@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:form_designer/mainScreen/login.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import 'mainScreen/home_screen.dart';
+import 'global/global.dart';
 
-void main() {
+Future<void> main() async {
+  sharedPreferences = await SharedPreferences.getInstance();
   runApp(const MyApp());
 }
 
@@ -14,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const HomeScreen(),
+      home: const LoginScreen(),
     );
   }
 }
