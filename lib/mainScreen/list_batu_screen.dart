@@ -5,7 +5,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 // ignore: unused_import
 import 'package:form_designer/mainScreen/form_screen_by_id.dart';
-import 'package:form_designer/widgets/drawer_1.dart';
+import 'package:form_designer/mainScreen/side_screen_batu.dart';
 import 'package:http/http.dart' as http;
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
@@ -107,8 +107,9 @@ class _ListBatuScreenState extends State<ListBatuScreen> {
       // ignore: null_check_always_fails
       onWillPop: () async => null!,
       child: Scaffold(
-        drawer: Drawer1(),
+        // drawer: Drawer1(),
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           elevation: 0,
           backgroundColor: Colors.blue,
           flexibleSpace: Container(
@@ -335,258 +336,269 @@ class _ListBatuScreenState extends State<ListBatuScreen> {
                   ],
                 ),
               ),
-        floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {
-            showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  final _formKey = GlobalKey<FormState>();
-                  TextEditingController lot = TextEditingController();
-                  TextEditingController size = TextEditingController();
-                  TextEditingController parcel = TextEditingController();
-                  TextEditingController qty = TextEditingController();
-                  TextEditingController caratPcs = TextEditingController();
-                  TextEditingController keterangan = TextEditingController();
-                  RoundedLoadingButtonController btnController =
-                      RoundedLoadingButtonController();
-                  return AlertDialog(
-                    content: Stack(
-                      clipBehavior: Clip.none,
-                      children: <Widget>[
-                        Positioned(
-                          right: -40.0,
-                          top: -40.0,
-                          child: InkResponse(
-                            onTap: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: const CircleAvatar(
-                              backgroundColor: Colors.red,
-                              child: Icon(Icons.close),
+        floatingActionButton: Stack(children: [
+          Positioned(
+            left: 40,
+            bottom: 5,
+            child: FloatingActionButton.extended(
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      final _formKey = GlobalKey<FormState>();
+                      TextEditingController lot = TextEditingController();
+                      TextEditingController size = TextEditingController();
+                      TextEditingController parcel = TextEditingController();
+                      TextEditingController qty = TextEditingController();
+                      TextEditingController caratPcs = TextEditingController();
+                      TextEditingController keterangan =
+                          TextEditingController();
+                      RoundedLoadingButtonController btnController =
+                          RoundedLoadingButtonController();
+                      return AlertDialog(
+                        content: Stack(
+                          clipBehavior: Clip.none,
+                          children: <Widget>[
+                            Positioned(
+                              right: -47.0,
+                              top: -47.0,
+                              child: InkResponse(
+                                onTap: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const CircleAvatar(
+                                  backgroundColor: Colors.red,
+                                  child: Icon(Icons.close),
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                        Form(
-                          key: _formKey,
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              //lot
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: TextFormField(
-                                  style: const TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold),
-                                  textInputAction: TextInputAction.next,
-                                  controller: lot,
-                                  decoration: InputDecoration(
-                                    // hintText: "example: Cahaya Sanivokasi",
-                                    labelText: "Lot",
-                                    border: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(5.0)),
+                            Form(
+                              key: _formKey,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  //lot
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: TextFormField(
+                                      style: const TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold),
+                                      textInputAction: TextInputAction.next,
+                                      controller: lot,
+                                      decoration: InputDecoration(
+                                        // hintText: "example: Cahaya Sanivokasi",
+                                        labelText: "Lot",
+                                        border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(5.0)),
+                                      ),
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          return 'Wajib diisi *';
+                                        }
+                                        return null;
+                                      },
+                                    ),
                                   ),
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return 'Wajib diisi *';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                              ),
-                              //size
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: TextFormField(
-                                  style: const TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold),
-                                  textInputAction: TextInputAction.next,
-                                  controller: size,
-                                  decoration: InputDecoration(
-                                    // hintText: "example: Cahaya Sanivokasi",
-                                    labelText: "Ukuran",
-                                    border: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(5.0)),
+                                  //size
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: TextFormField(
+                                      style: const TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold),
+                                      textInputAction: TextInputAction.next,
+                                      controller: size,
+                                      decoration: InputDecoration(
+                                        // hintText: "example: Cahaya Sanivokasi",
+                                        labelText: "Ukuran",
+                                        border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(5.0)),
+                                      ),
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          return 'Wajib diisi *';
+                                        }
+                                        return null;
+                                      },
+                                    ),
                                   ),
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return 'Wajib diisi *';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: TextFormField(
-                                  style: const TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold),
-                                  textInputAction: TextInputAction.next,
-                                  controller: parcel,
-                                  decoration: InputDecoration(
-                                    // hintText: "example: Cahaya Sanivokasi",
-                                    labelText: "Parcel",
-                                    border: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(5.0)),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: TextFormField(
+                                      style: const TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold),
+                                      textInputAction: TextInputAction.next,
+                                      controller: parcel,
+                                      decoration: InputDecoration(
+                                        // hintText: "example: Cahaya Sanivokasi",
+                                        labelText: "Parcel",
+                                        border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(5.0)),
+                                      ),
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          return 'Wajib diisi *';
+                                        }
+                                        return null;
+                                      },
+                                    ),
                                   ),
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return 'Wajib diisi *';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: TextFormField(
-                                  style: const TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold),
-                                  textInputAction: TextInputAction.next,
-                                  controller: qty,
-                                  decoration: InputDecoration(
-                                    // hintText: "example: Cahaya Sanivokasi",
-                                    labelText: "Qty",
-                                    border: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(5.0)),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: TextFormField(
+                                      style: const TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold),
+                                      textInputAction: TextInputAction.next,
+                                      controller: qty,
+                                      decoration: InputDecoration(
+                                        // hintText: "example: Cahaya Sanivokasi",
+                                        labelText: "Qty",
+                                        border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(5.0)),
+                                      ),
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          return 'Wajib diisi *';
+                                        }
+                                        return null;
+                                      },
+                                    ),
                                   ),
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return 'Wajib diisi *';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: TextFormField(
-                                  style: const TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold),
-                                  textInputAction: TextInputAction.next,
-                                  controller: caratPcs,
-                                  decoration: InputDecoration(
-                                    // hintText: "example: Cahaya Sanivokasi",
-                                    labelText: "Carat Pcs",
-                                    border: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(5.0)),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: TextFormField(
+                                      style: const TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold),
+                                      textInputAction: TextInputAction.next,
+                                      controller: caratPcs,
+                                      decoration: InputDecoration(
+                                        // hintText: "example: Cahaya Sanivokasi",
+                                        labelText: "Carat Pcs",
+                                        border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(5.0)),
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: TextFormField(
-                                  style: const TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold),
-                                  textInputAction: TextInputAction.next,
-                                  controller: keterangan,
-                                  decoration: InputDecoration(
-                                    // hintText: "example: Cahaya Sanivokasi",
-                                    labelText: "Keterangan",
-                                    border: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(5.0)),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: TextFormField(
+                                      style: const TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold),
+                                      textInputAction: TextInputAction.next,
+                                      controller: keterangan,
+                                      decoration: InputDecoration(
+                                        // hintText: "example: Cahaya Sanivokasi",
+                                        labelText: "Keterangan",
+                                        border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(5.0)),
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: SizedBox(
-                                  width: 250,
-                                  child: CustomLoadingButton(
-                                      controller: btnController,
-                                      child: const Text("Simpan Batu"),
-                                      onPressed: () async {
-                                        if (_formKey.currentState!.validate()) {
-                                          _formKey.currentState!.save();
-                                          Future.delayed(
-                                                  const Duration(seconds: 2))
-                                              .then((value) async {
-                                            btnController.success();
-                                            print(lot.text);
-                                            print(size.text);
-                                            print(parcel.text);
-                                            print(qty.text);
-                                            print(caratPcs.text);
-                                            print(keterangan.text);
-                                            Map<String, dynamic> body = {
-                                              'lot': lot.text,
-                                              'size': size.text,
-                                              'parcel': parcel.text,
-                                              'qty': qty.text,
-                                              'caratPcs': caratPcs.text,
-                                              'keterangan': keterangan.text,
-                                            };
-                                            final response = await http.post(
-                                                Uri.parse(ApiConstants.baseUrl +
-                                                    ApiConstants.postDataBatu),
-                                                body: body);
-                                            print(response.body);
-                                            Future.delayed(
-                                                    const Duration(seconds: 1))
-                                                .then((value) {
-                                              btnController.reset(); //reset
-                                              showDialog<String>(
-                                                  context: context,
-                                                  builder:
-                                                      (BuildContext context) =>
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: SizedBox(
+                                      width: 250,
+                                      child: CustomLoadingButton(
+                                          controller: btnController,
+                                          child: const Text("Simpan Batu"),
+                                          onPressed: () async {
+                                            if (_formKey.currentState!
+                                                .validate()) {
+                                              _formKey.currentState!.save();
+                                              Future.delayed(const Duration(
+                                                      seconds: 2))
+                                                  .then((value) async {
+                                                btnController.success();
+                                                print(lot.text);
+                                                print(size.text);
+                                                print(parcel.text);
+                                                print(qty.text);
+                                                print(caratPcs.text);
+                                                print(keterangan.text);
+                                                Map<String, dynamic> body = {
+                                                  'lot': lot.text,
+                                                  'size': size.text,
+                                                  'parcel': parcel.text,
+                                                  'qty': qty.text,
+                                                  'caratPcs': caratPcs.text,
+                                                  'keterangan': keterangan.text,
+                                                };
+                                                final response =
+                                                    await http.post(
+                                                        Uri.parse(ApiConstants
+                                                                .baseUrl +
+                                                            ApiConstants
+                                                                .postDataBatu),
+                                                        body: body);
+                                                print(response.body);
+                                                Future.delayed(const Duration(
+                                                        seconds: 1))
+                                                    .then((value) {
+                                                  btnController.reset(); //reset
+                                                  showDialog<String>(
+                                                      context: context,
+                                                      builder: (BuildContext
+                                                              context) =>
                                                           const AlertDialog(
                                                             title: Text(
                                                               'Tambah batu berhasil',
                                                             ),
                                                           ));
-                                            });
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (c) =>
-                                                        const ListBatuScreen()));
-                                          });
-                                        } else {
-                                          btnController.error();
-                                          Future.delayed(
-                                                  const Duration(seconds: 1))
-                                              .then((value) {
-                                            btnController.reset(); //reset
-                                          });
-                                        }
-                                      }),
-                                ),
-                              )
-                            ],
-                          ),
+                                                });
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (c) =>
+                                                            const MainViewBatu()));
+                                              });
+                                            } else {
+                                              btnController.error();
+                                              Future.delayed(const Duration(
+                                                      seconds: 1))
+                                                  .then((value) {
+                                                btnController.reset(); //reset
+                                              });
+                                            }
+                                          }),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  );
-                });
-          },
-          label: const Text(
-            "Tambah Batu",
-            style: TextStyle(color: Colors.white),
+                      );
+                    });
+              },
+              label: const Text(
+                "Tambah Batu",
+                style: TextStyle(color: Colors.white),
+              ),
+              icon: const Icon(
+                Icons.add_circle_outline_sharp,
+                color: Colors.white,
+              ),
+              backgroundColor: Colors.blue,
+            ),
           ),
-          icon: const Icon(
-            Icons.add_circle_outline_sharp,
-            color: Colors.white,
-          ),
-          backgroundColor: Colors.blue,
-        ),
+        ]),
       ),
     );
   }
@@ -680,7 +692,7 @@ class RowSource extends DataTableSource {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (c) => const ListBatuScreen()));
+                                  builder: (c) => const MainViewBatu()));
                           showDialog<String>(
                               context: context,
                               builder: (BuildContext context) =>
@@ -730,8 +742,8 @@ class RowSource extends DataTableSource {
                             clipBehavior: Clip.none,
                             children: <Widget>[
                               Positioned(
-                                right: -40.0,
-                                top: -40.0,
+                                right: -47.0,
+                                top: -47.0,
                                 child: InkResponse(
                                   onTap: () {
                                     Navigator.of(context).pop();
@@ -894,7 +906,7 @@ class RowSource extends DataTableSource {
                                                       context,
                                                       MaterialPageRoute(
                                                           builder: (c) =>
-                                                              const ListBatuScreen()));
+                                                              const MainViewBatu()));
                                                 });
                                               } else {
                                                 btnController.error();

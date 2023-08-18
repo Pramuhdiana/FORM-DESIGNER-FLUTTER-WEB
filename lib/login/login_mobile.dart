@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 
 import '../api/api_constant.dart';
 import '../global/global.dart';
-import '../mainScreen/home_screen.dart';
+import 'my_splash_screen.dart';
 
 class LoginMobile extends StatefulWidget {
   const LoginMobile({super.key});
@@ -111,6 +111,9 @@ class _LoginMobileState extends State<LoginMobile> {
                                         })
                                       : setState(() {
                                           _isChecked = true;
+                                          sharedPreferences!.clear();
+                                          sharedPreferences!
+                                              .setString('token', 'ingat saya');
                                         });
                                 },
                               ),
@@ -172,7 +175,8 @@ class _LoginMobileState extends State<LoginMobile> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (c) => const HomeScreen()));
+                                        builder: (c) =>
+                                            const MySplashScreen()));
                               });
                             } else {
                               showDialog<String>(

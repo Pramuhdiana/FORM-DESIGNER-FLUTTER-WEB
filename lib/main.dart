@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:form_designer/mainScreen/login.dart';
+import 'package:form_designer/login/my_splash_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'global/global.dart';
@@ -17,7 +17,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const LoginScreen(),
+      debugShowCheckedModeBanner: false,
+      home: const MySplashScreen(),
     );
   }
 }

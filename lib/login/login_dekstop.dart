@@ -3,7 +3,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:form_designer/mainScreen/home_screen.dart';
+import 'package:form_designer/login/my_splash_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 
@@ -35,7 +35,7 @@ class _LoginDesktopState extends State<LoginDesktop> {
         Expanded(
           //<-- Expanded widget
           child: Image.network(
-            'http://192.168.22.228/Api_Flutter/spk/upload/sanivokasi_logo-01.png',
+            '${ApiConstants.baseUrlImage}sanivokasi_logo-01.png',
             fit: BoxFit.cover,
           ),
         ),
@@ -124,6 +124,10 @@ class _LoginDesktopState extends State<LoginDesktop> {
                                       })
                                     : setState(() {
                                         _isChecked = true;
+
+                                        sharedPreferences!.clear();
+                                        sharedPreferences!
+                                            .setString('token', 'ingat saya');
                                       });
                               },
                             ),
@@ -166,13 +170,16 @@ class _LoginDesktopState extends State<LoginDesktop> {
                           final data = jsonDecode(response.body);
                           print(data);
                           int value = data['value'];
-                          String id = data['id'];
-                          String emailAPI = data['email'];
-                          String namaAPI = data['nama'];
-                          String levelAPI = data['level'];
-                          String statusAPI = data['status'];
+                          print(response.statusCode);
                           if (value == 1) {
+                            String id = data['id'];
+                            String emailAPI = data['email'];
+                            String namaAPI = data['nama'];
+                            String levelAPI = data['level'];
+                            String statusAPI = data['status'];
                             setState(() {
+                              sharedPreferences!
+                                  .setString('token', 'ingat saya');
                               sharedPreferences!.setString('id', id);
                               sharedPreferences!.setString('nama', namaAPI);
                               sharedPreferences!.setString('email', emailAPI);
@@ -184,9 +191,9 @@ class _LoginDesktopState extends State<LoginDesktop> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (c) => const HomeScreen()));
+                                      builder: (c) => const MySplashScreen()));
                             });
-                          } else {
+                          } else if (value == 0) {
                             showDialog<String>(
                                 context: context,
                                 builder: (BuildContext context) =>

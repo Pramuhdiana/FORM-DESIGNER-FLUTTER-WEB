@@ -1,8 +1,12 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
-import 'package:form_designer/mainScreen/calculate_pricing.dart';
-import 'package:form_designer/mainScreen/form_screen.dart';
 import 'package:form_designer/mainScreen/home_screen.dart';
 import 'package:form_designer/mainScreen/list_batu_screen.dart';
+import 'package:form_designer/mainScreen/login.dart';
+import 'package:form_designer/mainScreen/side_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../calculatePricing/list_calculate_pricing_screen.dart';
 import '../mainScreen/list_designer_screen.dart';
 
 // ignore: must_be_immutable, use_key_in_widget_constructors
@@ -51,28 +55,20 @@ class Drawer1 extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.add_outlined),
-            title: const Text('Tambah form designer'),
+            title: const Text('main view'),
             onTap: () => {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (c) => const FormScreen()))
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (c) => const MainView()))
             },
           ),
           ListTile(
-            leading: const Icon(Icons.add_circle_sharp),
-            title: const Text('Tambah stok batu'),
+            leading: const Icon(Icons.list),
+            title: const Text('List stok batu'),
             onTap: () => {
               Navigator.push(context,
                   MaterialPageRoute(builder: (c) => const ListBatuScreen()))
             },
           ),
-          // ListTile(
-          //   leading: const Icon(Icons.developer_mode_outlined),
-          //   title: const Text('Tambah stok batu'),
-          //   onTap: () => {
-          //     Navigator.push(
-          //         context, MaterialPageRoute(builder: (c) => ProfileScreen()))
-          //   },
-          // ),
           Container(
             color: Colors.red,
             child: ListTile(
@@ -87,8 +83,8 @@ class Drawer1 extends StatelessWidget {
                           clipBehavior: Clip.none,
                           children: <Widget>[
                             Positioned(
-                              right: -40.0,
-                              top: -40.0,
+                              right: -47.0,
+                              top: -47.0,
                               child: InkResponse(
                                 onTap: () {
                                   Navigator.of(context).pop();
@@ -149,7 +145,7 @@ class Drawer1 extends StatelessWidget {
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (c) =>
-                                                          const CalculateScreen()));
+                                                          const ListCalculatePricingScreen()));
                                         },
                                       ),
                                     )
@@ -163,6 +159,72 @@ class Drawer1 extends StatelessWidget {
                     })
               },
             ),
+          ),
+          ListTile(
+            leading: const Icon(Icons.logout),
+            title: const Text('Keluar'),
+            onTap: () => {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      content: Stack(
+                        clipBehavior: Clip.none,
+                        children: <Widget>[
+                          Positioned(
+                            right: -47.0,
+                            top: -47.0,
+                            child: InkResponse(
+                              onTap: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const CircleAvatar(
+                                backgroundColor: Colors.red,
+                                child: Icon(Icons.close),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            child: Form(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  const Padding(
+                                    padding:
+                                        EdgeInsets.only(top: 5, bottom: 10),
+                                    child: Text('Yakin ingin keluar ?'),
+                                  ),
+                                  Container(
+                                    width: 200,
+                                    height: 50,
+                                    padding: const EdgeInsets.only(top: 10),
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.red),
+                                      child: const Text("Keluar"),
+                                      onPressed: () async {
+                                        SharedPreferences prefs =
+                                            await SharedPreferences
+                                                .getInstance();
+                                        prefs.clear();
+                                        prefs.setString('token', 'null');
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (c) =>
+                                                    const LoginScreen()));
+                                      },
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  })
+            },
           ),
         ],
       ),

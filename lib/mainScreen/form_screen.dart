@@ -7,6 +7,7 @@ import 'package:dio/dio.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:form_designer/mainScreen/side_screen_design.dart';
 import 'package:form_designer/model/batu_model.dart';
 import 'package:form_designer/model/earnut_model.dart';
 import 'package:form_designer/model/jenis_barang_model.dart';
@@ -23,7 +24,6 @@ import '../global/currency_format.dart';
 import '../global/global.dart';
 import '../model/rantai_model.dart';
 import '../widgets/custom_loading.dart';
-import '../widgets/drawer_1.dart';
 
 class FormScreen extends StatefulWidget {
   const FormScreen({super.key});
@@ -40,9 +40,11 @@ class _FormScreenState extends State<FormScreen> {
   PlatformFile? _imageFile;
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  double doubleBeratEmasDariCustomer = 0;
 
   TextEditingController kodeDesignMdbc = TextEditingController();
   TextEditingController kodeMarketing = TextEditingController();
+  TextEditingController siklus = TextEditingController();
   TextEditingController kodeProduksi = TextEditingController();
   TextEditingController namaDesigner = TextEditingController();
   TextEditingController namaModeller = TextEditingController();
@@ -422,7 +424,7 @@ class _FormScreenState extends State<FormScreen> {
     }
   }
 
-  String get totalPrice {
+  double get totalPrice {
     var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
         (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
         (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
@@ -457,50 +459,51 @@ class _FormScreenState extends State<FormScreen> {
         (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
         (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
         (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
-
-    var totalQtyCrt = (((caratPcsBatu1 * qtyIntBatu1!) +
-            (caratPcsBatu2 * qtyIntBatu2!) +
-            (caratPcsBatu3 * qtyIntBatu3!) +
-            (caratPcsBatu4 * qtyIntBatu4!) +
-            (caratPcsBatu5 * qtyIntBatu5!) +
-            (caratPcsBatu6 * qtyIntBatu6!) +
-            (caratPcsBatu7 * qtyIntBatu7!) +
-            (caratPcsBatu8 * qtyIntBatu8!) +
-            (caratPcsBatu9 * qtyIntBatu9!) +
-            (caratPcsBatu10 * qtyIntBatu10!) +
-            (caratPcsBatu11 * qtyIntBatu11!) +
-            (caratPcsBatu12 * qtyIntBatu12!) +
-            (caratPcsBatu13 * qtyIntBatu13!) +
-            (caratPcsBatu14 * qtyIntBatu14!) +
-            (caratPcsBatu15 * qtyIntBatu15!) +
-            (caratPcsBatu16 * qtyIntBatu16!) +
-            (caratPcsBatu17 * qtyIntBatu17!) +
-            (caratPcsBatu18 * qtyIntBatu18!) +
-            (caratPcsBatu19 * qtyIntBatu19!) +
-            (caratPcsBatu20 * qtyIntBatu20!) +
-            (caratPcsBatu21 * qtyIntBatu21!) +
-            (caratPcsBatu22 * qtyIntBatu22!) +
-            (caratPcsBatu23 * qtyIntBatu23!) +
-            (caratPcsBatu24 * qtyIntBatu24!) +
-            (caratPcsBatu25 * qtyIntBatu25!) +
-            (caratPcsBatu26 * qtyIntBatu26!) +
-            (caratPcsBatu27 * qtyIntBatu27!) +
-            (caratPcsBatu28 * qtyIntBatu28!) +
-            (caratPcsBatu29 * qtyIntBatu29!) +
-            (caratPcsBatu30 * qtyIntBatu30!) +
-            (caratPcsBatu31 * qtyIntBatu31!) +
-            (caratPcsBatu32 * qtyIntBatu32!) +
-            (caratPcsBatu33 * qtyIntBatu33!) +
-            (caratPcsBatu34 * qtyIntBatu34!) +
-            (caratPcsBatu35 * qtyIntBatu35!)) /
+    print('Diamond $totalDiamond');
+    var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
+                (caratPcsBatu2 * qtyIntBatu2!) +
+                (caratPcsBatu3 * qtyIntBatu3!) +
+                (caratPcsBatu4 * qtyIntBatu4!) +
+                (caratPcsBatu5 * qtyIntBatu5!) +
+                (caratPcsBatu6 * qtyIntBatu6!) +
+                (caratPcsBatu7 * qtyIntBatu7!) +
+                (caratPcsBatu8 * qtyIntBatu8!) +
+                (caratPcsBatu9 * qtyIntBatu9!) +
+                (caratPcsBatu10 * qtyIntBatu10!) +
+                (caratPcsBatu11 * qtyIntBatu11!) +
+                (caratPcsBatu12 * qtyIntBatu12!) +
+                (caratPcsBatu13 * qtyIntBatu13!) +
+                (caratPcsBatu14 * qtyIntBatu14!) +
+                (caratPcsBatu15 * qtyIntBatu15!) +
+                (caratPcsBatu16 * qtyIntBatu16!) +
+                (caratPcsBatu17 * qtyIntBatu17!) +
+                (caratPcsBatu18 * qtyIntBatu18!) +
+                (caratPcsBatu19 * qtyIntBatu19!) +
+                (caratPcsBatu20 * qtyIntBatu20!) +
+                (caratPcsBatu21 * qtyIntBatu21!) +
+                (caratPcsBatu22 * qtyIntBatu22!) +
+                (caratPcsBatu23 * qtyIntBatu23!) +
+                (caratPcsBatu24 * qtyIntBatu24!) +
+                (caratPcsBatu25 * qtyIntBatu25!) +
+                (caratPcsBatu26 * qtyIntBatu26!) +
+                (caratPcsBatu27 * qtyIntBatu27!) +
+                (caratPcsBatu28 * qtyIntBatu28!) +
+                (caratPcsBatu29 * qtyIntBatu29!) +
+                (caratPcsBatu30 * qtyIntBatu30!) +
+                (caratPcsBatu31 * qtyIntBatu31!) +
+                (caratPcsBatu32 * qtyIntBatu32!) +
+                (caratPcsBatu33 * qtyIntBatu33!) +
+                (caratPcsBatu34 * qtyIntBatu34!) +
+                (caratPcsBatu35 * qtyIntBatu35!)) +
+            doubleBeratEmasDariCustomer) /
         5);
     var totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmas);
 
     var totalLabour = ((labour! + 0) * upLabour);
     var total = ((totalDiamond + totalEmas + totalLabour) * upFinal) / kurs;
-
+    print(total);
     if (total.toString() == 'NaN') {
-      return '\$ ${CurrencyFormat.convertToDollar(0, 0)}';
+      return 0;
     } else if (total <= 2251) {
       var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
           (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
@@ -537,51 +540,94 @@ class _FormScreenState extends State<FormScreen> {
           (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
           (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
 
-      var totalQtyCrt = (((caratPcsBatu1 * qtyIntBatu1!) +
-              (caratPcsBatu2 * qtyIntBatu2!) +
-              (caratPcsBatu3 * qtyIntBatu3!) +
-              (caratPcsBatu4 * qtyIntBatu4!) +
-              (caratPcsBatu5 * qtyIntBatu5!) +
-              (caratPcsBatu6 * qtyIntBatu6!) +
-              (caratPcsBatu7 * qtyIntBatu7!) +
-              (caratPcsBatu8 * qtyIntBatu8!) +
-              (caratPcsBatu9 * qtyIntBatu9!) +
-              (caratPcsBatu10 * qtyIntBatu10!) +
-              (caratPcsBatu11 * qtyIntBatu11!) +
-              (caratPcsBatu12 * qtyIntBatu12!) +
-              (caratPcsBatu13 * qtyIntBatu13!) +
-              (caratPcsBatu14 * qtyIntBatu14!) +
-              (caratPcsBatu15 * qtyIntBatu15!) +
-              (caratPcsBatu16 * qtyIntBatu16!) +
-              (caratPcsBatu17 * qtyIntBatu17!) +
-              (caratPcsBatu18 * qtyIntBatu18!) +
-              (caratPcsBatu19 * qtyIntBatu19!) +
-              (caratPcsBatu20 * qtyIntBatu20!) +
-              (caratPcsBatu21 * qtyIntBatu21!) +
-              (caratPcsBatu22 * qtyIntBatu22!) +
-              (caratPcsBatu23 * qtyIntBatu23!) +
-              (caratPcsBatu24 * qtyIntBatu24!) +
-              (caratPcsBatu25 * qtyIntBatu25!) +
-              (caratPcsBatu26 * qtyIntBatu26!) +
-              (caratPcsBatu27 * qtyIntBatu27!) +
-              (caratPcsBatu28 * qtyIntBatu28!) +
-              (caratPcsBatu29 * qtyIntBatu29!) +
-              (caratPcsBatu30 * qtyIntBatu30!) +
-              (caratPcsBatu31 * qtyIntBatu31!) +
-              (caratPcsBatu32 * qtyIntBatu32!) +
-              (caratPcsBatu33 * qtyIntBatu33!) +
-              (caratPcsBatu34 * qtyIntBatu34!) +
-              (caratPcsBatu35 * qtyIntBatu35!)) /
+      var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
+                  (caratPcsBatu2 * qtyIntBatu2!) +
+                  (caratPcsBatu3 * qtyIntBatu3!) +
+                  (caratPcsBatu4 * qtyIntBatu4!) +
+                  (caratPcsBatu5 * qtyIntBatu5!) +
+                  (caratPcsBatu6 * qtyIntBatu6!) +
+                  (caratPcsBatu7 * qtyIntBatu7!) +
+                  (caratPcsBatu8 * qtyIntBatu8!) +
+                  (caratPcsBatu9 * qtyIntBatu9!) +
+                  (caratPcsBatu10 * qtyIntBatu10!) +
+                  (caratPcsBatu11 * qtyIntBatu11!) +
+                  (caratPcsBatu12 * qtyIntBatu12!) +
+                  (caratPcsBatu13 * qtyIntBatu13!) +
+                  (caratPcsBatu14 * qtyIntBatu14!) +
+                  (caratPcsBatu15 * qtyIntBatu15!) +
+                  (caratPcsBatu16 * qtyIntBatu16!) +
+                  (caratPcsBatu17 * qtyIntBatu17!) +
+                  (caratPcsBatu18 * qtyIntBatu18!) +
+                  (caratPcsBatu19 * qtyIntBatu19!) +
+                  (caratPcsBatu20 * qtyIntBatu20!) +
+                  (caratPcsBatu21 * qtyIntBatu21!) +
+                  (caratPcsBatu22 * qtyIntBatu22!) +
+                  (caratPcsBatu23 * qtyIntBatu23!) +
+                  (caratPcsBatu24 * qtyIntBatu24!) +
+                  (caratPcsBatu25 * qtyIntBatu25!) +
+                  (caratPcsBatu26 * qtyIntBatu26!) +
+                  (caratPcsBatu27 * qtyIntBatu27!) +
+                  (caratPcsBatu28 * qtyIntBatu28!) +
+                  (caratPcsBatu29 * qtyIntBatu29!) +
+                  (caratPcsBatu30 * qtyIntBatu30!) +
+                  (caratPcsBatu31 * qtyIntBatu31!) +
+                  (caratPcsBatu32 * qtyIntBatu32!) +
+                  (caratPcsBatu33 * qtyIntBatu33!) +
+                  (caratPcsBatu34 * qtyIntBatu34!) +
+                  (caratPcsBatu35 * qtyIntBatu35!)) +
+              doubleBeratEmasDariCustomer) /
           5);
       var totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmas);
 
       var totalLabour = ((labour! + others1) * upLabour);
       var total = ((totalDiamond + totalEmas + totalLabour) * upFinal) / kurs;
-      setState(() {
-        print('others1');
-        estimasiHarga.text = total.toString();
-      });
-      return '\$ ${CurrencyFormat.convertToDollar(total, 0)}';
+      var output =
+          total.round().toString()[total.round().toString().length - 1];
+      if (int.parse(output) >= 1 && int.parse(output) <= 4) {
+        setState(() {
+          print('others1');
+          total = (total + (5 - int.parse(output)));
+          if (brand.text == "BELI BERLIAN") {
+            total = ((total * 1.2) * 1.33);
+            estimasiHarga.text = total.toString();
+          } else if (brand.text == "METIER") {
+            total = (((total.round() * kurs) * 1.2) * 1.65);
+            estimasiHarga.text = total.toString();
+          } else {
+            estimasiHarga.text = total.toString();
+          }
+        });
+        return total;
+      } else if (int.parse(output) >= 6 && int.parse(output) <= 9) {
+        setState(() {
+          print('others1');
+          total = (total + (10 - int.parse(output)));
+          if (brand.text == "BELI BERLIAN") {
+            total = ((total * 1.2) * 1.33);
+            estimasiHarga.text = total.toString();
+          } else if (brand.text == "METIER") {
+            total = (((total.round() * kurs) * 1.2) * 1.65);
+            estimasiHarga.text = total.toString();
+          } else {
+            estimasiHarga.text = total.toString();
+          }
+        });
+        return total;
+      } else {
+        setState(() {
+          print('others1');
+          if (brand.text == "BELI BERLIAN") {
+            total = ((total * 1.2) * 1.33);
+            estimasiHarga.text = total.toString();
+          } else if (brand.text == "METIER") {
+            total = (((total.round() * kurs) * 1.2) * 1.65);
+            estimasiHarga.text = total.toString();
+          } else {
+            estimasiHarga.text = total.toString();
+          }
+        });
+        return total;
+      }
     } else if (total <= 4000) {
       var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
           (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
@@ -618,52 +664,94 @@ class _FormScreenState extends State<FormScreen> {
           (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
           (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
 
-      var totalQtyCrt = (((caratPcsBatu1 * qtyIntBatu1!) +
-              (caratPcsBatu2 * qtyIntBatu2!) +
-              (caratPcsBatu3 * qtyIntBatu3!) +
-              (caratPcsBatu4 * qtyIntBatu4!) +
-              (caratPcsBatu5 * qtyIntBatu5!) +
-              (caratPcsBatu6 * qtyIntBatu6!) +
-              (caratPcsBatu7 * qtyIntBatu7!) +
-              (caratPcsBatu8 * qtyIntBatu8!) +
-              (caratPcsBatu9 * qtyIntBatu9!) +
-              (caratPcsBatu10 * qtyIntBatu10!) +
-              (caratPcsBatu11 * qtyIntBatu11!) +
-              (caratPcsBatu12 * qtyIntBatu12!) +
-              (caratPcsBatu13 * qtyIntBatu13!) +
-              (caratPcsBatu14 * qtyIntBatu14!) +
-              (caratPcsBatu15 * qtyIntBatu15!) +
-              (caratPcsBatu16 * qtyIntBatu16!) +
-              (caratPcsBatu17 * qtyIntBatu17!) +
-              (caratPcsBatu18 * qtyIntBatu18!) +
-              (caratPcsBatu19 * qtyIntBatu19!) +
-              (caratPcsBatu20 * qtyIntBatu20!) +
-              (caratPcsBatu21 * qtyIntBatu21!) +
-              (caratPcsBatu22 * qtyIntBatu22!) +
-              (caratPcsBatu23 * qtyIntBatu23!) +
-              (caratPcsBatu24 * qtyIntBatu24!) +
-              (caratPcsBatu25 * qtyIntBatu25!) +
-              (caratPcsBatu26 * qtyIntBatu26!) +
-              (caratPcsBatu27 * qtyIntBatu27!) +
-              (caratPcsBatu28 * qtyIntBatu28!) +
-              (caratPcsBatu29 * qtyIntBatu29!) +
-              (caratPcsBatu30 * qtyIntBatu30!) +
-              (caratPcsBatu31 * qtyIntBatu31!) +
-              (caratPcsBatu32 * qtyIntBatu32!) +
-              (caratPcsBatu33 * qtyIntBatu33!) +
-              (caratPcsBatu34 * qtyIntBatu34!) +
-              (caratPcsBatu35 * qtyIntBatu35!)) /
+      var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
+                  (caratPcsBatu2 * qtyIntBatu2!) +
+                  (caratPcsBatu3 * qtyIntBatu3!) +
+                  (caratPcsBatu4 * qtyIntBatu4!) +
+                  (caratPcsBatu5 * qtyIntBatu5!) +
+                  (caratPcsBatu6 * qtyIntBatu6!) +
+                  (caratPcsBatu7 * qtyIntBatu7!) +
+                  (caratPcsBatu8 * qtyIntBatu8!) +
+                  (caratPcsBatu9 * qtyIntBatu9!) +
+                  (caratPcsBatu10 * qtyIntBatu10!) +
+                  (caratPcsBatu11 * qtyIntBatu11!) +
+                  (caratPcsBatu12 * qtyIntBatu12!) +
+                  (caratPcsBatu13 * qtyIntBatu13!) +
+                  (caratPcsBatu14 * qtyIntBatu14!) +
+                  (caratPcsBatu15 * qtyIntBatu15!) +
+                  (caratPcsBatu16 * qtyIntBatu16!) +
+                  (caratPcsBatu17 * qtyIntBatu17!) +
+                  (caratPcsBatu18 * qtyIntBatu18!) +
+                  (caratPcsBatu19 * qtyIntBatu19!) +
+                  (caratPcsBatu20 * qtyIntBatu20!) +
+                  (caratPcsBatu21 * qtyIntBatu21!) +
+                  (caratPcsBatu22 * qtyIntBatu22!) +
+                  (caratPcsBatu23 * qtyIntBatu23!) +
+                  (caratPcsBatu24 * qtyIntBatu24!) +
+                  (caratPcsBatu25 * qtyIntBatu25!) +
+                  (caratPcsBatu26 * qtyIntBatu26!) +
+                  (caratPcsBatu27 * qtyIntBatu27!) +
+                  (caratPcsBatu28 * qtyIntBatu28!) +
+                  (caratPcsBatu29 * qtyIntBatu29!) +
+                  (caratPcsBatu30 * qtyIntBatu30!) +
+                  (caratPcsBatu31 * qtyIntBatu31!) +
+                  (caratPcsBatu32 * qtyIntBatu32!) +
+                  (caratPcsBatu33 * qtyIntBatu33!) +
+                  (caratPcsBatu34 * qtyIntBatu34!) +
+                  (caratPcsBatu35 * qtyIntBatu35!)) +
+              doubleBeratEmasDariCustomer) /
           5);
       var totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmas);
 
       var totalLabour = ((labour! + others2) * upLabour);
       var total = ((totalDiamond + totalEmas + totalLabour) * upFinal) / kurs;
-      setState(() {
-        print('others2');
-
-        estimasiHarga.text = total.toString();
-      });
-      return '\$ ${CurrencyFormat.convertToDollar(total, 0)}';
+      var output =
+          total.round().toString()[total.round().toString().length - 1];
+      if (int.parse(output) >= 1 && int.parse(output) <= 4) {
+        setState(() {
+          print('others2');
+          total = (total + (5 - int.parse(output)));
+          if (brand.text == "BELI BERLIAN") {
+            total = ((total * 1.2) * 1.33);
+            estimasiHarga.text = total.toString();
+          } else if (brand.text == "METIER") {
+            total = (((total.round() * kurs) * 1.2) * 1.65);
+            estimasiHarga.text = total.toString();
+          } else {
+            estimasiHarga.text = total.toString();
+          }
+        });
+        return total;
+      } else if (int.parse(output) >= 6 && int.parse(output) <= 9) {
+        setState(() {
+          print('others2');
+          total = (total + (10 - int.parse(output)));
+          if (brand.text == "BELI BERLIAN") {
+            total = ((total * 1.2) * 1.33);
+            estimasiHarga.text = total.toString();
+          } else if (brand.text == "METIER") {
+            total = (((total.round() * kurs) * 1.2) * 1.65);
+            estimasiHarga.text = total.toString();
+          } else {
+            estimasiHarga.text = total.toString();
+          }
+        });
+        return total;
+      } else {
+        setState(() {
+          print('others2');
+          if (brand.text == "BELI BERLIAN") {
+            total = ((total * 1.2) * 1.33);
+            estimasiHarga.text = total.toString();
+          } else if (brand.text == "METIER") {
+            total = (((total.round() * kurs) * 1.2) * 1.65);
+            estimasiHarga.text = total.toString();
+          } else {
+            estimasiHarga.text = total.toString();
+          }
+        });
+        return total;
+      }
     } else {
       var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
           (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
@@ -700,160 +788,199 @@ class _FormScreenState extends State<FormScreen> {
           (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
           (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
 
-      var totalQtyCrt = (((caratPcsBatu1 * qtyIntBatu1!) +
-              (caratPcsBatu2 * qtyIntBatu2!) +
-              (caratPcsBatu3 * qtyIntBatu3!) +
-              (caratPcsBatu4 * qtyIntBatu4!) +
-              (caratPcsBatu5 * qtyIntBatu5!) +
-              (caratPcsBatu6 * qtyIntBatu6!) +
-              (caratPcsBatu7 * qtyIntBatu7!) +
-              (caratPcsBatu8 * qtyIntBatu8!) +
-              (caratPcsBatu9 * qtyIntBatu9!) +
-              (caratPcsBatu10 * qtyIntBatu10!) +
-              (caratPcsBatu11 * qtyIntBatu11!) +
-              (caratPcsBatu12 * qtyIntBatu12!) +
-              (caratPcsBatu13 * qtyIntBatu13!) +
-              (caratPcsBatu14 * qtyIntBatu14!) +
-              (caratPcsBatu15 * qtyIntBatu15!) +
-              (caratPcsBatu16 * qtyIntBatu16!) +
-              (caratPcsBatu17 * qtyIntBatu17!) +
-              (caratPcsBatu18 * qtyIntBatu18!) +
-              (caratPcsBatu19 * qtyIntBatu19!) +
-              (caratPcsBatu20 * qtyIntBatu20!) +
-              (caratPcsBatu21 * qtyIntBatu21!) +
-              (caratPcsBatu22 * qtyIntBatu22!) +
-              (caratPcsBatu23 * qtyIntBatu23!) +
-              (caratPcsBatu24 * qtyIntBatu24!) +
-              (caratPcsBatu25 * qtyIntBatu25!) +
-              (caratPcsBatu26 * qtyIntBatu26!) +
-              (caratPcsBatu27 * qtyIntBatu27!) +
-              (caratPcsBatu28 * qtyIntBatu28!) +
-              (caratPcsBatu29 * qtyIntBatu29!) +
-              (caratPcsBatu30 * qtyIntBatu30!) +
-              (caratPcsBatu31 * qtyIntBatu31!) +
-              (caratPcsBatu32 * qtyIntBatu32!) +
-              (caratPcsBatu33 * qtyIntBatu33!) +
-              (caratPcsBatu34 * qtyIntBatu34!) +
-              (caratPcsBatu35 * qtyIntBatu35!)) /
+      var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
+                  (caratPcsBatu2 * qtyIntBatu2!) +
+                  (caratPcsBatu3 * qtyIntBatu3!) +
+                  (caratPcsBatu4 * qtyIntBatu4!) +
+                  (caratPcsBatu5 * qtyIntBatu5!) +
+                  (caratPcsBatu6 * qtyIntBatu6!) +
+                  (caratPcsBatu7 * qtyIntBatu7!) +
+                  (caratPcsBatu8 * qtyIntBatu8!) +
+                  (caratPcsBatu9 * qtyIntBatu9!) +
+                  (caratPcsBatu10 * qtyIntBatu10!) +
+                  (caratPcsBatu11 * qtyIntBatu11!) +
+                  (caratPcsBatu12 * qtyIntBatu12!) +
+                  (caratPcsBatu13 * qtyIntBatu13!) +
+                  (caratPcsBatu14 * qtyIntBatu14!) +
+                  (caratPcsBatu15 * qtyIntBatu15!) +
+                  (caratPcsBatu16 * qtyIntBatu16!) +
+                  (caratPcsBatu17 * qtyIntBatu17!) +
+                  (caratPcsBatu18 * qtyIntBatu18!) +
+                  (caratPcsBatu19 * qtyIntBatu19!) +
+                  (caratPcsBatu20 * qtyIntBatu20!) +
+                  (caratPcsBatu21 * qtyIntBatu21!) +
+                  (caratPcsBatu22 * qtyIntBatu22!) +
+                  (caratPcsBatu23 * qtyIntBatu23!) +
+                  (caratPcsBatu24 * qtyIntBatu24!) +
+                  (caratPcsBatu25 * qtyIntBatu25!) +
+                  (caratPcsBatu26 * qtyIntBatu26!) +
+                  (caratPcsBatu27 * qtyIntBatu27!) +
+                  (caratPcsBatu28 * qtyIntBatu28!) +
+                  (caratPcsBatu29 * qtyIntBatu29!) +
+                  (caratPcsBatu30 * qtyIntBatu30!) +
+                  (caratPcsBatu31 * qtyIntBatu31!) +
+                  (caratPcsBatu32 * qtyIntBatu32!) +
+                  (caratPcsBatu33 * qtyIntBatu33!) +
+                  (caratPcsBatu34 * qtyIntBatu34!) +
+                  (caratPcsBatu35 * qtyIntBatu35!)) +
+              doubleBeratEmasDariCustomer) /
           5);
       var totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmas);
 
       var totalLabour = ((labour! + others3) * upLabour);
       var total = ((totalDiamond + totalEmas + totalLabour) * upFinal) / kurs;
-      setState(() {
-        print('others3');
-
-        estimasiHarga.text = total.toString();
-      });
-      return '\$ ${CurrencyFormat.convertToDollar(total, 0)}';
+      var output =
+          total.round().toString()[total.round().toString().length - 1];
+      if (int.parse(output) >= 1 && int.parse(output) <= 4) {
+        setState(() {
+          print('others3');
+          total = (total + (5 - int.parse(output)));
+          if (brand.text == "BELI BERLIAN") {
+            total = ((total * 1.2) * 1.33);
+            estimasiHarga.text = total.toString();
+          } else if (brand.text == "METIER") {
+            total = (((total.round() * kurs) * 1.2) * 1.65);
+            estimasiHarga.text = total.toString();
+          } else {
+            estimasiHarga.text = total.toString();
+          }
+        });
+        return total;
+      } else if (int.parse(output) >= 6 && int.parse(output) <= 9) {
+        setState(() {
+          print('others3');
+          total = (total + (10 - int.parse(output)));
+          if (brand.text == "BELI BERLIAN") {
+            total = ((total * 1.2) * 1.33);
+            estimasiHarga.text = total.toString();
+          } else if (brand.text == "METIER") {
+            total = (((total.round() * kurs) * 1.2) * 1.65);
+            estimasiHarga.text = total.toString();
+          } else {
+            estimasiHarga.text = total.toString();
+          }
+        });
+        return total;
+      } else {
+        setState(() {
+          print('others3');
+          if (brand.text == "BELI BERLIAN") {
+            total = ((total * 1.2) * 1.33);
+            estimasiHarga.text = total.toString();
+          } else if (brand.text == "METIER") {
+            total = (((total.round() * kurs) * 1.2) * 1.65);
+            estimasiHarga.text = total.toString();
+          } else {
+            estimasiHarga.text = total.toString();
+          }
+        });
+        return total;
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      // ignore: null_check_always_fails
-      onWillPop: () async => null!,
-      child: Scaffold(
-          drawer: Drawer1(),
-          appBar: AppBar(
-            backgroundColor: Colors.blue,
-            title: const Text(
-              "Form Designer",
-              style: TextStyle(fontSize: 25, color: Colors.white),
-            ),
-            centerTitle: true,
-          ),
-          backgroundColor: Colors.white,
-          body: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: Container(
-                  height: 2000,
-                  padding: const EdgeInsets.only(top: 25, left: 20, right: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      _bagianKiri(),
-                      _bagianTengah(),
-                      // _bagianKanan(),
-                    ],
-                  ),
-                )),
-          ),
-          bottomNavigationBar: Padding(
-            padding: const EdgeInsets.only(bottom: 2),
-            child: CustomLoadingButton(
-              controller: btnController,
-              onPressed: () {
-                final isValid = formKey.currentState?.validate();
-                if (!isValid!) {
-                  btnController.error();
-                  Future.delayed(const Duration(seconds: 1)).then((value) {
-                    btnController.reset(); //reset
-                  });
-                  return;
-                }
-                Future.delayed(const Duration(seconds: 2)).then((value) async {
-                  btnController.success();
-                  postAPI();
-                  postApiQtyBatu1();
-                  postApiQtyBatu2();
-                  postApiQtyBatu3();
-                  postApiQtyBatu4();
-                  postApiQtyBatu5();
-                  postApiQtyBatu6();
-                  postApiQtyBatu7();
-                  postApiQtyBatu8();
-                  postApiQtyBatu9();
-                  postApiQtyBatu10();
-                  postApiQtyBatu11();
-                  postApiQtyBatu12();
-                  postApiQtyBatu13();
-                  postApiQtyBatu14();
-                  postApiQtyBatu15();
-                  postApiQtyBatu16();
-                  postApiQtyBatu17();
-                  postApiQtyBatu18();
-                  postApiQtyBatu19();
-                  postApiQtyBatu20();
-                  postApiQtyBatu21();
-                  postApiQtyBatu22();
-                  postApiQtyBatu23();
-                  postApiQtyBatu24();
-                  postApiQtyBatu25();
-                  postApiQtyBatu26();
-                  postApiQtyBatu27();
-                  postApiQtyBatu28();
-                  postApiQtyBatu29();
-                  postApiQtyBatu30();
-                  postApiQtyBatu31();
-                  postApiQtyBatu32();
-                  postApiQtyBatu33();
-                  postApiQtyBatu34();
-                  postApiQtyBatu35();
-                  Future.delayed(const Duration(seconds: 1)).then((value) {
-                    btnController.reset(); //reset
-                    showDialog<String>(
-                        context: context,
-                        builder: (BuildContext context) => const AlertDialog(
-                              title: Text(
-                                'Design Tersimpan',
-                              ),
-                            ));
-                  });
-                  setState(() {
-                    clearForm();
-                  });
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (c) => const FormScreen()));
-                });
-              },
-              child: const Text(
-                "Save Design",
-                style: TextStyle(color: Colors.white, fontSize: 34),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.blue,
+        title: const Text(
+          "Form Designer",
+          style: TextStyle(fontSize: 25, color: Colors.white),
+        ),
+        centerTitle: true,
+      ),
+      backgroundColor: Colors.white,
+      body: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Container(
+              height: 2000,
+              padding: const EdgeInsets.only(top: 25, left: 20, right: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  _bagianKiri(),
+                  _bagianTengah(),
+                  // _bagianKanan(),
+                ],
               ),
+            )),
+      ),
+      bottomNavigationBar: Padding(
+          padding: const EdgeInsets.only(bottom: 2),
+          child: CustomLoadingButton(
+            controller: btnController,
+            onPressed: () {
+              final isValid = formKey.currentState?.validate();
+              if (!isValid!) {
+                btnController.error();
+                Future.delayed(const Duration(seconds: 1)).then((value) {
+                  btnController.reset(); //reset
+                });
+                return;
+              }
+              Future.delayed(const Duration(seconds: 2)).then((value) async {
+                btnController.success();
+                postAPI();
+                postApiQtyBatu1();
+                postApiQtyBatu2();
+                postApiQtyBatu3();
+                postApiQtyBatu4();
+                postApiQtyBatu5();
+                postApiQtyBatu6();
+                postApiQtyBatu7();
+                postApiQtyBatu8();
+                postApiQtyBatu9();
+                postApiQtyBatu10();
+                postApiQtyBatu11();
+                postApiQtyBatu12();
+                postApiQtyBatu13();
+                postApiQtyBatu14();
+                postApiQtyBatu15();
+                postApiQtyBatu16();
+                postApiQtyBatu17();
+                postApiQtyBatu18();
+                postApiQtyBatu19();
+                postApiQtyBatu20();
+                postApiQtyBatu21();
+                postApiQtyBatu22();
+                postApiQtyBatu23();
+                postApiQtyBatu24();
+                postApiQtyBatu25();
+                postApiQtyBatu26();
+                postApiQtyBatu27();
+                postApiQtyBatu28();
+                postApiQtyBatu29();
+                postApiQtyBatu30();
+                postApiQtyBatu31();
+                postApiQtyBatu32();
+                postApiQtyBatu33();
+                postApiQtyBatu34();
+                postApiQtyBatu35();
+                Future.delayed(const Duration(seconds: 1)).then((value) {
+                  btnController.reset(); //reset
+                  showDialog<String>(
+                      context: context,
+                      builder: (BuildContext context) => const AlertDialog(
+                            title: Text(
+                              'Design Tersimpan',
+                            ),
+                          ));
+                });
+                setState(() {
+                  clearForm();
+                });
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (c) => const MainViewFormDesign()));
+              });
+            },
+            child: const Text(
+              "Save Design",
+              style: TextStyle(color: Colors.white, fontSize: 34),
             ),
           )),
     );
@@ -906,7 +1033,6 @@ class _FormScreenState extends State<FormScreen> {
                     controller: namaDesigner,
                     onChanged: (value) {},
                     decoration: InputDecoration(
-                      // hintText: "example: Cahaya Sanivokasi",
                       labelText: "Nama Designer",
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5.0)),
@@ -962,6 +1088,48 @@ class _FormScreenState extends State<FormScreen> {
                       ),
                     ),
                   ),
+
+                  //Siklus
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 1),
+                    height: 65,
+                    width: MediaQuery.of(context).size.width * 0.1,
+                    child: DropdownSearch<String>(
+                      items: const [
+                        "JANUARI",
+                        "FEBRUARI",
+                        "MARET",
+                        "APRIL",
+                        "MEI",
+                        "JUNI",
+                        "JULI",
+                        "AGUSTUS",
+                        "SEPTEMBER",
+                        "OKTOBER",
+                        "NOVEMBER",
+                        "DESEMBER"
+                      ],
+                      onChanged: (item) {
+                        setState(() {
+                          siklus.text = item!;
+                          print(siklus.text);
+                        });
+                      },
+                      popupProps:
+                          const PopupPropsMultiSelection.modalBottomSheet(
+                        showSelectedItems: true,
+                        showSearchBox: true,
+                      ),
+                      dropdownDecoratorProps: const DropDownDecoratorProps(
+                        dropdownSearchDecoration: InputDecoration(
+                          labelText: "Siklus",
+                          filled: true,
+                          fillColor: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+
                   //kode deisgn
                   SizedBox(
                     height: 65,
@@ -1385,7 +1553,7 @@ class _FormScreenState extends State<FormScreen> {
                     height: 65,
                     width: MediaQuery.of(context).size.width * 0.1,
                     child: DropdownSearch<String>(
-                      items: const ["PARVA", "SIORAI", "METIER"],
+                      items: const ["PARVA", "BELI BERLIAN", "METIER"],
                       onChanged: (item) {
                         setState(() {
                           brand.text = item!;
@@ -1591,8 +1759,9 @@ class _FormScreenState extends State<FormScreen> {
                       // controller: estimasiHarga,
                       decoration: InputDecoration(
                         label: Text(
-                          // ignore: unnecessary_string_interpolations
-                          "$totalPrice",
+                          brand.text != "METIER"
+                              ? '\$ ${CurrencyFormat.convertToDollar(totalPrice, 0)}'
+                              : 'Rp. ${CurrencyFormat.convertToDollar(totalPrice, 0)}',
                         ),
                         // hintText: "example: Cahaya Sanivokasi",
                         border: OutlineInputBorder(
@@ -1737,7 +1906,6 @@ class _FormScreenState extends State<FormScreen> {
                                         });
                                       },
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text('Qty'),
                                         border: OutlineInputBorder(
                                             borderRadius:
@@ -1757,7 +1925,6 @@ class _FormScreenState extends State<FormScreen> {
                                       textInputAction: TextInputAction.next,
                                       controller: stokBatu1,
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text(
                                           'Stok',
                                           style: TextStyle(
@@ -6963,6 +7130,7 @@ class _FormScreenState extends State<FormScreen> {
       'namaDesigner': namaDesigner.text,
       'namaModeller': namaModeller.text,
       'kodeDesign': kodeDesign.text,
+      'siklus': siklus.text,
       'tema': tema.text,
       'rantai': rantai.text,
       'qtyRantai': qtyRantai.text,

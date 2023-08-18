@@ -3,12 +3,12 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:form_designer/login/my_splash_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 
 import '../api/api_constant.dart';
 import '../global/global.dart';
-import '../mainScreen/home_screen.dart';
 
 class LoginTablet extends StatefulWidget {
   const LoginTablet({super.key});
@@ -111,6 +111,9 @@ class _LoginTabletState extends State<LoginTablet> {
                                         })
                                       : setState(() {
                                           _isChecked = true;
+                                          sharedPreferences!.clear();
+                                          sharedPreferences!
+                                              .setString('token', 'ingat saya');
                                         });
                                 },
                               ),
@@ -172,7 +175,8 @@ class _LoginTabletState extends State<LoginTablet> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (c) => const HomeScreen()));
+                                        builder: (c) =>
+                                            const MySplashScreen()));
                               });
                             } else {
                               showDialog<String>(

@@ -2,40 +2,21 @@
 
 import 'dart:convert';
 
-List<FormDesignerModel> allcrm(String str) => List<FormDesignerModel>.from(
-    json.decode(str).map((x) => FormDesignerModel.fromJson(x)));
+List<EstimasiPricingModel> allcrm(String str) =>
+    List<EstimasiPricingModel>.from(
+        json.decode(str).map((x) => EstimasiPricingModel.fromJson(x)));
 
-String allcrmToJson(List<FormDesignerModel> data) =>
+String allcrmToJson(List<EstimasiPricingModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 initState() {}
 
-class FormDesignerModel {
+class EstimasiPricingModel {
   int? id;
-  String? kodeDesignMdbc;
-  String? kodeMarketing;
-  String? kodeProduksi;
   String? namaDesigner;
-  String? namaModeller;
-  String? kodeDesign;
-  String? siklus;
-  String? tema;
-  String? rantai;
-  int? qtyRantai;
-  String? lain2;
-  int? qtyLain2;
-  String? earnut;
-  int? qtyEarnut;
-  String? panjangRantai;
-  String? customKomponen;
-  int? qtyCustomKomponen;
   String? jenisBarang;
-  String? kategoriBarang;
   String? brand;
-  String? photoShoot;
-  String? color;
   double? beratEmas;
   int? estimasiHarga;
-  String? ringSize;
   String? created_at;
   String? batu1;
   int? qtyBatu1;
@@ -107,35 +88,14 @@ class FormDesignerModel {
   int? qtyBatu34;
   String? batu35;
   int? qtyBatu35;
-  String? imageUrl;
 
-  FormDesignerModel({
+  EstimasiPricingModel({
     this.id,
-    this.kodeDesignMdbc,
-    this.kodeMarketing,
-    this.kodeProduksi,
     this.namaDesigner,
-    this.namaModeller,
-    this.kodeDesign,
-    this.siklus,
-    this.tema,
-    this.rantai,
-    this.qtyRantai,
-    this.lain2,
-    this.qtyLain2,
-    this.earnut,
-    this.qtyEarnut,
-    this.panjangRantai,
-    this.customKomponen,
-    this.qtyCustomKomponen,
     this.jenisBarang,
-    this.kategoriBarang,
     this.brand,
-    this.photoShoot,
-    this.color,
     this.beratEmas,
     this.estimasiHarga,
-    this.ringSize,
     this.created_at,
     this.batu1,
     this.qtyBatu1,
@@ -207,38 +167,17 @@ class FormDesignerModel {
     this.qtyBatu34,
     this.batu35,
     this.qtyBatu35,
-    this.imageUrl,
   });
 
   // ignore: avoid_types_as_parameter_names
-  factory FormDesignerModel.fromJson(Map<String, dynamic> json) =>
-      FormDesignerModel(
+  factory EstimasiPricingModel.fromJson(Map<String, dynamic> json) =>
+      EstimasiPricingModel(
         id: json["id"] ?? 0,
-        kodeDesignMdbc: json["kodeDesignMdbc"],
-        kodeMarketing: json["kodeMarketing"],
-        kodeProduksi: json["kodeProduksi"],
         namaDesigner: json["namaDesigner"],
-        namaModeller: json["namaModeller"],
-        kodeDesign: json["kodeDesign"],
-        siklus: json["siklus"],
-        tema: json["tema"],
-        rantai: json["rantai"],
-        qtyRantai: json["qtyRantai"],
-        lain2: json["lain2"],
-        qtyLain2: json["qtyLain2"],
-        earnut: json["earnut"],
-        qtyEarnut: json["qtyEarnut"],
-        panjangRantai: json["panjangRantai"],
-        customKomponen: json["customKomponen"],
-        qtyCustomKomponen: json["qtyCustomKomponen"],
         jenisBarang: json["jenisBarang"],
-        kategoriBarang: json["kategoriBarang"],
         brand: json["brand"],
-        photoShoot: json["photoShoot"],
-        color: json["color"],
         beratEmas: json["beratEmas"],
         estimasiHarga: json["estimasiHarga"],
-        ringSize: json["ringSize"],
         created_at: json["created_at"],
         batu1: json["batu1"],
         qtyBatu1: json["qtyBatu1"],
@@ -310,36 +249,15 @@ class FormDesignerModel {
         qtyBatu34: json["qtyBatu34"],
         batu35: json["batu35"],
         qtyBatu35: json["qtyBatu35"],
-        imageUrl: json["imageUrl"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "kodeDesignMdbc": kodeDesignMdbc,
-        "kodeMarketing": kodeMarketing,
-        "kodeProduksi": kodeProduksi,
         "namaDesigner": namaDesigner,
-        "namaModeller": namaModeller,
-        "kodeDesign": kodeDesign,
-        "siklus": siklus,
-        "tema": tema,
-        "rantai": rantai,
-        "qtyRantai": qtyRantai,
-        "lain2": lain2,
-        "qtyLain2": qtyLain2,
-        "earnut": earnut,
-        "qtyEarnut": qtyEarnut,
-        "panjangRantai": panjangRantai,
-        "customKomponen": customKomponen,
-        "qtyCustomKomponen": qtyCustomKomponen,
         "jenisBarang": jenisBarang,
-        "kategoriBarang": kategoriBarang,
         "brand": brand,
-        "photoShoot": photoShoot,
-        "color": color,
         "beratEmas": beratEmas,
         "estimasiHarga": estimasiHarga,
-        "ringSize": ringSize,
         "created_at": created_at,
         "batu1": batu1,
         "qtyBatu1": qtyBatu1,
@@ -411,6 +329,5 @@ class FormDesignerModel {
         "qtyBatu34": qtyBatu34,
         "batu35": batu35,
         "qtyBatu35": qtyBatu35,
-        "imageUrl": imageUrl,
       };
 }

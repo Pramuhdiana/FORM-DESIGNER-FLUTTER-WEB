@@ -19,22 +19,25 @@ import 'package:http/http.dart' as http;
 
 import '../api/api_constant.dart';
 import '../global/currency_format.dart';
+import '../mainScreen/side_screen_pricing.dart';
 import '../model/rantai_model.dart';
 import '../widgets/custom_loading.dart';
 
-class CalculateScreen extends StatefulWidget {
-  const CalculateScreen({super.key});
+class AddCalculatePricingScreen extends StatefulWidget {
+  const AddCalculatePricingScreen({super.key});
 
   @override
-  State<CalculateScreen> createState() => _CalculateScreenState();
+  State<AddCalculatePricingScreen> createState() =>
+      _AddCalculatePricingScreenState();
 }
 
-class _CalculateScreenState extends State<CalculateScreen> {
+class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
   // ignore: unused_field, prefer_final_fields
   List pemakaianBatu = [];
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
+  TextEditingController beratEmasDariCustomer = TextEditingController();
   TextEditingController kodeDesignMdbc = TextEditingController();
   TextEditingController kodeMarketing = TextEditingController();
   TextEditingController kodeProduksi = TextEditingController();
@@ -315,6 +318,7 @@ class _CalculateScreenState extends State<CalculateScreen> {
 
   int? labour = 0;
   double doubleBeratEmas = 0;
+  double doubleBeratEmasDariCustomer = 0;
 
   int emas = 0;
   double upEmas = 0;
@@ -386,7 +390,7 @@ class _CalculateScreenState extends State<CalculateScreen> {
     }
   }
 
-  String get totalPrice {
+  double get totalPrice {
     var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
         (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
         (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
@@ -422,49 +426,50 @@ class _CalculateScreenState extends State<CalculateScreen> {
         (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
         (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
     print('Diamond $totalDiamond');
-    var totalQtyCrt = (((caratPcsBatu1 * qtyIntBatu1!) +
-            (caratPcsBatu2 * qtyIntBatu2!) +
-            (caratPcsBatu3 * qtyIntBatu3!) +
-            (caratPcsBatu4 * qtyIntBatu4!) +
-            (caratPcsBatu5 * qtyIntBatu5!) +
-            (caratPcsBatu6 * qtyIntBatu6!) +
-            (caratPcsBatu7 * qtyIntBatu7!) +
-            (caratPcsBatu8 * qtyIntBatu8!) +
-            (caratPcsBatu9 * qtyIntBatu9!) +
-            (caratPcsBatu10 * qtyIntBatu10!) +
-            (caratPcsBatu11 * qtyIntBatu11!) +
-            (caratPcsBatu12 * qtyIntBatu12!) +
-            (caratPcsBatu13 * qtyIntBatu13!) +
-            (caratPcsBatu14 * qtyIntBatu14!) +
-            (caratPcsBatu15 * qtyIntBatu15!) +
-            (caratPcsBatu16 * qtyIntBatu16!) +
-            (caratPcsBatu17 * qtyIntBatu17!) +
-            (caratPcsBatu18 * qtyIntBatu18!) +
-            (caratPcsBatu19 * qtyIntBatu19!) +
-            (caratPcsBatu20 * qtyIntBatu20!) +
-            (caratPcsBatu21 * qtyIntBatu21!) +
-            (caratPcsBatu22 * qtyIntBatu22!) +
-            (caratPcsBatu23 * qtyIntBatu23!) +
-            (caratPcsBatu24 * qtyIntBatu24!) +
-            (caratPcsBatu25 * qtyIntBatu25!) +
-            (caratPcsBatu26 * qtyIntBatu26!) +
-            (caratPcsBatu27 * qtyIntBatu27!) +
-            (caratPcsBatu28 * qtyIntBatu28!) +
-            (caratPcsBatu29 * qtyIntBatu29!) +
-            (caratPcsBatu30 * qtyIntBatu30!) +
-            (caratPcsBatu31 * qtyIntBatu31!) +
-            (caratPcsBatu32 * qtyIntBatu32!) +
-            (caratPcsBatu33 * qtyIntBatu33!) +
-            (caratPcsBatu34 * qtyIntBatu34!) +
-            (caratPcsBatu35 * qtyIntBatu35!)) /
+    var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
+                (caratPcsBatu2 * qtyIntBatu2!) +
+                (caratPcsBatu3 * qtyIntBatu3!) +
+                (caratPcsBatu4 * qtyIntBatu4!) +
+                (caratPcsBatu5 * qtyIntBatu5!) +
+                (caratPcsBatu6 * qtyIntBatu6!) +
+                (caratPcsBatu7 * qtyIntBatu7!) +
+                (caratPcsBatu8 * qtyIntBatu8!) +
+                (caratPcsBatu9 * qtyIntBatu9!) +
+                (caratPcsBatu10 * qtyIntBatu10!) +
+                (caratPcsBatu11 * qtyIntBatu11!) +
+                (caratPcsBatu12 * qtyIntBatu12!) +
+                (caratPcsBatu13 * qtyIntBatu13!) +
+                (caratPcsBatu14 * qtyIntBatu14!) +
+                (caratPcsBatu15 * qtyIntBatu15!) +
+                (caratPcsBatu16 * qtyIntBatu16!) +
+                (caratPcsBatu17 * qtyIntBatu17!) +
+                (caratPcsBatu18 * qtyIntBatu18!) +
+                (caratPcsBatu19 * qtyIntBatu19!) +
+                (caratPcsBatu20 * qtyIntBatu20!) +
+                (caratPcsBatu21 * qtyIntBatu21!) +
+                (caratPcsBatu22 * qtyIntBatu22!) +
+                (caratPcsBatu23 * qtyIntBatu23!) +
+                (caratPcsBatu24 * qtyIntBatu24!) +
+                (caratPcsBatu25 * qtyIntBatu25!) +
+                (caratPcsBatu26 * qtyIntBatu26!) +
+                (caratPcsBatu27 * qtyIntBatu27!) +
+                (caratPcsBatu28 * qtyIntBatu28!) +
+                (caratPcsBatu29 * qtyIntBatu29!) +
+                (caratPcsBatu30 * qtyIntBatu30!) +
+                (caratPcsBatu31 * qtyIntBatu31!) +
+                (caratPcsBatu32 * qtyIntBatu32!) +
+                (caratPcsBatu33 * qtyIntBatu33!) +
+                (caratPcsBatu34 * qtyIntBatu34!) +
+                (caratPcsBatu35 * qtyIntBatu35!)) +
+            doubleBeratEmasDariCustomer) /
         5);
     var totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmas);
 
     var totalLabour = ((labour! + 0) * upLabour);
     var total = ((totalDiamond + totalEmas + totalLabour) * upFinal) / kurs;
-
+    print(total);
     if (total.toString() == 'NaN') {
-      return '\$ ${CurrencyFormat.convertToDollar(0, 0)}';
+      return 0;
     } else if (total <= 2251) {
       var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
           (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
@@ -501,51 +506,94 @@ class _CalculateScreenState extends State<CalculateScreen> {
           (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
           (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
 
-      var totalQtyCrt = (((caratPcsBatu1 * qtyIntBatu1!) +
-              (caratPcsBatu2 * qtyIntBatu2!) +
-              (caratPcsBatu3 * qtyIntBatu3!) +
-              (caratPcsBatu4 * qtyIntBatu4!) +
-              (caratPcsBatu5 * qtyIntBatu5!) +
-              (caratPcsBatu6 * qtyIntBatu6!) +
-              (caratPcsBatu7 * qtyIntBatu7!) +
-              (caratPcsBatu8 * qtyIntBatu8!) +
-              (caratPcsBatu9 * qtyIntBatu9!) +
-              (caratPcsBatu10 * qtyIntBatu10!) +
-              (caratPcsBatu11 * qtyIntBatu11!) +
-              (caratPcsBatu12 * qtyIntBatu12!) +
-              (caratPcsBatu13 * qtyIntBatu13!) +
-              (caratPcsBatu14 * qtyIntBatu14!) +
-              (caratPcsBatu15 * qtyIntBatu15!) +
-              (caratPcsBatu16 * qtyIntBatu16!) +
-              (caratPcsBatu17 * qtyIntBatu17!) +
-              (caratPcsBatu18 * qtyIntBatu18!) +
-              (caratPcsBatu19 * qtyIntBatu19!) +
-              (caratPcsBatu20 * qtyIntBatu20!) +
-              (caratPcsBatu21 * qtyIntBatu21!) +
-              (caratPcsBatu22 * qtyIntBatu22!) +
-              (caratPcsBatu23 * qtyIntBatu23!) +
-              (caratPcsBatu24 * qtyIntBatu24!) +
-              (caratPcsBatu25 * qtyIntBatu25!) +
-              (caratPcsBatu26 * qtyIntBatu26!) +
-              (caratPcsBatu27 * qtyIntBatu27!) +
-              (caratPcsBatu28 * qtyIntBatu28!) +
-              (caratPcsBatu29 * qtyIntBatu29!) +
-              (caratPcsBatu30 * qtyIntBatu30!) +
-              (caratPcsBatu31 * qtyIntBatu31!) +
-              (caratPcsBatu32 * qtyIntBatu32!) +
-              (caratPcsBatu33 * qtyIntBatu33!) +
-              (caratPcsBatu34 * qtyIntBatu34!) +
-              (caratPcsBatu35 * qtyIntBatu35!)) /
+      var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
+                  (caratPcsBatu2 * qtyIntBatu2!) +
+                  (caratPcsBatu3 * qtyIntBatu3!) +
+                  (caratPcsBatu4 * qtyIntBatu4!) +
+                  (caratPcsBatu5 * qtyIntBatu5!) +
+                  (caratPcsBatu6 * qtyIntBatu6!) +
+                  (caratPcsBatu7 * qtyIntBatu7!) +
+                  (caratPcsBatu8 * qtyIntBatu8!) +
+                  (caratPcsBatu9 * qtyIntBatu9!) +
+                  (caratPcsBatu10 * qtyIntBatu10!) +
+                  (caratPcsBatu11 * qtyIntBatu11!) +
+                  (caratPcsBatu12 * qtyIntBatu12!) +
+                  (caratPcsBatu13 * qtyIntBatu13!) +
+                  (caratPcsBatu14 * qtyIntBatu14!) +
+                  (caratPcsBatu15 * qtyIntBatu15!) +
+                  (caratPcsBatu16 * qtyIntBatu16!) +
+                  (caratPcsBatu17 * qtyIntBatu17!) +
+                  (caratPcsBatu18 * qtyIntBatu18!) +
+                  (caratPcsBatu19 * qtyIntBatu19!) +
+                  (caratPcsBatu20 * qtyIntBatu20!) +
+                  (caratPcsBatu21 * qtyIntBatu21!) +
+                  (caratPcsBatu22 * qtyIntBatu22!) +
+                  (caratPcsBatu23 * qtyIntBatu23!) +
+                  (caratPcsBatu24 * qtyIntBatu24!) +
+                  (caratPcsBatu25 * qtyIntBatu25!) +
+                  (caratPcsBatu26 * qtyIntBatu26!) +
+                  (caratPcsBatu27 * qtyIntBatu27!) +
+                  (caratPcsBatu28 * qtyIntBatu28!) +
+                  (caratPcsBatu29 * qtyIntBatu29!) +
+                  (caratPcsBatu30 * qtyIntBatu30!) +
+                  (caratPcsBatu31 * qtyIntBatu31!) +
+                  (caratPcsBatu32 * qtyIntBatu32!) +
+                  (caratPcsBatu33 * qtyIntBatu33!) +
+                  (caratPcsBatu34 * qtyIntBatu34!) +
+                  (caratPcsBatu35 * qtyIntBatu35!)) +
+              doubleBeratEmasDariCustomer) /
           5);
       var totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmas);
 
       var totalLabour = ((labour! + others1) * upLabour);
       var total = ((totalDiamond + totalEmas + totalLabour) * upFinal) / kurs;
-      setState(() {
-        print('others1');
-        estimasiHarga.text = total.toString();
-      });
-      return '\$ ${CurrencyFormat.convertToDollar(total, 0)}';
+      var output =
+          total.round().toString()[total.round().toString().length - 1];
+      if (int.parse(output) >= 1 && int.parse(output) <= 4) {
+        setState(() {
+          print('others1');
+          total = (total + (5 - int.parse(output)));
+          if (brand.text == "BELI BERLIAN") {
+            total = ((total * 1.2) * 1.33);
+            estimasiHarga.text = total.toString();
+          } else if (brand.text == "METIER") {
+            total = (((total.round() * kurs) * 1.2) * 1.65);
+            estimasiHarga.text = total.toString();
+          } else {
+            estimasiHarga.text = total.toString();
+          }
+        });
+        return total;
+      } else if (int.parse(output) >= 6 && int.parse(output) <= 9) {
+        setState(() {
+          print('others1');
+          total = (total + (10 - int.parse(output)));
+          if (brand.text == "BELI BERLIAN") {
+            total = ((total * 1.2) * 1.33);
+            estimasiHarga.text = total.toString();
+          } else if (brand.text == "METIER") {
+            total = (((total.round() * kurs) * 1.2) * 1.65);
+            estimasiHarga.text = total.toString();
+          } else {
+            estimasiHarga.text = total.toString();
+          }
+        });
+        return total;
+      } else {
+        setState(() {
+          print('others1');
+          if (brand.text == "BELI BERLIAN") {
+            total = ((total * 1.2) * 1.33);
+            estimasiHarga.text = total.toString();
+          } else if (brand.text == "METIER") {
+            total = (((total.round() * kurs) * 1.2) * 1.65);
+            estimasiHarga.text = total.toString();
+          } else {
+            estimasiHarga.text = total.toString();
+          }
+        });
+        return total;
+      }
     } else if (total <= 4000) {
       var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
           (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
@@ -582,52 +630,94 @@ class _CalculateScreenState extends State<CalculateScreen> {
           (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
           (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
 
-      var totalQtyCrt = (((caratPcsBatu1 * qtyIntBatu1!) +
-              (caratPcsBatu2 * qtyIntBatu2!) +
-              (caratPcsBatu3 * qtyIntBatu3!) +
-              (caratPcsBatu4 * qtyIntBatu4!) +
-              (caratPcsBatu5 * qtyIntBatu5!) +
-              (caratPcsBatu6 * qtyIntBatu6!) +
-              (caratPcsBatu7 * qtyIntBatu7!) +
-              (caratPcsBatu8 * qtyIntBatu8!) +
-              (caratPcsBatu9 * qtyIntBatu9!) +
-              (caratPcsBatu10 * qtyIntBatu10!) +
-              (caratPcsBatu11 * qtyIntBatu11!) +
-              (caratPcsBatu12 * qtyIntBatu12!) +
-              (caratPcsBatu13 * qtyIntBatu13!) +
-              (caratPcsBatu14 * qtyIntBatu14!) +
-              (caratPcsBatu15 * qtyIntBatu15!) +
-              (caratPcsBatu16 * qtyIntBatu16!) +
-              (caratPcsBatu17 * qtyIntBatu17!) +
-              (caratPcsBatu18 * qtyIntBatu18!) +
-              (caratPcsBatu19 * qtyIntBatu19!) +
-              (caratPcsBatu20 * qtyIntBatu20!) +
-              (caratPcsBatu21 * qtyIntBatu21!) +
-              (caratPcsBatu22 * qtyIntBatu22!) +
-              (caratPcsBatu23 * qtyIntBatu23!) +
-              (caratPcsBatu24 * qtyIntBatu24!) +
-              (caratPcsBatu25 * qtyIntBatu25!) +
-              (caratPcsBatu26 * qtyIntBatu26!) +
-              (caratPcsBatu27 * qtyIntBatu27!) +
-              (caratPcsBatu28 * qtyIntBatu28!) +
-              (caratPcsBatu29 * qtyIntBatu29!) +
-              (caratPcsBatu30 * qtyIntBatu30!) +
-              (caratPcsBatu31 * qtyIntBatu31!) +
-              (caratPcsBatu32 * qtyIntBatu32!) +
-              (caratPcsBatu33 * qtyIntBatu33!) +
-              (caratPcsBatu34 * qtyIntBatu34!) +
-              (caratPcsBatu35 * qtyIntBatu35!)) /
+      var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
+                  (caratPcsBatu2 * qtyIntBatu2!) +
+                  (caratPcsBatu3 * qtyIntBatu3!) +
+                  (caratPcsBatu4 * qtyIntBatu4!) +
+                  (caratPcsBatu5 * qtyIntBatu5!) +
+                  (caratPcsBatu6 * qtyIntBatu6!) +
+                  (caratPcsBatu7 * qtyIntBatu7!) +
+                  (caratPcsBatu8 * qtyIntBatu8!) +
+                  (caratPcsBatu9 * qtyIntBatu9!) +
+                  (caratPcsBatu10 * qtyIntBatu10!) +
+                  (caratPcsBatu11 * qtyIntBatu11!) +
+                  (caratPcsBatu12 * qtyIntBatu12!) +
+                  (caratPcsBatu13 * qtyIntBatu13!) +
+                  (caratPcsBatu14 * qtyIntBatu14!) +
+                  (caratPcsBatu15 * qtyIntBatu15!) +
+                  (caratPcsBatu16 * qtyIntBatu16!) +
+                  (caratPcsBatu17 * qtyIntBatu17!) +
+                  (caratPcsBatu18 * qtyIntBatu18!) +
+                  (caratPcsBatu19 * qtyIntBatu19!) +
+                  (caratPcsBatu20 * qtyIntBatu20!) +
+                  (caratPcsBatu21 * qtyIntBatu21!) +
+                  (caratPcsBatu22 * qtyIntBatu22!) +
+                  (caratPcsBatu23 * qtyIntBatu23!) +
+                  (caratPcsBatu24 * qtyIntBatu24!) +
+                  (caratPcsBatu25 * qtyIntBatu25!) +
+                  (caratPcsBatu26 * qtyIntBatu26!) +
+                  (caratPcsBatu27 * qtyIntBatu27!) +
+                  (caratPcsBatu28 * qtyIntBatu28!) +
+                  (caratPcsBatu29 * qtyIntBatu29!) +
+                  (caratPcsBatu30 * qtyIntBatu30!) +
+                  (caratPcsBatu31 * qtyIntBatu31!) +
+                  (caratPcsBatu32 * qtyIntBatu32!) +
+                  (caratPcsBatu33 * qtyIntBatu33!) +
+                  (caratPcsBatu34 * qtyIntBatu34!) +
+                  (caratPcsBatu35 * qtyIntBatu35!)) +
+              doubleBeratEmasDariCustomer) /
           5);
       var totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmas);
 
       var totalLabour = ((labour! + others2) * upLabour);
       var total = ((totalDiamond + totalEmas + totalLabour) * upFinal) / kurs;
-      setState(() {
-        print('others2');
-
-        estimasiHarga.text = total.toString();
-      });
-      return '\$ ${CurrencyFormat.convertToDollar(total, 0)}';
+      var output =
+          total.round().toString()[total.round().toString().length - 1];
+      if (int.parse(output) >= 1 && int.parse(output) <= 4) {
+        setState(() {
+          print('others2');
+          total = (total + (5 - int.parse(output)));
+          if (brand.text == "BELI BERLIAN") {
+            total = ((total * 1.2) * 1.33);
+            estimasiHarga.text = total.toString();
+          } else if (brand.text == "METIER") {
+            total = (((total.round() * kurs) * 1.2) * 1.65);
+            estimasiHarga.text = total.toString();
+          } else {
+            estimasiHarga.text = total.toString();
+          }
+        });
+        return total;
+      } else if (int.parse(output) >= 6 && int.parse(output) <= 9) {
+        setState(() {
+          print('others2');
+          total = (total + (10 - int.parse(output)));
+          if (brand.text == "BELI BERLIAN") {
+            total = ((total * 1.2) * 1.33);
+            estimasiHarga.text = total.toString();
+          } else if (brand.text == "METIER") {
+            total = (((total.round() * kurs) * 1.2) * 1.65);
+            estimasiHarga.text = total.toString();
+          } else {
+            estimasiHarga.text = total.toString();
+          }
+        });
+        return total;
+      } else {
+        setState(() {
+          print('others2');
+          if (brand.text == "BELI BERLIAN") {
+            total = ((total * 1.2) * 1.33);
+            estimasiHarga.text = total.toString();
+          } else if (brand.text == "METIER") {
+            total = (((total.round() * kurs) * 1.2) * 1.65);
+            estimasiHarga.text = total.toString();
+          } else {
+            estimasiHarga.text = total.toString();
+          }
+        });
+        return total;
+      }
     } else {
       var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
           (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
@@ -664,52 +754,94 @@ class _CalculateScreenState extends State<CalculateScreen> {
           (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
           (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
 
-      var totalQtyCrt = (((caratPcsBatu1 * qtyIntBatu1!) +
-              (caratPcsBatu2 * qtyIntBatu2!) +
-              (caratPcsBatu3 * qtyIntBatu3!) +
-              (caratPcsBatu4 * qtyIntBatu4!) +
-              (caratPcsBatu5 * qtyIntBatu5!) +
-              (caratPcsBatu6 * qtyIntBatu6!) +
-              (caratPcsBatu7 * qtyIntBatu7!) +
-              (caratPcsBatu8 * qtyIntBatu8!) +
-              (caratPcsBatu9 * qtyIntBatu9!) +
-              (caratPcsBatu10 * qtyIntBatu10!) +
-              (caratPcsBatu11 * qtyIntBatu11!) +
-              (caratPcsBatu12 * qtyIntBatu12!) +
-              (caratPcsBatu13 * qtyIntBatu13!) +
-              (caratPcsBatu14 * qtyIntBatu14!) +
-              (caratPcsBatu15 * qtyIntBatu15!) +
-              (caratPcsBatu16 * qtyIntBatu16!) +
-              (caratPcsBatu17 * qtyIntBatu17!) +
-              (caratPcsBatu18 * qtyIntBatu18!) +
-              (caratPcsBatu19 * qtyIntBatu19!) +
-              (caratPcsBatu20 * qtyIntBatu20!) +
-              (caratPcsBatu21 * qtyIntBatu21!) +
-              (caratPcsBatu22 * qtyIntBatu22!) +
-              (caratPcsBatu23 * qtyIntBatu23!) +
-              (caratPcsBatu24 * qtyIntBatu24!) +
-              (caratPcsBatu25 * qtyIntBatu25!) +
-              (caratPcsBatu26 * qtyIntBatu26!) +
-              (caratPcsBatu27 * qtyIntBatu27!) +
-              (caratPcsBatu28 * qtyIntBatu28!) +
-              (caratPcsBatu29 * qtyIntBatu29!) +
-              (caratPcsBatu30 * qtyIntBatu30!) +
-              (caratPcsBatu31 * qtyIntBatu31!) +
-              (caratPcsBatu32 * qtyIntBatu32!) +
-              (caratPcsBatu33 * qtyIntBatu33!) +
-              (caratPcsBatu34 * qtyIntBatu34!) +
-              (caratPcsBatu35 * qtyIntBatu35!)) /
+      var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
+                  (caratPcsBatu2 * qtyIntBatu2!) +
+                  (caratPcsBatu3 * qtyIntBatu3!) +
+                  (caratPcsBatu4 * qtyIntBatu4!) +
+                  (caratPcsBatu5 * qtyIntBatu5!) +
+                  (caratPcsBatu6 * qtyIntBatu6!) +
+                  (caratPcsBatu7 * qtyIntBatu7!) +
+                  (caratPcsBatu8 * qtyIntBatu8!) +
+                  (caratPcsBatu9 * qtyIntBatu9!) +
+                  (caratPcsBatu10 * qtyIntBatu10!) +
+                  (caratPcsBatu11 * qtyIntBatu11!) +
+                  (caratPcsBatu12 * qtyIntBatu12!) +
+                  (caratPcsBatu13 * qtyIntBatu13!) +
+                  (caratPcsBatu14 * qtyIntBatu14!) +
+                  (caratPcsBatu15 * qtyIntBatu15!) +
+                  (caratPcsBatu16 * qtyIntBatu16!) +
+                  (caratPcsBatu17 * qtyIntBatu17!) +
+                  (caratPcsBatu18 * qtyIntBatu18!) +
+                  (caratPcsBatu19 * qtyIntBatu19!) +
+                  (caratPcsBatu20 * qtyIntBatu20!) +
+                  (caratPcsBatu21 * qtyIntBatu21!) +
+                  (caratPcsBatu22 * qtyIntBatu22!) +
+                  (caratPcsBatu23 * qtyIntBatu23!) +
+                  (caratPcsBatu24 * qtyIntBatu24!) +
+                  (caratPcsBatu25 * qtyIntBatu25!) +
+                  (caratPcsBatu26 * qtyIntBatu26!) +
+                  (caratPcsBatu27 * qtyIntBatu27!) +
+                  (caratPcsBatu28 * qtyIntBatu28!) +
+                  (caratPcsBatu29 * qtyIntBatu29!) +
+                  (caratPcsBatu30 * qtyIntBatu30!) +
+                  (caratPcsBatu31 * qtyIntBatu31!) +
+                  (caratPcsBatu32 * qtyIntBatu32!) +
+                  (caratPcsBatu33 * qtyIntBatu33!) +
+                  (caratPcsBatu34 * qtyIntBatu34!) +
+                  (caratPcsBatu35 * qtyIntBatu35!)) +
+              doubleBeratEmasDariCustomer) /
           5);
       var totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmas);
 
       var totalLabour = ((labour! + others3) * upLabour);
       var total = ((totalDiamond + totalEmas + totalLabour) * upFinal) / kurs;
-      setState(() {
-        print('others3');
-
-        estimasiHarga.text = total.toString();
-      });
-      return '\$ ${CurrencyFormat.convertToDollar(total, 0)}';
+      var output =
+          total.round().toString()[total.round().toString().length - 1];
+      if (int.parse(output) >= 1 && int.parse(output) <= 4) {
+        setState(() {
+          print('others3');
+          total = (total + (5 - int.parse(output)));
+          if (brand.text == "BELI BERLIAN") {
+            total = ((total * 1.2) * 1.33);
+            estimasiHarga.text = total.toString();
+          } else if (brand.text == "METIER") {
+            total = (((total.round() * kurs) * 1.2) * 1.65);
+            estimasiHarga.text = total.toString();
+          } else {
+            estimasiHarga.text = total.toString();
+          }
+        });
+        return total;
+      } else if (int.parse(output) >= 6 && int.parse(output) <= 9) {
+        setState(() {
+          print('others3');
+          total = (total + (10 - int.parse(output)));
+          if (brand.text == "BELI BERLIAN") {
+            total = ((total * 1.2) * 1.33);
+            estimasiHarga.text = total.toString();
+          } else if (brand.text == "METIER") {
+            total = (((total.round() * kurs) * 1.2) * 1.65);
+            estimasiHarga.text = total.toString();
+          } else {
+            estimasiHarga.text = total.toString();
+          }
+        });
+        return total;
+      } else {
+        setState(() {
+          print('others3');
+          if (brand.text == "BELI BERLIAN") {
+            total = ((total * 1.2) * 1.33);
+            estimasiHarga.text = total.toString();
+          } else if (brand.text == "METIER") {
+            total = (((total.round() * kurs) * 1.2) * 1.65);
+            estimasiHarga.text = total.toString();
+          } else {
+            estimasiHarga.text = total.toString();
+          }
+        });
+        return total;
+      }
     }
   }
 
@@ -719,7 +851,7 @@ class _CalculateScreenState extends State<CalculateScreen> {
         appBar: AppBar(
           backgroundColor: Colors.blue,
           title: const Text(
-            "Kalkulator Estimasi Harga",
+            "Form Estimasi Harga",
             style: TextStyle(fontSize: 25, color: Colors.white),
           ),
           centerTitle: true,
@@ -736,23 +868,24 @@ class _CalculateScreenState extends State<CalculateScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    //idHarga
+                    //brand
                     Container(
-                      padding: const EdgeInsets.only(left: 0),
-                      height: 70,
-                      width: 250,
-                      child: TextFormField(
-                        style: const TextStyle(
-                            fontSize: 14,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
-                        textInputAction: TextInputAction.next,
-                        controller: idHarga,
-                        onChanged: (value) {},
-                        decoration: InputDecoration(
-                          labelText: "Id Estimasi",
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
+                      padding: const EdgeInsets.symmetric(horizontal: 1),
+                      height: 65,
+                      width: MediaQuery.of(context).size.width * 0.1,
+                      child: DropdownSearch<String>(
+                        items: const ["PARVA", "BELI BERLIAN", "METIER"],
+                        onChanged: (item) {
+                          setState(() {
+                            brand.text = item!;
+                          });
+                        },
+                        dropdownDecoratorProps: const DropDownDecoratorProps(
+                          dropdownSearchDecoration: InputDecoration(
+                            labelText: "Brand",
+                            filled: true,
+                            fillColor: Colors.white,
+                          ),
                         ),
                       ),
                     ),
@@ -806,6 +939,36 @@ class _CalculateScreenState extends State<CalculateScreen> {
                         ),
                       ),
                     ),
+
+                    //berat emas dari customer
+                    Container(
+                      padding: const EdgeInsets.only(left: 30),
+                      height: 70,
+                      width: 250,
+                      child: TextFormField(
+                        style: const TextStyle(
+                            fontSize: 14,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold),
+                        textInputAction: TextInputAction.next,
+                        controller: beratEmasDariCustomer,
+                        onChanged: (value) {
+                          setState(() {
+                            try {
+                              doubleBeratEmasDariCustomer = double.parse(value);
+                            } catch (c) {
+                              doubleBeratEmasDariCustomer = 0;
+                            }
+                          });
+                        },
+                        decoration: InputDecoration(
+                          labelText: "Berat Diamond dari customer",
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5.0)),
+                        ),
+                      ),
+                    ),
+
                     //jenis barang
                     Container(
                       padding: const EdgeInsets.only(left: 30),
@@ -852,7 +1015,9 @@ class _CalculateScreenState extends State<CalculateScreen> {
                         textInputAction: TextInputAction.next,
                         decoration: InputDecoration(
                           label: Text(
-                            totalPrice,
+                            brand.text != "METIER"
+                                ? '\$ ${CurrencyFormat.convertToDollar(totalPrice, 0)}'
+                                : 'Rp. ${CurrencyFormat.convertToDollar(totalPrice, 0)}',
                             style: const TextStyle(
                                 fontSize: 25,
                                 color: Colors.black,
@@ -893,42 +1058,7 @@ class _CalculateScreenState extends State<CalculateScreen> {
               }
               Future.delayed(const Duration(seconds: 2)).then((value) async {
                 btnController.success();
-                // postAPI();
-                // postApiQtyBatu1();
-                // postApiQtyBatu2();
-                // postApiQtyBatu3();
-                // postApiQtyBatu4();
-                // postApiQtyBatu5();
-                // postApiQtyBatu6();
-                // postApiQtyBatu7();
-                // postApiQtyBatu8();
-                // postApiQtyBatu9();
-                // postApiQtyBatu10();
-                // postApiQtyBatu11();
-                // postApiQtyBatu12();
-                // postApiQtyBatu13();
-                // postApiQtyBatu14();
-                // postApiQtyBatu15();
-                // postApiQtyBatu16();
-                // postApiQtyBatu17();
-                // postApiQtyBatu18();
-                // postApiQtyBatu19();
-                // postApiQtyBatu20();
-                // postApiQtyBatu21();
-                // postApiQtyBatu22();
-                // postApiQtyBatu23();
-                // postApiQtyBatu24();
-                // postApiQtyBatu25();
-                // postApiQtyBatu26();
-                // postApiQtyBatu27();
-                // postApiQtyBatu28();
-                // postApiQtyBatu29();
-                // postApiQtyBatu30();
-                // postApiQtyBatu31();
-                // postApiQtyBatu32();
-                // postApiQtyBatu33();
-                // postApiQtyBatu34();
-                // postApiQtyBatu35();
+                await postAPI();
                 Future.delayed(const Duration(seconds: 1)).then((value) {
                   btnController.reset(); //reset
                   showDialog<String>(
@@ -942,8 +1072,9 @@ class _CalculateScreenState extends State<CalculateScreen> {
                 setState(() {
                   clearForm();
                 });
+                // ignore: use_build_context_synchronously
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (c) => const CalculateScreen()));
+                    MaterialPageRoute(builder: (c) => const MainViewPricing()));
               });
             },
             child: const Text(
@@ -5966,30 +6097,11 @@ class _CalculateScreenState extends State<CalculateScreen> {
 
   postAPI() async {
     Map<String, String> body = {
-      'kodeDesignMdbc': kodeDesignMdbc.text,
-      'kodeMarketing': kodeMarketing.text,
-      'kodeProduksi': kodeProduksi.text,
       'namaDesigner': namaDesigner.text,
-      'namaModeller': namaModeller.text,
-      'kodeDesign': kodeDesign.text,
-      'tema': tema.text,
-      'rantai': rantai.text,
-      'qtyRantai': qtyRantai.text,
-      'lain2': lain2.text,
-      'qtyLain2': qtyLain2.text,
-      'earnut': earnut.text,
-      'qtyEarnut': qtyEarnut.text,
-      'panjangRantai': panjangRantai.text,
-      'customKomponen': customKomponen.text,
-      'qtyCustomKomponen': qtyCustomKomponen.text,
       'jenisBarang': jenisBarang.text,
-      'kategoriBarang': kategoriBarang.text,
       'brand': brand.text,
-      'photoShoot': photoShoot.text,
-      'color': color.text,
       'beratEmas': beratEmas.text,
       'estimasiHarga': estimasiHarga.text,
-      'ringSize': ringSize.text,
       'batu1': batu1!,
       'qtyBatu1': qtyBatu1.text,
       'batu2': batu2!,
@@ -6060,10 +6172,9 @@ class _CalculateScreenState extends State<CalculateScreen> {
       'qtyBatu34': qtyBatu34.text,
       'batu35': batu35!,
       'qtyBatu35': qtyBatu35.text,
-      'imageUrl': imageUrl!,
     };
     final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postFormDesigner),
+        Uri.parse(ApiConstants.baseUrl + ApiConstants.postFormEstimasiPricing),
         body: body);
     print(response.statusCode);
   }

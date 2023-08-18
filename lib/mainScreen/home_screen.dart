@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:form_designer/global/global.dart';
 
-import '../widgets/drawer_1.dart';
-
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -17,8 +15,9 @@ class _HomeScreenState extends State<HomeScreen> {
       // ignore: null_check_always_fails
       onWillPop: () async => null!,
       child: Scaffold(
-        drawer: Drawer1(),
+        // drawer: Drawer1(),
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           backgroundColor: Colors.blue,
           title: const Text(
             "Home",
