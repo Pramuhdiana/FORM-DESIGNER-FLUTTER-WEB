@@ -1871,7 +1871,7 @@ class _FormScreenState extends State<FormScreen> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Container(
-                                    width: 185,
+                                    width: 250,
                                     height: 38,
                                     padding: const EdgeInsets.only(top: 5),
                                     child: DropdownSearch<BatuModel>(
@@ -2007,7 +2007,7 @@ class _FormScreenState extends State<FormScreen> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Container(
-                                          width: 185,
+                                          width: 250,
                                           height: 38,
                                           padding:
                                               const EdgeInsets.only(top: 5),
@@ -2153,7 +2153,7 @@ class _FormScreenState extends State<FormScreen> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Container(
-                                          width: 185,
+                                          width: 250,
                                           height: 38,
                                           padding:
                                               const EdgeInsets.only(top: 5),
@@ -2299,7 +2299,7 @@ class _FormScreenState extends State<FormScreen> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Container(
-                                          width: 185,
+                                          width: 250,
                                           height: 38,
                                           padding:
                                               const EdgeInsets.only(top: 5),
@@ -2445,7 +2445,7 @@ class _FormScreenState extends State<FormScreen> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Container(
-                                          width: 185,
+                                          width: 250,
                                           height: 38,
                                           padding:
                                               const EdgeInsets.only(top: 5),
@@ -2591,7 +2591,7 @@ class _FormScreenState extends State<FormScreen> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Container(
-                                          width: 185,
+                                          width: 250,
                                           height: 38,
                                           padding:
                                               const EdgeInsets.only(top: 5),
@@ -2737,7 +2737,7 @@ class _FormScreenState extends State<FormScreen> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Container(
-                                          width: 185,
+                                          width: 250,
                                           height: 38,
                                           padding:
                                               const EdgeInsets.only(top: 5),
@@ -2883,7 +2883,7 @@ class _FormScreenState extends State<FormScreen> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Container(
-                                          width: 185,
+                                          width: 250,
                                           height: 38,
                                           padding:
                                               const EdgeInsets.only(top: 5),
@@ -3029,7 +3029,7 @@ class _FormScreenState extends State<FormScreen> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Container(
-                                          width: 185,
+                                          width: 250,
                                           height: 38,
                                           padding:
                                               const EdgeInsets.only(top: 5),
@@ -3175,7 +3175,7 @@ class _FormScreenState extends State<FormScreen> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Container(
-                                          width: 185,
+                                          width: 250,
                                           height: 38,
                                           padding:
                                               const EdgeInsets.only(top: 5),
@@ -3322,7 +3322,7 @@ class _FormScreenState extends State<FormScreen> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Container(
-                                          width: 185,
+                                          width: 250,
                                           height: 38,
                                           padding:
                                               const EdgeInsets.only(top: 5),
@@ -3469,7 +3469,7 @@ class _FormScreenState extends State<FormScreen> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Container(
-                                          width: 185,
+                                          width: 250,
                                           height: 38,
                                           padding:
                                               const EdgeInsets.only(top: 5),
@@ -3616,7 +3616,7 @@ class _FormScreenState extends State<FormScreen> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Container(
-                                          width: 185,
+                                          width: 250,
                                           height: 38,
                                           padding:
                                               const EdgeInsets.only(top: 5),
@@ -3763,7 +3763,7 @@ class _FormScreenState extends State<FormScreen> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Container(
-                                          width: 185,
+                                          width: 250,
                                           height: 38,
                                           padding:
                                               const EdgeInsets.only(top: 5),
@@ -3910,7 +3910,7 @@ class _FormScreenState extends State<FormScreen> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Container(
-                                          width: 185,
+                                          width: 250,
                                           height: 38,
                                           padding:
                                               const EdgeInsets.only(top: 5),
@@ -4057,7 +4057,7 @@ class _FormScreenState extends State<FormScreen> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Container(
-                                          width: 185,
+                                          width: 250,
                                           height: 38,
                                           padding:
                                               const EdgeInsets.only(top: 5),
@@ -4204,7 +4204,7 @@ class _FormScreenState extends State<FormScreen> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Container(
-                                          width: 185,
+                                          width: 250,
                                           height: 38,
                                           padding:
                                               const EdgeInsets.only(top: 5),
@@ -4351,7 +4351,7 @@ class _FormScreenState extends State<FormScreen> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Container(
-                                          width: 185,
+                                          width: 250,
                                           height: 38,
                                           padding:
                                               const EdgeInsets.only(top: 5),
@@ -4498,7 +4498,7 @@ class _FormScreenState extends State<FormScreen> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Container(
-                                          width: 185,
+                                          width: 250,
                                           height: 38,
                                           padding:
                                               const EdgeInsets.only(top: 5),
@@ -4645,7 +4645,7 @@ class _FormScreenState extends State<FormScreen> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Container(
-                                          width: 185,
+                                          width: 250,
                                           height: 38,
                                           padding:
                                               const EdgeInsets.only(top: 5),
@@ -4792,7 +4792,7 @@ class _FormScreenState extends State<FormScreen> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Container(
-                                          width: 185,
+                                          width: 250,
                                           height: 38,
                                           padding:
                                               const EdgeInsets.only(top: 5),
@@ -4938,7 +4938,7 @@ class _FormScreenState extends State<FormScreen> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Container(
-                                          width: 185,
+                                          width: 250,
                                           height: 38,
                                           padding:
                                               const EdgeInsets.only(top: 5),
@@ -5084,7 +5084,7 @@ class _FormScreenState extends State<FormScreen> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Container(
-                                          width: 185,
+                                          width: 250,
                                           height: 38,
                                           padding:
                                               const EdgeInsets.only(top: 5),
@@ -5230,7 +5230,7 @@ class _FormScreenState extends State<FormScreen> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Container(
-                                          width: 185,
+                                          width: 250,
                                           height: 38,
                                           padding:
                                               const EdgeInsets.only(top: 5),
@@ -5376,7 +5376,7 @@ class _FormScreenState extends State<FormScreen> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Container(
-                                          width: 185,
+                                          width: 250,
                                           height: 38,
                                           padding:
                                               const EdgeInsets.only(top: 5),
@@ -5522,7 +5522,7 @@ class _FormScreenState extends State<FormScreen> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Container(
-                                          width: 185,
+                                          width: 250,
                                           height: 38,
                                           padding:
                                               const EdgeInsets.only(top: 5),
@@ -5668,7 +5668,7 @@ class _FormScreenState extends State<FormScreen> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Container(
-                                          width: 185,
+                                          width: 250,
                                           height: 38,
                                           padding:
                                               const EdgeInsets.only(top: 5),
@@ -5814,7 +5814,7 @@ class _FormScreenState extends State<FormScreen> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Container(
-                                          width: 185,
+                                          width: 250,
                                           height: 38,
                                           padding:
                                               const EdgeInsets.only(top: 5),
@@ -5960,7 +5960,7 @@ class _FormScreenState extends State<FormScreen> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Container(
-                                          width: 185,
+                                          width: 250,
                                           height: 38,
                                           padding:
                                               const EdgeInsets.only(top: 5),
@@ -6106,7 +6106,7 @@ class _FormScreenState extends State<FormScreen> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Container(
-                                          width: 185,
+                                          width: 250,
                                           height: 38,
                                           padding:
                                               const EdgeInsets.only(top: 5),
@@ -6252,7 +6252,7 @@ class _FormScreenState extends State<FormScreen> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Container(
-                                          width: 185,
+                                          width: 250,
                                           height: 38,
                                           padding:
                                               const EdgeInsets.only(top: 5),
@@ -6398,7 +6398,7 @@ class _FormScreenState extends State<FormScreen> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Container(
-                                          width: 185,
+                                          width: 250,
                                           height: 38,
                                           padding:
                                               const EdgeInsets.only(top: 5),
@@ -6544,7 +6544,7 @@ class _FormScreenState extends State<FormScreen> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Container(
-                                          width: 185,
+                                          width: 250,
                                           height: 38,
                                           padding:
                                               const EdgeInsets.only(top: 5),
@@ -6690,7 +6690,7 @@ class _FormScreenState extends State<FormScreen> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Container(
-                                          width: 185,
+                                          width: 250,
                                           height: 38,
                                           padding:
                                               const EdgeInsets.only(top: 5),
@@ -6836,7 +6836,7 @@ class _FormScreenState extends State<FormScreen> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Container(
-                                          width: 185,
+                                          width: 250,
                                           height: 38,
                                           padding:
                                               const EdgeInsets.only(top: 5),

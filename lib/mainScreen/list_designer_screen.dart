@@ -158,6 +158,9 @@ class _ListDesignerScreenState extends State<ListDesignerScreen> {
                                           element.namaDesigner!
                                               .toLowerCase()
                                               .contains(value.toLowerCase()) ||
+                                          element.kodeMarketing!
+                                              .toLowerCase()
+                                              .contains(value.toLowerCase()) ||
                                           element.kodeDesign!
                                               .toLowerCase()
                                               .contains(value.toLowerCase()) ||
@@ -259,7 +262,7 @@ class _ListDesignerScreenState extends State<ListDesignerScreen> {
                                                   _currentSortColumn =
                                                       columnIndex;
                                                   if (sharedPreferences!
-                                                          .getString('level') !=
+                                                          .getString('level') ==
                                                       '1') {
                                                     if (sort == true) {
                                                       sort = false;
@@ -400,9 +403,10 @@ class _ListDesignerScreenState extends State<ListDesignerScreen> {
                                           DataColumn(label: _verticalDivider),
                                           DataColumn(
                                               label: const SizedBox(
-                                                  width: 120,
+                                                  width: 50,
                                                   child: Text(
-                                                    "Estimasi Harga",
+                                                    "Harga",
+                                                    maxLines: 2,
                                                     style: TextStyle(
                                                         fontSize: 15,
                                                         fontWeight:
@@ -1010,10 +1014,10 @@ class RowSource extends DataTableSource {
                                               const MainViewFormDesign()));
                                 },
                                 child: data.edit! == 0
-                                    ? const Text('Kunci',
+                                    ? const Text('Buka kunci',
                                         style: TextStyle(color: Colors.red))
                                     : const Text(
-                                        'Buka kunci',
+                                        'Kunci',
                                         style: TextStyle(color: Colors.red),
                                       ),
                               ),
@@ -1021,10 +1025,15 @@ class RowSource extends DataTableSource {
                           ),
                         );
                       },
-                      icon: const Icon(
-                        Icons.key,
-                        color: Colors.yellow,
-                      ),
+                      icon: data.edit! == 0
+                          ? const Icon(
+                              Icons.key,
+                              color: Colors.blue,
+                            )
+                          : Icon(
+                              Icons.key_off,
+                              color: Colors.yellow.shade900,
+                            ),
                     ),
                   ),
           ],
