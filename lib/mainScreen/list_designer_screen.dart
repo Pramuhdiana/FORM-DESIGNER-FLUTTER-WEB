@@ -78,7 +78,6 @@ class _ListDesignerScreenState extends State<ListDesignerScreen> {
       setState(() {
         filterCrm = g;
         myCrm = g;
-        print(myCrm!.length);
         isLoading = true;
       });
       return g;
@@ -156,7 +155,7 @@ class _ListDesignerScreenState extends State<ListDesignerScreen> {
                                           element.kodeDesignMdbc!
                                               .toLowerCase()
                                               .contains(value.toLowerCase()) ||
-                                          element.kodeMarketing!
+                                          element.namaDesigner!
                                               .toLowerCase()
                                               .contains(value.toLowerCase()) ||
                                           element.kodeDesign!
@@ -233,35 +232,70 @@ class _ListDesignerScreenState extends State<ListDesignerScreen> {
                                               }),
                                           DataColumn(label: _verticalDivider),
                                           DataColumn(
-                                              label: const SizedBox(
+                                              label: SizedBox(
                                                   width: 120,
-                                                  child: Text(
-                                                    "Kode Marketing",
-                                                    style: TextStyle(
-                                                        fontSize: 15,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  )),
+                                                  child: sharedPreferences!
+                                                              .getString(
+                                                                  'level') !=
+                                                          '1'
+                                                      ? const Text(
+                                                          "Kode Marketing",
+                                                          style: TextStyle(
+                                                              fontSize: 15,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        )
+                                                      : const Text(
+                                                          "Nama Designer",
+                                                          style: TextStyle(
+                                                              fontSize: 15,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        )),
                                               onSort: (columnIndex, _) {
                                                 setState(() {
                                                   _currentSortColumn =
                                                       columnIndex;
-                                                  if (sort == true) {
-                                                    sort = false;
-                                                    filterCrm!.sort((a, b) => a
-                                                        .kodeMarketing!
-                                                        .toLowerCase()
-                                                        .compareTo(b
-                                                            .kodeMarketing!
-                                                            .toLowerCase()));
+                                                  if (sharedPreferences!
+                                                          .getString('level') !=
+                                                      '1') {
+                                                    if (sort == true) {
+                                                      sort = false;
+                                                      filterCrm!.sort((a, b) => a
+                                                          .namaDesigner!
+                                                          .toLowerCase()
+                                                          .compareTo(b
+                                                              .namaDesigner!
+                                                              .toLowerCase()));
+                                                    } else {
+                                                      sort = true;
+                                                      filterCrm!.sort((a, b) => b
+                                                          .namaDesigner!
+                                                          .toLowerCase()
+                                                          .compareTo(a
+                                                              .namaDesigner!
+                                                              .toLowerCase()));
+                                                    }
                                                   } else {
-                                                    sort = true;
-                                                    filterCrm!.sort((a, b) => b
-                                                        .kodeMarketing!
-                                                        .toLowerCase()
-                                                        .compareTo(a
-                                                            .kodeMarketing!
-                                                            .toLowerCase()));
+                                                    if (sort == true) {
+                                                      sort = false;
+                                                      filterCrm!.sort((a, b) => a
+                                                          .kodeMarketing!
+                                                          .toLowerCase()
+                                                          .compareTo(b
+                                                              .kodeMarketing!
+                                                              .toLowerCase()));
+                                                    } else {
+                                                      sort = true;
+                                                      filterCrm!.sort((a, b) => b
+                                                          .kodeMarketing!
+                                                          .toLowerCase()
+                                                          .compareTo(a
+                                                              .kodeMarketing!
+                                                              .toLowerCase()));
+                                                    }
                                                   }
                                                 });
                                               }),
@@ -480,6 +514,8 @@ class RowSource extends DataTableSource {
   }
 
   DataRow recentFileDataRow(var data) {
+    // ignore: prefer_interpolation_to_compose_strings
+    print('ini edit :' + data.edit!.toString());
     return DataRow(cells: [
       //kodeDesignMdbc
       DataCell(
@@ -487,10 +523,13 @@ class RowSource extends DataTableSource {
             padding: const EdgeInsets.all(0), child: Text(data.kodeDesignMdbc)),
       ),
       DataCell(_verticalDivider),
-      //kodemarketing
+      //namaDesigner
       DataCell(
         Padding(
-            padding: const EdgeInsets.all(0), child: Text(data.kodeMarketing)),
+            padding: const EdgeInsets.all(0),
+            child: sharedPreferences!.getString('level') != '1'
+                ? Text(data.kodeMarketing)
+                : Text(data.namaDesigner)),
       ),
       DataCell(_verticalDivider),
 
@@ -530,7 +569,7 @@ class RowSource extends DataTableSource {
       //imageUrl
       DataCell(
         Container(
-            width: 200,
+            width: 100,
             padding: const EdgeInsets.all(0),
             child: Text(
               data.imageUrl,
@@ -769,124 +808,225 @@ class RowSource extends DataTableSource {
               padding: const EdgeInsets.only(left: 15),
               child: IconButton(
                 onPressed: () {
-                  // showDialog(
-                  //     context: context,
-                  //     builder: (c) {
-                  //       return const LoadingDialogWidget(
-                  //         message: "Checking credentials",
-                  //       );
-                  //     });
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (c) => FormScreenById(
-                                modelDesigner: FormDesignerModel(
-                                    id: data.id,
-                                    kodeDesignMdbc: data.kodeDesignMdbc,
-                                    kodeMarketing: data.kodeMarketing,
-                                    kodeProduksi: data.kodeProduksi,
-                                    namaDesigner: data.namaDesigner,
-                                    namaModeller: data.namaModeller,
-                                    kodeDesign: data.kodeDesign,
-                                    siklus: data.siklus,
-                                    tema: data.tema,
-                                    rantai: data.rantai,
-                                    qtyRantai: data.qtyRantai,
-                                    lain2: data.lain2,
-                                    qtyLain2: data.qtyLain2,
-                                    earnut: data.earnut,
-                                    qtyEarnut: data.qtyEarnut,
-                                    panjangRantai: data.panjangRantai,
-                                    customKomponen: data.customKomponen,
-                                    qtyCustomKomponen: data.qtyCustomKomponen,
-                                    jenisBarang: data.jenisBarang,
-                                    kategoriBarang: data.kategoriBarang,
-                                    brand: data.brand,
-                                    photoShoot: data.photoShoot,
-                                    color: data.color,
-                                    beratEmas: data.beratEmas,
-                                    estimasiHarga: data.estimasiHarga,
-                                    ringSize: data.ringSize,
-                                    created_at: data.created_at,
-                                    batu1: data.batu1,
-                                    qtyBatu1: data.qtyBatu1,
-                                    batu2: data.batu2,
-                                    qtyBatu2: data.qtyBatu2,
-                                    batu3: data.batu3,
-                                    qtyBatu3: data.qtyBatu3,
-                                    batu4: data.batu4,
-                                    qtyBatu4: data.qtyBatu4,
-                                    batu5: data.batu5,
-                                    qtyBatu5: data.qtyBatu5,
-                                    batu6: data.batu6,
-                                    qtyBatu6: data.qtyBatu6,
-                                    batu7: data.batu7,
-                                    qtyBatu7: data.qtyBatu7,
-                                    batu8: data.batu8,
-                                    qtyBatu8: data.qtyBatu8,
-                                    batu9: data.batu9,
-                                    qtyBatu9: data.qtyBatu9,
-                                    batu10: data.batu10,
-                                    qtyBatu10: data.qtyBatu10,
-                                    batu11: data.batu11,
-                                    qtyBatu11: data.qtyBatu11,
-                                    batu12: data.batu12,
-                                    qtyBatu12: data.qtyBatu12,
-                                    batu13: data.batu13,
-                                    qtyBatu13: data.qtyBatu13,
-                                    batu14: data.batu14,
-                                    qtyBatu14: data.qtyBatu14,
-                                    batu15: data.batu15,
-                                    qtyBatu15: data.qtyBatu15,
-                                    batu16: data.batu16,
-                                    qtyBatu16: data.qtyBatu16,
-                                    batu17: data.batu17,
-                                    qtyBatu17: data.qtyBatu17,
-                                    batu18: data.batu18,
-                                    qtyBatu18: data.qtyBatu18,
-                                    batu19: data.batu19,
-                                    qtyBatu19: data.qtyBatu19,
-                                    batu20: data.batu20,
-                                    qtyBatu20: data.qtyBatu20,
-                                    batu21: data.batu21,
-                                    qtyBatu21: data.qtyBatu21,
-                                    batu22: data.batu22,
-                                    qtyBatu22: data.qtyBatu22,
-                                    batu23: data.batu23,
-                                    qtyBatu23: data.qtyBatu23,
-                                    batu24: data.batu24,
-                                    qtyBatu24: data.qtyBatu24,
-                                    batu25: data.batu25,
-                                    qtyBatu25: data.qtyBatu25,
-                                    batu26: data.batu26,
-                                    qtyBatu26: data.qtyBatu26,
-                                    batu27: data.batu27,
-                                    qtyBatu27: data.qtyBatu27,
-                                    batu28: data.batu28,
-                                    qtyBatu28: data.qtyBatu28,
-                                    batu29: data.batu29,
-                                    qtyBatu29: data.qtyBatu29,
-                                    batu30: data.batu30,
-                                    qtyBatu30: data.qtyBatu30,
-                                    batu31: data.batu31,
-                                    qtyBatu31: data.qtyBatu31,
-                                    batu32: data.batu32,
-                                    qtyBatu32: data.qtyBatu32,
-                                    batu33: data.batu33,
-                                    qtyBatu33: data.qtyBatu33,
-                                    batu34: data.batu34,
-                                    qtyBatu34: data.qtyBatu34,
-                                    batu35: data.batu35,
-                                    qtyBatu35: data.qtyBatu35,
-                                    imageUrl: data.imageUrl),
-                              )));
+                  print('edit :${data.edit}');
+                  data.edit! == 0
+                      ? showDialog<String>(
+                          context: context,
+                          builder: (BuildContext context) => const AlertDialog(
+                                title: Text(
+                                  'Form terkunci',
+                                ),
+                              ))
+                      : Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (c) => FormScreenById(
+                                    modelDesigner: FormDesignerModel(
+                                        id: data.id,
+                                        kodeDesignMdbc: data.kodeDesignMdbc,
+                                        kodeMarketing: data.kodeMarketing,
+                                        kodeProduksi: data.kodeProduksi,
+                                        namaDesigner: data.namaDesigner,
+                                        namaModeller: data.namaModeller,
+                                        kodeDesign: data.kodeDesign,
+                                        siklus: data.siklus,
+                                        tema: data.tema,
+                                        rantai: data.rantai,
+                                        qtyRantai: data.qtyRantai,
+                                        lain2: data.lain2,
+                                        qtyLain2: data.qtyLain2,
+                                        earnut: data.earnut,
+                                        qtyEarnut: data.qtyEarnut,
+                                        panjangRantai: data.panjangRantai,
+                                        customKomponen: data.customKomponen,
+                                        qtyCustomKomponen:
+                                            data.qtyCustomKomponen,
+                                        jenisBarang: data.jenisBarang,
+                                        kategoriBarang: data.kategoriBarang,
+                                        brand: data.brand,
+                                        photoShoot: data.photoShoot,
+                                        color: data.color,
+                                        beratEmas: data.beratEmas,
+                                        estimasiHarga: data.estimasiHarga,
+                                        ringSize: data.ringSize,
+                                        created_at: data.created_at,
+                                        batu1: data.batu1,
+                                        qtyBatu1: data.qtyBatu1,
+                                        batu2: data.batu2,
+                                        qtyBatu2: data.qtyBatu2,
+                                        batu3: data.batu3,
+                                        qtyBatu3: data.qtyBatu3,
+                                        batu4: data.batu4,
+                                        qtyBatu4: data.qtyBatu4,
+                                        batu5: data.batu5,
+                                        qtyBatu5: data.qtyBatu5,
+                                        batu6: data.batu6,
+                                        qtyBatu6: data.qtyBatu6,
+                                        batu7: data.batu7,
+                                        qtyBatu7: data.qtyBatu7,
+                                        batu8: data.batu8,
+                                        qtyBatu8: data.qtyBatu8,
+                                        batu9: data.batu9,
+                                        qtyBatu9: data.qtyBatu9,
+                                        batu10: data.batu10,
+                                        qtyBatu10: data.qtyBatu10,
+                                        batu11: data.batu11,
+                                        qtyBatu11: data.qtyBatu11,
+                                        batu12: data.batu12,
+                                        qtyBatu12: data.qtyBatu12,
+                                        batu13: data.batu13,
+                                        qtyBatu13: data.qtyBatu13,
+                                        batu14: data.batu14,
+                                        qtyBatu14: data.qtyBatu14,
+                                        batu15: data.batu15,
+                                        qtyBatu15: data.qtyBatu15,
+                                        batu16: data.batu16,
+                                        qtyBatu16: data.qtyBatu16,
+                                        batu17: data.batu17,
+                                        qtyBatu17: data.qtyBatu17,
+                                        batu18: data.batu18,
+                                        qtyBatu18: data.qtyBatu18,
+                                        batu19: data.batu19,
+                                        qtyBatu19: data.qtyBatu19,
+                                        batu20: data.batu20,
+                                        qtyBatu20: data.qtyBatu20,
+                                        batu21: data.batu21,
+                                        qtyBatu21: data.qtyBatu21,
+                                        batu22: data.batu22,
+                                        qtyBatu22: data.qtyBatu22,
+                                        batu23: data.batu23,
+                                        qtyBatu23: data.qtyBatu23,
+                                        batu24: data.batu24,
+                                        qtyBatu24: data.qtyBatu24,
+                                        batu25: data.batu25,
+                                        qtyBatu25: data.qtyBatu25,
+                                        batu26: data.batu26,
+                                        qtyBatu26: data.qtyBatu26,
+                                        batu27: data.batu27,
+                                        qtyBatu27: data.qtyBatu27,
+                                        batu28: data.batu28,
+                                        qtyBatu28: data.qtyBatu28,
+                                        batu29: data.batu29,
+                                        qtyBatu29: data.qtyBatu29,
+                                        batu30: data.batu30,
+                                        qtyBatu30: data.qtyBatu30,
+                                        batu31: data.batu31,
+                                        qtyBatu31: data.qtyBatu31,
+                                        batu32: data.batu32,
+                                        qtyBatu32: data.qtyBatu32,
+                                        batu33: data.batu33,
+                                        qtyBatu33: data.qtyBatu33,
+                                        batu34: data.batu34,
+                                        qtyBatu34: data.qtyBatu34,
+                                        batu35: data.batu35,
+                                        qtyBatu35: data.qtyBatu35,
+                                        imageUrl: data.imageUrl),
+                                  )));
                 },
-                icon: const Icon(
-                  Icons.remove_red_eye,
-                  color: Colors.green,
-                ),
+                icon: data.edit! == 0
+                    ? const Icon(
+                        Icons.lock,
+                        color: Colors.black,
+                      )
+                    : const Icon(
+                        Icons.remove_red_eye,
+                        color: Colors.green,
+                      ),
               ),
             ),
+            sharedPreferences!.getString('level') != '1'
+                ? const SizedBox()
+                : Padding(
+                    padding: const EdgeInsets.only(left: 5),
+                    child: IconButton(
+                      onPressed: () {
+                        showDialog<String>(
+                          context: context,
+                          builder: (BuildContext context) => AlertDialog(
+                            title: const Text(
+                              'Perhatian',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            content: Row(
+                              children: [
+                                data.edit! == 0
+                                    ? const Text(
+                                        'Apakah anda yakin ingin membuka kunci ',
+                                      )
+                                    : const Text(
+                                        'Apakah anda yakin ingin kunci ',
+                                      ),
+                                Text(
+                                  '${data.kodeDesignMdbc}  ?',
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black),
+                                ),
+                              ],
+                            ),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () => Navigator.pop(
+                                  context,
+                                  'Batal',
+                                ),
+                                child: const Text('Batal'),
+                              ),
+                              TextButton(
+                                onPressed: () async {
+                                  var id = data.id.toString();
+                                  var edit = data.edit! == 0 ? 1 : 0;
+                                  Map<String, String> body = {
+                                    'id': id,
+                                    'edit': edit.toString()
+                                  };
+                                  final response = await http.post(
+                                      Uri.parse(ApiConstants.baseUrl +
+                                          ApiConstants.keyById),
+                                      body: body);
+                                  print(response.body);
+                                  // ignore: use_build_context_synchronously
+                                  showDialog<String>(
+                                      context: context,
+                                      builder: (BuildContext context) =>
+                                          AlertDialog(
+                                            title: edit == 0
+                                                ? const Text(
+                                                    'Design Berhasil Dibuka',
+                                                  )
+                                                : const Text(
+                                                    'Design Berhasil Dikunci',
+                                                  ),
+                                          ));
+
+                                  // ignore: use_build_context_synchronously
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (c) =>
+                                              const MainViewFormDesign()));
+                                },
+                                child: data.edit! == 0
+                                    ? const Text('Kunci',
+                                        style: TextStyle(color: Colors.red))
+                                    : const Text(
+                                        'Buka kunci',
+                                        style: TextStyle(color: Colors.red),
+                                      ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                      icon: const Icon(
+                        Icons.key,
+                        color: Colors.yellow,
+                      ),
+                    ),
+                  ),
           ],
         );
       }))
@@ -2113,7 +2253,7 @@ class UserDataTableSource extends DataTableSource {
       index: index,
       cells: <DataCell>[
         DataCell(Text('${_user.kodeDesignMdbc}')),
-        DataCell(Text('${_user.kodeMarketing}')),
+        DataCell(Text('${_user.namaDesigner}')),
         DataCell(Text('${_user.kodeDesign}')),
         DataCell(Text('${_user.tema}')),
         DataCell(Text('${_user.jenisBarang}')),

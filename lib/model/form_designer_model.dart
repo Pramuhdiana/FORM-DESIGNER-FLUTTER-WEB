@@ -108,6 +108,7 @@ class FormDesignerModel {
   String? batu35;
   int? qtyBatu35;
   String? imageUrl;
+  int? edit;
 
   FormDesignerModel({
     this.id,
@@ -208,6 +209,7 @@ class FormDesignerModel {
     this.batu35,
     this.qtyBatu35,
     this.imageUrl,
+    this.edit,
   });
 
   // ignore: avoid_types_as_parameter_names
@@ -311,6 +313,7 @@ class FormDesignerModel {
         batu35: json["batu35"],
         qtyBatu35: json["qtyBatu35"],
         imageUrl: json["imageUrl"],
+        edit: json["edit"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -412,5 +415,6 @@ class FormDesignerModel {
         "batu35": batu35,
         "qtyBatu35": qtyBatu35,
         "imageUrl": imageUrl,
+        "edit": edit,
       };
 }

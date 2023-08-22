@@ -322,6 +322,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
 
   int emas = 0;
   double upEmas = 0;
+  double upEmasMetier = 1.3;
+  double upDiamondMetier = 1.1;
   double upLabour = 0;
   double upBatu = 0;
   double upFinal = 0;
@@ -463,11 +465,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                 (caratPcsBatu35 * qtyIntBatu35!)) +
             doubleBeratEmasDariCustomer) /
         5);
-    var totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmas);
-
+    double totalEmas;
+    brand.text.toLowerCase() == "parva"
+        ? totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmas)
+        : totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmasMetier);
     var totalLabour = ((labour! + 0) * upLabour);
-    var total = ((totalDiamond + totalEmas + totalLabour) * upFinal) / kurs;
-    print(total);
+    double total;
+    brand.text.toLowerCase() == "parva"
+        ? total = ((totalDiamond + totalEmas + totalLabour) * upFinal) / kurs
+        : total =
+            (((totalDiamond * upDiamondMetier) + totalEmas + totalLabour) *
+                    upFinal) /
+                kurs;
+
     if (total.toString() == 'NaN') {
       return 0;
     } else if (total <= 2251) {
@@ -543,12 +553,22 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                   (caratPcsBatu35 * qtyIntBatu35!)) +
               doubleBeratEmasDariCustomer) /
           5);
-      var totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmas);
-
+      double totalEmas;
+      brand.text.toLowerCase() == "parva"
+          ? totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmas)
+          : totalEmas =
+              (((doubleBeratEmas + totalQtyCrt) * emas) * upEmasMetier);
       var totalLabour = ((labour! + others1) * upLabour);
-      var total = ((totalDiamond + totalEmas + totalLabour) * upFinal) / kurs;
+      double total;
+      brand.text.toLowerCase() == "parva"
+          ? total = ((totalDiamond + totalEmas + totalLabour) * upFinal) / kurs
+          : total =
+              (((totalDiamond * upDiamondMetier) + totalEmas + totalLabour) *
+                      upFinal) /
+                  kurs;
       var output =
           total.round().toString()[total.round().toString().length - 1];
+
       if (int.parse(output) >= 1 && int.parse(output) <= 4) {
         setState(() {
           print('others1');
@@ -667,10 +687,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                   (caratPcsBatu35 * qtyIntBatu35!)) +
               doubleBeratEmasDariCustomer) /
           5);
-      var totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmas);
-
+      double totalEmas;
+      brand.text.toLowerCase() == "parva"
+          ? totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmas)
+          : totalEmas =
+              (((doubleBeratEmas + totalQtyCrt) * emas) * upEmasMetier);
       var totalLabour = ((labour! + others2) * upLabour);
-      var total = ((totalDiamond + totalEmas + totalLabour) * upFinal) / kurs;
+      double total;
+      brand.text.toLowerCase() == "parva"
+          ? total = ((totalDiamond + totalEmas + totalLabour) * upFinal) / kurs
+          : total =
+              (((totalDiamond * upDiamondMetier) + totalEmas + totalLabour) *
+                      upFinal) /
+                  kurs;
       var output =
           total.round().toString()[total.round().toString().length - 1];
       if (int.parse(output) >= 1 && int.parse(output) <= 4) {
@@ -791,10 +820,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                   (caratPcsBatu35 * qtyIntBatu35!)) +
               doubleBeratEmasDariCustomer) /
           5);
-      var totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmas);
-
+      double totalEmas;
+      brand.text.toLowerCase() == "parva"
+          ? totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmas)
+          : totalEmas =
+              (((doubleBeratEmas + totalQtyCrt) * emas) * upEmasMetier);
       var totalLabour = ((labour! + others3) * upLabour);
-      var total = ((totalDiamond + totalEmas + totalLabour) * upFinal) / kurs;
+      double total;
+      brand.text.toLowerCase() == "parva"
+          ? total = ((totalDiamond + totalEmas + totalLabour) * upFinal) / kurs
+          : total =
+              (((totalDiamond * upDiamondMetier) + totalEmas + totalLabour) *
+                      upFinal) /
+                  kurs;
       var output =
           total.round().toString()[total.round().toString().length - 1];
       if (int.parse(output) >= 1 && int.parse(output) <= 4) {

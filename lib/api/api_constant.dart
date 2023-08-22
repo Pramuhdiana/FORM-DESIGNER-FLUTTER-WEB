@@ -1,9 +1,11 @@
 // ignore_for_file: non_constant_identifier_names
 
 // http://110.5.102.154:1212/
+// http://localhost:1212/
 class ApiConstants {
-  static String baseUrlImage = 'http://localhost:1212/Api_Flutter/spk/upload/';
-  static String baseUrl = 'http://localhost:1212/Api_Flutter/';
+  static String baseUrlImage =
+      'http://110.5.102.154:1212/Api_Flutter/spk/upload/';
+  static String baseUrl = 'http://110.5.102.154:1212/Api_Flutter/';
   // static String baseUrlImage =
   //     'http://110.5.102.154:1212/Api_Flutter/spk/upload/';
   // static String baseUrl = 'http://110.5.102.154:1212/Api_Flutter/';
@@ -35,4 +37,6 @@ class ApiConstants {
   static String postUpdateDataBatuBySize = 'spk/update_qty_batu_by_size.php';
   static String postUpdateListDataBatu = 'spk/update_batu.php';
   static String updateFormDesigner = 'spk/update_form_designer.php';
+
+  static String keyById = 'spk/key.php';
 }
