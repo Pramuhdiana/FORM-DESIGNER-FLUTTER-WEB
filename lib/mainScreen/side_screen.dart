@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:form_designer/SCM/mainScreen/kebutuhan_batu_by_siklus.dart';
 import 'package:form_designer/mainScreen/home_screen.dart';
 import 'package:form_designer/mainScreen/list_batu_screen.dart';
 import 'package:form_designer/mainScreen/list_designer_screen.dart';
@@ -6,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:side_navigation/side_navigation.dart';
 
 import '../calculatePricing/list_calculate_pricing_screen.dart';
+import '../global/global.dart';
 import 'login.dart';
 
 class MainView extends StatefulWidget {
@@ -17,11 +19,15 @@ class MainView extends StatefulWidget {
 }
 
 class _MainViewState extends State<MainView> {
-  List<Widget> views = const [
-    HomeScreen(),
-    ListDesignerScreen(),
-    ListBatuScreen(),
-    ListCalculatePricingScreen(),
+  List<Widget> views = [
+    const HomeScreen(),
+    const ListDesignerScreen(),
+    const ListBatuScreen(),
+    const ListCalculatePricingScreen(),
+    const ListDesignerScreen(),
+    sharedPreferences!.getString('level') != '1'
+        ? const HomeScreen()
+        : const ListKebutuhanBatuScreen(),
   ];
   final _formKey = GlobalKey<FormState>();
 
@@ -41,27 +47,32 @@ class _MainViewState extends State<MainView> {
         children: [
           SideNavigationBar(
             selectedIndex: selectedIndex,
-            items: const [
-              SideNavigationBarItem(
+            items: [
+              const SideNavigationBarItem(
                 icon: Icons.home,
                 label: 'Dashboard',
               ),
-              SideNavigationBarItem(
+              const SideNavigationBarItem(
                 icon: Icons.list_alt,
                 label: 'List form designer',
               ),
-              SideNavigationBarItem(
+              const SideNavigationBarItem(
                 icon: Icons.list,
                 label: 'List stok batu',
               ),
-              SideNavigationBarItem(
+              const SideNavigationBarItem(
                 icon: Icons.calculate_outlined,
                 label: 'Calculate Price',
               ),
-              SideNavigationBarItem(
+              const SideNavigationBarItem(
                 icon: Icons.logout,
                 label: 'Keluar',
               ),
+              if (sharedPreferences!.getString('level') == '1')
+                const SideNavigationBarItem(
+                  icon: Icons.bar_chart_sharp,
+                  label: 'Kebutuhan Data Batu',
+                ),
             ],
             onTap: (index) {
               if (index == 3) {
@@ -143,13 +154,6 @@ class _MainViewState extends State<MainView> {
                                               Navigator.of(context).pop();
                                             });
                                           } else {}
-                                          // kodeAkses.text = '';
-                                          // isKodeAkses == false
-                                          //     ? Navigator.pop(context)
-                                          //     : setState(() {
-                                          //         selectedIndex = index;
-                                          //         Navigator.of(context).pop();
-                                          //       });
                                         },
                                       ),
                                     )

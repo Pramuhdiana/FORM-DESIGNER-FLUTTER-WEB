@@ -142,6 +142,42 @@ class _FormScreenState extends State<FormScreen> {
   TextEditingController qtyBatu35 = TextEditingController();
   TextEditingController stokBatu35 = TextEditingController();
 
+  TextEditingController crtPcsBatu1 = TextEditingController();
+  TextEditingController crtPcsBatu2 = TextEditingController();
+  TextEditingController crtPcsBatu3 = TextEditingController();
+  TextEditingController crtPcsBatu4 = TextEditingController();
+  TextEditingController crtPcsBatu5 = TextEditingController();
+  TextEditingController crtPcsBatu6 = TextEditingController();
+  TextEditingController crtPcsBatu7 = TextEditingController();
+  TextEditingController crtPcsBatu8 = TextEditingController();
+  TextEditingController crtPcsBatu9 = TextEditingController();
+  TextEditingController crtPcsBatu10 = TextEditingController();
+  TextEditingController crtPcsBatu11 = TextEditingController();
+  TextEditingController crtPcsBatu12 = TextEditingController();
+  TextEditingController crtPcsBatu13 = TextEditingController();
+  TextEditingController crtPcsBatu14 = TextEditingController();
+  TextEditingController crtPcsBatu15 = TextEditingController();
+  TextEditingController crtPcsBatu16 = TextEditingController();
+  TextEditingController crtPcsBatu17 = TextEditingController();
+  TextEditingController crtPcsBatu18 = TextEditingController();
+  TextEditingController crtPcsBatu19 = TextEditingController();
+  TextEditingController crtPcsBatu20 = TextEditingController();
+  TextEditingController crtPcsBatu21 = TextEditingController();
+  TextEditingController crtPcsBatu22 = TextEditingController();
+  TextEditingController crtPcsBatu23 = TextEditingController();
+  TextEditingController crtPcsBatu24 = TextEditingController();
+  TextEditingController crtPcsBatu25 = TextEditingController();
+  TextEditingController crtPcsBatu26 = TextEditingController();
+  TextEditingController crtPcsBatu27 = TextEditingController();
+  TextEditingController crtPcsBatu28 = TextEditingController();
+  TextEditingController crtPcsBatu29 = TextEditingController();
+  TextEditingController crtPcsBatu30 = TextEditingController();
+  TextEditingController crtPcsBatu31 = TextEditingController();
+  TextEditingController crtPcsBatu32 = TextEditingController();
+  TextEditingController crtPcsBatu33 = TextEditingController();
+  TextEditingController crtPcsBatu34 = TextEditingController();
+  TextEditingController crtPcsBatu35 = TextEditingController();
+
   String? batu1 = '';
   String? batu2 = '';
   String? batu3 = '';
@@ -426,7 +462,7 @@ class _FormScreenState extends State<FormScreen> {
     }
   }
 
-  double get totalPrice {
+  double get totalPriceParva {
     var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
         (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
         (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
@@ -461,7 +497,6 @@ class _FormScreenState extends State<FormScreen> {
         (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
         (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
         (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
-    print('Diamond $totalDiamond');
     var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
                 (caratPcsBatu2 * qtyIntBatu2!) +
                 (caratPcsBatu3 * qtyIntBatu3!) +
@@ -500,17 +535,10 @@ class _FormScreenState extends State<FormScreen> {
             doubleBeratEmasDariCustomer) /
         5);
     double totalEmas;
-    brand.text.toLowerCase() == "parva"
-        ? totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmas)
-        : totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmasMetier);
+    totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmas);
     var totalLabour = ((labour! + 0) * upLabour);
     double total;
-    brand.text.toLowerCase() == "parva"
-        ? total = ((totalDiamond + totalEmas + totalLabour) * upFinal) / kurs
-        : total =
-            (((totalDiamond * upDiamondMetier) + totalEmas + totalLabour) *
-                    upFinal) /
-                kurs;
+    total = ((totalDiamond + totalEmas + totalLabour) * upFinal) / kurs;
 
     if (total.toString() == 'NaN') {
       return 0;
@@ -588,18 +616,11 @@ class _FormScreenState extends State<FormScreen> {
               doubleBeratEmasDariCustomer) /
           5);
       double totalEmas;
-      brand.text.toLowerCase() == "parva"
-          ? totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmas)
-          : totalEmas =
-              (((doubleBeratEmas + totalQtyCrt) * emas) * upEmasMetier);
+      totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmas);
       var totalLabour = ((labour! + others1) * upLabour);
       double total;
-      brand.text.toLowerCase() == "parva"
-          ? total = ((totalDiamond + totalEmas + totalLabour) * upFinal) / kurs
-          : total =
-              (((totalDiamond * upDiamondMetier) + totalEmas + totalLabour) *
-                      upFinal) /
-                  kurs;
+      total = ((totalDiamond + totalEmas + totalLabour) * upFinal) / kurs;
+
       var output =
           total.round().toString()[total.round().toString().length - 1];
 
@@ -607,44 +628,22 @@ class _FormScreenState extends State<FormScreen> {
         setState(() {
           print('others1');
           total = (total + (5 - int.parse(output)));
-          if (brand.text == "BELI BERLIAN") {
-            total = ((total * 1.2) * 1.33);
-            estimasiHarga.text = total.toString();
-          } else if (brand.text == "METIER") {
-            total = (((total.round() * kurs) * 1.2) * 1.65);
-            estimasiHarga.text = total.toString();
-          } else {
-            estimasiHarga.text = total.toString();
-          }
+          estimasiHarga.text = total.toString();
         });
         return total;
       } else if (int.parse(output) >= 6 && int.parse(output) <= 9) {
         setState(() {
           print('others1');
           total = (total + (10 - int.parse(output)));
-          if (brand.text == "BELI BERLIAN") {
-            total = ((total * 1.2) * 1.33);
-            estimasiHarga.text = total.toString();
-          } else if (brand.text == "METIER") {
-            total = (((total.round() * kurs) * 1.2) * 1.65);
-            estimasiHarga.text = total.toString();
-          } else {
-            estimasiHarga.text = total.toString();
-          }
+
+          estimasiHarga.text = total.toString();
         });
         return total;
       } else {
         setState(() {
           print('others1');
-          if (brand.text == "BELI BERLIAN") {
-            total = ((total * 1.2) * 1.33);
-            estimasiHarga.text = total.toString();
-          } else if (brand.text == "METIER") {
-            total = (((total.round() * kurs) * 1.2) * 1.65);
-            estimasiHarga.text = total.toString();
-          } else {
-            estimasiHarga.text = total.toString();
-          }
+
+          estimasiHarga.text = total.toString();
         });
         return total;
       }
@@ -722,62 +721,35 @@ class _FormScreenState extends State<FormScreen> {
               doubleBeratEmasDariCustomer) /
           5);
       double totalEmas;
-      brand.text.toLowerCase() == "parva"
-          ? totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmas)
-          : totalEmas =
-              (((doubleBeratEmas + totalQtyCrt) * emas) * upEmasMetier);
+      totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmas);
+
       var totalLabour = ((labour! + others2) * upLabour);
       double total;
-      brand.text.toLowerCase() == "parva"
-          ? total = ((totalDiamond + totalEmas + totalLabour) * upFinal) / kurs
-          : total =
-              (((totalDiamond * upDiamondMetier) + totalEmas + totalLabour) *
-                      upFinal) /
-                  kurs;
+      total = ((totalDiamond + totalEmas + totalLabour) * upFinal) / kurs;
+
       var output =
           total.round().toString()[total.round().toString().length - 1];
       if (int.parse(output) >= 1 && int.parse(output) <= 4) {
         setState(() {
           print('others2');
           total = (total + (5 - int.parse(output)));
-          if (brand.text == "BELI BERLIAN") {
-            total = ((total * 1.2) * 1.33);
-            estimasiHarga.text = total.toString();
-          } else if (brand.text == "METIER") {
-            total = (((total.round() * kurs) * 1.2) * 1.65);
-            estimasiHarga.text = total.toString();
-          } else {
-            estimasiHarga.text = total.toString();
-          }
+
+          estimasiHarga.text = total.toString();
         });
         return total;
       } else if (int.parse(output) >= 6 && int.parse(output) <= 9) {
         setState(() {
           print('others2');
           total = (total + (10 - int.parse(output)));
-          if (brand.text == "BELI BERLIAN") {
-            total = ((total * 1.2) * 1.33);
-            estimasiHarga.text = total.toString();
-          } else if (brand.text == "METIER") {
-            total = (((total.round() * kurs) * 1.2) * 1.65);
-            estimasiHarga.text = total.toString();
-          } else {
-            estimasiHarga.text = total.toString();
-          }
+
+          estimasiHarga.text = total.toString();
         });
         return total;
       } else {
         setState(() {
           print('others2');
-          if (brand.text == "BELI BERLIAN") {
-            total = ((total * 1.2) * 1.33);
-            estimasiHarga.text = total.toString();
-          } else if (brand.text == "METIER") {
-            total = (((total.round() * kurs) * 1.2) * 1.65);
-            estimasiHarga.text = total.toString();
-          } else {
-            estimasiHarga.text = total.toString();
-          }
+
+          estimasiHarga.text = total.toString();
         });
         return total;
       }
@@ -855,62 +827,853 @@ class _FormScreenState extends State<FormScreen> {
               doubleBeratEmasDariCustomer) /
           5);
       double totalEmas;
-      brand.text.toLowerCase() == "parva"
-          ? totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmas)
-          : totalEmas =
-              (((doubleBeratEmas + totalQtyCrt) * emas) * upEmasMetier);
+      totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmas);
+
       var totalLabour = ((labour! + others3) * upLabour);
       double total;
-      brand.text.toLowerCase() == "parva"
-          ? total = ((totalDiamond + totalEmas + totalLabour) * upFinal) / kurs
-          : total =
-              (((totalDiamond * upDiamondMetier) + totalEmas + totalLabour) *
-                      upFinal) /
-                  kurs;
+      total = ((totalDiamond + totalEmas + totalLabour) * upFinal) / kurs;
+
       var output =
           total.round().toString()[total.round().toString().length - 1];
       if (int.parse(output) >= 1 && int.parse(output) <= 4) {
         setState(() {
           print('others3');
           total = (total + (5 - int.parse(output)));
-          if (brand.text == "BELI BERLIAN") {
-            total = ((total * 1.2) * 1.33);
-            estimasiHarga.text = total.toString();
-          } else if (brand.text == "METIER") {
-            total = (((total.round() * kurs) * 1.2) * 1.65);
-            estimasiHarga.text = total.toString();
-          } else {
-            estimasiHarga.text = total.toString();
-          }
+          estimasiHarga.text = total.toString();
         });
         return total;
       } else if (int.parse(output) >= 6 && int.parse(output) <= 9) {
         setState(() {
           print('others3');
           total = (total + (10 - int.parse(output)));
-          if (brand.text == "BELI BERLIAN") {
-            total = ((total * 1.2) * 1.33);
-            estimasiHarga.text = total.toString();
-          } else if (brand.text == "METIER") {
-            total = (((total.round() * kurs) * 1.2) * 1.65);
-            estimasiHarga.text = total.toString();
-          } else {
-            estimasiHarga.text = total.toString();
-          }
+
+          estimasiHarga.text = total.toString();
         });
         return total;
       } else {
         setState(() {
           print('others3');
-          if (brand.text == "BELI BERLIAN") {
-            total = ((total * 1.2) * 1.33);
-            estimasiHarga.text = total.toString();
-          } else if (brand.text == "METIER") {
-            total = (((total.round() * kurs) * 1.2) * 1.65);
-            estimasiHarga.text = total.toString();
-          } else {
-            estimasiHarga.text = total.toString();
-          }
+
+          estimasiHarga.text = total.toString();
+        });
+        return total;
+      }
+    }
+  }
+
+  double get totalPriceBeliBerlian {
+    var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
+        (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
+        (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
+        (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
+        (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
+        (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
+        (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
+        (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
+        (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
+        (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
+        (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
+        (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
+        (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
+        (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
+        (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
+        (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
+        (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
+        (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
+        (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
+        (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
+        (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
+        (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
+        (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
+        (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
+        (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
+        (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
+        (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
+        (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
+        (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
+        (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
+        (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
+        (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
+        (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
+        (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
+    print('Diamond $totalDiamond');
+    var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
+                (caratPcsBatu2 * qtyIntBatu2!) +
+                (caratPcsBatu3 * qtyIntBatu3!) +
+                (caratPcsBatu4 * qtyIntBatu4!) +
+                (caratPcsBatu5 * qtyIntBatu5!) +
+                (caratPcsBatu6 * qtyIntBatu6!) +
+                (caratPcsBatu7 * qtyIntBatu7!) +
+                (caratPcsBatu8 * qtyIntBatu8!) +
+                (caratPcsBatu9 * qtyIntBatu9!) +
+                (caratPcsBatu10 * qtyIntBatu10!) +
+                (caratPcsBatu11 * qtyIntBatu11!) +
+                (caratPcsBatu12 * qtyIntBatu12!) +
+                (caratPcsBatu13 * qtyIntBatu13!) +
+                (caratPcsBatu14 * qtyIntBatu14!) +
+                (caratPcsBatu15 * qtyIntBatu15!) +
+                (caratPcsBatu16 * qtyIntBatu16!) +
+                (caratPcsBatu17 * qtyIntBatu17!) +
+                (caratPcsBatu18 * qtyIntBatu18!) +
+                (caratPcsBatu19 * qtyIntBatu19!) +
+                (caratPcsBatu20 * qtyIntBatu20!) +
+                (caratPcsBatu21 * qtyIntBatu21!) +
+                (caratPcsBatu22 * qtyIntBatu22!) +
+                (caratPcsBatu23 * qtyIntBatu23!) +
+                (caratPcsBatu24 * qtyIntBatu24!) +
+                (caratPcsBatu25 * qtyIntBatu25!) +
+                (caratPcsBatu26 * qtyIntBatu26!) +
+                (caratPcsBatu27 * qtyIntBatu27!) +
+                (caratPcsBatu28 * qtyIntBatu28!) +
+                (caratPcsBatu29 * qtyIntBatu29!) +
+                (caratPcsBatu30 * qtyIntBatu30!) +
+                (caratPcsBatu31 * qtyIntBatu31!) +
+                (caratPcsBatu32 * qtyIntBatu32!) +
+                (caratPcsBatu33 * qtyIntBatu33!) +
+                (caratPcsBatu34 * qtyIntBatu34!) +
+                (caratPcsBatu35 * qtyIntBatu35!)) +
+            doubleBeratEmasDariCustomer) /
+        5);
+    double totalEmas;
+    totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmasMetier);
+    var totalLabour = ((labour! + 0) * upLabour);
+    double total;
+    total = (((totalDiamond * upDiamondMetier) + totalEmas + totalLabour) *
+            upFinal) /
+        kurs;
+
+    if (total.toString() == 'NaN') {
+      return 0;
+    } else if (total <= 2251) {
+      var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
+          (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
+          (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
+          (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
+          (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
+          (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
+          (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
+          (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
+          (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
+          (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
+          (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
+          (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
+          (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
+          (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
+          (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
+          (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
+          (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
+          (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
+          (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
+          (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
+          (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
+          (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
+          (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
+          (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
+          (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
+          (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
+          (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
+          (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
+          (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
+          (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
+          (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
+          (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
+          (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
+          (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
+
+      var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
+                  (caratPcsBatu2 * qtyIntBatu2!) +
+                  (caratPcsBatu3 * qtyIntBatu3!) +
+                  (caratPcsBatu4 * qtyIntBatu4!) +
+                  (caratPcsBatu5 * qtyIntBatu5!) +
+                  (caratPcsBatu6 * qtyIntBatu6!) +
+                  (caratPcsBatu7 * qtyIntBatu7!) +
+                  (caratPcsBatu8 * qtyIntBatu8!) +
+                  (caratPcsBatu9 * qtyIntBatu9!) +
+                  (caratPcsBatu10 * qtyIntBatu10!) +
+                  (caratPcsBatu11 * qtyIntBatu11!) +
+                  (caratPcsBatu12 * qtyIntBatu12!) +
+                  (caratPcsBatu13 * qtyIntBatu13!) +
+                  (caratPcsBatu14 * qtyIntBatu14!) +
+                  (caratPcsBatu15 * qtyIntBatu15!) +
+                  (caratPcsBatu16 * qtyIntBatu16!) +
+                  (caratPcsBatu17 * qtyIntBatu17!) +
+                  (caratPcsBatu18 * qtyIntBatu18!) +
+                  (caratPcsBatu19 * qtyIntBatu19!) +
+                  (caratPcsBatu20 * qtyIntBatu20!) +
+                  (caratPcsBatu21 * qtyIntBatu21!) +
+                  (caratPcsBatu22 * qtyIntBatu22!) +
+                  (caratPcsBatu23 * qtyIntBatu23!) +
+                  (caratPcsBatu24 * qtyIntBatu24!) +
+                  (caratPcsBatu25 * qtyIntBatu25!) +
+                  (caratPcsBatu26 * qtyIntBatu26!) +
+                  (caratPcsBatu27 * qtyIntBatu27!) +
+                  (caratPcsBatu28 * qtyIntBatu28!) +
+                  (caratPcsBatu29 * qtyIntBatu29!) +
+                  (caratPcsBatu30 * qtyIntBatu30!) +
+                  (caratPcsBatu31 * qtyIntBatu31!) +
+                  (caratPcsBatu32 * qtyIntBatu32!) +
+                  (caratPcsBatu33 * qtyIntBatu33!) +
+                  (caratPcsBatu34 * qtyIntBatu34!) +
+                  (caratPcsBatu35 * qtyIntBatu35!)) +
+              doubleBeratEmasDariCustomer) /
+          5);
+      double totalEmas;
+      totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmasMetier);
+      var totalLabour = ((labour! + others1) * upLabour);
+      double total;
+      total = (((totalDiamond * upDiamondMetier) + totalEmas + totalLabour) *
+              upFinal) /
+          kurs;
+      total = ((total * 1.2) * 1.33);
+      var output =
+          total.round().toString()[total.round().toString().length - 1];
+
+      if (int.parse(output) >= 1 && int.parse(output) <= 4) {
+        setState(() {
+          print('others1');
+          total = (total + (5 - int.parse(output)));
+          estimasiHarga.text = total.toString();
+        });
+        return total;
+      } else if (int.parse(output) >= 6 && int.parse(output) <= 9) {
+        setState(() {
+          print('others1');
+          total = (total + (10 - int.parse(output)));
+          estimasiHarga.text = total.toString();
+        });
+        return total;
+      } else {
+        setState(() {
+          print('others1');
+
+          estimasiHarga.text = total.toString();
+        });
+        return total;
+      }
+    } else if (total <= 4000) {
+      var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
+          (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
+          (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
+          (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
+          (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
+          (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
+          (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
+          (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
+          (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
+          (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
+          (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
+          (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
+          (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
+          (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
+          (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
+          (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
+          (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
+          (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
+          (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
+          (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
+          (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
+          (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
+          (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
+          (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
+          (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
+          (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
+          (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
+          (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
+          (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
+          (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
+          (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
+          (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
+          (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
+          (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
+
+      var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
+                  (caratPcsBatu2 * qtyIntBatu2!) +
+                  (caratPcsBatu3 * qtyIntBatu3!) +
+                  (caratPcsBatu4 * qtyIntBatu4!) +
+                  (caratPcsBatu5 * qtyIntBatu5!) +
+                  (caratPcsBatu6 * qtyIntBatu6!) +
+                  (caratPcsBatu7 * qtyIntBatu7!) +
+                  (caratPcsBatu8 * qtyIntBatu8!) +
+                  (caratPcsBatu9 * qtyIntBatu9!) +
+                  (caratPcsBatu10 * qtyIntBatu10!) +
+                  (caratPcsBatu11 * qtyIntBatu11!) +
+                  (caratPcsBatu12 * qtyIntBatu12!) +
+                  (caratPcsBatu13 * qtyIntBatu13!) +
+                  (caratPcsBatu14 * qtyIntBatu14!) +
+                  (caratPcsBatu15 * qtyIntBatu15!) +
+                  (caratPcsBatu16 * qtyIntBatu16!) +
+                  (caratPcsBatu17 * qtyIntBatu17!) +
+                  (caratPcsBatu18 * qtyIntBatu18!) +
+                  (caratPcsBatu19 * qtyIntBatu19!) +
+                  (caratPcsBatu20 * qtyIntBatu20!) +
+                  (caratPcsBatu21 * qtyIntBatu21!) +
+                  (caratPcsBatu22 * qtyIntBatu22!) +
+                  (caratPcsBatu23 * qtyIntBatu23!) +
+                  (caratPcsBatu24 * qtyIntBatu24!) +
+                  (caratPcsBatu25 * qtyIntBatu25!) +
+                  (caratPcsBatu26 * qtyIntBatu26!) +
+                  (caratPcsBatu27 * qtyIntBatu27!) +
+                  (caratPcsBatu28 * qtyIntBatu28!) +
+                  (caratPcsBatu29 * qtyIntBatu29!) +
+                  (caratPcsBatu30 * qtyIntBatu30!) +
+                  (caratPcsBatu31 * qtyIntBatu31!) +
+                  (caratPcsBatu32 * qtyIntBatu32!) +
+                  (caratPcsBatu33 * qtyIntBatu33!) +
+                  (caratPcsBatu34 * qtyIntBatu34!) +
+                  (caratPcsBatu35 * qtyIntBatu35!)) +
+              doubleBeratEmasDariCustomer) /
+          5);
+      double totalEmas;
+      totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmasMetier);
+      var totalLabour = ((labour! + others2) * upLabour);
+      double total;
+      total = (((totalDiamond * upDiamondMetier) + totalEmas + totalLabour) *
+              upFinal) /
+          kurs;
+      total = ((total * 1.2) * 1.33);
+      var output =
+          total.round().toString()[total.round().toString().length - 1];
+      if (int.parse(output) >= 1 && int.parse(output) <= 4) {
+        setState(() {
+          print('others2');
+          total = (total + (5 - int.parse(output)));
+
+          estimasiHarga.text = total.toString();
+        });
+        return total;
+      } else if (int.parse(output) >= 6 && int.parse(output) <= 9) {
+        setState(() {
+          print('others2');
+          total = (total + (10 - int.parse(output)));
+
+          estimasiHarga.text = total.toString();
+        });
+        return total;
+      } else {
+        setState(() {
+          print('others2');
+
+          estimasiHarga.text = total.toString();
+        });
+        return total;
+      }
+    } else {
+      var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
+          (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
+          (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
+          (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
+          (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
+          (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
+          (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
+          (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
+          (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
+          (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
+          (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
+          (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
+          (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
+          (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
+          (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
+          (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
+          (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
+          (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
+          (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
+          (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
+          (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
+          (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
+          (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
+          (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
+          (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
+          (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
+          (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
+          (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
+          (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
+          (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
+          (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
+          (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
+          (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
+          (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
+
+      var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
+                  (caratPcsBatu2 * qtyIntBatu2!) +
+                  (caratPcsBatu3 * qtyIntBatu3!) +
+                  (caratPcsBatu4 * qtyIntBatu4!) +
+                  (caratPcsBatu5 * qtyIntBatu5!) +
+                  (caratPcsBatu6 * qtyIntBatu6!) +
+                  (caratPcsBatu7 * qtyIntBatu7!) +
+                  (caratPcsBatu8 * qtyIntBatu8!) +
+                  (caratPcsBatu9 * qtyIntBatu9!) +
+                  (caratPcsBatu10 * qtyIntBatu10!) +
+                  (caratPcsBatu11 * qtyIntBatu11!) +
+                  (caratPcsBatu12 * qtyIntBatu12!) +
+                  (caratPcsBatu13 * qtyIntBatu13!) +
+                  (caratPcsBatu14 * qtyIntBatu14!) +
+                  (caratPcsBatu15 * qtyIntBatu15!) +
+                  (caratPcsBatu16 * qtyIntBatu16!) +
+                  (caratPcsBatu17 * qtyIntBatu17!) +
+                  (caratPcsBatu18 * qtyIntBatu18!) +
+                  (caratPcsBatu19 * qtyIntBatu19!) +
+                  (caratPcsBatu20 * qtyIntBatu20!) +
+                  (caratPcsBatu21 * qtyIntBatu21!) +
+                  (caratPcsBatu22 * qtyIntBatu22!) +
+                  (caratPcsBatu23 * qtyIntBatu23!) +
+                  (caratPcsBatu24 * qtyIntBatu24!) +
+                  (caratPcsBatu25 * qtyIntBatu25!) +
+                  (caratPcsBatu26 * qtyIntBatu26!) +
+                  (caratPcsBatu27 * qtyIntBatu27!) +
+                  (caratPcsBatu28 * qtyIntBatu28!) +
+                  (caratPcsBatu29 * qtyIntBatu29!) +
+                  (caratPcsBatu30 * qtyIntBatu30!) +
+                  (caratPcsBatu31 * qtyIntBatu31!) +
+                  (caratPcsBatu32 * qtyIntBatu32!) +
+                  (caratPcsBatu33 * qtyIntBatu33!) +
+                  (caratPcsBatu34 * qtyIntBatu34!) +
+                  (caratPcsBatu35 * qtyIntBatu35!)) +
+              doubleBeratEmasDariCustomer) /
+          5);
+      double totalEmas;
+      totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmasMetier);
+      var totalLabour = ((labour! + others3) * upLabour);
+      double total;
+      total = (((totalDiamond * upDiamondMetier) + totalEmas + totalLabour) *
+              upFinal) /
+          kurs;
+      total = ((total * 1.2) * 1.33);
+      var output =
+          total.round().toString()[total.round().toString().length - 1];
+      if (int.parse(output) >= 1 && int.parse(output) <= 4) {
+        setState(() {
+          print('others3');
+          total = (total + (5 - int.parse(output)));
+
+          estimasiHarga.text = total.toString();
+        });
+        return total;
+      } else if (int.parse(output) >= 6 && int.parse(output) <= 9) {
+        setState(() {
+          print('others3');
+          total = (total + (10 - int.parse(output)));
+
+          estimasiHarga.text = total.toString();
+        });
+        return total;
+      } else {
+        setState(() {
+          print('others3');
+
+          estimasiHarga.text = total.toString();
+        });
+        return total;
+      }
+    }
+  }
+
+  double get totalPriceMetier {
+    var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
+        (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
+        (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
+        (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
+        (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
+        (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
+        (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
+        (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
+        (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
+        (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
+        (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
+        (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
+        (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
+        (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
+        (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
+        (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
+        (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
+        (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
+        (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
+        (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
+        (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
+        (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
+        (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
+        (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
+        (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
+        (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
+        (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
+        (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
+        (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
+        (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
+        (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
+        (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
+        (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
+        (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
+    print('Diamond $totalDiamond');
+    var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
+                (caratPcsBatu2 * qtyIntBatu2!) +
+                (caratPcsBatu3 * qtyIntBatu3!) +
+                (caratPcsBatu4 * qtyIntBatu4!) +
+                (caratPcsBatu5 * qtyIntBatu5!) +
+                (caratPcsBatu6 * qtyIntBatu6!) +
+                (caratPcsBatu7 * qtyIntBatu7!) +
+                (caratPcsBatu8 * qtyIntBatu8!) +
+                (caratPcsBatu9 * qtyIntBatu9!) +
+                (caratPcsBatu10 * qtyIntBatu10!) +
+                (caratPcsBatu11 * qtyIntBatu11!) +
+                (caratPcsBatu12 * qtyIntBatu12!) +
+                (caratPcsBatu13 * qtyIntBatu13!) +
+                (caratPcsBatu14 * qtyIntBatu14!) +
+                (caratPcsBatu15 * qtyIntBatu15!) +
+                (caratPcsBatu16 * qtyIntBatu16!) +
+                (caratPcsBatu17 * qtyIntBatu17!) +
+                (caratPcsBatu18 * qtyIntBatu18!) +
+                (caratPcsBatu19 * qtyIntBatu19!) +
+                (caratPcsBatu20 * qtyIntBatu20!) +
+                (caratPcsBatu21 * qtyIntBatu21!) +
+                (caratPcsBatu22 * qtyIntBatu22!) +
+                (caratPcsBatu23 * qtyIntBatu23!) +
+                (caratPcsBatu24 * qtyIntBatu24!) +
+                (caratPcsBatu25 * qtyIntBatu25!) +
+                (caratPcsBatu26 * qtyIntBatu26!) +
+                (caratPcsBatu27 * qtyIntBatu27!) +
+                (caratPcsBatu28 * qtyIntBatu28!) +
+                (caratPcsBatu29 * qtyIntBatu29!) +
+                (caratPcsBatu30 * qtyIntBatu30!) +
+                (caratPcsBatu31 * qtyIntBatu31!) +
+                (caratPcsBatu32 * qtyIntBatu32!) +
+                (caratPcsBatu33 * qtyIntBatu33!) +
+                (caratPcsBatu34 * qtyIntBatu34!) +
+                (caratPcsBatu35 * qtyIntBatu35!)) +
+            doubleBeratEmasDariCustomer) /
+        5);
+    double totalEmas;
+    totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmasMetier);
+    var totalLabour = ((labour! + 0) * upLabour);
+    double total;
+    total = (((totalDiamond * upDiamondMetier) + totalEmas + totalLabour) *
+            upFinal) /
+        kurs;
+
+    if (total.toString() == 'NaN') {
+      return 0;
+    } else if (total <= 2251) {
+      var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
+          (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
+          (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
+          (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
+          (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
+          (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
+          (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
+          (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
+          (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
+          (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
+          (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
+          (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
+          (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
+          (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
+          (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
+          (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
+          (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
+          (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
+          (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
+          (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
+          (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
+          (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
+          (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
+          (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
+          (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
+          (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
+          (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
+          (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
+          (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
+          (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
+          (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
+          (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
+          (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
+          (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
+
+      var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
+                  (caratPcsBatu2 * qtyIntBatu2!) +
+                  (caratPcsBatu3 * qtyIntBatu3!) +
+                  (caratPcsBatu4 * qtyIntBatu4!) +
+                  (caratPcsBatu5 * qtyIntBatu5!) +
+                  (caratPcsBatu6 * qtyIntBatu6!) +
+                  (caratPcsBatu7 * qtyIntBatu7!) +
+                  (caratPcsBatu8 * qtyIntBatu8!) +
+                  (caratPcsBatu9 * qtyIntBatu9!) +
+                  (caratPcsBatu10 * qtyIntBatu10!) +
+                  (caratPcsBatu11 * qtyIntBatu11!) +
+                  (caratPcsBatu12 * qtyIntBatu12!) +
+                  (caratPcsBatu13 * qtyIntBatu13!) +
+                  (caratPcsBatu14 * qtyIntBatu14!) +
+                  (caratPcsBatu15 * qtyIntBatu15!) +
+                  (caratPcsBatu16 * qtyIntBatu16!) +
+                  (caratPcsBatu17 * qtyIntBatu17!) +
+                  (caratPcsBatu18 * qtyIntBatu18!) +
+                  (caratPcsBatu19 * qtyIntBatu19!) +
+                  (caratPcsBatu20 * qtyIntBatu20!) +
+                  (caratPcsBatu21 * qtyIntBatu21!) +
+                  (caratPcsBatu22 * qtyIntBatu22!) +
+                  (caratPcsBatu23 * qtyIntBatu23!) +
+                  (caratPcsBatu24 * qtyIntBatu24!) +
+                  (caratPcsBatu25 * qtyIntBatu25!) +
+                  (caratPcsBatu26 * qtyIntBatu26!) +
+                  (caratPcsBatu27 * qtyIntBatu27!) +
+                  (caratPcsBatu28 * qtyIntBatu28!) +
+                  (caratPcsBatu29 * qtyIntBatu29!) +
+                  (caratPcsBatu30 * qtyIntBatu30!) +
+                  (caratPcsBatu31 * qtyIntBatu31!) +
+                  (caratPcsBatu32 * qtyIntBatu32!) +
+                  (caratPcsBatu33 * qtyIntBatu33!) +
+                  (caratPcsBatu34 * qtyIntBatu34!) +
+                  (caratPcsBatu35 * qtyIntBatu35!)) +
+              doubleBeratEmasDariCustomer) /
+          5);
+      double totalEmas;
+      totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmasMetier);
+      var totalLabour = ((labour! + others1) * upLabour);
+      double total;
+      total = (((totalDiamond * upDiamondMetier) + totalEmas + totalLabour) *
+              upFinal) /
+          kurs;
+      total = (((total.round() * kurs) * 1.2) * 1.65);
+      var output =
+          total.round().toString()[total.round().toString().length - 5];
+      var result = total.round().toString().lastChars(5); // 'World'
+      print(result);
+      if (int.parse(output) >= 0 && int.parse(output) <= 4) {
+        setState(() {
+          print('others1');
+          total = (total + (50000 - int.parse(result)));
+          estimasiHarga.text = total.toString();
+        });
+        return total;
+      } else if (int.parse(output) >= 6 && int.parse(output) <= 9) {
+        setState(() {
+          print('others1');
+          total = (total + (100000 - int.parse(result)));
+
+          estimasiHarga.text = total.toString();
+        });
+        return total;
+      } else {
+        setState(() {
+          print('others1');
+
+          estimasiHarga.text = total.toString();
+        });
+        return total;
+      }
+    } else if (total <= 4000) {
+      var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
+          (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
+          (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
+          (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
+          (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
+          (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
+          (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
+          (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
+          (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
+          (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
+          (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
+          (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
+          (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
+          (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
+          (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
+          (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
+          (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
+          (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
+          (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
+          (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
+          (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
+          (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
+          (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
+          (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
+          (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
+          (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
+          (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
+          (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
+          (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
+          (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
+          (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
+          (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
+          (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
+          (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
+
+      var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
+                  (caratPcsBatu2 * qtyIntBatu2!) +
+                  (caratPcsBatu3 * qtyIntBatu3!) +
+                  (caratPcsBatu4 * qtyIntBatu4!) +
+                  (caratPcsBatu5 * qtyIntBatu5!) +
+                  (caratPcsBatu6 * qtyIntBatu6!) +
+                  (caratPcsBatu7 * qtyIntBatu7!) +
+                  (caratPcsBatu8 * qtyIntBatu8!) +
+                  (caratPcsBatu9 * qtyIntBatu9!) +
+                  (caratPcsBatu10 * qtyIntBatu10!) +
+                  (caratPcsBatu11 * qtyIntBatu11!) +
+                  (caratPcsBatu12 * qtyIntBatu12!) +
+                  (caratPcsBatu13 * qtyIntBatu13!) +
+                  (caratPcsBatu14 * qtyIntBatu14!) +
+                  (caratPcsBatu15 * qtyIntBatu15!) +
+                  (caratPcsBatu16 * qtyIntBatu16!) +
+                  (caratPcsBatu17 * qtyIntBatu17!) +
+                  (caratPcsBatu18 * qtyIntBatu18!) +
+                  (caratPcsBatu19 * qtyIntBatu19!) +
+                  (caratPcsBatu20 * qtyIntBatu20!) +
+                  (caratPcsBatu21 * qtyIntBatu21!) +
+                  (caratPcsBatu22 * qtyIntBatu22!) +
+                  (caratPcsBatu23 * qtyIntBatu23!) +
+                  (caratPcsBatu24 * qtyIntBatu24!) +
+                  (caratPcsBatu25 * qtyIntBatu25!) +
+                  (caratPcsBatu26 * qtyIntBatu26!) +
+                  (caratPcsBatu27 * qtyIntBatu27!) +
+                  (caratPcsBatu28 * qtyIntBatu28!) +
+                  (caratPcsBatu29 * qtyIntBatu29!) +
+                  (caratPcsBatu30 * qtyIntBatu30!) +
+                  (caratPcsBatu31 * qtyIntBatu31!) +
+                  (caratPcsBatu32 * qtyIntBatu32!) +
+                  (caratPcsBatu33 * qtyIntBatu33!) +
+                  (caratPcsBatu34 * qtyIntBatu34!) +
+                  (caratPcsBatu35 * qtyIntBatu35!)) +
+              doubleBeratEmasDariCustomer) /
+          5);
+      double totalEmas;
+      totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmasMetier);
+      var totalLabour = ((labour! + others2) * upLabour);
+      double total;
+      total = (((totalDiamond * upDiamondMetier) + totalEmas + totalLabour) *
+              upFinal) /
+          kurs;
+      total = (((total.round() * kurs) * 1.2) * 1.65);
+      var output =
+          total.round().toString()[total.round().toString().length - 5];
+      var result = total.round().toString().lastChars(5); // 'World'
+      print(result);
+      if (int.parse(output) >= 0 && int.parse(output) <= 4) {
+        setState(() {
+          print('others2');
+          total = (total + (50000 - int.parse(result)));
+
+          estimasiHarga.text = total.toString();
+        });
+        return total;
+      } else if (int.parse(output) >= 6 && int.parse(output) <= 9) {
+        setState(() {
+          print('others2');
+          total = (total + (100000 - int.parse(result)));
+
+          estimasiHarga.text = total.toString();
+        });
+        return total;
+      } else {
+        setState(() {
+          print('others2');
+
+          estimasiHarga.text = total.toString();
+        });
+        return total;
+      }
+    } else {
+      var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
+          (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
+          (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
+          (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
+          (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
+          (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
+          (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
+          (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
+          (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
+          (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
+          (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
+          (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
+          (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
+          (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
+          (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
+          (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
+          (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
+          (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
+          (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
+          (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
+          (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
+          (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
+          (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
+          (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
+          (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
+          (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
+          (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
+          (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
+          (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
+          (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
+          (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
+          (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
+          (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
+          (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
+
+      var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
+                  (caratPcsBatu2 * qtyIntBatu2!) +
+                  (caratPcsBatu3 * qtyIntBatu3!) +
+                  (caratPcsBatu4 * qtyIntBatu4!) +
+                  (caratPcsBatu5 * qtyIntBatu5!) +
+                  (caratPcsBatu6 * qtyIntBatu6!) +
+                  (caratPcsBatu7 * qtyIntBatu7!) +
+                  (caratPcsBatu8 * qtyIntBatu8!) +
+                  (caratPcsBatu9 * qtyIntBatu9!) +
+                  (caratPcsBatu10 * qtyIntBatu10!) +
+                  (caratPcsBatu11 * qtyIntBatu11!) +
+                  (caratPcsBatu12 * qtyIntBatu12!) +
+                  (caratPcsBatu13 * qtyIntBatu13!) +
+                  (caratPcsBatu14 * qtyIntBatu14!) +
+                  (caratPcsBatu15 * qtyIntBatu15!) +
+                  (caratPcsBatu16 * qtyIntBatu16!) +
+                  (caratPcsBatu17 * qtyIntBatu17!) +
+                  (caratPcsBatu18 * qtyIntBatu18!) +
+                  (caratPcsBatu19 * qtyIntBatu19!) +
+                  (caratPcsBatu20 * qtyIntBatu20!) +
+                  (caratPcsBatu21 * qtyIntBatu21!) +
+                  (caratPcsBatu22 * qtyIntBatu22!) +
+                  (caratPcsBatu23 * qtyIntBatu23!) +
+                  (caratPcsBatu24 * qtyIntBatu24!) +
+                  (caratPcsBatu25 * qtyIntBatu25!) +
+                  (caratPcsBatu26 * qtyIntBatu26!) +
+                  (caratPcsBatu27 * qtyIntBatu27!) +
+                  (caratPcsBatu28 * qtyIntBatu28!) +
+                  (caratPcsBatu29 * qtyIntBatu29!) +
+                  (caratPcsBatu30 * qtyIntBatu30!) +
+                  (caratPcsBatu31 * qtyIntBatu31!) +
+                  (caratPcsBatu32 * qtyIntBatu32!) +
+                  (caratPcsBatu33 * qtyIntBatu33!) +
+                  (caratPcsBatu34 * qtyIntBatu34!) +
+                  (caratPcsBatu35 * qtyIntBatu35!)) +
+              doubleBeratEmasDariCustomer) /
+          5);
+      double totalEmas;
+      totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmasMetier);
+      var totalLabour = ((labour! + others3) * upLabour);
+      double total;
+      total = (((totalDiamond * upDiamondMetier) + totalEmas + totalLabour) *
+              upFinal) /
+          kurs;
+      total = (((total.round() * kurs) * 1.2) * 1.65);
+
+      var output =
+          total.round().toString()[total.round().toString().length - 5];
+      var result = total.round().toString().lastChars(5); // 'World'
+      print(result);
+      if (int.parse(output) >= 0 && int.parse(output) <= 4) {
+        setState(() {
+          print('others3');
+          total = (total + (50000 - int.parse(result)));
+
+          estimasiHarga.text = total.toString();
+        });
+        return total;
+      } else if (int.parse(output) >= 6 && int.parse(output) <= 9) {
+        setState(() {
+          print('others3');
+          total = (total + (100000 - int.parse(result)));
+
+          estimasiHarga.text = total.toString();
+        });
+        return total;
+      } else {
+        setState(() {
+          print('others3');
+
+          estimasiHarga.text = total.toString();
         });
         return total;
       }
@@ -957,64 +1720,114 @@ class _FormScreenState extends State<FormScreen> {
                 Future.delayed(const Duration(seconds: 1)).then((value) {
                   btnController.reset(); //reset
                 });
-                return;
-              }
-              Future.delayed(const Duration(seconds: 2)).then((value) async {
-                btnController.success();
-                postAPI();
-                postApiQtyBatu1();
-                postApiQtyBatu2();
-                postApiQtyBatu3();
-                postApiQtyBatu4();
-                postApiQtyBatu5();
-                postApiQtyBatu6();
-                postApiQtyBatu7();
-                postApiQtyBatu8();
-                postApiQtyBatu9();
-                postApiQtyBatu10();
-                postApiQtyBatu11();
-                postApiQtyBatu12();
-                postApiQtyBatu13();
-                postApiQtyBatu14();
-                postApiQtyBatu15();
-                postApiQtyBatu16();
-                postApiQtyBatu17();
-                postApiQtyBatu18();
-                postApiQtyBatu19();
-                postApiQtyBatu20();
-                postApiQtyBatu21();
-                postApiQtyBatu22();
-                postApiQtyBatu23();
-                postApiQtyBatu24();
-                postApiQtyBatu25();
-                postApiQtyBatu26();
-                postApiQtyBatu27();
-                postApiQtyBatu28();
-                postApiQtyBatu29();
-                postApiQtyBatu30();
-                postApiQtyBatu31();
-                postApiQtyBatu32();
-                postApiQtyBatu33();
-                postApiQtyBatu34();
-                postApiQtyBatu35();
+                // return;
+              } else if (siklus.text.isEmpty) {
+                showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) => const AlertDialog(
+                          title: Text(
+                            'Siklus wajib diisi',
+                          ),
+                        ));
+                btnController.error();
                 Future.delayed(const Duration(seconds: 1)).then((value) {
                   btnController.reset(); //reset
-                  showDialog<String>(
-                      context: context,
-                      builder: (BuildContext context) => const AlertDialog(
-                            title: Text(
-                              'Design Tersimpan',
-                            ),
-                          ));
                 });
-                setState(() {
-                  clearForm();
+              } else if (jenisBarang.text.isEmpty) {
+                showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) => const AlertDialog(
+                          title: Text(
+                            'jenis barang wajib diisi',
+                          ),
+                        ));
+                btnController.error();
+                Future.delayed(const Duration(seconds: 1)).then((value) {
+                  btnController.reset(); //reset
                 });
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (c) => const MainViewFormDesign()));
-              });
+              } else if (jenisBarang.text == "Necklace" &&
+                  rantai.text.isEmpty) {
+                showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) => const AlertDialog(
+                          title: Text(
+                            'Rantai Wajib di isi',
+                          ),
+                        ));
+                btnController.error();
+                Future.delayed(const Duration(seconds: 1)).then((value) {
+                  btnController.reset(); //reset
+                });
+              } else if (jenisBarang.text == "Earings" && earnut.text.isEmpty) {
+                showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) => const AlertDialog(
+                          title: Text(
+                            'Earnut Wajib di isi',
+                          ),
+                        ));
+                btnController.error();
+                Future.delayed(const Duration(seconds: 1)).then((value) {
+                  btnController.reset(); //reset
+                });
+              } else {
+                Future.delayed(const Duration(seconds: 2)).then((value) async {
+                  btnController.success();
+                  postAPI();
+                  postApiQtyBatu1();
+                  postApiQtyBatu2();
+                  postApiQtyBatu3();
+                  postApiQtyBatu4();
+                  postApiQtyBatu5();
+                  postApiQtyBatu6();
+                  postApiQtyBatu7();
+                  postApiQtyBatu8();
+                  postApiQtyBatu9();
+                  postApiQtyBatu10();
+                  postApiQtyBatu11();
+                  postApiQtyBatu12();
+                  postApiQtyBatu13();
+                  postApiQtyBatu14();
+                  postApiQtyBatu15();
+                  postApiQtyBatu16();
+                  postApiQtyBatu17();
+                  postApiQtyBatu18();
+                  postApiQtyBatu19();
+                  postApiQtyBatu20();
+                  postApiQtyBatu21();
+                  postApiQtyBatu22();
+                  postApiQtyBatu23();
+                  postApiQtyBatu24();
+                  postApiQtyBatu25();
+                  postApiQtyBatu26();
+                  postApiQtyBatu27();
+                  postApiQtyBatu28();
+                  postApiQtyBatu29();
+                  postApiQtyBatu30();
+                  postApiQtyBatu31();
+                  postApiQtyBatu32();
+                  postApiQtyBatu33();
+                  postApiQtyBatu34();
+                  postApiQtyBatu35();
+                  Future.delayed(const Duration(seconds: 1)).then((value) {
+                    btnController.reset(); //reset
+                    showDialog<String>(
+                        context: context,
+                        builder: (BuildContext context) => const AlertDialog(
+                              title: Text(
+                                'Design Tersimpan',
+                              ),
+                            ));
+                  });
+                  setState(() {
+                    clearForm();
+                  });
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (c) => const MainViewFormDesign()));
+                });
+              }
             },
             child: const Text(
               "Save Design",
@@ -1487,18 +2300,19 @@ class _FormScreenState extends State<FormScreen> {
                     padding: const EdgeInsets.symmetric(horizontal: 1),
                     height: 65,
                     width: MediaQuery.of(context).size.width * 0.1,
-                    child: TextFormField(
-                      style: const TextStyle(
-                          fontSize: 14,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold),
-                      textInputAction: TextInputAction.next,
-                      controller: kategoriBarang,
-                      decoration: InputDecoration(
-                        // hintText: "example: Cahaya Sanivokasi",
-                        labelText: "Kategori Barang",
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5.0)),
+                    child: DropdownSearch<String>(
+                      items: const ["CLASSIC", "FASHION"],
+                      onChanged: (item) {
+                        setState(() {
+                          kategoriBarang.text = item!;
+                        });
+                      },
+                      dropdownDecoratorProps: const DropDownDecoratorProps(
+                        dropdownSearchDecoration: InputDecoration(
+                          labelText: "Kategori Barang",
+                          filled: true,
+                          fillColor: Colors.white,
+                        ),
                       ),
                     ),
                   ),
@@ -1591,7 +2405,7 @@ class _FormScreenState extends State<FormScreen> {
                     height: 65,
                     width: MediaQuery.of(context).size.width * 0.1,
                     child: DropdownSearch<String>(
-                      items: const ["PARVA", "BELI BERLIAN", "METIER"],
+                      items: const ["PARVA", "BELI BERLIAN", "METIER", "FINE"],
                       onChanged: (item) {
                         setState(() {
                           brand.text = item!;
@@ -1797,9 +2611,11 @@ class _FormScreenState extends State<FormScreen> {
                       // controller: estimasiHarga,
                       decoration: InputDecoration(
                         label: Text(
-                          brand.text != "METIER"
-                              ? '\$ ${CurrencyFormat.convertToDollar(totalPrice, 0)}'
-                              : 'Rp. ${CurrencyFormat.convertToDollar(totalPrice, 0)}',
+                          brand.text == "BELI BERLIAN"
+                              ? '\$ ${CurrencyFormat.convertToDollar(totalPriceBeliBerlian, 0)}'
+                              : brand.text == "METIER"
+                                  ? 'Rp. ${CurrencyFormat.convertToDollar(totalPriceMetier, 0)}'
+                                  : '\$ ${CurrencyFormat.convertToDollar(totalPriceParva, 0)}',
                         ),
                         // hintText: "example: Cahaya Sanivokasi",
                         border: OutlineInputBorder(
@@ -1902,6 +2718,9 @@ class _FormScreenState extends State<FormScreen> {
                                               idBatu1 = item.id;
                                               caratPcsBatu1 =
                                                   data[0]['caratPcs'];
+                                              crtPcsBatu1.text = data[0]
+                                                      ['caratPcs']
+                                                  .toString();
                                               batu1 = item.keyWord.toString();
                                               stokBatu1.text =
                                                   item.qty.toString();
@@ -1912,15 +2731,15 @@ class _FormScreenState extends State<FormScreen> {
                                         }
                                       },
                                       dropdownDecoratorProps:
-                                          DropDownDecoratorProps(
+                                          const DropDownDecoratorProps(
                                         dropdownSearchDecoration:
                                             InputDecoration(
-                                          label: Text(
-                                            batu1!,
-                                            style: const TextStyle(
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.bold),
-                                          ),
+                                          // label: Text(
+                                          //   batu1!,
+                                          //   style: const TextStyle(
+                                          //       fontSize: 18,
+                                          //       fontWeight: FontWeight.bold),
+                                          // ),
                                           filled: true,
                                           fillColor: Colors.white,
                                         ),
@@ -1976,6 +2795,34 @@ class _FormScreenState extends State<FormScreen> {
                                     ),
                                   ),
 
+                                  //crt/pcsbatu1
+                                  Container(
+                                    width: 120,
+                                    height: 38,
+                                    padding: const EdgeInsets.only(
+                                        top: 10, left: 15),
+                                    child: TextFormField(
+                                      enabled:
+                                          caratPcsBatu1 <= 0 ? true : false,
+                                      textInputAction: TextInputAction.next,
+                                      controller: crtPcsBatu1,
+                                      onChanged: (value) {
+                                        caratPcsBatu1 = double.parse(value);
+                                      },
+                                      decoration: InputDecoration(
+                                        label: const Text(
+                                          'Carat/Pcs',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(5.0)),
+                                      ),
+                                    ),
+                                  ),
+
                                   qtyBatu1.text.isEmpty
                                       ? const SizedBox()
                                       : Padding(
@@ -1989,6 +2836,7 @@ class _FormScreenState extends State<FormScreen> {
                                                   batu1 = '';
                                                   hargaBatu1 = 0;
                                                   caratPcsBatu1 = 0;
+                                                  crtPcsBatu1.text = '';
                                                 });
                                               },
                                               icon: const Icon(Icons.cancel)),
@@ -2029,18 +2877,24 @@ class _FormScreenState extends State<FormScreen> {
                                                   Uri.parse(
                                                       '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
                                                 );
+                                                print(response.statusCode);
                                                 if (response.statusCode ==
                                                     200) {
+                                                  print(response.body);
                                                   final data =
                                                       jsonDecode(response.body);
+                                                  print(data);
                                                   setState(() {
                                                     hargaBatu2 =
                                                         data[0]['unitCost'];
                                                     idBatu2 = item.id;
-
                                                     caratPcsBatu2 =
                                                         data[0]['caratPcs'];
-                                                    batu2 = item.keyWord;
+                                                    crtPcsBatu2.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
+                                                    batu2 =
+                                                        item.keyWord.toString();
                                                     stokBatu2.text =
                                                         item.qty.toString();
                                                   });
@@ -2050,16 +2904,15 @@ class _FormScreenState extends State<FormScreen> {
                                               }
                                             },
                                             dropdownDecoratorProps:
-                                                DropDownDecoratorProps(
+                                                const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                label: Text(
-                                                  batu2!,
-                                                  style: const TextStyle(
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
+                                                // label: Text(
+                                                //   batu2!,
+                                                //   style: const TextStyle(
+                                                //       fontSize: 18,
+                                                //       fontWeight: FontWeight.bold),
+                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
@@ -2084,7 +2937,6 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -2106,7 +2958,6 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu2,
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -2121,6 +2972,40 @@ class _FormScreenState extends State<FormScreen> {
                                             ),
                                           ),
                                         ),
+
+                                        //crt/pcsbatu2
+                                        Container(
+                                          width: 120,
+                                          height: 38,
+                                          padding: const EdgeInsets.only(
+                                              top: 10, left: 15),
+                                          child: TextFormField(
+                                            enabled: caratPcsBatu2 <= 0
+                                                ? true
+                                                : false,
+                                            textInputAction:
+                                                TextInputAction.next,
+                                            controller: crtPcsBatu2,
+                                            onChanged: (value) {
+                                              caratPcsBatu2 =
+                                                  double.parse(value);
+                                            },
+                                            decoration: InputDecoration(
+                                              label: const Text(
+                                                'Carat/Pcs',
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          5.0)),
+                                            ),
+                                          ),
+                                        ),
+
                                         qtyBatu2.text.isEmpty
                                             ? const SizedBox()
                                             : Padding(
@@ -2134,6 +3019,7 @@ class _FormScreenState extends State<FormScreen> {
                                                         batu2 = '';
                                                         hargaBatu2 = 0;
                                                         caratPcsBatu2 = 0;
+                                                        crtPcsBatu2.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -2175,18 +3061,24 @@ class _FormScreenState extends State<FormScreen> {
                                                   Uri.parse(
                                                       '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
                                                 );
+                                                print(response.statusCode);
                                                 if (response.statusCode ==
                                                     200) {
+                                                  print(response.body);
                                                   final data =
                                                       jsonDecode(response.body);
+                                                  print(data);
                                                   setState(() {
                                                     hargaBatu3 =
                                                         data[0]['unitCost'];
                                                     idBatu3 = item.id;
-
                                                     caratPcsBatu3 =
                                                         data[0]['caratPcs'];
-                                                    batu3 = item.keyWord;
+                                                    crtPcsBatu3.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
+                                                    batu3 =
+                                                        item.keyWord.toString();
                                                     stokBatu3.text =
                                                         item.qty.toString();
                                                   });
@@ -2196,16 +3088,15 @@ class _FormScreenState extends State<FormScreen> {
                                               }
                                             },
                                             dropdownDecoratorProps:
-                                                DropDownDecoratorProps(
+                                                const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                label: Text(
-                                                  batu3!,
-                                                  style: const TextStyle(
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
+                                                // label: Text(
+                                                //   batu3!,
+                                                //   style: const TextStyle(
+                                                //       fontSize: 18,
+                                                //       fontWeight: FontWeight.bold),
+                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
@@ -2230,7 +3121,6 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -2252,7 +3142,6 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu3,
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -2267,6 +3156,40 @@ class _FormScreenState extends State<FormScreen> {
                                             ),
                                           ),
                                         ),
+
+                                        //crt/pcsbatu3
+                                        Container(
+                                          width: 120,
+                                          height: 38,
+                                          padding: const EdgeInsets.only(
+                                              top: 10, left: 15),
+                                          child: TextFormField(
+                                            enabled: caratPcsBatu3 <= 0
+                                                ? true
+                                                : false,
+                                            textInputAction:
+                                                TextInputAction.next,
+                                            controller: crtPcsBatu3,
+                                            onChanged: (value) {
+                                              caratPcsBatu3 =
+                                                  double.parse(value);
+                                            },
+                                            decoration: InputDecoration(
+                                              label: const Text(
+                                                'Carat/Pcs',
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          5.0)),
+                                            ),
+                                          ),
+                                        ),
+
                                         qtyBatu3.text.isEmpty
                                             ? const SizedBox()
                                             : Padding(
@@ -2280,6 +3203,7 @@ class _FormScreenState extends State<FormScreen> {
                                                         batu3 = '';
                                                         hargaBatu3 = 0;
                                                         caratPcsBatu3 = 0;
+                                                        crtPcsBatu3.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -2321,18 +3245,24 @@ class _FormScreenState extends State<FormScreen> {
                                                   Uri.parse(
                                                       '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
                                                 );
+                                                print(response.statusCode);
                                                 if (response.statusCode ==
                                                     200) {
+                                                  print(response.body);
                                                   final data =
                                                       jsonDecode(response.body);
+                                                  print(data);
                                                   setState(() {
                                                     hargaBatu4 =
                                                         data[0]['unitCost'];
                                                     idBatu4 = item.id;
-
                                                     caratPcsBatu4 =
                                                         data[0]['caratPcs'];
-                                                    batu4 = item.keyWord;
+                                                    crtPcsBatu4.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
+                                                    batu4 =
+                                                        item.keyWord.toString();
                                                     stokBatu4.text =
                                                         item.qty.toString();
                                                   });
@@ -2342,16 +3272,15 @@ class _FormScreenState extends State<FormScreen> {
                                               }
                                             },
                                             dropdownDecoratorProps:
-                                                DropDownDecoratorProps(
+                                                const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                label: Text(
-                                                  batu4!,
-                                                  style: const TextStyle(
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
+                                                // label: Text(
+                                                //   batu4!,
+                                                //   style: const TextStyle(
+                                                //       fontSize: 18,
+                                                //       fontWeight: FontWeight.bold),
+                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
@@ -2376,7 +3305,6 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -2398,7 +3326,6 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu4,
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -2413,6 +3340,40 @@ class _FormScreenState extends State<FormScreen> {
                                             ),
                                           ),
                                         ),
+
+                                        //crt/pcsbatu4
+                                        Container(
+                                          width: 120,
+                                          height: 38,
+                                          padding: const EdgeInsets.only(
+                                              top: 10, left: 15),
+                                          child: TextFormField(
+                                            enabled: caratPcsBatu4 <= 0
+                                                ? true
+                                                : false,
+                                            textInputAction:
+                                                TextInputAction.next,
+                                            controller: crtPcsBatu4,
+                                            onChanged: (value) {
+                                              caratPcsBatu4 =
+                                                  double.parse(value);
+                                            },
+                                            decoration: InputDecoration(
+                                              label: const Text(
+                                                'Carat/Pcs',
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          5.0)),
+                                            ),
+                                          ),
+                                        ),
+
                                         qtyBatu4.text.isEmpty
                                             ? const SizedBox()
                                             : Padding(
@@ -2426,6 +3387,7 @@ class _FormScreenState extends State<FormScreen> {
                                                         batu4 = '';
                                                         hargaBatu4 = 0;
                                                         caratPcsBatu4 = 0;
+                                                        crtPcsBatu4.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -2467,18 +3429,24 @@ class _FormScreenState extends State<FormScreen> {
                                                   Uri.parse(
                                                       '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
                                                 );
+                                                print(response.statusCode);
                                                 if (response.statusCode ==
                                                     200) {
+                                                  print(response.body);
                                                   final data =
                                                       jsonDecode(response.body);
+                                                  print(data);
                                                   setState(() {
                                                     hargaBatu5 =
                                                         data[0]['unitCost'];
                                                     idBatu5 = item.id;
-
                                                     caratPcsBatu5 =
                                                         data[0]['caratPcs'];
-                                                    batu5 = item.keyWord;
+                                                    crtPcsBatu5.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
+                                                    batu5 =
+                                                        item.keyWord.toString();
                                                     stokBatu5.text =
                                                         item.qty.toString();
                                                   });
@@ -2488,16 +3456,15 @@ class _FormScreenState extends State<FormScreen> {
                                               }
                                             },
                                             dropdownDecoratorProps:
-                                                DropDownDecoratorProps(
+                                                const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                label: Text(
-                                                  batu5!,
-                                                  style: const TextStyle(
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
+                                                // label: Text(
+                                                //   batu5!,
+                                                //   style: const TextStyle(
+                                                //       fontSize: 18,
+                                                //       fontWeight: FontWeight.bold),
+                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
@@ -2522,7 +3489,6 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -2544,7 +3510,6 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu5,
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -2559,6 +3524,40 @@ class _FormScreenState extends State<FormScreen> {
                                             ),
                                           ),
                                         ),
+
+                                        //crt/pcsbatu5
+                                        Container(
+                                          width: 120,
+                                          height: 38,
+                                          padding: const EdgeInsets.only(
+                                              top: 10, left: 15),
+                                          child: TextFormField(
+                                            enabled: caratPcsBatu5 <= 0
+                                                ? true
+                                                : false,
+                                            textInputAction:
+                                                TextInputAction.next,
+                                            controller: crtPcsBatu5,
+                                            onChanged: (value) {
+                                              caratPcsBatu5 =
+                                                  double.parse(value);
+                                            },
+                                            decoration: InputDecoration(
+                                              label: const Text(
+                                                'Carat/Pcs',
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          5.0)),
+                                            ),
+                                          ),
+                                        ),
+
                                         qtyBatu5.text.isEmpty
                                             ? const SizedBox()
                                             : Padding(
@@ -2572,6 +3571,7 @@ class _FormScreenState extends State<FormScreen> {
                                                         batu5 = '';
                                                         hargaBatu5 = 0;
                                                         caratPcsBatu5 = 0;
+                                                        crtPcsBatu5.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -2613,18 +3613,24 @@ class _FormScreenState extends State<FormScreen> {
                                                   Uri.parse(
                                                       '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
                                                 );
+                                                print(response.statusCode);
                                                 if (response.statusCode ==
                                                     200) {
+                                                  print(response.body);
                                                   final data =
                                                       jsonDecode(response.body);
+                                                  print(data);
                                                   setState(() {
                                                     hargaBatu6 =
                                                         data[0]['unitCost'];
                                                     idBatu6 = item.id;
-
                                                     caratPcsBatu6 =
                                                         data[0]['caratPcs'];
-                                                    batu6 = item.keyWord;
+                                                    crtPcsBatu6.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
+                                                    batu6 =
+                                                        item.keyWord.toString();
                                                     stokBatu6.text =
                                                         item.qty.toString();
                                                   });
@@ -2634,16 +3640,15 @@ class _FormScreenState extends State<FormScreen> {
                                               }
                                             },
                                             dropdownDecoratorProps:
-                                                DropDownDecoratorProps(
+                                                const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                label: Text(
-                                                  batu6!,
-                                                  style: const TextStyle(
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
+                                                // label: Text(
+                                                //   batu6!,
+                                                //   style: const TextStyle(
+                                                //       fontSize: 18,
+                                                //       fontWeight: FontWeight.bold),
+                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
@@ -2668,7 +3673,6 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -2690,7 +3694,6 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu6,
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -2705,6 +3708,40 @@ class _FormScreenState extends State<FormScreen> {
                                             ),
                                           ),
                                         ),
+
+                                        //crt/pcsbatu6
+                                        Container(
+                                          width: 120,
+                                          height: 38,
+                                          padding: const EdgeInsets.only(
+                                              top: 10, left: 15),
+                                          child: TextFormField(
+                                            enabled: caratPcsBatu6 <= 0
+                                                ? true
+                                                : false,
+                                            textInputAction:
+                                                TextInputAction.next,
+                                            controller: crtPcsBatu6,
+                                            onChanged: (value) {
+                                              caratPcsBatu6 =
+                                                  double.parse(value);
+                                            },
+                                            decoration: InputDecoration(
+                                              label: const Text(
+                                                'Carat/Pcs',
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          5.0)),
+                                            ),
+                                          ),
+                                        ),
+
                                         qtyBatu6.text.isEmpty
                                             ? const SizedBox()
                                             : Padding(
@@ -2718,6 +3755,7 @@ class _FormScreenState extends State<FormScreen> {
                                                         batu6 = '';
                                                         hargaBatu6 = 0;
                                                         caratPcsBatu6 = 0;
+                                                        crtPcsBatu6.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -2759,18 +3797,24 @@ class _FormScreenState extends State<FormScreen> {
                                                   Uri.parse(
                                                       '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
                                                 );
+                                                print(response.statusCode);
                                                 if (response.statusCode ==
                                                     200) {
+                                                  print(response.body);
                                                   final data =
                                                       jsonDecode(response.body);
+                                                  print(data);
                                                   setState(() {
                                                     hargaBatu7 =
                                                         data[0]['unitCost'];
                                                     idBatu7 = item.id;
-
                                                     caratPcsBatu7 =
                                                         data[0]['caratPcs'];
-                                                    batu7 = item.keyWord;
+                                                    crtPcsBatu7.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
+                                                    batu7 =
+                                                        item.keyWord.toString();
                                                     stokBatu7.text =
                                                         item.qty.toString();
                                                   });
@@ -2780,16 +3824,15 @@ class _FormScreenState extends State<FormScreen> {
                                               }
                                             },
                                             dropdownDecoratorProps:
-                                                DropDownDecoratorProps(
+                                                const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                label: Text(
-                                                  batu7!,
-                                                  style: const TextStyle(
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
+                                                // label: Text(
+                                                //   batu7!,
+                                                //   style: const TextStyle(
+                                                //       fontSize: 18,
+                                                //       fontWeight: FontWeight.bold),
+                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
@@ -2814,7 +3857,6 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -2836,7 +3878,6 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu7,
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -2851,6 +3892,40 @@ class _FormScreenState extends State<FormScreen> {
                                             ),
                                           ),
                                         ),
+
+                                        //crt/pcsbatu7
+                                        Container(
+                                          width: 120,
+                                          height: 38,
+                                          padding: const EdgeInsets.only(
+                                              top: 10, left: 15),
+                                          child: TextFormField(
+                                            enabled: caratPcsBatu7 <= 0
+                                                ? true
+                                                : false,
+                                            textInputAction:
+                                                TextInputAction.next,
+                                            controller: crtPcsBatu7,
+                                            onChanged: (value) {
+                                              caratPcsBatu7 =
+                                                  double.parse(value);
+                                            },
+                                            decoration: InputDecoration(
+                                              label: const Text(
+                                                'Carat/Pcs',
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          5.0)),
+                                            ),
+                                          ),
+                                        ),
+
                                         qtyBatu7.text.isEmpty
                                             ? const SizedBox()
                                             : Padding(
@@ -2864,6 +3939,7 @@ class _FormScreenState extends State<FormScreen> {
                                                         batu7 = '';
                                                         hargaBatu7 = 0;
                                                         caratPcsBatu7 = 0;
+                                                        crtPcsBatu7.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -2905,18 +3981,24 @@ class _FormScreenState extends State<FormScreen> {
                                                   Uri.parse(
                                                       '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
                                                 );
+                                                print(response.statusCode);
                                                 if (response.statusCode ==
                                                     200) {
+                                                  print(response.body);
                                                   final data =
                                                       jsonDecode(response.body);
+                                                  print(data);
                                                   setState(() {
                                                     hargaBatu8 =
                                                         data[0]['unitCost'];
                                                     idBatu8 = item.id;
-
                                                     caratPcsBatu8 =
                                                         data[0]['caratPcs'];
-                                                    batu8 = item.keyWord;
+                                                    crtPcsBatu8.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
+                                                    batu8 =
+                                                        item.keyWord.toString();
                                                     stokBatu8.text =
                                                         item.qty.toString();
                                                   });
@@ -2926,16 +4008,15 @@ class _FormScreenState extends State<FormScreen> {
                                               }
                                             },
                                             dropdownDecoratorProps:
-                                                DropDownDecoratorProps(
+                                                const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                label: Text(
-                                                  batu8!,
-                                                  style: const TextStyle(
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
+                                                // label: Text(
+                                                //   batu8!,
+                                                //   style: const TextStyle(
+                                                //       fontSize: 18,
+                                                //       fontWeight: FontWeight.bold),
+                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
@@ -2960,7 +4041,6 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -2982,7 +4062,6 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu8,
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -2997,6 +4076,40 @@ class _FormScreenState extends State<FormScreen> {
                                             ),
                                           ),
                                         ),
+
+                                        //crt/pcsbatu8
+                                        Container(
+                                          width: 120,
+                                          height: 38,
+                                          padding: const EdgeInsets.only(
+                                              top: 10, left: 15),
+                                          child: TextFormField(
+                                            enabled: caratPcsBatu8 <= 0
+                                                ? true
+                                                : false,
+                                            textInputAction:
+                                                TextInputAction.next,
+                                            controller: crtPcsBatu8,
+                                            onChanged: (value) {
+                                              caratPcsBatu8 =
+                                                  double.parse(value);
+                                            },
+                                            decoration: InputDecoration(
+                                              label: const Text(
+                                                'Carat/Pcs',
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          5.0)),
+                                            ),
+                                          ),
+                                        ),
+
                                         qtyBatu8.text.isEmpty
                                             ? const SizedBox()
                                             : Padding(
@@ -3010,6 +4123,7 @@ class _FormScreenState extends State<FormScreen> {
                                                         batu8 = '';
                                                         hargaBatu8 = 0;
                                                         caratPcsBatu8 = 0;
+                                                        crtPcsBatu8.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -3051,18 +4165,24 @@ class _FormScreenState extends State<FormScreen> {
                                                   Uri.parse(
                                                       '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
                                                 );
+                                                print(response.statusCode);
                                                 if (response.statusCode ==
                                                     200) {
+                                                  print(response.body);
                                                   final data =
                                                       jsonDecode(response.body);
+                                                  print(data);
                                                   setState(() {
                                                     hargaBatu9 =
                                                         data[0]['unitCost'];
                                                     idBatu9 = item.id;
-
                                                     caratPcsBatu9 =
                                                         data[0]['caratPcs'];
-                                                    batu9 = item.keyWord;
+                                                    crtPcsBatu9.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
+                                                    batu9 =
+                                                        item.keyWord.toString();
                                                     stokBatu9.text =
                                                         item.qty.toString();
                                                   });
@@ -3072,16 +4192,15 @@ class _FormScreenState extends State<FormScreen> {
                                               }
                                             },
                                             dropdownDecoratorProps:
-                                                DropDownDecoratorProps(
+                                                const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                label: Text(
-                                                  batu9!,
-                                                  style: const TextStyle(
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
+                                                // label: Text(
+                                                //   batu9!,
+                                                //   style: const TextStyle(
+                                                //       fontSize: 18,
+                                                //       fontWeight: FontWeight.bold),
+                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
@@ -3106,7 +4225,6 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -3128,7 +4246,6 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu9,
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -3143,6 +4260,40 @@ class _FormScreenState extends State<FormScreen> {
                                             ),
                                           ),
                                         ),
+
+                                        //crt/pcsbatu9
+                                        Container(
+                                          width: 120,
+                                          height: 38,
+                                          padding: const EdgeInsets.only(
+                                              top: 10, left: 15),
+                                          child: TextFormField(
+                                            enabled: caratPcsBatu9 <= 0
+                                                ? true
+                                                : false,
+                                            textInputAction:
+                                                TextInputAction.next,
+                                            controller: crtPcsBatu9,
+                                            onChanged: (value) {
+                                              caratPcsBatu9 =
+                                                  double.parse(value);
+                                            },
+                                            decoration: InputDecoration(
+                                              label: const Text(
+                                                'Carat/Pcs',
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          5.0)),
+                                            ),
+                                          ),
+                                        ),
+
                                         qtyBatu9.text.isEmpty
                                             ? const SizedBox()
                                             : Padding(
@@ -3156,6 +4307,7 @@ class _FormScreenState extends State<FormScreen> {
                                                         batu9 = '';
                                                         hargaBatu9 = 0;
                                                         caratPcsBatu9 = 0;
+                                                        crtPcsBatu9.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -3197,18 +4349,24 @@ class _FormScreenState extends State<FormScreen> {
                                                   Uri.parse(
                                                       '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
                                                 );
+                                                print(response.statusCode);
                                                 if (response.statusCode ==
                                                     200) {
+                                                  print(response.body);
                                                   final data =
                                                       jsonDecode(response.body);
+                                                  print(data);
                                                   setState(() {
                                                     hargaBatu10 =
                                                         data[0]['unitCost'];
                                                     idBatu10 = item.id;
-
                                                     caratPcsBatu10 =
                                                         data[0]['caratPcs'];
-                                                    batu10 = item.keyWord;
+                                                    crtPcsBatu10.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
+                                                    batu10 =
+                                                        item.keyWord.toString();
                                                     stokBatu10.text =
                                                         item.qty.toString();
                                                   });
@@ -3218,16 +4376,15 @@ class _FormScreenState extends State<FormScreen> {
                                               }
                                             },
                                             dropdownDecoratorProps:
-                                                DropDownDecoratorProps(
+                                                const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                label: Text(
-                                                  batu10!,
-                                                  style: const TextStyle(
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
+                                                // label: Text(
+                                                //   batu10!,
+                                                //   style: const TextStyle(
+                                                //       fontSize: 18,
+                                                //       fontWeight: FontWeight.bold),
+                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
@@ -3253,7 +4410,6 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -3275,7 +4431,6 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu10,
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -3290,6 +4445,40 @@ class _FormScreenState extends State<FormScreen> {
                                             ),
                                           ),
                                         ),
+
+                                        //crt/pcsbatu10
+                                        Container(
+                                          width: 120,
+                                          height: 38,
+                                          padding: const EdgeInsets.only(
+                                              top: 10, left: 15),
+                                          child: TextFormField(
+                                            enabled: caratPcsBatu10 <= 0
+                                                ? true
+                                                : false,
+                                            textInputAction:
+                                                TextInputAction.next,
+                                            controller: crtPcsBatu10,
+                                            onChanged: (value) {
+                                              caratPcsBatu10 =
+                                                  double.parse(value);
+                                            },
+                                            decoration: InputDecoration(
+                                              label: const Text(
+                                                'Carat/Pcs',
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          5.0)),
+                                            ),
+                                          ),
+                                        ),
+
                                         qtyBatu10.text.isEmpty
                                             ? const SizedBox()
                                             : Padding(
@@ -3303,6 +4492,7 @@ class _FormScreenState extends State<FormScreen> {
                                                         batu10 = '';
                                                         hargaBatu10 = 0;
                                                         caratPcsBatu10 = 0;
+                                                        crtPcsBatu10.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -3344,18 +4534,24 @@ class _FormScreenState extends State<FormScreen> {
                                                   Uri.parse(
                                                       '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
                                                 );
+                                                print(response.statusCode);
                                                 if (response.statusCode ==
                                                     200) {
+                                                  print(response.body);
                                                   final data =
                                                       jsonDecode(response.body);
+                                                  print(data);
                                                   setState(() {
                                                     hargaBatu11 =
                                                         data[0]['unitCost'];
                                                     idBatu11 = item.id;
-
                                                     caratPcsBatu11 =
                                                         data[0]['caratPcs'];
-                                                    batu11 = item.keyWord;
+                                                    crtPcsBatu11.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
+                                                    batu11 =
+                                                        item.keyWord.toString();
                                                     stokBatu11.text =
                                                         item.qty.toString();
                                                   });
@@ -3365,16 +4561,15 @@ class _FormScreenState extends State<FormScreen> {
                                               }
                                             },
                                             dropdownDecoratorProps:
-                                                DropDownDecoratorProps(
+                                                const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                label: Text(
-                                                  batu11!,
-                                                  style: const TextStyle(
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
+                                                // label: Text(
+                                                //   batu11!,
+                                                //   style: const TextStyle(
+                                                //       fontSize: 18,
+                                                //       fontWeight: FontWeight.bold),
+                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
@@ -3400,7 +4595,6 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -3422,7 +4616,6 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu11,
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -3437,6 +4630,40 @@ class _FormScreenState extends State<FormScreen> {
                                             ),
                                           ),
                                         ),
+
+                                        //crt/pcsbatu11
+                                        Container(
+                                          width: 120,
+                                          height: 38,
+                                          padding: const EdgeInsets.only(
+                                              top: 10, left: 15),
+                                          child: TextFormField(
+                                            enabled: caratPcsBatu11 <= 0
+                                                ? true
+                                                : false,
+                                            textInputAction:
+                                                TextInputAction.next,
+                                            controller: crtPcsBatu11,
+                                            onChanged: (value) {
+                                              caratPcsBatu11 =
+                                                  double.parse(value);
+                                            },
+                                            decoration: InputDecoration(
+                                              label: const Text(
+                                                'Carat/Pcs',
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          5.0)),
+                                            ),
+                                          ),
+                                        ),
+
                                         qtyBatu11.text.isEmpty
                                             ? const SizedBox()
                                             : Padding(
@@ -3450,6 +4677,7 @@ class _FormScreenState extends State<FormScreen> {
                                                         batu11 = '';
                                                         hargaBatu11 = 0;
                                                         caratPcsBatu11 = 0;
+                                                        crtPcsBatu11.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -3491,18 +4719,24 @@ class _FormScreenState extends State<FormScreen> {
                                                   Uri.parse(
                                                       '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
                                                 );
+                                                print(response.statusCode);
                                                 if (response.statusCode ==
                                                     200) {
+                                                  print(response.body);
                                                   final data =
                                                       jsonDecode(response.body);
+                                                  print(data);
                                                   setState(() {
                                                     hargaBatu12 =
                                                         data[0]['unitCost'];
                                                     idBatu12 = item.id;
-
                                                     caratPcsBatu12 =
                                                         data[0]['caratPcs'];
-                                                    batu12 = item.keyWord;
+                                                    crtPcsBatu12.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
+                                                    batu12 =
+                                                        item.keyWord.toString();
                                                     stokBatu12.text =
                                                         item.qty.toString();
                                                   });
@@ -3512,16 +4746,15 @@ class _FormScreenState extends State<FormScreen> {
                                               }
                                             },
                                             dropdownDecoratorProps:
-                                                DropDownDecoratorProps(
+                                                const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                label: Text(
-                                                  batu12!,
-                                                  style: const TextStyle(
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
+                                                // label: Text(
+                                                //   batu12!,
+                                                //   style: const TextStyle(
+                                                //       fontSize: 18,
+                                                //       fontWeight: FontWeight.bold),
+                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
@@ -3547,7 +4780,6 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -3569,7 +4801,6 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu12,
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -3584,6 +4815,40 @@ class _FormScreenState extends State<FormScreen> {
                                             ),
                                           ),
                                         ),
+
+                                        //crt/pcsbatu12
+                                        Container(
+                                          width: 120,
+                                          height: 38,
+                                          padding: const EdgeInsets.only(
+                                              top: 10, left: 15),
+                                          child: TextFormField(
+                                            enabled: caratPcsBatu12 <= 0
+                                                ? true
+                                                : false,
+                                            textInputAction:
+                                                TextInputAction.next,
+                                            controller: crtPcsBatu12,
+                                            onChanged: (value) {
+                                              caratPcsBatu12 =
+                                                  double.parse(value);
+                                            },
+                                            decoration: InputDecoration(
+                                              label: const Text(
+                                                'Carat/Pcs',
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          5.0)),
+                                            ),
+                                          ),
+                                        ),
+
                                         qtyBatu12.text.isEmpty
                                             ? const SizedBox()
                                             : Padding(
@@ -3597,6 +4862,7 @@ class _FormScreenState extends State<FormScreen> {
                                                         batu12 = '';
                                                         hargaBatu12 = 0;
                                                         caratPcsBatu12 = 0;
+                                                        crtPcsBatu12.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -3638,18 +4904,24 @@ class _FormScreenState extends State<FormScreen> {
                                                   Uri.parse(
                                                       '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
                                                 );
+                                                print(response.statusCode);
                                                 if (response.statusCode ==
                                                     200) {
+                                                  print(response.body);
                                                   final data =
                                                       jsonDecode(response.body);
+                                                  print(data);
                                                   setState(() {
                                                     hargaBatu13 =
                                                         data[0]['unitCost'];
                                                     idBatu13 = item.id;
-
                                                     caratPcsBatu13 =
                                                         data[0]['caratPcs'];
-                                                    batu13 = item.keyWord;
+                                                    crtPcsBatu13.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
+                                                    batu13 =
+                                                        item.keyWord.toString();
                                                     stokBatu13.text =
                                                         item.qty.toString();
                                                   });
@@ -3659,16 +4931,15 @@ class _FormScreenState extends State<FormScreen> {
                                               }
                                             },
                                             dropdownDecoratorProps:
-                                                DropDownDecoratorProps(
+                                                const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                label: Text(
-                                                  batu13!,
-                                                  style: const TextStyle(
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
+                                                // label: Text(
+                                                //   batu13!,
+                                                //   style: const TextStyle(
+                                                //       fontSize: 18,
+                                                //       fontWeight: FontWeight.bold),
+                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
@@ -3694,7 +4965,6 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -3716,7 +4986,6 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu13,
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -3731,6 +5000,40 @@ class _FormScreenState extends State<FormScreen> {
                                             ),
                                           ),
                                         ),
+
+                                        //crt/pcsbatu13
+                                        Container(
+                                          width: 120,
+                                          height: 38,
+                                          padding: const EdgeInsets.only(
+                                              top: 10, left: 15),
+                                          child: TextFormField(
+                                            enabled: caratPcsBatu13 <= 0
+                                                ? true
+                                                : false,
+                                            textInputAction:
+                                                TextInputAction.next,
+                                            controller: crtPcsBatu13,
+                                            onChanged: (value) {
+                                              caratPcsBatu13 =
+                                                  double.parse(value);
+                                            },
+                                            decoration: InputDecoration(
+                                              label: const Text(
+                                                'Carat/Pcs',
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          5.0)),
+                                            ),
+                                          ),
+                                        ),
+
                                         qtyBatu13.text.isEmpty
                                             ? const SizedBox()
                                             : Padding(
@@ -3744,6 +5047,7 @@ class _FormScreenState extends State<FormScreen> {
                                                         batu13 = '';
                                                         hargaBatu13 = 0;
                                                         caratPcsBatu13 = 0;
+                                                        crtPcsBatu13.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -3785,18 +5089,24 @@ class _FormScreenState extends State<FormScreen> {
                                                   Uri.parse(
                                                       '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
                                                 );
+                                                print(response.statusCode);
                                                 if (response.statusCode ==
                                                     200) {
+                                                  print(response.body);
                                                   final data =
                                                       jsonDecode(response.body);
+                                                  print(data);
                                                   setState(() {
                                                     hargaBatu14 =
                                                         data[0]['unitCost'];
                                                     idBatu14 = item.id;
-
                                                     caratPcsBatu14 =
                                                         data[0]['caratPcs'];
-                                                    batu14 = item.keyWord;
+                                                    crtPcsBatu14.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
+                                                    batu14 =
+                                                        item.keyWord.toString();
                                                     stokBatu14.text =
                                                         item.qty.toString();
                                                   });
@@ -3806,16 +5116,15 @@ class _FormScreenState extends State<FormScreen> {
                                               }
                                             },
                                             dropdownDecoratorProps:
-                                                DropDownDecoratorProps(
+                                                const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                label: Text(
-                                                  batu14!,
-                                                  style: const TextStyle(
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
+                                                // label: Text(
+                                                //   batu14!,
+                                                //   style: const TextStyle(
+                                                //       fontSize: 18,
+                                                //       fontWeight: FontWeight.bold),
+                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
@@ -3841,7 +5150,6 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -3863,7 +5171,6 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu14,
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -3878,6 +5185,40 @@ class _FormScreenState extends State<FormScreen> {
                                             ),
                                           ),
                                         ),
+
+                                        //crt/pcsbatu14
+                                        Container(
+                                          width: 120,
+                                          height: 38,
+                                          padding: const EdgeInsets.only(
+                                              top: 10, left: 15),
+                                          child: TextFormField(
+                                            enabled: caratPcsBatu14 <= 0
+                                                ? true
+                                                : false,
+                                            textInputAction:
+                                                TextInputAction.next,
+                                            controller: crtPcsBatu14,
+                                            onChanged: (value) {
+                                              caratPcsBatu14 =
+                                                  double.parse(value);
+                                            },
+                                            decoration: InputDecoration(
+                                              label: const Text(
+                                                'Carat/Pcs',
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          5.0)),
+                                            ),
+                                          ),
+                                        ),
+
                                         qtyBatu14.text.isEmpty
                                             ? const SizedBox()
                                             : Padding(
@@ -3891,6 +5232,7 @@ class _FormScreenState extends State<FormScreen> {
                                                         batu14 = '';
                                                         hargaBatu14 = 0;
                                                         caratPcsBatu14 = 0;
+                                                        crtPcsBatu14.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -3932,18 +5274,24 @@ class _FormScreenState extends State<FormScreen> {
                                                   Uri.parse(
                                                       '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
                                                 );
+                                                print(response.statusCode);
                                                 if (response.statusCode ==
                                                     200) {
+                                                  print(response.body);
                                                   final data =
                                                       jsonDecode(response.body);
+                                                  print(data);
                                                   setState(() {
                                                     hargaBatu15 =
                                                         data[0]['unitCost'];
                                                     idBatu15 = item.id;
-
                                                     caratPcsBatu15 =
                                                         data[0]['caratPcs'];
-                                                    batu15 = item.keyWord;
+                                                    crtPcsBatu15.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
+                                                    batu15 =
+                                                        item.keyWord.toString();
                                                     stokBatu15.text =
                                                         item.qty.toString();
                                                   });
@@ -3953,16 +5301,15 @@ class _FormScreenState extends State<FormScreen> {
                                               }
                                             },
                                             dropdownDecoratorProps:
-                                                DropDownDecoratorProps(
+                                                const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                label: Text(
-                                                  batu15!,
-                                                  style: const TextStyle(
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
+                                                // label: Text(
+                                                //   batu15!,
+                                                //   style: const TextStyle(
+                                                //       fontSize: 18,
+                                                //       fontWeight: FontWeight.bold),
+                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
@@ -3988,7 +5335,6 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -4010,7 +5356,6 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu15,
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -4025,6 +5370,40 @@ class _FormScreenState extends State<FormScreen> {
                                             ),
                                           ),
                                         ),
+
+                                        //crt/pcsbatu15
+                                        Container(
+                                          width: 120,
+                                          height: 38,
+                                          padding: const EdgeInsets.only(
+                                              top: 10, left: 15),
+                                          child: TextFormField(
+                                            enabled: caratPcsBatu15 <= 0
+                                                ? true
+                                                : false,
+                                            textInputAction:
+                                                TextInputAction.next,
+                                            controller: crtPcsBatu15,
+                                            onChanged: (value) {
+                                              caratPcsBatu15 =
+                                                  double.parse(value);
+                                            },
+                                            decoration: InputDecoration(
+                                              label: const Text(
+                                                'Carat/Pcs',
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          5.0)),
+                                            ),
+                                          ),
+                                        ),
+
                                         qtyBatu15.text.isEmpty
                                             ? const SizedBox()
                                             : Padding(
@@ -4038,6 +5417,7 @@ class _FormScreenState extends State<FormScreen> {
                                                         batu15 = '';
                                                         hargaBatu15 = 0;
                                                         caratPcsBatu15 = 0;
+                                                        crtPcsBatu15.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -4079,18 +5459,24 @@ class _FormScreenState extends State<FormScreen> {
                                                   Uri.parse(
                                                       '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
                                                 );
+                                                print(response.statusCode);
                                                 if (response.statusCode ==
                                                     200) {
+                                                  print(response.body);
                                                   final data =
                                                       jsonDecode(response.body);
+                                                  print(data);
                                                   setState(() {
                                                     hargaBatu16 =
                                                         data[0]['unitCost'];
                                                     idBatu16 = item.id;
-
                                                     caratPcsBatu16 =
                                                         data[0]['caratPcs'];
-                                                    batu16 = item.keyWord;
+                                                    crtPcsBatu16.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
+                                                    batu16 =
+                                                        item.keyWord.toString();
                                                     stokBatu16.text =
                                                         item.qty.toString();
                                                   });
@@ -4100,16 +5486,15 @@ class _FormScreenState extends State<FormScreen> {
                                               }
                                             },
                                             dropdownDecoratorProps:
-                                                DropDownDecoratorProps(
+                                                const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                label: Text(
-                                                  batu16!,
-                                                  style: const TextStyle(
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
+                                                // label: Text(
+                                                //   batu16!,
+                                                //   style: const TextStyle(
+                                                //       fontSize: 18,
+                                                //       fontWeight: FontWeight.bold),
+                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
@@ -4135,7 +5520,6 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -4157,7 +5541,6 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu16,
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -4172,6 +5555,40 @@ class _FormScreenState extends State<FormScreen> {
                                             ),
                                           ),
                                         ),
+
+                                        //crt/pcsbatu16
+                                        Container(
+                                          width: 120,
+                                          height: 38,
+                                          padding: const EdgeInsets.only(
+                                              top: 10, left: 15),
+                                          child: TextFormField(
+                                            enabled: caratPcsBatu16 <= 0
+                                                ? true
+                                                : false,
+                                            textInputAction:
+                                                TextInputAction.next,
+                                            controller: crtPcsBatu16,
+                                            onChanged: (value) {
+                                              caratPcsBatu16 =
+                                                  double.parse(value);
+                                            },
+                                            decoration: InputDecoration(
+                                              label: const Text(
+                                                'Carat/Pcs',
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          5.0)),
+                                            ),
+                                          ),
+                                        ),
+
                                         qtyBatu16.text.isEmpty
                                             ? const SizedBox()
                                             : Padding(
@@ -4185,6 +5602,7 @@ class _FormScreenState extends State<FormScreen> {
                                                         batu16 = '';
                                                         hargaBatu16 = 0;
                                                         caratPcsBatu16 = 0;
+                                                        crtPcsBatu16.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -4226,18 +5644,24 @@ class _FormScreenState extends State<FormScreen> {
                                                   Uri.parse(
                                                       '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
                                                 );
+                                                print(response.statusCode);
                                                 if (response.statusCode ==
                                                     200) {
+                                                  print(response.body);
                                                   final data =
                                                       jsonDecode(response.body);
+                                                  print(data);
                                                   setState(() {
                                                     hargaBatu17 =
                                                         data[0]['unitCost'];
                                                     idBatu17 = item.id;
-
                                                     caratPcsBatu17 =
                                                         data[0]['caratPcs'];
-                                                    batu17 = item.keyWord;
+                                                    crtPcsBatu17.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
+                                                    batu17 =
+                                                        item.keyWord.toString();
                                                     stokBatu17.text =
                                                         item.qty.toString();
                                                   });
@@ -4247,16 +5671,15 @@ class _FormScreenState extends State<FormScreen> {
                                               }
                                             },
                                             dropdownDecoratorProps:
-                                                DropDownDecoratorProps(
+                                                const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                label: Text(
-                                                  batu17!,
-                                                  style: const TextStyle(
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
+                                                // label: Text(
+                                                //   batu17!,
+                                                //   style: const TextStyle(
+                                                //       fontSize: 18,
+                                                //       fontWeight: FontWeight.bold),
+                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
@@ -4282,7 +5705,6 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -4304,7 +5726,6 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu17,
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -4319,6 +5740,40 @@ class _FormScreenState extends State<FormScreen> {
                                             ),
                                           ),
                                         ),
+
+                                        //crt/pcsbatu17
+                                        Container(
+                                          width: 120,
+                                          height: 38,
+                                          padding: const EdgeInsets.only(
+                                              top: 10, left: 15),
+                                          child: TextFormField(
+                                            enabled: caratPcsBatu17 <= 0
+                                                ? true
+                                                : false,
+                                            textInputAction:
+                                                TextInputAction.next,
+                                            controller: crtPcsBatu17,
+                                            onChanged: (value) {
+                                              caratPcsBatu17 =
+                                                  double.parse(value);
+                                            },
+                                            decoration: InputDecoration(
+                                              label: const Text(
+                                                'Carat/Pcs',
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          5.0)),
+                                            ),
+                                          ),
+                                        ),
+
                                         qtyBatu17.text.isEmpty
                                             ? const SizedBox()
                                             : Padding(
@@ -4332,6 +5787,7 @@ class _FormScreenState extends State<FormScreen> {
                                                         batu17 = '';
                                                         hargaBatu17 = 0;
                                                         caratPcsBatu17 = 0;
+                                                        crtPcsBatu17.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -4373,18 +5829,24 @@ class _FormScreenState extends State<FormScreen> {
                                                   Uri.parse(
                                                       '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
                                                 );
+                                                print(response.statusCode);
                                                 if (response.statusCode ==
                                                     200) {
+                                                  print(response.body);
                                                   final data =
                                                       jsonDecode(response.body);
+                                                  print(data);
                                                   setState(() {
                                                     hargaBatu18 =
                                                         data[0]['unitCost'];
                                                     idBatu18 = item.id;
-
                                                     caratPcsBatu18 =
                                                         data[0]['caratPcs'];
-                                                    batu18 = item.keyWord;
+                                                    crtPcsBatu18.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
+                                                    batu18 =
+                                                        item.keyWord.toString();
                                                     stokBatu18.text =
                                                         item.qty.toString();
                                                   });
@@ -4394,16 +5856,15 @@ class _FormScreenState extends State<FormScreen> {
                                               }
                                             },
                                             dropdownDecoratorProps:
-                                                DropDownDecoratorProps(
+                                                const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                label: Text(
-                                                  batu18!,
-                                                  style: const TextStyle(
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
+                                                // label: Text(
+                                                //   batu18!,
+                                                //   style: const TextStyle(
+                                                //       fontSize: 18,
+                                                //       fontWeight: FontWeight.bold),
+                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
@@ -4429,7 +5890,6 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -4451,7 +5911,6 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu18,
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -4466,6 +5925,40 @@ class _FormScreenState extends State<FormScreen> {
                                             ),
                                           ),
                                         ),
+
+                                        //crt/pcsbatu18
+                                        Container(
+                                          width: 120,
+                                          height: 38,
+                                          padding: const EdgeInsets.only(
+                                              top: 10, left: 15),
+                                          child: TextFormField(
+                                            enabled: caratPcsBatu18 <= 0
+                                                ? true
+                                                : false,
+                                            textInputAction:
+                                                TextInputAction.next,
+                                            controller: crtPcsBatu18,
+                                            onChanged: (value) {
+                                              caratPcsBatu18 =
+                                                  double.parse(value);
+                                            },
+                                            decoration: InputDecoration(
+                                              label: const Text(
+                                                'Carat/Pcs',
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          5.0)),
+                                            ),
+                                          ),
+                                        ),
+
                                         qtyBatu18.text.isEmpty
                                             ? const SizedBox()
                                             : Padding(
@@ -4479,6 +5972,7 @@ class _FormScreenState extends State<FormScreen> {
                                                         batu18 = '';
                                                         hargaBatu18 = 0;
                                                         caratPcsBatu18 = 0;
+                                                        crtPcsBatu18.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -4520,18 +6014,24 @@ class _FormScreenState extends State<FormScreen> {
                                                   Uri.parse(
                                                       '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
                                                 );
+                                                print(response.statusCode);
                                                 if (response.statusCode ==
                                                     200) {
+                                                  print(response.body);
                                                   final data =
                                                       jsonDecode(response.body);
+                                                  print(data);
                                                   setState(() {
                                                     hargaBatu19 =
                                                         data[0]['unitCost'];
                                                     idBatu19 = item.id;
-
                                                     caratPcsBatu19 =
                                                         data[0]['caratPcs'];
-                                                    batu19 = item.keyWord;
+                                                    crtPcsBatu19.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
+                                                    batu19 =
+                                                        item.keyWord.toString();
                                                     stokBatu19.text =
                                                         item.qty.toString();
                                                   });
@@ -4541,16 +6041,15 @@ class _FormScreenState extends State<FormScreen> {
                                               }
                                             },
                                             dropdownDecoratorProps:
-                                                DropDownDecoratorProps(
+                                                const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                label: Text(
-                                                  batu19!,
-                                                  style: const TextStyle(
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
+                                                // label: Text(
+                                                //   batu19!,
+                                                //   style: const TextStyle(
+                                                //       fontSize: 18,
+                                                //       fontWeight: FontWeight.bold),
+                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
@@ -4576,7 +6075,6 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -4598,7 +6096,6 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu19,
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -4613,6 +6110,40 @@ class _FormScreenState extends State<FormScreen> {
                                             ),
                                           ),
                                         ),
+
+                                        //crt/pcsbatu19
+                                        Container(
+                                          width: 120,
+                                          height: 38,
+                                          padding: const EdgeInsets.only(
+                                              top: 10, left: 15),
+                                          child: TextFormField(
+                                            enabled: caratPcsBatu19 <= 0
+                                                ? true
+                                                : false,
+                                            textInputAction:
+                                                TextInputAction.next,
+                                            controller: crtPcsBatu19,
+                                            onChanged: (value) {
+                                              caratPcsBatu19 =
+                                                  double.parse(value);
+                                            },
+                                            decoration: InputDecoration(
+                                              label: const Text(
+                                                'Carat/Pcs',
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          5.0)),
+                                            ),
+                                          ),
+                                        ),
+
                                         qtyBatu19.text.isEmpty
                                             ? const SizedBox()
                                             : Padding(
@@ -4626,6 +6157,7 @@ class _FormScreenState extends State<FormScreen> {
                                                         batu19 = '';
                                                         hargaBatu19 = 0;
                                                         caratPcsBatu19 = 0;
+                                                        crtPcsBatu19.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -4667,18 +6199,24 @@ class _FormScreenState extends State<FormScreen> {
                                                   Uri.parse(
                                                       '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
                                                 );
+                                                print(response.statusCode);
                                                 if (response.statusCode ==
                                                     200) {
+                                                  print(response.body);
                                                   final data =
                                                       jsonDecode(response.body);
+                                                  print(data);
                                                   setState(() {
                                                     hargaBatu20 =
                                                         data[0]['unitCost'];
                                                     idBatu20 = item.id;
-
                                                     caratPcsBatu20 =
                                                         data[0]['caratPcs'];
-                                                    batu20 = item.keyWord;
+                                                    crtPcsBatu20.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
+                                                    batu20 =
+                                                        item.keyWord.toString();
                                                     stokBatu20.text =
                                                         item.qty.toString();
                                                   });
@@ -4688,16 +6226,15 @@ class _FormScreenState extends State<FormScreen> {
                                               }
                                             },
                                             dropdownDecoratorProps:
-                                                DropDownDecoratorProps(
+                                                const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                label: Text(
-                                                  batu20!,
-                                                  style: const TextStyle(
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
+                                                // label: Text(
+                                                //   batu20!,
+                                                //   style: const TextStyle(
+                                                //       fontSize: 18,
+                                                //       fontWeight: FontWeight.bold),
+                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
@@ -4723,7 +6260,6 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -4745,7 +6281,6 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu20,
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -4760,6 +6295,40 @@ class _FormScreenState extends State<FormScreen> {
                                             ),
                                           ),
                                         ),
+
+                                        //crt/pcsbatu20
+                                        Container(
+                                          width: 120,
+                                          height: 38,
+                                          padding: const EdgeInsets.only(
+                                              top: 10, left: 15),
+                                          child: TextFormField(
+                                            enabled: caratPcsBatu20 <= 0
+                                                ? true
+                                                : false,
+                                            textInputAction:
+                                                TextInputAction.next,
+                                            controller: crtPcsBatu20,
+                                            onChanged: (value) {
+                                              caratPcsBatu20 =
+                                                  double.parse(value);
+                                            },
+                                            decoration: InputDecoration(
+                                              label: const Text(
+                                                'Carat/Pcs',
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          5.0)),
+                                            ),
+                                          ),
+                                        ),
+
                                         qtyBatu20.text.isEmpty
                                             ? const SizedBox()
                                             : Padding(
@@ -4773,6 +6342,7 @@ class _FormScreenState extends State<FormScreen> {
                                                         batu20 = '';
                                                         hargaBatu20 = 0;
                                                         caratPcsBatu20 = 0;
+                                                        crtPcsBatu20.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -4814,17 +6384,24 @@ class _FormScreenState extends State<FormScreen> {
                                                   Uri.parse(
                                                       '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
                                                 );
+                                                print(response.statusCode);
                                                 if (response.statusCode ==
                                                     200) {
+                                                  print(response.body);
                                                   final data =
                                                       jsonDecode(response.body);
+                                                  print(data);
                                                   setState(() {
                                                     hargaBatu21 =
                                                         data[0]['unitCost'];
                                                     idBatu21 = item.id;
                                                     caratPcsBatu21 =
                                                         data[0]['caratPcs'];
-                                                    batu21 = item.keyWord;
+                                                    crtPcsBatu21.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
+                                                    batu21 =
+                                                        item.keyWord.toString();
                                                     stokBatu21.text =
                                                         item.qty.toString();
                                                   });
@@ -4834,16 +6411,15 @@ class _FormScreenState extends State<FormScreen> {
                                               }
                                             },
                                             dropdownDecoratorProps:
-                                                DropDownDecoratorProps(
+                                                const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                label: Text(
-                                                  batu21!,
-                                                  style: const TextStyle(
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
+                                                // label: Text(
+                                                //   batu21!,
+                                                //   style: const TextStyle(
+                                                //       fontSize: 18,
+                                                //       fontWeight: FontWeight.bold),
+                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
@@ -4869,7 +6445,6 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -4891,7 +6466,6 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu21,
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -4906,6 +6480,40 @@ class _FormScreenState extends State<FormScreen> {
                                             ),
                                           ),
                                         ),
+
+                                        //crt/pcsbatu21
+                                        Container(
+                                          width: 120,
+                                          height: 38,
+                                          padding: const EdgeInsets.only(
+                                              top: 10, left: 15),
+                                          child: TextFormField(
+                                            enabled: caratPcsBatu21 <= 0
+                                                ? true
+                                                : false,
+                                            textInputAction:
+                                                TextInputAction.next,
+                                            controller: crtPcsBatu21,
+                                            onChanged: (value) {
+                                              caratPcsBatu21 =
+                                                  double.parse(value);
+                                            },
+                                            decoration: InputDecoration(
+                                              label: const Text(
+                                                'Carat/Pcs',
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          5.0)),
+                                            ),
+                                          ),
+                                        ),
+
                                         qtyBatu21.text.isEmpty
                                             ? const SizedBox()
                                             : Padding(
@@ -4919,6 +6527,7 @@ class _FormScreenState extends State<FormScreen> {
                                                         batu21 = '';
                                                         hargaBatu21 = 0;
                                                         caratPcsBatu21 = 0;
+                                                        crtPcsBatu21.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -4960,17 +6569,24 @@ class _FormScreenState extends State<FormScreen> {
                                                   Uri.parse(
                                                       '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
                                                 );
+                                                print(response.statusCode);
                                                 if (response.statusCode ==
                                                     200) {
+                                                  print(response.body);
                                                   final data =
                                                       jsonDecode(response.body);
+                                                  print(data);
                                                   setState(() {
                                                     hargaBatu22 =
                                                         data[0]['unitCost'];
                                                     idBatu22 = item.id;
                                                     caratPcsBatu22 =
                                                         data[0]['caratPcs'];
-                                                    batu22 = item.keyWord;
+                                                    crtPcsBatu22.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
+                                                    batu22 =
+                                                        item.keyWord.toString();
                                                     stokBatu22.text =
                                                         item.qty.toString();
                                                   });
@@ -4980,16 +6596,15 @@ class _FormScreenState extends State<FormScreen> {
                                               }
                                             },
                                             dropdownDecoratorProps:
-                                                DropDownDecoratorProps(
+                                                const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                label: Text(
-                                                  batu22!,
-                                                  style: const TextStyle(
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
+                                                // label: Text(
+                                                //   batu22!,
+                                                //   style: const TextStyle(
+                                                //       fontSize: 18,
+                                                //       fontWeight: FontWeight.bold),
+                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
@@ -5015,7 +6630,6 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -5037,7 +6651,6 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu22,
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -5052,6 +6665,40 @@ class _FormScreenState extends State<FormScreen> {
                                             ),
                                           ),
                                         ),
+
+                                        //crt/pcsbatu22
+                                        Container(
+                                          width: 120,
+                                          height: 38,
+                                          padding: const EdgeInsets.only(
+                                              top: 10, left: 15),
+                                          child: TextFormField(
+                                            enabled: caratPcsBatu22 <= 0
+                                                ? true
+                                                : false,
+                                            textInputAction:
+                                                TextInputAction.next,
+                                            controller: crtPcsBatu22,
+                                            onChanged: (value) {
+                                              caratPcsBatu22 =
+                                                  double.parse(value);
+                                            },
+                                            decoration: InputDecoration(
+                                              label: const Text(
+                                                'Carat/Pcs',
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          5.0)),
+                                            ),
+                                          ),
+                                        ),
+
                                         qtyBatu22.text.isEmpty
                                             ? const SizedBox()
                                             : Padding(
@@ -5065,6 +6712,7 @@ class _FormScreenState extends State<FormScreen> {
                                                         batu22 = '';
                                                         hargaBatu22 = 0;
                                                         caratPcsBatu22 = 0;
+                                                        crtPcsBatu22.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -5106,17 +6754,24 @@ class _FormScreenState extends State<FormScreen> {
                                                   Uri.parse(
                                                       '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
                                                 );
+                                                print(response.statusCode);
                                                 if (response.statusCode ==
                                                     200) {
+                                                  print(response.body);
                                                   final data =
                                                       jsonDecode(response.body);
+                                                  print(data);
                                                   setState(() {
                                                     hargaBatu23 =
                                                         data[0]['unitCost'];
                                                     idBatu23 = item.id;
                                                     caratPcsBatu23 =
                                                         data[0]['caratPcs'];
-                                                    batu23 = item.keyWord;
+                                                    crtPcsBatu23.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
+                                                    batu23 =
+                                                        item.keyWord.toString();
                                                     stokBatu23.text =
                                                         item.qty.toString();
                                                   });
@@ -5126,16 +6781,15 @@ class _FormScreenState extends State<FormScreen> {
                                               }
                                             },
                                             dropdownDecoratorProps:
-                                                DropDownDecoratorProps(
+                                                const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                label: Text(
-                                                  batu23!,
-                                                  style: const TextStyle(
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
+                                                // label: Text(
+                                                //   batu23!,
+                                                //   style: const TextStyle(
+                                                //       fontSize: 18,
+                                                //       fontWeight: FontWeight.bold),
+                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
@@ -5161,7 +6815,6 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -5183,7 +6836,6 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu23,
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -5198,6 +6850,40 @@ class _FormScreenState extends State<FormScreen> {
                                             ),
                                           ),
                                         ),
+
+                                        //crt/pcsbatu23
+                                        Container(
+                                          width: 120,
+                                          height: 38,
+                                          padding: const EdgeInsets.only(
+                                              top: 10, left: 15),
+                                          child: TextFormField(
+                                            enabled: caratPcsBatu23 <= 0
+                                                ? true
+                                                : false,
+                                            textInputAction:
+                                                TextInputAction.next,
+                                            controller: crtPcsBatu23,
+                                            onChanged: (value) {
+                                              caratPcsBatu23 =
+                                                  double.parse(value);
+                                            },
+                                            decoration: InputDecoration(
+                                              label: const Text(
+                                                'Carat/Pcs',
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          5.0)),
+                                            ),
+                                          ),
+                                        ),
+
                                         qtyBatu23.text.isEmpty
                                             ? const SizedBox()
                                             : Padding(
@@ -5211,6 +6897,7 @@ class _FormScreenState extends State<FormScreen> {
                                                         batu23 = '';
                                                         hargaBatu23 = 0;
                                                         caratPcsBatu23 = 0;
+                                                        crtPcsBatu23.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -5252,17 +6939,24 @@ class _FormScreenState extends State<FormScreen> {
                                                   Uri.parse(
                                                       '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
                                                 );
+                                                print(response.statusCode);
                                                 if (response.statusCode ==
                                                     200) {
+                                                  print(response.body);
                                                   final data =
                                                       jsonDecode(response.body);
+                                                  print(data);
                                                   setState(() {
                                                     hargaBatu24 =
                                                         data[0]['unitCost'];
                                                     idBatu24 = item.id;
                                                     caratPcsBatu24 =
                                                         data[0]['caratPcs'];
-                                                    batu24 = item.keyWord;
+                                                    crtPcsBatu24.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
+                                                    batu24 =
+                                                        item.keyWord.toString();
                                                     stokBatu24.text =
                                                         item.qty.toString();
                                                   });
@@ -5272,16 +6966,15 @@ class _FormScreenState extends State<FormScreen> {
                                               }
                                             },
                                             dropdownDecoratorProps:
-                                                DropDownDecoratorProps(
+                                                const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                label: Text(
-                                                  batu24!,
-                                                  style: const TextStyle(
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
+                                                // label: Text(
+                                                //   batu24!,
+                                                //   style: const TextStyle(
+                                                //       fontSize: 18,
+                                                //       fontWeight: FontWeight.bold),
+                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
@@ -5307,7 +7000,6 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -5329,7 +7021,6 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu24,
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -5344,6 +7035,40 @@ class _FormScreenState extends State<FormScreen> {
                                             ),
                                           ),
                                         ),
+
+                                        //crt/pcsbatu24
+                                        Container(
+                                          width: 120,
+                                          height: 38,
+                                          padding: const EdgeInsets.only(
+                                              top: 10, left: 15),
+                                          child: TextFormField(
+                                            enabled: caratPcsBatu24 <= 0
+                                                ? true
+                                                : false,
+                                            textInputAction:
+                                                TextInputAction.next,
+                                            controller: crtPcsBatu24,
+                                            onChanged: (value) {
+                                              caratPcsBatu24 =
+                                                  double.parse(value);
+                                            },
+                                            decoration: InputDecoration(
+                                              label: const Text(
+                                                'Carat/Pcs',
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          5.0)),
+                                            ),
+                                          ),
+                                        ),
+
                                         qtyBatu24.text.isEmpty
                                             ? const SizedBox()
                                             : Padding(
@@ -5357,6 +7082,7 @@ class _FormScreenState extends State<FormScreen> {
                                                         batu24 = '';
                                                         hargaBatu24 = 0;
                                                         caratPcsBatu24 = 0;
+                                                        crtPcsBatu24.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -5398,17 +7124,24 @@ class _FormScreenState extends State<FormScreen> {
                                                   Uri.parse(
                                                       '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
                                                 );
+                                                print(response.statusCode);
                                                 if (response.statusCode ==
                                                     200) {
+                                                  print(response.body);
                                                   final data =
                                                       jsonDecode(response.body);
+                                                  print(data);
                                                   setState(() {
                                                     hargaBatu25 =
                                                         data[0]['unitCost'];
                                                     idBatu25 = item.id;
                                                     caratPcsBatu25 =
                                                         data[0]['caratPcs'];
-                                                    batu25 = item.keyWord;
+                                                    crtPcsBatu25.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
+                                                    batu25 =
+                                                        item.keyWord.toString();
                                                     stokBatu25.text =
                                                         item.qty.toString();
                                                   });
@@ -5418,16 +7151,15 @@ class _FormScreenState extends State<FormScreen> {
                                               }
                                             },
                                             dropdownDecoratorProps:
-                                                DropDownDecoratorProps(
+                                                const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                label: Text(
-                                                  batu25!,
-                                                  style: const TextStyle(
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
+                                                // label: Text(
+                                                //   batu25!,
+                                                //   style: const TextStyle(
+                                                //       fontSize: 18,
+                                                //       fontWeight: FontWeight.bold),
+                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
@@ -5453,7 +7185,6 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -5475,7 +7206,6 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu25,
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -5490,6 +7220,40 @@ class _FormScreenState extends State<FormScreen> {
                                             ),
                                           ),
                                         ),
+
+                                        //crt/pcsbatu25
+                                        Container(
+                                          width: 120,
+                                          height: 38,
+                                          padding: const EdgeInsets.only(
+                                              top: 10, left: 15),
+                                          child: TextFormField(
+                                            enabled: caratPcsBatu25 <= 0
+                                                ? true
+                                                : false,
+                                            textInputAction:
+                                                TextInputAction.next,
+                                            controller: crtPcsBatu25,
+                                            onChanged: (value) {
+                                              caratPcsBatu25 =
+                                                  double.parse(value);
+                                            },
+                                            decoration: InputDecoration(
+                                              label: const Text(
+                                                'Carat/Pcs',
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          5.0)),
+                                            ),
+                                          ),
+                                        ),
+
                                         qtyBatu25.text.isEmpty
                                             ? const SizedBox()
                                             : Padding(
@@ -5503,6 +7267,7 @@ class _FormScreenState extends State<FormScreen> {
                                                         batu25 = '';
                                                         hargaBatu25 = 0;
                                                         caratPcsBatu25 = 0;
+                                                        crtPcsBatu25.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -5544,17 +7309,24 @@ class _FormScreenState extends State<FormScreen> {
                                                   Uri.parse(
                                                       '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
                                                 );
+                                                print(response.statusCode);
                                                 if (response.statusCode ==
                                                     200) {
+                                                  print(response.body);
                                                   final data =
                                                       jsonDecode(response.body);
+                                                  print(data);
                                                   setState(() {
                                                     hargaBatu26 =
                                                         data[0]['unitCost'];
                                                     idBatu26 = item.id;
                                                     caratPcsBatu26 =
                                                         data[0]['caratPcs'];
-                                                    batu26 = item.keyWord;
+                                                    crtPcsBatu26.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
+                                                    batu26 =
+                                                        item.keyWord.toString();
                                                     stokBatu26.text =
                                                         item.qty.toString();
                                                   });
@@ -5564,16 +7336,15 @@ class _FormScreenState extends State<FormScreen> {
                                               }
                                             },
                                             dropdownDecoratorProps:
-                                                DropDownDecoratorProps(
+                                                const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                label: Text(
-                                                  batu26!,
-                                                  style: const TextStyle(
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
+                                                // label: Text(
+                                                //   batu26!,
+                                                //   style: const TextStyle(
+                                                //       fontSize: 18,
+                                                //       fontWeight: FontWeight.bold),
+                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
@@ -5599,7 +7370,6 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -5621,7 +7391,6 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu26,
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -5636,6 +7405,40 @@ class _FormScreenState extends State<FormScreen> {
                                             ),
                                           ),
                                         ),
+
+                                        //crt/pcsbatu26
+                                        Container(
+                                          width: 120,
+                                          height: 38,
+                                          padding: const EdgeInsets.only(
+                                              top: 10, left: 15),
+                                          child: TextFormField(
+                                            enabled: caratPcsBatu26 <= 0
+                                                ? true
+                                                : false,
+                                            textInputAction:
+                                                TextInputAction.next,
+                                            controller: crtPcsBatu26,
+                                            onChanged: (value) {
+                                              caratPcsBatu26 =
+                                                  double.parse(value);
+                                            },
+                                            decoration: InputDecoration(
+                                              label: const Text(
+                                                'Carat/Pcs',
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          5.0)),
+                                            ),
+                                          ),
+                                        ),
+
                                         qtyBatu26.text.isEmpty
                                             ? const SizedBox()
                                             : Padding(
@@ -5649,6 +7452,7 @@ class _FormScreenState extends State<FormScreen> {
                                                         batu26 = '';
                                                         hargaBatu26 = 0;
                                                         caratPcsBatu26 = 0;
+                                                        crtPcsBatu26.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -5690,17 +7494,24 @@ class _FormScreenState extends State<FormScreen> {
                                                   Uri.parse(
                                                       '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
                                                 );
+                                                print(response.statusCode);
                                                 if (response.statusCode ==
                                                     200) {
+                                                  print(response.body);
                                                   final data =
                                                       jsonDecode(response.body);
+                                                  print(data);
                                                   setState(() {
                                                     hargaBatu27 =
                                                         data[0]['unitCost'];
                                                     idBatu27 = item.id;
                                                     caratPcsBatu27 =
                                                         data[0]['caratPcs'];
-                                                    batu27 = item.keyWord;
+                                                    crtPcsBatu27.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
+                                                    batu27 =
+                                                        item.keyWord.toString();
                                                     stokBatu27.text =
                                                         item.qty.toString();
                                                   });
@@ -5710,16 +7521,15 @@ class _FormScreenState extends State<FormScreen> {
                                               }
                                             },
                                             dropdownDecoratorProps:
-                                                DropDownDecoratorProps(
+                                                const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                label: Text(
-                                                  batu27!,
-                                                  style: const TextStyle(
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
+                                                // label: Text(
+                                                //   batu27!,
+                                                //   style: const TextStyle(
+                                                //       fontSize: 18,
+                                                //       fontWeight: FontWeight.bold),
+                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
@@ -5745,7 +7555,6 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -5767,7 +7576,6 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu27,
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -5782,6 +7590,40 @@ class _FormScreenState extends State<FormScreen> {
                                             ),
                                           ),
                                         ),
+
+                                        //crt/pcsbatu27
+                                        Container(
+                                          width: 120,
+                                          height: 38,
+                                          padding: const EdgeInsets.only(
+                                              top: 10, left: 15),
+                                          child: TextFormField(
+                                            enabled: caratPcsBatu27 <= 0
+                                                ? true
+                                                : false,
+                                            textInputAction:
+                                                TextInputAction.next,
+                                            controller: crtPcsBatu27,
+                                            onChanged: (value) {
+                                              caratPcsBatu27 =
+                                                  double.parse(value);
+                                            },
+                                            decoration: InputDecoration(
+                                              label: const Text(
+                                                'Carat/Pcs',
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          5.0)),
+                                            ),
+                                          ),
+                                        ),
+
                                         qtyBatu27.text.isEmpty
                                             ? const SizedBox()
                                             : Padding(
@@ -5795,6 +7637,7 @@ class _FormScreenState extends State<FormScreen> {
                                                         batu27 = '';
                                                         hargaBatu27 = 0;
                                                         caratPcsBatu27 = 0;
+                                                        crtPcsBatu27.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -5836,17 +7679,24 @@ class _FormScreenState extends State<FormScreen> {
                                                   Uri.parse(
                                                       '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
                                                 );
+                                                print(response.statusCode);
                                                 if (response.statusCode ==
                                                     200) {
+                                                  print(response.body);
                                                   final data =
                                                       jsonDecode(response.body);
+                                                  print(data);
                                                   setState(() {
                                                     hargaBatu28 =
                                                         data[0]['unitCost'];
                                                     idBatu28 = item.id;
                                                     caratPcsBatu28 =
                                                         data[0]['caratPcs'];
-                                                    batu28 = item.keyWord;
+                                                    crtPcsBatu28.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
+                                                    batu28 =
+                                                        item.keyWord.toString();
                                                     stokBatu28.text =
                                                         item.qty.toString();
                                                   });
@@ -5856,16 +7706,15 @@ class _FormScreenState extends State<FormScreen> {
                                               }
                                             },
                                             dropdownDecoratorProps:
-                                                DropDownDecoratorProps(
+                                                const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                label: Text(
-                                                  batu28!,
-                                                  style: const TextStyle(
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
+                                                // label: Text(
+                                                //   batu28!,
+                                                //   style: const TextStyle(
+                                                //       fontSize: 18,
+                                                //       fontWeight: FontWeight.bold),
+                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
@@ -5891,7 +7740,6 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -5913,7 +7761,6 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu28,
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -5928,6 +7775,40 @@ class _FormScreenState extends State<FormScreen> {
                                             ),
                                           ),
                                         ),
+
+                                        //crt/pcsbatu28
+                                        Container(
+                                          width: 120,
+                                          height: 38,
+                                          padding: const EdgeInsets.only(
+                                              top: 10, left: 15),
+                                          child: TextFormField(
+                                            enabled: caratPcsBatu28 <= 0
+                                                ? true
+                                                : false,
+                                            textInputAction:
+                                                TextInputAction.next,
+                                            controller: crtPcsBatu28,
+                                            onChanged: (value) {
+                                              caratPcsBatu28 =
+                                                  double.parse(value);
+                                            },
+                                            decoration: InputDecoration(
+                                              label: const Text(
+                                                'Carat/Pcs',
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          5.0)),
+                                            ),
+                                          ),
+                                        ),
+
                                         qtyBatu28.text.isEmpty
                                             ? const SizedBox()
                                             : Padding(
@@ -5941,6 +7822,7 @@ class _FormScreenState extends State<FormScreen> {
                                                         batu28 = '';
                                                         hargaBatu28 = 0;
                                                         caratPcsBatu28 = 0;
+                                                        crtPcsBatu28.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -5982,17 +7864,24 @@ class _FormScreenState extends State<FormScreen> {
                                                   Uri.parse(
                                                       '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
                                                 );
+                                                print(response.statusCode);
                                                 if (response.statusCode ==
                                                     200) {
+                                                  print(response.body);
                                                   final data =
                                                       jsonDecode(response.body);
+                                                  print(data);
                                                   setState(() {
                                                     hargaBatu29 =
                                                         data[0]['unitCost'];
                                                     idBatu29 = item.id;
                                                     caratPcsBatu29 =
                                                         data[0]['caratPcs'];
-                                                    batu29 = item.keyWord;
+                                                    crtPcsBatu29.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
+                                                    batu29 =
+                                                        item.keyWord.toString();
                                                     stokBatu29.text =
                                                         item.qty.toString();
                                                   });
@@ -6002,16 +7891,15 @@ class _FormScreenState extends State<FormScreen> {
                                               }
                                             },
                                             dropdownDecoratorProps:
-                                                DropDownDecoratorProps(
+                                                const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                label: Text(
-                                                  batu29!,
-                                                  style: const TextStyle(
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
+                                                // label: Text(
+                                                //   batu29!,
+                                                //   style: const TextStyle(
+                                                //       fontSize: 18,
+                                                //       fontWeight: FontWeight.bold),
+                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
@@ -6037,7 +7925,6 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -6059,7 +7946,6 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu29,
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -6074,6 +7960,40 @@ class _FormScreenState extends State<FormScreen> {
                                             ),
                                           ),
                                         ),
+
+                                        //crt/pcsbatu29
+                                        Container(
+                                          width: 120,
+                                          height: 38,
+                                          padding: const EdgeInsets.only(
+                                              top: 10, left: 15),
+                                          child: TextFormField(
+                                            enabled: caratPcsBatu29 <= 0
+                                                ? true
+                                                : false,
+                                            textInputAction:
+                                                TextInputAction.next,
+                                            controller: crtPcsBatu29,
+                                            onChanged: (value) {
+                                              caratPcsBatu29 =
+                                                  double.parse(value);
+                                            },
+                                            decoration: InputDecoration(
+                                              label: const Text(
+                                                'Carat/Pcs',
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          5.0)),
+                                            ),
+                                          ),
+                                        ),
+
                                         qtyBatu29.text.isEmpty
                                             ? const SizedBox()
                                             : Padding(
@@ -6087,6 +8007,7 @@ class _FormScreenState extends State<FormScreen> {
                                                         batu29 = '';
                                                         hargaBatu29 = 0;
                                                         caratPcsBatu29 = 0;
+                                                        crtPcsBatu19.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -6128,17 +8049,24 @@ class _FormScreenState extends State<FormScreen> {
                                                   Uri.parse(
                                                       '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
                                                 );
+                                                print(response.statusCode);
                                                 if (response.statusCode ==
                                                     200) {
+                                                  print(response.body);
                                                   final data =
                                                       jsonDecode(response.body);
+                                                  print(data);
                                                   setState(() {
                                                     hargaBatu30 =
                                                         data[0]['unitCost'];
                                                     idBatu30 = item.id;
                                                     caratPcsBatu30 =
                                                         data[0]['caratPcs'];
-                                                    batu30 = item.keyWord;
+                                                    crtPcsBatu30.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
+                                                    batu30 =
+                                                        item.keyWord.toString();
                                                     stokBatu30.text =
                                                         item.qty.toString();
                                                   });
@@ -6148,16 +8076,15 @@ class _FormScreenState extends State<FormScreen> {
                                               }
                                             },
                                             dropdownDecoratorProps:
-                                                DropDownDecoratorProps(
+                                                const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                label: Text(
-                                                  batu30!,
-                                                  style: const TextStyle(
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
+                                                // label: Text(
+                                                //   batu30!,
+                                                //   style: const TextStyle(
+                                                //       fontSize: 18,
+                                                //       fontWeight: FontWeight.bold),
+                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
@@ -6183,7 +8110,6 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -6205,7 +8131,6 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu30,
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -6220,6 +8145,40 @@ class _FormScreenState extends State<FormScreen> {
                                             ),
                                           ),
                                         ),
+
+                                        //crt/pcsbatu30
+                                        Container(
+                                          width: 120,
+                                          height: 38,
+                                          padding: const EdgeInsets.only(
+                                              top: 10, left: 15),
+                                          child: TextFormField(
+                                            enabled: caratPcsBatu30 <= 0
+                                                ? true
+                                                : false,
+                                            textInputAction:
+                                                TextInputAction.next,
+                                            controller: crtPcsBatu30,
+                                            onChanged: (value) {
+                                              caratPcsBatu30 =
+                                                  double.parse(value);
+                                            },
+                                            decoration: InputDecoration(
+                                              label: const Text(
+                                                'Carat/Pcs',
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          5.0)),
+                                            ),
+                                          ),
+                                        ),
+
                                         qtyBatu30.text.isEmpty
                                             ? const SizedBox()
                                             : Padding(
@@ -6233,6 +8192,7 @@ class _FormScreenState extends State<FormScreen> {
                                                         batu30 = '';
                                                         hargaBatu30 = 0;
                                                         caratPcsBatu30 = 0;
+                                                        crtPcsBatu30.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -6274,17 +8234,24 @@ class _FormScreenState extends State<FormScreen> {
                                                   Uri.parse(
                                                       '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
                                                 );
+                                                print(response.statusCode);
                                                 if (response.statusCode ==
                                                     200) {
+                                                  print(response.body);
                                                   final data =
                                                       jsonDecode(response.body);
+                                                  print(data);
                                                   setState(() {
                                                     hargaBatu31 =
                                                         data[0]['unitCost'];
                                                     idBatu31 = item.id;
                                                     caratPcsBatu31 =
                                                         data[0]['caratPcs'];
-                                                    batu31 = item.keyWord;
+                                                    crtPcsBatu31.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
+                                                    batu31 =
+                                                        item.keyWord.toString();
                                                     stokBatu31.text =
                                                         item.qty.toString();
                                                   });
@@ -6294,16 +8261,15 @@ class _FormScreenState extends State<FormScreen> {
                                               }
                                             },
                                             dropdownDecoratorProps:
-                                                DropDownDecoratorProps(
+                                                const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                label: Text(
-                                                  batu31!,
-                                                  style: const TextStyle(
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
+                                                // label: Text(
+                                                //   batu31!,
+                                                //   style: const TextStyle(
+                                                //       fontSize: 18,
+                                                //       fontWeight: FontWeight.bold),
+                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
@@ -6329,7 +8295,6 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -6351,7 +8316,6 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu31,
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -6366,6 +8330,40 @@ class _FormScreenState extends State<FormScreen> {
                                             ),
                                           ),
                                         ),
+
+                                        //crt/pcsbatu31
+                                        Container(
+                                          width: 120,
+                                          height: 38,
+                                          padding: const EdgeInsets.only(
+                                              top: 10, left: 15),
+                                          child: TextFormField(
+                                            enabled: caratPcsBatu31 <= 0
+                                                ? true
+                                                : false,
+                                            textInputAction:
+                                                TextInputAction.next,
+                                            controller: crtPcsBatu31,
+                                            onChanged: (value) {
+                                              caratPcsBatu31 =
+                                                  double.parse(value);
+                                            },
+                                            decoration: InputDecoration(
+                                              label: const Text(
+                                                'Carat/Pcs',
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          5.0)),
+                                            ),
+                                          ),
+                                        ),
+
                                         qtyBatu31.text.isEmpty
                                             ? const SizedBox()
                                             : Padding(
@@ -6379,6 +8377,7 @@ class _FormScreenState extends State<FormScreen> {
                                                         batu31 = '';
                                                         hargaBatu31 = 0;
                                                         caratPcsBatu31 = 0;
+                                                        crtPcsBatu31.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -6420,17 +8419,24 @@ class _FormScreenState extends State<FormScreen> {
                                                   Uri.parse(
                                                       '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
                                                 );
+                                                print(response.statusCode);
                                                 if (response.statusCode ==
                                                     200) {
+                                                  print(response.body);
                                                   final data =
                                                       jsonDecode(response.body);
+                                                  print(data);
                                                   setState(() {
                                                     hargaBatu32 =
                                                         data[0]['unitCost'];
                                                     idBatu32 = item.id;
                                                     caratPcsBatu32 =
                                                         data[0]['caratPcs'];
-                                                    batu32 = item.keyWord;
+                                                    crtPcsBatu32.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
+                                                    batu32 =
+                                                        item.keyWord.toString();
                                                     stokBatu32.text =
                                                         item.qty.toString();
                                                   });
@@ -6440,16 +8446,15 @@ class _FormScreenState extends State<FormScreen> {
                                               }
                                             },
                                             dropdownDecoratorProps:
-                                                DropDownDecoratorProps(
+                                                const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                label: Text(
-                                                  batu32!,
-                                                  style: const TextStyle(
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
+                                                // label: Text(
+                                                //   batu32!,
+                                                //   style: const TextStyle(
+                                                //       fontSize: 18,
+                                                //       fontWeight: FontWeight.bold),
+                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
@@ -6475,7 +8480,6 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -6497,7 +8501,6 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu32,
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -6512,6 +8515,40 @@ class _FormScreenState extends State<FormScreen> {
                                             ),
                                           ),
                                         ),
+
+                                        //crt/pcsbatu32
+                                        Container(
+                                          width: 120,
+                                          height: 38,
+                                          padding: const EdgeInsets.only(
+                                              top: 10, left: 15),
+                                          child: TextFormField(
+                                            enabled: caratPcsBatu32 <= 0
+                                                ? true
+                                                : false,
+                                            textInputAction:
+                                                TextInputAction.next,
+                                            controller: crtPcsBatu32,
+                                            onChanged: (value) {
+                                              caratPcsBatu32 =
+                                                  double.parse(value);
+                                            },
+                                            decoration: InputDecoration(
+                                              label: const Text(
+                                                'Carat/Pcs',
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          5.0)),
+                                            ),
+                                          ),
+                                        ),
+
                                         qtyBatu32.text.isEmpty
                                             ? const SizedBox()
                                             : Padding(
@@ -6525,6 +8562,7 @@ class _FormScreenState extends State<FormScreen> {
                                                         batu32 = '';
                                                         hargaBatu32 = 0;
                                                         caratPcsBatu32 = 0;
+                                                        crtPcsBatu32.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -6566,17 +8604,24 @@ class _FormScreenState extends State<FormScreen> {
                                                   Uri.parse(
                                                       '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
                                                 );
+                                                print(response.statusCode);
                                                 if (response.statusCode ==
                                                     200) {
+                                                  print(response.body);
                                                   final data =
                                                       jsonDecode(response.body);
+                                                  print(data);
                                                   setState(() {
                                                     hargaBatu33 =
                                                         data[0]['unitCost'];
                                                     idBatu33 = item.id;
                                                     caratPcsBatu33 =
                                                         data[0]['caratPcs'];
-                                                    batu33 = item.keyWord;
+                                                    crtPcsBatu33.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
+                                                    batu33 =
+                                                        item.keyWord.toString();
                                                     stokBatu33.text =
                                                         item.qty.toString();
                                                   });
@@ -6586,16 +8631,15 @@ class _FormScreenState extends State<FormScreen> {
                                               }
                                             },
                                             dropdownDecoratorProps:
-                                                DropDownDecoratorProps(
+                                                const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                label: Text(
-                                                  batu33!,
-                                                  style: const TextStyle(
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
+                                                // label: Text(
+                                                //   batu33!,
+                                                //   style: const TextStyle(
+                                                //       fontSize: 18,
+                                                //       fontWeight: FontWeight.bold),
+                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
@@ -6621,7 +8665,6 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -6643,7 +8686,6 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu33,
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -6658,6 +8700,40 @@ class _FormScreenState extends State<FormScreen> {
                                             ),
                                           ),
                                         ),
+
+                                        //crt/pcsbatu33
+                                        Container(
+                                          width: 120,
+                                          height: 38,
+                                          padding: const EdgeInsets.only(
+                                              top: 10, left: 15),
+                                          child: TextFormField(
+                                            enabled: caratPcsBatu33 <= 0
+                                                ? true
+                                                : false,
+                                            textInputAction:
+                                                TextInputAction.next,
+                                            controller: crtPcsBatu33,
+                                            onChanged: (value) {
+                                              caratPcsBatu33 =
+                                                  double.parse(value);
+                                            },
+                                            decoration: InputDecoration(
+                                              label: const Text(
+                                                'Carat/Pcs',
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          5.0)),
+                                            ),
+                                          ),
+                                        ),
+
                                         qtyBatu33.text.isEmpty
                                             ? const SizedBox()
                                             : Padding(
@@ -6671,6 +8747,7 @@ class _FormScreenState extends State<FormScreen> {
                                                         batu33 = '';
                                                         hargaBatu33 = 0;
                                                         caratPcsBatu33 = 0;
+                                                        crtPcsBatu33.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -6712,17 +8789,24 @@ class _FormScreenState extends State<FormScreen> {
                                                   Uri.parse(
                                                       '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
                                                 );
+                                                print(response.statusCode);
                                                 if (response.statusCode ==
                                                     200) {
+                                                  print(response.body);
                                                   final data =
                                                       jsonDecode(response.body);
+                                                  print(data);
                                                   setState(() {
                                                     hargaBatu34 =
                                                         data[0]['unitCost'];
                                                     idBatu34 = item.id;
                                                     caratPcsBatu34 =
                                                         data[0]['caratPcs'];
-                                                    batu34 = item.keyWord;
+                                                    crtPcsBatu34.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
+                                                    batu34 =
+                                                        item.keyWord.toString();
                                                     stokBatu34.text =
                                                         item.qty.toString();
                                                   });
@@ -6732,16 +8816,15 @@ class _FormScreenState extends State<FormScreen> {
                                               }
                                             },
                                             dropdownDecoratorProps:
-                                                DropDownDecoratorProps(
+                                                const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                label: Text(
-                                                  batu34!,
-                                                  style: const TextStyle(
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
+                                                // label: Text(
+                                                //   batu34!,
+                                                //   style: const TextStyle(
+                                                //       fontSize: 18,
+                                                //       fontWeight: FontWeight.bold),
+                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
@@ -6767,7 +8850,6 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -6789,7 +8871,6 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu34,
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -6804,6 +8885,40 @@ class _FormScreenState extends State<FormScreen> {
                                             ),
                                           ),
                                         ),
+
+                                        //crt/pcsbatu34
+                                        Container(
+                                          width: 120,
+                                          height: 38,
+                                          padding: const EdgeInsets.only(
+                                              top: 10, left: 15),
+                                          child: TextFormField(
+                                            enabled: caratPcsBatu34 <= 0
+                                                ? true
+                                                : false,
+                                            textInputAction:
+                                                TextInputAction.next,
+                                            controller: crtPcsBatu34,
+                                            onChanged: (value) {
+                                              caratPcsBatu34 =
+                                                  double.parse(value);
+                                            },
+                                            decoration: InputDecoration(
+                                              label: const Text(
+                                                'Carat/Pcs',
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          5.0)),
+                                            ),
+                                          ),
+                                        ),
+
                                         qtyBatu34.text.isEmpty
                                             ? const SizedBox()
                                             : Padding(
@@ -6817,6 +8932,7 @@ class _FormScreenState extends State<FormScreen> {
                                                         batu34 = '';
                                                         hargaBatu34 = 0;
                                                         caratPcsBatu34 = 0;
+                                                        crtPcsBatu34.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -6858,17 +8974,24 @@ class _FormScreenState extends State<FormScreen> {
                                                   Uri.parse(
                                                       '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
                                                 );
+                                                print(response.statusCode);
                                                 if (response.statusCode ==
                                                     200) {
+                                                  print(response.body);
                                                   final data =
                                                       jsonDecode(response.body);
+                                                  print(data);
                                                   setState(() {
                                                     hargaBatu35 =
                                                         data[0]['unitCost'];
                                                     idBatu35 = item.id;
                                                     caratPcsBatu35 =
                                                         data[0]['caratPcs'];
-                                                    batu35 = item.keyWord;
+                                                    crtPcsBatu35.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
+                                                    batu35 =
+                                                        item.keyWord.toString();
                                                     stokBatu35.text =
                                                         item.qty.toString();
                                                   });
@@ -6878,16 +9001,15 @@ class _FormScreenState extends State<FormScreen> {
                                               }
                                             },
                                             dropdownDecoratorProps:
-                                                DropDownDecoratorProps(
+                                                const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                label: Text(
-                                                  batu35!,
-                                                  style: const TextStyle(
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
+                                                // label: Text(
+                                                //   batu35!,
+                                                //   style: const TextStyle(
+                                                //       fontSize: 18,
+                                                //       fontWeight: FontWeight.bold),
+                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
@@ -6913,7 +9035,6 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -6935,7 +9056,6 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu35,
                                             decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -6950,6 +9070,40 @@ class _FormScreenState extends State<FormScreen> {
                                             ),
                                           ),
                                         ),
+
+                                        //crt/pcsbatu35
+                                        Container(
+                                          width: 120,
+                                          height: 38,
+                                          padding: const EdgeInsets.only(
+                                              top: 10, left: 15),
+                                          child: TextFormField(
+                                            enabled: caratPcsBatu35 <= 0
+                                                ? true
+                                                : false,
+                                            textInputAction:
+                                                TextInputAction.next,
+                                            controller: crtPcsBatu35,
+                                            onChanged: (value) {
+                                              caratPcsBatu35 =
+                                                  double.parse(value);
+                                            },
+                                            decoration: InputDecoration(
+                                              label: const Text(
+                                                'Carat/Pcs',
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          5.0)),
+                                            ),
+                                          ),
+                                        ),
+
                                         qtyBatu35.text.isEmpty
                                             ? const SizedBox()
                                             : Padding(
@@ -6963,6 +9117,7 @@ class _FormScreenState extends State<FormScreen> {
                                                         batu35 = '';
                                                         hargaBatu35 = 0;
                                                         caratPcsBatu35 = 0;
+                                                        crtPcsBatu35.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -7901,4 +10056,9 @@ Widget _listJenisbarang(
       title: Text(item?.nama ?? ''),
     ),
   );
+}
+
+//class untuk ambil character
+extension E on String {
+  String lastChars(int n) => substring(length - n);
 }

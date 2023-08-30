@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:form_designer/mainScreen/form_screen.dart';
 // ignore: unused_import
@@ -35,6 +36,9 @@ class _ListDesignerScreenState extends State<ListDesignerScreen> {
   final searchController = TextEditingController();
   bool isLoading = false;
 
+  String siklusDesigner = '';
+  TextEditingController siklus = TextEditingController();
+
   int? idBatu1 = 0;
   int? stokBatu1 = 0;
 
@@ -60,15 +64,11 @@ class _ListDesignerScreenState extends State<ListDesignerScreen> {
   }
 
   Future<List<FormDesignerModel>> _getData() async {
-    // final response = await http.get(
-    //     Uri.parse(ApiConstants.baseUrl + ApiConstants.getListFormDesigner));
     final response = sharedPreferences!.getString('level') == '1'
         ? await http.get(
             Uri.parse(ApiConstants.baseUrl + ApiConstants.getListFormDesigner))
         : await http.get(Uri.parse(
             '${ApiConstants.baseUrl}${ApiConstants.getListFormDesignerByName}?nama=${sharedPreferences!.getString('nama')!}'));
-
-    // if response successful
 
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);
@@ -78,6 +78,34 @@ class _ListDesignerScreenState extends State<ListDesignerScreen> {
       setState(() {
         filterCrm = g;
         myCrm = g;
+        isLoading = true;
+      });
+      return g;
+    } else {
+      throw Exception('Unexpected error occured!');
+    }
+  }
+
+  Future<List<FormDesignerModel>> _getDataBySiklus(chooseSiklus) async {
+    final response = sharedPreferences!.getString('level') == '1'
+        ? await http.get(
+            Uri.parse(ApiConstants.baseUrl + ApiConstants.getListFormDesigner))
+        : await http.get(Uri.parse(
+            '${ApiConstants.baseUrl}${ApiConstants.getListFormDesignerByName}?nama=${sharedPreferences!.getString('nama')!}'));
+
+    if (response.statusCode == 200) {
+      List jsonResponse = json.decode(response.body);
+
+      var g =
+          jsonResponse.map((data) => FormDesignerModel.fromJson(data)).toList();
+
+      var filterBySiklus = g.where((element) =>
+          element.siklus.toString().toLowerCase() ==
+          chooseSiklus.toString().toLowerCase());
+      filterBySiklus.toList();
+      setState(() {
+        filterCrm = filterBySiklus.toList();
+        myCrm = filterBySiklus.toList();
         isLoading = true;
       });
       return g;
@@ -111,19 +139,20 @@ class _ListDesignerScreenState extends State<ListDesignerScreen> {
                   ),
                 ),
                 centerTitle: true,
-                actions: [
-                  IconButton(
-                    onPressed: () {
-                      setState(() {
-                        _getData();
-                      });
-                    },
-                    icon: const Icon(
-                      Icons.refresh,
-                      color: Colors.white,
-                    ),
-                  )
-                ],
+                // actions: [
+                //   IconButton(
+                //     onPressed: () {
+                //       setState(() {
+                //         siklus.text = '';
+                //         _getData();
+                //       });
+                //     },
+                //     icon: const Icon(
+                //       Icons.refresh,
+                //       color: Colors.white,
+                //     ),
+                //   )
+                // ],
               ),
               body: isLoading == false
                   ? const Center(child: CircularProgressIndicator())
@@ -132,6 +161,46 @@ class _ListDesignerScreenState extends State<ListDesignerScreen> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
+                          Container(
+                            padding: const EdgeInsets.only(bottom: 20),
+                            width: MediaQuery.of(context).size.width * 0.5,
+                            child: DropdownSearch<String>(
+                              items: const [
+                                "JANUARI",
+                                "FEBRUARI",
+                                "MARET",
+                                "APRIL",
+                                "MEI",
+                                "JUNI",
+                                "JULI",
+                                "AGUSTUS",
+                                "SEPTEMBER",
+                                "OKTOBER",
+                                "NOVEMBER",
+                                "DESEMBER"
+                              ],
+                              onChanged: (item) {
+                                setState(() {
+                                  siklus.text = item!;
+                                  siklusDesigner = siklus.text.toString();
+                                  _getDataBySiklus(siklus.text);
+                                });
+                              },
+                              popupProps: const PopupPropsMultiSelection
+                                  .modalBottomSheet(
+                                showSelectedItems: true,
+                                showSearchBox: true,
+                              ),
+                              dropdownDecoratorProps:
+                                  const DropDownDecoratorProps(
+                                dropdownSearchDecoration: InputDecoration(
+                                  labelText: "Pilih Siklus",
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
                           Container(
                             width: MediaQuery.of(context).size.width * 0.5,
                             height: 45,
@@ -438,7 +507,7 @@ class _ListDesignerScreenState extends State<ListDesignerScreen> {
                                             label: SizedBox(
                                                 width: 120,
                                                 child: Text(
-                                                  "Gambar",
+                                                  "Kelas Harga",
                                                   style: TextStyle(
                                                       fontSize: 15,
                                                       fontWeight:
@@ -519,7 +588,6 @@ class RowSource extends DataTableSource {
 
   DataRow recentFileDataRow(var data) {
     // ignore: prefer_interpolation_to_compose_strings
-    print('ini edit :' + data.edit!.toString());
     return DataRow(cells: [
       //kodeDesignMdbc
       DataCell(
@@ -1036,6 +1104,16 @@ class RowSource extends DataTableSource {
                             ),
                     ),
                   ),
+            // sharedPreferences!.getString('level') != '1'
+            //     ? const SizedBox()
+            //     : Padding(
+            //         padding: const EdgeInsets.only(left: 5),
+            //         child: IconButton(
+            //             onPressed: () {},
+            //             icon: const Icon(
+            //               Icons.print,
+            //               color: Colors.blue,
+            //             )))
           ],
         );
       }))

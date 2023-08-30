@@ -22,6 +22,9 @@ class ApiConstants {
   static String getListFormDesigner = 'spk/list_form_designer.php';
   static String getListFormDesignerByName =
       'spk/list_form_designer_by_name.php';
+  static String getListFormDesignerBySiklus =
+      'spk/list_form_designer_by_siklus.php';
+
   static String getListEstimasiHarga = 'spk/get_estimasi_pricing.php';
 
   static String postDataBatu = 'spk/create_batu.php';

@@ -6,10 +6,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:form_designer/api/api_constant.dart';
 import 'package:form_designer/mainScreen/login.dart';
 import 'package:form_designer/mainScreen/side_screen.dart';
 import '../global/global.dart';
+import 'package:lottie/lottie.dart';
 
 class MySplashScreen extends StatefulWidget {
   const MySplashScreen({super.key});
@@ -25,7 +25,7 @@ class _MySplashScreenState extends State<MySplashScreen> {
 
   var isLoading = false;
   splashScreenTimer() {
-    Timer(const Duration(seconds: 1), () async {
+    Timer(const Duration(seconds: 4), () async {
       //user sudah login
       print('token $token');
       if (sharedPreferences!.getString("token").toString() != "null") {
@@ -147,12 +147,13 @@ class _MySplashScreenState extends State<MySplashScreen> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(12.0),
-                child: Image.network(
-                  '${ApiConstants.baseUrlImage}sanivokasi_logo-01.png',
-                  height: 400,
-                  width: 400,
-                  fit: BoxFit.cover,
-                ),
+                child: Lottie.asset("loadingJSON/animation_llvy7jo7.json"),
+                // child: Image.network(
+                //   '${ApiConstants.baseUrlImage}sanivokasi_logo-01.png',
+                //   height: 400,
+                //   width: 400,
+                //   fit: BoxFit.cover,
+                // ),
               ),
               const SizedBox(
                 height: 10,
