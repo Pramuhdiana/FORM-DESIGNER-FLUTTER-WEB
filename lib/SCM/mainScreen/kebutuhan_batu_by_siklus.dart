@@ -145,108 +145,236 @@ class _ListKebutuhanBatuScreenState extends State<ListKebutuhanBatuScreen> {
         listQtyBatu6.add(data[i]['qtyBatu6']);
       }
 
-      //?bawah belum
       //! remove batu7
       List<String> listBatu7 = [];
-      for (var i = 1; i < data.length; i++) {
+      List<int> listQtyBatu7 = [];
+      for (var i = 0; i < data.length; i++) {
         listBatu7.add(data[i]['batu7']);
-        listBatu7 = listBatu7.toSet().toList();
+        listQtyBatu7.add(data[i]['qtyBatu7']);
       }
+
       //! remove batu8
       List<String> listBatu8 = [];
-      for (var i = 1; i < data.length; i++) {
+      List<int> listQtyBatu8 = [];
+      for (var i = 0; i < data.length; i++) {
         listBatu8.add(data[i]['batu8']);
-        listBatu8 = listBatu8.toSet().toList();
+        listQtyBatu8.add(data[i]['qtyBatu8']);
       }
+
       //! remove batu9
       List<String> listBatu9 = [];
-      for (var i = 1; i < data.length; i++) {
+      List<int> listQtyBatu9 = [];
+      for (var i = 0; i < data.length; i++) {
         listBatu9.add(data[i]['batu9']);
-        listBatu9 = listBatu9.toSet().toList();
+        listQtyBatu9.add(data[i]['qtyBatu9']);
       }
+
       //! remove batu10
       List<String> listBatu10 = [];
-      for (var i = 1; i < data.length; i++) {
+      List<int> listQtyBatu10 = [];
+      for (var i = 0; i < data.length; i++) {
         listBatu10.add(data[i]['batu10']);
-        listBatu10 = listBatu10.toSet().toList();
+        listQtyBatu10.add(data[i]['qtyBatu10']);
       }
+
       //! remove batu11
       List<String> listBatu11 = [];
-      for (var i = 1; i < data.length; i++) {
+      List<int> listQtyBatu11 = [];
+      for (var i = 0; i < data.length; i++) {
         listBatu11.add(data[i]['batu11']);
-        listBatu11 = listBatu11.toSet().toList();
+        listQtyBatu11.add(data[i]['qtyBatu11']);
       }
+
       //! remove batu12
       List<String> listBatu12 = [];
-      for (var i = 1; i < data.length; i++) {
+      List<int> listQtyBatu12 = [];
+      for (var i = 0; i < data.length; i++) {
         listBatu12.add(data[i]['batu12']);
-        listBatu12 = listBatu12.toSet().toList();
+        listQtyBatu12.add(data[i]['qtyBatu12']);
       }
+
       //! remove batu13
       List<String> listBatu13 = [];
-      for (var i = 1; i < data.length; i++) {
+      List<int> listQtyBatu13 = [];
+      for (var i = 0; i < data.length; i++) {
         listBatu13.add(data[i]['batu13']);
-        listBatu13 = listBatu13.toSet().toList();
+        listQtyBatu13.add(data[i]['qtyBatu13']);
       }
+
       //! remove batu14
       List<String> listBatu14 = [];
-      for (var i = 1; i < data.length; i++) {
+      List<int> listQtyBatu14 = [];
+      for (var i = 0; i < data.length; i++) {
         listBatu14.add(data[i]['batu14']);
-        listBatu14 = listBatu14.toSet().toList();
+        listQtyBatu14.add(data[i]['qtyBatu14']);
       }
+
       //! remove batu15
       List<String> listBatu15 = [];
-      for (var i = 1; i < data.length; i++) {
+      List<int> listQtyBatu15 = [];
+      for (var i = 0; i < data.length; i++) {
         listBatu15.add(data[i]['batu15']);
-        listBatu15 = listBatu15.toSet().toList();
+        listQtyBatu15.add(data[i]['qtyBatu15']);
       }
+
       //! remove batu16
       List<String> listBatu16 = [];
-      for (var i = 1; i < data.length; i++) {
+      List<int> listQtyBatu16 = [];
+      for (var i = 0; i < data.length; i++) {
         listBatu16.add(data[i]['batu16']);
-        listBatu16 = listBatu16.toSet().toList();
+        listQtyBatu16.add(data[i]['qtyBatu16']);
       }
+
       //! remove batu17
       List<String> listBatu17 = [];
-      for (var i = 1; i < data.length; i++) {
+      List<int> listQtyBatu17 = [];
+      for (var i = 0; i < data.length; i++) {
         listBatu17.add(data[i]['batu17']);
-        listBatu17 = listBatu17.toSet().toList();
+        listQtyBatu17.add(data[i]['qtyBatu17']);
       }
+
       //! remove batu18
       List<String> listBatu18 = [];
-      for (var i = 1; i < data.length; i++) {
+      List<int> listQtyBatu18 = [];
+      for (var i = 0; i < data.length; i++) {
         listBatu18.add(data[i]['batu18']);
-        listBatu18 = listBatu18.toSet().toList();
+        listQtyBatu18.add(data[i]['qtyBatu18']);
       }
+
       //! remove batu19
       List<String> listBatu19 = [];
-      for (var i = 1; i < data.length; i++) {
+      List<int> listQtyBatu19 = [];
+      for (var i = 0; i < data.length; i++) {
         listBatu19.add(data[i]['batu19']);
-        listBatu19 = listBatu19.toSet().toList();
+        listQtyBatu19.add(data[i]['qtyBatu19']);
       }
+
       //! remove batu20
       List<String> listBatu20 = [];
-      for (var i = 1; i < data.length; i++) {
+      List<int> listQtyBatu20 = [];
+      for (var i = 0; i < data.length; i++) {
         listBatu20.add(data[i]['batu20']);
-        listBatu20 = listBatu20.toSet().toList();
+        listQtyBatu20.add(data[i]['qtyBatu20']);
       }
+
       //! remove batu21
       List<String> listBatu21 = [];
-      for (var i = 1; i < data.length; i++) {
+      List<int> listQtyBatu21 = [];
+      for (var i = 0; i < data.length; i++) {
         listBatu21.add(data[i]['batu21']);
-        listBatu21 = listBatu21.toSet().toList();
+        listQtyBatu21.add(data[i]['qtyBatu21']);
       }
+
       //! remove batu22
       List<String> listBatu22 = [];
-      for (var i = 1; i < data.length; i++) {
+      List<int> listQtyBatu22 = [];
+      for (var i = 0; i < data.length; i++) {
         listBatu22.add(data[i]['batu22']);
-        listBatu22 = listBatu22.toSet().toList();
+        listQtyBatu22.add(data[i]['qtyBatu22']);
       }
+
       //! remove batu23
       List<String> listBatu23 = [];
-      for (var i = 1; i < data.length; i++) {
+      List<int> listQtyBatu23 = [];
+      for (var i = 0; i < data.length; i++) {
         listBatu23.add(data[i]['batu23']);
-        listBatu23 = listBatu23.toSet().toList();
+        listQtyBatu23.add(data[i]['qtyBatu23']);
+      }
+
+      //! remove batu24
+      List<String> listBatu24 = [];
+      List<int> listQtyBatu24 = [];
+      for (var i = 0; i < data.length; i++) {
+        listBatu24.add(data[i]['batu24']);
+        listQtyBatu24.add(data[i]['qtyBatu24']);
+      }
+
+      //! remove batu25
+      List<String> listBatu25 = [];
+      List<int> listQtyBatu25 = [];
+      for (var i = 0; i < data.length; i++) {
+        listBatu25.add(data[i]['batu25']);
+        listQtyBatu25.add(data[i]['qtyBatu25']);
+      }
+
+      //! remove batu26
+      List<String> listBatu26 = [];
+      List<int> listQtyBatu26 = [];
+      for (var i = 0; i < data.length; i++) {
+        listBatu26.add(data[i]['batu26']);
+        listQtyBatu26.add(data[i]['qtyBatu26']);
+      }
+
+      //! remove batu27
+      List<String> listBatu27 = [];
+      List<int> listQtyBatu27 = [];
+      for (var i = 0; i < data.length; i++) {
+        listBatu27.add(data[i]['batu27']);
+        listQtyBatu27.add(data[i]['qtyBatu27']);
+      }
+
+      //! remove batu28
+      List<String> listBatu28 = [];
+      List<int> listQtyBatu28 = [];
+      for (var i = 0; i < data.length; i++) {
+        listBatu28.add(data[i]['batu28']);
+        listQtyBatu28.add(data[i]['qtyBatu28']);
+      }
+
+      //! remove batu29
+      List<String> listBatu29 = [];
+      List<int> listQtyBatu29 = [];
+      for (var i = 0; i < data.length; i++) {
+        listBatu29.add(data[i]['batu29']);
+        listQtyBatu29.add(data[i]['qtyBatu29']);
+      }
+
+      //! remove batu30
+      List<String> listBatu30 = [];
+      List<int> listQtyBatu30 = [];
+      for (var i = 0; i < data.length; i++) {
+        listBatu30.add(data[i]['batu30']);
+        listQtyBatu30.add(data[i]['qtyBatu30']);
+      }
+
+      //! remove batu31
+      List<String> listBatu31 = [];
+      List<int> listQtyBatu31 = [];
+      for (var i = 0; i < data.length; i++) {
+        listBatu31.add(data[i]['batu31']);
+        listQtyBatu31.add(data[i]['qtyBatu31']);
+      }
+
+      //! remove batu32
+      List<String> listBatu32 = [];
+      List<int> listQtyBatu32 = [];
+      for (var i = 0; i < data.length; i++) {
+        listBatu32.add(data[i]['batu32']);
+        listQtyBatu32.add(data[i]['qtyBatu32']);
+      }
+
+      //! remove batu33
+      List<String> listBatu33 = [];
+      List<int> listQtyBatu33 = [];
+      for (var i = 0; i < data.length; i++) {
+        listBatu33.add(data[i]['batu33']);
+        listQtyBatu33.add(data[i]['qtyBatu33']);
+      }
+
+      //! remove batu34
+      List<String> listBatu34 = [];
+      List<int> listQtyBatu34 = [];
+      for (var i = 0; i < data.length; i++) {
+        listBatu34.add(data[i]['batu34']);
+        listQtyBatu34.add(data[i]['qtyBatu34']);
+      }
+
+      //! remove batu35
+      List<String> listBatu35 = [];
+      List<int> listQtyBatu35 = [];
+      for (var i = 0; i < data.length; i++) {
+        listBatu35.add(data[i]['batu35']);
+        listQtyBatu35.add(data[i]['qtyBatu35']);
       }
 
       listAllBatu.addAll(listBatu1);
@@ -272,26 +400,56 @@ class _ListKebutuhanBatuScreenState extends State<ListKebutuhanBatuScreen> {
       listAllBatu.addAll(listBatu21);
       listAllBatu.addAll(listBatu22);
       listAllBatu.addAll(listBatu23);
-      // listAllBatu.addAll(listBatu24);
-      // listAllBatu.addAll(listBatu25);
-      // listAllBatu.addAll(listBatu26);
-      // listAllBatu.addAll(listBatu27);
-      // listAllBatu.addAll(listBatu28);
-      // listAllBatu.addAll(listBatu29);
-      // listAllBatu.addAll(listBatu30);
-      // listAllBatu.addAll(listBatu31);
-      // listAllBatu.addAll(listBatu32);
-      // listAllBatu.addAll(listBatu33);
-      // listAllBatu.addAll(listBatu34);
-      // listAllBatu.addAll(listBatu35);
+      listAllBatu.addAll(listBatu24);
+      listAllBatu.addAll(listBatu25);
+      listAllBatu.addAll(listBatu26);
+      listAllBatu.addAll(listBatu27);
+      listAllBatu.addAll(listBatu28);
+      listAllBatu.addAll(listBatu29);
+      listAllBatu.addAll(listBatu30);
+      listAllBatu.addAll(listBatu31);
+      listAllBatu.addAll(listBatu32);
+      listAllBatu.addAll(listBatu33);
+      listAllBatu.addAll(listBatu34);
+      listAllBatu.addAll(listBatu35);
       listAllBatu.removeWhere((value) => value == '');
       print(listAllBatu);
+
       listAllQtyBatu.addAll(listQtyBatu1);
       listAllQtyBatu.addAll(listQtyBatu2);
       listAllQtyBatu.addAll(listQtyBatu3);
       listAllQtyBatu.addAll(listQtyBatu4);
       listAllQtyBatu.addAll(listQtyBatu5);
       listAllQtyBatu.addAll(listQtyBatu6);
+      listAllQtyBatu.addAll(listQtyBatu7);
+      listAllQtyBatu.addAll(listQtyBatu8);
+      listAllQtyBatu.addAll(listQtyBatu9);
+      listAllQtyBatu.addAll(listQtyBatu10);
+      listAllQtyBatu.addAll(listQtyBatu11);
+      listAllQtyBatu.addAll(listQtyBatu12);
+      listAllQtyBatu.addAll(listQtyBatu13);
+      listAllQtyBatu.addAll(listQtyBatu14);
+      listAllQtyBatu.addAll(listQtyBatu15);
+      listAllQtyBatu.addAll(listQtyBatu16);
+      listAllQtyBatu.addAll(listQtyBatu17);
+      listAllQtyBatu.addAll(listQtyBatu18);
+      listAllQtyBatu.addAll(listQtyBatu19);
+      listAllQtyBatu.addAll(listQtyBatu20);
+      listAllQtyBatu.addAll(listQtyBatu21);
+      listAllQtyBatu.addAll(listQtyBatu22);
+      listAllQtyBatu.addAll(listQtyBatu23);
+      listAllQtyBatu.addAll(listQtyBatu24);
+      listAllQtyBatu.addAll(listQtyBatu25);
+      listAllQtyBatu.addAll(listQtyBatu26);
+      listAllQtyBatu.addAll(listQtyBatu27);
+      listAllQtyBatu.addAll(listQtyBatu28);
+      listAllQtyBatu.addAll(listQtyBatu29);
+      listAllQtyBatu.addAll(listQtyBatu30);
+      listAllQtyBatu.addAll(listQtyBatu31);
+      listAllQtyBatu.addAll(listQtyBatu32);
+      listAllQtyBatu.addAll(listQtyBatu33);
+      listAllQtyBatu.addAll(listQtyBatu34);
+      listAllQtyBatu.addAll(listQtyBatu35);
       listAllQtyBatu.removeWhere((value) => value == 0);
       print(listAllQtyBatu);
 

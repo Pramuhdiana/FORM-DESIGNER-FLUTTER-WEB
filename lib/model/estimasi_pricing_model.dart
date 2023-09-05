@@ -88,6 +88,12 @@ class EstimasiPricingModel {
   int? qtyBatu34;
   String? batu35;
   int? qtyBatu35;
+  String? diambilId;
+  String? statusApproval;
+  String? statusGet;
+  String? approvalHarga;
+  String? noteApprove;
+  String? namaSales;
 
   EstimasiPricingModel({
     this.id,
@@ -167,6 +173,12 @@ class EstimasiPricingModel {
     this.qtyBatu34,
     this.batu35,
     this.qtyBatu35,
+    this.diambilId,
+    this.statusApproval,
+    this.statusGet,
+    this.approvalHarga,
+    this.noteApprove,
+    this.namaSales,
   });
 
   // ignore: avoid_types_as_parameter_names
@@ -249,6 +261,12 @@ class EstimasiPricingModel {
         qtyBatu34: json["qtyBatu34"],
         batu35: json["batu35"],
         qtyBatu35: json["qtyBatu35"],
+        diambilId: json["diambil_id"].toString(),
+        statusApproval: json["status_approval"].toString(),
+        statusGet: json["status_get"].toString(),
+        approvalHarga: (json["approval_harga"] ?? '0').toString(),
+        noteApprove: json["note_approve"].toString(),
+        namaSales: json["nama_sales"].toString(),
       );
 
   Map<String, dynamic> toJson() => {
@@ -329,5 +347,11 @@ class EstimasiPricingModel {
         "qtyBatu34": qtyBatu34,
         "batu35": batu35,
         "qtyBatu35": qtyBatu35,
+        "diambilId": diambilId,
+        "statusApproval": statusApproval,
+        "statusGet": statusGet,
+        "approvalHarga": approvalHarga,
+        "noteApprove": noteApprove,
+        "namaSales": namaSales,
       };
 }

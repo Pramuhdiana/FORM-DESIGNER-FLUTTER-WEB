@@ -628,7 +628,8 @@ class _FormScreenState extends State<FormScreen> {
         setState(() {
           print('others1');
           total = (total + (5 - int.parse(output)));
-          estimasiHarga.text = total.toString();
+
+          estimasiHarga.text = total.round().toString();
         });
         return total;
       } else if (int.parse(output) >= 6 && int.parse(output) <= 9) {
@@ -636,14 +637,14 @@ class _FormScreenState extends State<FormScreen> {
           print('others1');
           total = (total + (10 - int.parse(output)));
 
-          estimasiHarga.text = total.toString();
+          estimasiHarga.text = total.round().toString();
         });
         return total;
       } else {
         setState(() {
           print('others1');
 
-          estimasiHarga.text = total.toString();
+          estimasiHarga.text = total.round().toString();
         });
         return total;
       }
@@ -734,7 +735,7 @@ class _FormScreenState extends State<FormScreen> {
           print('others2');
           total = (total + (5 - int.parse(output)));
 
-          estimasiHarga.text = total.toString();
+          estimasiHarga.text = total.round().toString();
         });
         return total;
       } else if (int.parse(output) >= 6 && int.parse(output) <= 9) {
@@ -742,14 +743,14 @@ class _FormScreenState extends State<FormScreen> {
           print('others2');
           total = (total + (10 - int.parse(output)));
 
-          estimasiHarga.text = total.toString();
+          estimasiHarga.text = total.round().toString();
         });
         return total;
       } else {
         setState(() {
           print('others2');
 
-          estimasiHarga.text = total.toString();
+          estimasiHarga.text = total.round().toString();
         });
         return total;
       }
@@ -839,7 +840,7 @@ class _FormScreenState extends State<FormScreen> {
         setState(() {
           print('others3');
           total = (total + (5 - int.parse(output)));
-          estimasiHarga.text = total.toString();
+          estimasiHarga.text = total.round().toString();
         });
         return total;
       } else if (int.parse(output) >= 6 && int.parse(output) <= 9) {
@@ -847,14 +848,14 @@ class _FormScreenState extends State<FormScreen> {
           print('others3');
           total = (total + (10 - int.parse(output)));
 
-          estimasiHarga.text = total.toString();
+          estimasiHarga.text = total.round().toString();
         });
         return total;
       } else {
         setState(() {
           print('others3');
 
-          estimasiHarga.text = total.toString();
+          estimasiHarga.text = total.round().toString();
         });
         return total;
       }
@@ -1021,9 +1022,7 @@ class _FormScreenState extends State<FormScreen> {
       totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmasMetier);
       var totalLabour = ((labour! + others1) * upLabour);
       double total;
-      total = (((totalDiamond * upDiamondMetier) + totalEmas + totalLabour) *
-              upFinal) /
-          kurs;
+      total = (((totalDiamond * upDiamondMetier) + totalEmas + totalLabour));
       total = ((total * 1.2) * 1.33);
       var output =
           total.round().toString()[total.round().toString().length - 1];
@@ -1032,21 +1031,21 @@ class _FormScreenState extends State<FormScreen> {
         setState(() {
           print('others1');
           total = (total + (5 - int.parse(output)));
-          estimasiHarga.text = total.toString();
+          estimasiHarga.text = total.round().toString();
         });
         return total;
       } else if (int.parse(output) >= 6 && int.parse(output) <= 9) {
         setState(() {
           print('others1');
           total = (total + (10 - int.parse(output)));
-          estimasiHarga.text = total.toString();
+          estimasiHarga.text = total.round().toString();
         });
         return total;
       } else {
         setState(() {
           print('others1');
 
-          estimasiHarga.text = total.toString();
+          estimasiHarga.text = total.round().toString();
         });
         return total;
       }
@@ -1127,9 +1126,7 @@ class _FormScreenState extends State<FormScreen> {
       totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmasMetier);
       var totalLabour = ((labour! + others2) * upLabour);
       double total;
-      total = (((totalDiamond * upDiamondMetier) + totalEmas + totalLabour) *
-              upFinal) /
-          kurs;
+      total = (((totalDiamond * upDiamondMetier) + totalEmas + totalLabour));
       total = ((total * 1.2) * 1.33);
       var output =
           total.round().toString()[total.round().toString().length - 1];
@@ -1138,7 +1135,7 @@ class _FormScreenState extends State<FormScreen> {
           print('others2');
           total = (total + (5 - int.parse(output)));
 
-          estimasiHarga.text = total.toString();
+          estimasiHarga.text = total.round().toString();
         });
         return total;
       } else if (int.parse(output) >= 6 && int.parse(output) <= 9) {
@@ -1146,14 +1143,14 @@ class _FormScreenState extends State<FormScreen> {
           print('others2');
           total = (total + (10 - int.parse(output)));
 
-          estimasiHarga.text = total.toString();
+          estimasiHarga.text = total.round().toString();
         });
         return total;
       } else {
         setState(() {
           print('others2');
 
-          estimasiHarga.text = total.toString();
+          estimasiHarga.text = total.round().toString();
         });
         return total;
       }
@@ -1234,9 +1231,7 @@ class _FormScreenState extends State<FormScreen> {
       totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmasMetier);
       var totalLabour = ((labour! + others3) * upLabour);
       double total;
-      total = (((totalDiamond * upDiamondMetier) + totalEmas + totalLabour) *
-              upFinal) /
-          kurs;
+      total = (((totalDiamond * upDiamondMetier) + totalEmas + totalLabour));
       total = ((total * 1.2) * 1.33);
       var output =
           total.round().toString()[total.round().toString().length - 1];
@@ -1245,7 +1240,7 @@ class _FormScreenState extends State<FormScreen> {
           print('others3');
           total = (total + (5 - int.parse(output)));
 
-          estimasiHarga.text = total.toString();
+          estimasiHarga.text = total.round().toString();
         });
         return total;
       } else if (int.parse(output) >= 6 && int.parse(output) <= 9) {
@@ -1253,14 +1248,14 @@ class _FormScreenState extends State<FormScreen> {
           print('others3');
           total = (total + (10 - int.parse(output)));
 
-          estimasiHarga.text = total.toString();
+          estimasiHarga.text = total.round().toString();
         });
         return total;
       } else {
         setState(() {
           print('others3');
 
-          estimasiHarga.text = total.toString();
+          estimasiHarga.text = total.round().toString();
         });
         return total;
       }
@@ -1340,6 +1335,7 @@ class _FormScreenState extends State<FormScreen> {
                 (caratPcsBatu35 * qtyIntBatu35!)) +
             doubleBeratEmasDariCustomer) /
         5);
+
     double totalEmas;
     totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmasMetier);
     var totalLabour = ((labour! + 0) * upLabour);
@@ -1425,21 +1421,27 @@ class _FormScreenState extends State<FormScreen> {
           5);
       double totalEmas;
       totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmasMetier);
+      print('ini diamond : $totalDiamond * $upDiamondMetier');
+      print('ini emas : $totalEmas');
       var totalLabour = ((labour! + others1) * upLabour);
+      print('ini labour : $totalLabour');
+      print('$labour! & $others1 & $upLabour');
+
       double total;
-      total = (((totalDiamond * upDiamondMetier) + totalEmas + totalLabour) *
-              upFinal) /
-          kurs;
-      total = (((total.round() * kurs) * 1.2) * 1.65);
+      total = (((totalDiamond * upDiamondMetier) +
+          totalEmas +
+          totalLabour)); //final
+      var totalwholesale = (((total.round()) * 1.2)); //wholesale
+      total = (((total.round()) * 1.2) * 1.65); //retail
+      print(totalwholesale);
       var output =
           total.round().toString()[total.round().toString().length - 5];
       var result = total.round().toString().lastChars(5); // 'World'
-      print(result);
       if (int.parse(output) >= 0 && int.parse(output) <= 4) {
         setState(() {
           print('others1');
           total = (total + (50000 - int.parse(result)));
-          estimasiHarga.text = total.toString();
+          estimasiHarga.text = total.round().toString();
         });
         return total;
       } else if (int.parse(output) >= 6 && int.parse(output) <= 9) {
@@ -1447,14 +1449,14 @@ class _FormScreenState extends State<FormScreen> {
           print('others1');
           total = (total + (100000 - int.parse(result)));
 
-          estimasiHarga.text = total.toString();
+          estimasiHarga.text = total.round().toString();
         });
         return total;
       } else {
         setState(() {
           print('others1');
 
-          estimasiHarga.text = total.toString();
+          estimasiHarga.text = total.round().toString();
         });
         return total;
       }
@@ -1533,12 +1535,19 @@ class _FormScreenState extends State<FormScreen> {
           5);
       double totalEmas;
       totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmasMetier);
+      print('ini emas : $totalEmas');
+      print('ini diamond : $totalDiamond * $upDiamondMetier');
+
       var totalLabour = ((labour! + others2) * upLabour);
       double total;
-      total = (((totalDiamond * upDiamondMetier) + totalEmas + totalLabour) *
-              upFinal) /
-          kurs;
-      total = (((total.round() * kurs) * 1.2) * 1.65);
+      print('$labour! & $others2 & $upLabour');
+      print('ini labour : $totalLabour');
+      total = (((totalDiamond * upDiamondMetier) +
+          totalEmas +
+          totalLabour)); //final
+      var totalwholesale = (((total.round()) * 1.2)); //wholesale
+      total = (((total.round()) * 1.2) * 1.65); //retail
+      print(totalwholesale);
       var output =
           total.round().toString()[total.round().toString().length - 5];
       var result = total.round().toString().lastChars(5); // 'World'
@@ -1548,7 +1557,7 @@ class _FormScreenState extends State<FormScreen> {
           print('others2');
           total = (total + (50000 - int.parse(result)));
 
-          estimasiHarga.text = total.toString();
+          estimasiHarga.text = total.round().toString();
         });
         return total;
       } else if (int.parse(output) >= 6 && int.parse(output) <= 9) {
@@ -1556,14 +1565,14 @@ class _FormScreenState extends State<FormScreen> {
           print('others2');
           total = (total + (100000 - int.parse(result)));
 
-          estimasiHarga.text = total.toString();
+          estimasiHarga.text = total.round().toString();
         });
         return total;
       } else {
         setState(() {
           print('others2');
 
-          estimasiHarga.text = total.toString();
+          estimasiHarga.text = total.round().toString();
         });
         return total;
       }
@@ -1642,12 +1651,19 @@ class _FormScreenState extends State<FormScreen> {
           5);
       double totalEmas;
       totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmasMetier);
+      print('ini emas : $totalEmas');
+      print('ini diamond : $totalDiamond * $upDiamondMetier');
+
       var totalLabour = ((labour! + others3) * upLabour);
       double total;
-      total = (((totalDiamond * upDiamondMetier) + totalEmas + totalLabour) *
-              upFinal) /
-          kurs;
-      total = (((total.round() * kurs) * 1.2) * 1.65);
+      total = (((totalDiamond * upDiamondMetier) +
+          totalEmas +
+          totalLabour)); //final
+      var totalwholesale = (((total.round()) * 1.2)); //wholesale
+      total = (((total.round()) * 1.2) * 1.65); //retail
+      print(totalwholesale);
+      print('ini labour : $totalLabour');
+      print('$labour! & $others3 & $upLabour');
 
       var output =
           total.round().toString()[total.round().toString().length - 5];
@@ -1658,7 +1674,7 @@ class _FormScreenState extends State<FormScreen> {
           print('others3');
           total = (total + (50000 - int.parse(result)));
 
-          estimasiHarga.text = total.toString();
+          estimasiHarga.text = total.round().toString();
         });
         return total;
       } else if (int.parse(output) >= 6 && int.parse(output) <= 9) {
@@ -1666,14 +1682,14 @@ class _FormScreenState extends State<FormScreen> {
           print('others3');
           total = (total + (100000 - int.parse(result)));
 
-          estimasiHarga.text = total.toString();
+          estimasiHarga.text = total.round().toString();
         });
         return total;
       } else {
         setState(() {
           print('others3');
 
-          estimasiHarga.text = total.toString();
+          estimasiHarga.text = total.round().toString();
         });
         return total;
       }
@@ -2612,7 +2628,7 @@ class _FormScreenState extends State<FormScreen> {
                       decoration: InputDecoration(
                         label: Text(
                           brand.text == "BELI BERLIAN"
-                              ? '\$ ${CurrencyFormat.convertToDollar(totalPriceBeliBerlian, 0)}'
+                              ? 'Rp. ${CurrencyFormat.convertToDollar(totalPriceBeliBerlian, 0)}'
                               : brand.text == "METIER"
                                   ? 'Rp. ${CurrencyFormat.convertToDollar(totalPriceMetier, 0)}'
                                   : '\$ ${CurrencyFormat.convertToDollar(totalPriceParva, 0)}',

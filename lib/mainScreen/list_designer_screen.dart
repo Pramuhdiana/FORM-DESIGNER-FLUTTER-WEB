@@ -372,38 +372,38 @@ class _ListDesignerScreenState extends State<ListDesignerScreen> {
                                                 });
                                               }),
                                           DataColumn(label: _verticalDivider),
-                                          DataColumn(
-                                              label: const SizedBox(
-                                                  width: 120,
-                                                  child: Text(
-                                                    "Kode Design",
-                                                    style: TextStyle(
-                                                        fontSize: 15,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  )),
-                                              onSort: (columnIndex, _) {
-                                                setState(() {
-                                                  _currentSortColumn =
-                                                      columnIndex;
-                                                  if (sort == true) {
-                                                    sort = false;
-                                                    filterCrm!.sort((a, b) => a
-                                                        .kodeDesign!
-                                                        .toLowerCase()
-                                                        .compareTo(b.kodeDesign!
-                                                            .toLowerCase()));
-                                                  } else {
-                                                    sort = true;
-                                                    filterCrm!.sort((a, b) => b
-                                                        .kodeDesign!
-                                                        .toLowerCase()
-                                                        .compareTo(a.kodeDesign!
-                                                            .toLowerCase()));
-                                                  }
-                                                });
-                                              }),
-                                          DataColumn(label: _verticalDivider),
+                                          // DataColumn(
+                                          //     label: const SizedBox(
+                                          //         width: 120,
+                                          //         child: Text(
+                                          //           "Kode Design",
+                                          //           style: TextStyle(
+                                          //               fontSize: 15,
+                                          //               fontWeight:
+                                          //                   FontWeight.bold),
+                                          //         )),
+                                          //     onSort: (columnIndex, _) {
+                                          //       setState(() {
+                                          //         _currentSortColumn =
+                                          //             columnIndex;
+                                          //         if (sort == true) {
+                                          //           sort = false;
+                                          //           filterCrm!.sort((a, b) => a
+                                          //               .kodeDesign!
+                                          //               .toLowerCase()
+                                          //               .compareTo(b.kodeDesign!
+                                          //                   .toLowerCase()));
+                                          //         } else {
+                                          //           sort = true;
+                                          //           filterCrm!.sort((a, b) => b
+                                          //               .kodeDesign!
+                                          //               .toLowerCase()
+                                          //               .compareTo(a.kodeDesign!
+                                          //                   .toLowerCase()));
+                                          //         }
+                                          //       });
+                                          //     }),
+                                          // DataColumn(label: _verticalDivider),
                                           DataColumn(
                                               label: const SizedBox(
                                                   width: 120,
@@ -605,11 +605,11 @@ class RowSource extends DataTableSource {
       ),
       DataCell(_verticalDivider),
 
-      //kodeDesign
-      DataCell(
-        Padding(padding: const EdgeInsets.all(0), child: Text(data.kodeDesign)),
-      ),
-      DataCell(_verticalDivider),
+      // //kodeDesign
+      // DataCell(
+      //   Padding(padding: const EdgeInsets.all(0), child: Text(data.kodeDesign)),
+      // ),
+      // DataCell(_verticalDivider),
 
       //tema
       DataCell(
@@ -638,15 +638,35 @@ class RowSource extends DataTableSource {
       ),
       DataCell(_verticalDivider),
 
-      //imageUrl
+      //kelas harga
       DataCell(
         Container(
             width: 100,
             padding: const EdgeInsets.all(0),
-            child: Text(
-              data.imageUrl,
-              maxLines: 2,
-            )),
+            child: ((data.estimasiHarga * 0.37) * 11500) <= 5000000
+                ? const Text(
+                    "XS",
+                    maxLines: 2,
+                  )
+                : ((data.estimasiHarga * 0.37) * 11500) <= 10000000
+                    ? const Text(
+                        "S",
+                        maxLines: 2,
+                      )
+                    : ((data.estimasiHarga * 0.37) * 11500) <= 20000000
+                        ? const Text(
+                            "M",
+                            maxLines: 2,
+                          )
+                        : ((data.estimasiHarga * 0.37) * 11500) <= 35000000
+                            ? const Text(
+                                "L",
+                                maxLines: 2,
+                              )
+                            : const Text(
+                                "XL",
+                                maxLines: 2,
+                              )),
       ),
       DataCell(_verticalDivider),
 

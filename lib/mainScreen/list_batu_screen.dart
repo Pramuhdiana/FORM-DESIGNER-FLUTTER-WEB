@@ -325,6 +325,40 @@ class _ListBatuScreenState extends State<ListBatuScreen> {
                                               });
                                             }),
                                         DataColumn(label: _verticalDivider),
+                                        //* carat / cps
+                                        const DataColumn(
+                                          label: SizedBox(
+                                              width: 120,
+                                              child: Text(
+                                                "CARAT PER PCS",
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              )),
+                                          // onSort: (columnIndex, _) {
+                                          //   setState(() {
+                                          //     _currentSortColumn =
+                                          //         columnIndex;
+                                          //     if (sort == true) {
+                                          //       sort = false;
+                                          //       filterListBatu!.sort((a, b) =>
+                                          //           a.parcel!
+                                          //               .toLowerCase()
+                                          //               .compareTo(b.parcel!
+                                          //                   .toLowerCase()));
+                                          //     } else {
+                                          //       sort = true;
+                                          //       filterListBatu!.sort((a, b) =>
+                                          //           b.parcel!
+                                          //               .toLowerCase()
+                                          //               .compareTo(a.parcel!
+                                          //                   .toLowerCase()));
+                                          //     }
+                                          //   });
+                                          // }
+                                        ),
+                                        DataColumn(label: _verticalDivider),
                                         //QTY
                                         DataColumn(
                                             label: const SizedBox(
@@ -359,7 +393,7 @@ class _ListBatuScreenState extends State<ListBatuScreen> {
                                                   left: 30),
                                               width: 120,
                                               child: const Text(
-                                                "Aksi",
+                                                "AKSI",
                                                 style: TextStyle(
                                                     fontSize: 15,
                                                     fontWeight:
@@ -926,6 +960,11 @@ class RowSource extends DataTableSource {
       //parcel
       DataCell(
         Padding(padding: const EdgeInsets.all(0), child: Text(data.parcel)),
+      ),
+      DataCell(_verticalDivider),
+      //CARAT /PCS
+      DataCell(
+        Padding(padding: const EdgeInsets.all(0), child: Text(data.caratPcs)),
       ),
       DataCell(_verticalDivider),
       //qty

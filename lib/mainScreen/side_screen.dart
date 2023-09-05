@@ -3,6 +3,7 @@ import 'package:form_designer/SCM/mainScreen/kebutuhan_batu_by_siklus.dart';
 import 'package:form_designer/mainScreen/home_screen.dart';
 import 'package:form_designer/mainScreen/list_batu_screen.dart';
 import 'package:form_designer/mainScreen/list_designer_screen.dart';
+import 'package:form_designer/mainScreen/list_status_approval.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:side_navigation/side_navigation.dart';
 
@@ -28,6 +29,9 @@ class _MainViewState extends State<MainView> {
     sharedPreferences!.getString('level') != '1'
         ? const HomeScreen()
         : const ListKebutuhanBatuScreen(),
+    sharedPreferences!.getString('level') != '1'
+        ? const HomeScreen()
+        : const ListStatusApprovalScreen(),
   ];
   final _formKey = GlobalKey<FormState>();
 
@@ -72,6 +76,11 @@ class _MainViewState extends State<MainView> {
                 const SideNavigationBarItem(
                   icon: Icons.bar_chart_sharp,
                   label: 'Kebutuhan Data Batu',
+                ),
+              if (sharedPreferences!.getString('level') == '1')
+                const SideNavigationBarItem(
+                  icon: Icons.verified,
+                  label: 'Status Approval',
                 ),
             ],
             onTap: (index) {

@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:form_designer/calculatePricing/add_calculate_pricing.dart';
+import 'package:form_designer/global/currency_format.dart';
 // ignore: unused_import
 import 'package:form_designer/mainScreen/form_screen_by_id.dart';
 import 'package:http/http.dart' as http;
@@ -486,7 +487,11 @@ class RowSource extends DataTableSource {
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                data.estimasiHarga.toString(),
+                data.brand == "BELI BERLIAN"
+                    ? 'Rp. ${CurrencyFormat.convertToDollar(data.estimasiHarga, 0)}'
+                    : data.brand == "METIER"
+                        ? 'Rp. ${CurrencyFormat.convertToDollar(data.estimasiHarga, 0)}'
+                        : '\$ ${CurrencyFormat.convertToDollar(data.estimasiHarga, 0)}',
                 textAlign: TextAlign.center,
               ),
             )),

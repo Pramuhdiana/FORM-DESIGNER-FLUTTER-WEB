@@ -103,16 +103,6 @@ class _MySplashScreenState extends State<MySplashScreen> {
         .listen((event) {
       setState(() {});
     });
-    try {
-      // await apiProvider.getUsers();
-      // setState(() {
-      //   role = int.parse(sharedPreferences!.getString('role_sales_brand')!);
-      //   print(role);
-      // });
-    } catch (c) {
-      // sharedPreferences!.setString('name', 'Failed To Load Data');
-      // Fluttertoast.showToast(msg: "Failed To Load Data User");
-    }
 
     setState(() {
       isLoading = false;
@@ -145,7 +135,10 @@ class _MySplashScreenState extends State<MySplashScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Padding(
+              Container(
+                height: MediaQuery.of(context).size.height * 0.8,
+                width: MediaQuery.of(context).size.width * 1,
+
                 padding: const EdgeInsets.all(12.0),
                 child: Lottie.asset("loadingJSON/animation_llvy7jo7.json"),
                 // child: Image.network(
