@@ -1,6 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages, avoid_print, prefer_typing_uninitialized_variables
 
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:form_designer/api/api_constant.dart';
 import 'package:form_designer/global/global.dart';
@@ -174,6 +175,7 @@ class _HomeScreenState extends State<HomeScreen> {
         // ignore: null_check_always_fails
         onWillPop: () async => null!,
         child: Scaffold(
+
             // drawer: Drawer1(),
             appBar: AppBar(
               automaticallyImplyLeading: false,
@@ -2289,4 +2291,12 @@ class RowSource extends DataTableSource {
       null;
     }
   }
+}
+
+class CustomScrollBehavior extends MaterialScrollBehavior {
+  @override
+  Set<PointerDeviceKind> get dragDevices => {
+        PointerDeviceKind.touch,
+        PointerDeviceKind.mouse,
+      };
 }

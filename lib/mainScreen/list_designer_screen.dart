@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:form_designer/mainScreen/form_screen.dart';
 // ignore: unused_import
@@ -120,6 +121,7 @@ class _ListDesignerScreenState extends State<ListDesignerScreen> {
       // ignore: null_check_always_fails
       onWillPop: () async => null!,
       child: MaterialApp(
+          scrollBehavior: CustomScrollBehavior(),
           debugShowCheckedModeBanner: false,
           home: Scaffold(
               // drawer: Drawer1(),
@@ -591,8 +593,106 @@ class RowSource extends DataTableSource {
     return DataRow(cells: [
       //kodeDesignMdbc
       DataCell(
-        Padding(
-            padding: const EdgeInsets.all(0), child: Text(data.kodeDesignMdbc)),
+        Builder(builder: (context) {
+          return Padding(
+              padding: const EdgeInsets.all(0),
+              child: sharedPreferences!.getString('level') != '1'
+                  ? Text(data.kodeDesignMdbc)
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(data.kodeDesignMdbc),
+                        IconButton(
+                            onPressed: () {
+                              final dropdownFormKey = GlobalKey<FormState>();
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8)),
+                                      // title: const Text('Pilih Siklus'),
+                                      content: SizedBox(
+                                        height: 150,
+                                        child: Column(
+                                          children: [
+                                            Form(
+                                                key: dropdownFormKey,
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    DropdownSearch<String>(
+                                                      items: const [
+                                                        "JANUARI",
+                                                        "FEBRUARI",
+                                                        "MARET",
+                                                        "APRIL",
+                                                        "MEI",
+                                                        "JUNI",
+                                                        "JULI",
+                                                        "AGUSTUS",
+                                                        "SEPTEMBER",
+                                                        "OKTOBER",
+                                                        "NOVEMBER",
+                                                        "DESEMBER"
+                                                      ],
+                                                      dropdownDecoratorProps:
+                                                          DropDownDecoratorProps(
+                                                        dropdownSearchDecoration:
+                                                            InputDecoration(
+                                                          hintText:
+                                                              'Pilih Siklus',
+                                                          filled: true,
+                                                          fillColor: Colors
+                                                              .grey.shade200,
+                                                          enabledBorder:
+                                                              OutlineInputBorder(
+                                                            borderSide:
+                                                                const BorderSide(
+                                                                    color: Colors
+                                                                        .black,
+                                                                    width: 2),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        20),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      validator: (value) =>
+                                                          value == null
+                                                              ? "Siklus tidak boleh kosong"
+                                                              : null,
+                                                      onChanged:
+                                                          (String? newValue) {},
+                                                    ),
+                                                    Container(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              top: 20),
+                                                      child: ElevatedButton(
+                                                          onPressed: () {
+                                                            if (dropdownFormKey
+                                                                .currentState!
+                                                                .validate()) {}
+                                                          },
+                                                          child: const Text(
+                                                              "Submit")),
+                                                    )
+                                                  ],
+                                                ))
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  });
+                            },
+                            icon: const Icon(Icons.rotate_90_degrees_ccw)),
+                      ],
+                    ));
+        }),
       ),
       DataCell(_verticalDivider),
       //namaDesigner
@@ -2412,4 +2512,12 @@ class UserDataTableSource extends DataTableSource {
 
     notifyListeners();
   }
+}
+
+class CustomScrollBehavior extends MaterialScrollBehavior {
+  @override
+  Set<PointerDeviceKind> get dragDevices => {
+        PointerDeviceKind.touch,
+        PointerDeviceKind.mouse,
+      };
 }

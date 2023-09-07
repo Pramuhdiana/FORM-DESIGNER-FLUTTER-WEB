@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:form_designer/calculatePricing/add_calculate_pricing.dart';
 import 'package:form_designer/global/currency_format.dart';
@@ -92,6 +93,7 @@ class _ListCalculatePricingScreenState
       // ignore: null_check_always_fails
       onWillPop: () async => null!,
       child: MaterialApp(
+          scrollBehavior: CustomScrollBehavior(),
           debugShowCheckedModeBanner: false,
           home: Scaffold(
               // drawer: Drawer1(),
@@ -581,4 +583,12 @@ class UserDataTableSource extends DataTableSource {
 
     notifyListeners();
   }
+}
+
+class CustomScrollBehavior extends MaterialScrollBehavior {
+  @override
+  Set<PointerDeviceKind> get dragDevices => {
+        PointerDeviceKind.touch,
+        PointerDeviceKind.mouse,
+      };
 }

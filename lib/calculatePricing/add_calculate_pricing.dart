@@ -579,7 +579,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
 
     if (total.toString() == 'NaN') {
       return 0;
-    } else if (total <= 2251) {
+    } else if (total < 1500) {
       var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
           (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
           (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
@@ -614,6 +614,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
           (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
           (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
           (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
+      print(totalDiamond);
 
       var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
                   (caratPcsBatu2 * qtyIntBatu2!) +
@@ -654,24 +655,25 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
           5);
       double totalEmas;
       totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmas);
-      var totalLabour = ((labour! + others1) * upLabour);
+      print(totalEmas);
+      var totalLabour = ((labour!) * upLabour);
+      print(totalLabour);
       double total;
       total = ((totalDiamond + totalEmas + totalLabour) * upFinal) / kurs;
-
       var output =
           total.round().toString()[total.round().toString().length - 1];
 
       if (int.parse(output) >= 1 && int.parse(output) <= 4) {
         setState(() {
-          print('others1');
+          print('parva/fine others1 a');
           total = (total + (5 - int.parse(output)));
-
           estimasiHarga.text = total.round().toString();
         });
         return total;
       } else if (int.parse(output) >= 6 && int.parse(output) <= 9) {
         setState(() {
-          print('others1');
+          print('parva/fine others1 b');
+
           total = (total + (10 - int.parse(output)));
 
           estimasiHarga.text = total.round().toString();
@@ -679,7 +681,119 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
         return total;
       } else {
         setState(() {
-          print('others1');
+          print('parva/fine others1 ori');
+
+          estimasiHarga.text = total.round().toString();
+        });
+        return total;
+      }
+    } else if (total <= 2251) {
+      var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
+          (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
+          (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
+          (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
+          (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
+          (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
+          (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
+          (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
+          (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
+          (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
+          (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
+          (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
+          (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
+          (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
+          (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
+          (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
+          (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
+          (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
+          (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
+          (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
+          (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
+          (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
+          (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
+          (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
+          (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
+          (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
+          (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
+          (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
+          (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
+          (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
+          (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
+          (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
+          (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
+          (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
+      print(totalDiamond);
+
+      var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
+                  (caratPcsBatu2 * qtyIntBatu2!) +
+                  (caratPcsBatu3 * qtyIntBatu3!) +
+                  (caratPcsBatu4 * qtyIntBatu4!) +
+                  (caratPcsBatu5 * qtyIntBatu5!) +
+                  (caratPcsBatu6 * qtyIntBatu6!) +
+                  (caratPcsBatu7 * qtyIntBatu7!) +
+                  (caratPcsBatu8 * qtyIntBatu8!) +
+                  (caratPcsBatu9 * qtyIntBatu9!) +
+                  (caratPcsBatu10 * qtyIntBatu10!) +
+                  (caratPcsBatu11 * qtyIntBatu11!) +
+                  (caratPcsBatu12 * qtyIntBatu12!) +
+                  (caratPcsBatu13 * qtyIntBatu13!) +
+                  (caratPcsBatu14 * qtyIntBatu14!) +
+                  (caratPcsBatu15 * qtyIntBatu15!) +
+                  (caratPcsBatu16 * qtyIntBatu16!) +
+                  (caratPcsBatu17 * qtyIntBatu17!) +
+                  (caratPcsBatu18 * qtyIntBatu18!) +
+                  (caratPcsBatu19 * qtyIntBatu19!) +
+                  (caratPcsBatu20 * qtyIntBatu20!) +
+                  (caratPcsBatu21 * qtyIntBatu21!) +
+                  (caratPcsBatu22 * qtyIntBatu22!) +
+                  (caratPcsBatu23 * qtyIntBatu23!) +
+                  (caratPcsBatu24 * qtyIntBatu24!) +
+                  (caratPcsBatu25 * qtyIntBatu25!) +
+                  (caratPcsBatu26 * qtyIntBatu26!) +
+                  (caratPcsBatu27 * qtyIntBatu27!) +
+                  (caratPcsBatu28 * qtyIntBatu28!) +
+                  (caratPcsBatu29 * qtyIntBatu29!) +
+                  (caratPcsBatu30 * qtyIntBatu30!) +
+                  (caratPcsBatu31 * qtyIntBatu31!) +
+                  (caratPcsBatu32 * qtyIntBatu32!) +
+                  (caratPcsBatu33 * qtyIntBatu33!) +
+                  (caratPcsBatu34 * qtyIntBatu34!) +
+                  (caratPcsBatu35 * qtyIntBatu35!)) +
+              doubleBeratEmasDariCustomer) /
+          5);
+      double totalEmas;
+      totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmas);
+      print(totalEmas);
+
+      var totalLabour = ((labour! + others1) * upLabour);
+      print(totalLabour);
+
+      double total;
+      total = ((totalDiamond + totalEmas + totalLabour) * upFinal) / kurs;
+      var output =
+          total.round().toString()[total.round().toString().length - 1];
+
+      if (int.parse(output) >= 1 && int.parse(output) <= 4) {
+        setState(() {
+          print('parva/fine others1 a');
+
+          total = (total + (5 - int.parse(output)));
+
+          estimasiHarga.text = total.round().toString();
+        });
+        return total;
+      } else if (int.parse(output) >= 6 && int.parse(output) <= 9) {
+        setState(() {
+          print('parva/fine others1 b');
+
+          total = (total + (10 - int.parse(output)));
+
+          estimasiHarga.text = total.round().toString();
+        });
+        return total;
+      } else {
+        setState(() {
+          print('parva/fine others1 ori');
 
           estimasiHarga.text = total.round().toString();
         });
@@ -720,6 +834,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
           (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
           (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
           (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
+      print(totalDiamond);
 
       var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
                   (caratPcsBatu2 * qtyIntBatu2!) +
@@ -982,6 +1097,112 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
 
     if (total.toString() == 'NaN') {
       return 0;
+    } else if (total < 1500) {
+      var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
+          (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
+          (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
+          (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
+          (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
+          (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
+          (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
+          (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
+          (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
+          (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
+          (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
+          (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
+          (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
+          (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
+          (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
+          (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
+          (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
+          (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
+          (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
+          (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
+          (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
+          (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
+          (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
+          (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
+          (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
+          (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
+          (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
+          (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
+          (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
+          (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
+          (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
+          (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
+          (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
+          (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
+
+      var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
+                  (caratPcsBatu2 * qtyIntBatu2!) +
+                  (caratPcsBatu3 * qtyIntBatu3!) +
+                  (caratPcsBatu4 * qtyIntBatu4!) +
+                  (caratPcsBatu5 * qtyIntBatu5!) +
+                  (caratPcsBatu6 * qtyIntBatu6!) +
+                  (caratPcsBatu7 * qtyIntBatu7!) +
+                  (caratPcsBatu8 * qtyIntBatu8!) +
+                  (caratPcsBatu9 * qtyIntBatu9!) +
+                  (caratPcsBatu10 * qtyIntBatu10!) +
+                  (caratPcsBatu11 * qtyIntBatu11!) +
+                  (caratPcsBatu12 * qtyIntBatu12!) +
+                  (caratPcsBatu13 * qtyIntBatu13!) +
+                  (caratPcsBatu14 * qtyIntBatu14!) +
+                  (caratPcsBatu15 * qtyIntBatu15!) +
+                  (caratPcsBatu16 * qtyIntBatu16!) +
+                  (caratPcsBatu17 * qtyIntBatu17!) +
+                  (caratPcsBatu18 * qtyIntBatu18!) +
+                  (caratPcsBatu19 * qtyIntBatu19!) +
+                  (caratPcsBatu20 * qtyIntBatu20!) +
+                  (caratPcsBatu21 * qtyIntBatu21!) +
+                  (caratPcsBatu22 * qtyIntBatu22!) +
+                  (caratPcsBatu23 * qtyIntBatu23!) +
+                  (caratPcsBatu24 * qtyIntBatu24!) +
+                  (caratPcsBatu25 * qtyIntBatu25!) +
+                  (caratPcsBatu26 * qtyIntBatu26!) +
+                  (caratPcsBatu27 * qtyIntBatu27!) +
+                  (caratPcsBatu28 * qtyIntBatu28!) +
+                  (caratPcsBatu29 * qtyIntBatu29!) +
+                  (caratPcsBatu30 * qtyIntBatu30!) +
+                  (caratPcsBatu31 * qtyIntBatu31!) +
+                  (caratPcsBatu32 * qtyIntBatu32!) +
+                  (caratPcsBatu33 * qtyIntBatu33!) +
+                  (caratPcsBatu34 * qtyIntBatu34!) +
+                  (caratPcsBatu35 * qtyIntBatu35!)) +
+              doubleBeratEmasDariCustomer) /
+          5);
+      double totalEmas;
+      totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmasMetier);
+      var totalLabour = ((labour!) * upLabour);
+      double total;
+      total = (((totalDiamond * upDiamondMetier) + totalEmas + totalLabour));
+      total = ((total * 1.2) * 1.33);
+      var output =
+          total.round().toString()[total.round().toString().length - 1];
+
+      if (int.parse(output) >= 1 && int.parse(output) <= 4) {
+        setState(() {
+          print('tanpa others');
+
+          total = (total + (5 - int.parse(output)));
+          estimasiHarga.text = total.round().toString();
+        });
+        return total;
+      } else if (int.parse(output) >= 6 && int.parse(output) <= 9) {
+        setState(() {
+          print('tanpa others');
+
+          total = (total + (10 - int.parse(output)));
+          estimasiHarga.text = total.round().toString();
+        });
+        return total;
+      } else {
+        setState(() {
+          print('tanpa others');
+
+          estimasiHarga.text = total.round().toString();
+        });
+        return total;
+      }
     } else if (total <= 2251) {
       var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
           (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
@@ -1383,6 +1604,122 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
 
     if (total.toString() == 'NaN') {
       return 0;
+    } else if (total < 1500) {
+      var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
+          (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
+          (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
+          (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
+          (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
+          (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
+          (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
+          (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
+          (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
+          (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
+          (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
+          (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
+          (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
+          (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
+          (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
+          (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
+          (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
+          (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
+          (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
+          (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
+          (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
+          (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
+          (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
+          (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
+          (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
+          (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
+          (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
+          (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
+          (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
+          (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
+          (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
+          (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
+          (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
+          (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
+
+      var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
+                  (caratPcsBatu2 * qtyIntBatu2!) +
+                  (caratPcsBatu3 * qtyIntBatu3!) +
+                  (caratPcsBatu4 * qtyIntBatu4!) +
+                  (caratPcsBatu5 * qtyIntBatu5!) +
+                  (caratPcsBatu6 * qtyIntBatu6!) +
+                  (caratPcsBatu7 * qtyIntBatu7!) +
+                  (caratPcsBatu8 * qtyIntBatu8!) +
+                  (caratPcsBatu9 * qtyIntBatu9!) +
+                  (caratPcsBatu10 * qtyIntBatu10!) +
+                  (caratPcsBatu11 * qtyIntBatu11!) +
+                  (caratPcsBatu12 * qtyIntBatu12!) +
+                  (caratPcsBatu13 * qtyIntBatu13!) +
+                  (caratPcsBatu14 * qtyIntBatu14!) +
+                  (caratPcsBatu15 * qtyIntBatu15!) +
+                  (caratPcsBatu16 * qtyIntBatu16!) +
+                  (caratPcsBatu17 * qtyIntBatu17!) +
+                  (caratPcsBatu18 * qtyIntBatu18!) +
+                  (caratPcsBatu19 * qtyIntBatu19!) +
+                  (caratPcsBatu20 * qtyIntBatu20!) +
+                  (caratPcsBatu21 * qtyIntBatu21!) +
+                  (caratPcsBatu22 * qtyIntBatu22!) +
+                  (caratPcsBatu23 * qtyIntBatu23!) +
+                  (caratPcsBatu24 * qtyIntBatu24!) +
+                  (caratPcsBatu25 * qtyIntBatu25!) +
+                  (caratPcsBatu26 * qtyIntBatu26!) +
+                  (caratPcsBatu27 * qtyIntBatu27!) +
+                  (caratPcsBatu28 * qtyIntBatu28!) +
+                  (caratPcsBatu29 * qtyIntBatu29!) +
+                  (caratPcsBatu30 * qtyIntBatu30!) +
+                  (caratPcsBatu31 * qtyIntBatu31!) +
+                  (caratPcsBatu32 * qtyIntBatu32!) +
+                  (caratPcsBatu33 * qtyIntBatu33!) +
+                  (caratPcsBatu34 * qtyIntBatu34!) +
+                  (caratPcsBatu35 * qtyIntBatu35!)) +
+              doubleBeratEmasDariCustomer) /
+          5);
+      double totalEmas;
+      totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmasMetier);
+      print('ini diamond : $totalDiamond * $upDiamondMetier');
+      print('ini emas : $totalEmas');
+      var totalLabour = ((labour!) * upLabour);
+      print('ini labour : $totalLabour');
+      print('$labour! & $upLabour');
+
+      double total;
+      total = (((totalDiamond * upDiamondMetier) +
+          totalEmas +
+          totalLabour)); //final
+      var totalwholesale = (((total.round()) * 1.2)); //wholesale
+      total = (((total.round()) * 1.2) * 1.65); //retail
+      print(totalwholesale);
+      var output =
+          total.round().toString()[total.round().toString().length - 5];
+      var result = total.round().toString().lastChars(5); // 'World'
+      if (int.parse(output) >= 0 && int.parse(output) <= 4) {
+        setState(() {
+          print('tanpa others');
+
+          total = (total + (50000 - int.parse(result)));
+          estimasiHarga.text = total.round().toString();
+        });
+        return total;
+      } else if (int.parse(output) >= 6 && int.parse(output) <= 9) {
+        setState(() {
+          print('tanpa others');
+
+          total = (total + (100000 - int.parse(result)));
+
+          estimasiHarga.text = total.round().toString();
+        });
+        return total;
+      } else {
+        setState(() {
+          print('tanpa others');
+
+          estimasiHarga.text = total.round().toString();
+        });
+        return total;
+      }
     } else if (total <= 2251) {
       var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
           (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
@@ -1760,7 +2097,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 1),
                       height: 65,
-                      width: MediaQuery.of(context).size.width * 0.1,
+                      width: 150,
                       child: DropdownSearch<String>(
                         items: const [
                           "PARVA",
@@ -1950,7 +2287,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                     Container(
                       padding: const EdgeInsets.only(left: 30),
                       height: 70,
-                      width: MediaQuery.of(context).size.width * 0.4,
+                      width: 250,
                       child: TextFormField(
                         enabled: false,
                         style: const TextStyle(
@@ -2034,7 +2371,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
 
   Widget _bagianBawah() {
     return Container(
-      width: MediaQuery.of(context).size.width * 1,
+      width: 1500,
       child: Align(
         alignment: Alignment.centerLeft,
         child: Row(
@@ -2254,7 +2591,6 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
               ),
             ),
             Container(
-                width: 850,
                 padding: const EdgeInsets.only(left: 25, right: 25, top: 15),
                 child: Row(children: [
                   Column(mainAxisAlignment: MainAxisAlignment.start, children: [
@@ -2367,7 +2703,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                     idStone1 != -2
                                         ? const SizedBox()
                                         : Container(
-                                            width: 120,
+                                            width: 220,
                                             height: 50,
                                             padding: const EdgeInsets.only(
                                                 top: 10, left: 15),
@@ -2665,7 +3001,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone2 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -3016,7 +3352,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone3 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -3367,7 +3703,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone4 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -3718,7 +4054,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone5 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -4069,7 +4405,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone6 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -4420,7 +4756,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone7 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -4771,7 +5107,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone8 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -5122,7 +5458,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone9 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -5473,7 +5809,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone10 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -5826,7 +6162,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone11 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -6179,7 +6515,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone12 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -6532,7 +6868,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone13 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -6885,7 +7221,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone14 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -7238,7 +7574,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone15 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -7591,7 +7927,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone16 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -7944,7 +8280,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone17 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -8297,7 +8633,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone18 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -8650,7 +8986,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone19 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -9003,7 +9339,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone20 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -9356,7 +9692,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone21 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -9709,7 +10045,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone22 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -10062,7 +10398,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone23 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -10415,7 +10751,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone24 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -10768,7 +11104,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone25 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -11121,7 +11457,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone26 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -11474,7 +11810,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone27 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -11827,7 +12163,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone28 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -12180,7 +12516,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone29 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -12533,7 +12869,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone30 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -12886,7 +13222,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone31 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -13239,7 +13575,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone32 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -13592,7 +13928,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone33 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -13945,7 +14281,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone34 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -14298,7 +14634,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone35 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(

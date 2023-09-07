@@ -1775,7 +1775,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
 
   Widget _bagianKiri() {
     return Container(
-        width: MediaQuery.of(context).size.width * 0.40,
+        width: 700,
         child: Form(
           key: formKey,
           child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
@@ -1784,7 +1784,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
               children: [
                 //kode design mdbc
                 SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.1,
+                  width: 200,
                   height: 65,
                   child: TextFormField(
                     style: const TextStyle(
@@ -1810,7 +1810,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                 //nama deisner
                 SizedBox(
                   height: 65,
-                  width: MediaQuery.of(context).size.width * 0.1,
+                  width: 200,
                   child: TextFormField(
                     style: const TextStyle(
                         fontSize: 14,
@@ -1840,7 +1840,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                 //nama modeller
                 SizedBox(
                   height: 65,
-                  width: MediaQuery.of(context).size.width * 0.1,
+                  width: 200,
                   child: TextFormField(
                     style: const TextStyle(
                         fontSize: 14,
@@ -1865,7 +1865,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                   //kode marketing
                   SizedBox(
                     height: 65,
-                    width: MediaQuery.of(context).size.width * 0.1,
+                    width: 200,
                     child: TextFormField(
                       style: const TextStyle(
                           fontSize: 14,
@@ -1885,7 +1885,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 1),
                     height: 65,
-                    width: MediaQuery.of(context).size.width * 0.1,
+                    width: 200,
                     child: DropdownSearch<String>(
                       items: const [
                         "JANUARI",
@@ -1926,7 +1926,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                   //kode deisgn
                   SizedBox(
                     height: 65,
-                    width: MediaQuery.of(context).size.width * 0.1,
+                    width: 200,
                     child: TextFormField(
                       style: const TextStyle(
                           fontSize: 14,
@@ -1953,7 +1953,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                   //kode produksi
                   SizedBox(
                     height: 65,
-                    width: MediaQuery.of(context).size.width * 0.1,
+                    width: 200,
                     child: TextFormField(
                       style: const TextStyle(
                           fontSize: 14,
@@ -1972,7 +1972,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                   //tema
                   SizedBox(
                     height: 65,
-                    width: MediaQuery.of(context).size.width * 0.1,
+                    width: 200,
                     child: TextFormField(
                       style: const TextStyle(
                           fontSize: 14,
@@ -2055,7 +2055,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                       children: [
                         SizedBox(
                           height: 65,
-                          width: MediaQuery.of(context).size.width * 0.15,
+                          width: 230,
                           child: DropdownSearch<RantaiModel>(
                             asyncItems: (String? filter) =>
                                 getListRantai(filter),
@@ -2084,7 +2084,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 15),
                           height: 65,
-                          width: MediaQuery.of(context).size.width * 0.06,
+                          width: 100,
                           child: TextFormField(
                             style: const TextStyle(
                                 fontSize: 14,
@@ -2103,7 +2103,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 1),
                           height: 65,
-                          width: MediaQuery.of(context).size.width * 0.05,
+                          width: 100,
                           child: TextFormField(
                             enabled: false,
                             style: const TextStyle(
@@ -2126,7 +2126,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 1),
                     height: 65,
-                    width: MediaQuery.of(context).size.width * 0.1,
+                    width: 230,
                     child: DropdownSearch<JenisbarangModel>(
                       asyncItems: (String? filter) =>
                           getListJenisbarang(filter),
@@ -2170,7 +2170,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                       children: [
                         SizedBox(
                           height: 65,
-                          width: MediaQuery.of(context).size.width * 0.15,
+                          width: 230,
                           child: DropdownSearch<Lain2Model>(
                             asyncItems: (String? filter) =>
                                 getListLain2(filter),
@@ -2203,7 +2203,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 15),
                           height: 65,
-                          width: MediaQuery.of(context).size.width * 0.06,
+                          width: 100,
                           child: TextFormField(
                             style: const TextStyle(
                                 fontSize: 14,
@@ -2222,7 +2222,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 1),
                           height: 65,
-                          width: MediaQuery.of(context).size.width * 0.05,
+                          width: 100,
                           child: TextFormField(
                             enabled: false,
                             style: const TextStyle(
@@ -2245,7 +2245,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 1),
                     height: 65,
-                    width: MediaQuery.of(context).size.width * 0.1,
+                    width: 230,
                     child: TextFormField(
                       style: const TextStyle(
                           fontSize: 14,
@@ -2278,7 +2278,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                       children: [
                         SizedBox(
                           height: 65,
-                          width: MediaQuery.of(context).size.width * 0.15,
+                          width: 230,
                           child: DropdownSearch<EarnutModel>(
                             asyncItems: (String? filter) =>
                                 getListEarnut(filter),
@@ -2311,7 +2311,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 15),
                           height: 65,
-                          width: MediaQuery.of(context).size.width * 0.06,
+                          width: 100,
                           child: TextFormField(
                             style: const TextStyle(
                                 fontSize: 14,
@@ -2330,7 +2330,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 1),
                           height: 65,
-                          width: MediaQuery.of(context).size.width * 0.05,
+                          width: 100,
                           child: TextFormField(
                             enabled: false,
                             style: const TextStyle(
@@ -2353,7 +2353,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 1),
                     height: 65,
-                    width: MediaQuery.of(context).size.width * 0.1,
+                    width: 230,
                     child: DropdownSearch<String>(
                       items: const ["PARVA", "SIORAI", "METIER"],
                       onChanged: (item) {
@@ -2388,7 +2388,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                       children: [
                         SizedBox(
                           height: 65,
-                          width: MediaQuery.of(context).size.width * 0.15,
+                          width: 230,
                           child: TextFormField(
                             style: const TextStyle(
                                 fontSize: 14,
@@ -2409,7 +2409,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 1),
                     height: 65,
-                    width: MediaQuery.of(context).size.width * 0.1,
+                    width: 230,
                     child: TextFormField(
                       style: const TextStyle(
                           fontSize: 14,
@@ -2440,7 +2440,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                       children: [
                         SizedBox(
                           height: 65,
-                          width: MediaQuery.of(context).size.width * 0.15,
+                          width: 230,
                           child: TextFormField(
                             style: const TextStyle(
                                 fontSize: 14,
@@ -2459,7 +2459,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 15),
                           height: 65,
-                          width: MediaQuery.of(context).size.width * 0.06,
+                          width: 100,
                           child: TextFormField(
                             style: const TextStyle(
                                 fontSize: 14,
@@ -2478,7 +2478,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 1),
                           height: 65,
-                          width: MediaQuery.of(context).size.width * 0.05,
+                          width: 100,
                           child: TextFormField(
                             enabled: false,
                             style: const TextStyle(
@@ -2501,7 +2501,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 1),
                     height: 65,
-                    width: MediaQuery.of(context).size.width * 0.1,
+                    width: 230,
                     child: DropdownSearch<String>(
                       items: const ["WG", "RG", "MIX"],
                       onChanged: (item) {
@@ -2531,7 +2531,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                 children: [
                   SizedBox(
                     height: 65,
-                    width: MediaQuery.of(context).size.width * 0.1,
+                    width: 230,
                     child: TextFormField(
                       style: const TextStyle(
                           fontSize: 14,
@@ -2552,9 +2552,9 @@ class _FormScreenByIdState extends State<FormScreenById> {
                     ),
                   ),
                   Container(
-                    padding: const EdgeInsets.only(left: 25),
+                    padding: const EdgeInsets.only(left: 0),
                     height: 65,
-                    width: MediaQuery.of(context).size.width * 0.12,
+                    width: 200,
                     child: TextFormField(
                       enabled: false,
                       style: const TextStyle(
@@ -2562,10 +2562,10 @@ class _FormScreenByIdState extends State<FormScreenById> {
                           color: Colors.black,
                           fontWeight: FontWeight.bold),
                       textInputAction: TextInputAction.next,
-                      // controller: estimasiHarga,
+                      controller: estimasiHarga,
                       decoration: InputDecoration(
-                        label: Text(
-                          totalPrice,
+                        label: const Text(
+                          'Estimasi Harga',
                         ),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5.0)),
@@ -2574,7 +2574,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                   ),
                   SizedBox(
                     height: 65,
-                    width: MediaQuery.of(context).size.width * 0.1,
+                    width: 230,
                     child: TextFormField(
                       style: const TextStyle(
                           fontSize: 14,
@@ -2601,7 +2601,6 @@ class _FormScreenByIdState extends State<FormScreenById> {
     //bagian tengah
     return Container(
         padding: const EdgeInsets.only(left: 5, top: 0),
-        width: MediaQuery.of(context).size.width * 0.55,
         child: Row(
           children: [
             Column(mainAxisAlignment: MainAxisAlignment.start, children: [

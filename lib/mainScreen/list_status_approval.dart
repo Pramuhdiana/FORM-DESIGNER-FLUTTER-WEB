@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:form_designer/global/currency_format.dart';
 // ignore: unused_import
@@ -80,7 +81,8 @@ class _ListStatusApprovalScreenState extends State<ListStatusApprovalScreen> {
       setState(() {
         filterCrm = g;
         myCrm = g;
-        print(myCrm!.length);
+        myCrm!.sort((a, b) => a.statusApproval!
+            .compareTo(b.statusApproval!)); //!fungsi untuk sort data
         isLoading = true;
       });
       return g;
@@ -95,6 +97,7 @@ class _ListStatusApprovalScreenState extends State<ListStatusApprovalScreen> {
       // ignore: null_check_always_fails
       onWillPop: () async => null!,
       child: MaterialApp(
+          scrollBehavior: CustomScrollBehavior(),
           debugShowCheckedModeBanner: false,
           home: Scaffold(
             // drawer: Drawer1(),
@@ -400,6 +403,19 @@ class _ListStatusApprovalScreenState extends State<ListStatusApprovalScreen> {
                                                         FontWeight.bold),
                                               )),
                                         ),
+                                        //note approve
+                                        DataColumn(label: _verticalDivider),
+                                        const DataColumn(
+                                          label: SizedBox(
+                                              width: 130,
+                                              child: Text(
+                                                "NOTE APPROVE",
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              )),
+                                        ),
                                       ],
                                       source:
                                           // UserDataTableSource(userData: filterCrm!)),
@@ -438,9 +454,9 @@ class RowSource extends DataTableSource {
 
   DataRow recentFileDataRow(var data) {
     return DataRow(cells: [
-      //id
+      //diambil id
       DataCell(
-        Padding(
+        Container(
             padding: const EdgeInsets.all(0),
             child: Text(data.diambilId.toString())),
       ),
@@ -462,7 +478,7 @@ class RowSource extends DataTableSource {
         Padding(
             padding: const EdgeInsets.all(0),
             child: data.statusApproval == '1'
-                ? const Text("Waiting")
+                ? Text("Waiting - ${data.jenisPengajuan}")
                 : const Text("Approved")),
       ),
       DataCell(_verticalDivider),
@@ -509,6 +525,13 @@ class RowSource extends DataTableSource {
                 textAlign: TextAlign.center,
               ),
             )),
+      ),
+      //note
+      DataCell(_verticalDivider),
+      DataCell(
+        Padding(
+            padding: const EdgeInsets.all(0),
+            child: Text(data.noteApprove.toString())),
       ),
     ]);
   }
@@ -595,4 +618,12 @@ class UserDataTableSource extends DataTableSource {
 
     notifyListeners();
   }
+}
+
+class CustomScrollBehavior extends MaterialScrollBehavior {
+  @override
+  Set<PointerDeviceKind> get dragDevices => {
+        PointerDeviceKind.touch,
+        PointerDeviceKind.mouse,
+      };
 }
