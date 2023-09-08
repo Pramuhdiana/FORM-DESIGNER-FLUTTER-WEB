@@ -676,10 +676,46 @@ class RowSource extends DataTableSource {
                                                           onPressed: () {
                                                             if (dropdownFormKey
                                                                 .currentState!
-                                                                .validate()) {}
+                                                                .validate()) {
+                                                              print(
+                                                                  "siklus terisiisi");
+                                                              //? method untuk mengganti siklus
+                                                              Navigator.pop(
+                                                                  context);
+                                                              showDialog<
+                                                                      String>(
+                                                                  context:
+                                                                      context,
+                                                                  builder: (BuildContext
+                                                                          context) =>
+                                                                      const AlertDialog(
+                                                                        title:
+                                                                            Text(
+                                                                          'Design Berhasil Dipindahkan',
+                                                                        ),
+                                                                      ));
+                                                            }
+                                                            print(
+                                                                "siklus tidak di isi");
+
+                                                            // showDialog<String>(
+                                                            //     context:
+                                                            //         context,
+                                                            //     builder: (BuildContext
+                                                            //             context) =>
+                                                            //         const AlertDialog(
+                                                            //           title:
+                                                            //               Text(
+                                                            //             'Design Berhasil Dipindahkan',
+                                                            //           ),
+                                                            //         ));
                                                           },
                                                           child: const Text(
-                                                              "Submit")),
+                                                            "Submit",
+                                                            style: TextStyle(
+                                                              fontSize: 24,
+                                                            ),
+                                                          )),
                                                     )
                                                   ],
                                                 ))

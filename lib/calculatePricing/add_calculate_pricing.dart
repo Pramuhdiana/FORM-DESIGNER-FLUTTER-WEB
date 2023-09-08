@@ -2287,7 +2287,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                     Container(
                       padding: const EdgeInsets.only(left: 30),
                       height: 70,
-                      width: 250,
+                      width: 350,
                       child: TextFormField(
                         enabled: false,
                         style: const TextStyle(
@@ -2648,6 +2648,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   jsonDecode(response.body);
                                               print(data);
                                               setState(() {
+                                                ukuranBatu1.text = '';
+                                                crtPcsBatu1.text = '';
                                                 idStone1 = item.idStone;
                                                 idBatu1 = item.id;
                                                 hargaBatu1 =
@@ -2678,7 +2680,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                     idStone1 != -2
                                         ? const SizedBox()
                                         : Container(
-                                            width: 120,
+                                            width: 220,
                                             height: 50,
                                             padding: const EdgeInsets.only(
                                                 top: 10, left: 15),
@@ -2703,7 +2705,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                     idStone1 != -2
                                         ? const SizedBox()
                                         : Container(
-                                            width: 220,
+                                            width: 100,
                                             height: 50,
                                             padding: const EdgeInsets.only(
                                                 top: 10, left: 15),
@@ -2972,7 +2974,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone2 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -3001,7 +3003,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone2 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 220,
+                                                  width: 100,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -3323,7 +3325,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone3 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -3352,7 +3354,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone3 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 220,
+                                                  width: 100,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -3674,7 +3676,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone4 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -3703,7 +3705,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone4 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 220,
+                                                  width: 100,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -4025,7 +4027,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone5 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -4054,7 +4056,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone5 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 220,
+                                                  width: 100,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -4376,7 +4378,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone6 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -4405,7 +4407,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone6 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 220,
+                                                  width: 100,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -4727,7 +4729,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone7 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -4756,7 +4758,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone7 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 220,
+                                                  width: 100,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -5078,7 +5080,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone8 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -5107,7 +5109,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone8 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 220,
+                                                  width: 100,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -5429,7 +5431,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone9 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -5458,7 +5460,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone9 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 220,
+                                                  width: 100,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -5780,7 +5782,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone10 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -5809,7 +5811,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone10 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 220,
+                                                  width: 100,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -6133,7 +6135,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone11 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -6162,7 +6164,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone11 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 220,
+                                                  width: 100,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -6486,7 +6488,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone12 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -6515,7 +6517,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone12 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 220,
+                                                  width: 100,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -6839,7 +6841,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone13 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -6868,7 +6870,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone13 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 220,
+                                                  width: 100,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -7192,7 +7194,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone14 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -7221,7 +7223,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone14 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 220,
+                                                  width: 100,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -7545,7 +7547,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone15 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -7574,7 +7576,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone15 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 220,
+                                                  width: 100,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -7898,7 +7900,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone16 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -7927,7 +7929,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone16 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 220,
+                                                  width: 100,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -8251,7 +8253,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone17 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -8280,7 +8282,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone17 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 220,
+                                                  width: 100,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -8604,7 +8606,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone18 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -8633,7 +8635,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone18 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 220,
+                                                  width: 100,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -8957,7 +8959,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone19 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -8986,7 +8988,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone19 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 220,
+                                                  width: 100,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -9310,7 +9312,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone20 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -9339,7 +9341,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone20 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 220,
+                                                  width: 100,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -9663,7 +9665,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone21 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -9692,7 +9694,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone21 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 220,
+                                                  width: 100,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -10016,7 +10018,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone22 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -10045,7 +10047,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone22 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 220,
+                                                  width: 100,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -10369,7 +10371,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone23 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -10398,7 +10400,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone23 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 220,
+                                                  width: 100,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -10722,7 +10724,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone24 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -10751,7 +10753,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone24 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 220,
+                                                  width: 100,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -11075,7 +11077,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone25 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -11104,7 +11106,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone25 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 220,
+                                                  width: 100,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -11428,7 +11430,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone26 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -11457,7 +11459,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone26 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 220,
+                                                  width: 100,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -11781,7 +11783,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone27 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -11810,7 +11812,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone27 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 220,
+                                                  width: 100,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -12134,7 +12136,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone28 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -12163,7 +12165,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone28 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 220,
+                                                  width: 100,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -12487,7 +12489,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone29 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -12516,7 +12518,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone29 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 220,
+                                                  width: 100,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -12840,7 +12842,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone30 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -12869,7 +12871,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone30 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 220,
+                                                  width: 100,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -13193,7 +13195,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone31 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -13222,7 +13224,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone31 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 220,
+                                                  width: 100,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -13546,7 +13548,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone32 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -13575,7 +13577,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone32 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 220,
+                                                  width: 100,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -13899,7 +13901,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone33 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -13928,7 +13930,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone33 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 220,
+                                                  width: 100,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -14252,7 +14254,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone34 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -14281,7 +14283,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone34 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 220,
+                                                  width: 100,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -14605,7 +14607,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone35 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 120,
+                                                  width: 220,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
@@ -14634,7 +14636,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           idStone35 != -2
                                               ? const SizedBox()
                                               : Container(
-                                                  width: 220,
+                                                  width: 100,
                                                   height: 50,
                                                   padding:
                                                       const EdgeInsets.only(
