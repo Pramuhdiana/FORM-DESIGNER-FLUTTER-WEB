@@ -1,14 +1,18 @@
 // ignore_for_file: unnecessary_null_comparison, use_build_context_synchronously, avoid_print
 
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:form_designer/api/api_constant.dart';
 import 'package:form_designer/mainScreen/login.dart';
 import 'package:form_designer/mainScreen/side_screen.dart';
+import 'package:form_designer/model/siklus_model.dart';
 import '../global/global.dart';
+import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';
 
 class MySplashScreen extends StatefulWidget {
@@ -30,6 +34,18 @@ class _MySplashScreenState extends State<MySplashScreen> {
       print('token $token');
       if (sharedPreferences!.getString("token").toString() != "null") {
         try {
+          final response = await http
+              .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getSiklus));
+          if (response.statusCode == 200) {
+            List jsonResponse = json.decode(response.body);
+
+            var g =
+                jsonResponse.map((data) => SiklusModel.fromJson(data)).toList();
+            sharedPreferences!.setString('siklus', g[0].siklus!);
+            // print(nowSiklus);
+          } else {
+            throw Exception('Unexpected error occured!');
+          }
           Navigator.push(
               context, MaterialPageRoute(builder: (c) => const MainView()));
         } catch (c) {
@@ -138,15 +154,8 @@ class _MySplashScreenState extends State<MySplashScreen> {
               Container(
                 height: MediaQuery.of(context).size.height * 0.8,
                 width: MediaQuery.of(context).size.width * 1,
-
                 padding: const EdgeInsets.all(12.0),
                 child: Lottie.asset("loadingJSON/animation_llvy7jo7.json"),
-                // child: Image.network(
-                //   '${ApiConstants.baseUrlImage}sanivokasi_logo-01.png',
-                //   height: 400,
-                //   width: 400,
-                //   fit: BoxFit.cover,
-                // ),
               ),
               const SizedBox(
                 height: 10,

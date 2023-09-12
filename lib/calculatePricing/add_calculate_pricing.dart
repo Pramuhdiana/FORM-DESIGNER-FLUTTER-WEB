@@ -15181,14 +15181,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
     // ignore: prefer_typing_uninitialized_variables
     var priceAfterDiskon;
     if (brand.text.toLowerCase().toString() == "parva" ||
-        brand.text == "fine") {
+        brand.text.toLowerCase().toString() == "fine") {
       print('parva or vine');
       pricePerCarat = ((double.parse(estimasiHarga.text) * 0.37 * 11500) -
               (double.parse(beratEmas.text) * 1000000)) /
           beratDiamond;
       priceAfterDiskon = (int.parse(estimasiHarga.text) * 0.37) * 11500;
     } else {
-      print('bukan parva or vine');
+      print('bukan parva or fine');
       pricePerCarat = ((double.parse(estimasiHarga.text)) -
               (double.parse(beratEmas.text) * 1000000)) /
           beratDiamond;

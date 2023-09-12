@@ -193,6 +193,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
   int? idBatu34 = 0;
   int? idBatu35 = 0;
 
+  TextEditingController pointModeller = TextEditingController();
   TextEditingController kodeDesignMdbc = TextEditingController();
   TextEditingController siklus = TextEditingController();
   TextEditingController kodeMarketing = TextEditingController();
@@ -295,6 +296,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
   TextEditingController stokBatu34 = TextEditingController();
   TextEditingController qtyBatu35 = TextEditingController();
   TextEditingController stokBatu35 = TextEditingController();
+  TextEditingController keteranganStatusBatu = TextEditingController();
 
   String? batu1 = '';
   String? batu2 = '';
@@ -559,6 +561,8 @@ class _FormViewScreenState extends State<FormViewScreen> {
     batu35 = widget.modelDesigner!.batu35!.toString();
     qtyBatu35.text = widget.modelDesigner!.qtyBatu35!.toString();
     imageUrl = widget.modelDesigner!.imageUrl!.toString();
+    keteranganStatusBatu.text =
+        widget.modelDesigner!.keteranganStatusBatu!.toString();
     _getData();
     _getDataBatu();
   }
@@ -1700,9 +1704,10 @@ class _FormViewScreenState extends State<FormViewScreen> {
               ),
             )),
       ),
-      bottomNavigationBar: sharedPreferences!.getString('level') != '1'
-          ? const SizedBox()
-          : Padding(
+      bottomNavigationBar: sharedPreferences!.getString('level') == '1'
+          ?
+          //untuk scm
+          Padding(
               padding: const EdgeInsets.only(bottom: 2),
               child: CustomLoadingButton(
                 controller: btnController,
@@ -1738,7 +1743,53 @@ class _FormViewScreenState extends State<FormViewScreen> {
                   "Simpan Modeller",
                   style: TextStyle(color: Colors.white, fontSize: 34),
                 ),
-              )),
+              ))
+          : sharedPreferences!.getString('level') == '2'
+              ?
+              //null untuk designer
+              const SizedBox()
+              :
+              //untuk modeller
+              Padding(
+                  padding: const EdgeInsets.only(bottom: 2),
+                  child: CustomLoadingButton(
+                    controller: btnController,
+                    onPressed: () {
+                      final isValid = formKey.currentState?.validate();
+                      if (!isValid!) {
+                        btnController.error();
+                        Future.delayed(const Duration(seconds: 1))
+                            .then((value) {
+                          btnController.reset(); //reset
+                        });
+                        return;
+                      }
+                      Future.delayed(const Duration(seconds: 2))
+                          .then((value) async {
+                        btnController.success();
+                        await postPoint();
+                        Future.delayed(const Duration(seconds: 1))
+                            .then((value) {
+                          btnController.reset(); //reset
+                          // ignore: use_build_context_synchronously
+                          Navigator.pop(context);
+                          showDialog<String>(
+                              context: context,
+                              builder: (BuildContext context) =>
+                                  const AlertDialog(
+                                    title: Text(
+                                      'Point berhasil di simpan',
+                                    ),
+                                  ));
+                          setState(() {});
+                        });
+                      });
+                    },
+                    child: const Text(
+                      "Simpan Point",
+                      style: TextStyle(color: Colors.white, fontSize: 34),
+                    ),
+                  )),
     );
   }
 
@@ -1809,26 +1860,40 @@ class _FormViewScreenState extends State<FormViewScreen> {
                   ),
                 ),
                 //nama modeller
-                SizedBox(
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 1),
                   height: 65,
                   width: 200,
-                  child: TextFormField(
-                    // autofocus: sharedPreferences!.getString('level') != '1'
-                    //     ? false
-                    //     : true,
-                    readOnly: sharedPreferences!.getString('level') != '1'
+                  child: DropdownSearch<String>(
+                    enabled: sharedPreferences!.getString('level') == '1'
                         ? true
                         : false,
-                    style: const TextStyle(
-                        fontSize: 14,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold),
-                    textInputAction: TextInputAction.next,
-                    controller: namaModeller,
-                    decoration: InputDecoration(
-                      labelText: "Nama Modeller",
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5.0)),
+                    items: const [
+                      "ARIF",
+                      "ARIS",
+                      "FIKRI",
+                      "YUSE",
+                    ],
+                    onChanged: (item) {
+                      setState(() {
+                        namaModeller.text = item!;
+                      });
+                    },
+                    selectedItem:
+                        namaModeller.text.isEmpty ? null : namaModeller.text,
+                    popupProps: const PopupPropsMultiSelection.modalBottomSheet(
+                      showSelectedItems: true,
+                      showSearchBox: true,
+                    ),
+                    dropdownDecoratorProps: const DropDownDecoratorProps(
+                      dropdownSearchDecoration: InputDecoration(
+                        label: Text(
+                          "Nama Modeller",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        filled: true,
+                        fillColor: Colors.white,
+                      ),
                     ),
                   ),
                 ),
@@ -1844,7 +1909,9 @@ class _FormViewScreenState extends State<FormViewScreen> {
                     height: 65,
                     width: 200,
                     child: TextFormField(
-                      readOnly: true,
+                      readOnly: sharedPreferences!.getString('level') != '1'
+                          ? true
+                          : false,
                       style: const TextStyle(
                           fontSize: 14,
                           color: Colors.black,
@@ -1953,6 +2020,49 @@ class _FormViewScreenState extends State<FormViewScreen> {
                       ),
                     ),
                   ),
+                  //keteranganStatus Batu
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 1),
+                    height: 65,
+                    width: 250,
+                    child: DropdownSearch<String>(
+                      enabled: sharedPreferences!.getString('level') == '1'
+                          ? true
+                          : false,
+                      items: const [
+                        "BATU LENGKAP",
+                        "BATU KURANG LENGKAP",
+                        "BATU TIDAK LENGKAP",
+                      ],
+                      onChanged: (item) {
+                        setState(() {
+                          keteranganStatusBatu.text = item!;
+                        });
+                      },
+                      selectedItem: keteranganStatusBatu.text.isEmpty
+                          ? null
+                          : keteranganStatusBatu.text,
+                      popupProps:
+                          const PopupPropsMultiSelection.modalBottomSheet(
+                        showSelectedItems: true,
+                        showSearchBox: true,
+                      ),
+                      dropdownDecoratorProps: const DropDownDecoratorProps(
+                        dropdownSearchDecoration: InputDecoration(
+                          label: Text(
+                            "Keterangan Status Batu",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+
+                          // suffixText: keteranganStatusBatu.text.isEmpty
+                          //     ? "Keterangan Status Batu"
+                          //     : keteranganStatusBatu.text,
+                          filled: true,
+                          fillColor: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
                   //tema
                   SizedBox(
                     height: 65,
@@ -1978,36 +2088,31 @@ class _FormViewScreenState extends State<FormViewScreen> {
             ),
             Container(
               padding: const EdgeInsets.only(top: 18, bottom: 10),
-              child: ElevatedButton(
-                  onPressed: () {
-                    // _pickImage();
-                    // DropdownSearch<BatuModel>(
-                    //   enabled: false,
-                    //   asyncItems: (String? filter) => getData(filter),
-                    //   popupProps:
-                    //       const PopupPropsMultiSelection.modalBottomSheet(
-                    //     showSelectedItems: true,
-                    //     itemBuilder: _listBatu,
-                    //     showSearchBox: true,
-                    //   ),
-                    //   compareFn: (item, sItem) => item.id == sItem.id,
-                    //   onChanged: (item) {
-                    //     setState(() {});
-                    //   },
-                    //   dropdownDecoratorProps: DropDownDecoratorProps(
-                    //     dropdownSearchDecoration: InputDecoration(
-                    //       enabled: false,
-                    //       label: Text(
-                    //         rantai.text.isEmpty ? "Rantai" : rantai.text,
-                    //         style: const TextStyle(fontWeight: FontWeight.bold),
-                    //       ),
-                    //       filled: true,
-                    //       fillColor: Colors.white,
-                    //     ),
-                    //   ),
-                    // );
-                  },
-                  child: const Text('Gambar Design')),
+              child: sharedPreferences!.getString('level') != '3'
+                  ? const SizedBox()
+                  : SizedBox(
+                      width: 150,
+                      height: 45,
+                      child: TextFormField(
+                        style: const TextStyle(
+                            fontSize: 14,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold),
+                        textInputAction: TextInputAction.next,
+                        controller: pointModeller,
+                        decoration: InputDecoration(
+                          labelText: "Point Modeller",
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5.0)),
+                        ),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Point wajib diisi *';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
             ),
             imageUrl != null
                 ? Container(
@@ -5874,9 +5979,22 @@ class _FormViewScreenState extends State<FormViewScreen> {
     Map<String, String> body = {
       'id': widget.modelDesigner!.id!.toString(),
       'namaModeller': namaModeller.text,
+      'kodeMarketing': kodeMarketing.text,
+      'keteranganStatusBatu': keteranganStatusBatu.text,
     };
     final response = await http.post(
         Uri.parse('${ApiConstants.baseUrl}${ApiConstants.addModeller}'),
+        body: body);
+    print(response.body);
+  }
+
+  postPoint() async {
+    Map<String, String> body = {
+      'id': widget.modelDesigner!.id!.toString(),
+      'pointModeller': pointModeller.text,
+    };
+    final response = await http.post(
+        Uri.parse('${ApiConstants.baseUrl}${ApiConstants.addPointModeller}'),
         body: body);
     print(response.body);
   }

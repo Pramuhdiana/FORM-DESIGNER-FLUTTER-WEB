@@ -12,6 +12,7 @@ import 'package:form_designer/model/batu_model.dart';
 import 'package:form_designer/model/earnut_model.dart';
 import 'package:form_designer/model/jenis_barang_model.dart';
 import 'package:form_designer/model/lain2_model.dart';
+import 'package:form_designer/model/siklus_model.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
@@ -378,7 +379,24 @@ class _FormScreenState extends State<FormScreen> {
   void initState() {
     super.initState();
     namaDesigner.text = sharedPreferences!.getString('nama')!;
-    // _getData();
+    _getSiklus();
+  }
+
+//get token
+  _getSiklus() async {
+    final response = await http
+        .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getSiklus));
+    if (response.statusCode == 200) {
+      List jsonResponse = json.decode(response.body);
+
+      var g = jsonResponse.map((data) => SiklusModel.fromJson(data)).toList();
+      setState(() {
+        siklus.text = g[0].siklus!;
+      });
+      // print(nowSiklus);
+    } else {
+      throw Exception('Unexpected error occured!');
+    }
   }
 
   //start image
@@ -2074,19 +2092,21 @@ class _FormScreenState extends State<FormScreen> {
                   btnController.reset(); //reset
                 });
                 // return;
-              } else if (siklus.text.isEmpty) {
-                showDialog<String>(
-                    context: context,
-                    builder: (BuildContext context) => const AlertDialog(
-                          title: Text(
-                            'Siklus wajib diisi',
-                          ),
-                        ));
-                btnController.error();
-                Future.delayed(const Duration(seconds: 1)).then((value) {
-                  btnController.reset(); //reset
-                });
-              } else if (jenisBarang.text.isEmpty) {
+              }
+              // else if (siklus.text.isEmpty) {
+              //   showDialog<String>(
+              //       context: context,
+              //       builder: (BuildContext context) => const AlertDialog(
+              //             title: Text(
+              //               'Siklus wajib diisi',
+              //             ),
+              //           ));
+              //   btnController.error();
+              //   Future.delayed(const Duration(seconds: 1)).then((value) {
+              //     btnController.reset(); //reset
+              //   });
+              // }
+              else if (jenisBarang.text.isEmpty) {
                 showDialog<String>(
                     context: context,
                     builder: (BuildContext context) => const AlertDialog(
@@ -2345,6 +2365,7 @@ class _FormScreenState extends State<FormScreen> {
                     height: 65,
                     width: 200,
                     child: DropdownSearch<String>(
+                      enabled: false,
                       items: const [
                         "JANUARI",
                         "FEBRUARI",
@@ -2370,9 +2391,12 @@ class _FormScreenState extends State<FormScreen> {
                         showSelectedItems: true,
                         showSearchBox: true,
                       ),
-                      dropdownDecoratorProps: const DropDownDecoratorProps(
+                      dropdownDecoratorProps: DropDownDecoratorProps(
                         dropdownSearchDecoration: InputDecoration(
-                          labelText: "Siklus",
+                          label: Text(
+                            siklus.text,
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
                           filled: true,
                           fillColor: Colors.white,
                         ),
