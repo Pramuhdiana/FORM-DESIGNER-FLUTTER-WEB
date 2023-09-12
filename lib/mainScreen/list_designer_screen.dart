@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:form_designer/global/currency_format.dart';
 import 'package:form_designer/mainScreen/form_screen.dart';
 // ignore: unused_import
 import 'package:form_designer/mainScreen/form_screen_by_id.dart';
@@ -65,7 +66,7 @@ class _ListDesignerScreenState extends State<ListDesignerScreen> {
   }
 
   Future<List<FormDesignerModel>> _getData() async {
-    final response = sharedPreferences!.getString('level') == '1'
+    final response = sharedPreferences!.getString('level') != '2'
         ? await http.get(
             Uri.parse(ApiConstants.baseUrl + ApiConstants.getListFormDesigner))
         : await http.get(Uri.parse(
@@ -76,11 +77,27 @@ class _ListDesignerScreenState extends State<ListDesignerScreen> {
 
       var g =
           jsonResponse.map((data) => FormDesignerModel.fromJson(data)).toList();
-      setState(() {
-        filterCrm = g;
-        myCrm = g;
-        isLoading = true;
-      });
+
+      if (sharedPreferences!.getString('level') == '3') {
+        var nama = sharedPreferences!.getString('nama');
+        print(nama);
+        var filterByModeller = g.where((element) =>
+            element.namaModeller.toString().toLowerCase() ==
+            nama.toString().toLowerCase());
+        g = filterByModeller.toList();
+        setState(() {
+          filterCrm = g;
+          myCrm = g;
+          isLoading = true;
+        });
+      } else {
+        setState(() {
+          filterCrm = g;
+          myCrm = g;
+          isLoading = true;
+        });
+      }
+
       return g;
     } else {
       throw Exception('Unexpected error occured!');
@@ -275,7 +292,7 @@ class _ListDesignerScreenState extends State<ListDesignerScreen> {
                                               label: const SizedBox(
                                                   width: 120,
                                                   child: Text(
-                                                    "Kode MDBC",
+                                                    "      Kode MDBC",
                                                     style: TextStyle(
                                                         fontSize: 15,
                                                         fontWeight:
@@ -602,130 +619,6 @@ class RowSource extends DataTableSource {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(data.kodeDesignMdbc),
-                        IconButton(
-                            onPressed: () {
-                              final dropdownFormKey = GlobalKey<FormState>();
-                              showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(8)),
-                                      // title: const Text('Pilih Siklus'),
-                                      content: SizedBox(
-                                        height: 150,
-                                        child: Column(
-                                          children: [
-                                            Form(
-                                                key: dropdownFormKey,
-                                                child: Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    DropdownSearch<String>(
-                                                      items: const [
-                                                        "JANUARI",
-                                                        "FEBRUARI",
-                                                        "MARET",
-                                                        "APRIL",
-                                                        "MEI",
-                                                        "JUNI",
-                                                        "JULI",
-                                                        "AGUSTUS",
-                                                        "SEPTEMBER",
-                                                        "OKTOBER",
-                                                        "NOVEMBER",
-                                                        "DESEMBER"
-                                                      ],
-                                                      dropdownDecoratorProps:
-                                                          DropDownDecoratorProps(
-                                                        dropdownSearchDecoration:
-                                                            InputDecoration(
-                                                          hintText:
-                                                              'Pilih Siklus',
-                                                          filled: true,
-                                                          fillColor: Colors
-                                                              .grey.shade200,
-                                                          enabledBorder:
-                                                              OutlineInputBorder(
-                                                            borderSide:
-                                                                const BorderSide(
-                                                                    color: Colors
-                                                                        .black,
-                                                                    width: 2),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        20),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      validator: (value) =>
-                                                          value == null
-                                                              ? "Siklus tidak boleh kosong"
-                                                              : null,
-                                                      onChanged:
-                                                          (String? newValue) {},
-                                                    ),
-                                                    Container(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              top: 20),
-                                                      child: ElevatedButton(
-                                                          onPressed: () {
-                                                            if (dropdownFormKey
-                                                                .currentState!
-                                                                .validate()) {
-                                                              print(
-                                                                  "siklus terisiisi");
-                                                              //? method untuk mengganti siklus
-                                                              Navigator.pop(
-                                                                  context);
-                                                              showDialog<
-                                                                      String>(
-                                                                  context:
-                                                                      context,
-                                                                  builder: (BuildContext
-                                                                          context) =>
-                                                                      const AlertDialog(
-                                                                        title:
-                                                                            Text(
-                                                                          'Design Berhasil Dipindahkan',
-                                                                        ),
-                                                                      ));
-                                                            }
-                                                            print(
-                                                                "siklus tidak di isi");
-
-                                                            // showDialog<String>(
-                                                            //     context:
-                                                            //         context,
-                                                            //     builder: (BuildContext
-                                                            //             context) =>
-                                                            //         const AlertDialog(
-                                                            //           title:
-                                                            //               Text(
-                                                            //             'Design Berhasil Dipindahkan',
-                                                            //           ),
-                                                            //         ));
-                                                          },
-                                                          child: const Text(
-                                                            "Submit",
-                                                            style: TextStyle(
-                                                              fontSize: 24,
-                                                            ),
-                                                          )),
-                                                    )
-                                                  ],
-                                                ))
-                                          ],
-                                        ),
-                                      ),
-                                    );
-                                  });
-                            },
-                            icon: const Icon(Icons.rotate_90_degrees_ccw)),
                       ],
                     ));
         }),
@@ -767,7 +660,11 @@ class RowSource extends DataTableSource {
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                data.estimasiHarga.toString(),
+                data.brand == "BELI BERLIAN"
+                    ? 'Rp. ${CurrencyFormat.convertToDollar(data.estimasiHarga, 0)}'
+                    : data.brand == "METIER"
+                        ? 'Rp. ${CurrencyFormat.convertToDollar(data.estimasiHarga, 0)}'
+                        : '\$ ${CurrencyFormat.convertToDollar(data.estimasiHarga, 0)}',
                 textAlign: TextAlign.center,
               ),
             )),
@@ -822,230 +719,10 @@ class RowSource extends DataTableSource {
       DataCell(Builder(builder: (context) {
         return Row(
           children: [
-            IconButton(
-              onPressed: () {
-                showDialog<String>(
-                  context: context,
-                  builder: (BuildContext context) => AlertDialog(
-                    title: const Text(
-                      'Perhatian',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: Colors.black, fontWeight: FontWeight.bold),
-                    ),
-                    content: Row(
-                      children: [
-                        const Text(
-                          'Apakah anda yakin ingin menghapus data ',
-                        ),
-                        Text(
-                          '${data.kodeDesignMdbc}  ?',
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold, color: Colors.black),
-                        ),
-                      ],
-                    ),
-                    actions: <Widget>[
-                      TextButton(
-                        onPressed: () => Navigator.pop(
-                          context,
-                          'Batal',
-                        ),
-                        child: const Text('Batal'),
-                      ),
-                      TextButton(
-                        onPressed: () async {
-                          await postApiQtyBatu1(
-                            data.batu1,
-                            data.qtyBatu1,
-                          );
-                          await postApiQtyBatu2(
-                            data.batu2,
-                            data.qtyBatu2,
-                          );
-                          await postApiQtyBatu3(
-                            data.batu3,
-                            data.qtyBatu3,
-                          );
-                          await postApiQtyBatu4(
-                            data.batu4,
-                            data.qtyBatu4,
-                          );
-                          await postApiQtyBatu5(
-                            data.batu5,
-                            data.qtyBatu5,
-                          );
-                          await postApiQtyBatu6(
-                            data.batu6,
-                            data.qtyBatu6,
-                          );
-                          await postApiQtyBatu7(
-                            data.batu7,
-                            data.qtyBatu7,
-                          );
-                          await postApiQtyBatu8(
-                            data.batu8,
-                            data.qtyBatu8,
-                          );
-                          await postApiQtyBatu9(
-                            data.batu9,
-                            data.qtyBatu9,
-                          );
-                          await postApiQtyBatu10(
-                            data.batu10,
-                            data.qtyBatu10,
-                          );
-                          await postApiQtyBatu11(
-                            data.batu11,
-                            data.qtyBatu11,
-                          );
-                          await postApiQtyBatu12(
-                            data.batu12,
-                            data.qtyBatu12,
-                          );
-                          await postApiQtyBatu13(
-                            data.batu13,
-                            data.qtyBatu13,
-                          );
-                          await postApiQtyBatu14(
-                            data.batu14,
-                            data.qtyBatu14,
-                          );
-                          await postApiQtyBatu15(
-                            data.batu15,
-                            data.qtyBatu15,
-                          );
-                          await postApiQtyBatu16(
-                            data.batu16,
-                            data.qtyBatu16,
-                          );
-                          await postApiQtyBatu17(
-                            data.batu17,
-                            data.qtyBatu17,
-                          );
-                          await postApiQtyBatu18(
-                            data.batu18,
-                            data.qtyBatu18,
-                          );
-                          await postApiQtyBatu19(
-                            data.batu19,
-                            data.qtyBatu19,
-                          );
-                          await postApiQtyBatu20(
-                            data.batu20,
-                            data.qtyBatu20,
-                          );
-                          await postApiQtyBatu21(
-                            data.batu21,
-                            data.qtyBatu21,
-                          );
-                          await postApiQtyBatu22(
-                            data.batu22,
-                            data.qtyBatu22,
-                          );
-                          await postApiQtyBatu23(
-                            data.batu23,
-                            data.qtyBatu23,
-                          );
-                          await postApiQtyBatu24(
-                            data.batu24,
-                            data.qtyBatu24,
-                          );
-                          await postApiQtyBatu25(
-                            data.batu25,
-                            data.qtyBatu25,
-                          );
-                          await postApiQtyBatu26(
-                            data.batu26,
-                            data.qtyBatu26,
-                          );
-                          await postApiQtyBatu27(
-                            data.batu27,
-                            data.qtyBatu27,
-                          );
-                          await postApiQtyBatu28(
-                            data.batu28,
-                            data.qtyBatu28,
-                          );
-                          await postApiQtyBatu29(
-                            data.batu29,
-                            data.qtyBatu29,
-                          );
-                          await postApiQtyBatu30(
-                            data.batu30,
-                            data.qtyBatu30,
-                          );
-                          await postApiQtyBatu31(
-                            data.batu31,
-                            data.qtyBatu31,
-                          );
-                          await postApiQtyBatu32(
-                            data.batu32,
-                            data.qtyBatu32,
-                          );
-                          await postApiQtyBatu33(
-                            data.batu33,
-                            data.qtyBatu33,
-                          );
-                          await postApiQtyBatu34(
-                            data.batu34,
-                            data.qtyBatu34,
-                          );
-                          await postApiQtyBatu35(
-                            data.batu35,
-                            data.qtyBatu35,
-                          );
-                          var id = data.id.toString();
-                          Map<String, String> body = {'id': id};
-                          final response = await http.post(
-                              Uri.parse(ApiConstants.baseUrl +
-                                  ApiConstants.postDeleteFormDesignerById),
-                              body: body);
-                          print(response.body);
-                          // ignore: use_build_context_synchronously
-                          showDialog<String>(
-                              context: context,
-                              builder: (BuildContext context) =>
-                                  const AlertDialog(
-                                    title: Text(
-                                      'Design Terhapus',
-                                    ),
-                                  ));
-
-                          // ignore: use_build_context_synchronously
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (c) => const MainViewFormDesign()));
-                        },
-                        child: const Text(
-                          'Hapus',
-                          style: TextStyle(color: Colors.red),
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              },
-              icon: const Icon(
-                Icons.delete,
-                color: Colors.red,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 15),
-              child: IconButton(
-                onPressed: () {
-                  print('edit :${data.edit}');
-                  data.edit! == 0
-                      ? showDialog<String>(
-                          context: context,
-                          builder: (BuildContext context) => const AlertDialog(
-                                title: Text(
-                                  'Form terkunci',
-                                ),
-                              ))
-                      : Navigator.push(
+            sharedPreferences!.getString('level') == '3'
+                ? IconButton(
+                    onPressed: () {
+                      Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (c) => FormScreenById(
@@ -1150,18 +827,361 @@ class RowSource extends DataTableSource {
                                         qtyBatu35: data.qtyBatu35,
                                         imageUrl: data.imageUrl),
                                   )));
-                },
-                icon: data.edit! == 0
-                    ? const Icon(
-                        Icons.lock,
-                        color: Colors.black,
-                      )
-                    : const Icon(
-                        Icons.remove_red_eye,
-                        color: Colors.green,
-                      ),
-              ),
-            ),
+                    },
+                    icon: const Icon(
+                      Icons.remove_red_eye,
+                      color: Colors.blue,
+                    ))
+                : IconButton(
+                    onPressed: () {
+                      showDialog<String>(
+                        context: context,
+                        builder: (BuildContext context) => AlertDialog(
+                          title: const Text(
+                            'Perhatian',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          content: Row(
+                            children: [
+                              const Text(
+                                'Apakah anda yakin ingin menghapus data ',
+                              ),
+                              Text(
+                                '${data.kodeDesignMdbc}  ?',
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black),
+                              ),
+                            ],
+                          ),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () => Navigator.pop(
+                                context,
+                                'Batal',
+                              ),
+                              child: const Text('Batal'),
+                            ),
+                            TextButton(
+                              onPressed: () async {
+                                await postApiQtyBatu1(
+                                  data.batu1,
+                                  data.qtyBatu1,
+                                );
+                                await postApiQtyBatu2(
+                                  data.batu2,
+                                  data.qtyBatu2,
+                                );
+                                await postApiQtyBatu3(
+                                  data.batu3,
+                                  data.qtyBatu3,
+                                );
+                                await postApiQtyBatu4(
+                                  data.batu4,
+                                  data.qtyBatu4,
+                                );
+                                await postApiQtyBatu5(
+                                  data.batu5,
+                                  data.qtyBatu5,
+                                );
+                                await postApiQtyBatu6(
+                                  data.batu6,
+                                  data.qtyBatu6,
+                                );
+                                await postApiQtyBatu7(
+                                  data.batu7,
+                                  data.qtyBatu7,
+                                );
+                                await postApiQtyBatu8(
+                                  data.batu8,
+                                  data.qtyBatu8,
+                                );
+                                await postApiQtyBatu9(
+                                  data.batu9,
+                                  data.qtyBatu9,
+                                );
+                                await postApiQtyBatu10(
+                                  data.batu10,
+                                  data.qtyBatu10,
+                                );
+                                await postApiQtyBatu11(
+                                  data.batu11,
+                                  data.qtyBatu11,
+                                );
+                                await postApiQtyBatu12(
+                                  data.batu12,
+                                  data.qtyBatu12,
+                                );
+                                await postApiQtyBatu13(
+                                  data.batu13,
+                                  data.qtyBatu13,
+                                );
+                                await postApiQtyBatu14(
+                                  data.batu14,
+                                  data.qtyBatu14,
+                                );
+                                await postApiQtyBatu15(
+                                  data.batu15,
+                                  data.qtyBatu15,
+                                );
+                                await postApiQtyBatu16(
+                                  data.batu16,
+                                  data.qtyBatu16,
+                                );
+                                await postApiQtyBatu17(
+                                  data.batu17,
+                                  data.qtyBatu17,
+                                );
+                                await postApiQtyBatu18(
+                                  data.batu18,
+                                  data.qtyBatu18,
+                                );
+                                await postApiQtyBatu19(
+                                  data.batu19,
+                                  data.qtyBatu19,
+                                );
+                                await postApiQtyBatu20(
+                                  data.batu20,
+                                  data.qtyBatu20,
+                                );
+                                await postApiQtyBatu21(
+                                  data.batu21,
+                                  data.qtyBatu21,
+                                );
+                                await postApiQtyBatu22(
+                                  data.batu22,
+                                  data.qtyBatu22,
+                                );
+                                await postApiQtyBatu23(
+                                  data.batu23,
+                                  data.qtyBatu23,
+                                );
+                                await postApiQtyBatu24(
+                                  data.batu24,
+                                  data.qtyBatu24,
+                                );
+                                await postApiQtyBatu25(
+                                  data.batu25,
+                                  data.qtyBatu25,
+                                );
+                                await postApiQtyBatu26(
+                                  data.batu26,
+                                  data.qtyBatu26,
+                                );
+                                await postApiQtyBatu27(
+                                  data.batu27,
+                                  data.qtyBatu27,
+                                );
+                                await postApiQtyBatu28(
+                                  data.batu28,
+                                  data.qtyBatu28,
+                                );
+                                await postApiQtyBatu29(
+                                  data.batu29,
+                                  data.qtyBatu29,
+                                );
+                                await postApiQtyBatu30(
+                                  data.batu30,
+                                  data.qtyBatu30,
+                                );
+                                await postApiQtyBatu31(
+                                  data.batu31,
+                                  data.qtyBatu31,
+                                );
+                                await postApiQtyBatu32(
+                                  data.batu32,
+                                  data.qtyBatu32,
+                                );
+                                await postApiQtyBatu33(
+                                  data.batu33,
+                                  data.qtyBatu33,
+                                );
+                                await postApiQtyBatu34(
+                                  data.batu34,
+                                  data.qtyBatu34,
+                                );
+                                await postApiQtyBatu35(
+                                  data.batu35,
+                                  data.qtyBatu35,
+                                );
+                                var id = data.id.toString();
+                                Map<String, String> body = {'id': id};
+                                final response = await http.post(
+                                    Uri.parse(ApiConstants.baseUrl +
+                                        ApiConstants
+                                            .postDeleteFormDesignerById),
+                                    body: body);
+                                print(response.body);
+                                // ignore: use_build_context_synchronously
+                                showDialog<String>(
+                                    context: context,
+                                    builder: (BuildContext context) =>
+                                        const AlertDialog(
+                                          title: Text(
+                                            'Design Terhapus',
+                                          ),
+                                        ));
+
+                                // ignore: use_build_context_synchronously
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (c) =>
+                                            const MainViewFormDesign()));
+                              },
+                              child: const Text(
+                                'Hapus',
+                                style: TextStyle(color: Colors.red),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                    icon: const Icon(
+                      Icons.delete,
+                      color: Colors.red,
+                    ),
+                  ),
+            sharedPreferences!.getString('level') == '3'
+                ? const SizedBox()
+                : Padding(
+                    padding: const EdgeInsets.only(left: 15),
+                    child: IconButton(
+                      onPressed: () {
+                        print('edit :${data.edit}');
+                        data.edit! == 0
+                            ? showDialog<String>(
+                                context: context,
+                                builder: (BuildContext context) =>
+                                    const AlertDialog(
+                                      title: Text(
+                                        'Form terkunci',
+                                      ),
+                                    ))
+                            : Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (c) => FormScreenById(
+                                          modelDesigner: FormDesignerModel(
+                                              id: data.id,
+                                              kodeDesignMdbc:
+                                                  data.kodeDesignMdbc,
+                                              kodeMarketing: data.kodeMarketing,
+                                              kodeProduksi: data.kodeProduksi,
+                                              namaDesigner: data.namaDesigner,
+                                              namaModeller: data.namaModeller,
+                                              kodeDesign: data.kodeDesign,
+                                              siklus: data.siklus,
+                                              tema: data.tema,
+                                              rantai: data.rantai,
+                                              qtyRantai: data.qtyRantai,
+                                              lain2: data.lain2,
+                                              qtyLain2: data.qtyLain2,
+                                              earnut: data.earnut,
+                                              qtyEarnut: data.qtyEarnut,
+                                              panjangRantai: data.panjangRantai,
+                                              customKomponen:
+                                                  data.customKomponen,
+                                              qtyCustomKomponen:
+                                                  data.qtyCustomKomponen,
+                                              jenisBarang: data.jenisBarang,
+                                              kategoriBarang:
+                                                  data.kategoriBarang,
+                                              brand: data.brand,
+                                              photoShoot: data.photoShoot,
+                                              color: data.color,
+                                              beratEmas: data.beratEmas,
+                                              estimasiHarga: data.estimasiHarga,
+                                              ringSize: data.ringSize,
+                                              created_at: data.created_at,
+                                              batu1: data.batu1,
+                                              qtyBatu1: data.qtyBatu1,
+                                              batu2: data.batu2,
+                                              qtyBatu2: data.qtyBatu2,
+                                              batu3: data.batu3,
+                                              qtyBatu3: data.qtyBatu3,
+                                              batu4: data.batu4,
+                                              qtyBatu4: data.qtyBatu4,
+                                              batu5: data.batu5,
+                                              qtyBatu5: data.qtyBatu5,
+                                              batu6: data.batu6,
+                                              qtyBatu6: data.qtyBatu6,
+                                              batu7: data.batu7,
+                                              qtyBatu7: data.qtyBatu7,
+                                              batu8: data.batu8,
+                                              qtyBatu8: data.qtyBatu8,
+                                              batu9: data.batu9,
+                                              qtyBatu9: data.qtyBatu9,
+                                              batu10: data.batu10,
+                                              qtyBatu10: data.qtyBatu10,
+                                              batu11: data.batu11,
+                                              qtyBatu11: data.qtyBatu11,
+                                              batu12: data.batu12,
+                                              qtyBatu12: data.qtyBatu12,
+                                              batu13: data.batu13,
+                                              qtyBatu13: data.qtyBatu13,
+                                              batu14: data.batu14,
+                                              qtyBatu14: data.qtyBatu14,
+                                              batu15: data.batu15,
+                                              qtyBatu15: data.qtyBatu15,
+                                              batu16: data.batu16,
+                                              qtyBatu16: data.qtyBatu16,
+                                              batu17: data.batu17,
+                                              qtyBatu17: data.qtyBatu17,
+                                              batu18: data.batu18,
+                                              qtyBatu18: data.qtyBatu18,
+                                              batu19: data.batu19,
+                                              qtyBatu19: data.qtyBatu19,
+                                              batu20: data.batu20,
+                                              qtyBatu20: data.qtyBatu20,
+                                              batu21: data.batu21,
+                                              qtyBatu21: data.qtyBatu21,
+                                              batu22: data.batu22,
+                                              qtyBatu22: data.qtyBatu22,
+                                              batu23: data.batu23,
+                                              qtyBatu23: data.qtyBatu23,
+                                              batu24: data.batu24,
+                                              qtyBatu24: data.qtyBatu24,
+                                              batu25: data.batu25,
+                                              qtyBatu25: data.qtyBatu25,
+                                              batu26: data.batu26,
+                                              qtyBatu26: data.qtyBatu26,
+                                              batu27: data.batu27,
+                                              qtyBatu27: data.qtyBatu27,
+                                              batu28: data.batu28,
+                                              qtyBatu28: data.qtyBatu28,
+                                              batu29: data.batu29,
+                                              qtyBatu29: data.qtyBatu29,
+                                              batu30: data.batu30,
+                                              qtyBatu30: data.qtyBatu30,
+                                              batu31: data.batu31,
+                                              qtyBatu31: data.qtyBatu31,
+                                              batu32: data.batu32,
+                                              qtyBatu32: data.qtyBatu32,
+                                              batu33: data.batu33,
+                                              qtyBatu33: data.qtyBatu33,
+                                              batu34: data.batu34,
+                                              qtyBatu34: data.qtyBatu34,
+                                              batu35: data.batu35,
+                                              qtyBatu35: data.qtyBatu35,
+                                              imageUrl: data.imageUrl),
+                                        )));
+                      },
+                      icon: data.edit! == 0
+                          ? const Icon(
+                              Icons.lock,
+                              color: Colors.black,
+                            )
+                          : const Icon(
+                              Icons.remove_red_eye,
+                              color: Colors.green,
+                            ),
+                    ),
+                  ),
             sharedPreferences!.getString('level') != '1'
                 ? const SizedBox()
                 : Padding(

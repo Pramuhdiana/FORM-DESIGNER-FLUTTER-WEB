@@ -56,7 +56,7 @@ class _ListKebutuhanBatuScreenState extends State<ListKebutuhanBatuScreen> {
     var now = DateTime.now();
     String month = DateFormat('MMMM', 'id').format(now);
     print(month);
-    _getData(month);
+    _getData("all");
   }
 
   // ignore: unused_element
@@ -90,8 +90,15 @@ class _ListKebutuhanBatuScreenState extends State<ListKebutuhanBatuScreen> {
     listUniqBatu.clear();
     mylist.clear();
 
-    final response = await http.get(Uri.parse(
-        '${ApiConstants.baseUrl}${ApiConstants.getListFormDesignerBySiklus}?siklus=$siklus'));
+    final response;
+
+    if (siklus.toString().toLowerCase() == "all") {
+      response = await http.get(Uri.parse(
+          '${ApiConstants.baseUrl}${ApiConstants.getListFormDesigner}'));
+    } else {
+      response = await http.get(Uri.parse(
+          '${ApiConstants.baseUrl}${ApiConstants.getListFormDesignerBySiklus}?siklus=$siklus'));
+    }
 
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);
@@ -414,6 +421,7 @@ class _ListKebutuhanBatuScreenState extends State<ListKebutuhanBatuScreen> {
       listAllBatu.addAll(listBatu35);
       listAllBatu.removeWhere((value) => value == '');
       print(listAllBatu);
+      print(listAllBatu.length);
 
       listAllQtyBatu.addAll(listQtyBatu1);
       listAllQtyBatu.addAll(listQtyBatu2);

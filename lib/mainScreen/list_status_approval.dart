@@ -516,7 +516,7 @@ class RowSource extends DataTableSource {
               alignment: Alignment.centerLeft,
               child: Text(
                 data.approvalHarga == '0'
-                    ? "Belum di approve"
+                    ? "0"
                     : data.brand == "BELI BERLIAN"
                         ? 'Rp. ${CurrencyFormat.convertToDollar(int.parse(data.approvalHarga), 0)}'
                         : data.brand == "METIER"

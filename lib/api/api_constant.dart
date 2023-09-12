@@ -40,6 +40,7 @@ class ApiConstants {
   static String postUpdateDataBatuBySize = 'spk/update_qty_batu_by_size.php';
   static String postUpdateListDataBatu = 'spk/update_batu.php';
   static String updateFormDesigner = 'spk/update_form_designer.php';
+  static String addModeller = 'spk/add_modeller.php';
 
   static String keyById = 'spk/key.php';
 }

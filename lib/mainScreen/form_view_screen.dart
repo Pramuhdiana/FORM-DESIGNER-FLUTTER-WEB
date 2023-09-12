@@ -28,19 +28,19 @@ import '../model/rantai_model.dart';
 import '../widgets/custom_loading.dart';
 
 // ignore: must_be_immutable
-class FormScreenById extends StatefulWidget {
+class FormViewScreen extends StatefulWidget {
   FormDesignerModel? modelDesigner;
 
-  FormScreenById({
+  FormViewScreen({
     super.key,
     this.modelDesigner,
     FormDesignerModel? models,
   });
   @override
-  State<FormScreenById> createState() => _FormScreenByIdState();
+  State<FormViewScreen> createState() => _FormViewScreenState();
 }
 
-class _FormScreenByIdState extends State<FormScreenById> {
+class _FormViewScreenState extends State<FormViewScreen> {
   // ignore: unused_field, prefer_final_fields
   List _get = [];
   List<XFile>? imagefiles;
@@ -586,6 +586,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
     }
   }
 
+  // ignore: unused_element
   Future<void> _pickImage() async {
     try {
       _paths = (await FilePicker.platform.pickFiles(
@@ -1677,7 +1678,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
         automaticallyImplyLeading: true,
         backgroundColor: Colors.blue,
         title: Text(
-          'Form Edit Designer ${widget.modelDesigner!.jenisBarang}',
+          '${widget.modelDesigner!.kodeDesignMdbc} - ${widget.modelDesigner!.jenisBarang}',
           style: const TextStyle(fontSize: 25, color: Colors.white),
         ),
         centerTitle: true,
@@ -1699,78 +1700,45 @@ class _FormScreenByIdState extends State<FormScreenById> {
               ),
             )),
       ),
-      bottomNavigationBar: Padding(
-          padding: const EdgeInsets.only(bottom: 2),
-          child: CustomLoadingButton(
-            controller: btnController,
-            onPressed: () {
-              final isValid = formKey.currentState?.validate();
-              if (!isValid!) {
-                btnController.error();
-                Future.delayed(const Duration(seconds: 1)).then((value) {
-                  btnController.reset(); //reset
-                });
-                return;
-              }
-              Future.delayed(const Duration(seconds: 2)).then((value) async {
-                btnController.success();
-                await postAPI();
-                isBatu1 != true ? null : postApiQtyBatu1();
-                isBatu2 != true ? null : postApiQtyBatu2();
-                isBatu3 != true ? null : postApiQtyBatu3();
-                isBatu4 != true ? null : postApiQtyBatu4();
-                isBatu5 != true ? null : postApiQtyBatu5();
-                isBatu6 != true ? null : postApiQtyBatu6();
-                isBatu7 != true ? null : postApiQtyBatu7();
-                isBatu8 != true ? null : postApiQtyBatu8();
-                isBatu8 != true ? null : postApiQtyBatu9();
-                isBatu10 != true ? null : postApiQtyBatu10();
-                isBatu11 != true ? null : postApiQtyBatu11();
-                isBatu12 != true ? null : postApiQtyBatu12();
-                isBatu13 != true ? null : postApiQtyBatu13();
-                isBatu14 != true ? null : postApiQtyBatu14();
-                isBatu15 != true ? null : postApiQtyBatu15();
-                isBatu16 != true ? null : postApiQtyBatu16();
-                isBatu17 != true ? null : postApiQtyBatu17();
-                isBatu18 != true ? null : postApiQtyBatu18();
-                isBatu19 != true ? null : postApiQtyBatu19();
-                isBatu20 != true ? null : postApiQtyBatu20();
-                isBatu21 != true ? null : postApiQtyBatu21();
-                isBatu22 != true ? null : postApiQtyBatu22();
-                isBatu23 != true ? null : postApiQtyBatu23();
-                isBatu24 != true ? null : postApiQtyBatu24();
-                isBatu25 != true ? null : postApiQtyBatu25();
-                isBatu26 != true ? null : postApiQtyBatu26();
-                isBatu27 != true ? null : postApiQtyBatu27();
-                isBatu28 != true ? null : postApiQtyBatu28();
-                isBatu29 != true ? null : postApiQtyBatu29();
-                isBatu30 != true ? null : postApiQtyBatu30();
-                isBatu31 != true ? null : postApiQtyBatu31();
-                isBatu32 != true ? null : postApiQtyBatu32();
-                isBatu33 != true ? null : postApiQtyBatu33();
-                isBatu34 != true ? null : postApiQtyBatu34();
-                isBatu35 != true ? null : postApiQtyBatu35();
-
-                Future.delayed(const Duration(seconds: 1)).then((value) {
-                  btnController.reset(); //reset
-                  // ignore: use_build_context_synchronously
-                  Navigator.pop(context);
-                  showDialog<String>(
-                      context: context,
-                      builder: (BuildContext context) => const AlertDialog(
-                            title: Text(
-                              'Edit Design Berhasil',
-                            ),
-                          ));
-                  setState(() {});
-                });
-              });
-            },
-            child: const Text(
-              "Edit Design",
-              style: TextStyle(color: Colors.white, fontSize: 34),
-            ),
-          )),
+      bottomNavigationBar: sharedPreferences!.getString('level') != '1'
+          ? const SizedBox()
+          : Padding(
+              padding: const EdgeInsets.only(bottom: 2),
+              child: CustomLoadingButton(
+                controller: btnController,
+                onPressed: () {
+                  final isValid = formKey.currentState?.validate();
+                  if (!isValid!) {
+                    btnController.error();
+                    Future.delayed(const Duration(seconds: 1)).then((value) {
+                      btnController.reset(); //reset
+                    });
+                    return;
+                  }
+                  Future.delayed(const Duration(seconds: 2))
+                      .then((value) async {
+                    btnController.success();
+                    await postAPI();
+                    Future.delayed(const Duration(seconds: 1)).then((value) {
+                      btnController.reset(); //reset
+                      // ignore: use_build_context_synchronously
+                      Navigator.pop(context);
+                      showDialog<String>(
+                          context: context,
+                          builder: (BuildContext context) => const AlertDialog(
+                                title: Text(
+                                  'Pilih Modeller Berhasil',
+                                ),
+                              ));
+                      setState(() {});
+                    });
+                  });
+                },
+                child: const Text(
+                  "Simpan Modeller",
+                  style: TextStyle(color: Colors.white, fontSize: 34),
+                ),
+              )),
     );
   }
 
@@ -1788,9 +1756,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                   width: 200,
                   height: 65,
                   child: TextFormField(
-                    readOnly: sharedPreferences!.getString('level') == '3'
-                        ? true
-                        : false,
+                    readOnly: true,
                     style: const TextStyle(
                         fontSize: 14,
                         color: Colors.black,
@@ -1847,7 +1813,10 @@ class _FormScreenByIdState extends State<FormScreenById> {
                   height: 65,
                   width: 200,
                   child: TextFormField(
-                    readOnly: sharedPreferences!.getString('level') == '3'
+                    // autofocus: sharedPreferences!.getString('level') != '1'
+                    //     ? false
+                    //     : true,
+                    readOnly: sharedPreferences!.getString('level') != '1'
                         ? true
                         : false,
                     style: const TextStyle(
@@ -1875,9 +1844,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                     height: 65,
                     width: 200,
                     child: TextFormField(
-                      readOnly: sharedPreferences!.getString('level') == '3'
-                          ? true
-                          : false,
+                      readOnly: true,
                       style: const TextStyle(
                           fontSize: 14,
                           color: Colors.black,
@@ -1898,6 +1865,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                     height: 65,
                     width: 200,
                     child: DropdownSearch<String>(
+                      enabled: false,
                       items: const [
                         "JANUARI",
                         "FEBRUARI",
@@ -1925,6 +1893,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                       ),
                       dropdownDecoratorProps: DropDownDecoratorProps(
                         dropdownSearchDecoration: InputDecoration(
+                          enabled: false,
                           label: Text(
                             siklus.text.isEmpty ? "Siklus" : siklus.text,
                             style: const TextStyle(fontWeight: FontWeight.bold),
@@ -1941,9 +1910,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                     height: 65,
                     width: 200,
                     child: TextFormField(
-                      readOnly: sharedPreferences!.getString('level') == '3'
-                          ? true
-                          : false,
+                      readOnly: true,
                       style: const TextStyle(
                           fontSize: 14,
                           color: Colors.black,
@@ -1971,9 +1938,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                     height: 65,
                     width: 200,
                     child: TextFormField(
-                      readOnly: sharedPreferences!.getString('level') == '3'
-                          ? true
-                          : false,
+                      readOnly: true,
                       style: const TextStyle(
                           fontSize: 14,
                           color: Colors.black,
@@ -1993,9 +1958,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                     height: 65,
                     width: 200,
                     child: TextFormField(
-                      readOnly: sharedPreferences!.getString('level') == '3'
-                          ? true
-                          : false,
+                      readOnly: true,
                       style: const TextStyle(
                           fontSize: 14,
                           color: Colors.black,
@@ -2017,30 +1980,32 @@ class _FormScreenByIdState extends State<FormScreenById> {
               padding: const EdgeInsets.only(top: 18, bottom: 10),
               child: ElevatedButton(
                   onPressed: () {
-                    _pickImage();
-                    DropdownSearch<BatuModel>(
-                      asyncItems: (String? filter) => getData(filter),
-                      popupProps:
-                          const PopupPropsMultiSelection.modalBottomSheet(
-                        showSelectedItems: true,
-                        itemBuilder: _listBatu,
-                        showSearchBox: true,
-                      ),
-                      compareFn: (item, sItem) => item.id == sItem.id,
-                      onChanged: (item) {
-                        setState(() {});
-                      },
-                      dropdownDecoratorProps: DropDownDecoratorProps(
-                        dropdownSearchDecoration: InputDecoration(
-                          label: Text(
-                            rantai.text.isEmpty ? "Rantai" : rantai.text,
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          filled: true,
-                          fillColor: Colors.white,
-                        ),
-                      ),
-                    );
+                    // _pickImage();
+                    // DropdownSearch<BatuModel>(
+                    //   enabled: false,
+                    //   asyncItems: (String? filter) => getData(filter),
+                    //   popupProps:
+                    //       const PopupPropsMultiSelection.modalBottomSheet(
+                    //     showSelectedItems: true,
+                    //     itemBuilder: _listBatu,
+                    //     showSearchBox: true,
+                    //   ),
+                    //   compareFn: (item, sItem) => item.id == sItem.id,
+                    //   onChanged: (item) {
+                    //     setState(() {});
+                    //   },
+                    //   dropdownDecoratorProps: DropDownDecoratorProps(
+                    //     dropdownSearchDecoration: InputDecoration(
+                    //       enabled: false,
+                    //       label: Text(
+                    //         rantai.text.isEmpty ? "Rantai" : rantai.text,
+                    //         style: const TextStyle(fontWeight: FontWeight.bold),
+                    //       ),
+                    //       filled: true,
+                    //       fillColor: Colors.white,
+                    //     ),
+                    //   ),
+                    // );
                   },
                   child: const Text('Gambar Design')),
             ),
@@ -2079,6 +2044,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                           height: 65,
                           width: 230,
                           child: DropdownSearch<RantaiModel>(
+                            enabled: false,
                             asyncItems: (String? filter) =>
                                 getListRantai(filter),
                             popupProps:
@@ -2096,6 +2062,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                             },
                             dropdownDecoratorProps: DropDownDecoratorProps(
                               dropdownSearchDecoration: InputDecoration(
+                                enabled: false,
                                 label: Text(
                                   rantai.text.isEmpty ? "Rantai" : rantai.text,
                                   style: const TextStyle(
@@ -2112,10 +2079,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                           height: 65,
                           width: 100,
                           child: TextFormField(
-                            readOnly:
-                                sharedPreferences!.getString('level') == '3'
-                                    ? true
-                                    : false,
+                            readOnly: true,
                             style: const TextStyle(
                                 fontSize: 14,
                                 color: Colors.black,
@@ -2135,6 +2099,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                           height: 65,
                           width: 100,
                           child: TextFormField(
+                            readOnly: true,
                             enabled: false,
                             style: const TextStyle(
                                 fontSize: 14,
@@ -2158,6 +2123,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                     height: 65,
                     width: 230,
                     child: DropdownSearch<JenisbarangModel>(
+                      enabled: false,
                       asyncItems: (String? filter) =>
                           getListJenisbarang(filter),
                       popupProps:
@@ -2175,6 +2141,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                       },
                       dropdownDecoratorProps: DropDownDecoratorProps(
                         dropdownSearchDecoration: InputDecoration(
+                          enabled: false,
                           label: Text(
                             jenisBarang.text,
                             style: const TextStyle(fontWeight: FontWeight.bold),
@@ -2202,6 +2169,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                           height: 65,
                           width: 230,
                           child: DropdownSearch<Lain2Model>(
+                            enabled: false,
                             asyncItems: (String? filter) =>
                                 getListLain2(filter),
                             popupProps:
@@ -2219,6 +2187,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                             },
                             dropdownDecoratorProps: DropDownDecoratorProps(
                               dropdownSearchDecoration: InputDecoration(
+                                enabled: false,
                                 label: Text(
                                   lain2.text.isEmpty ? "Lain-Lain" : lain2.text,
                                   style: const TextStyle(
@@ -2235,10 +2204,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                           height: 65,
                           width: 100,
                           child: TextFormField(
-                            readOnly:
-                                sharedPreferences!.getString('level') == '3'
-                                    ? true
-                                    : false,
+                            readOnly: true,
                             style: const TextStyle(
                                 fontSize: 14,
                                 color: Colors.black,
@@ -2258,6 +2224,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                           height: 65,
                           width: 100,
                           child: TextFormField(
+                            readOnly: true,
                             enabled: false,
                             style: const TextStyle(
                                 fontSize: 14,
@@ -2281,9 +2248,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                     height: 65,
                     width: 230,
                     child: TextFormField(
-                      readOnly: sharedPreferences!.getString('level') == '3'
-                          ? true
-                          : false,
+                      readOnly: true,
                       style: const TextStyle(
                           fontSize: 14,
                           color: Colors.black,
@@ -2291,6 +2256,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                       textInputAction: TextInputAction.next,
                       controller: kategoriBarang,
                       decoration: InputDecoration(
+                        enabled: false,
                         // hintText: "example: Cahaya Sanivokasi",
                         labelText: kategoriBarang.text.isEmpty
                             ? "Kategori Bararang"
@@ -2317,6 +2283,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                           height: 65,
                           width: 230,
                           child: DropdownSearch<EarnutModel>(
+                            enabled: false,
                             asyncItems: (String? filter) =>
                                 getListEarnut(filter),
                             popupProps:
@@ -2334,6 +2301,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                             },
                             dropdownDecoratorProps: DropDownDecoratorProps(
                               dropdownSearchDecoration: InputDecoration(
+                                enabled: false,
                                 label: Text(
                                   earnut.text.isEmpty ? "Earnut" : earnut.text,
                                   style: const TextStyle(
@@ -2350,10 +2318,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                           height: 65,
                           width: 100,
                           child: TextFormField(
-                            readOnly:
-                                sharedPreferences!.getString('level') == '3'
-                                    ? true
-                                    : false,
+                            readOnly: true,
                             style: const TextStyle(
                                 fontSize: 14,
                                 color: Colors.black,
@@ -2396,6 +2361,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                     height: 65,
                     width: 230,
                     child: DropdownSearch<String>(
+                      enabled: false,
                       items: const ["PARVA", "SIORAI", "METIER"],
                       onChanged: (item) {
                         setState(() {
@@ -2404,6 +2370,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                       },
                       dropdownDecoratorProps: DropDownDecoratorProps(
                         dropdownSearchDecoration: InputDecoration(
+                          enabled: false,
                           label: Text(
                             brand.text.isEmpty ? "Brand" : brand.text,
                             style: const TextStyle(fontWeight: FontWeight.bold),
@@ -2431,6 +2398,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                           height: 65,
                           width: 230,
                           child: TextFormField(
+                            readOnly: true,
                             style: const TextStyle(
                                 fontSize: 14,
                                 color: Colors.black,
@@ -2452,6 +2420,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                     height: 65,
                     width: 230,
                     child: TextFormField(
+                      readOnly: true,
                       style: const TextStyle(
                           fontSize: 14,
                           color: Colors.black,
@@ -2483,6 +2452,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                           height: 65,
                           width: 230,
                           child: TextFormField(
+                            readOnly: true,
                             style: const TextStyle(
                                 fontSize: 14,
                                 color: Colors.black,
@@ -2502,6 +2472,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                           height: 65,
                           width: 100,
                           child: TextFormField(
+                            readOnly: true,
                             style: const TextStyle(
                                 fontSize: 14,
                                 color: Colors.black,
@@ -2521,6 +2492,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                           height: 65,
                           width: 100,
                           child: TextFormField(
+                            readOnly: true,
                             enabled: false,
                             style: const TextStyle(
                                 fontSize: 14,
@@ -2544,6 +2516,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                     height: 65,
                     width: 230,
                     child: DropdownSearch<String>(
+                      enabled: false,
                       items: const ["WG", "RG", "MIX"],
                       onChanged: (item) {
                         setState(() {
@@ -2552,6 +2525,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                       },
                       dropdownDecoratorProps: DropDownDecoratorProps(
                         dropdownSearchDecoration: InputDecoration(
+                          enabled: false,
                           label: Text(color.text.isEmpty ? "Color" : color.text,
                               style:
                                   const TextStyle(fontWeight: FontWeight.bold)),
@@ -2573,6 +2547,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                     height: 65,
                     width: 230,
                     child: TextFormField(
+                      readOnly: true,
                       style: const TextStyle(
                           fontSize: 14,
                           color: Colors.black,
@@ -2596,16 +2571,20 @@ class _FormScreenByIdState extends State<FormScreenById> {
                     height: 65,
                     width: 200,
                     child: TextFormField(
+                      readOnly: true,
                       enabled: false,
                       style: const TextStyle(
                           fontSize: 14,
                           color: Colors.black,
                           fontWeight: FontWeight.bold),
                       textInputAction: TextInputAction.next,
-                      controller: estimasiHarga,
                       decoration: InputDecoration(
-                        label: const Text(
-                          'Estimasi Harga',
+                        label: Text(
+                          brand.text == "BELI BERLIAN"
+                              ? 'Rp. ${CurrencyFormat.convertToDollar(int.parse(estimasiHarga.text), 0)}'
+                              : brand.text == "METIER"
+                                  ? 'Rp. ${CurrencyFormat.convertToDollar(int.parse(estimasiHarga.text), 0)}'
+                                  : '\$ ${CurrencyFormat.convertToDollar(int.parse(estimasiHarga.text), 0)}',
                         ),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5.0)),
@@ -2616,6 +2595,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                     height: 65,
                     width: 230,
                     child: TextFormField(
+                      readOnly: true,
                       style: const TextStyle(
                           fontSize: 14,
                           color: Colors.black,
@@ -2668,253 +2648,9 @@ class _FormScreenByIdState extends State<FormScreenById> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         //size batu1
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              width: 350,
-                              height: 38,
-                              padding: const EdgeInsets.only(top: 5),
-                              child: DropdownSearch<BatuModel>(
-                                asyncItems: (String? filter) => getData(filter),
-                                popupProps: const PopupPropsMultiSelection
-                                    .modalBottomSheet(
-                                  showSelectedItems: true,
-                                  itemBuilder: _listBatu,
-                                  showSearchBox: true,
-                                ),
-                                compareFn: (item, sItem) => item.id == sItem.id,
-                                onChanged: (item) async {
-                                  try {
-                                    final response = await http.get(
-                                      Uri.parse(
-                                          '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
-                                    );
-                                    print(response.statusCode);
-                                    if (response.statusCode == 200) {
-                                      print(response.body);
-                                      final data = jsonDecode(response.body);
-                                      print(data);
-                                      setState(() {
-                                        hargaBatu1 = data[0]['unitCost'];
-                                        idBatu1 = item.id;
-                                        caratPcsBatu1 = data[0]['caratPcs'];
-                                        batu1 = item.size;
-                                        stokBatu1.text = item.qty.toString();
-                                        qtyBatu1.text = '0';
-                                      });
-                                    }
-                                  } catch (e) {
-                                    print(e);
-                                  }
-                                },
-                                dropdownDecoratorProps: DropDownDecoratorProps(
-                                  dropdownSearchDecoration: InputDecoration(
-                                    label: Text(
-                                      batu1!,
-                                      style: const TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-
-                            //qty batu1
-                            Container(
-                              width: 80,
-                              height: 38,
-                              padding: const EdgeInsets.only(top: 10, left: 15),
-                              child: TextFormField(
-                                enabled: batu1 == '' ? false : true,
-                                textInputAction: TextInputAction.next,
-                                controller: qtyBatu1,
-                                onChanged: (value) {
-                                  setState(() {
-                                    isBatu1 = true;
-                                    qtyIntBatu1 = int.parse(value);
-                                  });
-                                },
-                                decoration: InputDecoration(
-                                  label: const Text('Qty'),
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(5.0)),
-                                ),
-                              ),
-                            ),
-
-                            //stok batu1
-                            Container(
-                              width: 80,
-                              height: 38,
-                              padding: const EdgeInsets.only(top: 10, left: 15),
-                              child: TextFormField(
-                                enabled: false,
-                                textInputAction: TextInputAction.next,
-                                controller: stokBatu1,
-                                decoration: InputDecoration(
-                                  label: const Text(
-                                    'Stok',
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(5.0)),
-                                ),
-                              ),
-                            ),
-
-                            qtyBatu1.text.isEmpty
-                                ? const SizedBox()
-                                : Padding(
-                                    padding: const EdgeInsets.only(top: 10),
-                                    child: IconButton(
-                                        onPressed: () {
-                                          setState(() {
-                                            qtyBatu1.text = '0';
-                                            stokBatu1.text = '';
-                                            batu1 = '';
-                                            hargaBatu1 = 0;
-                                            caratPcsBatu1 = 0;
-                                          });
-                                        },
-                                        icon: const Icon(Icons.cancel)),
-                                  ),
-                          ],
-                        ),
-                        // end row batu1
-
-                        //size batu2
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              width: 350,
-                              height: 58,
-                              padding: const EdgeInsets.only(top: 5),
-                              child: DropdownSearch<BatuModel>(
-                                asyncItems: (String? filter) => getData(filter),
-                                popupProps: const PopupPropsMultiSelection
-                                    .modalBottomSheet(
-                                  showSelectedItems: true,
-                                  itemBuilder: _listBatu,
-                                  showSearchBox: true,
-                                ),
-                                compareFn: (item, sItem) => item.id == sItem.id,
-                                onChanged: (item) async {
-                                  try {
-                                    final response = await http.get(
-                                      Uri.parse(
-                                          '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
-                                    );
-                                    print(response.statusCode);
-                                    if (response.statusCode == 200) {
-                                      print(response.body);
-                                      final data = jsonDecode(response.body);
-                                      print(data);
-                                      setState(() {
-                                        hargaBatu2 = data[0]['unitCost'];
-                                        idBatu2 = item.id;
-                                        caratPcsBatu2 = data[0]['caratPcs'];
-                                        batu2 = item.size;
-                                        stokBatu2.text = item.qty.toString();
-                                        qtyBatu2.text = '0';
-                                      });
-                                    }
-                                  } catch (e) {
-                                    print(e);
-                                  }
-                                },
-                                dropdownDecoratorProps: DropDownDecoratorProps(
-                                  dropdownSearchDecoration: InputDecoration(
-                                    label: Text(
-                                      batu2!,
-                                      style: const TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-
-                            //qty batu2
-                            Container(
-                              width: 80,
-                              height: 38,
-                              padding: const EdgeInsets.only(top: 10, left: 15),
-                              child: TextFormField(
-                                enabled: batu2 == '' ? false : true,
-                                textInputAction: TextInputAction.next,
-                                controller: qtyBatu2,
-                                onChanged: (value) {
-                                  setState(() {
-                                    isBatu2 = true;
-                                    qtyIntBatu2 = int.parse(value);
-                                  });
-                                },
-                                decoration: InputDecoration(
-                                  label: const Text('Qty'),
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(5.0)),
-                                ),
-                              ),
-                            ),
-
-                            //stok batu2
-                            Container(
-                              width: 80,
-                              height: 38,
-                              padding: const EdgeInsets.only(top: 10, left: 15),
-                              child: TextFormField(
-                                enabled: false,
-                                textInputAction: TextInputAction.next,
-                                controller: stokBatu2,
-                                decoration: InputDecoration(
-                                  label: const Text(
-                                    'Stok',
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(5.0)),
-                                ),
-                              ),
-                            ),
-
-                            qtyBatu2.text.isEmpty
-                                ? const SizedBox()
-                                : Padding(
-                                    padding: const EdgeInsets.only(top: 10),
-                                    child: IconButton(
-                                        onPressed: () {
-                                          setState(() {
-                                            qtyBatu2.text = '0';
-                                            stokBatu2.text = '';
-                                            batu2 = '';
-                                            hargaBatu2 = 0;
-                                            caratPcsBatu2 = 0;
-                                          });
-                                        },
-                                        icon: const Icon(Icons.cancel)),
-                                  ),
-                          ],
-                        ),
-                        // end row batu2
-
-                        //batu3
-                        qtyBatu2.text.isEmpty
+                        int.parse(qtyBatu1.text) <= 0
                             ? const SizedBox()
-                            :
-                            //size batu3
-                            Row(
+                            : Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
@@ -2933,28 +2669,183 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                       compareFn: (item, sItem) =>
                                           item.id == sItem.id,
-                                      onChanged: (item) async {
-                                        try {
-                                          final response = await http.get(
-                                            Uri.parse(
-                                                '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
-                                          );
-                                          if (response.statusCode == 200) {
-                                            final data =
-                                                jsonDecode(response.body);
-                                            setState(() {
-                                              hargaBatu3 = data[0]['unitCost'];
-                                              caratPcsBatu3 =
-                                                  data[0]['caratPcs'];
-                                              batu3 = item.size;
-                                              stokBatu3.text =
-                                                  item.qty.toString();
-                                            });
-                                          }
-                                        } catch (e) {
-                                          print(e);
-                                        }
-                                      },
+                                      onChanged: (item) async {},
+                                      dropdownDecoratorProps:
+                                          DropDownDecoratorProps(
+                                        dropdownSearchDecoration:
+                                            InputDecoration(
+                                          label: Text(
+                                            batu1!,
+                                            style: const TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          filled: true,
+                                          fillColor: Colors.white,
+                                        ),
+                                      ),
+                                      enabled: false,
+                                    ),
+                                  ),
+
+                                  //qty batu1
+                                  Container(
+                                    width: 80,
+                                    height: 38,
+                                    padding: const EdgeInsets.only(
+                                        top: 10, left: 15),
+                                    child: TextFormField(
+                                      enabled: false,
+                                      textInputAction: TextInputAction.next,
+                                      controller: qtyBatu1,
+                                      onChanged: (value) {},
+                                      decoration: InputDecoration(
+                                        label: const Text('Qty'),
+                                        border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(5.0)),
+                                      ),
+                                    ),
+                                  ),
+
+                                  //stok batu1
+                                  Container(
+                                    width: 80,
+                                    height: 38,
+                                    padding: const EdgeInsets.only(
+                                        top: 10, left: 15),
+                                    child: TextFormField(
+                                      enabled: false,
+                                      textInputAction: TextInputAction.next,
+                                      controller: stokBatu1,
+                                      decoration: InputDecoration(
+                                        label: const Text(
+                                          'Stok',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(5.0)),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                        // end row batu1
+
+                        //size batu2
+                        int.parse(qtyBatu2.text) <= 0
+                            ? const SizedBox()
+                            : Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                    width: 350,
+                                    height: 38,
+                                    padding: const EdgeInsets.only(top: 5),
+                                    child: DropdownSearch<BatuModel>(
+                                      asyncItems: (String? filter) =>
+                                          getData(filter),
+                                      popupProps: const PopupPropsMultiSelection
+                                          .modalBottomSheet(
+                                        showSelectedItems: true,
+                                        itemBuilder: _listBatu,
+                                        showSearchBox: true,
+                                      ),
+                                      compareFn: (item, sItem) =>
+                                          item.id == sItem.id,
+                                      onChanged: (item) async {},
+                                      dropdownDecoratorProps:
+                                          DropDownDecoratorProps(
+                                        dropdownSearchDecoration:
+                                            InputDecoration(
+                                          label: Text(
+                                            batu2!,
+                                            style: const TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          filled: true,
+                                          fillColor: Colors.white,
+                                        ),
+                                      ),
+                                      enabled: false,
+                                    ),
+                                  ),
+
+                                  //qty batu2
+                                  Container(
+                                    width: 80,
+                                    height: 38,
+                                    padding: const EdgeInsets.only(
+                                        top: 10, left: 15),
+                                    child: TextFormField(
+                                      enabled: false,
+                                      textInputAction: TextInputAction.next,
+                                      controller: qtyBatu2,
+                                      onChanged: (value) {},
+                                      decoration: InputDecoration(
+                                        label: const Text('Qty'),
+                                        border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(5.0)),
+                                      ),
+                                    ),
+                                  ),
+
+                                  //stok batu2
+                                  Container(
+                                    width: 80,
+                                    height: 38,
+                                    padding: const EdgeInsets.only(
+                                        top: 10, left: 15),
+                                    child: TextFormField(
+                                      enabled: false,
+                                      textInputAction: TextInputAction.next,
+                                      controller: stokBatu2,
+                                      decoration: InputDecoration(
+                                        label: const Text(
+                                          'Stok',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(5.0)),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                        // end row batu2
+
+                        //size batu3
+                        int.parse(qtyBatu3.text) <= 0
+                            ? const SizedBox()
+                            : Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                    width: 350,
+                                    height: 38,
+                                    padding: const EdgeInsets.only(top: 5),
+                                    child: DropdownSearch<BatuModel>(
+                                      asyncItems: (String? filter) =>
+                                          getData(filter),
+                                      popupProps: const PopupPropsMultiSelection
+                                          .modalBottomSheet(
+                                        showSelectedItems: true,
+                                        itemBuilder: _listBatu,
+                                        showSearchBox: true,
+                                      ),
+                                      compareFn: (item, sItem) =>
+                                          item.id == sItem.id,
+                                      onChanged: (item) async {},
                                       dropdownDecoratorProps:
                                           DropDownDecoratorProps(
                                         dropdownSearchDecoration:
@@ -2962,13 +2853,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           label: Text(
                                             batu3!,
                                             style: const TextStyle(
-                                                fontSize: 14,
+                                                fontSize: 20,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                           filled: true,
                                           fillColor: Colors.white,
                                         ),
                                       ),
+                                      enabled: false,
                                     ),
                                   ),
 
@@ -2979,16 +2871,11 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                     padding: const EdgeInsets.only(
                                         top: 10, left: 15),
                                     child: TextFormField(
-                                      enabled: batu3 == '' ? false : true,
+                                      enabled: false,
                                       textInputAction: TextInputAction.next,
                                       controller: qtyBatu3,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          qtyIntBatu3 = int.parse(value);
-                                        });
-                                      },
+                                      onChanged: (value) {},
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text('Qty'),
                                         border: OutlineInputBorder(
                                             borderRadius:
@@ -3008,7 +2895,6 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       textInputAction: TextInputAction.next,
                                       controller: stokBatu3,
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text(
                                           'Stok',
                                           style: TextStyle(
@@ -3021,33 +2907,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                     ),
                                   ),
-                                  qtyBatu3.text.isEmpty
-                                      ? const SizedBox()
-                                      : Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 10),
-                                          child: IconButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  qtyBatu3.text = '0';
-                                                  stokBatu3.text = '';
-                                                  batu3 = '';
-                                                  hargaBatu3 = 0;
-                                                  caratPcsBatu3 = 0;
-                                                });
-                                              },
-                                              icon: const Icon(Icons.cancel)),
-                                        ),
                                 ],
                               ),
                         // end row batu3
 
-                        //batu4
-                        qtyBatu3.text.isEmpty
+                        //size batu4
+                        int.parse(qtyBatu4.text) <= 0
                             ? const SizedBox()
-                            :
-                            //size batu4
-                            Row(
+                            : Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
@@ -3066,28 +2933,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                       compareFn: (item, sItem) =>
                                           item.id == sItem.id,
-                                      onChanged: (item) async {
-                                        try {
-                                          final response = await http.get(
-                                            Uri.parse(
-                                                '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
-                                          );
-                                          if (response.statusCode == 200) {
-                                            final data =
-                                                jsonDecode(response.body);
-                                            setState(() {
-                                              hargaBatu4 = data[0]['unitCost'];
-                                              caratPcsBatu4 =
-                                                  data[0]['caratPcs'];
-                                              batu4 = item.size;
-                                              stokBatu4.text =
-                                                  item.qty.toString();
-                                            });
-                                          }
-                                        } catch (e) {
-                                          print(e);
-                                        }
-                                      },
+                                      onChanged: (item) async {},
                                       dropdownDecoratorProps:
                                           DropDownDecoratorProps(
                                         dropdownSearchDecoration:
@@ -3095,13 +2941,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           label: Text(
                                             batu4!,
                                             style: const TextStyle(
-                                                fontSize: 14,
+                                                fontSize: 20,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                           filled: true,
                                           fillColor: Colors.white,
                                         ),
                                       ),
+                                      enabled: false,
                                     ),
                                   ),
 
@@ -3112,16 +2959,11 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                     padding: const EdgeInsets.only(
                                         top: 10, left: 15),
                                     child: TextFormField(
-                                      enabled: batu4 == '' ? false : true,
+                                      enabled: false,
                                       textInputAction: TextInputAction.next,
                                       controller: qtyBatu4,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          qtyIntBatu4 = int.parse(value);
-                                        });
-                                      },
+                                      onChanged: (value) {},
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text('Qty'),
                                         border: OutlineInputBorder(
                                             borderRadius:
@@ -3141,7 +2983,6 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       textInputAction: TextInputAction.next,
                                       controller: stokBatu4,
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text(
                                           'Stok',
                                           style: TextStyle(
@@ -3154,33 +2995,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                     ),
                                   ),
-                                  qtyBatu4.text.isEmpty
-                                      ? const SizedBox()
-                                      : Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 10),
-                                          child: IconButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  qtyBatu4.text = '0';
-                                                  stokBatu4.text = '';
-                                                  batu4 = '';
-                                                  hargaBatu4 = 0;
-                                                  caratPcsBatu4 = 0;
-                                                });
-                                              },
-                                              icon: const Icon(Icons.cancel)),
-                                        ),
                                 ],
                               ),
                         // end row batu4
 
-                        //batu5
-                        qtyBatu4.text.isEmpty
+                        //size batu5
+                        int.parse(qtyBatu5.text) <= 0
                             ? const SizedBox()
-                            :
-                            //size batu5
-                            Row(
+                            : Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
@@ -3199,28 +3021,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                       compareFn: (item, sItem) =>
                                           item.id == sItem.id,
-                                      onChanged: (item) async {
-                                        try {
-                                          final response = await http.get(
-                                            Uri.parse(
-                                                '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
-                                          );
-                                          if (response.statusCode == 200) {
-                                            final data =
-                                                jsonDecode(response.body);
-                                            setState(() {
-                                              hargaBatu5 = data[0]['unitCost'];
-                                              caratPcsBatu5 =
-                                                  data[0]['caratPcs'];
-                                              batu5 = item.size;
-                                              stokBatu5.text =
-                                                  item.qty.toString();
-                                            });
-                                          }
-                                        } catch (e) {
-                                          print(e);
-                                        }
-                                      },
+                                      onChanged: (item) async {},
                                       dropdownDecoratorProps:
                                           DropDownDecoratorProps(
                                         dropdownSearchDecoration:
@@ -3228,13 +3029,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           label: Text(
                                             batu5!,
                                             style: const TextStyle(
-                                                fontSize: 14,
+                                                fontSize: 20,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                           filled: true,
                                           fillColor: Colors.white,
                                         ),
                                       ),
+                                      enabled: false,
                                     ),
                                   ),
 
@@ -3245,16 +3047,11 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                     padding: const EdgeInsets.only(
                                         top: 10, left: 15),
                                     child: TextFormField(
-                                      enabled: batu5 == '' ? false : true,
+                                      enabled: false,
                                       textInputAction: TextInputAction.next,
                                       controller: qtyBatu5,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          qtyIntBatu5 = int.parse(value);
-                                        });
-                                      },
+                                      onChanged: (value) {},
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text('Qty'),
                                         border: OutlineInputBorder(
                                             borderRadius:
@@ -3274,7 +3071,6 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       textInputAction: TextInputAction.next,
                                       controller: stokBatu5,
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text(
                                           'Stok',
                                           style: TextStyle(
@@ -3287,33 +3083,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                     ),
                                   ),
-                                  qtyBatu5.text.isEmpty
-                                      ? const SizedBox()
-                                      : Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 10),
-                                          child: IconButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  qtyBatu5.text = '0';
-                                                  stokBatu5.text = '';
-                                                  batu5 = '';
-                                                  hargaBatu5 = 0;
-                                                  caratPcsBatu5 = 0;
-                                                });
-                                              },
-                                              icon: const Icon(Icons.cancel)),
-                                        ),
                                 ],
                               ),
                         // end row batu5
 
-                        //batu6
-                        qtyBatu5.text.isEmpty
+                        //size batu6
+                        int.parse(qtyBatu6.text) <= 0
                             ? const SizedBox()
-                            :
-                            //size batu6
-                            Row(
+                            : Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
@@ -3332,28 +3109,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                       compareFn: (item, sItem) =>
                                           item.id == sItem.id,
-                                      onChanged: (item) async {
-                                        try {
-                                          final response = await http.get(
-                                            Uri.parse(
-                                                '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
-                                          );
-                                          if (response.statusCode == 200) {
-                                            final data =
-                                                jsonDecode(response.body);
-                                            setState(() {
-                                              hargaBatu6 = data[0]['unitCost'];
-                                              caratPcsBatu6 =
-                                                  data[0]['caratPcs'];
-                                              batu6 = item.size;
-                                              stokBatu6.text =
-                                                  item.qty.toString();
-                                            });
-                                          }
-                                        } catch (e) {
-                                          print(e);
-                                        }
-                                      },
+                                      onChanged: (item) async {},
                                       dropdownDecoratorProps:
                                           DropDownDecoratorProps(
                                         dropdownSearchDecoration:
@@ -3361,13 +3117,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           label: Text(
                                             batu6!,
                                             style: const TextStyle(
-                                                fontSize: 14,
+                                                fontSize: 20,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                           filled: true,
                                           fillColor: Colors.white,
                                         ),
                                       ),
+                                      enabled: false,
                                     ),
                                   ),
 
@@ -3378,16 +3135,11 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                     padding: const EdgeInsets.only(
                                         top: 10, left: 15),
                                     child: TextFormField(
-                                      enabled: batu6 == '' ? false : true,
+                                      enabled: false,
                                       textInputAction: TextInputAction.next,
                                       controller: qtyBatu6,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          qtyIntBatu6 = int.parse(value);
-                                        });
-                                      },
+                                      onChanged: (value) {},
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text('Qty'),
                                         border: OutlineInputBorder(
                                             borderRadius:
@@ -3407,7 +3159,6 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       textInputAction: TextInputAction.next,
                                       controller: stokBatu6,
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text(
                                           'Stok',
                                           style: TextStyle(
@@ -3420,33 +3171,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                     ),
                                   ),
-                                  qtyBatu6.text.isEmpty
-                                      ? const SizedBox()
-                                      : Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 10),
-                                          child: IconButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  qtyBatu6.text = '0';
-                                                  stokBatu6.text = '';
-                                                  batu6 = '';
-                                                  hargaBatu6 = 0;
-                                                  caratPcsBatu6 = 0;
-                                                });
-                                              },
-                                              icon: const Icon(Icons.cancel)),
-                                        ),
                                 ],
                               ),
                         // end row batu6
 
-                        //batu7
-                        qtyBatu6.text.isEmpty
+                        //size batu7
+                        int.parse(qtyBatu7.text) <= 0
                             ? const SizedBox()
-                            :
-                            //size batu7
-                            Row(
+                            : Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
@@ -3465,28 +3197,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                       compareFn: (item, sItem) =>
                                           item.id == sItem.id,
-                                      onChanged: (item) async {
-                                        try {
-                                          final response = await http.get(
-                                            Uri.parse(
-                                                '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
-                                          );
-                                          if (response.statusCode == 200) {
-                                            final data =
-                                                jsonDecode(response.body);
-                                            setState(() {
-                                              hargaBatu7 = data[0]['unitCost'];
-                                              caratPcsBatu7 =
-                                                  data[0]['caratPcs'];
-                                              batu7 = item.size;
-                                              stokBatu7.text =
-                                                  item.qty.toString();
-                                            });
-                                          }
-                                        } catch (e) {
-                                          print(e);
-                                        }
-                                      },
+                                      onChanged: (item) async {},
                                       dropdownDecoratorProps:
                                           DropDownDecoratorProps(
                                         dropdownSearchDecoration:
@@ -3494,13 +3205,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           label: Text(
                                             batu7!,
                                             style: const TextStyle(
-                                                fontSize: 14,
+                                                fontSize: 20,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                           filled: true,
                                           fillColor: Colors.white,
                                         ),
                                       ),
+                                      enabled: false,
                                     ),
                                   ),
 
@@ -3511,16 +3223,11 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                     padding: const EdgeInsets.only(
                                         top: 10, left: 15),
                                     child: TextFormField(
-                                      enabled: batu7 == '' ? false : true,
+                                      enabled: false,
                                       textInputAction: TextInputAction.next,
                                       controller: qtyBatu7,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          qtyIntBatu7 = int.parse(value);
-                                        });
-                                      },
+                                      onChanged: (value) {},
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text('Qty'),
                                         border: OutlineInputBorder(
                                             borderRadius:
@@ -3540,7 +3247,6 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       textInputAction: TextInputAction.next,
                                       controller: stokBatu7,
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text(
                                           'Stok',
                                           style: TextStyle(
@@ -3553,33 +3259,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                     ),
                                   ),
-                                  qtyBatu7.text.isEmpty
-                                      ? const SizedBox()
-                                      : Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 10),
-                                          child: IconButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  qtyBatu7.text = '0';
-                                                  stokBatu7.text = '';
-                                                  batu7 = '';
-                                                  hargaBatu7 = 0;
-                                                  caratPcsBatu7 = 0;
-                                                });
-                                              },
-                                              icon: const Icon(Icons.cancel)),
-                                        ),
                                 ],
                               ),
                         // end row batu7
 
-                        //batu8
-                        qtyBatu7.text.isEmpty
+                        //size batu8
+                        int.parse(qtyBatu8.text) <= 0
                             ? const SizedBox()
-                            :
-                            //size batu8
-                            Row(
+                            : Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
@@ -3598,28 +3285,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                       compareFn: (item, sItem) =>
                                           item.id == sItem.id,
-                                      onChanged: (item) async {
-                                        try {
-                                          final response = await http.get(
-                                            Uri.parse(
-                                                '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
-                                          );
-                                          if (response.statusCode == 200) {
-                                            final data =
-                                                jsonDecode(response.body);
-                                            setState(() {
-                                              hargaBatu8 = data[0]['unitCost'];
-                                              caratPcsBatu8 =
-                                                  data[0]['caratPcs'];
-                                              batu8 = item.size;
-                                              stokBatu8.text =
-                                                  item.qty.toString();
-                                            });
-                                          }
-                                        } catch (e) {
-                                          print(e);
-                                        }
-                                      },
+                                      onChanged: (item) async {},
                                       dropdownDecoratorProps:
                                           DropDownDecoratorProps(
                                         dropdownSearchDecoration:
@@ -3627,13 +3293,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           label: Text(
                                             batu8!,
                                             style: const TextStyle(
-                                                fontSize: 14,
+                                                fontSize: 20,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                           filled: true,
                                           fillColor: Colors.white,
                                         ),
                                       ),
+                                      enabled: false,
                                     ),
                                   ),
 
@@ -3644,16 +3311,11 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                     padding: const EdgeInsets.only(
                                         top: 10, left: 15),
                                     child: TextFormField(
-                                      enabled: batu8 == '' ? false : true,
+                                      enabled: false,
                                       textInputAction: TextInputAction.next,
                                       controller: qtyBatu8,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          qtyIntBatu8 = int.parse(value);
-                                        });
-                                      },
+                                      onChanged: (value) {},
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text('Qty'),
                                         border: OutlineInputBorder(
                                             borderRadius:
@@ -3673,7 +3335,6 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       textInputAction: TextInputAction.next,
                                       controller: stokBatu8,
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text(
                                           'Stok',
                                           style: TextStyle(
@@ -3686,33 +3347,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                     ),
                                   ),
-                                  qtyBatu8.text.isEmpty
-                                      ? const SizedBox()
-                                      : Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 10),
-                                          child: IconButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  qtyBatu8.text = '0';
-                                                  stokBatu8.text = '';
-                                                  batu8 = '';
-                                                  hargaBatu8 = 0;
-                                                  caratPcsBatu8 = 0;
-                                                });
-                                              },
-                                              icon: const Icon(Icons.cancel)),
-                                        ),
                                 ],
                               ),
                         // end row batu8
 
-                        //batu9
-                        qtyBatu8.text.isEmpty
+                        //size batu9
+                        int.parse(qtyBatu9.text) <= 0
                             ? const SizedBox()
-                            :
-                            //size batu9
-                            Row(
+                            : Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
@@ -3731,28 +3373,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                       compareFn: (item, sItem) =>
                                           item.id == sItem.id,
-                                      onChanged: (item) async {
-                                        try {
-                                          final response = await http.get(
-                                            Uri.parse(
-                                                '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
-                                          );
-                                          if (response.statusCode == 200) {
-                                            final data =
-                                                jsonDecode(response.body);
-                                            setState(() {
-                                              hargaBatu9 = data[0]['unitCost'];
-                                              caratPcsBatu9 =
-                                                  data[0]['caratPcs'];
-                                              batu9 = item.size;
-                                              stokBatu9.text =
-                                                  item.qty.toString();
-                                            });
-                                          }
-                                        } catch (e) {
-                                          print(e);
-                                        }
-                                      },
+                                      onChanged: (item) async {},
                                       dropdownDecoratorProps:
                                           DropDownDecoratorProps(
                                         dropdownSearchDecoration:
@@ -3760,13 +3381,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           label: Text(
                                             batu9!,
                                             style: const TextStyle(
-                                                fontSize: 14,
+                                                fontSize: 20,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                           filled: true,
                                           fillColor: Colors.white,
                                         ),
                                       ),
+                                      enabled: false,
                                     ),
                                   ),
 
@@ -3777,16 +3399,11 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                     padding: const EdgeInsets.only(
                                         top: 10, left: 15),
                                     child: TextFormField(
-                                      enabled: batu9 == '' ? false : true,
+                                      enabled: false,
                                       textInputAction: TextInputAction.next,
                                       controller: qtyBatu9,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          qtyIntBatu9 = int.parse(value);
-                                        });
-                                      },
+                                      onChanged: (value) {},
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text('Qty'),
                                         border: OutlineInputBorder(
                                             borderRadius:
@@ -3806,7 +3423,6 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       textInputAction: TextInputAction.next,
                                       controller: stokBatu9,
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text(
                                           'Stok',
                                           style: TextStyle(
@@ -3819,33 +3435,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                     ),
                                   ),
-                                  qtyBatu9.text.isEmpty
-                                      ? const SizedBox()
-                                      : Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 10),
-                                          child: IconButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  qtyBatu9.text = '0';
-                                                  stokBatu9.text = '';
-                                                  batu9 = '';
-                                                  hargaBatu9 = 0;
-                                                  caratPcsBatu9 = 0;
-                                                });
-                                              },
-                                              icon: const Icon(Icons.cancel)),
-                                        ),
                                 ],
                               ),
                         // end row batu9
 
-                        //batu10
-                        qtyBatu9.text.isEmpty
+                        //size batu10
+                        int.parse(qtyBatu10.text) <= 0
                             ? const SizedBox()
-                            :
-                            //size batu10
-                            Row(
+                            : Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
@@ -3864,28 +3461,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                       compareFn: (item, sItem) =>
                                           item.id == sItem.id,
-                                      onChanged: (item) async {
-                                        try {
-                                          final response = await http.get(
-                                            Uri.parse(
-                                                '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
-                                          );
-                                          if (response.statusCode == 200) {
-                                            final data =
-                                                jsonDecode(response.body);
-                                            setState(() {
-                                              hargaBatu10 = data[0]['unitCost'];
-                                              caratPcsBatu10 =
-                                                  data[0]['caratPcs'];
-                                              batu10 = item.size;
-                                              stokBatu10.text =
-                                                  item.qty.toString();
-                                            });
-                                          }
-                                        } catch (e) {
-                                          print(e);
-                                        }
-                                      },
+                                      onChanged: (item) async {},
                                       dropdownDecoratorProps:
                                           DropDownDecoratorProps(
                                         dropdownSearchDecoration:
@@ -3893,13 +3469,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           label: Text(
                                             batu10!,
                                             style: const TextStyle(
-                                                fontSize: 14,
+                                                fontSize: 20,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                           filled: true,
                                           fillColor: Colors.white,
                                         ),
                                       ),
+                                      enabled: false,
                                     ),
                                   ),
 
@@ -3910,16 +3487,11 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                     padding: const EdgeInsets.only(
                                         top: 10, left: 15),
                                     child: TextFormField(
-                                      enabled: batu10 == '' ? false : true,
+                                      enabled: false,
                                       textInputAction: TextInputAction.next,
                                       controller: qtyBatu10,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          qtyIntBatu10 = int.parse(value);
-                                        });
-                                      },
+                                      onChanged: (value) {},
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text('Qty'),
                                         border: OutlineInputBorder(
                                             borderRadius:
@@ -3939,7 +3511,6 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       textInputAction: TextInputAction.next,
                                       controller: stokBatu10,
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text(
                                           'Stok',
                                           style: TextStyle(
@@ -3952,33 +3523,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                     ),
                                   ),
-                                  qtyBatu10.text.isEmpty
-                                      ? const SizedBox()
-                                      : Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 10),
-                                          child: IconButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  qtyBatu10.text = '0';
-                                                  stokBatu10.text = '';
-                                                  batu10 = '';
-                                                  hargaBatu10 = 0;
-                                                  caratPcsBatu10 = 0;
-                                                });
-                                              },
-                                              icon: const Icon(Icons.cancel)),
-                                        ),
                                 ],
                               ),
                         // end row batu10
 
-                        //batu11
-                        qtyBatu10.text.isEmpty
+                        //size batu11
+                        int.parse(qtyBatu11.text) <= 0
                             ? const SizedBox()
-                            :
-                            //size batu11
-                            Row(
+                            : Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
@@ -3997,28 +3549,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                       compareFn: (item, sItem) =>
                                           item.id == sItem.id,
-                                      onChanged: (item) async {
-                                        try {
-                                          final response = await http.get(
-                                            Uri.parse(
-                                                '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
-                                          );
-                                          if (response.statusCode == 200) {
-                                            final data =
-                                                jsonDecode(response.body);
-                                            setState(() {
-                                              hargaBatu11 = data[0]['unitCost'];
-                                              caratPcsBatu11 =
-                                                  data[0]['caratPcs'];
-                                              batu11 = item.size;
-                                              stokBatu11.text =
-                                                  item.qty.toString();
-                                            });
-                                          }
-                                        } catch (e) {
-                                          print(e);
-                                        }
-                                      },
+                                      onChanged: (item) async {},
                                       dropdownDecoratorProps:
                                           DropDownDecoratorProps(
                                         dropdownSearchDecoration:
@@ -4026,13 +3557,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           label: Text(
                                             batu11!,
                                             style: const TextStyle(
-                                                fontSize: 14,
+                                                fontSize: 20,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                           filled: true,
                                           fillColor: Colors.white,
                                         ),
                                       ),
+                                      enabled: false,
                                     ),
                                   ),
 
@@ -4043,16 +3575,11 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                     padding: const EdgeInsets.only(
                                         top: 10, left: 15),
                                     child: TextFormField(
-                                      enabled: batu11 == '' ? false : true,
+                                      enabled: false,
                                       textInputAction: TextInputAction.next,
                                       controller: qtyBatu11,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          qtyIntBatu11 = int.parse(value);
-                                        });
-                                      },
+                                      onChanged: (value) {},
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text('Qty'),
                                         border: OutlineInputBorder(
                                             borderRadius:
@@ -4072,7 +3599,6 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       textInputAction: TextInputAction.next,
                                       controller: stokBatu11,
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text(
                                           'Stok',
                                           style: TextStyle(
@@ -4085,33 +3611,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                     ),
                                   ),
-                                  qtyBatu11.text.isEmpty
-                                      ? const SizedBox()
-                                      : Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 10),
-                                          child: IconButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  qtyBatu11.text = '0';
-                                                  stokBatu11.text = '';
-                                                  batu11 = '';
-                                                  hargaBatu11 = 0;
-                                                  caratPcsBatu11 = 0;
-                                                });
-                                              },
-                                              icon: const Icon(Icons.cancel)),
-                                        ),
                                 ],
                               ),
                         // end row batu11
 
-                        //batu12
-                        qtyBatu11.text.isEmpty
+                        //size batu12
+                        int.parse(qtyBatu12.text) <= 0
                             ? const SizedBox()
-                            :
-                            //size batu12
-                            Row(
+                            : Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
@@ -4130,28 +3637,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                       compareFn: (item, sItem) =>
                                           item.id == sItem.id,
-                                      onChanged: (item) async {
-                                        try {
-                                          final response = await http.get(
-                                            Uri.parse(
-                                                '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
-                                          );
-                                          if (response.statusCode == 200) {
-                                            final data =
-                                                jsonDecode(response.body);
-                                            setState(() {
-                                              hargaBatu12 = data[0]['unitCost'];
-                                              caratPcsBatu12 =
-                                                  data[0]['caratPcs'];
-                                              batu12 = item.size;
-                                              stokBatu12.text =
-                                                  item.qty.toString();
-                                            });
-                                          }
-                                        } catch (e) {
-                                          print(e);
-                                        }
-                                      },
+                                      onChanged: (item) async {},
                                       dropdownDecoratorProps:
                                           DropDownDecoratorProps(
                                         dropdownSearchDecoration:
@@ -4159,13 +3645,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           label: Text(
                                             batu12!,
                                             style: const TextStyle(
-                                                fontSize: 14,
+                                                fontSize: 20,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                           filled: true,
                                           fillColor: Colors.white,
                                         ),
                                       ),
+                                      enabled: false,
                                     ),
                                   ),
 
@@ -4176,16 +3663,11 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                     padding: const EdgeInsets.only(
                                         top: 10, left: 15),
                                     child: TextFormField(
-                                      enabled: batu12 == '' ? false : true,
+                                      enabled: false,
                                       textInputAction: TextInputAction.next,
                                       controller: qtyBatu12,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          qtyIntBatu12 = int.parse(value);
-                                        });
-                                      },
+                                      onChanged: (value) {},
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text('Qty'),
                                         border: OutlineInputBorder(
                                             borderRadius:
@@ -4205,7 +3687,6 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       textInputAction: TextInputAction.next,
                                       controller: stokBatu12,
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text(
                                           'Stok',
                                           style: TextStyle(
@@ -4218,33 +3699,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                     ),
                                   ),
-                                  qtyBatu12.text.isEmpty
-                                      ? const SizedBox()
-                                      : Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 10),
-                                          child: IconButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  qtyBatu12.text = '0';
-                                                  stokBatu12.text = '';
-                                                  batu12 = '';
-                                                  hargaBatu12 = 0;
-                                                  caratPcsBatu12 = 0;
-                                                });
-                                              },
-                                              icon: const Icon(Icons.cancel)),
-                                        ),
                                 ],
                               ),
                         // end row batu12
 
-                        //batu13
-                        qtyBatu12.text.isEmpty
+                        //size batu13
+                        int.parse(qtyBatu13.text) <= 0
                             ? const SizedBox()
-                            :
-                            //size batu13
-                            Row(
+                            : Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
@@ -4263,28 +3725,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                       compareFn: (item, sItem) =>
                                           item.id == sItem.id,
-                                      onChanged: (item) async {
-                                        try {
-                                          final response = await http.get(
-                                            Uri.parse(
-                                                '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
-                                          );
-                                          if (response.statusCode == 200) {
-                                            final data =
-                                                jsonDecode(response.body);
-                                            setState(() {
-                                              hargaBatu13 = data[0]['unitCost'];
-                                              caratPcsBatu13 =
-                                                  data[0]['caratPcs'];
-                                              batu13 = item.size;
-                                              stokBatu13.text =
-                                                  item.qty.toString();
-                                            });
-                                          }
-                                        } catch (e) {
-                                          print(e);
-                                        }
-                                      },
+                                      onChanged: (item) async {},
                                       dropdownDecoratorProps:
                                           DropDownDecoratorProps(
                                         dropdownSearchDecoration:
@@ -4292,13 +3733,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           label: Text(
                                             batu13!,
                                             style: const TextStyle(
-                                                fontSize: 14,
+                                                fontSize: 20,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                           filled: true,
                                           fillColor: Colors.white,
                                         ),
                                       ),
+                                      enabled: false,
                                     ),
                                   ),
 
@@ -4309,16 +3751,11 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                     padding: const EdgeInsets.only(
                                         top: 10, left: 15),
                                     child: TextFormField(
-                                      enabled: batu13 == '' ? false : true,
+                                      enabled: false,
                                       textInputAction: TextInputAction.next,
                                       controller: qtyBatu13,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          qtyIntBatu13 = int.parse(value);
-                                        });
-                                      },
+                                      onChanged: (value) {},
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text('Qty'),
                                         border: OutlineInputBorder(
                                             borderRadius:
@@ -4338,7 +3775,6 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       textInputAction: TextInputAction.next,
                                       controller: stokBatu13,
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text(
                                           'Stok',
                                           style: TextStyle(
@@ -4351,33 +3787,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                     ),
                                   ),
-                                  qtyBatu13.text.isEmpty
-                                      ? const SizedBox()
-                                      : Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 10),
-                                          child: IconButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  qtyBatu13.text = '0';
-                                                  stokBatu13.text = '';
-                                                  batu13 = '';
-                                                  hargaBatu13 = 0;
-                                                  caratPcsBatu13 = 0;
-                                                });
-                                              },
-                                              icon: const Icon(Icons.cancel)),
-                                        ),
                                 ],
                               ),
                         // end row batu13
 
-                        //batu14
-                        qtyBatu13.text.isEmpty
+                        //size batu14
+                        int.parse(qtyBatu14.text) <= 0
                             ? const SizedBox()
-                            :
-                            //size batu14
-                            Row(
+                            : Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
@@ -4396,28 +3813,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                       compareFn: (item, sItem) =>
                                           item.id == sItem.id,
-                                      onChanged: (item) async {
-                                        try {
-                                          final response = await http.get(
-                                            Uri.parse(
-                                                '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
-                                          );
-                                          if (response.statusCode == 200) {
-                                            final data =
-                                                jsonDecode(response.body);
-                                            setState(() {
-                                              hargaBatu14 = data[0]['unitCost'];
-                                              caratPcsBatu14 =
-                                                  data[0]['caratPcs'];
-                                              batu14 = item.size;
-                                              stokBatu14.text =
-                                                  item.qty.toString();
-                                            });
-                                          }
-                                        } catch (e) {
-                                          print(e);
-                                        }
-                                      },
+                                      onChanged: (item) async {},
                                       dropdownDecoratorProps:
                                           DropDownDecoratorProps(
                                         dropdownSearchDecoration:
@@ -4425,13 +3821,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           label: Text(
                                             batu14!,
                                             style: const TextStyle(
-                                                fontSize: 14,
+                                                fontSize: 20,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                           filled: true,
                                           fillColor: Colors.white,
                                         ),
                                       ),
+                                      enabled: false,
                                     ),
                                   ),
 
@@ -4442,16 +3839,11 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                     padding: const EdgeInsets.only(
                                         top: 10, left: 15),
                                     child: TextFormField(
-                                      enabled: batu14 == '' ? false : true,
+                                      enabled: false,
                                       textInputAction: TextInputAction.next,
                                       controller: qtyBatu14,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          qtyIntBatu14 = int.parse(value);
-                                        });
-                                      },
+                                      onChanged: (value) {},
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text('Qty'),
                                         border: OutlineInputBorder(
                                             borderRadius:
@@ -4471,7 +3863,6 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       textInputAction: TextInputAction.next,
                                       controller: stokBatu14,
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text(
                                           'Stok',
                                           style: TextStyle(
@@ -4484,33 +3875,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                     ),
                                   ),
-                                  qtyBatu14.text.isEmpty
-                                      ? const SizedBox()
-                                      : Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 10),
-                                          child: IconButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  qtyBatu14.text = '0';
-                                                  stokBatu14.text = '';
-                                                  batu14 = '';
-                                                  hargaBatu14 = 0;
-                                                  caratPcsBatu14 = 0;
-                                                });
-                                              },
-                                              icon: const Icon(Icons.cancel)),
-                                        ),
                                 ],
                               ),
                         // end row batu14
 
-                        //batu15
-                        qtyBatu14.text.isEmpty
+                        //size batu15
+                        int.parse(qtyBatu15.text) <= 0
                             ? const SizedBox()
-                            :
-                            //size batu15
-                            Row(
+                            : Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
@@ -4529,28 +3901,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                       compareFn: (item, sItem) =>
                                           item.id == sItem.id,
-                                      onChanged: (item) async {
-                                        try {
-                                          final response = await http.get(
-                                            Uri.parse(
-                                                '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
-                                          );
-                                          if (response.statusCode == 200) {
-                                            final data =
-                                                jsonDecode(response.body);
-                                            setState(() {
-                                              hargaBatu15 = data[0]['unitCost'];
-                                              caratPcsBatu15 =
-                                                  data[0]['caratPcs'];
-                                              batu15 = item.size;
-                                              stokBatu15.text =
-                                                  item.qty.toString();
-                                            });
-                                          }
-                                        } catch (e) {
-                                          print(e);
-                                        }
-                                      },
+                                      onChanged: (item) async {},
                                       dropdownDecoratorProps:
                                           DropDownDecoratorProps(
                                         dropdownSearchDecoration:
@@ -4558,13 +3909,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           label: Text(
                                             batu15!,
                                             style: const TextStyle(
-                                                fontSize: 14,
+                                                fontSize: 20,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                           filled: true,
                                           fillColor: Colors.white,
                                         ),
                                       ),
+                                      enabled: false,
                                     ),
                                   ),
 
@@ -4575,16 +3927,11 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                     padding: const EdgeInsets.only(
                                         top: 10, left: 15),
                                     child: TextFormField(
-                                      enabled: batu15 == '' ? false : true,
+                                      enabled: false,
                                       textInputAction: TextInputAction.next,
                                       controller: qtyBatu15,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          qtyIntBatu15 = int.parse(value);
-                                        });
-                                      },
+                                      onChanged: (value) {},
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text('Qty'),
                                         border: OutlineInputBorder(
                                             borderRadius:
@@ -4604,7 +3951,6 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       textInputAction: TextInputAction.next,
                                       controller: stokBatu15,
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text(
                                           'Stok',
                                           style: TextStyle(
@@ -4617,33 +3963,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                     ),
                                   ),
-                                  qtyBatu15.text.isEmpty
-                                      ? const SizedBox()
-                                      : Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 10),
-                                          child: IconButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  qtyBatu15.text = '0';
-                                                  stokBatu15.text = '';
-                                                  batu15 = '';
-                                                  hargaBatu15 = 0;
-                                                  caratPcsBatu15 = 0;
-                                                });
-                                              },
-                                              icon: const Icon(Icons.cancel)),
-                                        ),
                                 ],
                               ),
                         // end row batu15
 
-                        //batu16
-                        qtyBatu15.text.isEmpty
+                        //size batu16
+                        int.parse(qtyBatu16.text) <= 0
                             ? const SizedBox()
-                            :
-                            //size batu16
-                            Row(
+                            : Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
@@ -4662,28 +3989,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                       compareFn: (item, sItem) =>
                                           item.id == sItem.id,
-                                      onChanged: (item) async {
-                                        try {
-                                          final response = await http.get(
-                                            Uri.parse(
-                                                '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
-                                          );
-                                          if (response.statusCode == 200) {
-                                            final data =
-                                                jsonDecode(response.body);
-                                            setState(() {
-                                              hargaBatu16 = data[0]['unitCost'];
-                                              caratPcsBatu16 =
-                                                  data[0]['caratPcs'];
-                                              batu16 = item.size;
-                                              stokBatu16.text =
-                                                  item.qty.toString();
-                                            });
-                                          }
-                                        } catch (e) {
-                                          print(e);
-                                        }
-                                      },
+                                      onChanged: (item) async {},
                                       dropdownDecoratorProps:
                                           DropDownDecoratorProps(
                                         dropdownSearchDecoration:
@@ -4691,13 +3997,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           label: Text(
                                             batu16!,
                                             style: const TextStyle(
-                                                fontSize: 14,
+                                                fontSize: 20,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                           filled: true,
                                           fillColor: Colors.white,
                                         ),
                                       ),
+                                      enabled: false,
                                     ),
                                   ),
 
@@ -4708,16 +4015,11 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                     padding: const EdgeInsets.only(
                                         top: 10, left: 15),
                                     child: TextFormField(
-                                      enabled: batu16 == '' ? false : true,
+                                      enabled: false,
                                       textInputAction: TextInputAction.next,
                                       controller: qtyBatu16,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          qtyIntBatu16 = int.parse(value);
-                                        });
-                                      },
+                                      onChanged: (value) {},
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text('Qty'),
                                         border: OutlineInputBorder(
                                             borderRadius:
@@ -4737,7 +4039,6 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       textInputAction: TextInputAction.next,
                                       controller: stokBatu16,
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text(
                                           'Stok',
                                           style: TextStyle(
@@ -4750,33 +4051,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                     ),
                                   ),
-                                  qtyBatu16.text.isEmpty
-                                      ? const SizedBox()
-                                      : Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 10),
-                                          child: IconButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  qtyBatu16.text = '0';
-                                                  stokBatu16.text = '';
-                                                  batu16 = '';
-                                                  hargaBatu16 = 0;
-                                                  caratPcsBatu16 = 0;
-                                                });
-                                              },
-                                              icon: const Icon(Icons.cancel)),
-                                        ),
                                 ],
                               ),
                         // end row batu16
 
-                        //batu17
-                        qtyBatu16.text.isEmpty
+                        //size batu17
+                        int.parse(qtyBatu17.text) <= 0
                             ? const SizedBox()
-                            :
-                            //size batu17
-                            Row(
+                            : Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
@@ -4795,28 +4077,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                       compareFn: (item, sItem) =>
                                           item.id == sItem.id,
-                                      onChanged: (item) async {
-                                        try {
-                                          final response = await http.get(
-                                            Uri.parse(
-                                                '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
-                                          );
-                                          if (response.statusCode == 200) {
-                                            final data =
-                                                jsonDecode(response.body);
-                                            setState(() {
-                                              hargaBatu17 = data[0]['unitCost'];
-                                              caratPcsBatu17 =
-                                                  data[0]['caratPcs'];
-                                              batu17 = item.size;
-                                              stokBatu17.text =
-                                                  item.qty.toString();
-                                            });
-                                          }
-                                        } catch (e) {
-                                          print(e);
-                                        }
-                                      },
+                                      onChanged: (item) async {},
                                       dropdownDecoratorProps:
                                           DropDownDecoratorProps(
                                         dropdownSearchDecoration:
@@ -4824,13 +4085,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           label: Text(
                                             batu17!,
                                             style: const TextStyle(
-                                                fontSize: 14,
+                                                fontSize: 20,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                           filled: true,
                                           fillColor: Colors.white,
                                         ),
                                       ),
+                                      enabled: false,
                                     ),
                                   ),
 
@@ -4841,16 +4103,11 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                     padding: const EdgeInsets.only(
                                         top: 10, left: 15),
                                     child: TextFormField(
-                                      enabled: batu17 == '' ? false : true,
+                                      enabled: false,
                                       textInputAction: TextInputAction.next,
                                       controller: qtyBatu17,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          qtyIntBatu17 = int.parse(value);
-                                        });
-                                      },
+                                      onChanged: (value) {},
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text('Qty'),
                                         border: OutlineInputBorder(
                                             borderRadius:
@@ -4870,7 +4127,6 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       textInputAction: TextInputAction.next,
                                       controller: stokBatu17,
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text(
                                           'Stok',
                                           style: TextStyle(
@@ -4883,33 +4139,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                     ),
                                   ),
-                                  qtyBatu17.text.isEmpty
-                                      ? const SizedBox()
-                                      : Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 10),
-                                          child: IconButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  qtyBatu17.text = '0';
-                                                  stokBatu17.text = '';
-                                                  batu17 = '';
-                                                  hargaBatu17 = 0;
-                                                  caratPcsBatu17 = 0;
-                                                });
-                                              },
-                                              icon: const Icon(Icons.cancel)),
-                                        ),
                                 ],
                               ),
                         // end row batu17
 
-                        //batu18
-                        qtyBatu17.text.isEmpty
+                        //size batu18
+                        int.parse(qtyBatu18.text) <= 0
                             ? const SizedBox()
-                            :
-                            //size batu18
-                            Row(
+                            : Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
@@ -4928,28 +4165,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                       compareFn: (item, sItem) =>
                                           item.id == sItem.id,
-                                      onChanged: (item) async {
-                                        try {
-                                          final response = await http.get(
-                                            Uri.parse(
-                                                '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
-                                          );
-                                          if (response.statusCode == 200) {
-                                            final data =
-                                                jsonDecode(response.body);
-                                            setState(() {
-                                              hargaBatu18 = data[0]['unitCost'];
-                                              caratPcsBatu18 =
-                                                  data[0]['caratPcs'];
-                                              batu18 = item.size;
-                                              stokBatu18.text =
-                                                  item.qty.toString();
-                                            });
-                                          }
-                                        } catch (e) {
-                                          print(e);
-                                        }
-                                      },
+                                      onChanged: (item) async {},
                                       dropdownDecoratorProps:
                                           DropDownDecoratorProps(
                                         dropdownSearchDecoration:
@@ -4957,13 +4173,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           label: Text(
                                             batu18!,
                                             style: const TextStyle(
-                                                fontSize: 14,
+                                                fontSize: 20,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                           filled: true,
                                           fillColor: Colors.white,
                                         ),
                                       ),
+                                      enabled: false,
                                     ),
                                   ),
 
@@ -4974,16 +4191,11 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                     padding: const EdgeInsets.only(
                                         top: 10, left: 15),
                                     child: TextFormField(
-                                      enabled: batu18 == '' ? false : true,
+                                      enabled: false,
                                       textInputAction: TextInputAction.next,
                                       controller: qtyBatu18,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          qtyIntBatu18 = int.parse(value);
-                                        });
-                                      },
+                                      onChanged: (value) {},
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text('Qty'),
                                         border: OutlineInputBorder(
                                             borderRadius:
@@ -5003,7 +4215,6 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       textInputAction: TextInputAction.next,
                                       controller: stokBatu18,
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text(
                                           'Stok',
                                           style: TextStyle(
@@ -5016,33 +4227,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                     ),
                                   ),
-                                  qtyBatu18.text.isEmpty
-                                      ? const SizedBox()
-                                      : Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 10),
-                                          child: IconButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  qtyBatu18.text = '0';
-                                                  stokBatu18.text = '';
-                                                  batu18 = '';
-                                                  hargaBatu18 = 0;
-                                                  caratPcsBatu18 = 0;
-                                                });
-                                              },
-                                              icon: const Icon(Icons.cancel)),
-                                        ),
                                 ],
                               ),
                         // end row batu18
 
-                        //batu19
-                        qtyBatu18.text.isEmpty
+                        //size batu19
+                        int.parse(qtyBatu19.text) <= 0
                             ? const SizedBox()
-                            :
-                            //size batu19
-                            Row(
+                            : Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
@@ -5061,28 +4253,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                       compareFn: (item, sItem) =>
                                           item.id == sItem.id,
-                                      onChanged: (item) async {
-                                        try {
-                                          final response = await http.get(
-                                            Uri.parse(
-                                                '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
-                                          );
-                                          if (response.statusCode == 200) {
-                                            final data =
-                                                jsonDecode(response.body);
-                                            setState(() {
-                                              hargaBatu19 = data[0]['unitCost'];
-                                              caratPcsBatu19 =
-                                                  data[0]['caratPcs'];
-                                              batu19 = item.size;
-                                              stokBatu19.text =
-                                                  item.qty.toString();
-                                            });
-                                          }
-                                        } catch (e) {
-                                          print(e);
-                                        }
-                                      },
+                                      onChanged: (item) async {},
                                       dropdownDecoratorProps:
                                           DropDownDecoratorProps(
                                         dropdownSearchDecoration:
@@ -5090,13 +4261,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           label: Text(
                                             batu19!,
                                             style: const TextStyle(
-                                                fontSize: 14,
+                                                fontSize: 20,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                           filled: true,
                                           fillColor: Colors.white,
                                         ),
                                       ),
+                                      enabled: false,
                                     ),
                                   ),
 
@@ -5107,16 +4279,11 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                     padding: const EdgeInsets.only(
                                         top: 10, left: 15),
                                     child: TextFormField(
-                                      enabled: batu19 == '' ? false : true,
+                                      enabled: false,
                                       textInputAction: TextInputAction.next,
                                       controller: qtyBatu19,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          qtyIntBatu19 = int.parse(value);
-                                        });
-                                      },
+                                      onChanged: (value) {},
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text('Qty'),
                                         border: OutlineInputBorder(
                                             borderRadius:
@@ -5136,7 +4303,6 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       textInputAction: TextInputAction.next,
                                       controller: stokBatu19,
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text(
                                           'Stok',
                                           style: TextStyle(
@@ -5149,33 +4315,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                     ),
                                   ),
-                                  qtyBatu19.text.isEmpty
-                                      ? const SizedBox()
-                                      : Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 10),
-                                          child: IconButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  qtyBatu19.text = '0';
-                                                  stokBatu19.text = '';
-                                                  batu19 = '';
-                                                  hargaBatu19 = 0;
-                                                  caratPcsBatu19 = 0;
-                                                });
-                                              },
-                                              icon: const Icon(Icons.cancel)),
-                                        ),
                                 ],
                               ),
                         // end row batu19
 
-                        //batu20
-                        qtyBatu19.text.isEmpty
+                        //size batu20
+                        int.parse(qtyBatu20.text) <= 0
                             ? const SizedBox()
-                            :
-                            //size batu20
-                            Row(
+                            : Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
@@ -5194,28 +4341,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                       compareFn: (item, sItem) =>
                                           item.id == sItem.id,
-                                      onChanged: (item) async {
-                                        try {
-                                          final response = await http.get(
-                                            Uri.parse(
-                                                '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
-                                          );
-                                          if (response.statusCode == 200) {
-                                            final data =
-                                                jsonDecode(response.body);
-                                            setState(() {
-                                              hargaBatu20 = data[0]['unitCost'];
-                                              caratPcsBatu20 =
-                                                  data[0]['caratPcs'];
-                                              batu20 = item.size;
-                                              stokBatu20.text =
-                                                  item.qty.toString();
-                                            });
-                                          }
-                                        } catch (e) {
-                                          print(e);
-                                        }
-                                      },
+                                      onChanged: (item) async {},
                                       dropdownDecoratorProps:
                                           DropDownDecoratorProps(
                                         dropdownSearchDecoration:
@@ -5223,13 +4349,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           label: Text(
                                             batu20!,
                                             style: const TextStyle(
-                                                fontSize: 14,
+                                                fontSize: 20,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                           filled: true,
                                           fillColor: Colors.white,
                                         ),
                                       ),
+                                      enabled: false,
                                     ),
                                   ),
 
@@ -5240,16 +4367,11 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                     padding: const EdgeInsets.only(
                                         top: 10, left: 15),
                                     child: TextFormField(
-                                      enabled: batu20 == '' ? false : true,
+                                      enabled: false,
                                       textInputAction: TextInputAction.next,
                                       controller: qtyBatu20,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          qtyIntBatu20 = int.parse(value);
-                                        });
-                                      },
+                                      onChanged: (value) {},
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text('Qty'),
                                         border: OutlineInputBorder(
                                             borderRadius:
@@ -5269,7 +4391,6 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       textInputAction: TextInputAction.next,
                                       controller: stokBatu20,
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text(
                                           'Stok',
                                           style: TextStyle(
@@ -5282,33 +4403,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                     ),
                                   ),
-                                  qtyBatu20.text.isEmpty
-                                      ? const SizedBox()
-                                      : Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 10),
-                                          child: IconButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  qtyBatu20.text = '0';
-                                                  stokBatu20.text = '';
-                                                  batu20 = '';
-                                                  hargaBatu20 = 0;
-                                                  caratPcsBatu20 = 0;
-                                                });
-                                              },
-                                              icon: const Icon(Icons.cancel)),
-                                        ),
                                 ],
                               ),
                         // end row batu20
 
-                        //batu21
-                        qtyBatu20.text.isEmpty
+                        //size batu21
+                        int.parse(qtyBatu21.text) <= 0
                             ? const SizedBox()
-                            :
-                            //size batu21
-                            Row(
+                            : Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
@@ -5327,28 +4429,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                       compareFn: (item, sItem) =>
                                           item.id == sItem.id,
-                                      onChanged: (item) async {
-                                        try {
-                                          final response = await http.get(
-                                            Uri.parse(
-                                                '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
-                                          );
-                                          if (response.statusCode == 200) {
-                                            final data =
-                                                jsonDecode(response.body);
-                                            setState(() {
-                                              hargaBatu21 = data[0]['unitCost'];
-                                              caratPcsBatu21 =
-                                                  data[0]['caratPcs'];
-                                              batu21 = item.size;
-                                              stokBatu21.text =
-                                                  item.qty.toString();
-                                            });
-                                          }
-                                        } catch (e) {
-                                          print(e);
-                                        }
-                                      },
+                                      onChanged: (item) async {},
                                       dropdownDecoratorProps:
                                           DropDownDecoratorProps(
                                         dropdownSearchDecoration:
@@ -5356,13 +4437,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           label: Text(
                                             batu21!,
                                             style: const TextStyle(
-                                                fontSize: 14,
+                                                fontSize: 20,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                           filled: true,
                                           fillColor: Colors.white,
                                         ),
                                       ),
+                                      enabled: false,
                                     ),
                                   ),
 
@@ -5373,16 +4455,11 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                     padding: const EdgeInsets.only(
                                         top: 10, left: 15),
                                     child: TextFormField(
-                                      enabled: batu21 == '' ? false : true,
+                                      enabled: false,
                                       textInputAction: TextInputAction.next,
                                       controller: qtyBatu21,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          qtyIntBatu21 = int.parse(value);
-                                        });
-                                      },
+                                      onChanged: (value) {},
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text('Qty'),
                                         border: OutlineInputBorder(
                                             borderRadius:
@@ -5402,7 +4479,6 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       textInputAction: TextInputAction.next,
                                       controller: stokBatu21,
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text(
                                           'Stok',
                                           style: TextStyle(
@@ -5415,33 +4491,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                     ),
                                   ),
-                                  qtyBatu21.text.isEmpty
-                                      ? const SizedBox()
-                                      : Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 10),
-                                          child: IconButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  qtyBatu21.text = '0';
-                                                  stokBatu21.text = '';
-                                                  batu21 = '';
-                                                  hargaBatu21 = 0;
-                                                  caratPcsBatu21 = 0;
-                                                });
-                                              },
-                                              icon: const Icon(Icons.cancel)),
-                                        ),
                                 ],
                               ),
                         // end row batu21
 
-                        //batu22
-                        qtyBatu21.text.isEmpty
+                        //size batu22
+                        int.parse(qtyBatu22.text) <= 0
                             ? const SizedBox()
-                            :
-                            //size batu22
-                            Row(
+                            : Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
@@ -5460,28 +4517,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                       compareFn: (item, sItem) =>
                                           item.id == sItem.id,
-                                      onChanged: (item) async {
-                                        try {
-                                          final response = await http.get(
-                                            Uri.parse(
-                                                '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
-                                          );
-                                          if (response.statusCode == 200) {
-                                            final data =
-                                                jsonDecode(response.body);
-                                            setState(() {
-                                              hargaBatu22 = data[0]['unitCost'];
-                                              caratPcsBatu22 =
-                                                  data[0]['caratPcs'];
-                                              batu22 = item.size;
-                                              stokBatu22.text =
-                                                  item.qty.toString();
-                                            });
-                                          }
-                                        } catch (e) {
-                                          print(e);
-                                        }
-                                      },
+                                      onChanged: (item) async {},
                                       dropdownDecoratorProps:
                                           DropDownDecoratorProps(
                                         dropdownSearchDecoration:
@@ -5489,13 +4525,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           label: Text(
                                             batu22!,
                                             style: const TextStyle(
-                                                fontSize: 14,
+                                                fontSize: 20,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                           filled: true,
                                           fillColor: Colors.white,
                                         ),
                                       ),
+                                      enabled: false,
                                     ),
                                   ),
 
@@ -5506,16 +4543,11 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                     padding: const EdgeInsets.only(
                                         top: 10, left: 15),
                                     child: TextFormField(
-                                      enabled: batu22 == '' ? false : true,
+                                      enabled: false,
                                       textInputAction: TextInputAction.next,
                                       controller: qtyBatu22,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          qtyIntBatu22 = int.parse(value);
-                                        });
-                                      },
+                                      onChanged: (value) {},
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text('Qty'),
                                         border: OutlineInputBorder(
                                             borderRadius:
@@ -5535,7 +4567,6 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       textInputAction: TextInputAction.next,
                                       controller: stokBatu22,
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text(
                                           'Stok',
                                           style: TextStyle(
@@ -5548,33 +4579,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                     ),
                                   ),
-                                  qtyBatu22.text.isEmpty
-                                      ? const SizedBox()
-                                      : Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 10),
-                                          child: IconButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  qtyBatu22.text = '0';
-                                                  stokBatu22.text = '';
-                                                  batu22 = '';
-                                                  hargaBatu22 = 0;
-                                                  caratPcsBatu22 = 0;
-                                                });
-                                              },
-                                              icon: const Icon(Icons.cancel)),
-                                        ),
                                 ],
                               ),
                         // end row batu22
 
-                        //batu23
-                        qtyBatu22.text.isEmpty
+                        //size batu23
+                        int.parse(qtyBatu23.text) <= 0
                             ? const SizedBox()
-                            :
-                            //size batu23
-                            Row(
+                            : Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
@@ -5593,28 +4605,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                       compareFn: (item, sItem) =>
                                           item.id == sItem.id,
-                                      onChanged: (item) async {
-                                        try {
-                                          final response = await http.get(
-                                            Uri.parse(
-                                                '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
-                                          );
-                                          if (response.statusCode == 200) {
-                                            final data =
-                                                jsonDecode(response.body);
-                                            setState(() {
-                                              hargaBatu23 = data[0]['unitCost'];
-                                              caratPcsBatu23 =
-                                                  data[0]['caratPcs'];
-                                              batu23 = item.size;
-                                              stokBatu23.text =
-                                                  item.qty.toString();
-                                            });
-                                          }
-                                        } catch (e) {
-                                          print(e);
-                                        }
-                                      },
+                                      onChanged: (item) async {},
                                       dropdownDecoratorProps:
                                           DropDownDecoratorProps(
                                         dropdownSearchDecoration:
@@ -5622,13 +4613,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           label: Text(
                                             batu23!,
                                             style: const TextStyle(
-                                                fontSize: 14,
+                                                fontSize: 20,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                           filled: true,
                                           fillColor: Colors.white,
                                         ),
                                       ),
+                                      enabled: false,
                                     ),
                                   ),
 
@@ -5639,16 +4631,11 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                     padding: const EdgeInsets.only(
                                         top: 10, left: 15),
                                     child: TextFormField(
-                                      enabled: batu23 == '' ? false : true,
+                                      enabled: false,
                                       textInputAction: TextInputAction.next,
                                       controller: qtyBatu23,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          qtyIntBatu23 = int.parse(value);
-                                        });
-                                      },
+                                      onChanged: (value) {},
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text('Qty'),
                                         border: OutlineInputBorder(
                                             borderRadius:
@@ -5668,7 +4655,6 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       textInputAction: TextInputAction.next,
                                       controller: stokBatu23,
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text(
                                           'Stok',
                                           style: TextStyle(
@@ -5681,33 +4667,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                     ),
                                   ),
-                                  qtyBatu23.text.isEmpty
-                                      ? const SizedBox()
-                                      : Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 10),
-                                          child: IconButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  qtyBatu23.text = '0';
-                                                  stokBatu23.text = '';
-                                                  batu23 = '';
-                                                  hargaBatu23 = 0;
-                                                  caratPcsBatu23 = 0;
-                                                });
-                                              },
-                                              icon: const Icon(Icons.cancel)),
-                                        ),
                                 ],
                               ),
                         // end row batu23
 
-                        //batu24
-                        qtyBatu23.text.isEmpty
+                        //size batu24
+                        int.parse(qtyBatu24.text) <= 0
                             ? const SizedBox()
-                            :
-                            //size batu24
-                            Row(
+                            : Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
@@ -5726,28 +4693,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                       compareFn: (item, sItem) =>
                                           item.id == sItem.id,
-                                      onChanged: (item) async {
-                                        try {
-                                          final response = await http.get(
-                                            Uri.parse(
-                                                '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
-                                          );
-                                          if (response.statusCode == 200) {
-                                            final data =
-                                                jsonDecode(response.body);
-                                            setState(() {
-                                              hargaBatu24 = data[0]['unitCost'];
-                                              caratPcsBatu24 =
-                                                  data[0]['caratPcs'];
-                                              batu24 = item.size;
-                                              stokBatu24.text =
-                                                  item.qty.toString();
-                                            });
-                                          }
-                                        } catch (e) {
-                                          print(e);
-                                        }
-                                      },
+                                      onChanged: (item) async {},
                                       dropdownDecoratorProps:
                                           DropDownDecoratorProps(
                                         dropdownSearchDecoration:
@@ -5755,13 +4701,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           label: Text(
                                             batu24!,
                                             style: const TextStyle(
-                                                fontSize: 14,
+                                                fontSize: 20,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                           filled: true,
                                           fillColor: Colors.white,
                                         ),
                                       ),
+                                      enabled: false,
                                     ),
                                   ),
 
@@ -5772,16 +4719,11 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                     padding: const EdgeInsets.only(
                                         top: 10, left: 15),
                                     child: TextFormField(
-                                      enabled: batu24 == '' ? false : true,
+                                      enabled: false,
                                       textInputAction: TextInputAction.next,
                                       controller: qtyBatu24,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          qtyIntBatu24 = int.parse(value);
-                                        });
-                                      },
+                                      onChanged: (value) {},
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text('Qty'),
                                         border: OutlineInputBorder(
                                             borderRadius:
@@ -5801,7 +4743,6 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       textInputAction: TextInputAction.next,
                                       controller: stokBatu24,
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text(
                                           'Stok',
                                           style: TextStyle(
@@ -5814,33 +4755,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                     ),
                                   ),
-                                  qtyBatu24.text.isEmpty
-                                      ? const SizedBox()
-                                      : Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 10),
-                                          child: IconButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  qtyBatu24.text = '0';
-                                                  stokBatu24.text = '';
-                                                  batu24 = '';
-                                                  hargaBatu24 = 0;
-                                                  caratPcsBatu24 = 0;
-                                                });
-                                              },
-                                              icon: const Icon(Icons.cancel)),
-                                        ),
                                 ],
                               ),
                         // end row batu24
 
-                        //batu25
-                        qtyBatu24.text.isEmpty
+                        //size batu25
+                        int.parse(qtyBatu25.text) <= 0
                             ? const SizedBox()
-                            :
-                            //size batu25
-                            Row(
+                            : Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
@@ -5859,28 +4781,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                       compareFn: (item, sItem) =>
                                           item.id == sItem.id,
-                                      onChanged: (item) async {
-                                        try {
-                                          final response = await http.get(
-                                            Uri.parse(
-                                                '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
-                                          );
-                                          if (response.statusCode == 200) {
-                                            final data =
-                                                jsonDecode(response.body);
-                                            setState(() {
-                                              hargaBatu25 = data[0]['unitCost'];
-                                              caratPcsBatu25 =
-                                                  data[0]['caratPcs'];
-                                              batu25 = item.size;
-                                              stokBatu25.text =
-                                                  item.qty.toString();
-                                            });
-                                          }
-                                        } catch (e) {
-                                          print(e);
-                                        }
-                                      },
+                                      onChanged: (item) async {},
                                       dropdownDecoratorProps:
                                           DropDownDecoratorProps(
                                         dropdownSearchDecoration:
@@ -5888,13 +4789,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           label: Text(
                                             batu25!,
                                             style: const TextStyle(
-                                                fontSize: 14,
+                                                fontSize: 20,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                           filled: true,
                                           fillColor: Colors.white,
                                         ),
                                       ),
+                                      enabled: false,
                                     ),
                                   ),
 
@@ -5905,16 +4807,11 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                     padding: const EdgeInsets.only(
                                         top: 10, left: 15),
                                     child: TextFormField(
-                                      enabled: batu25 == '' ? false : true,
+                                      enabled: false,
                                       textInputAction: TextInputAction.next,
                                       controller: qtyBatu25,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          qtyIntBatu25 = int.parse(value);
-                                        });
-                                      },
+                                      onChanged: (value) {},
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text('Qty'),
                                         border: OutlineInputBorder(
                                             borderRadius:
@@ -5934,7 +4831,6 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       textInputAction: TextInputAction.next,
                                       controller: stokBatu25,
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text(
                                           'Stok',
                                           style: TextStyle(
@@ -5947,33 +4843,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                     ),
                                   ),
-                                  qtyBatu25.text.isEmpty
-                                      ? const SizedBox()
-                                      : Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 10),
-                                          child: IconButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  qtyBatu25.text = '0';
-                                                  stokBatu25.text = '';
-                                                  batu25 = '';
-                                                  hargaBatu25 = 0;
-                                                  caratPcsBatu25 = 0;
-                                                });
-                                              },
-                                              icon: const Icon(Icons.cancel)),
-                                        ),
                                 ],
                               ),
                         // end row batu25
 
-                        //batu26
-                        qtyBatu25.text.isEmpty
+                        //size batu26
+                        int.parse(qtyBatu26.text) <= 0
                             ? const SizedBox()
-                            :
-                            //size batu26
-                            Row(
+                            : Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
@@ -5992,28 +4869,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                       compareFn: (item, sItem) =>
                                           item.id == sItem.id,
-                                      onChanged: (item) async {
-                                        try {
-                                          final response = await http.get(
-                                            Uri.parse(
-                                                '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
-                                          );
-                                          if (response.statusCode == 200) {
-                                            final data =
-                                                jsonDecode(response.body);
-                                            setState(() {
-                                              hargaBatu26 = data[0]['unitCost'];
-                                              caratPcsBatu26 =
-                                                  data[0]['caratPcs'];
-                                              batu26 = item.size;
-                                              stokBatu26.text =
-                                                  item.qty.toString();
-                                            });
-                                          }
-                                        } catch (e) {
-                                          print(e);
-                                        }
-                                      },
+                                      onChanged: (item) async {},
                                       dropdownDecoratorProps:
                                           DropDownDecoratorProps(
                                         dropdownSearchDecoration:
@@ -6021,13 +4877,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           label: Text(
                                             batu26!,
                                             style: const TextStyle(
-                                                fontSize: 14,
+                                                fontSize: 20,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                           filled: true,
                                           fillColor: Colors.white,
                                         ),
                                       ),
+                                      enabled: false,
                                     ),
                                   ),
 
@@ -6038,16 +4895,11 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                     padding: const EdgeInsets.only(
                                         top: 10, left: 15),
                                     child: TextFormField(
-                                      enabled: batu26 == '' ? false : true,
+                                      enabled: false,
                                       textInputAction: TextInputAction.next,
                                       controller: qtyBatu26,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          qtyIntBatu26 = int.parse(value);
-                                        });
-                                      },
+                                      onChanged: (value) {},
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text('Qty'),
                                         border: OutlineInputBorder(
                                             borderRadius:
@@ -6067,7 +4919,6 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       textInputAction: TextInputAction.next,
                                       controller: stokBatu26,
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text(
                                           'Stok',
                                           style: TextStyle(
@@ -6080,33 +4931,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                     ),
                                   ),
-                                  qtyBatu26.text.isEmpty
-                                      ? const SizedBox()
-                                      : Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 10),
-                                          child: IconButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  qtyBatu26.text = '0';
-                                                  stokBatu26.text = '';
-                                                  batu26 = '';
-                                                  hargaBatu26 = 0;
-                                                  caratPcsBatu26 = 0;
-                                                });
-                                              },
-                                              icon: const Icon(Icons.cancel)),
-                                        ),
                                 ],
                               ),
                         // end row batu26
 
-                        //batu27
-                        qtyBatu26.text.isEmpty
+                        //size batu27
+                        int.parse(qtyBatu27.text) <= 0
                             ? const SizedBox()
-                            :
-                            //size batu27
-                            Row(
+                            : Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
@@ -6125,28 +4957,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                       compareFn: (item, sItem) =>
                                           item.id == sItem.id,
-                                      onChanged: (item) async {
-                                        try {
-                                          final response = await http.get(
-                                            Uri.parse(
-                                                '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
-                                          );
-                                          if (response.statusCode == 200) {
-                                            final data =
-                                                jsonDecode(response.body);
-                                            setState(() {
-                                              hargaBatu27 = data[0]['unitCost'];
-                                              caratPcsBatu27 =
-                                                  data[0]['caratPcs'];
-                                              batu27 = item.size;
-                                              stokBatu27.text =
-                                                  item.qty.toString();
-                                            });
-                                          }
-                                        } catch (e) {
-                                          print(e);
-                                        }
-                                      },
+                                      onChanged: (item) async {},
                                       dropdownDecoratorProps:
                                           DropDownDecoratorProps(
                                         dropdownSearchDecoration:
@@ -6154,13 +4965,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           label: Text(
                                             batu27!,
                                             style: const TextStyle(
-                                                fontSize: 14,
+                                                fontSize: 20,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                           filled: true,
                                           fillColor: Colors.white,
                                         ),
                                       ),
+                                      enabled: false,
                                     ),
                                   ),
 
@@ -6171,16 +4983,11 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                     padding: const EdgeInsets.only(
                                         top: 10, left: 15),
                                     child: TextFormField(
-                                      enabled: batu27 == '' ? false : true,
+                                      enabled: false,
                                       textInputAction: TextInputAction.next,
                                       controller: qtyBatu27,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          qtyIntBatu27 = int.parse(value);
-                                        });
-                                      },
+                                      onChanged: (value) {},
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text('Qty'),
                                         border: OutlineInputBorder(
                                             borderRadius:
@@ -6200,7 +5007,6 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       textInputAction: TextInputAction.next,
                                       controller: stokBatu27,
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text(
                                           'Stok',
                                           style: TextStyle(
@@ -6213,33 +5019,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                     ),
                                   ),
-                                  qtyBatu27.text.isEmpty
-                                      ? const SizedBox()
-                                      : Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 10),
-                                          child: IconButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  qtyBatu27.text = '0';
-                                                  stokBatu27.text = '';
-                                                  batu27 = '';
-                                                  hargaBatu27 = 0;
-                                                  caratPcsBatu27 = 0;
-                                                });
-                                              },
-                                              icon: const Icon(Icons.cancel)),
-                                        ),
                                 ],
                               ),
                         // end row batu27
 
-                        //batu28
-                        qtyBatu27.text.isEmpty
+                        //size batu28
+                        int.parse(qtyBatu28.text) <= 0
                             ? const SizedBox()
-                            :
-                            //size batu28
-                            Row(
+                            : Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
@@ -6258,28 +5045,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                       compareFn: (item, sItem) =>
                                           item.id == sItem.id,
-                                      onChanged: (item) async {
-                                        try {
-                                          final response = await http.get(
-                                            Uri.parse(
-                                                '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
-                                          );
-                                          if (response.statusCode == 200) {
-                                            final data =
-                                                jsonDecode(response.body);
-                                            setState(() {
-                                              hargaBatu28 = data[0]['unitCost'];
-                                              caratPcsBatu28 =
-                                                  data[0]['caratPcs'];
-                                              batu28 = item.size;
-                                              stokBatu28.text =
-                                                  item.qty.toString();
-                                            });
-                                          }
-                                        } catch (e) {
-                                          print(e);
-                                        }
-                                      },
+                                      onChanged: (item) async {},
                                       dropdownDecoratorProps:
                                           DropDownDecoratorProps(
                                         dropdownSearchDecoration:
@@ -6287,13 +5053,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           label: Text(
                                             batu28!,
                                             style: const TextStyle(
-                                                fontSize: 14,
+                                                fontSize: 20,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                           filled: true,
                                           fillColor: Colors.white,
                                         ),
                                       ),
+                                      enabled: false,
                                     ),
                                   ),
 
@@ -6304,16 +5071,11 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                     padding: const EdgeInsets.only(
                                         top: 10, left: 15),
                                     child: TextFormField(
-                                      enabled: batu28 == '' ? false : true,
+                                      enabled: false,
                                       textInputAction: TextInputAction.next,
                                       controller: qtyBatu28,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          qtyIntBatu28 = int.parse(value);
-                                        });
-                                      },
+                                      onChanged: (value) {},
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text('Qty'),
                                         border: OutlineInputBorder(
                                             borderRadius:
@@ -6333,7 +5095,6 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       textInputAction: TextInputAction.next,
                                       controller: stokBatu28,
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text(
                                           'Stok',
                                           style: TextStyle(
@@ -6346,33 +5107,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                     ),
                                   ),
-                                  qtyBatu28.text.isEmpty
-                                      ? const SizedBox()
-                                      : Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 10),
-                                          child: IconButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  qtyBatu28.text = '0';
-                                                  stokBatu28.text = '';
-                                                  batu28 = '';
-                                                  hargaBatu28 = 0;
-                                                  caratPcsBatu28 = 0;
-                                                });
-                                              },
-                                              icon: const Icon(Icons.cancel)),
-                                        ),
                                 ],
                               ),
                         // end row batu28
 
-                        //batu29
-                        qtyBatu28.text.isEmpty
+                        //size batu29
+                        int.parse(qtyBatu29.text) <= 0
                             ? const SizedBox()
-                            :
-                            //size batu29
-                            Row(
+                            : Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
@@ -6391,28 +5133,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                       compareFn: (item, sItem) =>
                                           item.id == sItem.id,
-                                      onChanged: (item) async {
-                                        try {
-                                          final response = await http.get(
-                                            Uri.parse(
-                                                '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
-                                          );
-                                          if (response.statusCode == 200) {
-                                            final data =
-                                                jsonDecode(response.body);
-                                            setState(() {
-                                              hargaBatu29 = data[0]['unitCost'];
-                                              caratPcsBatu29 =
-                                                  data[0]['caratPcs'];
-                                              batu29 = item.size;
-                                              stokBatu29.text =
-                                                  item.qty.toString();
-                                            });
-                                          }
-                                        } catch (e) {
-                                          print(e);
-                                        }
-                                      },
+                                      onChanged: (item) async {},
                                       dropdownDecoratorProps:
                                           DropDownDecoratorProps(
                                         dropdownSearchDecoration:
@@ -6420,13 +5141,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           label: Text(
                                             batu29!,
                                             style: const TextStyle(
-                                                fontSize: 14,
+                                                fontSize: 20,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                           filled: true,
                                           fillColor: Colors.white,
                                         ),
                                       ),
+                                      enabled: false,
                                     ),
                                   ),
 
@@ -6437,16 +5159,11 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                     padding: const EdgeInsets.only(
                                         top: 10, left: 15),
                                     child: TextFormField(
-                                      enabled: batu29 == '' ? false : true,
+                                      enabled: false,
                                       textInputAction: TextInputAction.next,
                                       controller: qtyBatu29,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          qtyIntBatu29 = int.parse(value);
-                                        });
-                                      },
+                                      onChanged: (value) {},
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text('Qty'),
                                         border: OutlineInputBorder(
                                             borderRadius:
@@ -6466,7 +5183,6 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       textInputAction: TextInputAction.next,
                                       controller: stokBatu29,
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text(
                                           'Stok',
                                           style: TextStyle(
@@ -6479,33 +5195,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                     ),
                                   ),
-                                  qtyBatu29.text.isEmpty
-                                      ? const SizedBox()
-                                      : Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 10),
-                                          child: IconButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  qtyBatu29.text = '0';
-                                                  stokBatu29.text = '';
-                                                  batu29 = '';
-                                                  hargaBatu29 = 0;
-                                                  caratPcsBatu29 = 0;
-                                                });
-                                              },
-                                              icon: const Icon(Icons.cancel)),
-                                        ),
                                 ],
                               ),
                         // end row batu29
 
-                        //batu30
-                        qtyBatu29.text.isEmpty
+                        //size batu30
+                        int.parse(qtyBatu30.text) <= 0
                             ? const SizedBox()
-                            :
-                            //size batu30
-                            Row(
+                            : Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
@@ -6524,28 +5221,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                       compareFn: (item, sItem) =>
                                           item.id == sItem.id,
-                                      onChanged: (item) async {
-                                        try {
-                                          final response = await http.get(
-                                            Uri.parse(
-                                                '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
-                                          );
-                                          if (response.statusCode == 200) {
-                                            final data =
-                                                jsonDecode(response.body);
-                                            setState(() {
-                                              hargaBatu30 = data[0]['unitCost'];
-                                              caratPcsBatu30 =
-                                                  data[0]['caratPcs'];
-                                              batu30 = item.size;
-                                              stokBatu30.text =
-                                                  item.qty.toString();
-                                            });
-                                          }
-                                        } catch (e) {
-                                          print(e);
-                                        }
-                                      },
+                                      onChanged: (item) async {},
                                       dropdownDecoratorProps:
                                           DropDownDecoratorProps(
                                         dropdownSearchDecoration:
@@ -6553,13 +5229,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           label: Text(
                                             batu30!,
                                             style: const TextStyle(
-                                                fontSize: 14,
+                                                fontSize: 20,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                           filled: true,
                                           fillColor: Colors.white,
                                         ),
                                       ),
+                                      enabled: false,
                                     ),
                                   ),
 
@@ -6570,16 +5247,11 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                     padding: const EdgeInsets.only(
                                         top: 10, left: 15),
                                     child: TextFormField(
-                                      enabled: batu30 == '' ? false : true,
+                                      enabled: false,
                                       textInputAction: TextInputAction.next,
                                       controller: qtyBatu30,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          qtyIntBatu30 = int.parse(value);
-                                        });
-                                      },
+                                      onChanged: (value) {},
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text('Qty'),
                                         border: OutlineInputBorder(
                                             borderRadius:
@@ -6599,7 +5271,6 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       textInputAction: TextInputAction.next,
                                       controller: stokBatu30,
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text(
                                           'Stok',
                                           style: TextStyle(
@@ -6612,33 +5283,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                     ),
                                   ),
-                                  qtyBatu30.text.isEmpty
-                                      ? const SizedBox()
-                                      : Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 10),
-                                          child: IconButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  qtyBatu30.text = '0';
-                                                  stokBatu30.text = '';
-                                                  batu30 = '';
-                                                  hargaBatu30 = 0;
-                                                  caratPcsBatu30 = 0;
-                                                });
-                                              },
-                                              icon: const Icon(Icons.cancel)),
-                                        ),
                                 ],
                               ),
                         // end row batu30
 
-                        //batu31
-                        qtyBatu30.text.isEmpty
+                        //size batu31
+                        int.parse(qtyBatu31.text) <= 0
                             ? const SizedBox()
-                            :
-                            //size batu31
-                            Row(
+                            : Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
@@ -6657,28 +5309,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                       compareFn: (item, sItem) =>
                                           item.id == sItem.id,
-                                      onChanged: (item) async {
-                                        try {
-                                          final response = await http.get(
-                                            Uri.parse(
-                                                '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
-                                          );
-                                          if (response.statusCode == 200) {
-                                            final data =
-                                                jsonDecode(response.body);
-                                            setState(() {
-                                              hargaBatu31 = data[0]['unitCost'];
-                                              caratPcsBatu31 =
-                                                  data[0]['caratPcs'];
-                                              batu31 = item.size;
-                                              stokBatu31.text =
-                                                  item.qty.toString();
-                                            });
-                                          }
-                                        } catch (e) {
-                                          print(e);
-                                        }
-                                      },
+                                      onChanged: (item) async {},
                                       dropdownDecoratorProps:
                                           DropDownDecoratorProps(
                                         dropdownSearchDecoration:
@@ -6686,13 +5317,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           label: Text(
                                             batu31!,
                                             style: const TextStyle(
-                                                fontSize: 14,
+                                                fontSize: 20,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                           filled: true,
                                           fillColor: Colors.white,
                                         ),
                                       ),
+                                      enabled: false,
                                     ),
                                   ),
 
@@ -6703,16 +5335,11 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                     padding: const EdgeInsets.only(
                                         top: 10, left: 15),
                                     child: TextFormField(
-                                      enabled: batu31 == '' ? false : true,
+                                      enabled: false,
                                       textInputAction: TextInputAction.next,
                                       controller: qtyBatu31,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          qtyIntBatu31 = int.parse(value);
-                                        });
-                                      },
+                                      onChanged: (value) {},
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text('Qty'),
                                         border: OutlineInputBorder(
                                             borderRadius:
@@ -6732,7 +5359,6 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       textInputAction: TextInputAction.next,
                                       controller: stokBatu31,
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text(
                                           'Stok',
                                           style: TextStyle(
@@ -6745,33 +5371,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                     ),
                                   ),
-                                  qtyBatu31.text.isEmpty
-                                      ? const SizedBox()
-                                      : Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 10),
-                                          child: IconButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  qtyBatu31.text = '0';
-                                                  stokBatu31.text = '';
-                                                  batu31 = '';
-                                                  hargaBatu31 = 0;
-                                                  caratPcsBatu31 = 0;
-                                                });
-                                              },
-                                              icon: const Icon(Icons.cancel)),
-                                        ),
                                 ],
                               ),
                         // end row batu31
 
-                        //batu32
-                        qtyBatu31.text.isEmpty
+                        //size batu32
+                        int.parse(qtyBatu32.text) <= 0
                             ? const SizedBox()
-                            :
-                            //size batu32
-                            Row(
+                            : Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
@@ -6790,28 +5397,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                       compareFn: (item, sItem) =>
                                           item.id == sItem.id,
-                                      onChanged: (item) async {
-                                        try {
-                                          final response = await http.get(
-                                            Uri.parse(
-                                                '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
-                                          );
-                                          if (response.statusCode == 200) {
-                                            final data =
-                                                jsonDecode(response.body);
-                                            setState(() {
-                                              hargaBatu32 = data[0]['unitCost'];
-                                              caratPcsBatu32 =
-                                                  data[0]['caratPcs'];
-                                              batu32 = item.size;
-                                              stokBatu32.text =
-                                                  item.qty.toString();
-                                            });
-                                          }
-                                        } catch (e) {
-                                          print(e);
-                                        }
-                                      },
+                                      onChanged: (item) async {},
                                       dropdownDecoratorProps:
                                           DropDownDecoratorProps(
                                         dropdownSearchDecoration:
@@ -6819,13 +5405,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           label: Text(
                                             batu32!,
                                             style: const TextStyle(
-                                                fontSize: 14,
+                                                fontSize: 20,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                           filled: true,
                                           fillColor: Colors.white,
                                         ),
                                       ),
+                                      enabled: false,
                                     ),
                                   ),
 
@@ -6836,16 +5423,11 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                     padding: const EdgeInsets.only(
                                         top: 10, left: 15),
                                     child: TextFormField(
-                                      enabled: batu32 == '' ? false : true,
+                                      enabled: false,
                                       textInputAction: TextInputAction.next,
                                       controller: qtyBatu32,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          qtyIntBatu32 = int.parse(value);
-                                        });
-                                      },
+                                      onChanged: (value) {},
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text('Qty'),
                                         border: OutlineInputBorder(
                                             borderRadius:
@@ -6865,7 +5447,6 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       textInputAction: TextInputAction.next,
                                       controller: stokBatu32,
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text(
                                           'Stok',
                                           style: TextStyle(
@@ -6878,33 +5459,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                     ),
                                   ),
-                                  qtyBatu32.text.isEmpty
-                                      ? const SizedBox()
-                                      : Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 10),
-                                          child: IconButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  qtyBatu32.text = '0';
-                                                  stokBatu32.text = '';
-                                                  batu32 = '';
-                                                  hargaBatu32 = 0;
-                                                  caratPcsBatu32 = 0;
-                                                });
-                                              },
-                                              icon: const Icon(Icons.cancel)),
-                                        ),
                                 ],
                               ),
                         // end row batu32
 
-                        //batu33
-                        qtyBatu32.text.isEmpty
+                        //size batu33
+                        int.parse(qtyBatu33.text) <= 0
                             ? const SizedBox()
-                            :
-                            //size batu33
-                            Row(
+                            : Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
@@ -6923,28 +5485,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                       compareFn: (item, sItem) =>
                                           item.id == sItem.id,
-                                      onChanged: (item) async {
-                                        try {
-                                          final response = await http.get(
-                                            Uri.parse(
-                                                '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
-                                          );
-                                          if (response.statusCode == 200) {
-                                            final data =
-                                                jsonDecode(response.body);
-                                            setState(() {
-                                              hargaBatu33 = data[0]['unitCost'];
-                                              caratPcsBatu33 =
-                                                  data[0]['caratPcs'];
-                                              batu33 = item.size;
-                                              stokBatu33.text =
-                                                  item.qty.toString();
-                                            });
-                                          }
-                                        } catch (e) {
-                                          print(e);
-                                        }
-                                      },
+                                      onChanged: (item) async {},
                                       dropdownDecoratorProps:
                                           DropDownDecoratorProps(
                                         dropdownSearchDecoration:
@@ -6952,13 +5493,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           label: Text(
                                             batu33!,
                                             style: const TextStyle(
-                                                fontSize: 14,
+                                                fontSize: 20,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                           filled: true,
                                           fillColor: Colors.white,
                                         ),
                                       ),
+                                      enabled: false,
                                     ),
                                   ),
 
@@ -6969,16 +5511,11 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                     padding: const EdgeInsets.only(
                                         top: 10, left: 15),
                                     child: TextFormField(
-                                      enabled: batu33 == '' ? false : true,
+                                      enabled: false,
                                       textInputAction: TextInputAction.next,
                                       controller: qtyBatu33,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          qtyIntBatu33 = int.parse(value);
-                                        });
-                                      },
+                                      onChanged: (value) {},
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text('Qty'),
                                         border: OutlineInputBorder(
                                             borderRadius:
@@ -6998,7 +5535,6 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       textInputAction: TextInputAction.next,
                                       controller: stokBatu33,
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text(
                                           'Stok',
                                           style: TextStyle(
@@ -7011,33 +5547,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                     ),
                                   ),
-                                  qtyBatu33.text.isEmpty
-                                      ? const SizedBox()
-                                      : Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 10),
-                                          child: IconButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  qtyBatu33.text = '0';
-                                                  stokBatu33.text = '';
-                                                  batu33 = '';
-                                                  hargaBatu33 = 0;
-                                                  caratPcsBatu33 = 0;
-                                                });
-                                              },
-                                              icon: const Icon(Icons.cancel)),
-                                        ),
                                 ],
                               ),
                         // end row batu33
 
-                        //batu34
-                        qtyBatu33.text.isEmpty
+                        //size batu34
+                        int.parse(qtyBatu34.text) <= 0
                             ? const SizedBox()
-                            :
-                            //size batu34
-                            Row(
+                            : Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
@@ -7056,28 +5573,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                       compareFn: (item, sItem) =>
                                           item.id == sItem.id,
-                                      onChanged: (item) async {
-                                        try {
-                                          final response = await http.get(
-                                            Uri.parse(
-                                                '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
-                                          );
-                                          if (response.statusCode == 200) {
-                                            final data =
-                                                jsonDecode(response.body);
-                                            setState(() {
-                                              hargaBatu34 = data[0]['unitCost'];
-                                              caratPcsBatu34 =
-                                                  data[0]['caratPcs'];
-                                              batu34 = item.size;
-                                              stokBatu34.text =
-                                                  item.qty.toString();
-                                            });
-                                          }
-                                        } catch (e) {
-                                          print(e);
-                                        }
-                                      },
+                                      onChanged: (item) async {},
                                       dropdownDecoratorProps:
                                           DropDownDecoratorProps(
                                         dropdownSearchDecoration:
@@ -7085,13 +5581,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           label: Text(
                                             batu34!,
                                             style: const TextStyle(
-                                                fontSize: 14,
+                                                fontSize: 20,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                           filled: true,
                                           fillColor: Colors.white,
                                         ),
                                       ),
+                                      enabled: false,
                                     ),
                                   ),
 
@@ -7102,16 +5599,11 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                     padding: const EdgeInsets.only(
                                         top: 10, left: 15),
                                     child: TextFormField(
-                                      enabled: batu34 == '' ? false : true,
+                                      enabled: false,
                                       textInputAction: TextInputAction.next,
                                       controller: qtyBatu34,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          qtyIntBatu34 = int.parse(value);
-                                        });
-                                      },
+                                      onChanged: (value) {},
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text('Qty'),
                                         border: OutlineInputBorder(
                                             borderRadius:
@@ -7131,7 +5623,6 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       textInputAction: TextInputAction.next,
                                       controller: stokBatu34,
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text(
                                           'Stok',
                                           style: TextStyle(
@@ -7144,33 +5635,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                     ),
                                   ),
-                                  qtyBatu34.text.isEmpty
-                                      ? const SizedBox()
-                                      : Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 10),
-                                          child: IconButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  qtyBatu34.text = '0';
-                                                  stokBatu34.text = '';
-                                                  batu34 = '';
-                                                  hargaBatu34 = 0;
-                                                  caratPcsBatu34 = 0;
-                                                });
-                                              },
-                                              icon: const Icon(Icons.cancel)),
-                                        ),
                                 ],
                               ),
                         // end row batu34
 
-                        //batu35
-                        qtyBatu34.text.isEmpty
+                        //size batu35
+                        int.parse(qtyBatu35.text) <= 0
                             ? const SizedBox()
-                            :
-                            //size batu35
-                            Row(
+                            : Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
@@ -7189,28 +5661,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                       compareFn: (item, sItem) =>
                                           item.id == sItem.id,
-                                      onChanged: (item) async {
-                                        try {
-                                          final response = await http.get(
-                                            Uri.parse(
-                                                '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
-                                          );
-                                          if (response.statusCode == 200) {
-                                            final data =
-                                                jsonDecode(response.body);
-                                            setState(() {
-                                              hargaBatu35 = data[0]['unitCost'];
-                                              caratPcsBatu35 =
-                                                  data[0]['caratPcs'];
-                                              batu35 = item.size;
-                                              stokBatu35.text =
-                                                  item.qty.toString();
-                                            });
-                                          }
-                                        } catch (e) {
-                                          print(e);
-                                        }
-                                      },
+                                      onChanged: (item) async {},
                                       dropdownDecoratorProps:
                                           DropDownDecoratorProps(
                                         dropdownSearchDecoration:
@@ -7218,13 +5669,14 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           label: Text(
                                             batu35!,
                                             style: const TextStyle(
-                                                fontSize: 14,
+                                                fontSize: 20,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                           filled: true,
                                           fillColor: Colors.white,
                                         ),
                                       ),
+                                      enabled: false,
                                     ),
                                   ),
 
@@ -7235,16 +5687,11 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                     padding: const EdgeInsets.only(
                                         top: 10, left: 15),
                                     child: TextFormField(
-                                      enabled: batu35 == '' ? false : true,
+                                      enabled: false,
                                       textInputAction: TextInputAction.next,
                                       controller: qtyBatu35,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          qtyIntBatu35 = int.parse(value);
-                                        });
-                                      },
+                                      onChanged: (value) {},
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text('Qty'),
                                         border: OutlineInputBorder(
                                             borderRadius:
@@ -7264,7 +5711,6 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       textInputAction: TextInputAction.next,
                                       controller: stokBatu35,
                                       decoration: InputDecoration(
-                                        // hintText: "example: Cahaya Sanivokasi",
                                         label: const Text(
                                           'Stok',
                                           style: TextStyle(
@@ -7277,23 +5723,6 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                       ),
                                     ),
                                   ),
-                                  qtyBatu35.text.isEmpty
-                                      ? const SizedBox()
-                                      : Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 10),
-                                          child: IconButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  qtyBatu35.text = '0';
-                                                  stokBatu35.text = '';
-                                                  batu35 = '';
-                                                  hargaBatu35 = 0;
-                                                  caratPcsBatu35 = 0;
-                                                });
-                                              },
-                                              icon: const Icon(Icons.cancel)),
-                                        ),
                                 ],
                               ),
                         // end row batu35
@@ -7444,619 +5873,10 @@ class _FormScreenByIdState extends State<FormScreenById> {
   postAPI() async {
     Map<String, String> body = {
       'id': widget.modelDesigner!.id!.toString(),
-      'kodeDesignMdbc': kodeDesignMdbc.text,
-      'kodeMarketing': kodeMarketing.text,
-      'kodeProduksi': kodeProduksi.text,
-      'namaDesigner': namaDesigner.text,
       'namaModeller': namaModeller.text,
-      'kodeDesign': kodeDesign.text,
-      'siklus': siklus.text,
-      'tema': tema.text,
-      'rantai': rantai.text,
-      'qtyRantai': qtyRantai.text,
-      'lain2': lain2.text,
-      'qtyLain2': qtyLain2.text,
-      'earnut': earnut.text,
-      'qtyEarnut': qtyEarnut.text,
-      'panjangRantai': panjangRantai.text,
-      'customKomponen': customKomponen.text,
-      'qtyCustomKomponen': qtyCustomKomponen.text,
-      'jenisBarang': jenisBarang.text,
-      'kategoriBarang': kategoriBarang.text,
-      'brand': brand.text,
-      'photoShoot': photoShoot.text,
-      'color': color.text,
-      'beratEmas': beratEmas.text,
-      'estimasiHarga': estimasiHarga.text,
-      'ringSize': ringSize.text,
-      'batu1': batu1!,
-      'qtyBatu1': qtyBatu1.text,
-      'batu2': batu2!,
-      'qtyBatu2': qtyBatu2.text,
-      'batu3': batu3!,
-      'qtyBatu3': qtyBatu3.text,
-      'batu4': batu4!,
-      'qtyBatu4': qtyBatu4.text,
-      'batu5': batu5!,
-      'qtyBatu5': qtyBatu5.text,
-      'batu6': batu6!,
-      'qtyBatu6': qtyBatu6.text,
-      'batu7': batu7!,
-      'qtyBatu7': qtyBatu7.text,
-      'batu8': batu8!,
-      'qtyBatu8': qtyBatu8.text,
-      'batu9': batu9!,
-      'qtyBatu9': qtyBatu9.text,
-      'batu10': batu10!,
-      'qtyBatu10': qtyBatu10.text,
-      'batu11': batu11!,
-      'qtyBatu11': qtyBatu11.text,
-      'batu12': batu12!,
-      'qtyBatu12': qtyBatu12.text,
-      'batu13': batu13!,
-      'qtyBatu13': qtyBatu13.text,
-      'batu14': batu14!,
-      'qtyBatu14': qtyBatu14.text,
-      'batu15': batu15!,
-      'qtyBatu15': qtyBatu15.text,
-      'batu16': batu16!,
-      'qtyBatu16': qtyBatu16.text,
-      'batu17': batu17!,
-      'qtyBatu17': qtyBatu17.text,
-      'batu18': batu18!,
-      'qtyBatu18': qtyBatu18.text,
-      'batu19': batu19!,
-      'qtyBatu19': qtyBatu19.text,
-      'batu20': batu20!,
-      'qtyBatu20': qtyBatu20.text,
-      'batu21': batu21!,
-      'qtyBatu21': qtyBatu21.text,
-      'batu22': batu22!,
-      'qtyBatu22': qtyBatu22.text,
-      'batu23': batu23!,
-      'qtyBatu23': qtyBatu23.text,
-      'batu24': batu24!,
-      'qtyBatu24': qtyBatu24.text,
-      'batu25': batu25!,
-      'qtyBatu25': qtyBatu25.text,
-      'batu26': batu26!,
-      'qtyBatu26': qtyBatu26.text,
-      'batu27': batu27!,
-      'qtyBatu27': qtyBatu27.text,
-      'batu28': batu28!,
-      'qtyBatu28': qtyBatu28.text,
-      'batu29': batu29!,
-      'qtyBatu29': qtyBatu29.text,
-      'batu30': batu30!,
-      'qtyBatu30': qtyBatu30.text,
-      'batu31': batu31!,
-      'qtyBatu31': qtyBatu31.text,
-      'batu32': batu32!,
-      'qtyBatu32': qtyBatu32.text,
-      'batu33': batu33!,
-      'qtyBatu33': qtyBatu33.text,
-      'batu34': batu34!,
-      'qtyBatu34': qtyBatu34.text,
-      'batu35': batu35!,
-      'qtyBatu35': qtyBatu35.text,
-      'imageUrl': imageUrl!,
     };
     final response = await http.post(
-        Uri.parse('${ApiConstants.baseUrl}${ApiConstants.updateFormDesigner}'),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu1() async {
-    if (idBatu1 == 0 || idBatu1 == beforeIdBatu1) {
-      var result = beforeStokBatu1 + widget.modelDesigner!.qtyBatu1!;
-      var resultBatu1 = (result - int.parse(qtyBatu1.text)).toString();
-      Map<String, String> body = {
-        'id': beforeIdBatu1.toString(),
-        'qty': resultBatu1,
-      };
-      //kembalikan batu awal
-      final response = await http.post(
-          Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-          body: body);
-      print(response.body);
-
-      //update batu baru
-    } else {
-      var result = beforeStokBatu1 + widget.modelDesigner!.qtyBatu1!;
-      Map<String, String> bodyBefore = {
-        'id': beforeIdBatu1.toString(),
-        'qty': result.toString(),
-      };
-      final responseBefore = await http.post(
-          Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-          body: bodyBefore);
-      print(responseBefore.statusCode);
-
-      var resultBatu1 =
-          (int.parse(stokBatu1.text) - int.parse(qtyBatu1.text)).toString();
-      Map<String, String> body = {
-        'id': idBatu1.toString(),
-        'qty': resultBatu1,
-      };
-      final response = await http.post(
-          Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-          body: body);
-      print(response.body);
-    }
-  }
-
-  postApiQtyBatu2() async {
-    if (idBatu2 == 0 || idBatu2 == beforeIdBatu2) {
-      var result = beforeStokBatu2 + widget.modelDesigner!.qtyBatu2!;
-      var resultBatu2 = (result - int.parse(qtyBatu2.text)).toString();
-      Map<String, String> body = {
-        'id': beforeIdBatu2.toString(),
-        'qty': resultBatu2,
-      };
-      //kembalikan batu awal
-      final response = await http.post(
-          Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-          body: body);
-      print(response.body);
-
-      //update batu baru
-    } else {
-      var result = beforeStokBatu2 + widget.modelDesigner!.qtyBatu2!;
-      Map<String, String> bodyBefore = {
-        'id': beforeIdBatu2.toString(),
-        'qty': result.toString(),
-      };
-      final responseBefore = await http.post(
-          Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-          body: bodyBefore);
-      print(responseBefore.statusCode);
-
-      var resultBatu2 =
-          (int.parse(stokBatu2.text) - int.parse(qtyBatu2.text)).toString();
-      Map<String, String> body = {
-        'id': idBatu2.toString(),
-        'qty': resultBatu2,
-      };
-      final response = await http.post(
-          Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-          body: body);
-      print(response.body);
-    }
-  }
-
-  postApiQtyBatu3() async {
-    var resultBatu3 =
-        (int.parse(stokBatu3.text) - int.parse(qtyBatu3.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu3.toString(),
-      'qty': resultBatu3,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu4() async {
-    var resultBatu4 =
-        (int.parse(stokBatu4.text) - int.parse(qtyBatu4.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu4.toString(),
-      'qty': resultBatu4,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu5() async {
-    var resultBatu5 =
-        (int.parse(stokBatu5.text) - int.parse(qtyBatu5.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu5.toString(),
-      'qty': resultBatu5,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu6() async {
-    var resultBatu6 =
-        (int.parse(stokBatu6.text) - int.parse(qtyBatu6.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu6.toString(),
-      'qty': resultBatu6,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu7() async {
-    var resultBatu7 =
-        (int.parse(stokBatu7.text) - int.parse(qtyBatu7.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu7.toString(),
-      'qty': resultBatu7,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu8() async {
-    var resultBatu8 =
-        (int.parse(stokBatu8.text) - int.parse(qtyBatu8.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu8.toString(),
-      'qty': resultBatu8,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu9() async {
-    var resultBatu9 =
-        (int.parse(stokBatu9.text) - int.parse(qtyBatu9.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu9.toString(),
-      'qty': resultBatu9,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu10() async {
-    var resultBatu10 =
-        (int.parse(stokBatu10.text) - int.parse(qtyBatu10.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu10.toString(),
-      'qty': resultBatu10,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu11() async {
-    var resultBatu11 =
-        (int.parse(stokBatu11.text) - int.parse(qtyBatu11.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu11.toString(),
-      'qty': resultBatu11,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu12() async {
-    var resultBatu12 =
-        (int.parse(stokBatu12.text) - int.parse(qtyBatu12.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu12.toString(),
-      'qty': resultBatu12,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu13() async {
-    var resultBatu13 =
-        (int.parse(stokBatu13.text) - int.parse(qtyBatu13.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu13.toString(),
-      'qty': resultBatu13,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu14() async {
-    var resultBatu14 =
-        (int.parse(stokBatu14.text) - int.parse(qtyBatu14.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu14.toString(),
-      'qty': resultBatu14,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu15() async {
-    var resultBatu15 =
-        (int.parse(stokBatu15.text) - int.parse(qtyBatu15.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu15.toString(),
-      'qty': resultBatu15,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu16() async {
-    var resultBatu16 =
-        (int.parse(stokBatu16.text) - int.parse(qtyBatu16.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu16.toString(),
-      'qty': resultBatu16,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu17() async {
-    var resultBatu17 =
-        (int.parse(stokBatu17.text) - int.parse(qtyBatu17.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu17.toString(),
-      'qty': resultBatu17,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu18() async {
-    var resultBatu18 =
-        (int.parse(stokBatu18.text) - int.parse(qtyBatu18.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu18.toString(),
-      'qty': resultBatu18,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu19() async {
-    var resultBatu19 =
-        (int.parse(stokBatu19.text) - int.parse(qtyBatu19.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu19.toString(),
-      'qty': resultBatu19,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu20() async {
-    var resultBatu20 =
-        (int.parse(stokBatu20.text) - int.parse(qtyBatu20.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu20.toString(),
-      'qty': resultBatu20,
-    };
-
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu21() async {
-    var resultBatu21 =
-        (int.parse(stokBatu21.text) - int.parse(qtyBatu21.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu21.toString(),
-      'qty': resultBatu21,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu22() async {
-    var resultBatu22 =
-        (int.parse(stokBatu22.text) - int.parse(qtyBatu22.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu22.toString(),
-      'qty': resultBatu22,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu23() async {
-    var resultBatu23 =
-        (int.parse(stokBatu23.text) - int.parse(qtyBatu23.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu23.toString(),
-      'qty': resultBatu23,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu24() async {
-    var resultBatu24 =
-        (int.parse(stokBatu24.text) - int.parse(qtyBatu24.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu24.toString(),
-      'qty': resultBatu24,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu25() async {
-    var resultBatu25 =
-        (int.parse(stokBatu25.text) - int.parse(qtyBatu25.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu25.toString(),
-      'qty': resultBatu25,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu26() async {
-    var resultBatu26 =
-        (int.parse(stokBatu26.text) - int.parse(qtyBatu26.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu26.toString(),
-      'qty': resultBatu26,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu27() async {
-    var resultBatu27 =
-        (int.parse(stokBatu27.text) - int.parse(qtyBatu27.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu27.toString(),
-      'qty': resultBatu27,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu28() async {
-    var resultBatu28 =
-        (int.parse(stokBatu28.text) - int.parse(qtyBatu28.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu28.toString(),
-      'qty': resultBatu28,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu29() async {
-    var resultBatu29 =
-        (int.parse(stokBatu29.text) - int.parse(qtyBatu29.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu29.toString(),
-      'qty': resultBatu29,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu30() async {
-    var resultBatu30 =
-        (int.parse(stokBatu30.text) - int.parse(qtyBatu30.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu30.toString(),
-      'qty': resultBatu30,
-    };
-
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu31() async {
-    var resultBatu31 =
-        (int.parse(stokBatu31.text) - int.parse(qtyBatu31.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu31.toString(),
-      'qty': resultBatu31,
-    };
-
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu32() async {
-    var resultBatu32 =
-        (int.parse(stokBatu32.text) - int.parse(qtyBatu32.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu32.toString(),
-      'qty': resultBatu32,
-    };
-
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu33() async {
-    var resultBatu33 =
-        (int.parse(stokBatu33.text) - int.parse(qtyBatu33.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu33.toString(),
-      'qty': resultBatu33,
-    };
-
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu34() async {
-    var resultBatu34 =
-        (int.parse(stokBatu34.text) - int.parse(qtyBatu34.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu34.toString(),
-      'qty': resultBatu34,
-    };
-
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu35() async {
-    var resultBatu35 =
-        (int.parse(stokBatu35.text) - int.parse(qtyBatu35.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu35.toString(),
-      'qty': resultBatu35,
-    };
-
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
+        Uri.parse('${ApiConstants.baseUrl}${ApiConstants.addModeller}'),
         body: body);
     print(response.body);
   }

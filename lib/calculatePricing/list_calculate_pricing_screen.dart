@@ -448,10 +448,1501 @@ class RowSource extends DataTableSource {
   DataRow recentFileDataRow(var data) {
     return DataRow(cells: [
       //id
-      DataCell(
-        Padding(
-            padding: const EdgeInsets.all(0), child: Text(data.id.toString())),
-      ),
+      DataCell(Builder(builder: (context) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+                padding: const EdgeInsets.only(right: 25),
+                child: Text(data.id.toString())),
+            IconButton(
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          content: Stack(
+                            clipBehavior: Clip.none,
+                            children: <Widget>[
+                              Positioned(
+                                right: -47.0,
+                                top: -47.0,
+                                child: InkResponse(
+                                  onTap: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const CircleAvatar(
+                                    backgroundColor: Colors.red,
+                                    child: Icon(Icons.close),
+                                  ),
+                                ),
+                              ),
+                              SingleChildScrollView(
+                                scrollDirection: Axis.vertical,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    //? batu1
+                                    data.qtyBatu1 <= 0
+                                        ? const SizedBox()
+                                        : Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                SizedBox(
+                                                  width: 200,
+                                                  child: Text(
+                                                    '${data.batu1}',
+                                                    maxLines: 2,
+                                                    textAlign: TextAlign.left,
+                                                    style: const TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.black),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '${data.qtyBatu1}',
+                                                  textAlign: TextAlign.left,
+                                                  style: const TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                    data.qtyBatu1 <= 0
+                                        ? const SizedBox()
+                                        : const Divider(
+                                            thickness: 1,
+                                            color: Colors.black,
+                                          ),
+                                    //? batu2
+                                    data.qtyBatu2 <= 0
+                                        ? const SizedBox()
+                                        : Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                SizedBox(
+                                                  width: 200,
+                                                  child: Text(
+                                                    '${data.batu2}',
+                                                    maxLines: 2,
+                                                    textAlign: TextAlign.left,
+                                                    style: const TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.black),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '${data.qtyBatu2}',
+                                                  textAlign: TextAlign.left,
+                                                  style: const TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                    data.qtyBatu2 <= 0
+                                        ? const SizedBox()
+                                        : const Divider(
+                                            thickness: 1,
+                                            color: Colors.black,
+                                          ),
+
+                                    //? batu3
+                                    data.qtyBatu3 <= 0
+                                        ? const SizedBox()
+                                        : Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text(
+                                                  '${data.batu3}',
+                                                  textAlign: TextAlign.left,
+                                                  style: const TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black),
+                                                ),
+                                                Text(
+                                                  '${data.qtyBatu3}',
+                                                  textAlign: TextAlign.left,
+                                                  style: const TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                    data.qtyBatu3 <= 0
+                                        ? const SizedBox()
+                                        : const Divider(
+                                            thickness: 1,
+                                            color: Colors.black,
+                                          ),
+
+                                    //? batu4
+                                    data.qtyBatu4 <= 0
+                                        ? const SizedBox()
+                                        : Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                SizedBox(
+                                                  width: 200,
+                                                  child: Text(
+                                                    '${data.batu4}',
+                                                    maxLines: 2,
+                                                    textAlign: TextAlign.left,
+                                                    style: const TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.black),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '${data.qtyBatu4}',
+                                                  textAlign: TextAlign.left,
+                                                  style: const TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+
+                                    data.qtyBatu4 <= 0
+                                        ? const SizedBox()
+                                        : const Divider(
+                                            thickness: 1,
+                                            color: Colors.black,
+                                          ),
+
+                                    //? batu5
+                                    data.qtyBatu5 <= 0
+                                        ? const SizedBox()
+                                        : Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                SizedBox(
+                                                  width: 200,
+                                                  child: Text(
+                                                    '${data.batu5}',
+                                                    maxLines: 2,
+                                                    textAlign: TextAlign.left,
+                                                    style: const TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.black),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '${data.qtyBatu5}',
+                                                  textAlign: TextAlign.left,
+                                                  style: const TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                    data.qtyBatu5 <= 0
+                                        ? const SizedBox()
+                                        : const Divider(
+                                            thickness: 1,
+                                            color: Colors.black,
+                                          ),
+
+                                    //? batu6
+                                    data.qtyBatu6 <= 0
+                                        ? const SizedBox()
+                                        : Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                SizedBox(
+                                                  width: 200,
+                                                  child: Text(
+                                                    '${data.batu6}',
+                                                    maxLines: 2,
+                                                    textAlign: TextAlign.left,
+                                                    style: const TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.black),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '${data.qtyBatu6}',
+                                                  textAlign: TextAlign.left,
+                                                  style: const TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                    data.qtyBatu6 <= 0
+                                        ? const SizedBox()
+                                        : const Divider(
+                                            thickness: 1,
+                                            color: Colors.black,
+                                          ),
+
+                                    //? batu7
+                                    data.qtyBatu7 <= 0
+                                        ? const SizedBox()
+                                        : Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                SizedBox(
+                                                  width: 200,
+                                                  child: Text(
+                                                    '${data.batu7}',
+                                                    maxLines: 2,
+                                                    textAlign: TextAlign.left,
+                                                    style: const TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.black),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '${data.qtyBatu7}',
+                                                  textAlign: TextAlign.left,
+                                                  style: const TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                    data.qtyBatu7 <= 0
+                                        ? const SizedBox()
+                                        : const Divider(
+                                            thickness: 1,
+                                            color: Colors.black,
+                                          ),
+
+                                    //? batu8
+                                    data.qtyBatu8 <= 0
+                                        ? const SizedBox()
+                                        : Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                SizedBox(
+                                                  width: 200,
+                                                  child: Text(
+                                                    '${data.batu8}',
+                                                    maxLines: 2,
+                                                    textAlign: TextAlign.left,
+                                                    style: const TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.black),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '${data.qtyBatu8}',
+                                                  textAlign: TextAlign.left,
+                                                  style: const TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                    data.qtyBatu8 <= 0
+                                        ? const SizedBox()
+                                        : const Divider(
+                                            thickness: 1,
+                                            color: Colors.black,
+                                          ),
+
+                                    //? batu9
+                                    data.qtyBatu9 <= 0
+                                        ? const SizedBox()
+                                        : Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                SizedBox(
+                                                  width: 200,
+                                                  child: Text(
+                                                    '${data.batu9}',
+                                                    maxLines: 2,
+                                                    textAlign: TextAlign.left,
+                                                    style: const TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.black),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '${data.qtyBatu9}',
+                                                  textAlign: TextAlign.left,
+                                                  style: const TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                    data.qtyBatu9 <= 0
+                                        ? const SizedBox()
+                                        : const Divider(
+                                            thickness: 1,
+                                            color: Colors.black,
+                                          ),
+
+                                    //? batu10
+                                    data.qtyBatu10 <= 0
+                                        ? const SizedBox()
+                                        : Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                SizedBox(
+                                                  width: 200,
+                                                  child: Text(
+                                                    '${data.batu10}',
+                                                    maxLines: 2,
+                                                    textAlign: TextAlign.left,
+                                                    style: const TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.black),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '${data.qtyBatu10}',
+                                                  textAlign: TextAlign.left,
+                                                  style: const TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                    data.qtyBatu10 <= 0
+                                        ? const SizedBox()
+                                        : const Divider(
+                                            thickness: 1,
+                                            color: Colors.black,
+                                          ),
+
+                                    //? batu11
+                                    data.qtyBatu11 <= 0
+                                        ? const SizedBox()
+                                        : Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                SizedBox(
+                                                  width: 200,
+                                                  child: Text(
+                                                    '${data.batu11}',
+                                                    maxLines: 2,
+                                                    textAlign: TextAlign.left,
+                                                    style: const TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.black),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '${data.qtyBatu11}',
+                                                  textAlign: TextAlign.left,
+                                                  style: const TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                    data.qtyBatu11 <= 0
+                                        ? const SizedBox()
+                                        : const Divider(
+                                            thickness: 1,
+                                            color: Colors.black,
+                                          ),
+
+                                    //? batu12
+                                    data.qtyBatu12 <= 0
+                                        ? const SizedBox()
+                                        : Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                SizedBox(
+                                                  width: 200,
+                                                  child: Text(
+                                                    '${data.batu12}',
+                                                    maxLines: 2,
+                                                    textAlign: TextAlign.left,
+                                                    style: const TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.black),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '${data.qtyBatu12}',
+                                                  textAlign: TextAlign.left,
+                                                  style: const TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                    data.qtyBatu12 <= 0
+                                        ? const SizedBox()
+                                        : const Divider(
+                                            thickness: 1,
+                                            color: Colors.black,
+                                          ),
+
+                                    //? batu13
+
+                                    data.qtyBatu13 <= 0
+                                        ? const SizedBox()
+                                        : Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text(
+                                                  '${data.batu13}',
+                                                  textAlign: TextAlign.left,
+                                                  style: const TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black),
+                                                ),
+                                                Text(
+                                                  '${data.qtyBatu13}',
+                                                  textAlign: TextAlign.left,
+                                                  style: const TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                    data.qtyBatu13 <= 0
+                                        ? const SizedBox()
+                                        : const Divider(
+                                            thickness: 1,
+                                            color: Colors.black,
+                                          ),
+
+                                    //? batu14
+                                    data.qtyBatu14 <= 0
+                                        ? const SizedBox()
+                                        : Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                SizedBox(
+                                                  width: 200,
+                                                  child: Text(
+                                                    '${data.batu14}',
+                                                    maxLines: 2,
+                                                    textAlign: TextAlign.left,
+                                                    style: const TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.black),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '${data.qtyBatu14}',
+                                                  textAlign: TextAlign.left,
+                                                  style: const TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+
+                                    data.qtyBatu14 <= 0
+                                        ? const SizedBox()
+                                        : const Divider(
+                                            thickness: 1,
+                                            color: Colors.black,
+                                          ),
+
+                                    //? batu15
+                                    data.qtyBatu15 <= 0
+                                        ? const SizedBox()
+                                        : Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                SizedBox(
+                                                  width: 200,
+                                                  child: Text(
+                                                    '${data.batu15}',
+                                                    maxLines: 2,
+                                                    textAlign: TextAlign.left,
+                                                    style: const TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.black),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '${data.qtyBatu15}',
+                                                  textAlign: TextAlign.left,
+                                                  style: const TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                    data.qtyBatu15 <= 0
+                                        ? const SizedBox()
+                                        : const Divider(
+                                            thickness: 1,
+                                            color: Colors.black,
+                                          ),
+
+                                    //? batu16
+                                    data.qtyBatu16 <= 0
+                                        ? const SizedBox()
+                                        : Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                SizedBox(
+                                                  width: 200,
+                                                  child: Text(
+                                                    '${data.batu16}',
+                                                    maxLines: 2,
+                                                    textAlign: TextAlign.left,
+                                                    style: const TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.black),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '${data.qtyBatu16}',
+                                                  textAlign: TextAlign.left,
+                                                  style: const TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                    data.qtyBatu16 <= 0
+                                        ? const SizedBox()
+                                        : const Divider(
+                                            thickness: 1,
+                                            color: Colors.black,
+                                          ),
+
+                                    //? batu17
+                                    data.qtyBatu17 <= 0
+                                        ? const SizedBox()
+                                        : Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                SizedBox(
+                                                  width: 200,
+                                                  child: Text(
+                                                    '${data.batu17}',
+                                                    maxLines: 2,
+                                                    textAlign: TextAlign.left,
+                                                    style: const TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.black),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '${data.qtyBatu17}',
+                                                  textAlign: TextAlign.left,
+                                                  style: const TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                    data.qtyBatu17 <= 0
+                                        ? const SizedBox()
+                                        : const Divider(
+                                            thickness: 1,
+                                            color: Colors.black,
+                                          ),
+
+                                    //? batu18
+                                    data.qtyBatu18 <= 0
+                                        ? const SizedBox()
+                                        : Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                SizedBox(
+                                                  width: 200,
+                                                  child: Text(
+                                                    '${data.batu18}',
+                                                    maxLines: 2,
+                                                    textAlign: TextAlign.left,
+                                                    style: const TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.black),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '${data.qtyBatu18}',
+                                                  textAlign: TextAlign.left,
+                                                  style: const TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                    data.qtyBatu18 <= 0
+                                        ? const SizedBox()
+                                        : const Divider(
+                                            thickness: 1,
+                                            color: Colors.black,
+                                          ),
+
+                                    //? batu19
+                                    data.qtyBatu19 <= 0
+                                        ? const SizedBox()
+                                        : Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                SizedBox(
+                                                  width: 200,
+                                                  child: Text(
+                                                    '${data.batu19}',
+                                                    maxLines: 2,
+                                                    textAlign: TextAlign.left,
+                                                    style: const TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.black),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '${data.qtyBatu19}',
+                                                  textAlign: TextAlign.left,
+                                                  style: const TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                    data.qtyBatu19 <= 0
+                                        ? const SizedBox()
+                                        : const Divider(
+                                            thickness: 1,
+                                            color: Colors.black,
+                                          ),
+                                    //? batu20
+                                    data.qtyBatu20 <= 0
+                                        ? const SizedBox()
+                                        : Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                SizedBox(
+                                                  width: 200,
+                                                  child: Text(
+                                                    '${data.batu20}',
+                                                    maxLines: 2,
+                                                    textAlign: TextAlign.left,
+                                                    style: const TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.black),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '${data.qtyBatu20}',
+                                                  textAlign: TextAlign.left,
+                                                  style: const TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                    data.qtyBatu20 <= 0
+                                        ? const SizedBox()
+                                        : const Divider(
+                                            thickness: 1,
+                                            color: Colors.black,
+                                          ),
+                                    //? batu21
+                                    data.qtyBatu21 <= 0
+                                        ? const SizedBox()
+                                        : Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                SizedBox(
+                                                  width: 200,
+                                                  child: Text(
+                                                    '${data.batu21}',
+                                                    maxLines: 2,
+                                                    textAlign: TextAlign.left,
+                                                    style: const TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.black),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '${data.qtyBatu21}',
+                                                  textAlign: TextAlign.left,
+                                                  style: const TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                    data.qtyBatu21 <= 0
+                                        ? const SizedBox()
+                                        : const Divider(
+                                            thickness: 1,
+                                            color: Colors.black,
+                                          ),
+                                    //? batu22
+                                    data.qtyBatu22 <= 0
+                                        ? const SizedBox()
+                                        : Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                SizedBox(
+                                                  width: 200,
+                                                  child: Text(
+                                                    '${data.batu22}',
+                                                    maxLines: 2,
+                                                    textAlign: TextAlign.left,
+                                                    style: const TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.black),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '${data.qtyBatu22}',
+                                                  textAlign: TextAlign.left,
+                                                  style: const TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                    data.qtyBatu22 <= 0
+                                        ? const SizedBox()
+                                        : const Divider(
+                                            thickness: 1,
+                                            color: Colors.black,
+                                          ),
+                                    //? batu23
+                                    data.qtyBatu23 <= 0
+                                        ? const SizedBox()
+                                        : Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text(
+                                                  '${data.batu23}',
+                                                  textAlign: TextAlign.left,
+                                                  style: const TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black),
+                                                ),
+                                                Text(
+                                                  '${data.qtyBatu23}',
+                                                  textAlign: TextAlign.left,
+                                                  style: const TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                    data.qtyBatu23 <= 0
+                                        ? const SizedBox()
+                                        : const Divider(
+                                            thickness: 1,
+                                            color: Colors.black,
+                                          ),
+                                    //? batu24
+                                    data.qtyBatu24 <= 0
+                                        ? const SizedBox()
+                                        : Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                SizedBox(
+                                                  width: 200,
+                                                  child: Text(
+                                                    '${data.batu24}',
+                                                    maxLines: 2,
+                                                    textAlign: TextAlign.left,
+                                                    style: const TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.black),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '${data.qtyBatu24}',
+                                                  textAlign: TextAlign.left,
+                                                  style: const TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+
+                                    data.qtyBatu24 <= 0
+                                        ? const SizedBox()
+                                        : const Divider(
+                                            thickness: 1,
+                                            color: Colors.black,
+                                          ),
+                                    //? batu25
+                                    data.qtyBatu25 <= 0
+                                        ? const SizedBox()
+                                        : Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                SizedBox(
+                                                  width: 200,
+                                                  child: Text(
+                                                    '${data.batu25}',
+                                                    maxLines: 2,
+                                                    textAlign: TextAlign.left,
+                                                    style: const TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.black),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '${data.qtyBatu25}',
+                                                  textAlign: TextAlign.left,
+                                                  style: const TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                    data.qtyBatu25 <= 0
+                                        ? const SizedBox()
+                                        : const Divider(
+                                            thickness: 1,
+                                            color: Colors.black,
+                                          ),
+
+                                    //? batu26
+                                    data.qtyBatu26 <= 0
+                                        ? const SizedBox()
+                                        : Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                SizedBox(
+                                                  width: 200,
+                                                  child: Text(
+                                                    '${data.batu26}',
+                                                    maxLines: 2,
+                                                    textAlign: TextAlign.left,
+                                                    style: const TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.black),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '${data.qtyBatu26}',
+                                                  textAlign: TextAlign.left,
+                                                  style: const TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                    data.qtyBatu26 <= 0
+                                        ? const SizedBox()
+                                        : const Divider(
+                                            thickness: 1,
+                                            color: Colors.black,
+                                          ),
+                                    //? batu27
+                                    data.qtyBatu27 <= 0
+                                        ? const SizedBox()
+                                        : Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                SizedBox(
+                                                  width: 200,
+                                                  child: Text(
+                                                    '${data.batu27}',
+                                                    maxLines: 2,
+                                                    textAlign: TextAlign.left,
+                                                    style: const TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.black),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '${data.qtyBatu27}',
+                                                  textAlign: TextAlign.left,
+                                                  style: const TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                    data.qtyBatu27 <= 0
+                                        ? const SizedBox()
+                                        : const Divider(
+                                            thickness: 1,
+                                            color: Colors.black,
+                                          ),
+                                    //? batu28
+                                    data.qtyBatu28 <= 0
+                                        ? const SizedBox()
+                                        : Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                SizedBox(
+                                                  width: 200,
+                                                  child: Text(
+                                                    '${data.batu28}',
+                                                    maxLines: 2,
+                                                    textAlign: TextAlign.left,
+                                                    style: const TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.black),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '${data.qtyBatu28}',
+                                                  textAlign: TextAlign.left,
+                                                  style: const TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                    data.qtyBatu28 <= 0
+                                        ? const SizedBox()
+                                        : const Divider(
+                                            thickness: 1,
+                                            color: Colors.black,
+                                          ),
+                                    //? batu29
+                                    data.qtyBatu29 <= 0
+                                        ? const SizedBox()
+                                        : Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                SizedBox(
+                                                  width: 200,
+                                                  child: Text(
+                                                    '${data.batu29}',
+                                                    maxLines: 2,
+                                                    textAlign: TextAlign.left,
+                                                    style: const TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.black),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '${data.qtyBatu29}',
+                                                  textAlign: TextAlign.left,
+                                                  style: const TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                    data.qtyBatu29 <= 0
+                                        ? const SizedBox()
+                                        : const Divider(
+                                            thickness: 1,
+                                            color: Colors.black,
+                                          ),
+
+                                    //? batu30
+                                    data.qtyBatu30 <= 0
+                                        ? const SizedBox()
+                                        : Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                SizedBox(
+                                                  width: 200,
+                                                  child: Text(
+                                                    '${data.batu30}',
+                                                    maxLines: 2,
+                                                    textAlign: TextAlign.left,
+                                                    style: const TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.black),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '${data.qtyBatu30}',
+                                                  textAlign: TextAlign.left,
+                                                  style: const TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                    data.qtyBatu30 <= 0
+                                        ? const SizedBox()
+                                        : const Divider(
+                                            thickness: 1,
+                                            color: Colors.black,
+                                          ),
+                                    //? batu31
+                                    data.qtyBatu31 <= 0
+                                        ? const SizedBox()
+                                        : Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                SizedBox(
+                                                  width: 200,
+                                                  child: Text(
+                                                    '${data.batu31}',
+                                                    maxLines: 2,
+                                                    textAlign: TextAlign.left,
+                                                    style: const TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.black),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '${data.qtyBatu31}',
+                                                  textAlign: TextAlign.left,
+                                                  style: const TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                    data.qtyBatu31 <= 0
+                                        ? const SizedBox()
+                                        : const Divider(
+                                            thickness: 1,
+                                            color: Colors.black,
+                                          ),
+                                    //? batu32
+                                    data.qtyBatu32 <= 0
+                                        ? const SizedBox()
+                                        : Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                SizedBox(
+                                                  width: 200,
+                                                  child: Text(
+                                                    '${data.batu32}',
+                                                    maxLines: 2,
+                                                    textAlign: TextAlign.left,
+                                                    style: const TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.black),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '${data.qtyBatu32}',
+                                                  textAlign: TextAlign.left,
+                                                  style: const TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                    data.qtyBatu32 <= 0
+                                        ? const SizedBox()
+                                        : const Divider(
+                                            thickness: 1,
+                                            color: Colors.black,
+                                          ),
+                                    //? batu33
+                                    data.qtyBatu33 <= 0
+                                        ? const SizedBox()
+                                        : Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                SizedBox(
+                                                  width: 200,
+                                                  child: Text(
+                                                    '${data.batu33}',
+                                                    maxLines: 2,
+                                                    textAlign: TextAlign.left,
+                                                    style: const TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.black),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '${data.qtyBatu33}',
+                                                  textAlign: TextAlign.left,
+                                                  style: const TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                    data.qtyBatu33 <= 0
+                                        ? const SizedBox()
+                                        : const Divider(
+                                            thickness: 1,
+                                            color: Colors.black,
+                                          ),
+                                    //? batu34
+                                    data.qtyBatu34 <= 0
+                                        ? const SizedBox()
+                                        : Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                SizedBox(
+                                                  width: 200,
+                                                  child: Text(
+                                                    '${data.batu34}',
+                                                    maxLines: 2,
+                                                    textAlign: TextAlign.left,
+                                                    style: const TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.black),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '${data.qtyBatu34}',
+                                                  textAlign: TextAlign.left,
+                                                  style: const TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                    data.qtyBatu34 <= 0
+                                        ? const SizedBox()
+                                        : const Divider(
+                                            thickness: 1,
+                                            color: Colors.black,
+                                          ),
+                                    //? batu35
+                                    data.qtyBatu35 <= 0
+                                        ? const SizedBox()
+                                        : Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                SizedBox(
+                                                  width: 200,
+                                                  child: Text(
+                                                    '${data.batu35}',
+                                                    maxLines: 2,
+                                                    textAlign: TextAlign.left,
+                                                    style: const TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.black),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '${data.qtyBatu35}',
+                                                  textAlign: TextAlign.left,
+                                                  style: const TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                    data.qtyBatu35 <= 0
+                                        ? const SizedBox()
+                                        : const Divider(
+                                            thickness: 1,
+                                            color: Colors.black,
+                                          ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      });
+                },
+                icon: const Icon(
+                  Icons.remove_red_eye_outlined,
+                  color: Colors.blue,
+                ))
+          ],
+        );
+      })),
       DataCell(_verticalDivider),
       //Nama Designer
       DataCell(

@@ -24,7 +24,9 @@ class _MainViewState extends State<MainView> {
     const HomeScreen(),
     const ListDesignerScreen(),
     const ListBatuScreen(),
-    const ListCalculatePricingScreen(),
+    sharedPreferences!.getString('level') == '3'
+        ? const HomeScreen()
+        : const ListCalculatePricingScreen(),
     const ListDesignerScreen(),
     sharedPreferences!.getString('level') != '1'
         ? const HomeScreen()
@@ -64,10 +66,11 @@ class _MainViewState extends State<MainView> {
                 icon: Icons.list,
                 label: 'List stok batu',
               ),
-              const SideNavigationBarItem(
-                icon: Icons.calculate_outlined,
-                label: 'Calculate Price',
-              ),
+              if (sharedPreferences!.getString('level') != '3')
+                const SideNavigationBarItem(
+                  icon: Icons.calculate_outlined,
+                  label: 'Calculate Price',
+                ),
               const SideNavigationBarItem(
                 icon: Icons.logout,
                 label: 'Keluar',
@@ -85,95 +88,159 @@ class _MainViewState extends State<MainView> {
             ],
             onTap: (index) {
               if (index == 3) {
-                showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        content: Stack(
-                          clipBehavior: Clip.none,
-                          children: <Widget>[
-                            Positioned(
-                              right: -47.0,
-                              top: -47.0,
-                              child: InkResponse(
-                                onTap: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: const CircleAvatar(
-                                  backgroundColor: Colors.red,
-                                  child: Icon(Icons.close),
+                if (sharedPreferences!.getString('level') == '3') {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          content: Stack(
+                            clipBehavior: Clip.none,
+                            children: <Widget>[
+                              Positioned(
+                                right: -47.0,
+                                top: -47.0,
+                                child: InkResponse(
+                                  onTap: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const CircleAvatar(
+                                    backgroundColor: Colors.red,
+                                    child: Icon(Icons.close),
+                                  ),
                                 ),
                               ),
-                            ),
-                            SizedBox(
-                              height: 190,
-                              child: Form(
-                                key: _formKey,
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    const Padding(
-                                      padding:
-                                          EdgeInsets.only(top: 5, bottom: 10),
-                                      child: Text('Masukan Kode Akses'),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(
-                                        autofocus: true,
-                                        obscureText: true,
-                                        style: const TextStyle(
-                                            fontSize: 14,
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold),
-                                        textInputAction: TextInputAction.next,
-                                        controller: kodeAkses,
-                                        validator: (value) {
-                                          if (value! != 'S@niv0kasi') {
-                                            return 'Kode akses salah';
-                                          }
-                                          return null;
-                                        },
-                                        onChanged: (value) {
-                                          isKodeAkses = true;
-                                          kodeAkses.text == 'S@niv0kasi'
-                                              ? isKodeAkses = true
-                                              : isKodeAkses = false;
-                                        },
-                                        decoration: InputDecoration(
-                                          labelText: "Kode Akses",
-                                          border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(5.0)),
+                              SizedBox(
+                                child: Form(
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: <Widget>[
+                                      const Padding(
+                                        padding:
+                                            EdgeInsets.only(top: 5, bottom: 10),
+                                        child: Text('Yakin ingin keluar ?'),
+                                      ),
+                                      Container(
+                                        width: 200,
+                                        height: 50,
+                                        padding: const EdgeInsets.only(top: 10),
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                              backgroundColor: Colors.red),
+                                          child: const Text("Keluar"),
+                                          onPressed: () async {
+                                            SharedPreferences prefs =
+                                                await SharedPreferences
+                                                    .getInstance();
+                                            prefs.clear();
+                                            prefs.setString('token', 'null');
+                                            // ignore: use_build_context_synchronously
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (c) =>
+                                                        const LoginScreen()));
+                                          },
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      });
+                } else {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          content: Stack(
+                            clipBehavior: Clip.none,
+                            children: <Widget>[
+                              Positioned(
+                                right: -47.0,
+                                top: -47.0,
+                                child: InkResponse(
+                                  onTap: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const CircleAvatar(
+                                    backgroundColor: Colors.red,
+                                    child: Icon(Icons.close),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 190,
+                                child: Form(
+                                  key: _formKey,
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: <Widget>[
+                                      const Padding(
+                                        padding:
+                                            EdgeInsets.only(top: 5, bottom: 10),
+                                        child: Text('Masukan Kode Akses'),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: TextFormField(
+                                          autofocus: true,
+                                          obscureText: true,
+                                          style: const TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold),
+                                          textInputAction: TextInputAction.next,
+                                          controller: kodeAkses,
+                                          validator: (value) {
+                                            if (value! != 'S@niv0kasi') {
+                                              return 'Kode akses salah';
+                                            }
+                                            return null;
+                                          },
+                                          onChanged: (value) {
+                                            isKodeAkses = true;
+                                            kodeAkses.text == 'S@niv0kasi'
+                                                ? isKodeAkses = true
+                                                : isKodeAkses = false;
+                                          },
+                                          decoration: InputDecoration(
+                                            labelText: "Kode Akses",
+                                            border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(5.0)),
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    Container(
-                                      width: 200,
-                                      height: 50,
-                                      padding: const EdgeInsets.only(top: 10),
-                                      child: ElevatedButton(
-                                        child: const Text("Submit"),
-                                        onPressed: () {
-                                          if (_formKey.currentState!
-                                              .validate()) {
-                                            _formKey.currentState!.save();
-                                            setState(() {
-                                              selectedIndex = index;
-                                              Navigator.of(context).pop();
-                                            });
-                                          } else {}
-                                        },
-                                      ),
-                                    )
-                                  ],
+                                      Container(
+                                        width: 200,
+                                        height: 50,
+                                        padding: const EdgeInsets.only(top: 10),
+                                        child: ElevatedButton(
+                                          child: const Text("Submit"),
+                                          onPressed: () {
+                                            if (_formKey.currentState!
+                                                .validate()) {
+                                              _formKey.currentState!.save();
+                                              setState(() {
+                                                selectedIndex = index;
+                                                Navigator.of(context).pop();
+                                              });
+                                            } else {}
+                                          },
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                      );
-                    });
+                            ],
+                          ),
+                        );
+                      });
+                }
               } else if (index == 4) {
                 showDialog(
                     context: context,

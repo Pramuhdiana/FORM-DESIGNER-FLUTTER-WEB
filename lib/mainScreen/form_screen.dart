@@ -2123,6 +2123,52 @@ class _FormScreenState extends State<FormScreen> {
                 Future.delayed(const Duration(seconds: 1)).then((value) {
                   btnController.reset(); //reset
                 });
+              } else if ((batu1 != '' && qtyBatu1.text.isEmpty) ||
+                  (batu2 != '' && qtyBatu2.text.isEmpty) ||
+                  (batu3 != '' && qtyBatu3.text.isEmpty) ||
+                  (batu4 != '' && qtyBatu4.text.isEmpty) ||
+                  (batu5 != '' && qtyBatu5.text.isEmpty) ||
+                  (batu6 != '' && qtyBatu6.text.isEmpty) ||
+                  (batu7 != '' && qtyBatu7.text.isEmpty) ||
+                  (batu8 != '' && qtyBatu8.text.isEmpty) ||
+                  (batu9 != '' && qtyBatu9.text.isEmpty) ||
+                  (batu10 != '' && qtyBatu10.text.isEmpty) ||
+                  (batu11 != '' && qtyBatu11.text.isEmpty) ||
+                  (batu12 != '' && qtyBatu12.text.isEmpty) ||
+                  (batu13 != '' && qtyBatu13.text.isEmpty) ||
+                  (batu14 != '' && qtyBatu14.text.isEmpty) ||
+                  (batu15 != '' && qtyBatu15.text.isEmpty) ||
+                  (batu16 != '' && qtyBatu16.text.isEmpty) ||
+                  (batu17 != '' && qtyBatu17.text.isEmpty) ||
+                  (batu18 != '' && qtyBatu18.text.isEmpty) ||
+                  (batu19 != '' && qtyBatu19.text.isEmpty) ||
+                  (batu20 != '' && qtyBatu20.text.isEmpty) ||
+                  (batu21 != '' && qtyBatu21.text.isEmpty) ||
+                  (batu22 != '' && qtyBatu22.text.isEmpty) ||
+                  (batu23 != '' && qtyBatu23.text.isEmpty) ||
+                  (batu24 != '' && qtyBatu24.text.isEmpty) ||
+                  (batu25 != '' && qtyBatu25.text.isEmpty) ||
+                  (batu26 != '' && qtyBatu26.text.isEmpty) ||
+                  (batu27 != '' && qtyBatu27.text.isEmpty) ||
+                  (batu28 != '' && qtyBatu28.text.isEmpty) ||
+                  (batu29 != '' && qtyBatu29.text.isEmpty) ||
+                  (batu30 != '' && qtyBatu30.text.isEmpty) ||
+                  (batu31 != '' && qtyBatu31.text.isEmpty) ||
+                  (batu32 != '' && qtyBatu32.text.isEmpty) ||
+                  (batu33 != '' && qtyBatu33.text.isEmpty) ||
+                  (batu34 != '' && qtyBatu34.text.isEmpty) ||
+                  (batu35 != '' && qtyBatu35.text.isEmpty)) {
+                showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) => const AlertDialog(
+                          title: Text(
+                            'Qty tidak boleh kosong',
+                          ),
+                        ));
+                btnController.error();
+                Future.delayed(const Duration(seconds: 1)).then((value) {
+                  btnController.reset(); //reset
+                });
               } else {
                 Future.delayed(const Duration(seconds: 2)).then((value) async {
                   btnController.success();
@@ -2409,26 +2455,6 @@ class _FormScreenState extends State<FormScreen> {
                   ElevatedButton(
                       onPressed: () {
                         _pickImage();
-                        DropdownSearch<BatuModel>(
-                          asyncItems: (String? filter) => getData(filter),
-                          popupProps:
-                              const PopupPropsMultiSelection.modalBottomSheet(
-                            showSelectedItems: true,
-                            itemBuilder: _listBatu,
-                            showSearchBox: true,
-                          ),
-                          compareFn: (item, sItem) => item.id == sItem.id,
-                          onChanged: (item) {
-                            setState(() {});
-                          },
-                          dropdownDecoratorProps: const DropDownDecoratorProps(
-                            dropdownSearchDecoration: InputDecoration(
-                              hintText: 'Rantai',
-                              filled: true,
-                              fillColor: Colors.white,
-                            ),
-                          ),
-                        );
                       },
                       child: const Text('Gambar Design')),
             ),
