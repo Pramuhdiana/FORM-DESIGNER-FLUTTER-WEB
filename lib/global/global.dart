@@ -9,3 +9,4 @@ int rilisPerbaikanbug =
     0; //perbaikan bug                                      (PATCH)
 
 String version = 'v$revisiBesar.$revisiKecil.$rilisPerbaikanbug';
+String aksesKode = "S@niv0kasi";

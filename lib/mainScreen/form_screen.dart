@@ -3090,7 +3090,7 @@ class _FormScreenState extends State<FormScreen> {
                                 children: [
                                   Container(
                                     width: 250,
-                                    height: 38,
+                                    height: 45,
                                     padding: const EdgeInsets.only(top: 5),
                                     child: DropdownSearch<BatuModel>(
                                       asyncItems: (String? filter) =>
@@ -3152,7 +3152,7 @@ class _FormScreenState extends State<FormScreen> {
                                   //qty batu1
                                   Container(
                                     width: 80,
-                                    height: 38,
+                                    height: 45,
                                     padding: const EdgeInsets.only(
                                         top: 10, left: 15),
                                     child: TextFormField(
@@ -3176,7 +3176,7 @@ class _FormScreenState extends State<FormScreen> {
                                   //stok batu1
                                   Container(
                                     width: 80,
-                                    height: 38,
+                                    height: 45,
                                     padding: const EdgeInsets.only(
                                         top: 10, left: 15),
                                     child: TextFormField(
@@ -3200,7 +3200,7 @@ class _FormScreenState extends State<FormScreen> {
                                   //crt/pcsbatu1
                                   Container(
                                     width: 120,
-                                    height: 38,
+                                    height: 45,
                                     padding: const EdgeInsets.only(
                                         top: 10, left: 15),
                                     child: TextFormField(
@@ -3258,7 +3258,7 @@ class _FormScreenState extends State<FormScreen> {
                                       children: [
                                         Container(
                                           width: 250,
-                                          height: 38,
+                                          height: 45,
                                           padding:
                                               const EdgeInsets.only(top: 5),
                                           child: DropdownSearch<BatuModel>(
@@ -3325,7 +3325,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //qty batu2
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -3351,7 +3351,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //stok batu2
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -3378,7 +3378,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //crt/pcsbatu2
                                         Container(
                                           width: 120,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -3442,7 +3442,7 @@ class _FormScreenState extends State<FormScreen> {
                                       children: [
                                         Container(
                                           width: 250,
-                                          height: 38,
+                                          height: 45,
                                           padding:
                                               const EdgeInsets.only(top: 5),
                                           child: DropdownSearch<BatuModel>(
@@ -3509,7 +3509,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //qty batu3
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -3535,7 +3535,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //stok batu3
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -3562,7 +3562,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //crt/pcsbatu3
                                         Container(
                                           width: 120,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -3626,7 +3626,7 @@ class _FormScreenState extends State<FormScreen> {
                                       children: [
                                         Container(
                                           width: 250,
-                                          height: 38,
+                                          height: 45,
                                           padding:
                                               const EdgeInsets.only(top: 5),
                                           child: DropdownSearch<BatuModel>(
@@ -3693,7 +3693,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //qty batu4
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -3719,7 +3719,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //stok batu4
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -3746,7 +3746,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //crt/pcsbatu4
                                         Container(
                                           width: 120,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -3810,7 +3810,7 @@ class _FormScreenState extends State<FormScreen> {
                                       children: [
                                         Container(
                                           width: 250,
-                                          height: 38,
+                                          height: 45,
                                           padding:
                                               const EdgeInsets.only(top: 5),
                                           child: DropdownSearch<BatuModel>(
@@ -3877,7 +3877,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //qty batu5
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -3903,7 +3903,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //stok batu5
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -3930,7 +3930,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //crt/pcsbatu5
                                         Container(
                                           width: 120,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -3994,7 +3994,7 @@ class _FormScreenState extends State<FormScreen> {
                                       children: [
                                         Container(
                                           width: 250,
-                                          height: 38,
+                                          height: 45,
                                           padding:
                                               const EdgeInsets.only(top: 5),
                                           child: DropdownSearch<BatuModel>(
@@ -4061,7 +4061,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //qty batu6
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -4087,7 +4087,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //stok batu6
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -4114,7 +4114,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //crt/pcsbatu6
                                         Container(
                                           width: 120,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -4178,7 +4178,7 @@ class _FormScreenState extends State<FormScreen> {
                                       children: [
                                         Container(
                                           width: 250,
-                                          height: 38,
+                                          height: 45,
                                           padding:
                                               const EdgeInsets.only(top: 5),
                                           child: DropdownSearch<BatuModel>(
@@ -4245,7 +4245,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //qty batu7
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -4271,7 +4271,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //stok batu7
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -4298,7 +4298,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //crt/pcsbatu7
                                         Container(
                                           width: 120,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -4362,7 +4362,7 @@ class _FormScreenState extends State<FormScreen> {
                                       children: [
                                         Container(
                                           width: 250,
-                                          height: 38,
+                                          height: 45,
                                           padding:
                                               const EdgeInsets.only(top: 5),
                                           child: DropdownSearch<BatuModel>(
@@ -4429,7 +4429,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //qty batu8
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -4455,7 +4455,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //stok batu8
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -4482,7 +4482,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //crt/pcsbatu8
                                         Container(
                                           width: 120,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -4546,7 +4546,7 @@ class _FormScreenState extends State<FormScreen> {
                                       children: [
                                         Container(
                                           width: 250,
-                                          height: 38,
+                                          height: 45,
                                           padding:
                                               const EdgeInsets.only(top: 5),
                                           child: DropdownSearch<BatuModel>(
@@ -4613,7 +4613,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //qty batu9
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -4639,7 +4639,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //stok batu9
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -4666,7 +4666,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //crt/pcsbatu9
                                         Container(
                                           width: 120,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -4730,7 +4730,7 @@ class _FormScreenState extends State<FormScreen> {
                                       children: [
                                         Container(
                                           width: 250,
-                                          height: 38,
+                                          height: 45,
                                           padding:
                                               const EdgeInsets.only(top: 5),
                                           child: DropdownSearch<BatuModel>(
@@ -4797,7 +4797,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //qty batu10
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -4824,7 +4824,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //stok batu10
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -4851,7 +4851,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //crt/pcsbatu10
                                         Container(
                                           width: 120,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -4915,7 +4915,7 @@ class _FormScreenState extends State<FormScreen> {
                                       children: [
                                         Container(
                                           width: 250,
-                                          height: 38,
+                                          height: 45,
                                           padding:
                                               const EdgeInsets.only(top: 5),
                                           child: DropdownSearch<BatuModel>(
@@ -4982,7 +4982,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //qty batu11
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -5009,7 +5009,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //stok batu11
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -5036,7 +5036,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //crt/pcsbatu11
                                         Container(
                                           width: 120,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -5100,7 +5100,7 @@ class _FormScreenState extends State<FormScreen> {
                                       children: [
                                         Container(
                                           width: 250,
-                                          height: 38,
+                                          height: 45,
                                           padding:
                                               const EdgeInsets.only(top: 5),
                                           child: DropdownSearch<BatuModel>(
@@ -5167,7 +5167,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //qty batu12
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -5194,7 +5194,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //stok batu12
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -5221,7 +5221,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //crt/pcsbatu12
                                         Container(
                                           width: 120,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -5285,7 +5285,7 @@ class _FormScreenState extends State<FormScreen> {
                                       children: [
                                         Container(
                                           width: 250,
-                                          height: 38,
+                                          height: 45,
                                           padding:
                                               const EdgeInsets.only(top: 5),
                                           child: DropdownSearch<BatuModel>(
@@ -5352,7 +5352,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //qty batu13
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -5379,7 +5379,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //stok batu13
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -5406,7 +5406,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //crt/pcsbatu13
                                         Container(
                                           width: 120,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -5470,7 +5470,7 @@ class _FormScreenState extends State<FormScreen> {
                                       children: [
                                         Container(
                                           width: 250,
-                                          height: 38,
+                                          height: 45,
                                           padding:
                                               const EdgeInsets.only(top: 5),
                                           child: DropdownSearch<BatuModel>(
@@ -5537,7 +5537,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //qty batu14
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -5564,7 +5564,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //stok batu14
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -5591,7 +5591,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //crt/pcsbatu14
                                         Container(
                                           width: 120,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -5655,7 +5655,7 @@ class _FormScreenState extends State<FormScreen> {
                                       children: [
                                         Container(
                                           width: 250,
-                                          height: 38,
+                                          height: 45,
                                           padding:
                                               const EdgeInsets.only(top: 5),
                                           child: DropdownSearch<BatuModel>(
@@ -5722,7 +5722,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //qty batu15
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -5749,7 +5749,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //stok batu15
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -5776,7 +5776,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //crt/pcsbatu15
                                         Container(
                                           width: 120,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -5840,7 +5840,7 @@ class _FormScreenState extends State<FormScreen> {
                                       children: [
                                         Container(
                                           width: 250,
-                                          height: 38,
+                                          height: 45,
                                           padding:
                                               const EdgeInsets.only(top: 5),
                                           child: DropdownSearch<BatuModel>(
@@ -5907,7 +5907,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //qty batu16
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -5934,7 +5934,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //stok batu16
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -5961,7 +5961,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //crt/pcsbatu16
                                         Container(
                                           width: 120,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -6025,7 +6025,7 @@ class _FormScreenState extends State<FormScreen> {
                                       children: [
                                         Container(
                                           width: 250,
-                                          height: 38,
+                                          height: 45,
                                           padding:
                                               const EdgeInsets.only(top: 5),
                                           child: DropdownSearch<BatuModel>(
@@ -6092,7 +6092,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //qty batu17
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -6119,7 +6119,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //stok batu17
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -6146,7 +6146,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //crt/pcsbatu17
                                         Container(
                                           width: 120,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -6210,7 +6210,7 @@ class _FormScreenState extends State<FormScreen> {
                                       children: [
                                         Container(
                                           width: 250,
-                                          height: 38,
+                                          height: 45,
                                           padding:
                                               const EdgeInsets.only(top: 5),
                                           child: DropdownSearch<BatuModel>(
@@ -6277,7 +6277,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //qty batu18
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -6304,7 +6304,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //stok batu18
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -6331,7 +6331,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //crt/pcsbatu18
                                         Container(
                                           width: 120,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -6395,7 +6395,7 @@ class _FormScreenState extends State<FormScreen> {
                                       children: [
                                         Container(
                                           width: 250,
-                                          height: 38,
+                                          height: 45,
                                           padding:
                                               const EdgeInsets.only(top: 5),
                                           child: DropdownSearch<BatuModel>(
@@ -6462,7 +6462,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //qty batu19
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -6489,7 +6489,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //stok batu19
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -6516,7 +6516,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //crt/pcsbatu19
                                         Container(
                                           width: 120,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -6580,7 +6580,7 @@ class _FormScreenState extends State<FormScreen> {
                                       children: [
                                         Container(
                                           width: 250,
-                                          height: 38,
+                                          height: 45,
                                           padding:
                                               const EdgeInsets.only(top: 5),
                                           child: DropdownSearch<BatuModel>(
@@ -6647,7 +6647,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //qty batu20
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -6674,7 +6674,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //stok batu20
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -6701,7 +6701,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //crt/pcsbatu20
                                         Container(
                                           width: 120,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -6765,7 +6765,7 @@ class _FormScreenState extends State<FormScreen> {
                                       children: [
                                         Container(
                                           width: 250,
-                                          height: 38,
+                                          height: 45,
                                           padding:
                                               const EdgeInsets.only(top: 5),
                                           child: DropdownSearch<BatuModel>(
@@ -6832,7 +6832,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //qty batu21
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -6859,7 +6859,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //stok batu21
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -6886,7 +6886,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //crt/pcsbatu21
                                         Container(
                                           width: 120,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -6950,7 +6950,7 @@ class _FormScreenState extends State<FormScreen> {
                                       children: [
                                         Container(
                                           width: 250,
-                                          height: 38,
+                                          height: 45,
                                           padding:
                                               const EdgeInsets.only(top: 5),
                                           child: DropdownSearch<BatuModel>(
@@ -7017,7 +7017,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //qty batu22
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -7044,7 +7044,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //stok batu22
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -7071,7 +7071,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //crt/pcsbatu22
                                         Container(
                                           width: 120,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -7135,7 +7135,7 @@ class _FormScreenState extends State<FormScreen> {
                                       children: [
                                         Container(
                                           width: 250,
-                                          height: 38,
+                                          height: 45,
                                           padding:
                                               const EdgeInsets.only(top: 5),
                                           child: DropdownSearch<BatuModel>(
@@ -7202,7 +7202,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //qty batu23
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -7229,7 +7229,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //stok batu23
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -7256,7 +7256,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //crt/pcsbatu23
                                         Container(
                                           width: 120,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -7320,7 +7320,7 @@ class _FormScreenState extends State<FormScreen> {
                                       children: [
                                         Container(
                                           width: 250,
-                                          height: 38,
+                                          height: 45,
                                           padding:
                                               const EdgeInsets.only(top: 5),
                                           child: DropdownSearch<BatuModel>(
@@ -7387,7 +7387,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //qty batu24
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -7414,7 +7414,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //stok batu24
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -7441,7 +7441,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //crt/pcsbatu24
                                         Container(
                                           width: 120,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -7505,7 +7505,7 @@ class _FormScreenState extends State<FormScreen> {
                                       children: [
                                         Container(
                                           width: 250,
-                                          height: 38,
+                                          height: 45,
                                           padding:
                                               const EdgeInsets.only(top: 5),
                                           child: DropdownSearch<BatuModel>(
@@ -7572,7 +7572,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //qty batu25
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -7599,7 +7599,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //stok batu25
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -7626,7 +7626,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //crt/pcsbatu25
                                         Container(
                                           width: 120,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -7690,7 +7690,7 @@ class _FormScreenState extends State<FormScreen> {
                                       children: [
                                         Container(
                                           width: 250,
-                                          height: 38,
+                                          height: 45,
                                           padding:
                                               const EdgeInsets.only(top: 5),
                                           child: DropdownSearch<BatuModel>(
@@ -7757,7 +7757,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //qty batu26
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -7784,7 +7784,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //stok batu26
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -7811,7 +7811,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //crt/pcsbatu26
                                         Container(
                                           width: 120,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -7875,7 +7875,7 @@ class _FormScreenState extends State<FormScreen> {
                                       children: [
                                         Container(
                                           width: 250,
-                                          height: 38,
+                                          height: 45,
                                           padding:
                                               const EdgeInsets.only(top: 5),
                                           child: DropdownSearch<BatuModel>(
@@ -7942,7 +7942,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //qty batu27
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -7969,7 +7969,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //stok batu27
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -7996,7 +7996,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //crt/pcsbatu27
                                         Container(
                                           width: 120,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -8060,7 +8060,7 @@ class _FormScreenState extends State<FormScreen> {
                                       children: [
                                         Container(
                                           width: 250,
-                                          height: 38,
+                                          height: 45,
                                           padding:
                                               const EdgeInsets.only(top: 5),
                                           child: DropdownSearch<BatuModel>(
@@ -8127,7 +8127,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //qty batu28
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -8154,7 +8154,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //stok batu28
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -8181,7 +8181,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //crt/pcsbatu28
                                         Container(
                                           width: 120,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -8245,7 +8245,7 @@ class _FormScreenState extends State<FormScreen> {
                                       children: [
                                         Container(
                                           width: 250,
-                                          height: 38,
+                                          height: 45,
                                           padding:
                                               const EdgeInsets.only(top: 5),
                                           child: DropdownSearch<BatuModel>(
@@ -8312,7 +8312,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //qty batu29
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -8339,7 +8339,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //stok batu29
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -8366,7 +8366,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //crt/pcsbatu29
                                         Container(
                                           width: 120,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -8430,7 +8430,7 @@ class _FormScreenState extends State<FormScreen> {
                                       children: [
                                         Container(
                                           width: 250,
-                                          height: 38,
+                                          height: 45,
                                           padding:
                                               const EdgeInsets.only(top: 5),
                                           child: DropdownSearch<BatuModel>(
@@ -8497,7 +8497,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //qty batu30
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -8524,7 +8524,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //stok batu30
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -8551,7 +8551,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //crt/pcsbatu30
                                         Container(
                                           width: 120,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -8615,7 +8615,7 @@ class _FormScreenState extends State<FormScreen> {
                                       children: [
                                         Container(
                                           width: 250,
-                                          height: 38,
+                                          height: 45,
                                           padding:
                                               const EdgeInsets.only(top: 5),
                                           child: DropdownSearch<BatuModel>(
@@ -8682,7 +8682,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //qty batu31
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -8709,7 +8709,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //stok batu31
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -8736,7 +8736,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //crt/pcsbatu31
                                         Container(
                                           width: 120,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -8800,7 +8800,7 @@ class _FormScreenState extends State<FormScreen> {
                                       children: [
                                         Container(
                                           width: 250,
-                                          height: 38,
+                                          height: 45,
                                           padding:
                                               const EdgeInsets.only(top: 5),
                                           child: DropdownSearch<BatuModel>(
@@ -8867,7 +8867,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //qty batu32
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -8894,7 +8894,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //stok batu32
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -8921,7 +8921,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //crt/pcsbatu32
                                         Container(
                                           width: 120,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -8985,7 +8985,7 @@ class _FormScreenState extends State<FormScreen> {
                                       children: [
                                         Container(
                                           width: 250,
-                                          height: 38,
+                                          height: 45,
                                           padding:
                                               const EdgeInsets.only(top: 5),
                                           child: DropdownSearch<BatuModel>(
@@ -9052,7 +9052,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //qty batu33
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -9079,7 +9079,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //stok batu33
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -9106,7 +9106,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //crt/pcsbatu33
                                         Container(
                                           width: 120,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -9170,7 +9170,7 @@ class _FormScreenState extends State<FormScreen> {
                                       children: [
                                         Container(
                                           width: 250,
-                                          height: 38,
+                                          height: 45,
                                           padding:
                                               const EdgeInsets.only(top: 5),
                                           child: DropdownSearch<BatuModel>(
@@ -9237,7 +9237,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //qty batu34
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -9264,7 +9264,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //stok batu34
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -9291,7 +9291,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //crt/pcsbatu34
                                         Container(
                                           width: 120,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -9355,7 +9355,7 @@ class _FormScreenState extends State<FormScreen> {
                                       children: [
                                         Container(
                                           width: 250,
-                                          height: 38,
+                                          height: 45,
                                           padding:
                                               const EdgeInsets.only(top: 5),
                                           child: DropdownSearch<BatuModel>(
@@ -9422,7 +9422,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //qty batu35
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -9449,7 +9449,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //stok batu35
                                         Container(
                                           width: 80,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
@@ -9476,7 +9476,7 @@ class _FormScreenState extends State<FormScreen> {
                                         //crt/pcsbatu35
                                         Container(
                                           width: 120,
-                                          height: 38,
+                                          height: 45,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(

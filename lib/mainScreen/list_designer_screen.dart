@@ -816,13 +816,41 @@ class RowSource extends DataTableSource {
                                       imageUrl: data.imageUrl,
                                       keteranganStatusBatu:
                                           data.keteranganStatusBatu,
+                                      pointModeller: data.pointModeller,
                                     ),
                                   )));
                     },
-                    icon: const Icon(
-                      Icons.remove_red_eye,
-                      color: Colors.blue,
-                    ))
+                    icon: data.pointModeller != '0'
+                        ? const Icon(
+                            Icons.remove_red_eye,
+                            color: Colors.blue,
+                          )
+                        : Stack(
+                            clipBehavior:
+                                Clip.none, //agar tidak menghalangi object
+
+                            children: [
+                              //tambahan icon ADD
+                              Positioned(
+                                right: -10.0,
+                                top: -13.0,
+                                child: InkResponse(
+                                  onTap: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Icon(
+                                    Icons.add_circle_outline,
+                                    color: Colors.blue,
+                                    size: 20,
+                                  ),
+                                ),
+                              ),
+                              const Icon(
+                                Icons.remove_red_eye,
+                                color: Colors.blue,
+                              ),
+                            ],
+                          ))
                 : IconButton(
                     onPressed: () {
                       showDialog<String>(

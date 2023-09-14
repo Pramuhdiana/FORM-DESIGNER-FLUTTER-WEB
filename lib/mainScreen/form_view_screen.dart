@@ -17,9 +17,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:http/http.dart' as http;
-// import "package:async/async.dart";
-
-// import 'package:path/path.dart';
 
 import '../api/api_constant.dart';
 import '../dev/network.dart';
@@ -563,6 +560,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
     imageUrl = widget.modelDesigner!.imageUrl!.toString();
     keteranganStatusBatu.text =
         widget.modelDesigner!.keteranganStatusBatu!.toString();
+    pointModeller.text = widget.modelDesigner!.pointModeller!.toString();
     _getData();
     _getDataBatu();
   }
@@ -1793,6 +1791,36 @@ class _FormViewScreenState extends State<FormViewScreen> {
     );
   }
 
+  //method print
+  // void _createPdf() async {
+  //   final doc = pw.Document();
+
+  //   doc.addPage(pw.Page(
+  //       pageFormat: PdfPageFormat.a4,
+  //       build: (pw.Context context) {
+  //         return pw.Center(
+  //           child: pw.Text('Hello World'),
+  //         ); // Center
+  //       })); // Page
+  // PdfDocument document = PdfDocument();
+  // final doc = pw.Document();
+  // doc.addPage(pw.MultiPage(
+  //     pageFormat: PdfPageFormat.a4,
+  //     build: (context) {
+  //       return [
+  //         pw.SizedBox(
+  //           width: 250,
+  //           child: pw.Row(
+  //             children: [
+  //               pw.Text('try'),
+  //               pw.Text('saja'),
+  //             ],
+  //           ),
+  //         )
+  //       ];
+  //     }));
+  // }
+
   Widget _bagianKiri() {
     return Container(
         width: 700,
@@ -1869,10 +1897,10 @@ class _FormViewScreenState extends State<FormViewScreen> {
                         ? true
                         : false,
                     items: const [
-                      "ARIF",
-                      "ARIS",
-                      "FIKRI",
-                      "YUSE",
+                      "Arif Kurniawan",
+                      "Aris Pravidan",
+                      "Fikryansyah",
+                      "Yuse",
                     ],
                     onChanged: (item) {
                       setState(() {

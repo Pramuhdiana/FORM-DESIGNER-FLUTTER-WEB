@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_typing_uninitialized_variables, avoid_print, use_build_context_synchronously, no_leading_underscores_for_local_identifiers, depend_on_referenced_packages
+// ignore_for_file: prefer_typing_uninitialized_variables, avoid_print, use_build_context_synchronously, no_leading_underscores_for_local_identifiers, depend_on_referenced_packages, unrelated_type_equality_checks
 
 import 'dart:convert';
 
@@ -7,12 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:form_designer/SCM/model/kebutuhan_batu_model.dart';
 import 'package:form_designer/api/api_constant.dart';
 import 'package:form_designer/global/global.dart';
-// ignore: unused_import
-import 'package:form_designer/mainScreen/form_screen_by_id.dart';
-import 'package:form_designer/mainScreen/side_screen_batu.dart';
-import 'package:form_designer/widgets/custom_loading.dart';
+import 'package:form_designer/mainScreen/side_screen_kebutuhan_batu.dart';
 import 'package:http/http.dart' as http;
-import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
@@ -48,7 +44,6 @@ class _ListKebutuhanBatuScreenState extends State<ListKebutuhanBatuScreen> {
   int? limit;
   int _currentSortColumn = 0;
   String siklusDesigner = '';
-
   @override
   initState() {
     super.initState();
@@ -420,8 +415,8 @@ class _ListKebutuhanBatuScreenState extends State<ListKebutuhanBatuScreen> {
       listAllBatu.addAll(listBatu34);
       listAllBatu.addAll(listBatu35);
       listAllBatu.removeWhere((value) => value == '');
-      print(listAllBatu);
-      print(listAllBatu.length);
+      // print(listAllBatu);
+      // print(listAllBatu.length);
 
       listAllQtyBatu.addAll(listQtyBatu1);
       listAllQtyBatu.addAll(listQtyBatu2);
@@ -459,10 +454,10 @@ class _ListKebutuhanBatuScreenState extends State<ListKebutuhanBatuScreen> {
       listAllQtyBatu.addAll(listQtyBatu34);
       listAllQtyBatu.addAll(listQtyBatu35);
       listAllQtyBatu.removeWhere((value) => value == 0);
-      print(listAllQtyBatu);
+      // print(listAllQtyBatu);
 
       listUniqBatu = listAllBatu.toSet().toList();
-      print(listUniqBatu);
+      // print(listUniqBatu);
 
       var sum = 0;
       for (var i = 0; i < listUniqBatu.length; i++) {
@@ -479,7 +474,7 @@ class _ListKebutuhanBatuScreenState extends State<ListKebutuhanBatuScreen> {
         }
       }
 
-      print(mylist);
+      // print(mylist);
       // Iterable<String> keys = mylist.keys;
       // for (final key in keys) {
       //   print(key);
@@ -489,8 +484,8 @@ class _ListKebutuhanBatuScreenState extends State<ListKebutuhanBatuScreen> {
       for (final value in values) {
         listUniqQtyBatu.add(value);
       }
-      print(listUniqBatu);
-      print(listUniqQtyBatu);
+      // print(listUniqBatu);
+      // print(listUniqQtyBatu);
       var g = jsonResponse
           .map((data) => KebutuhanBatuModel.fromJson(data))
           .toList();
@@ -646,35 +641,16 @@ class _ListKebutuhanBatuScreenState extends State<ListKebutuhanBatuScreen> {
                                   columnSpacing: 0,
                                   columns: [
                                     // LOT
-                                    DataColumn(
-                                        label: const SizedBox(
-                                            width: 120,
-                                            child: Text(
-                                              "LOT",
-                                              style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold),
-                                            )),
-                                        onSort: (columnIndex, _) {
-                                          setState(() {
-                                            // _currentSortColumn = columnIndex;
-                                            // if (sort == true) {
-                                            //   sort = false;
-                                            //   filterListBatu!.sort((a, b) => a
-                                            //       .lot!
-                                            //       .toLowerCase()
-                                            //       .compareTo(
-                                            //           b.lot!.toLowerCase()));
-                                            // } else {
-                                            //   sort = true;
-                                            //   filterListBatu!.sort((a, b) => b
-                                            //       .lot!
-                                            //       .toLowerCase()
-                                            //       .compareTo(
-                                            //           a.lot!.toLowerCase()));
-                                            // }
-                                          });
-                                        }),
+                                    const DataColumn(
+                                      label: SizedBox(
+                                          width: 120,
+                                          child: Text(
+                                            "LOT",
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold),
+                                          )),
+                                    ),
                                     DataColumn(label: _verticalDivider),
                                     //UKURAN
                                     DataColumn(
@@ -703,37 +679,7 @@ class _ListKebutuhanBatuScreenState extends State<ListKebutuhanBatuScreen> {
                                           });
                                         }),
                                     DataColumn(label: _verticalDivider),
-                                    // //PARCEL
-                                    // DataColumn(
-                                    //     label: const SizedBox(
-                                    //         width: 120,
-                                    //         child: Text(
-                                    //           "PARCEL",
-                                    //           style: TextStyle(
-                                    //               fontSize: 15,
-                                    //               fontWeight: FontWeight.bold),
-                                    //         )),
-                                    //     onSort: (columnIndex, _) {
-                                    //       setState(() {
-                                    //         _currentSortColumn = columnIndex;
-                                    //         if (sort == true) {
-                                    //           sort = false;
-                                    //           filterListBatu!.sort((a, b) => a
-                                    //               .parcel!
-                                    //               .toLowerCase()
-                                    //               .compareTo(
-                                    //                   b.parcel!.toLowerCase()));
-                                    //         } else {
-                                    //           sort = true;
-                                    //           filterListBatu!.sort((a, b) => b
-                                    //               .parcel!
-                                    //               .toLowerCase()
-                                    //               .compareTo(
-                                    //                   a.parcel!.toLowerCase()));
-                                    //         }
-                                    //       });
-                                    //     }),
-                                    // DataColumn(label: _verticalDivider),
+
                                     //QTY
                                     const DataColumn(
                                       label: SizedBox(
@@ -744,43 +690,40 @@ class _ListKebutuhanBatuScreenState extends State<ListKebutuhanBatuScreen> {
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.bold),
                                           )),
-                                      // onSort: (columnIndex, _) {
-                                      //   setState(() {
-                                      //     _currentSortColumn = columnIndex;
-                                      //     if (sort == true) {
-                                      //       sort = false;
-                                      //       listUniqQtyBatu.sort(
-                                      //           (a, b) => b.compareTo(a));
-                                      //     } else {
-                                      //       sort = true;
-                                      //       listUniqQtyBatu.sort(
-                                      //           (a, b) => a.compareTo(b));
-                                      //     }
-                                      //   });
-                                      // }
                                     ),
-                                    // DataColumn(label: _verticalDivider),
-                                    //AKSI
-                                    // DataColumn(
-                                    //   label: Container(
-                                    //       padding:
-                                    //           const EdgeInsets.only(left: 30),
-                                    //       width: 120,
-                                    //       child: const Text(
-                                    //         "Aksi",
-                                    //         style: TextStyle(
-                                    //             fontSize: 15,
-                                    //             fontWeight: FontWeight.bold),
-                                    //       )),
-                                    // ),
+                                    DataColumn(label: _verticalDivider),
+                                    //? penyesuaian
+                                    DataColumn(
+                                      label: Container(
+                                          padding:
+                                              const EdgeInsets.only(left: 30),
+                                          width: 120,
+                                          child: const Text(
+                                            "Penyesuaian",
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold),
+                                          )),
+                                    ),
+                                    DataColumn(label: _verticalDivider),
+
+                                    //stok
+                                    const DataColumn(
+                                      label: SizedBox(
+                                          width: 120,
+                                          child: Text(
+                                            "STOK",
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold),
+                                          )),
+                                    ),
                                   ],
-                                  source:
-                                      // UserDataTableSource(userData: filterCrm!)),
-                                      RowSource(
-                                          size: listUniqBatu,
-                                          qty: listUniqQtyBatu,
-                                          count: listUniqBatu.length,
-                                          mylist: mylist)),
+                                  source: RowSource(
+                                      size: listUniqBatu,
+                                      qty: listUniqQtyBatu,
+                                      count: listUniqBatu.length,
+                                      mylist: mylist)),
                             ),
                           ),
                         ),
@@ -789,294 +732,6 @@ class _ListKebutuhanBatuScreenState extends State<ListKebutuhanBatuScreen> {
                   ],
                 ),
               ),
-        floatingActionButton: sharedPreferences!.getString('level') != '1'
-            ? null
-            : Stack(children: [
-                Positioned(
-                  left: 40,
-                  bottom: 5,
-                  child: FloatingActionButton.extended(
-                    onPressed: () {
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            final _formKey = GlobalKey<FormState>();
-                            TextEditingController lot = TextEditingController();
-                            TextEditingController size =
-                                TextEditingController();
-                            TextEditingController parcel =
-                                TextEditingController();
-                            TextEditingController qty = TextEditingController();
-                            TextEditingController caratPcs =
-                                TextEditingController();
-                            TextEditingController keterangan =
-                                TextEditingController();
-                            RoundedLoadingButtonController btnController =
-                                RoundedLoadingButtonController();
-                            return AlertDialog(
-                              content: Stack(
-                                clipBehavior: Clip.none,
-                                children: <Widget>[
-                                  Positioned(
-                                    right: -47.0,
-                                    top: -47.0,
-                                    child: InkResponse(
-                                      onTap: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: const CircleAvatar(
-                                        backgroundColor: Colors.red,
-                                        child: Icon(Icons.close),
-                                      ),
-                                    ),
-                                  ),
-                                  Form(
-                                    key: _formKey,
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: <Widget>[
-                                        //lot
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: TextFormField(
-                                            style: const TextStyle(
-                                                fontSize: 14,
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold),
-                                            textInputAction:
-                                                TextInputAction.next,
-                                            controller: lot,
-                                            decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
-                                              labelText: "Lot",
-                                              border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          5.0)),
-                                            ),
-                                            validator: (value) {
-                                              if (value!.isEmpty) {
-                                                return 'Wajib diisi *';
-                                              }
-                                              return null;
-                                            },
-                                          ),
-                                        ),
-                                        //size
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: TextFormField(
-                                            style: const TextStyle(
-                                                fontSize: 14,
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold),
-                                            textInputAction:
-                                                TextInputAction.next,
-                                            controller: size,
-                                            decoration: InputDecoration(
-                                              labelText: "Ukuran",
-                                              border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          5.0)),
-                                            ),
-                                            validator: (value) {
-                                              if (value!.isEmpty) {
-                                                return 'Wajib diisi *';
-                                              }
-                                              return null;
-                                            },
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: TextFormField(
-                                            style: const TextStyle(
-                                                fontSize: 14,
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold),
-                                            textInputAction:
-                                                TextInputAction.next,
-                                            controller: parcel,
-                                            decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
-                                              labelText: "Parcel",
-                                              border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          5.0)),
-                                            ),
-                                            validator: (value) {
-                                              if (value!.isEmpty) {
-                                                return 'Wajib diisi *';
-                                              }
-                                              return null;
-                                            },
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: TextFormField(
-                                            style: const TextStyle(
-                                                fontSize: 14,
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold),
-                                            textInputAction:
-                                                TextInputAction.next,
-                                            controller: qty,
-                                            decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
-                                              labelText: "Qty",
-                                              border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          5.0)),
-                                            ),
-                                            validator: (value) {
-                                              if (value!.isEmpty) {
-                                                return 'Wajib diisi *';
-                                              }
-                                              return null;
-                                            },
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: TextFormField(
-                                            style: const TextStyle(
-                                                fontSize: 14,
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold),
-                                            textInputAction:
-                                                TextInputAction.next,
-                                            controller: caratPcs,
-                                            decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
-                                              labelText: "Carat Pcs",
-                                              border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          5.0)),
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: TextFormField(
-                                            style: const TextStyle(
-                                                fontSize: 14,
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold),
-                                            textInputAction:
-                                                TextInputAction.next,
-                                            controller: keterangan,
-                                            decoration: InputDecoration(
-                                              // hintText: "example: Cahaya Sanivokasi",
-                                              labelText: "Keterangan",
-                                              border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          5.0)),
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: SizedBox(
-                                            width: 250,
-                                            child: CustomLoadingButton(
-                                                controller: btnController,
-                                                child:
-                                                    const Text("Simpan Batu"),
-                                                onPressed: () async {
-                                                  if (_formKey.currentState!
-                                                      .validate()) {
-                                                    _formKey.currentState!
-                                                        .save();
-                                                    Future.delayed(
-                                                            const Duration(
-                                                                seconds: 2))
-                                                        .then((value) async {
-                                                      btnController.success();
-                                                      print(lot.text);
-                                                      print(size.text);
-                                                      print(parcel.text);
-                                                      print(qty.text);
-                                                      print(caratPcs.text);
-                                                      print(keterangan.text);
-                                                      Map<String, dynamic>
-                                                          body = {
-                                                        'lot': lot.text,
-                                                        'size': size.text,
-                                                        'parcel': parcel.text,
-                                                        'qty': qty.text,
-                                                        'caratPcs':
-                                                            caratPcs.text,
-                                                        'keterangan':
-                                                            keterangan.text,
-                                                      };
-                                                      final response = await http.post(
-                                                          Uri.parse(ApiConstants
-                                                                  .baseUrl +
-                                                              ApiConstants
-                                                                  .postDataBatu),
-                                                          body: body);
-                                                      print(response.body);
-                                                      Future.delayed(
-                                                              const Duration(
-                                                                  seconds: 1))
-                                                          .then((value) {
-                                                        btnController
-                                                            .reset(); //reset
-                                                        showDialog<String>(
-                                                            context: context,
-                                                            builder: (BuildContext
-                                                                    context) =>
-                                                                const AlertDialog(
-                                                                  title: Text(
-                                                                    'Tambah batu berhasil',
-                                                                  ),
-                                                                ));
-                                                      });
-                                                      Navigator.push(
-                                                          context,
-                                                          MaterialPageRoute(
-                                                              builder: (c) =>
-                                                                  const MainViewBatu()));
-                                                    });
-                                                  } else {
-                                                    btnController.error();
-                                                    Future.delayed(
-                                                            const Duration(
-                                                                seconds: 1))
-                                                        .then((value) {
-                                                      btnController
-                                                          .reset(); //reset
-                                                    });
-                                                  }
-                                                }),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          });
-                    },
-                    label: const Text(
-                      "Tambah Batu",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    icon: const Icon(
-                      Icons.add_circle_outline_sharp,
-                      color: Colors.white,
-                    ),
-                    backgroundColor: Colors.blue,
-                  ),
-                ),
-              ]),
       ),
     );
   }
@@ -1121,333 +776,540 @@ class RowSource extends DataTableSource {
         Padding(padding: const EdgeInsets.all(0), child: Text(size)),
       ),
       DataCell(_verticalDivider),
-      // //parcel
-      // DataCell(
-      //   Padding(padding: const EdgeInsets.all(0), child: Text(data.parcel)),
-      // ),
-      // DataCell(_verticalDivider),
+
       //qty
       DataCell(
         Padding(
             padding: const EdgeInsets.all(0),
             child: Text(mylist[size].toString())),
       ),
-      // DataCell(_verticalDivider),
-      //Aksi
-      // DataCell(Builder(builder: (context) {
-      //   return sharedPreferences!.getString('level') != '1'
-      //       ? const Row()
-      //       : Row(
-      //           children: [
-      //             IconButton(
-      //               onPressed: () {
-      //                 showDialog<String>(
-      //                   context: context,
-      //                   builder: (BuildContext context) => AlertDialog(
-      //                     title: const Text(
-      //                       'Perhatian',
-      //                       textAlign: TextAlign.center,
-      //                       style: TextStyle(
-      //                           color: Colors.black,
-      //                           fontWeight: FontWeight.bold),
-      //                     ),
-      //                     content: Row(
-      //                       children: [
-      //                         const Text(
-      //                           'Apakah anda yakin ingin menghapus data batu ',
-      //                         ),
-      //                         Text(
-      //                           '${data.size}  ?',
-      //                           style: const TextStyle(
-      //                               fontWeight: FontWeight.bold,
-      //                               color: Colors.black),
-      //                         ),
-      //                       ],
-      //                     ),
-      //                     actions: <Widget>[
-      //                       TextButton(
-      //                         onPressed: () => Navigator.pop(
-      //                           context,
-      //                           'Batal',
-      //                         ),
-      //                         child: const Text('Batal'),
-      //                       ),
-      //                       TextButton(
-      //                         onPressed: () async {
-      //                           var id = data.id.toString();
-      //                           Map<String, String> body = {'id': id};
-      //                           final response = await http.post(
-      //                               Uri.parse(ApiConstants.baseUrl +
-      //                                   ApiConstants.postDeleteBatuById),
-      //                               body: body);
-      //                           print(response.body);
+      DataCell(_verticalDivider),
+      //? penyesuaian Qty
+      DataCell(Builder(builder: (context) {
+        TextEditingController penyesuaianQty = TextEditingController();
 
-      //                           Navigator.push(
-      //                               context,
-      //                               MaterialPageRoute(
-      //                                   builder: (c) => const MainViewBatu()));
-      //                           showDialog<String>(
-      //                               context: context,
-      //                               builder: (BuildContext context) =>
-      //                                   const AlertDialog(
-      //                                     title: Text(
-      //                                       'Hapus Batu Berhasil',
-      //                                     ),
-      //                                   ));
-      //                         },
-      //                         child: const Text(
-      //                           'Hapus',
-      //                           style: TextStyle(color: Colors.red),
-      //                         ),
-      //                       ),
-      //                     ],
-      //                   ),
-      //                 );
-      //               },
-      //               icon: const Icon(
-      //                 Icons.delete,
-      //                 color: Colors.red,
-      //               ),
-      //             ),
-      //             Padding(
-      //               padding: const EdgeInsets.only(left: 25),
-      //               child: IconButton(
-      //                 onPressed: () {
-      //                   showDialog(
-      //                       context: context,
-      //                       builder: (BuildContext context) {
-      //                         final _formKey = GlobalKey<FormState>();
-      //                         TextEditingController lot =
-      //                             TextEditingController();
-      //                         TextEditingController size =
-      //                             TextEditingController();
-      //                         TextEditingController parcel =
-      //                             TextEditingController();
-      //                         TextEditingController qty =
-      //                             TextEditingController();
-      //                         String id;
+        return Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.only(right: 15),
+              width: 100,
+              height: 30,
+              child: TextFormField(
+                style: const TextStyle(
+                    fontSize: 14,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold),
+                textInputAction: TextInputAction.next,
+                controller: penyesuaianQty,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5.0)),
+                ),
+              ),
+            ),
+            IconButton(
+                onPressed: () {
+                  final _formKey = GlobalKey<FormState>();
+                  // ignore: unused_local_variable
+                  bool isKodeAkses = false;
+                  TextEditingController kodeAkses = TextEditingController();
+                  penyesuaianQty.text.isEmpty
+                      ? null
+                      :
+                      //beri kode akses
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              content: Stack(
+                                clipBehavior: Clip.none,
+                                children: <Widget>[
+                                  Positioned(
+                                    right: -47.0,
+                                    top: -47.0,
+                                    child: InkResponse(
+                                      onTap: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: const CircleAvatar(
+                                        backgroundColor: Colors.red,
+                                        child: Icon(Icons.close),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 190,
+                                    child: Form(
+                                      key: _formKey,
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: <Widget>[
+                                          const Padding(
+                                            padding: EdgeInsets.only(
+                                                top: 5, bottom: 10),
+                                            child: Text('Masukan Kode Akses'),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: TextFormField(
+                                              autofocus: true,
+                                              obscureText: true,
+                                              style: const TextStyle(
+                                                  fontSize: 14,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold),
+                                              textInputAction:
+                                                  TextInputAction.next,
+                                              controller: kodeAkses,
+                                              validator: (value) {
+                                                if (value! != aksesKode) {
+                                                  return 'Kode akses salah';
+                                                }
+                                                return null;
+                                              },
+                                              onChanged: (value) {
+                                                isKodeAkses = true;
+                                                kodeAkses.text == aksesKode
+                                                    ? isKodeAkses = true
+                                                    : isKodeAkses = false;
+                                              },
+                                              decoration: InputDecoration(
+                                                labelText: "Kode Akses",
+                                                border: OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5.0)),
+                                              ),
+                                            ),
+                                          ),
+                                          Container(
+                                            width: 200,
+                                            height: 50,
+                                            padding:
+                                                const EdgeInsets.only(top: 10),
+                                            child: ElevatedButton(
+                                              child: const Text("Submit"),
+                                              onPressed: () {
+                                                if (_formKey.currentState!
+                                                    .validate()) {
+                                                  _formKey.currentState!.save();
+                                                  Navigator.of(context).pop();
 
-      //                         id = data.id.toString();
-      //                         lot.text = data.lot;
-      //                         size.text = data.size;
-      //                         parcel.text = data.parcel;
-      //                         qty.text = data.qty.toString();
-      //                         RoundedLoadingButtonController btnController =
-      //                             RoundedLoadingButtonController();
-      //                         return AlertDialog(
-      //                           content: Stack(
-      //                             clipBehavior: Clip.none,
-      //                             children: <Widget>[
-      //                               Positioned(
-      //                                 right: -47.0,
-      //                                 top: -47.0,
-      //                                 child: InkResponse(
-      //                                   onTap: () {
-      //                                     Navigator.of(context).pop();
-      //                                   },
-      //                                   child: const CircleAvatar(
-      //                                     backgroundColor: Colors.red,
-      //                                     child: Icon(Icons.close),
-      //                                   ),
-      //                                 ),
-      //                               ),
-      //                               Form(
-      //                                 key: _formKey,
-      //                                 child: Column(
-      //                                   mainAxisSize: MainAxisSize.min,
-      //                                   children: <Widget>[
-      //                                     //lot
-      //                                     Padding(
-      //                                       padding: const EdgeInsets.all(8.0),
-      //                                       child: TextFormField(
-      //                                         style: const TextStyle(
-      //                                             fontSize: 14,
-      //                                             color: Colors.black,
-      //                                             fontWeight: FontWeight.bold),
-      //                                         textInputAction:
-      //                                             TextInputAction.next,
-      //                                         controller: lot,
-      //                                         decoration: InputDecoration(
-      //                                           // hintText: "example: Cahaya Sanivokasi",
-      //                                           labelText: "Lot",
-      //                                           border: OutlineInputBorder(
-      //                                               borderRadius:
-      //                                                   BorderRadius.circular(
-      //                                                       5.0)),
-      //                                         ),
-      //                                         validator: (value) {
-      //                                           if (value!.isEmpty) {
-      //                                             return 'Wajib diisi *';
-      //                                           }
-      //                                           return null;
-      //                                         },
-      //                                       ),
-      //                                     ),
-      //                                     //size
-      //                                     Padding(
-      //                                       padding: const EdgeInsets.all(8.0),
-      //                                       child: TextFormField(
-      //                                         style: const TextStyle(
-      //                                             fontSize: 14,
-      //                                             color: Colors.black,
-      //                                             fontWeight: FontWeight.bold),
-      //                                         textInputAction:
-      //                                             TextInputAction.next,
-      //                                         controller: size,
-      //                                         decoration: InputDecoration(
-      //                                           // hintText: "example: Cahaya Sanivokasi",
-      //                                           labelText: "Ukuran",
-      //                                           border: OutlineInputBorder(
-      //                                               borderRadius:
-      //                                                   BorderRadius.circular(
-      //                                                       5.0)),
-      //                                         ),
-      //                                         validator: (value) {
-      //                                           if (value!.isEmpty) {
-      //                                             return 'Wajib diisi *';
-      //                                           }
-      //                                           return null;
-      //                                         },
-      //                                       ),
-      //                                     ),
-      //                                     Padding(
-      //                                       padding: const EdgeInsets.all(8.0),
-      //                                       child: TextFormField(
-      //                                         style: const TextStyle(
-      //                                             fontSize: 14,
-      //                                             color: Colors.black,
-      //                                             fontWeight: FontWeight.bold),
-      //                                         textInputAction:
-      //                                             TextInputAction.next,
-      //                                         controller: parcel,
-      //                                         decoration: InputDecoration(
-      //                                           // hintText: "example: Cahaya Sanivokasi",
-      //                                           labelText: "Parcel",
-      //                                           border: OutlineInputBorder(
-      //                                               borderRadius:
-      //                                                   BorderRadius.circular(
-      //                                                       5.0)),
-      //                                         ),
-      //                                         validator: (value) {
-      //                                           if (value!.isEmpty) {
-      //                                             return 'Wajib diisi *';
-      //                                           }
-      //                                           return null;
-      //                                         },
-      //                                       ),
-      //                                     ),
-      //                                     Padding(
-      //                                       padding: const EdgeInsets.all(8.0),
-      //                                       child: TextFormField(
-      //                                         style: const TextStyle(
-      //                                             fontSize: 14,
-      //                                             color: Colors.black,
-      //                                             fontWeight: FontWeight.bold),
-      //                                         textInputAction:
-      //                                             TextInputAction.next,
-      //                                         controller: qty,
-      //                                         decoration: InputDecoration(
-      //                                           // hintText: "example: Cahaya Sanivokasi",
-      //                                           labelText: "Qty",
-      //                                           border: OutlineInputBorder(
-      //                                               borderRadius:
-      //                                                   BorderRadius.circular(
-      //                                                       5.0)),
-      //                                         ),
-      //                                         validator: (value) {
-      //                                           if (value!.isEmpty) {
-      //                                             return 'Wajib diisi *';
-      //                                           }
+                                                  showDialog<String>(
+                                                    context: context,
+                                                    builder: (BuildContext
+                                                            context) =>
+                                                        AlertDialog(
+                                                      title: const Text(
+                                                        'Perhatian',
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style: TextStyle(
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                      content: Row(
+                                                        children: [
+                                                          const Text(
+                                                            'Apakah anda yakin ingin menambahkan penggunaan batu ',
+                                                          ),
+                                                          Text(
+                                                            '$size  ?',
+                                                            style: const TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .black),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      actions: <Widget>[
+                                                        TextButton(
+                                                          onPressed: () =>
+                                                              Navigator.pop(
+                                                            context,
+                                                            'Batal',
+                                                          ),
+                                                          child: const Text(
+                                                            'Batal',
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .amber),
+                                                          ),
+                                                        ),
+                                                        TextButton(
+                                                          onPressed: () async {
+                                                            final response =
+                                                                await http.get(
+                                                              Uri.parse(
+                                                                  '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$size"'),
+                                                            );
+                                                            if (response
+                                                                    .statusCode ==
+                                                                200) {
+                                                              final data =
+                                                                  jsonDecode(
+                                                                      response
+                                                                          .body);
 
-      //                                           return null;
-      //                                         },
-      //                                       ),
-      //                                     ),
-      //                                     Padding(
-      //                                       padding: const EdgeInsets.all(8.0),
-      //                                       child: SizedBox(
-      //                                         width: 250,
-      //                                         child: CustomLoadingButton(
-      //                                             controller: btnController,
-      //                                             child: const Text("Update"),
-      //                                             onPressed: () async {
-      //                                               if (_formKey.currentState!
-      //                                                   .validate()) {
-      //                                                 _formKey.currentState!
-      //                                                     .save();
-      //                                                 Future.delayed(
-      //                                                         const Duration(
-      //                                                             seconds: 2))
-      //                                                     .then((value) async {
-      //                                                   btnController.success();
-      //                                                   Map<String, dynamic>
-      //                                                       body = {
-      //                                                     'id': id,
-      //                                                     'lot': lot.text,
-      //                                                     'size': size.text,
-      //                                                     'parcel': parcel.text,
-      //                                                     'qty': qty.text,
-      //                                                   };
-      //                                                   final response = await http.post(
-      //                                                       Uri.parse(ApiConstants
-      //                                                               .baseUrl +
-      //                                                           ApiConstants
-      //                                                               .postUpdateListDataBatu),
-      //                                                       body: body);
-      //                                                   print(response.body);
-      //                                                   Future.delayed(
-      //                                                           const Duration(
-      //                                                               seconds: 1))
-      //                                                       .then((value) {
-      //                                                     btnController
-      //                                                         .reset(); //reset
-      //                                                     showDialog<String>(
-      //                                                         context: context,
-      //                                                         builder: (BuildContext
-      //                                                                 context) =>
-      //                                                             const AlertDialog(
-      //                                                               title: Text(
-      //                                                                 'Update Berhasil',
-      //                                                               ),
-      //                                                             ));
-      //                                                   });
-      //                                                   Navigator.push(
-      //                                                       context,
-      //                                                       MaterialPageRoute(
-      //                                                           builder: (c) =>
-      //                                                               const MainViewBatu()));
-      //                                                 });
-      //                                               } else {
-      //                                                 btnController.error();
-      //                                                 Future.delayed(
-      //                                                         const Duration(
-      //                                                             seconds: 1))
-      //                                                     .then((value) {
-      //                                                   btnController
-      //                                                       .reset(); //reset
-      //                                                 });
-      //                                               }
-      //                                             }),
-      //                                       ),
-      //                                     )
-      //                                   ],
-      //                                 ),
-      //                               ),
-      //                             ],
-      //                           ),
-      //                         );
-      //                       });
-      //                 },
-      //                 icon: const Icon(
-      //                   Icons.edit,
-      //                   color: Colors.green,
-      //                 ),
-      //               ),
-      //             ),
-      //           ],
-      //         );
-      // }))
+                                                              var stok = data[0]
+                                                                      ['qty'] -
+                                                                  int.parse(
+                                                                      penyesuaianQty
+                                                                          .text);
+                                                              await postUpdateQtyBatuBySize(
+                                                                  size, stok);
+                                                            } else {
+                                                              throw Exception(
+                                                                  'Unexpected error occured!');
+                                                            }
+
+                                                            await postPenyesuaianBatu(
+                                                                size,
+                                                                penyesuaianQty
+                                                                    .text);
+                                                            showDialog<String>(
+                                                                context:
+                                                                    context,
+                                                                builder: (BuildContext
+                                                                        context) =>
+                                                                    const AlertDialog(
+                                                                      title:
+                                                                          Text(
+                                                                        'Penyesuaian Batu Berhasil',
+                                                                      ),
+                                                                    ));
+
+                                                            Navigator.push(
+                                                                context,
+                                                                MaterialPageRoute(
+                                                                    builder: (c) =>
+                                                                        const MainViewKebutuhanBatu()));
+                                                            showDialog<String>(
+                                                                context:
+                                                                    context,
+                                                                builder: (BuildContext
+                                                                        context) =>
+                                                                    const AlertDialog(
+                                                                      title:
+                                                                          Text(
+                                                                        'Penyesuaian Batu Berhasil',
+                                                                      ),
+                                                                    ));
+                                                          },
+                                                          child: const Text(
+                                                            'Tambah',
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .blue),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  );
+                                                } else {}
+                                              },
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          });
+                },
+                icon: const Icon(
+                  Icons.add,
+                  color: Colors.blue,
+                )),
+            IconButton(
+                onPressed: () {
+                  final _formKey = GlobalKey<FormState>();
+                  // ignore: unused_local_variable
+                  bool isKodeAkses = false;
+                  TextEditingController kodeAkses = TextEditingController();
+                  penyesuaianQty.text.isEmpty
+                      ? null
+                      :
+                      //beri kode akses
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              content: Stack(
+                                clipBehavior: Clip.none,
+                                children: <Widget>[
+                                  Positioned(
+                                    right: -47.0,
+                                    top: -47.0,
+                                    child: InkResponse(
+                                      onTap: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: const CircleAvatar(
+                                        backgroundColor: Colors.red,
+                                        child: Icon(Icons.close),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 190,
+                                    child: Form(
+                                      key: _formKey,
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: <Widget>[
+                                          const Padding(
+                                            padding: EdgeInsets.only(
+                                                top: 5, bottom: 10),
+                                            child: Text('Masukan Kode Akses'),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: TextFormField(
+                                              autofocus: true,
+                                              obscureText: true,
+                                              style: const TextStyle(
+                                                  fontSize: 14,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold),
+                                              textInputAction:
+                                                  TextInputAction.next,
+                                              controller: kodeAkses,
+                                              validator: (value) {
+                                                if (value! != aksesKode) {
+                                                  return 'Kode akses salah';
+                                                }
+                                                return null;
+                                              },
+                                              onChanged: (value) {
+                                                isKodeAkses = true;
+                                                kodeAkses.text == aksesKode
+                                                    ? isKodeAkses = true
+                                                    : isKodeAkses = false;
+                                              },
+                                              decoration: InputDecoration(
+                                                labelText: "Kode Akses",
+                                                border: OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5.0)),
+                                              ),
+                                            ),
+                                          ),
+                                          Container(
+                                            width: 200,
+                                            height: 50,
+                                            padding:
+                                                const EdgeInsets.only(top: 10),
+                                            child: ElevatedButton(
+                                              child: const Text("Submit"),
+                                              onPressed: () {
+                                                if (_formKey.currentState!
+                                                    .validate()) {
+                                                  _formKey.currentState!.save();
+                                                  Navigator.of(context).pop();
+                                                  showDialog<String>(
+                                                    context: context,
+                                                    builder: (BuildContext
+                                                            context) =>
+                                                        AlertDialog(
+                                                      title: const Text(
+                                                        'Perhatian',
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style: TextStyle(
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                      content: Row(
+                                                        children: [
+                                                          const Text(
+                                                            'Apakah anda yakin ingin mengurangi penggunaan batu ',
+                                                          ),
+                                                          Text(
+                                                            '$size  ?',
+                                                            style: const TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .black),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      actions: <Widget>[
+                                                        TextButton(
+                                                          onPressed: () =>
+                                                              Navigator.pop(
+                                                            context,
+                                                            'Batal',
+                                                          ),
+                                                          child: const Text(
+                                                            'Batal',
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .amber),
+                                                          ),
+                                                        ),
+                                                        TextButton(
+                                                          onPressed: () async {
+                                                            final response =
+                                                                await http.get(
+                                                              Uri.parse(
+                                                                  '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$size"'),
+                                                            );
+                                                            if (response
+                                                                    .statusCode ==
+                                                                200) {
+                                                              final data =
+                                                                  jsonDecode(
+                                                                      response
+                                                                          .body);
+
+                                                              var stok = data[0]
+                                                                      ['qty'] +
+                                                                  int.parse(
+                                                                      penyesuaianQty
+                                                                          .text);
+                                                              await postUpdateQtyBatuBySize(
+                                                                  size, stok);
+                                                            } else {
+                                                              throw Exception(
+                                                                  'Unexpected error occured!');
+                                                            }
+
+                                                            await postPenyesuaianBatu(
+                                                                size,
+                                                                (int.parse(penyesuaianQty
+                                                                        .text) *
+                                                                    -1));
+                                                            showDialog<String>(
+                                                                context:
+                                                                    context,
+                                                                builder: (BuildContext
+                                                                        context) =>
+                                                                    const AlertDialog(
+                                                                      title:
+                                                                          Text(
+                                                                        'Penyesuaian Batu Berhasil',
+                                                                      ),
+                                                                    ));
+
+                                                            Navigator.push(
+                                                                context,
+                                                                MaterialPageRoute(
+                                                                    builder: (c) =>
+                                                                        const MainViewKebutuhanBatu()));
+                                                            showDialog<String>(
+                                                                context:
+                                                                    context,
+                                                                builder: (BuildContext
+                                                                        context) =>
+                                                                    const AlertDialog(
+                                                                      title:
+                                                                          Text(
+                                                                        'Penyesuaian Batu Berhasil',
+                                                                      ),
+                                                                    ));
+                                                          },
+                                                          child: const Text(
+                                                            'Kurangi',
+                                                            style: TextStyle(
+                                                                color:
+                                                                    Colors.red),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  );
+                                                } else {}
+                                              },
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          });
+                },
+                icon: const Icon(
+                  Icons.remove,
+                  color: Colors.red,
+                ))
+          ],
+        );
+      })),
+      DataCell(_verticalDivider),
+
+      //STOK
+      DataCell(FutureBuilder(
+          future: _getStokBySize(size),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return Text(snapshot.data!.toString());
+            } else {
+              return const CircularProgressIndicator();
+            }
+          })),
     ]);
+  }
+
+  _getStokBySize(size) async {
+    var lot;
+    final response = await http.get(
+      Uri.parse(
+          '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$size"'),
+    );
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      lot = data[0]['qty'];
+      return lot;
+    } else {
+      throw Exception('Unexpected error occured!');
+    }
+  }
+
+  postUpdateQtyBatuBySize(size, qty) async {
+    print('ini qty update $qty');
+    try {
+      Map<String, String> body = {
+        'size': size.toString(),
+        'qty': qty.toString(),
+      };
+      final response = await http.post(
+          Uri.parse(
+              ApiConstants.baseUrl + ApiConstants.postUpdateDataBatuBySize),
+          body: body);
+      print(response.body);
+    } catch (c) {
+      print(c);
+    }
+  }
+
+  postPenyesuaianBatu(size, qty) async {
+    try {
+      Map<String, String> body = {
+        'size': size.toString(),
+        'qty': qty.toString(),
+      };
+      final response = await http.post(
+          Uri.parse(ApiConstants.baseUrl + ApiConstants.postBatuPenyesuaian),
+          body: body);
+      print(response.body);
+    } catch (c) {
+      print(c);
+    }
   }
 
   @override

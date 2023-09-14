@@ -207,7 +207,7 @@ class _ListStatusApprovalScreenState extends State<ListStatusApprovalScreen> {
                                       columns: [
                                         DataColumn(
                                             label: const SizedBox(
-                                                width: 120,
+                                                width: 80,
                                                 child: Text(
                                                   "ID",
                                                   style: TextStyle(
@@ -457,6 +457,7 @@ class RowSource extends DataTableSource {
       //diambil id
       DataCell(
         Container(
+            width: 50,
             padding: const EdgeInsets.all(0),
             child: Text(data.diambilId.toString())),
       ),

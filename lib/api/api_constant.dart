@@ -32,6 +32,7 @@ class ApiConstants {
   static String postLogin = 'spk/login.php';
   static String postFormDesigner = 'spk/create_form_designer.php';
   static String postFormEstimasiPricing = 'spk/create_estimasi_pricing.php';
+  static String postBatuPenyesuaian = 'spk/create_batu_penyesuaian.php';
 
   static String postDeleteFormDesignerById =
       'spk/delete_form_designer_by_id.php';
