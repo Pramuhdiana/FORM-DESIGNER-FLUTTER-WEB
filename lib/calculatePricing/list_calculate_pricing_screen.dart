@@ -482,6 +482,97 @@ class RowSource extends DataTableSource {
                                 child: Column(
                                   mainAxisSize: MainAxisSize.min,
                                   children: <Widget>[
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          const SizedBox(
+                                            width: 200,
+                                            child: Text(
+                                              'Labour',
+                                              maxLines: 2,
+                                              textAlign: TextAlign.left,
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.black),
+                                            ),
+                                          ),
+                                          Text(
+                                            'Rp.${CurrencyFormat.convertToDollar(int.parse(data.labour), 0)}',
+                                            textAlign: TextAlign.left,
+                                            style: const TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          const SizedBox(
+                                            width: 200,
+                                            child: Text(
+                                              'Emas',
+                                              maxLines: 2,
+                                              textAlign: TextAlign.left,
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.black),
+                                            ),
+                                          ),
+                                          Text(
+                                            'Rp.${CurrencyFormat.convertToDollar(int.parse(data.emas), 0)}',
+                                            textAlign: TextAlign.left,
+                                            style: const TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          const SizedBox(
+                                            width: 200,
+                                            child: Text(
+                                              'Diamond',
+                                              maxLines: 2,
+                                              textAlign: TextAlign.left,
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.black),
+                                            ),
+                                          ),
+                                          Text(
+                                            'Rp.${CurrencyFormat.convertToDollar(int.parse(data.diamond), 0)}',
+                                            textAlign: TextAlign.left,
+                                            style: const TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    const Divider(
+                                      thickness: 3,
+                                      color: Colors.black,
+                                    ),
                                     //? batu1
                                     data.qtyBatu1 <= 0
                                         ? const SizedBox()
@@ -506,14 +597,40 @@ class RowSource extends DataTableSource {
                                                   ),
                                                 ),
                                                 Text(
-                                                  '${data.qtyBatu1}',
-                                                  textAlign: TextAlign.left,
+                                                  '(${data.qtyBatu1} Pcs)',
                                                   style: const TextStyle(
                                                       fontSize: 15,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 15),
+                                                  child: FutureBuilder(
+                                                      future: _getDataMdbc(
+                                                          data.batu1),
+                                                      builder:
+                                                          (context, snapshot) {
+                                                        if (snapshot.hasData) {
+                                                          return Text(
+                                                            '(${snapshot.data!} Crt/Pcs)',
+                                                            textAlign:
+                                                                TextAlign.left,
+                                                            style: const TextStyle(
+                                                                fontSize: 15,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .black),
+                                                          );
+                                                        } else {
+                                                          return const CircularProgressIndicator();
+                                                        }
+                                                      }),
+                                                )
                                               ],
                                             ),
                                           ),
@@ -547,14 +664,40 @@ class RowSource extends DataTableSource {
                                                   ),
                                                 ),
                                                 Text(
-                                                  '${data.qtyBatu2}',
-                                                  textAlign: TextAlign.left,
+                                                  '(${data.qtyBatu2} Pcs)',
                                                   style: const TextStyle(
                                                       fontSize: 15,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 15),
+                                                  child: FutureBuilder(
+                                                      future: _getDataMdbc(
+                                                          data.batu2),
+                                                      builder:
+                                                          (context, snapshot) {
+                                                        if (snapshot.hasData) {
+                                                          return Text(
+                                                            '(${snapshot.data!} Crt/Pcs)',
+                                                            textAlign:
+                                                                TextAlign.left,
+                                                            style: const TextStyle(
+                                                                fontSize: 15,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .black),
+                                                          );
+                                                        } else {
+                                                          return const CircularProgressIndicator();
+                                                        }
+                                                      }),
+                                                )
                                               ],
                                             ),
                                           ),
@@ -575,24 +718,53 @@ class RowSource extends DataTableSource {
                                                   MainAxisAlignment
                                                       .spaceBetween,
                                               children: [
+                                                SizedBox(
+                                                  width: 200,
+                                                  child: Text(
+                                                    '${data.batu3}',
+                                                    textAlign: TextAlign.left,
+                                                    style: const TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.black),
+                                                  ),
+                                                ),
                                                 Text(
-                                                  '${data.batu3}',
-                                                  textAlign: TextAlign.left,
+                                                  '(${data.qtyBatu3} Pcs)',
                                                   style: const TextStyle(
                                                       fontSize: 15,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
-                                                Text(
-                                                  '${data.qtyBatu3}',
-                                                  textAlign: TextAlign.left,
-                                                  style: const TextStyle(
-                                                      fontSize: 15,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: Colors.black),
-                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 15),
+                                                  child: FutureBuilder(
+                                                      future: _getDataMdbc(
+                                                          data.batu3),
+                                                      builder:
+                                                          (context, snapshot) {
+                                                        if (snapshot.hasData) {
+                                                          return Text(
+                                                            '(${snapshot.data!} Crt/Pcs)',
+                                                            textAlign:
+                                                                TextAlign.left,
+                                                            style: const TextStyle(
+                                                                fontSize: 15,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .black),
+                                                          );
+                                                        } else {
+                                                          return const CircularProgressIndicator();
+                                                        }
+                                                      }),
+                                                )
                                               ],
                                             ),
                                           ),
@@ -627,14 +799,40 @@ class RowSource extends DataTableSource {
                                                   ),
                                                 ),
                                                 Text(
-                                                  '${data.qtyBatu4}',
-                                                  textAlign: TextAlign.left,
+                                                  '(${data.qtyBatu4} Pcs)',
                                                   style: const TextStyle(
                                                       fontSize: 15,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 15),
+                                                  child: FutureBuilder(
+                                                      future: _getDataMdbc(
+                                                          data.batu4),
+                                                      builder:
+                                                          (context, snapshot) {
+                                                        if (snapshot.hasData) {
+                                                          return Text(
+                                                            '(${snapshot.data!} Crt/Pcs)',
+                                                            textAlign:
+                                                                TextAlign.left,
+                                                            style: const TextStyle(
+                                                                fontSize: 15,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .black),
+                                                          );
+                                                        } else {
+                                                          return const CircularProgressIndicator();
+                                                        }
+                                                      }),
+                                                )
                                               ],
                                             ),
                                           ),
@@ -670,14 +868,40 @@ class RowSource extends DataTableSource {
                                                   ),
                                                 ),
                                                 Text(
-                                                  '${data.qtyBatu5}',
-                                                  textAlign: TextAlign.left,
+                                                  '(${data.qtyBatu5} Pcs)',
                                                   style: const TextStyle(
                                                       fontSize: 15,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 15),
+                                                  child: FutureBuilder(
+                                                      future: _getDataMdbc(
+                                                          data.batu5),
+                                                      builder:
+                                                          (context, snapshot) {
+                                                        if (snapshot.hasData) {
+                                                          return Text(
+                                                            '(${snapshot.data!} Crt/Pcs)',
+                                                            textAlign:
+                                                                TextAlign.left,
+                                                            style: const TextStyle(
+                                                                fontSize: 15,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .black),
+                                                          );
+                                                        } else {
+                                                          return const CircularProgressIndicator();
+                                                        }
+                                                      }),
+                                                )
                                               ],
                                             ),
                                           ),
@@ -712,14 +936,40 @@ class RowSource extends DataTableSource {
                                                   ),
                                                 ),
                                                 Text(
-                                                  '${data.qtyBatu6}',
-                                                  textAlign: TextAlign.left,
+                                                  '(${data.qtyBatu6} Pcs)',
                                                   style: const TextStyle(
                                                       fontSize: 15,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 15),
+                                                  child: FutureBuilder(
+                                                      future: _getDataMdbc(
+                                                          data.batu6),
+                                                      builder:
+                                                          (context, snapshot) {
+                                                        if (snapshot.hasData) {
+                                                          return Text(
+                                                            '(${snapshot.data!} Crt/Pcs)',
+                                                            textAlign:
+                                                                TextAlign.left,
+                                                            style: const TextStyle(
+                                                                fontSize: 15,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .black),
+                                                          );
+                                                        } else {
+                                                          return const CircularProgressIndicator();
+                                                        }
+                                                      }),
+                                                )
                                               ],
                                             ),
                                           ),
@@ -754,14 +1004,40 @@ class RowSource extends DataTableSource {
                                                   ),
                                                 ),
                                                 Text(
-                                                  '${data.qtyBatu7}',
-                                                  textAlign: TextAlign.left,
+                                                  '(${data.qtyBatu7} Pcs)',
                                                   style: const TextStyle(
                                                       fontSize: 15,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 15),
+                                                  child: FutureBuilder(
+                                                      future: _getDataMdbc(
+                                                          data.batu7),
+                                                      builder:
+                                                          (context, snapshot) {
+                                                        if (snapshot.hasData) {
+                                                          return Text(
+                                                            '(${snapshot.data!} Crt/Pcs)',
+                                                            textAlign:
+                                                                TextAlign.left,
+                                                            style: const TextStyle(
+                                                                fontSize: 15,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .black),
+                                                          );
+                                                        } else {
+                                                          return const CircularProgressIndicator();
+                                                        }
+                                                      }),
+                                                )
                                               ],
                                             ),
                                           ),
@@ -796,14 +1072,40 @@ class RowSource extends DataTableSource {
                                                   ),
                                                 ),
                                                 Text(
-                                                  '${data.qtyBatu8}',
-                                                  textAlign: TextAlign.left,
+                                                  '(${data.qtyBatu8} Pcs)',
                                                   style: const TextStyle(
                                                       fontSize: 15,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 15),
+                                                  child: FutureBuilder(
+                                                      future: _getDataMdbc(
+                                                          data.batu8),
+                                                      builder:
+                                                          (context, snapshot) {
+                                                        if (snapshot.hasData) {
+                                                          return Text(
+                                                            '(${snapshot.data!} Crt/Pcs)',
+                                                            textAlign:
+                                                                TextAlign.left,
+                                                            style: const TextStyle(
+                                                                fontSize: 15,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .black),
+                                                          );
+                                                        } else {
+                                                          return const CircularProgressIndicator();
+                                                        }
+                                                      }),
+                                                )
                                               ],
                                             ),
                                           ),
@@ -838,14 +1140,40 @@ class RowSource extends DataTableSource {
                                                   ),
                                                 ),
                                                 Text(
-                                                  '${data.qtyBatu9}',
-                                                  textAlign: TextAlign.left,
+                                                  '(${data.qtyBatu9} Pcs)',
                                                   style: const TextStyle(
                                                       fontSize: 15,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 15),
+                                                  child: FutureBuilder(
+                                                      future: _getDataMdbc(
+                                                          data.batu9),
+                                                      builder:
+                                                          (context, snapshot) {
+                                                        if (snapshot.hasData) {
+                                                          return Text(
+                                                            '(${snapshot.data!} Crt/Pcs)',
+                                                            textAlign:
+                                                                TextAlign.left,
+                                                            style: const TextStyle(
+                                                                fontSize: 15,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .black),
+                                                          );
+                                                        } else {
+                                                          return const CircularProgressIndicator();
+                                                        }
+                                                      }),
+                                                )
                                               ],
                                             ),
                                           ),
@@ -880,14 +1208,40 @@ class RowSource extends DataTableSource {
                                                   ),
                                                 ),
                                                 Text(
-                                                  '${data.qtyBatu10}',
-                                                  textAlign: TextAlign.left,
+                                                  '(${data.qtyBatu10} Pcs)',
                                                   style: const TextStyle(
                                                       fontSize: 15,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 15),
+                                                  child: FutureBuilder(
+                                                      future: _getDataMdbc(
+                                                          data.batu10),
+                                                      builder:
+                                                          (context, snapshot) {
+                                                        if (snapshot.hasData) {
+                                                          return Text(
+                                                            '(${snapshot.data!} Crt/Pcs)',
+                                                            textAlign:
+                                                                TextAlign.left,
+                                                            style: const TextStyle(
+                                                                fontSize: 15,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .black),
+                                                          );
+                                                        } else {
+                                                          return const CircularProgressIndicator();
+                                                        }
+                                                      }),
+                                                )
                                               ],
                                             ),
                                           ),
@@ -922,14 +1276,40 @@ class RowSource extends DataTableSource {
                                                   ),
                                                 ),
                                                 Text(
-                                                  '${data.qtyBatu11}',
-                                                  textAlign: TextAlign.left,
+                                                  '(${data.qtyBatu11} Pcs)',
                                                   style: const TextStyle(
                                                       fontSize: 15,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 15),
+                                                  child: FutureBuilder(
+                                                      future: _getDataMdbc(
+                                                          data.batu11),
+                                                      builder:
+                                                          (context, snapshot) {
+                                                        if (snapshot.hasData) {
+                                                          return Text(
+                                                            '(${snapshot.data!} Crt/Pcs)',
+                                                            textAlign:
+                                                                TextAlign.left,
+                                                            style: const TextStyle(
+                                                                fontSize: 15,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .black),
+                                                          );
+                                                        } else {
+                                                          return const CircularProgressIndicator();
+                                                        }
+                                                      }),
+                                                )
                                               ],
                                             ),
                                           ),
@@ -964,14 +1344,40 @@ class RowSource extends DataTableSource {
                                                   ),
                                                 ),
                                                 Text(
-                                                  '${data.qtyBatu12}',
-                                                  textAlign: TextAlign.left,
+                                                  '(${data.qtyBatu12} Pcs)',
                                                   style: const TextStyle(
                                                       fontSize: 15,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 15),
+                                                  child: FutureBuilder(
+                                                      future: _getDataMdbc(
+                                                          data.batu12),
+                                                      builder:
+                                                          (context, snapshot) {
+                                                        if (snapshot.hasData) {
+                                                          return Text(
+                                                            '(${snapshot.data!} Crt/Pcs)',
+                                                            textAlign:
+                                                                TextAlign.left,
+                                                            style: const TextStyle(
+                                                                fontSize: 15,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .black),
+                                                          );
+                                                        } else {
+                                                          return const CircularProgressIndicator();
+                                                        }
+                                                      }),
+                                                )
                                               ],
                                             ),
                                           ),
@@ -993,24 +1399,53 @@ class RowSource extends DataTableSource {
                                                   MainAxisAlignment
                                                       .spaceBetween,
                                               children: [
+                                                SizedBox(
+                                                  width: 200,
+                                                  child: Text(
+                                                    '${data.batu13}',
+                                                    textAlign: TextAlign.left,
+                                                    style: const TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.black),
+                                                  ),
+                                                ),
                                                 Text(
-                                                  '${data.batu13}',
-                                                  textAlign: TextAlign.left,
+                                                  '(${data.qtyBatu13} Pcs)',
                                                   style: const TextStyle(
                                                       fontSize: 15,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
-                                                Text(
-                                                  '${data.qtyBatu13}',
-                                                  textAlign: TextAlign.left,
-                                                  style: const TextStyle(
-                                                      fontSize: 15,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: Colors.black),
-                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 15),
+                                                  child: FutureBuilder(
+                                                      future: _getDataMdbc(
+                                                          data.batu13),
+                                                      builder:
+                                                          (context, snapshot) {
+                                                        if (snapshot.hasData) {
+                                                          return Text(
+                                                            '(${snapshot.data!} Crt/Pcs)',
+                                                            textAlign:
+                                                                TextAlign.left,
+                                                            style: const TextStyle(
+                                                                fontSize: 15,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .black),
+                                                          );
+                                                        } else {
+                                                          return const CircularProgressIndicator();
+                                                        }
+                                                      }),
+                                                )
                                               ],
                                             ),
                                           ),
@@ -1045,14 +1480,40 @@ class RowSource extends DataTableSource {
                                                   ),
                                                 ),
                                                 Text(
-                                                  '${data.qtyBatu14}',
-                                                  textAlign: TextAlign.left,
+                                                  '(${data.qtyBatu14} Pcs)',
                                                   style: const TextStyle(
                                                       fontSize: 15,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 15),
+                                                  child: FutureBuilder(
+                                                      future: _getDataMdbc(
+                                                          data.batu14),
+                                                      builder:
+                                                          (context, snapshot) {
+                                                        if (snapshot.hasData) {
+                                                          return Text(
+                                                            '(${snapshot.data!} Crt/Pcs)',
+                                                            textAlign:
+                                                                TextAlign.left,
+                                                            style: const TextStyle(
+                                                                fontSize: 15,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .black),
+                                                          );
+                                                        } else {
+                                                          return const CircularProgressIndicator();
+                                                        }
+                                                      }),
+                                                )
                                               ],
                                             ),
                                           ),
@@ -1088,14 +1549,40 @@ class RowSource extends DataTableSource {
                                                   ),
                                                 ),
                                                 Text(
-                                                  '${data.qtyBatu15}',
-                                                  textAlign: TextAlign.left,
+                                                  '(${data.qtyBatu15} Pcs)',
                                                   style: const TextStyle(
                                                       fontSize: 15,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 15),
+                                                  child: FutureBuilder(
+                                                      future: _getDataMdbc(
+                                                          data.batu15),
+                                                      builder:
+                                                          (context, snapshot) {
+                                                        if (snapshot.hasData) {
+                                                          return Text(
+                                                            '(${snapshot.data!} Crt/Pcs)',
+                                                            textAlign:
+                                                                TextAlign.left,
+                                                            style: const TextStyle(
+                                                                fontSize: 15,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .black),
+                                                          );
+                                                        } else {
+                                                          return const CircularProgressIndicator();
+                                                        }
+                                                      }),
+                                                )
                                               ],
                                             ),
                                           ),
@@ -1130,14 +1617,40 @@ class RowSource extends DataTableSource {
                                                   ),
                                                 ),
                                                 Text(
-                                                  '${data.qtyBatu16}',
-                                                  textAlign: TextAlign.left,
+                                                  '(${data.qtyBatu16} Pcs)',
                                                   style: const TextStyle(
                                                       fontSize: 15,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 15),
+                                                  child: FutureBuilder(
+                                                      future: _getDataMdbc(
+                                                          data.batu16),
+                                                      builder:
+                                                          (context, snapshot) {
+                                                        if (snapshot.hasData) {
+                                                          return Text(
+                                                            '(${snapshot.data!} Crt/Pcs)',
+                                                            textAlign:
+                                                                TextAlign.left,
+                                                            style: const TextStyle(
+                                                                fontSize: 15,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .black),
+                                                          );
+                                                        } else {
+                                                          return const CircularProgressIndicator();
+                                                        }
+                                                      }),
+                                                )
                                               ],
                                             ),
                                           ),
@@ -1172,14 +1685,40 @@ class RowSource extends DataTableSource {
                                                   ),
                                                 ),
                                                 Text(
-                                                  '${data.qtyBatu17}',
-                                                  textAlign: TextAlign.left,
+                                                  '(${data.qtyBatu17} Pcs)',
                                                   style: const TextStyle(
                                                       fontSize: 15,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 15),
+                                                  child: FutureBuilder(
+                                                      future: _getDataMdbc(
+                                                          data.batu17),
+                                                      builder:
+                                                          (context, snapshot) {
+                                                        if (snapshot.hasData) {
+                                                          return Text(
+                                                            '(${snapshot.data!} Crt/Pcs)',
+                                                            textAlign:
+                                                                TextAlign.left,
+                                                            style: const TextStyle(
+                                                                fontSize: 15,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .black),
+                                                          );
+                                                        } else {
+                                                          return const CircularProgressIndicator();
+                                                        }
+                                                      }),
+                                                )
                                               ],
                                             ),
                                           ),
@@ -1214,14 +1753,40 @@ class RowSource extends DataTableSource {
                                                   ),
                                                 ),
                                                 Text(
-                                                  '${data.qtyBatu18}',
-                                                  textAlign: TextAlign.left,
+                                                  '(${data.qtyBatu18} Pcs)',
                                                   style: const TextStyle(
                                                       fontSize: 15,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 15),
+                                                  child: FutureBuilder(
+                                                      future: _getDataMdbc(
+                                                          data.batu18),
+                                                      builder:
+                                                          (context, snapshot) {
+                                                        if (snapshot.hasData) {
+                                                          return Text(
+                                                            '(${snapshot.data!} Crt/Pcs)',
+                                                            textAlign:
+                                                                TextAlign.left,
+                                                            style: const TextStyle(
+                                                                fontSize: 15,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .black),
+                                                          );
+                                                        } else {
+                                                          return const CircularProgressIndicator();
+                                                        }
+                                                      }),
+                                                )
                                               ],
                                             ),
                                           ),
@@ -1256,14 +1821,40 @@ class RowSource extends DataTableSource {
                                                   ),
                                                 ),
                                                 Text(
-                                                  '${data.qtyBatu19}',
-                                                  textAlign: TextAlign.left,
+                                                  '(${data.qtyBatu19} Pcs)',
                                                   style: const TextStyle(
                                                       fontSize: 15,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 15),
+                                                  child: FutureBuilder(
+                                                      future: _getDataMdbc(
+                                                          data.batu19),
+                                                      builder:
+                                                          (context, snapshot) {
+                                                        if (snapshot.hasData) {
+                                                          return Text(
+                                                            '(${snapshot.data!} Crt/Pcs)',
+                                                            textAlign:
+                                                                TextAlign.left,
+                                                            style: const TextStyle(
+                                                                fontSize: 15,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .black),
+                                                          );
+                                                        } else {
+                                                          return const CircularProgressIndicator();
+                                                        }
+                                                      }),
+                                                )
                                               ],
                                             ),
                                           ),
@@ -1297,14 +1888,40 @@ class RowSource extends DataTableSource {
                                                   ),
                                                 ),
                                                 Text(
-                                                  '${data.qtyBatu20}',
-                                                  textAlign: TextAlign.left,
+                                                  '(${data.qtyBatu20} Pcs)',
                                                   style: const TextStyle(
                                                       fontSize: 15,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 15),
+                                                  child: FutureBuilder(
+                                                      future: _getDataMdbc(
+                                                          data.batu20),
+                                                      builder:
+                                                          (context, snapshot) {
+                                                        if (snapshot.hasData) {
+                                                          return Text(
+                                                            '(${snapshot.data!} Crt/Pcs)',
+                                                            textAlign:
+                                                                TextAlign.left,
+                                                            style: const TextStyle(
+                                                                fontSize: 15,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .black),
+                                                          );
+                                                        } else {
+                                                          return const CircularProgressIndicator();
+                                                        }
+                                                      }),
+                                                )
                                               ],
                                             ),
                                           ),
@@ -1338,14 +1955,40 @@ class RowSource extends DataTableSource {
                                                   ),
                                                 ),
                                                 Text(
-                                                  '${data.qtyBatu21}',
-                                                  textAlign: TextAlign.left,
+                                                  '(${data.qtyBatu21} Pcs)',
                                                   style: const TextStyle(
                                                       fontSize: 15,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 15),
+                                                  child: FutureBuilder(
+                                                      future: _getDataMdbc(
+                                                          data.batu21),
+                                                      builder:
+                                                          (context, snapshot) {
+                                                        if (snapshot.hasData) {
+                                                          return Text(
+                                                            '(${snapshot.data!} Crt/Pcs)',
+                                                            textAlign:
+                                                                TextAlign.left,
+                                                            style: const TextStyle(
+                                                                fontSize: 15,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .black),
+                                                          );
+                                                        } else {
+                                                          return const CircularProgressIndicator();
+                                                        }
+                                                      }),
+                                                )
                                               ],
                                             ),
                                           ),
@@ -1379,14 +2022,40 @@ class RowSource extends DataTableSource {
                                                   ),
                                                 ),
                                                 Text(
-                                                  '${data.qtyBatu22}',
-                                                  textAlign: TextAlign.left,
+                                                  '(${data.qtyBatu22} Pcs)',
                                                   style: const TextStyle(
                                                       fontSize: 15,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 15),
+                                                  child: FutureBuilder(
+                                                      future: _getDataMdbc(
+                                                          data.batu22),
+                                                      builder:
+                                                          (context, snapshot) {
+                                                        if (snapshot.hasData) {
+                                                          return Text(
+                                                            '(${snapshot.data!} Crt/Pcs)',
+                                                            textAlign:
+                                                                TextAlign.left,
+                                                            style: const TextStyle(
+                                                                fontSize: 15,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .black),
+                                                          );
+                                                        } else {
+                                                          return const CircularProgressIndicator();
+                                                        }
+                                                      }),
+                                                )
                                               ],
                                             ),
                                           ),
@@ -1406,24 +2075,53 @@ class RowSource extends DataTableSource {
                                                   MainAxisAlignment
                                                       .spaceBetween,
                                               children: [
+                                                SizedBox(
+                                                  width: 200,
+                                                  child: Text(
+                                                    '${data.batu23}',
+                                                    textAlign: TextAlign.left,
+                                                    style: const TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.black),
+                                                  ),
+                                                ),
                                                 Text(
-                                                  '${data.batu23}',
-                                                  textAlign: TextAlign.left,
+                                                  '(${data.qtyBatu23} Pcs)',
                                                   style: const TextStyle(
                                                       fontSize: 15,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
-                                                Text(
-                                                  '${data.qtyBatu23}',
-                                                  textAlign: TextAlign.left,
-                                                  style: const TextStyle(
-                                                      fontSize: 15,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: Colors.black),
-                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 15),
+                                                  child: FutureBuilder(
+                                                      future: _getDataMdbc(
+                                                          data.batu23),
+                                                      builder:
+                                                          (context, snapshot) {
+                                                        if (snapshot.hasData) {
+                                                          return Text(
+                                                            '(${snapshot.data!} Crt/Pcs)',
+                                                            textAlign:
+                                                                TextAlign.left,
+                                                            style: const TextStyle(
+                                                                fontSize: 15,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .black),
+                                                          );
+                                                        } else {
+                                                          return const CircularProgressIndicator();
+                                                        }
+                                                      }),
+                                                )
                                               ],
                                             ),
                                           ),
@@ -1457,14 +2155,40 @@ class RowSource extends DataTableSource {
                                                   ),
                                                 ),
                                                 Text(
-                                                  '${data.qtyBatu24}',
-                                                  textAlign: TextAlign.left,
+                                                  '(${data.qtyBatu24} Pcs)',
                                                   style: const TextStyle(
                                                       fontSize: 15,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 15),
+                                                  child: FutureBuilder(
+                                                      future: _getDataMdbc(
+                                                          data.batu24),
+                                                      builder:
+                                                          (context, snapshot) {
+                                                        if (snapshot.hasData) {
+                                                          return Text(
+                                                            '(${snapshot.data!} Crt/Pcs)',
+                                                            textAlign:
+                                                                TextAlign.left,
+                                                            style: const TextStyle(
+                                                                fontSize: 15,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .black),
+                                                          );
+                                                        } else {
+                                                          return const CircularProgressIndicator();
+                                                        }
+                                                      }),
+                                                )
                                               ],
                                             ),
                                           ),
@@ -1499,14 +2223,40 @@ class RowSource extends DataTableSource {
                                                   ),
                                                 ),
                                                 Text(
-                                                  '${data.qtyBatu25}',
-                                                  textAlign: TextAlign.left,
+                                                  '(${data.qtyBatu25} Pcs)',
                                                   style: const TextStyle(
                                                       fontSize: 15,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 15),
+                                                  child: FutureBuilder(
+                                                      future: _getDataMdbc(
+                                                          data.batu25),
+                                                      builder:
+                                                          (context, snapshot) {
+                                                        if (snapshot.hasData) {
+                                                          return Text(
+                                                            '(${snapshot.data!} Crt/Pcs)',
+                                                            textAlign:
+                                                                TextAlign.left,
+                                                            style: const TextStyle(
+                                                                fontSize: 15,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .black),
+                                                          );
+                                                        } else {
+                                                          return const CircularProgressIndicator();
+                                                        }
+                                                      }),
+                                                )
                                               ],
                                             ),
                                           ),
@@ -1541,14 +2291,40 @@ class RowSource extends DataTableSource {
                                                   ),
                                                 ),
                                                 Text(
-                                                  '${data.qtyBatu26}',
-                                                  textAlign: TextAlign.left,
+                                                  '(${data.qtyBatu26} Pcs)',
                                                   style: const TextStyle(
                                                       fontSize: 15,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 15),
+                                                  child: FutureBuilder(
+                                                      future: _getDataMdbc(
+                                                          data.batu26),
+                                                      builder:
+                                                          (context, snapshot) {
+                                                        if (snapshot.hasData) {
+                                                          return Text(
+                                                            '(${snapshot.data!} Crt/Pcs)',
+                                                            textAlign:
+                                                                TextAlign.left,
+                                                            style: const TextStyle(
+                                                                fontSize: 15,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .black),
+                                                          );
+                                                        } else {
+                                                          return const CircularProgressIndicator();
+                                                        }
+                                                      }),
+                                                )
                                               ],
                                             ),
                                           ),
@@ -1582,14 +2358,40 @@ class RowSource extends DataTableSource {
                                                   ),
                                                 ),
                                                 Text(
-                                                  '${data.qtyBatu27}',
-                                                  textAlign: TextAlign.left,
+                                                  '(${data.qtyBatu27} Pcs)',
                                                   style: const TextStyle(
                                                       fontSize: 15,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 15),
+                                                  child: FutureBuilder(
+                                                      future: _getDataMdbc(
+                                                          data.batu27),
+                                                      builder:
+                                                          (context, snapshot) {
+                                                        if (snapshot.hasData) {
+                                                          return Text(
+                                                            '(${snapshot.data!} Crt/Pcs)',
+                                                            textAlign:
+                                                                TextAlign.left,
+                                                            style: const TextStyle(
+                                                                fontSize: 15,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .black),
+                                                          );
+                                                        } else {
+                                                          return const CircularProgressIndicator();
+                                                        }
+                                                      }),
+                                                )
                                               ],
                                             ),
                                           ),
@@ -1623,14 +2425,40 @@ class RowSource extends DataTableSource {
                                                   ),
                                                 ),
                                                 Text(
-                                                  '${data.qtyBatu28}',
-                                                  textAlign: TextAlign.left,
+                                                  '(${data.qtyBatu28} Pcs)',
                                                   style: const TextStyle(
                                                       fontSize: 15,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 15),
+                                                  child: FutureBuilder(
+                                                      future: _getDataMdbc(
+                                                          data.batu28),
+                                                      builder:
+                                                          (context, snapshot) {
+                                                        if (snapshot.hasData) {
+                                                          return Text(
+                                                            '(${snapshot.data!} Crt/Pcs)',
+                                                            textAlign:
+                                                                TextAlign.left,
+                                                            style: const TextStyle(
+                                                                fontSize: 15,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .black),
+                                                          );
+                                                        } else {
+                                                          return const CircularProgressIndicator();
+                                                        }
+                                                      }),
+                                                )
                                               ],
                                             ),
                                           ),
@@ -1664,14 +2492,40 @@ class RowSource extends DataTableSource {
                                                   ),
                                                 ),
                                                 Text(
-                                                  '${data.qtyBatu29}',
-                                                  textAlign: TextAlign.left,
+                                                  '(${data.qtyBatu29} Pcs)',
                                                   style: const TextStyle(
                                                       fontSize: 15,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 15),
+                                                  child: FutureBuilder(
+                                                      future: _getDataMdbc(
+                                                          data.batu29),
+                                                      builder:
+                                                          (context, snapshot) {
+                                                        if (snapshot.hasData) {
+                                                          return Text(
+                                                            '(${snapshot.data!} Crt/Pcs)',
+                                                            textAlign:
+                                                                TextAlign.left,
+                                                            style: const TextStyle(
+                                                                fontSize: 15,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .black),
+                                                          );
+                                                        } else {
+                                                          return const CircularProgressIndicator();
+                                                        }
+                                                      }),
+                                                )
                                               ],
                                             ),
                                           ),
@@ -1706,14 +2560,40 @@ class RowSource extends DataTableSource {
                                                   ),
                                                 ),
                                                 Text(
-                                                  '${data.qtyBatu30}',
-                                                  textAlign: TextAlign.left,
+                                                  '(${data.qtyBatu30} Pcs)',
                                                   style: const TextStyle(
                                                       fontSize: 15,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 15),
+                                                  child: FutureBuilder(
+                                                      future: _getDataMdbc(
+                                                          data.batu30),
+                                                      builder:
+                                                          (context, snapshot) {
+                                                        if (snapshot.hasData) {
+                                                          return Text(
+                                                            '(${snapshot.data!} Crt/Pcs)',
+                                                            textAlign:
+                                                                TextAlign.left,
+                                                            style: const TextStyle(
+                                                                fontSize: 15,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .black),
+                                                          );
+                                                        } else {
+                                                          return const CircularProgressIndicator();
+                                                        }
+                                                      }),
+                                                )
                                               ],
                                             ),
                                           ),
@@ -1747,14 +2627,40 @@ class RowSource extends DataTableSource {
                                                   ),
                                                 ),
                                                 Text(
-                                                  '${data.qtyBatu31}',
-                                                  textAlign: TextAlign.left,
+                                                  '(${data.qtyBatu31} Pcs)',
                                                   style: const TextStyle(
                                                       fontSize: 15,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 15),
+                                                  child: FutureBuilder(
+                                                      future: _getDataMdbc(
+                                                          data.batu31),
+                                                      builder:
+                                                          (context, snapshot) {
+                                                        if (snapshot.hasData) {
+                                                          return Text(
+                                                            '(${snapshot.data!} Crt/Pcs)',
+                                                            textAlign:
+                                                                TextAlign.left,
+                                                            style: const TextStyle(
+                                                                fontSize: 15,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .black),
+                                                          );
+                                                        } else {
+                                                          return const CircularProgressIndicator();
+                                                        }
+                                                      }),
+                                                )
                                               ],
                                             ),
                                           ),
@@ -1788,14 +2694,40 @@ class RowSource extends DataTableSource {
                                                   ),
                                                 ),
                                                 Text(
-                                                  '${data.qtyBatu32}',
-                                                  textAlign: TextAlign.left,
+                                                  '(${data.qtyBatu32} Pcs)',
                                                   style: const TextStyle(
                                                       fontSize: 15,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 15),
+                                                  child: FutureBuilder(
+                                                      future: _getDataMdbc(
+                                                          data.batu32),
+                                                      builder:
+                                                          (context, snapshot) {
+                                                        if (snapshot.hasData) {
+                                                          return Text(
+                                                            '(${snapshot.data!} Crt/Pcs)',
+                                                            textAlign:
+                                                                TextAlign.left,
+                                                            style: const TextStyle(
+                                                                fontSize: 15,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .black),
+                                                          );
+                                                        } else {
+                                                          return const CircularProgressIndicator();
+                                                        }
+                                                      }),
+                                                )
                                               ],
                                             ),
                                           ),
@@ -1829,14 +2761,40 @@ class RowSource extends DataTableSource {
                                                   ),
                                                 ),
                                                 Text(
-                                                  '${data.qtyBatu33}',
-                                                  textAlign: TextAlign.left,
+                                                  '(${data.qtyBatu33} Pcs)',
                                                   style: const TextStyle(
                                                       fontSize: 15,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 15),
+                                                  child: FutureBuilder(
+                                                      future: _getDataMdbc(
+                                                          data.batu33),
+                                                      builder:
+                                                          (context, snapshot) {
+                                                        if (snapshot.hasData) {
+                                                          return Text(
+                                                            '(${snapshot.data!} Crt/Pcs)',
+                                                            textAlign:
+                                                                TextAlign.left,
+                                                            style: const TextStyle(
+                                                                fontSize: 15,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .black),
+                                                          );
+                                                        } else {
+                                                          return const CircularProgressIndicator();
+                                                        }
+                                                      }),
+                                                )
                                               ],
                                             ),
                                           ),
@@ -1870,14 +2828,40 @@ class RowSource extends DataTableSource {
                                                   ),
                                                 ),
                                                 Text(
-                                                  '${data.qtyBatu34}',
-                                                  textAlign: TextAlign.left,
+                                                  '(${data.qtyBatu34} Pcs)',
                                                   style: const TextStyle(
                                                       fontSize: 15,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 15),
+                                                  child: FutureBuilder(
+                                                      future: _getDataMdbc(
+                                                          data.batu34),
+                                                      builder:
+                                                          (context, snapshot) {
+                                                        if (snapshot.hasData) {
+                                                          return Text(
+                                                            '(${snapshot.data!} Crt/Pcs)',
+                                                            textAlign:
+                                                                TextAlign.left,
+                                                            style: const TextStyle(
+                                                                fontSize: 15,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .black),
+                                                          );
+                                                        } else {
+                                                          return const CircularProgressIndicator();
+                                                        }
+                                                      }),
+                                                )
                                               ],
                                             ),
                                           ),
@@ -1911,14 +2895,40 @@ class RowSource extends DataTableSource {
                                                   ),
                                                 ),
                                                 Text(
-                                                  '${data.qtyBatu35}',
-                                                  textAlign: TextAlign.left,
+                                                  '(${data.qtyBatu35} Pcs)',
                                                   style: const TextStyle(
                                                       fontSize: 15,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 15),
+                                                  child: FutureBuilder(
+                                                      future: _getDataMdbc(
+                                                          data.batu35),
+                                                      builder:
+                                                          (context, snapshot) {
+                                                        if (snapshot.hasData) {
+                                                          return Text(
+                                                            '(${snapshot.data!} Crt/Pcs)',
+                                                            textAlign:
+                                                                TextAlign.left,
+                                                            style: const TextStyle(
+                                                                fontSize: 15,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .black),
+                                                          );
+                                                        } else {
+                                                          return const CircularProgressIndicator();
+                                                        }
+                                                      }),
+                                                )
                                               ],
                                             ),
                                           ),
@@ -2000,6 +3010,33 @@ class RowSource extends DataTableSource {
 
   @override
   int get selectedRowCount => 0;
+
+  _getDataMdbc(size) async {
+    try {
+      final response = await http.get(
+        Uri.parse(
+            '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$size"'),
+      );
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        var sum = data[0]['idStone'] ?? 0;
+        var result;
+        try {
+          final response = await http.get(
+            Uri.parse(
+                '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone="$sum"'),
+          );
+          final data = jsonDecode(response.body);
+          result = data[0]['caratPcs'] ?? 0;
+        } catch (c) {
+          print(c);
+        }
+        return result;
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
 }
 
 class UserDataTableSource extends DataTableSource {

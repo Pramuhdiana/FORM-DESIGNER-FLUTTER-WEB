@@ -12,6 +12,7 @@ import 'dart:convert';
 import 'package:form_designer/mainScreen/form_screen_by_id.dart';
 import 'package:form_designer/mainScreen/form_view_screen.dart';
 import 'package:form_designer/mainScreen/printing.dart';
+import 'package:form_designer/mainScreen/side_screen.dart';
 import 'package:form_designer/mainScreen/view_photo_screen.dart';
 import 'package:form_designer/model/form_designer_model.dart';
 import 'package:http/http.dart' as http;
@@ -34,6 +35,7 @@ Widget _verticalDivider = const VerticalDivider(
 
 class _HomeScreenState extends State<HomeScreen> {
   TextEditingController siklus = TextEditingController();
+  String? updateSiklus = '';
   TextEditingController addSiklus = TextEditingController();
 
   String siklusDesigner = '';
@@ -42,6 +44,16 @@ class _HomeScreenState extends State<HomeScreen> {
   List<int> sumHarga = [];
   int totalHarga = 0;
   int totalSPK = 0;
+  double pointArif = 0.0;
+  double pointAris = 0.0;
+  double pointFikri = 0.0;
+  double pointyuse = 0.0;
+  double beratArif = 0.0;
+  double beratAris = 0.0;
+  double beratFikri = 0.0;
+  double beratyuse = 0.0;
+  int totalSPKPending = 0;
+  int totalSPKSelesai = 0;
   TextEditingController controller = TextEditingController();
   bool sort = true;
   int _currentSortColumn = 0;
@@ -71,7 +83,19 @@ class _HomeScreenState extends State<HomeScreen> {
 
       var allData =
           jsonResponse.map((data) => FormDesignerModel.fromJson(data)).toList();
-      if (sharedPreferences!.getString('level') != '1') {
+
+      //! method scm
+      if (sharedPreferences!.getString('level') == '1') {
+        if (month.toString().toLowerCase() == "all") {
+        } else {
+          var filterBySiklus = allData.where((element) =>
+              element.siklus.toString().toLowerCase() ==
+              month.toString().toLowerCase());
+          allData = filterBySiklus.toList();
+        }
+      }
+      //! method designer
+      else if (sharedPreferences!.getString('level') == '2') {
         if (month.toString().toLowerCase() == "all") {
           var filterByName = allData.where((element) =>
               element.namaDesigner.toString().toLowerCase() ==
@@ -86,13 +110,27 @@ class _HomeScreenState extends State<HomeScreen> {
               name.toString().toLowerCase());
           allData = filterByName.toList();
         }
-      } else {
+      }
+      //! method modeller
+
+      else {
         if (month.toString().toLowerCase() == "all") {
+          var filterByName = allData.where((element) =>
+              element.namaModeller.toString().toLowerCase() ==
+              name.toString().toLowerCase());
+          allData = filterByName.toList();
+          allData.sort((a, b) => double.parse(a.pointModeller!)
+              .compareTo(double.parse(b.pointModeller!)));
         } else {
           var filterBySiklus = allData.where((element) =>
               element.siklus.toString().toLowerCase() ==
               month.toString().toLowerCase());
-          allData = filterBySiklus.toList();
+          var filterByName = filterBySiklus.where((element) =>
+              element.namaModeller.toString().toLowerCase() ==
+              name.toString().toLowerCase());
+          allData = filterByName.toList();
+          allData.sort((a, b) => double.parse(a.pointModeller!)
+              .compareTo(double.parse(b.pointModeller!)));
         }
       }
 
@@ -101,6 +139,9 @@ class _HomeScreenState extends State<HomeScreen> {
         myCrm = allData;
         isLoading = true;
         totalSPK = allData.length;
+        totalSPKSelesai = allData
+            .where((element) => double.parse(element.pointModeller!) > 0)
+            .length;
       });
       return allData;
     } else {
@@ -116,7 +157,166 @@ class _HomeScreenState extends State<HomeScreen> {
 
       var g =
           jsonResponse.map((data) => FormDesignerModel.fromJson(data)).toList();
-      if (sharedPreferences!.getString('level') != '1') {
+      //! method scm
+      if (sharedPreferences!.getString('level') == '1') {
+        if (chooseSiklus.toString().toLowerCase() == "all") {
+          listJenisBarang = g;
+
+          //! point modeller
+          var filterByPoint =
+              g.where((element) => double.parse(element.pointModeller!) > 0);
+          //? point modeller arif
+          var filterByArif = filterByPoint.where((element) =>
+              element.namaModeller.toString().toLowerCase() ==
+              "arif kurniawan");
+          pointArif = 0.0;
+          for (var i = 0; i < filterByArif.length; i++) {
+            pointArif += double.parse(filterByPoint.toList()[i].pointModeller!);
+          }
+          //? point modeller aris
+          var filterByAris = filterByPoint.where((element) =>
+              element.namaModeller.toString().toLowerCase() == "aris pravidan");
+          pointAris = 0.0;
+          for (var i = 0; i < filterByAris.length; i++) {
+            pointAris += double.parse(filterByPoint.toList()[i].pointModeller!);
+          }
+
+          //? point modeller fikri
+          var filterByFikri = filterByPoint.where((element) =>
+              element.namaModeller.toString().toLowerCase() == "fikryansyah");
+          pointFikri = 0.0;
+          for (var i = 0; i < filterByFikri.length; i++) {
+            pointFikri +=
+                double.parse(filterByPoint.toList()[i].pointModeller!);
+          }
+
+          //? point modeller yuse
+          var filterByyuse = filterByPoint.where((element) =>
+              element.namaModeller.toString().toLowerCase() == "yuse");
+          pointyuse = 0.0;
+          for (var i = 0; i < filterByyuse.length; i++) {
+            pointyuse += double.parse(filterByPoint.toList()[i].pointModeller!);
+          }
+
+          //! berat modeller
+          var filterByberat =
+              g.where((element) => double.parse(element.beratModeller!) > 0);
+          //? berat modeller arif
+          var filterBeratByArif = filterByberat.where((element) =>
+              element.namaModeller.toString().toLowerCase() ==
+              "arif kurniawan");
+          beratArif = 0.0;
+          for (var i = 0; i < filterBeratByArif.length; i++) {
+            beratArif += double.parse(filterByberat.toList()[i].beratModeller!);
+          }
+          //? berat modeller aris
+          var filterBeratByAris = filterByberat.where((element) =>
+              element.namaModeller.toString().toLowerCase() == "aris pravidan");
+          beratAris = 0.0;
+          for (var i = 0; i < filterBeratByAris.length; i++) {
+            beratAris += double.parse(filterByberat.toList()[i].beratModeller!);
+          }
+
+          //? berat modeller fikri
+          var filterBeratByFikri = filterByberat.where((element) =>
+              element.namaModeller.toString().toLowerCase() == "fikryansyah");
+          beratFikri = 0.0;
+          for (var i = 0; i < filterBeratByFikri.length; i++) {
+            beratFikri +=
+                double.parse(filterByberat.toList()[i].beratModeller!);
+          }
+
+          //? berat modeller yuse
+          var filterBeratByyuse = filterByberat.where((element) =>
+              element.namaModeller.toString().toLowerCase() == "yuse");
+          beratyuse = 0.0;
+          for (var i = 0; i < filterBeratByyuse.length; i++) {
+            beratyuse += double.parse(filterByberat.toList()[i].beratModeller!);
+          }
+        } else {
+          var filterBySiklus = g.where((element) =>
+              element.siklus.toString().toLowerCase() ==
+              chooseSiklus.toString().toLowerCase());
+
+          filterBySiklus.toList();
+          listJenisBarang = filterBySiklus.toList();
+
+          //! point modeller
+          var filterByPoint = filterBySiklus
+              .where((element) => double.parse(element.pointModeller!) > 0.0);
+          //? point modeller arif
+          var filterByArif = filterByPoint.where((element) =>
+              element.namaModeller.toString().toLowerCase() ==
+              "arif kurniawan");
+          pointArif = 0.0;
+          for (var i = 0; i < filterByArif.length; i++) {
+            pointArif += double.parse(filterByPoint.toList()[i].pointModeller!);
+          }
+          //? point modeller aris
+          var filterByAris = filterByPoint.where((element) =>
+              element.namaModeller.toString().toLowerCase() == "aris pravidan");
+          pointAris = 0.0;
+          for (var i = 0; i < filterByAris.length; i++) {
+            pointAris += double.parse(filterByPoint.toList()[i].pointModeller!);
+          }
+
+          //? point modeller fikri
+          var filterByFikri = filterByPoint.where((element) =>
+              element.namaModeller.toString().toLowerCase() == "fikryansyah");
+          pointFikri = 0.0;
+          for (var i = 0; i < filterByFikri.length; i++) {
+            pointFikri +=
+                double.parse(filterByPoint.toList()[i].pointModeller!);
+          }
+
+          //? point modeller yuse
+          var filterByyuse = filterByPoint.where((element) =>
+              element.namaModeller.toString().toLowerCase() == "yuse");
+          pointyuse = 0.0;
+          for (var i = 0; i < filterByyuse.length; i++) {
+            pointyuse += double.parse(filterByPoint.toList()[i].pointModeller!);
+          }
+
+//! berat modeller
+          var filterByberat =
+              g.where((element) => double.parse(element.beratModeller!) > 0);
+          //? berat modeller arif
+          var filterBeratByArif = filterByberat.where((element) =>
+              element.namaModeller.toString().toLowerCase() ==
+              "arif kurniawan");
+          beratArif = 0.0;
+          for (var i = 0; i < filterBeratByArif.length; i++) {
+            beratArif += double.parse(filterByberat.toList()[i].beratModeller!);
+          }
+          //? berat modeller aris
+          var filterBeratByAris = filterByberat.where((element) =>
+              element.namaModeller.toString().toLowerCase() == "aris pravidan");
+          beratAris = 0.0;
+          for (var i = 0; i < filterBeratByAris.length; i++) {
+            beratAris += double.parse(filterByberat.toList()[i].beratModeller!);
+          }
+
+          //? berat modeller fikri
+          var filterBeratByFikri = filterByberat.where((element) =>
+              element.namaModeller.toString().toLowerCase() == "fikryansyah");
+          beratFikri = 0.0;
+          for (var i = 0; i < filterBeratByFikri.length; i++) {
+            beratFikri +=
+                double.parse(filterByberat.toList()[i].beratModeller!);
+          }
+
+          //? berat modeller yuse
+          var filterBeratByyuse = filterByberat.where((element) =>
+              element.namaModeller.toString().toLowerCase() == "yuse");
+          beratyuse = 0.0;
+          for (var i = 0; i < filterBeratByyuse.length; i++) {
+            beratyuse += double.parse(filterByberat.toList()[i].beratModeller!);
+          }
+        }
+      }
+      //! method designer
+
+      else if (sharedPreferences!.getString('level') == '2') {
         if (chooseSiklus.toString().toLowerCase() == "all") {
           var filterByName = g.where((element) =>
               element.namaDesigner.toString().toLowerCase() ==
@@ -133,16 +333,167 @@ class _HomeScreenState extends State<HomeScreen> {
 
           listJenisBarang = filterByName.toList();
         }
-      } else {
+      }
+      //! method modeller
+
+      else {
         if (chooseSiklus.toString().toLowerCase() == "all") {
-          listJenisBarang = g;
+          var filterByNameModeller = g.where((element) =>
+              element.namaModeller.toString().toLowerCase() ==
+              nama.toString().toLowerCase());
+
+          listJenisBarang = filterByNameModeller.toList();
+          //! point modeller
+          var filterByPoint =
+              g.where((element) => double.parse(element.pointModeller!) > 0);
+          //? point modeller arif
+          var filterByArif = filterByPoint.where((element) =>
+              element.namaModeller.toString().toLowerCase() ==
+              "arif kurniawan");
+          pointArif = 0.0;
+          for (var i = 0; i < filterByArif.length; i++) {
+            pointArif += double.parse(filterByPoint.toList()[i].pointModeller!);
+          }
+          //? point modeller aris
+          var filterByAris = filterByPoint.where((element) =>
+              element.namaModeller.toString().toLowerCase() == "aris pravidan");
+          pointAris = 0.0;
+          for (var i = 0; i < filterByAris.length; i++) {
+            pointAris += double.parse(filterByPoint.toList()[i].pointModeller!);
+          }
+
+          //? point modeller fikri
+          var filterByFikri = filterByPoint.where((element) =>
+              element.namaModeller.toString().toLowerCase() == "fikryansyah");
+          pointFikri = 0.0;
+          for (var i = 0; i < filterByFikri.length; i++) {
+            pointFikri +=
+                double.parse(filterByPoint.toList()[i].pointModeller!);
+          }
+
+          //? point modeller yuse
+          var filterByyuse = filterByPoint.where((element) =>
+              element.namaModeller.toString().toLowerCase() == "yuse");
+          pointyuse = 0.0;
+          for (var i = 0; i < filterByyuse.length; i++) {
+            pointyuse += double.parse(filterByPoint.toList()[i].pointModeller!);
+          }
+
+//! berat modeller
+          var filterByberat =
+              g.where((element) => double.parse(element.beratModeller!) > 0);
+          //? berat modeller arif
+          var filterBeratByArif = filterByberat.where((element) =>
+              element.namaModeller.toString().toLowerCase() ==
+              "arif kurniawan");
+          beratArif = 0.0;
+          for (var i = 0; i < filterBeratByArif.length; i++) {
+            beratArif += double.parse(filterByberat.toList()[i].beratModeller!);
+          }
+          //? berat modeller aris
+          var filterBeratByAris = filterByberat.where((element) =>
+              element.namaModeller.toString().toLowerCase() == "aris pravidan");
+          beratAris = 0.0;
+          for (var i = 0; i < filterBeratByAris.length; i++) {
+            beratAris += double.parse(filterByberat.toList()[i].beratModeller!);
+          }
+
+          //? berat modeller fikri
+          var filterBeratByFikri = filterByberat.where((element) =>
+              element.namaModeller.toString().toLowerCase() == "fikryansyah");
+          beratFikri = 0.0;
+          for (var i = 0; i < filterBeratByFikri.length; i++) {
+            beratFikri +=
+                double.parse(filterByberat.toList()[i].beratModeller!);
+          }
+
+          //? berat modeller yuse
+          var filterBeratByyuse = filterByberat.where((element) =>
+              element.namaModeller.toString().toLowerCase() == "yuse");
+          beratyuse = 0.0;
+          for (var i = 0; i < filterBeratByyuse.length; i++) {
+            beratyuse += double.parse(filterByberat.toList()[i].beratModeller!);
+          }
         } else {
           var filterBySiklus = g.where((element) =>
               element.siklus.toString().toLowerCase() ==
               chooseSiklus.toString().toLowerCase());
+          var filterByName = filterBySiklus.where((element) =>
+              element.namaModeller.toString().toLowerCase() ==
+              nama.toString().toLowerCase());
 
-          filterBySiklus.toList();
-          listJenisBarang = filterBySiklus.toList();
+          listJenisBarang = filterByName.toList();
+          //! point modeller
+          var filterByPoint =
+              g.where((element) => double.parse(element.pointModeller!) > 0);
+          //? point modeller arif
+          var filterByArif = filterByPoint.where((element) =>
+              element.namaModeller.toString().toLowerCase() ==
+              "arif kurniawan");
+          pointArif = 0.0;
+          for (var i = 0; i < filterByArif.length; i++) {
+            pointArif += double.parse(filterByPoint.toList()[i].pointModeller!);
+          }
+          //? point modeller aris
+          var filterByAris = filterByPoint.where((element) =>
+              element.namaModeller.toString().toLowerCase() == "aris pravidan");
+          pointAris = 0.0;
+          for (var i = 0; i < filterByAris.length; i++) {
+            pointAris += double.parse(filterByPoint.toList()[i].pointModeller!);
+          }
+
+          //? point modeller fikri
+          var filterByFikri = filterByPoint.where((element) =>
+              element.namaModeller.toString().toLowerCase() == "fikryansyah");
+          pointFikri = 0.0;
+          for (var i = 0; i < filterByFikri.length; i++) {
+            pointFikri +=
+                double.parse(filterByPoint.toList()[i].pointModeller!);
+          }
+
+          //? point modeller yuse
+          var filterByyuse = filterByPoint.where((element) =>
+              element.namaModeller.toString().toLowerCase() == "yuse");
+          pointyuse = 0.0;
+          for (var i = 0; i < filterByyuse.length; i++) {
+            pointyuse += double.parse(filterByPoint.toList()[i].pointModeller!);
+          }
+
+          //! berat modeller
+          var filterByberat =
+              g.where((element) => double.parse(element.beratModeller!) > 0);
+          //? berat modeller arif
+          var filterBeratByArif = filterByberat.where((element) =>
+              element.namaModeller.toString().toLowerCase() ==
+              "arif kurniawan");
+          beratArif = 0.0;
+          for (var i = 0; i < filterBeratByArif.length; i++) {
+            beratArif += double.parse(filterByberat.toList()[i].beratModeller!);
+          }
+          //? berat modeller aris
+          var filterBeratByAris = filterByberat.where((element) =>
+              element.namaModeller.toString().toLowerCase() == "aris pravidan");
+          beratAris = 0.0;
+          for (var i = 0; i < filterBeratByAris.length; i++) {
+            beratAris += double.parse(filterByberat.toList()[i].beratModeller!);
+          }
+
+          //? berat modeller fikri
+          var filterBeratByFikri = filterByberat.where((element) =>
+              element.namaModeller.toString().toLowerCase() == "fikryansyah");
+          beratFikri = 0.0;
+          for (var i = 0; i < filterBeratByFikri.length; i++) {
+            beratFikri +=
+                double.parse(filterByberat.toList()[i].beratModeller!);
+          }
+
+          //? berat modeller yuse
+          var filterBeratByyuse = filterByberat.where((element) =>
+              element.namaModeller.toString().toLowerCase() == "yuse");
+          beratyuse = 0.0;
+          for (var i = 0; i < filterBeratByyuse.length; i++) {
+            beratyuse += double.parse(filterByberat.toList()[i].beratModeller!);
+          }
         }
       }
 
@@ -163,8 +514,18 @@ class _HomeScreenState extends State<HomeScreen> {
       var g =
           jsonResponse.map((data) => FormDesignerModel.fromJson(data)).toList();
 
-      if (sharedPreferences!.getString('level') != '1') {
-//! kondisi designer
+      if (sharedPreferences!.getString('level') == '1') {
+//! kondisi scm
+
+        if (chooseSiklus.toString().toLowerCase() == "all") {
+        } else {
+          var filterBySiklus = g.where((element) =>
+              element.siklus.toString().toLowerCase() ==
+              chooseSiklus.toString().toLowerCase());
+          g = filterBySiklus.toList();
+        }
+      } else if (sharedPreferences!.getString('level') == '2') {
+        //! kondisi designer
         if (chooseSiklus.toString().toLowerCase() == "all") {
           var filterByName = g.where((element) =>
               element.namaDesigner.toString().toLowerCase() ==
@@ -180,13 +541,20 @@ class _HomeScreenState extends State<HomeScreen> {
           g = filterByName.toList();
         }
       } else {
-        //! kondisi scm
+        //! kondisi modeller
         if (chooseSiklus.toString().toLowerCase() == "all") {
+          var filterByName = g.where((element) =>
+              element.namaModeller.toString().toLowerCase() ==
+              nama.toString().toLowerCase());
+          g = filterByName.toList();
         } else {
           var filterBySiklus = g.where((element) =>
               element.siklus.toString().toLowerCase() ==
               chooseSiklus.toString().toLowerCase());
-          g = filterBySiklus.toList();
+          var filterByName = filterBySiklus.where((element) =>
+              element.namaModeller.toString().toLowerCase() ==
+              nama.toString().toLowerCase());
+          g = filterByName.toList();
         }
       }
 
@@ -281,142 +649,148 @@ class _HomeScreenState extends State<HomeScreen> {
             appBar: AppBar(
               automaticallyImplyLeading: false,
               backgroundColor: Colors.blue,
-              leadingWidth: 280,
+              leadingWidth: 320,
               //change siklus
-              leading: Row(
-                children: [
-                  Text(
-                    "Siklus Saat Ini : $nowSiklus",
-                    style: const TextStyle(fontSize: 20, color: Colors.white),
-                  ),
-                  sharedPreferences!.getString('level') != '1'
-                      ? const SizedBox()
-                      : IconButton(
-                          onPressed: () {
-                            final dropdownFormKey = GlobalKey<FormState>();
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(8)),
-                                    // title: const Text('Pilih Siklus'),
-                                    content: SizedBox(
-                                      height: 150,
-                                      child: Column(
-                                        children: [
-                                          Form(
-                                              key: dropdownFormKey,
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  DropdownSearch<String>(
-                                                    items: const [
-                                                      "JANUARI",
-                                                      "FEBRUARI",
-                                                      "MARET",
-                                                      "APRIL",
-                                                      "MEI",
-                                                      "JUNI",
-                                                      "JULI",
-                                                      "AGUSTUS",
-                                                      "SEPTEMBER",
-                                                      "OKTOBER",
-                                                      "NOVEMBER",
-                                                      "DESEMBER"
-                                                    ],
-                                                    dropdownDecoratorProps:
-                                                        DropDownDecoratorProps(
-                                                      dropdownSearchDecoration:
-                                                          InputDecoration(
-                                                        hintText:
-                                                            'Pilih Siklus',
-                                                        filled: true,
-                                                        fillColor: Colors
-                                                            .grey.shade200,
-                                                        enabledBorder:
-                                                            OutlineInputBorder(
-                                                          borderSide:
-                                                              const BorderSide(
-                                                                  color: Colors
-                                                                      .black,
-                                                                  width: 2),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(20),
+              leading: Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: Row(
+                  children: [
+                    Text(
+                      "Siklus Saat Ini : $nowSiklus",
+                      style: const TextStyle(fontSize: 20, color: Colors.white),
+                    ),
+                    sharedPreferences!.getString('level') != '1'
+                        ? const SizedBox()
+                        : IconButton(
+                            onPressed: () {
+                              final dropdownFormKey = GlobalKey<FormState>();
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8)),
+                                      // title: const Text('Pilih Siklus'),
+                                      content: SizedBox(
+                                        height: 150,
+                                        child: Column(
+                                          children: [
+                                            Form(
+                                                key: dropdownFormKey,
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    DropdownSearch<String>(
+                                                      items: const [
+                                                        "JANUARI",
+                                                        "FEBRUARI",
+                                                        "MARET",
+                                                        "APRIL",
+                                                        "MEI",
+                                                        "JUNI",
+                                                        "JULI",
+                                                        "AGUSTUS",
+                                                        "SEPTEMBER",
+                                                        "OKTOBER",
+                                                        "NOVEMBER",
+                                                        "DESEMBER"
+                                                      ],
+                                                      dropdownDecoratorProps:
+                                                          DropDownDecoratorProps(
+                                                        dropdownSearchDecoration:
+                                                            InputDecoration(
+                                                          hintText:
+                                                              'Pilih Siklus',
+                                                          filled: true,
+                                                          fillColor: Colors
+                                                              .grey.shade200,
+                                                          enabledBorder:
+                                                              OutlineInputBorder(
+                                                            borderSide:
+                                                                const BorderSide(
+                                                                    color: Colors
+                                                                        .black,
+                                                                    width: 2),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        20),
+                                                          ),
                                                         ),
                                                       ),
+                                                      validator: (value) =>
+                                                          value == null
+                                                              ? "Siklus tidak boleh kosong"
+                                                              : null,
+                                                      onChanged:
+                                                          (String? newValue) {
+                                                        addSiklus.text =
+                                                            newValue!;
+                                                      },
                                                     ),
-                                                    validator: (value) => value ==
-                                                            null
-                                                        ? "Siklus tidak boleh kosong"
-                                                        : null,
-                                                    onChanged:
-                                                        (String? newValue) {
-                                                      addSiklus.text =
-                                                          newValue!;
-                                                    },
-                                                  ),
-                                                  Container(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            top: 20),
-                                                    child: ElevatedButton(
-                                                        onPressed: () async {
-                                                          if (dropdownFormKey
-                                                              .currentState!
-                                                              .validate()) {
-                                                            //? method untuk mengganti siklus
-                                                            await postSiklus();
-                                                            // ignore: use_build_context_synchronously
-                                                            Navigator.pop(
-                                                                context);
-                                                            // ignore: use_build_context_synchronously
+                                                    Container(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              top: 20),
+                                                      child: ElevatedButton(
+                                                          onPressed: () async {
+                                                            if (dropdownFormKey
+                                                                .currentState!
+                                                                .validate()) {
+                                                              //? method untuk mengganti siklus
+                                                              await postSiklus();
+                                                              // ignore: use_build_context_synchronously
+                                                              Navigator.pop(
+                                                                  context);
+                                                              // ignore: use_build_context_synchronously
 
-                                                            // ignore: use_build_context_synchronously
-                                                            showDialog<String>(
-                                                                context:
-                                                                    context,
-                                                                builder: (BuildContext
-                                                                        context) =>
-                                                                    const AlertDialog(
-                                                                      title:
-                                                                          Text(
-                                                                        'Siklus Berhasil Diterapkan',
-                                                                      ),
-                                                                    ));
-                                                            setState(() {
-                                                              nowSiklus =
-                                                                  addSiklus
-                                                                      .text;
-                                                              sharedPreferences!
-                                                                  .setString(
-                                                                      'siklus',
-                                                                      addSiklus
-                                                                          .text);
-                                                            });
-                                                          }
-                                                        },
-                                                        child: const Text(
-                                                          "Submit",
-                                                          style: TextStyle(
-                                                            fontSize: 24,
-                                                          ),
-                                                        )),
-                                                  )
-                                                ],
-                                              ))
-                                        ],
+                                                              // ignore: use_build_context_synchronously
+                                                              showDialog<
+                                                                      String>(
+                                                                  context:
+                                                                      context,
+                                                                  builder: (BuildContext
+                                                                          context) =>
+                                                                      const AlertDialog(
+                                                                        title:
+                                                                            Text(
+                                                                          'Siklus Berhasil Diterapkan',
+                                                                        ),
+                                                                      ));
+                                                              setState(() {
+                                                                nowSiklus =
+                                                                    addSiklus
+                                                                        .text;
+                                                                sharedPreferences!
+                                                                    .setString(
+                                                                        'siklus',
+                                                                        addSiklus
+                                                                            .text);
+                                                              });
+                                                            }
+                                                          },
+                                                          child: const Text(
+                                                            "Submit",
+                                                            style: TextStyle(
+                                                              fontSize: 24,
+                                                            ),
+                                                          )),
+                                                    )
+                                                  ],
+                                                ))
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                });
-                          },
-                          icon: const Icon(
-                            Icons.change_circle,
-                          ))
-                ],
+                                    );
+                                  });
+                            },
+                            icon: const Icon(
+                              Icons.change_circle,
+                            ))
+                  ],
+                ),
               ),
               title: const Text(
                 "Home",
@@ -430,23 +804,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             ),
-            // Center(
-            //     child: Text(
-            //       'Selamat ${greeting()},\n\n ${sharedPreferences!.getString('nama')!}',
-            //       textAlign: TextAlign.center,
-            //       style: const TextStyle(
-            //           fontSize: 26,
-            //           color: Colors.blueGrey,
-            //           fontWeight: FontWeight.bold,
-            //           fontFamily: 'Acne',
-            //           letterSpacing: 1.5),
-            //     ),
-            //   )
-            body: sharedPreferences!.getString('level') != '1'
-                ?
-                //*dashboard designer
-                dashboardDesigner()
-                : dashboardSCM()));
+            body: sharedPreferences!.getString('level') == '1'
+                ? dashboardSCM()
+                : sharedPreferences!.getString('level') == '2'
+                    ? dashboardDesigner()
+                    : dashboardModeller()));
   }
 
   //! dashboard SCM
@@ -929,7 +1291,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 }
                                 if (snapshot.data!.isEmpty) {
                                   return const Column(children: [
-                                    Text('Kelas Harga',
+                                    Text('Summary Report',
                                         style: TextStyle(
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
@@ -998,16 +1360,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           //fungsi menampilkan jumlah SESUAI table
                                                           Text(
                                                             '$totalSPK',
-                                                            // listKelasHarga
-                                                            //     .where((element) =>
-                                                            //         element ==
-                                                            //         listKelasHarga
-                                                            //             .toSet()
-                                                            //             .toList()[
-                                                            //                 index]
-                                                            //             .toString())
-                                                            //     .length
-                                                            //     .toString(),
                                                             style: const TextStyle(
                                                                 fontSize: 14,
                                                                 color: Colors
@@ -1212,6 +1564,295 @@ class _HomeScreenState extends State<HomeScreen> {
                                   )
                                 ]);
                               })))),
+
+              //* report Point Modeller
+              Align(
+                  alignment: Alignment.bottomLeft,
+                  child: Container(
+                      padding: const EdgeInsets.all(12),
+                      width: 300,
+                      height: 300,
+                      child: Card(
+                          color: Colors.grey.shade200,
+                          child: FutureBuilder(
+                              future: siklus.text.isEmpty
+                                  ? _getKelasHarga("all",
+                                      sharedPreferences!.getString('nama')!)
+                                  : _getKelasHarga(siklusDesigner,
+                                      sharedPreferences!.getString('nama')!),
+                              builder: (context, snapshot) {
+                                if (snapshot.hasError) {
+                                  return Column(children: [
+                                    const Text('Point Modeller',
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 24,
+                                        )),
+                                    const Divider(thickness: 5),
+                                    Center(
+                                        child: SizedBox(
+                                      height: 210,
+                                      child: Lottie.asset(
+                                          "loadingJSON/somethingwentwrong.json"),
+                                    ))
+                                  ]);
+                                }
+
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return Column(children: [
+                                    const Text('Point Modeller',
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 24,
+                                        )),
+                                    const Divider(thickness: 5),
+                                    Container(
+                                      padding: const EdgeInsets.all(5),
+                                      width: 90,
+                                      height: 90,
+                                      child: Lottie.asset(
+                                          "loadingJSON/loadingV1.json"),
+                                    )
+                                  ]);
+                                }
+                                if (snapshot.data!.isEmpty) {
+                                  return const Column(children: [
+                                    Text('Point Modeller',
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 24,
+                                        )),
+                                    Divider(thickness: 5),
+                                    Center(
+                                      child: Text(
+                                        'Tidak ada data',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            fontSize: 26,
+                                            color: Colors.blueGrey,
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: 'Acne',
+                                            letterSpacing: 1.5),
+                                      ),
+                                    )
+                                  ]);
+                                }
+                                if (snapshot.hasData) {
+                                  return Column(children: [
+                                    const Text('Point Modeller',
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 24,
+                                        )),
+                                    const Divider(thickness: 5),
+                                    Expanded(
+                                        child: isLoading == false
+                                            ? Container(
+                                                padding:
+                                                    const EdgeInsets.all(5),
+                                                width: 90,
+                                                height: 90,
+                                                child: Lottie.asset(
+                                                    "loadingJSON/loadingV1.json"),
+                                              )
+                                            : SingleChildScrollView(
+                                                scrollDirection: Axis.vertical,
+                                                child: Container(
+                                                  padding:
+                                                      const EdgeInsets.all(5),
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    children: [
+                                                      //? Arif Kurniawan
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          const Text(
+                                                            'Arif Kurniawan',
+                                                            maxLines: 2,
+                                                            style: TextStyle(
+                                                                fontSize: 14,
+                                                                color: Colors
+                                                                    .black,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
+                                                          //fungsi menampilkan jumlah SESUAI table
+                                                          Text(
+                                                            '$pointArif',
+                                                            style: const TextStyle(
+                                                                fontSize: 14,
+                                                                color: Colors
+                                                                    .black,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
+                                                        ],
+                                                      ),
+
+                                                      const Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                bottom: 10),
+                                                        child: Divider(
+                                                          thickness: 1,
+                                                          color: Colors.grey,
+                                                        ),
+                                                      ),
+
+                                                      //? Aris Pravidan
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          const Text(
+                                                            'Aris Pravidan',
+                                                            maxLines: 2,
+                                                            style: TextStyle(
+                                                                fontSize: 14,
+                                                                color: Colors
+                                                                    .black,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
+                                                          //fungsi menampilkan jumlah SESUAI table
+                                                          Text(
+                                                            '$pointAris',
+                                                            style: const TextStyle(
+                                                                fontSize: 14,
+                                                                color: Colors
+                                                                    .black,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
+                                                        ],
+                                                      ),
+
+                                                      const Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                bottom: 10),
+                                                        child: Divider(
+                                                          thickness: 1,
+                                                          color: Colors.grey,
+                                                        ),
+                                                      ),
+                                                      //? Fikryansyah
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          const Text(
+                                                            'Fikryansyah',
+                                                            maxLines: 2,
+                                                            style: TextStyle(
+                                                                fontSize: 14,
+                                                                color: Colors
+                                                                    .black,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
+                                                          //fungsi menampilkan jumlah SESUAI table
+                                                          Text(
+                                                            '$pointFikri',
+                                                            style: const TextStyle(
+                                                                fontSize: 14,
+                                                                color: Colors
+                                                                    .black,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
+                                                        ],
+                                                      ),
+
+                                                      const Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                bottom: 10),
+                                                        child: Divider(
+                                                          thickness: 1,
+                                                          color: Colors.grey,
+                                                        ),
+                                                      ),
+                                                      //? Yuse
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          const Text(
+                                                            'Yuse',
+                                                            maxLines: 2,
+                                                            style: TextStyle(
+                                                                fontSize: 14,
+                                                                color: Colors
+                                                                    .black,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
+                                                          //fungsi menampilkan jumlah SESUAI table
+                                                          Text(
+                                                            '$pointyuse',
+                                                            style: const TextStyle(
+                                                                fontSize: 14,
+                                                                color: Colors
+                                                                    .black,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
+                                                        ],
+                                                      ),
+
+                                                      const Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                bottom: 10),
+                                                        child: Divider(
+                                                          thickness: 1,
+                                                          color: Colors.grey,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              )),
+                                  ]);
+                                }
+                                return Column(children: [
+                                  const Text('Summary Report',
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 24,
+                                      )),
+                                  const Divider(thickness: 5),
+                                  Container(
+                                    padding: const EdgeInsets.all(5),
+                                    width: 90,
+                                    height: 90,
+                                    child: Lottie.asset(
+                                        "loadingJSON/loadingV1.json"),
+                                  )
+                                ]);
+                              })))),
             ],
           ),
         ),
@@ -1326,7 +1967,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       sharedPreferences!.getString('level') !=
                                               '1'
                                           ? const Text(
-                                              "Kode Design",
+                                              "Kode Marketing",
                                               style: TextStyle(
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.bold),
@@ -1358,16 +1999,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                   } else {
                                     if (sort == true) {
                                       sort = false;
-                                      filterCrm!.sort((a, b) => a.kodeDesign!
+                                      filterCrm!.sort((a, b) => a.kodeMarketing!
                                           .toLowerCase()
                                           .compareTo(
-                                              b.kodeDesign!.toLowerCase()));
+                                              b.kodeMarketing!.toLowerCase()));
                                     } else {
                                       sort = true;
-                                      filterCrm!.sort((a, b) => b.kodeDesign!
+                                      filterCrm!.sort((a, b) => b.kodeMarketing!
                                           .toLowerCase()
                                           .compareTo(
-                                              a.kodeDesign!.toLowerCase()));
+                                              a.kodeMarketing!.toLowerCase()));
                                     }
                                   }
                                 });
@@ -1910,6 +2551,334 @@ class _HomeScreenState extends State<HomeScreen> {
                                   )
                                 ]);
                               })))),
+              //* report Menu Report
+              Align(
+                  alignment: Alignment.bottomLeft,
+                  child: Container(
+                      padding: const EdgeInsets.all(12),
+                      width: 300,
+                      height: 300,
+                      child: Card(
+                          color: Colors.grey.shade200,
+                          child: FutureBuilder(
+                              future: siklus.text.isEmpty
+                                  ? _getKelasHarga("all",
+                                      sharedPreferences!.getString('nama')!)
+                                  : _getKelasHarga(siklusDesigner,
+                                      sharedPreferences!.getString('nama')!),
+                              builder: (context, snapshot) {
+                                if (snapshot.hasError) {
+                                  return Column(children: [
+                                    const Text('Summary Report',
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 24,
+                                        )),
+                                    const Divider(thickness: 5),
+                                    Center(
+                                        child: SizedBox(
+                                      height: 210,
+                                      child: Lottie.asset(
+                                          "loadingJSON/somethingwentwrong.json"),
+                                    ))
+                                  ]);
+                                }
+
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return Column(children: [
+                                    const Text('Summary Report',
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 24,
+                                        )),
+                                    const Divider(thickness: 5),
+                                    Container(
+                                      padding: const EdgeInsets.all(5),
+                                      width: 90,
+                                      height: 90,
+                                      child: Lottie.asset(
+                                          "loadingJSON/loadingV1.json"),
+                                    )
+                                  ]);
+                                }
+                                if (snapshot.data!.isEmpty) {
+                                  return const Column(children: [
+                                    Text('Kelas Harga',
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 24,
+                                        )),
+                                    Divider(thickness: 5),
+                                    Center(
+                                      child: Text(
+                                        'Tidak ada data',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            fontSize: 26,
+                                            color: Colors.blueGrey,
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: 'Acne',
+                                            letterSpacing: 1.5),
+                                      ),
+                                    )
+                                  ]);
+                                }
+                                if (snapshot.hasData) {
+                                  return Column(children: [
+                                    const Text('Summary Report',
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 24,
+                                        )),
+                                    const Divider(thickness: 5),
+                                    Expanded(
+                                        child: isLoading == false
+                                            ? Container(
+                                                padding:
+                                                    const EdgeInsets.all(5),
+                                                width: 90,
+                                                height: 90,
+                                                child: Lottie.asset(
+                                                    "loadingJSON/loadingV1.json"),
+                                              )
+                                            : SingleChildScrollView(
+                                                scrollDirection: Axis.vertical,
+                                                child: Container(
+                                                  padding:
+                                                      const EdgeInsets.all(5),
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    children: [
+                                                      //? SPK
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          const Text(
+                                                            'SPK',
+                                                            maxLines: 2,
+                                                            style: TextStyle(
+                                                                fontSize: 14,
+                                                                color: Colors
+                                                                    .black,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
+                                                          //fungsi menampilkan jumlah SESUAI table
+                                                          Text(
+                                                            '$totalSPK',
+                                                            style: const TextStyle(
+                                                                fontSize: 14,
+                                                                color: Colors
+                                                                    .black,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
+                                                        ],
+                                                      ),
+
+                                                      const Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                bottom: 10),
+                                                        child: Divider(
+                                                          thickness: 1,
+                                                          color: Colors.grey,
+                                                        ),
+                                                      ),
+                                                      // //? SPK LENGKAP
+                                                      // const Row(
+                                                      //   mainAxisAlignment:
+                                                      //       MainAxisAlignment
+                                                      //           .spaceBetween,
+                                                      //   children: [
+                                                      //     Text(
+                                                      //       'SPK Lengkap',
+                                                      //       maxLines: 2,
+                                                      //       style: TextStyle(
+                                                      //           fontSize: 14,
+                                                      //           color: Colors
+                                                      //               .black,
+                                                      //           fontWeight:
+                                                      //               FontWeight
+                                                      //                   .bold),
+                                                      //     ),
+                                                      //     //fungsi menampilkan jumlah SESUAI table
+                                                      //     Text(
+                                                      //       '0',
+                                                      //       style: TextStyle(
+                                                      //           fontSize: 14,
+                                                      //           color: Colors
+                                                      //               .black,
+                                                      //           fontWeight:
+                                                      //               FontWeight
+                                                      //                   .bold),
+                                                      //     ),
+                                                      //   ],
+                                                      // ),
+
+                                                      // const Padding(
+                                                      //   padding:
+                                                      //       EdgeInsets.only(
+                                                      //           bottom: 10),
+                                                      //   child: Divider(
+                                                      //     thickness: 1,
+                                                      //     color: Colors.grey,
+                                                      //   ),
+                                                      // ),
+                                                      // //? SPK Tidak LENGKAP
+                                                      // const Row(
+                                                      //   mainAxisAlignment:
+                                                      //       MainAxisAlignment
+                                                      //           .spaceBetween,
+                                                      //   children: [
+                                                      //     Text(
+                                                      //       'SPK Tidak Lengkap',
+                                                      //       maxLines: 2,
+                                                      //       style: TextStyle(
+                                                      //           fontSize: 14,
+                                                      //           color: Colors
+                                                      //               .black,
+                                                      //           fontWeight:
+                                                      //               FontWeight
+                                                      //                   .bold),
+                                                      //     ),
+                                                      //     //fungsi menampilkan jumlah SESUAI table
+                                                      //     Text(
+                                                      //       '0',
+                                                      //       style: TextStyle(
+                                                      //           fontSize: 14,
+                                                      //           color: Colors
+                                                      //               .black,
+                                                      //           fontWeight:
+                                                      //               FontWeight
+                                                      //                   .bold),
+                                                      //     ),
+                                                      //   ],
+                                                      // ),
+
+                                                      // const Padding(
+                                                      //   padding:
+                                                      //       EdgeInsets.only(
+                                                      //           bottom: 10),
+                                                      //   child: Divider(
+                                                      //     thickness: 1,
+                                                      //     color: Colors.grey,
+                                                      //   ),
+                                                      // ),
+                                                      // //? SPK Cancel
+                                                      // const Row(
+                                                      //   mainAxisAlignment:
+                                                      //       MainAxisAlignment
+                                                      //           .spaceBetween,
+                                                      //   children: [
+                                                      //     Text(
+                                                      //       'SPK Cancel',
+                                                      //       maxLines: 2,
+                                                      //       style: TextStyle(
+                                                      //           fontSize: 14,
+                                                      //           color: Colors
+                                                      //               .black,
+                                                      //           fontWeight:
+                                                      //               FontWeight
+                                                      //                   .bold),
+                                                      //     ),
+                                                      //     //fungsi menampilkan jumlah SESUAI table
+                                                      //     Text(
+                                                      //       '0',
+                                                      //       style: TextStyle(
+                                                      //           fontSize: 14,
+                                                      //           color: Colors
+                                                      //               .black,
+                                                      //           fontWeight:
+                                                      //               FontWeight
+                                                      //                   .bold),
+                                                      //     ),
+                                                      //   ],
+                                                      // ),
+
+                                                      // const Padding(
+                                                      //   padding:
+                                                      //       EdgeInsets.only(
+                                                      //           bottom: 10),
+                                                      //   child: Divider(
+                                                      //     thickness: 1,
+                                                      //     color: Colors.grey,
+                                                      //   ),
+                                                      // ),
+
+                                                      // //? Total harga
+                                                      // Row(
+                                                      //   mainAxisAlignment:
+                                                      //       MainAxisAlignment
+                                                      //           .spaceBetween,
+                                                      //   children: [
+                                                      //     const Text(
+                                                      //       'Total',
+                                                      //       maxLines: 2,
+                                                      //       style: TextStyle(
+                                                      //           fontSize: 14,
+                                                      //           color: Colors
+                                                      //               .black,
+                                                      //           fontWeight:
+                                                      //               FontWeight
+                                                      //                   .bold),
+                                                      //     ),
+                                                      //     //fungsi menampilkan jumlah SESUAI table
+                                                      //     Text(
+                                                      //       'Rp. ${CurrencyFormat.convertToDollar(totalHarga, 0)}',
+                                                      //       style: const TextStyle(
+                                                      //           fontSize: 14,
+                                                      //           color: Colors
+                                                      //               .black,
+                                                      //           fontWeight:
+                                                      //               FontWeight
+                                                      //                   .bold),
+                                                      //     ),
+                                                      //   ],
+                                                      // ),
+
+                                                      // const Padding(
+                                                      //   padding:
+                                                      //       EdgeInsets.only(
+                                                      //           bottom: 10),
+                                                      //   child: Divider(
+                                                      //     thickness: 1,
+                                                      //     color: Colors.grey,
+                                                      //   ),
+                                                      // ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              )),
+                                  ]);
+                                }
+                                return Column(children: [
+                                  const Text('Summary Report',
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 24,
+                                      )),
+                                  const Divider(thickness: 5),
+                                  Container(
+                                    padding: const EdgeInsets.all(5),
+                                    width: 90,
+                                    height: 90,
+                                    child: Lottie.asset(
+                                        "loadingJSON/loadingV1.json"),
+                                  )
+                                ]);
+                              })))),
             ],
           ),
         ),
@@ -1940,10 +2909,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         element.namaDesigner!
                             .toLowerCase()
                             .contains(value.toLowerCase()) ||
-                        element.kodeDesign!
+                        element.kodeMarketing!
                             .toLowerCase()
                             .contains(value.toLowerCase()) ||
-                        element.kodeDesign!
+                        element.kodeMarketing!
                             .toLowerCase()
                             .contains(value.toLowerCase()) ||
                         element.tema!
@@ -2024,7 +2993,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       sharedPreferences!.getString('level') !=
                                               '1'
                                           ? const Text(
-                                              "Kode Design",
+                                              "Kode Marketing",
                                               style: TextStyle(
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.bold),
@@ -2056,16 +3025,935 @@ class _HomeScreenState extends State<HomeScreen> {
                                   } else {
                                     if (sort == true) {
                                       sort = false;
-                                      filterCrm!.sort((a, b) => a.kodeDesign!
+                                      filterCrm!.sort((a, b) => a.kodeMarketing!
                                           .toLowerCase()
                                           .compareTo(
-                                              b.kodeDesign!.toLowerCase()));
+                                              b.kodeMarketing!.toLowerCase()));
                                     } else {
                                       sort = true;
-                                      filterCrm!.sort((a, b) => b.kodeDesign!
+                                      filterCrm!.sort((a, b) => b.kodeMarketing!
                                           .toLowerCase()
                                           .compareTo(
-                                              a.kodeDesign!.toLowerCase()));
+                                              a.kodeMarketing!.toLowerCase()));
+                                    }
+                                  }
+                                });
+                              }),
+                          DataColumn(label: _verticalDivider),
+                          DataColumn(
+                              label: Container(
+                                  padding: const EdgeInsets.only(left: 35),
+                                  width: 120,
+                                  child: const Text(
+                                    "Tema",
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold),
+                                  )),
+                              onSort: (columnIndex, _) {
+                                setState(() {
+                                  _currentSortColumn = columnIndex;
+                                  if (sort == true) {
+                                    sort = false;
+                                    filterCrm!.sort((a, b) => a.tema!
+                                        .toLowerCase()
+                                        .compareTo(b.tema!.toLowerCase()));
+                                  } else {
+                                    sort = true;
+                                    filterCrm!.sort((a, b) => b.tema!
+                                        .toLowerCase()
+                                        .compareTo(a.tema!.toLowerCase()));
+                                  }
+                                });
+                              }),
+                          DataColumn(label: _verticalDivider),
+                          DataColumn(
+                              label: const SizedBox(
+                                  width: 120,
+                                  child: Text(
+                                    "Jenis Barang",
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold),
+                                  )),
+                              onSort: (columnIndex, _) {
+                                setState(() {
+                                  _currentSortColumn = columnIndex;
+                                  if (sort == true) {
+                                    sort = false;
+                                    filterCrm!.sort((a, b) => a.jenisBarang!
+                                        .toLowerCase()
+                                        .compareTo(
+                                            b.jenisBarang!.toLowerCase()));
+                                  } else {
+                                    sort = true;
+                                    filterCrm!.sort((a, b) => b.jenisBarang!
+                                        .toLowerCase()
+                                        .compareTo(
+                                            a.jenisBarang!.toLowerCase()));
+                                  }
+                                });
+                              }),
+                          DataColumn(label: _verticalDivider),
+                          DataColumn(
+                              label: const SizedBox(
+                                  width: 50,
+                                  child: Text(
+                                    "Harga",
+                                    maxLines: 2,
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold),
+                                  )),
+                              onSort: (columnIndex, _) {
+                                setState(() {
+                                  _currentSortColumn = columnIndex;
+                                  if (sort == true) {
+                                    // myCrm.sort((a, b) => a['estimasiHarga'].)
+                                    sort = false;
+                                    filterCrm!.sort((a, b) => a.estimasiHarga!
+                                        .compareTo(b.estimasiHarga!));
+                                    // onsortColum(columnIndex, ascending);
+                                  } else {
+                                    sort = true;
+                                    filterCrm!.sort((a, b) => b.estimasiHarga!
+                                        .compareTo(a.estimasiHarga!));
+                                  }
+                                });
+                              }),
+                          DataColumn(label: _verticalDivider),
+                          const DataColumn(
+                            label: SizedBox(
+                                width: 120,
+                                child: Text(
+                                  "Kelas Harga",
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold),
+                                )),
+                          ),
+                          DataColumn(label: _verticalDivider),
+                          DataColumn(
+                            label: Container(
+                                padding: const EdgeInsets.only(left: 30),
+                                width: 120,
+                                child: const Text(
+                                  "Gambar",
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold),
+                                )),
+                          ),
+                        ],
+                        source:
+                            // UserDataTableSource(userData: filterCrm!)),
+                            RowSource(myData: myCrm, count: myCrm!.length)),
+                  ),
+                ),
+              ),
+      ]),
+    );
+  }
+
+  //! dashboard Designer
+  dashboardModeller() {
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+        Center(
+          child: Container(
+            padding: const EdgeInsets.only(top: 25),
+            width: MediaQuery.of(context).size.width * 0.3,
+            child: DropdownSearch<String>(
+              items: const [
+                "JANUARI",
+                "FEBRUARI",
+                "MARET",
+                "APRIL",
+                "MEI",
+                "JUNI",
+                "JULI",
+                "AGUSTUS",
+                "SEPTEMBER",
+                "OKTOBER",
+                "NOVEMBER",
+                "DESEMBER"
+              ],
+              onChanged: (item) {
+                setState(() {
+                  listKelasHarga.clear();
+                  sumHarga.clear();
+
+                  isLoading = false;
+                  siklus.text = item!;
+                  siklusDesigner = siklus.text.toString();
+                  _getData(
+                      siklusDesigner, sharedPreferences!.getString('nama')!);
+                  _getAllData(
+                      siklusDesigner, sharedPreferences!.getString('nama')!);
+                });
+                Future.delayed(const Duration(milliseconds: 500)).then((value) {
+                  setState(() {
+                    isLoading = true;
+                  });
+                });
+              },
+              popupProps: const PopupPropsMultiSelection.modalBottomSheet(
+                showSelectedItems: true,
+                showSearchBox: true,
+              ),
+              dropdownDecoratorProps: DropDownDecoratorProps(
+                textAlign: TextAlign.center,
+                baseStyle: const TextStyle(
+                    fontSize: 20,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold),
+                dropdownSearchDecoration: InputDecoration(
+                    labelText: "Pilih Siklus",
+                    floatingLabelAlignment: FloatingLabelAlignment.center,
+                    filled: true,
+                    fillColor: Colors.grey.shade200,
+                    border: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(50)))),
+              ),
+            ),
+          ),
+        ),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: [
+              Align(
+                  alignment: Alignment.bottomLeft,
+                  child: Container(
+                      padding: const EdgeInsets.all(12),
+                      width: 300,
+                      height: 300,
+                      child: Card(
+                          color: Colors.grey.shade200,
+                          child: FutureBuilder(
+                              future: siklus.text.isEmpty
+                                  ? _getData("all",
+                                      sharedPreferences!.getString('nama')!)
+                                  : _getData(siklusDesigner,
+                                      sharedPreferences!.getString('nama')!),
+                              builder: (context, snapshot) {
+                                if (snapshot.hasError) {
+                                  return Column(children: [
+                                    const Text('Jenis Barang',
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 24,
+                                        )),
+                                    const Divider(thickness: 5),
+                                    Center(
+                                        child: SizedBox(
+                                      width: 250,
+                                      height: 210,
+                                      child: Lottie.asset(
+                                          "loadingJSON/somethingwentwrong.json"),
+                                    ))
+                                  ]);
+                                }
+
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return Column(children: [
+                                    const Text('Jenis Barang',
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 24,
+                                        )),
+                                    const Divider(thickness: 5),
+                                    Container(
+                                      padding: const EdgeInsets.all(5),
+                                      width: 90,
+                                      height: 90,
+                                      child: Lottie.asset(
+                                          "loadingJSON/loadingV1.json"),
+                                    )
+                                  ]);
+                                }
+                                if (snapshot.data!.isEmpty) {
+                                  return const Column(children: [
+                                    Text('Jenis Barang',
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 24,
+                                        )),
+                                    Divider(thickness: 5),
+                                    Center(
+                                      child: Text(
+                                        'Tidak ada data',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            fontSize: 26,
+                                            color: Colors.blueGrey,
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: 'Acne',
+                                            letterSpacing: 1.5),
+                                      ),
+                                    )
+                                  ]);
+                                }
+                                if (snapshot.hasData) {
+                                  return Column(children: [
+                                    const Text('Jenis Barang',
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 24,
+                                        )),
+                                    const Divider(thickness: 5),
+                                    Expanded(
+                                      child: isLoading == false
+                                          ? Container(
+                                              padding: const EdgeInsets.all(5),
+                                              width: 90,
+                                              height: 90,
+                                              child: Lottie.asset(
+                                                  "loadingJSON/loadingV1.json"),
+                                            )
+                                          : ListView.builder(
+                                              itemCount: snapshot.data!.length,
+                                              itemBuilder:
+                                                  (BuildContext context,
+                                                      int index) {
+                                                var data =
+                                                    snapshot.data![index];
+                                                return Container(
+                                                  padding:
+                                                      const EdgeInsets.all(5),
+                                                  child: Column(
+                                                    children: [
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Text(
+                                                            data.jenisBarang
+                                                                .toString(),
+                                                            style: const TextStyle(
+                                                                fontSize: 14,
+                                                                color: Colors
+                                                                    .black,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
+                                                          Text(
+                                                            listJenisBarang!
+                                                                .where((element) =>
+                                                                    element
+                                                                        .jenisBarang
+                                                                        .toString()
+                                                                        .toLowerCase() ==
+                                                                    data.jenisBarang
+                                                                        .toString()
+                                                                        .toLowerCase())
+                                                                .toList()
+                                                                .length
+                                                                .toString(),
+                                                            style: const TextStyle(
+                                                                fontSize: 14,
+                                                                color: Colors
+                                                                    .black,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      const Divider(
+                                                        thickness: 1,
+                                                        color: Colors.grey,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                    ),
+                                  ]);
+                                }
+                                return Column(children: [
+                                  const Text('Jenis Barang',
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 24,
+                                      )),
+                                  const Divider(thickness: 5),
+                                  Container(
+                                    padding: const EdgeInsets.all(5),
+                                    width: 90,
+                                    height: 90,
+                                    child: Lottie.asset(
+                                        "loadingJSON/loadingV1.json"),
+                                  )
+                                ]);
+                              })))),
+              //* report Menu Report
+              Align(
+                  alignment: Alignment.bottomLeft,
+                  child: Container(
+                      padding: const EdgeInsets.all(12),
+                      width: 300,
+                      height: 300,
+                      child: Card(
+                          color: Colors.grey.shade200,
+                          child: FutureBuilder(
+                              future: siklus.text.isEmpty
+                                  ? _getKelasHarga("all",
+                                      sharedPreferences!.getString('nama')!)
+                                  : _getKelasHarga(siklusDesigner,
+                                      sharedPreferences!.getString('nama')!),
+                              builder: (context, snapshot) {
+                                if (snapshot.hasError) {
+                                  return Column(children: [
+                                    const Text('Summary Report',
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 24,
+                                        )),
+                                    const Divider(thickness: 5),
+                                    Center(
+                                        child: SizedBox(
+                                      height: 210,
+                                      child: Lottie.asset(
+                                          "loadingJSON/somethingwentwrong.json"),
+                                    ))
+                                  ]);
+                                }
+
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return Column(children: [
+                                    const Text('Summary Report',
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 24,
+                                        )),
+                                    const Divider(thickness: 5),
+                                    Container(
+                                      padding: const EdgeInsets.all(5),
+                                      width: 90,
+                                      height: 90,
+                                      child: Lottie.asset(
+                                          "loadingJSON/loadingV1.json"),
+                                    )
+                                  ]);
+                                }
+                                if (snapshot.data!.isEmpty) {
+                                  return const Column(children: [
+                                    Text('Kelas Harga',
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 24,
+                                        )),
+                                    Divider(thickness: 5),
+                                    Center(
+                                      child: Text(
+                                        'Tidak ada data',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            fontSize: 26,
+                                            color: Colors.blueGrey,
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: 'Acne',
+                                            letterSpacing: 1.5),
+                                      ),
+                                    )
+                                  ]);
+                                }
+                                if (snapshot.hasData) {
+                                  return Column(children: [
+                                    const Text('Summary Report',
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 24,
+                                        )),
+                                    const Divider(thickness: 5),
+                                    Expanded(
+                                        child: isLoading == false
+                                            ? Container(
+                                                padding:
+                                                    const EdgeInsets.all(5),
+                                                width: 90,
+                                                height: 90,
+                                                child: Lottie.asset(
+                                                    "loadingJSON/loadingV1.json"),
+                                              )
+                                            : SingleChildScrollView(
+                                                scrollDirection: Axis.vertical,
+                                                child: Container(
+                                                  padding:
+                                                      const EdgeInsets.all(5),
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    children: [
+                                                      //? Total SPK
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          const Text(
+                                                            'TOTAL SPK',
+                                                            maxLines: 2,
+                                                            style: TextStyle(
+                                                                fontSize: 18,
+                                                                color: Colors
+                                                                    .black,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
+                                                          //fungsi menampilkan jumlah SESUAI table
+                                                          Text(
+                                                            '$totalSPK',
+                                                            style: const TextStyle(
+                                                                fontSize: 18,
+                                                                color: Colors
+                                                                    .black,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
+                                                        ],
+                                                      ),
+
+                                                      const Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                bottom: 10),
+                                                        child: Divider(
+                                                          thickness: 1,
+                                                          color: Colors.grey,
+                                                        ),
+                                                      ),
+                                                      //? SPK PENDING
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          const Text(
+                                                            'SPK Pending',
+                                                            maxLines: 2,
+                                                            style: TextStyle(
+                                                                fontSize: 14,
+                                                                color: Colors
+                                                                    .orange,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
+                                                          //fungsi menampilkan jumlah SESUAI table
+                                                          Text(
+                                                            '${totalSPK - totalSPKSelesai}',
+                                                            style: const TextStyle(
+                                                                fontSize: 14,
+                                                                color: Colors
+                                                                    .orange,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
+                                                        ],
+                                                      ),
+
+                                                      const Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                bottom: 10),
+                                                        child: Divider(
+                                                          thickness: 1,
+                                                          color: Colors.grey,
+                                                        ),
+                                                      ),
+                                                      //? SPK selesai
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          const Text(
+                                                            'SPK Selesai',
+                                                            maxLines: 2,
+                                                            style: TextStyle(
+                                                                fontSize: 14,
+                                                                color: Colors
+                                                                    .green,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
+                                                          //fungsi menampilkan jumlah SESUAI table
+                                                          Text(
+                                                            '$totalSPKSelesai',
+                                                            style: const TextStyle(
+                                                                fontSize: 14,
+                                                                color: Colors
+                                                                    .green,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
+                                                        ],
+                                                      ),
+
+                                                      const Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                bottom: 10),
+                                                        child: Divider(
+                                                          thickness: 1,
+                                                          color: Colors.grey,
+                                                        ),
+                                                      ),
+                                                      //? Point Modeller
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          const Text(
+                                                            'Point Modeller',
+                                                            maxLines: 2,
+                                                            style: TextStyle(
+                                                                fontSize: 14,
+                                                                color: Colors
+                                                                    .black,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
+                                                          //fungsi menampilkan jumlah SESUAI table
+                                                          Text(
+                                                            sharedPreferences!
+                                                                        .getString(
+                                                                            'nama')!
+                                                                        .toString()
+                                                                        .toLowerCase() ==
+                                                                    "arif kurniawan"
+                                                                ? '$pointArif'
+                                                                : sharedPreferences!
+                                                                            .getString(
+                                                                                'nama')!
+                                                                            .toString()
+                                                                            .toLowerCase() ==
+                                                                        "aris pravidan"
+                                                                    ? '$pointAris'
+                                                                    : sharedPreferences!.getString('nama')!.toString().toLowerCase() ==
+                                                                            "fikryansyah"
+                                                                        ? '$pointFikri'
+                                                                        : '$pointyuse',
+                                                            style: const TextStyle(
+                                                                fontSize: 14,
+                                                                color: Colors
+                                                                    .black,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
+                                                        ],
+                                                      ),
+
+                                                      const Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                bottom: 10),
+                                                        child: Divider(
+                                                          thickness: 1,
+                                                          color: Colors.grey,
+                                                        ),
+                                                      ),
+//? berat Modeller
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          const Text(
+                                                            'Berat Modeller',
+                                                            maxLines: 2,
+                                                            style: TextStyle(
+                                                                fontSize: 14,
+                                                                color: Colors
+                                                                    .black,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
+                                                          //fungsi menampilkan jumlah SESUAI table
+                                                          Text(
+                                                            sharedPreferences!
+                                                                        .getString(
+                                                                            'nama')!
+                                                                        .toString()
+                                                                        .toLowerCase() ==
+                                                                    "arif kurniawan"
+                                                                ? '$beratArif'
+                                                                : sharedPreferences!
+                                                                            .getString(
+                                                                                'nama')!
+                                                                            .toString()
+                                                                            .toLowerCase() ==
+                                                                        "aris pravidan"
+                                                                    ? '$beratAris'
+                                                                    : sharedPreferences!.getString('nama')!.toString().toLowerCase() ==
+                                                                            "fikryansyah"
+                                                                        ? '$beratFikri'
+                                                                        : '$beratyuse',
+                                                            style: const TextStyle(
+                                                                fontSize: 14,
+                                                                color: Colors
+                                                                    .black,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
+                                                        ],
+                                                      ),
+
+                                                      const Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                bottom: 10),
+                                                        child: Divider(
+                                                          thickness: 1,
+                                                          color: Colors.grey,
+                                                        ),
+                                                      ),
+                                                      // //? Total harga
+                                                      // Row(
+                                                      //   mainAxisAlignment:
+                                                      //       MainAxisAlignment
+                                                      //           .spaceBetween,
+                                                      //   children: [
+                                                      //     const Text(
+                                                      //       'Total',
+                                                      //       maxLines: 2,
+                                                      //       style: TextStyle(
+                                                      //           fontSize: 14,
+                                                      //           color: Colors
+                                                      //               .black,
+                                                      //           fontWeight:
+                                                      //               FontWeight
+                                                      //                   .bold),
+                                                      //     ),
+                                                      //     //fungsi menampilkan jumlah SESUAI table
+                                                      //     Text(
+                                                      //       'Rp. ${CurrencyFormat.convertToDollar(totalHarga, 0)}',
+                                                      //       style: const TextStyle(
+                                                      //           fontSize: 14,
+                                                      //           color: Colors
+                                                      //               .black,
+                                                      //           fontWeight:
+                                                      //               FontWeight
+                                                      //                   .bold),
+                                                      //     ),
+                                                      //   ],
+                                                      // ),
+
+                                                      // const Padding(
+                                                      //   padding:
+                                                      //       EdgeInsets.only(
+                                                      //           bottom: 10),
+                                                      //   child: Divider(
+                                                      //     thickness: 1,
+                                                      //     color: Colors.grey,
+                                                      //   ),
+                                                      // ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              )),
+                                  ]);
+                                }
+                                return Column(children: [
+                                  const Text('Summary Report',
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 24,
+                                      )),
+                                  const Divider(thickness: 5),
+                                  Container(
+                                    padding: const EdgeInsets.all(5),
+                                    width: 90,
+                                    height: 90,
+                                    child: Lottie.asset(
+                                        "loadingJSON/loadingV1.json"),
+                                  )
+                                ]);
+                              })))),
+            ],
+          ),
+        ),
+        //? search anything
+        Container(
+          width: MediaQuery.of(context).size.width * 0.5,
+          height: 45,
+          padding: const EdgeInsets.all(5),
+          decoration: BoxDecoration(
+              border: Border.all(
+                color: Colors.grey,
+              ),
+              borderRadius: BorderRadius.circular(12)),
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            child: TextField(
+              textAlign: TextAlign.center,
+              controller: controller,
+              decoration:
+                  const InputDecoration(hintText: "Search Anything ..."),
+              onChanged: (value) {
+                //fungsi search anyting
+                myCrm = filterCrm!
+                    .where((element) =>
+                        element.kodeDesignMdbc!
+                            .toLowerCase()
+                            .contains(value.toLowerCase()) ||
+                        element.namaDesigner!
+                            .toLowerCase()
+                            .contains(value.toLowerCase()) ||
+                        element.kodeMarketing!
+                            .toLowerCase()
+                            .contains(value.toLowerCase()) ||
+                        element.kodeMarketing!
+                            .toLowerCase()
+                            .contains(value.toLowerCase()) ||
+                        element.tema!
+                            .toLowerCase()
+                            .contains(value.toLowerCase()) ||
+                        element.jenisBarang!
+                            .toLowerCase()
+                            .contains(value.toLowerCase()) ||
+                        element.estimasiHarga!
+                            .toString()
+                            .contains(value.toLowerCase()))
+                    .toList();
+
+                setState(() {});
+              },
+            ),
+          ),
+        ),
+        //? table list
+        isLoading == false
+            ? Center(
+                child: SizedBox(
+                width: 150,
+                height: 150,
+                child: Lottie.asset("loadingJSON/loadingV2.json"),
+              ))
+            : Container(
+                padding: const EdgeInsets.all(15),
+                width: MediaQuery.of(context).size.width * 1,
+                child: SizedBox(
+                  width: double.infinity,
+                  child: Theme(
+                    data: ThemeData.light().copyWith(
+                        // cardColor: Theme.of(context).canvasColor),
+                        cardColor: Colors.white,
+                        hoverColor: Colors.grey.shade400,
+                        dividerColor: Colors.grey),
+                    child: PaginatedDataTable(
+                        // ignore: deprecated_member_use
+                        dataRowHeight: 200,
+                        sortColumnIndex: _currentSortColumn,
+                        sortAscending: sort,
+                        rowsPerPage: 10,
+                        columnSpacing: 0,
+                        columns: [
+                          DataColumn(
+                              label: const SizedBox(
+                                  width: 120,
+                                  child: Text(
+                                    "Kode MDBC",
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold),
+                                  )),
+                              onSort: (columnIndex, _) {
+                                setState(() {
+                                  _currentSortColumn = columnIndex;
+                                  if (sort == true) {
+                                    sort = false;
+                                    filterCrm!.sort((a, b) => a.kodeDesignMdbc!
+                                        .toLowerCase()
+                                        .compareTo(
+                                            b.kodeDesignMdbc!.toLowerCase()));
+                                  } else {
+                                    sort = true;
+                                    filterCrm!.sort((a, b) => b.kodeDesignMdbc!
+                                        .toLowerCase()
+                                        .compareTo(
+                                            a.kodeDesignMdbc!.toLowerCase()));
+                                  }
+                                });
+                              }),
+                          DataColumn(label: _verticalDivider),
+                          DataColumn(
+                              label: SizedBox(
+                                  width: 120,
+                                  child:
+                                      sharedPreferences!.getString('level') !=
+                                              '1'
+                                          ? const Text(
+                                              "Kode Marketing",
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold),
+                                            )
+                                          : const Text(
+                                              "Nama Designer",
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold),
+                                            )),
+                              onSort: (columnIndex, _) {
+                                setState(() {
+                                  _currentSortColumn = columnIndex;
+                                  if (sharedPreferences!.getString('level') ==
+                                      '1') {
+                                    if (sort == true) {
+                                      sort = false;
+                                      filterCrm!.sort((a, b) => a.namaDesigner!
+                                          .toLowerCase()
+                                          .compareTo(
+                                              b.namaDesigner!.toLowerCase()));
+                                    } else {
+                                      sort = true;
+                                      filterCrm!.sort((a, b) => b.namaDesigner!
+                                          .toLowerCase()
+                                          .compareTo(
+                                              a.namaDesigner!.toLowerCase()));
+                                    }
+                                  } else {
+                                    if (sort == true) {
+                                      sort = false;
+                                      filterCrm!.sort((a, b) => a.kodeMarketing!
+                                          .toLowerCase()
+                                          .compareTo(
+                                              b.kodeMarketing!.toLowerCase()));
+                                    } else {
+                                      sort = true;
+                                      filterCrm!.sort((a, b) => b.kodeMarketing!
+                                          .toLowerCase()
+                                          .compareTo(
+                                              a.kodeMarketing!.toLowerCase()));
                                     }
                                   }
                                 });
@@ -2217,6 +4105,7 @@ class RowSource extends DataTableSource {
 
   DataRow recentFileDataRow(var data) {
     // ignore: prefer_interpolation_to_compose_strings
+    String? updateSiklus = '';
     return DataRow(cells: [
       //kodeDesignMdbc
       DataCell(Builder(builder: (context) {
@@ -2284,7 +4173,9 @@ class RowSource extends DataTableSource {
                                                       null
                                                   ? "Siklus tidak boleh kosong"
                                                   : null,
-                                              onChanged: (String? newValue) {},
+                                              onChanged: (String? newValue) {
+                                                updateSiklus = newValue;
+                                              },
                                             ),
                                             Container(
                                               padding: const EdgeInsets.only(
@@ -2296,7 +4187,15 @@ class RowSource extends DataTableSource {
                                                         .validate()) {
                                                       print("siklus terisiisi");
                                                       //? method untuk mengganti siklus
-                                                      Navigator.pop(context);
+                                                      updateSiklusDesigner(
+                                                          data.id,
+                                                          updateSiklus);
+
+                                                      Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (c) =>
+                                                                  const MainView()));
                                                       showDialog<String>(
                                                           context: context,
                                                           builder: (BuildContext
@@ -2309,18 +4208,6 @@ class RowSource extends DataTableSource {
                                                     }
                                                     print(
                                                         "siklus tidak di isi");
-
-                                                    // showDialog<String>(
-                                                    //     context:
-                                                    //         context,
-                                                    //     builder: (BuildContext
-                                                    //             context) =>
-                                                    //         const AlertDialog(
-                                                    //           title:
-                                                    //               Text(
-                                                    //             'Design Berhasil Dipindahkan',
-                                                    //           ),
-                                                    //         ));
                                                   },
                                                   child: const Text(
                                                     "Submit",
@@ -2349,120 +4236,184 @@ class RowSource extends DataTableSource {
                   style: const TextStyle(fontSize: 20, color: Colors.black),
                 )),
             IconButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (c) => FormViewScreen(
-                              modelDesigner: FormDesignerModel(
-                                id: data.id,
-                                kodeDesignMdbc: data.kodeDesignMdbc,
-                                kodeMarketing: data.kodeMarketing,
-                                kodeProduksi: data.kodeProduksi,
-                                namaDesigner: data.namaDesigner,
-                                namaModeller: data.namaModeller,
-                                kodeDesign: data.kodeDesign,
-                                siklus: data.siklus,
-                                tema: data.tema,
-                                rantai: data.rantai,
-                                qtyRantai: data.qtyRantai,
-                                lain2: data.lain2,
-                                qtyLain2: data.qtyLain2,
-                                earnut: data.earnut,
-                                qtyEarnut: data.qtyEarnut,
-                                panjangRantai: data.panjangRantai,
-                                customKomponen: data.customKomponen,
-                                qtyCustomKomponen: data.qtyCustomKomponen,
-                                jenisBarang: data.jenisBarang,
-                                kategoriBarang: data.kategoriBarang,
-                                brand: data.brand,
-                                photoShoot: data.photoShoot,
-                                color: data.color,
-                                beratEmas: data.beratEmas,
-                                estimasiHarga: data.estimasiHarga,
-                                ringSize: data.ringSize,
-                                created_at: data.created_at,
-                                batu1: data.batu1,
-                                qtyBatu1: data.qtyBatu1,
-                                batu2: data.batu2,
-                                qtyBatu2: data.qtyBatu2,
-                                batu3: data.batu3,
-                                qtyBatu3: data.qtyBatu3,
-                                batu4: data.batu4,
-                                qtyBatu4: data.qtyBatu4,
-                                batu5: data.batu5,
-                                qtyBatu5: data.qtyBatu5,
-                                batu6: data.batu6,
-                                qtyBatu6: data.qtyBatu6,
-                                batu7: data.batu7,
-                                qtyBatu7: data.qtyBatu7,
-                                batu8: data.batu8,
-                                qtyBatu8: data.qtyBatu8,
-                                batu9: data.batu9,
-                                qtyBatu9: data.qtyBatu9,
-                                batu10: data.batu10,
-                                qtyBatu10: data.qtyBatu10,
-                                batu11: data.batu11,
-                                qtyBatu11: data.qtyBatu11,
-                                batu12: data.batu12,
-                                qtyBatu12: data.qtyBatu12,
-                                batu13: data.batu13,
-                                qtyBatu13: data.qtyBatu13,
-                                batu14: data.batu14,
-                                qtyBatu14: data.qtyBatu14,
-                                batu15: data.batu15,
-                                qtyBatu15: data.qtyBatu15,
-                                batu16: data.batu16,
-                                qtyBatu16: data.qtyBatu16,
-                                batu17: data.batu17,
-                                qtyBatu17: data.qtyBatu17,
-                                batu18: data.batu18,
-                                qtyBatu18: data.qtyBatu18,
-                                batu19: data.batu19,
-                                qtyBatu19: data.qtyBatu19,
-                                batu20: data.batu20,
-                                qtyBatu20: data.qtyBatu20,
-                                batu21: data.batu21,
-                                qtyBatu21: data.qtyBatu21,
-                                batu22: data.batu22,
-                                qtyBatu22: data.qtyBatu22,
-                                batu23: data.batu23,
-                                qtyBatu23: data.qtyBatu23,
-                                batu24: data.batu24,
-                                qtyBatu24: data.qtyBatu24,
-                                batu25: data.batu25,
-                                qtyBatu25: data.qtyBatu25,
-                                batu26: data.batu26,
-                                qtyBatu26: data.qtyBatu26,
-                                batu27: data.batu27,
-                                qtyBatu27: data.qtyBatu27,
-                                batu28: data.batu28,
-                                qtyBatu28: data.qtyBatu28,
-                                batu29: data.batu29,
-                                qtyBatu29: data.qtyBatu29,
-                                batu30: data.batu30,
-                                qtyBatu30: data.qtyBatu30,
-                                batu31: data.batu31,
-                                qtyBatu31: data.qtyBatu31,
-                                batu32: data.batu32,
-                                qtyBatu32: data.qtyBatu32,
-                                batu33: data.batu33,
-                                qtyBatu33: data.qtyBatu33,
-                                batu34: data.batu34,
-                                qtyBatu34: data.qtyBatu34,
-                                batu35: data.batu35,
-                                qtyBatu35: data.qtyBatu35,
-                                imageUrl: data.imageUrl,
-                                keteranganStatusBatu: data.keteranganStatusBatu,
-                                pointModeller: data.pointModeller,
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (c) => FormViewScreen(
+                                modelDesigner: FormDesignerModel(
+                                  id: data.id,
+                                  kodeDesignMdbc: data.kodeDesignMdbc,
+                                  kodeMarketing: data.kodeMarketing,
+                                  kodeProduksi: data.kodeProduksi,
+                                  namaDesigner: data.namaDesigner,
+                                  namaModeller: data.namaModeller,
+                                  kodeDesign: data.kodeDesign,
+                                  siklus: data.siklus,
+                                  tema: data.tema,
+                                  rantai: data.rantai,
+                                  qtyRantai: data.qtyRantai,
+                                  lain2: data.lain2,
+                                  qtyLain2: data.qtyLain2,
+                                  earnut: data.earnut,
+                                  qtyEarnut: data.qtyEarnut,
+                                  panjangRantai: data.panjangRantai,
+                                  customKomponen: data.customKomponen,
+                                  qtyCustomKomponen: data.qtyCustomKomponen,
+                                  jenisBarang: data.jenisBarang,
+                                  kategoriBarang: data.kategoriBarang,
+                                  brand: data.brand,
+                                  photoShoot: data.photoShoot,
+                                  color: data.color,
+                                  beratEmas: data.beratEmas,
+                                  estimasiHarga: data.estimasiHarga,
+                                  ringSize: data.ringSize,
+                                  created_at: data.created_at,
+                                  batu1: data.batu1,
+                                  qtyBatu1: data.qtyBatu1,
+                                  batu2: data.batu2,
+                                  qtyBatu2: data.qtyBatu2,
+                                  batu3: data.batu3,
+                                  qtyBatu3: data.qtyBatu3,
+                                  batu4: data.batu4,
+                                  qtyBatu4: data.qtyBatu4,
+                                  batu5: data.batu5,
+                                  qtyBatu5: data.qtyBatu5,
+                                  batu6: data.batu6,
+                                  qtyBatu6: data.qtyBatu6,
+                                  batu7: data.batu7,
+                                  qtyBatu7: data.qtyBatu7,
+                                  batu8: data.batu8,
+                                  qtyBatu8: data.qtyBatu8,
+                                  batu9: data.batu9,
+                                  qtyBatu9: data.qtyBatu9,
+                                  batu10: data.batu10,
+                                  qtyBatu10: data.qtyBatu10,
+                                  batu11: data.batu11,
+                                  qtyBatu11: data.qtyBatu11,
+                                  batu12: data.batu12,
+                                  qtyBatu12: data.qtyBatu12,
+                                  batu13: data.batu13,
+                                  qtyBatu13: data.qtyBatu13,
+                                  batu14: data.batu14,
+                                  qtyBatu14: data.qtyBatu14,
+                                  batu15: data.batu15,
+                                  qtyBatu15: data.qtyBatu15,
+                                  batu16: data.batu16,
+                                  qtyBatu16: data.qtyBatu16,
+                                  batu17: data.batu17,
+                                  qtyBatu17: data.qtyBatu17,
+                                  batu18: data.batu18,
+                                  qtyBatu18: data.qtyBatu18,
+                                  batu19: data.batu19,
+                                  qtyBatu19: data.qtyBatu19,
+                                  batu20: data.batu20,
+                                  qtyBatu20: data.qtyBatu20,
+                                  batu21: data.batu21,
+                                  qtyBatu21: data.qtyBatu21,
+                                  batu22: data.batu22,
+                                  qtyBatu22: data.qtyBatu22,
+                                  batu23: data.batu23,
+                                  qtyBatu23: data.qtyBatu23,
+                                  batu24: data.batu24,
+                                  qtyBatu24: data.qtyBatu24,
+                                  batu25: data.batu25,
+                                  qtyBatu25: data.qtyBatu25,
+                                  batu26: data.batu26,
+                                  qtyBatu26: data.qtyBatu26,
+                                  batu27: data.batu27,
+                                  qtyBatu27: data.qtyBatu27,
+                                  batu28: data.batu28,
+                                  qtyBatu28: data.qtyBatu28,
+                                  batu29: data.batu29,
+                                  qtyBatu29: data.qtyBatu29,
+                                  batu30: data.batu30,
+                                  qtyBatu30: data.qtyBatu30,
+                                  batu31: data.batu31,
+                                  qtyBatu31: data.qtyBatu31,
+                                  batu32: data.batu32,
+                                  qtyBatu32: data.qtyBatu32,
+                                  batu33: data.batu33,
+                                  qtyBatu33: data.qtyBatu33,
+                                  batu34: data.batu34,
+                                  qtyBatu34: data.qtyBatu34,
+                                  batu35: data.batu35,
+                                  qtyBatu35: data.qtyBatu35,
+                                  imageUrl: data.imageUrl,
+                                  keteranganStatusBatu:
+                                      data.keteranganStatusBatu,
+                                  pointModeller: data.pointModeller,
+                                  tanggalInModeller: data.tanggalInModeller,
+                                  tanggalOutModeller: data.tanggalOutModeller,
+                                  tanggalInProduksi: data.tanggalInProduksi,
+                                  beratModeller: data.beratModeller,
+                                ),
+                              )));
+                },
+                icon: (sharedPreferences!.getString('level') != '3' &&
+                        double.parse(data.pointModeller) > 0 &&
+                        data.tanggalOutModeller.toString().isEmpty)
+                    ? Stack(
+                        clipBehavior: Clip.none, //agar tidak menghalangi object
+
+                        children: [
+                          //tambahan icon ADD
+                          Positioned(
+                            right: -10.0,
+                            top: -13.0,
+                            child: InkResponse(
+                              onTap: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const Icon(
+                                Icons.add_circle_outline,
+                                color: Colors.green,
+                                size: 20,
                               ),
-                            )));
-              },
-              icon: const Icon(
-                Icons.remove_red_eye_outlined,
-                color: Colors.blue,
-              ),
-            ),
+                            ),
+                          ),
+                          const Icon(
+                            Icons.remove_red_eye,
+                            color: Colors.green,
+                          ),
+                        ],
+                      )
+                    : sharedPreferences!.getString('level') != '3'
+                        ? const Icon(
+                            Icons.remove_red_eye_outlined,
+                            color: Colors.blue,
+                          )
+                        : data.pointModeller != '0'
+                            ? const Icon(
+                                Icons.remove_red_eye_outlined,
+                                color: Colors.blue,
+                              )
+                            : Stack(
+                                clipBehavior:
+                                    Clip.none, //agar tidak menghalangi object
+
+                                children: [
+                                  //tambahan icon ADD
+                                  Positioned(
+                                    right: -10.0,
+                                    top: -13.0,
+                                    child: InkResponse(
+                                      onTap: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: const Icon(
+                                        Icons.add_circle_outline,
+                                        color: Colors.green,
+                                        size: 20,
+                                      ),
+                                    ),
+                                  ),
+                                  const Icon(
+                                    Icons.remove_red_eye,
+                                    color: Colors.green,
+                                  ),
+                                ],
+                              )),
             //? printing
             IconButton(
               onPressed: () {
@@ -2590,7 +4541,7 @@ class RowSource extends DataTableSource {
             padding: const EdgeInsets.all(0),
             child: sharedPreferences!.getString('level') != '1'
                 ? Text(
-                    data.kodeDesign,
+                    data.kodeMarketing,
                     style: const TextStyle(fontSize: 20, color: Colors.black),
                   )
                 : Text(
@@ -2709,6 +4660,20 @@ class RowSource extends DataTableSource {
             ));
       }))
     ]);
+  }
+
+  updateSiklusDesigner(id, siklus) async {
+    print(id);
+    print(siklus);
+    Map<String, String> body = {
+      'id': id.toString(),
+      'siklus': siklus.toString(),
+    };
+    final response = await http.post(
+        Uri.parse(
+            '${ApiConstants.baseUrl}${ApiConstants.updateSiklusdesigner}'),
+        body: body);
+    print(response.body);
   }
 
   @override

@@ -217,6 +217,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
   TextEditingController crtPcsBatu34 = TextEditingController();
   TextEditingController crtPcsBatu35 = TextEditingController();
 
+  int? postLabour = 0;
+  int? postEmas = 0;
+  int? postDiamond = 0;
+
   int? idStone1 = -1;
   int? idStone2 = -1;
   int? idStone3 = -1;
@@ -490,7 +494,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
           upFinal = data[0]['upFinal'];
           kurs = data[0]['kurs'];
           others1 = data[0]['others1'];
-          others2 = data[0]['kurs'];
+          others2 = data[0]['others2'];
           others3 = data[0]['others3'];
         });
       }
@@ -614,7 +618,6 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
           (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
           (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
           (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
-      print(totalDiamond);
 
       var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
                   (caratPcsBatu2 * qtyIntBatu2!) +
@@ -655,9 +658,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
           5);
       double totalEmas;
       totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmas);
-      print(totalEmas);
       var totalLabour = ((labour!) * upLabour);
-      print(totalLabour);
       double total;
       total = ((totalDiamond + totalEmas + totalLabour) * upFinal) / kurs;
       var output =
@@ -665,14 +666,31 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
 
       if (int.parse(output) >= 1 && int.parse(output) <= 4) {
         setState(() {
-          print('parva/fine others1 a');
+          postLabour = totalLabour.round();
+          postEmas = totalEmas.round();
+          postDiamond = totalDiamond.round();
+          print('parva/fine ori a');
+          print(
+              'Labour : Rp. ${CurrencyFormat.convertToDollar(totalLabour, 0)}');
+          print('Emas : Rp. ${CurrencyFormat.convertToDollar(totalEmas, 0)}');
+          print(
+              'Diamond : Rp. ${CurrencyFormat.convertToDollar(totalDiamond, 0)}');
+
           total = (total + (5 - int.parse(output)));
           estimasiHarga.text = total.round().toString();
         });
         return total;
       } else if (int.parse(output) >= 6 && int.parse(output) <= 9) {
         setState(() {
-          print('parva/fine others1 b');
+          postLabour = totalLabour.round();
+          postEmas = totalEmas.round();
+          postDiamond = totalDiamond.round();
+          print('parva/fine ori b');
+          print(
+              'Labour : Rp. ${CurrencyFormat.convertToDollar(totalLabour, 0)}');
+          print('Emas : Rp. ${CurrencyFormat.convertToDollar(totalEmas, 0)}');
+          print(
+              'Diamond : Rp. ${CurrencyFormat.convertToDollar(totalDiamond, 0)}');
 
           total = (total + (10 - int.parse(output)));
 
@@ -681,8 +699,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
         return total;
       } else {
         setState(() {
-          print('parva/fine others1 ori');
-
+          postLabour = totalLabour.round();
+          postEmas = totalEmas.round();
+          postDiamond = totalDiamond.round();
+          print('parva/fine ori');
+          print(
+              'Labour : Rp. ${CurrencyFormat.convertToDollar(totalLabour, 0)}');
+          print('Emas : Rp. ${CurrencyFormat.convertToDollar(totalEmas, 0)}');
+          print(
+              'Diamond : Rp. ${CurrencyFormat.convertToDollar(totalDiamond, 0)}');
           estimasiHarga.text = total.round().toString();
         });
         return total;
@@ -722,7 +747,6 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
           (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
           (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
           (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
-      print(totalDiamond);
 
       var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
                   (caratPcsBatu2 * qtyIntBatu2!) +
@@ -763,10 +787,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
           5);
       double totalEmas;
       totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmas);
-      print(totalEmas);
 
       var totalLabour = ((labour! + others1) * upLabour);
-      print(totalLabour);
 
       double total;
       total = ((totalDiamond + totalEmas + totalLabour) * upFinal) / kurs;
@@ -775,7 +797,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
 
       if (int.parse(output) >= 1 && int.parse(output) <= 4) {
         setState(() {
+          postLabour = totalLabour.round();
+          postEmas = totalEmas.round();
+          postDiamond = totalDiamond.round();
           print('parva/fine others1 a');
+          print(
+              'Labour : Rp. ${CurrencyFormat.convertToDollar(totalLabour, 0)}');
+          print('Emas : Rp. ${CurrencyFormat.convertToDollar(totalEmas, 0)}');
+          print(
+              'Diamond : Rp. ${CurrencyFormat.convertToDollar(totalDiamond, 0)}');
 
           total = (total + (5 - int.parse(output)));
 
@@ -784,7 +814,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
         return total;
       } else if (int.parse(output) >= 6 && int.parse(output) <= 9) {
         setState(() {
+          postLabour = totalLabour.round();
+          postEmas = totalEmas.round();
+          postDiamond = totalDiamond.round();
           print('parva/fine others1 b');
+          print(
+              'Labour : Rp. ${CurrencyFormat.convertToDollar(totalLabour, 0)}');
+          print('Emas : Rp. ${CurrencyFormat.convertToDollar(totalEmas, 0)}');
+          print(
+              'Diamond : Rp. ${CurrencyFormat.convertToDollar(totalDiamond, 0)}');
 
           total = (total + (10 - int.parse(output)));
 
@@ -793,7 +831,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
         return total;
       } else {
         setState(() {
+          postLabour = totalLabour.round();
+          postEmas = totalEmas.round();
+          postDiamond = totalDiamond.round();
           print('parva/fine others1 ori');
+          print(
+              'Labour : Rp. ${CurrencyFormat.convertToDollar(totalLabour, 0)}');
+          print('Emas : Rp. ${CurrencyFormat.convertToDollar(totalEmas, 0)}');
+          print(
+              'Diamond : Rp. ${CurrencyFormat.convertToDollar(totalDiamond, 0)}');
 
           estimasiHarga.text = total.round().toString();
         });
@@ -834,7 +880,6 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
           (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
           (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
           (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
-      print(totalDiamond);
 
       var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
                   (caratPcsBatu2 * qtyIntBatu2!) +
@@ -877,6 +922,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
       totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmas);
 
       var totalLabour = ((labour! + others2) * upLabour);
+
       double total;
       total = ((totalDiamond + totalEmas + totalLabour) * upFinal) / kurs;
 
@@ -884,7 +930,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
           total.round().toString()[total.round().toString().length - 1];
       if (int.parse(output) >= 1 && int.parse(output) <= 4) {
         setState(() {
-          print('others2');
+          postLabour = totalLabour.round();
+          postEmas = totalEmas.round();
+          postDiamond = totalDiamond.round();
+          print('parva/fine others2 a');
+          print(
+              'Labour : Rp. ${CurrencyFormat.convertToDollar(totalLabour, 0)}');
+          print('Emas : Rp. ${CurrencyFormat.convertToDollar(totalEmas, 0)}');
+          print(
+              'Diamond : Rp. ${CurrencyFormat.convertToDollar(totalDiamond, 0)}');
           total = (total + (5 - int.parse(output)));
 
           estimasiHarga.text = total.round().toString();
@@ -892,7 +946,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
         return total;
       } else if (int.parse(output) >= 6 && int.parse(output) <= 9) {
         setState(() {
-          print('others2');
+          postLabour = totalLabour.round();
+          postEmas = totalEmas.round();
+          postDiamond = totalDiamond.round();
+          print('parva/fine others2 b');
+          print(
+              'Labour : Rp. ${CurrencyFormat.convertToDollar(totalLabour, 0)}');
+          print('Emas : Rp. ${CurrencyFormat.convertToDollar(totalEmas, 0)}');
+          print(
+              'Diamond : Rp. ${CurrencyFormat.convertToDollar(totalDiamond, 0)}');
           total = (total + (10 - int.parse(output)));
 
           estimasiHarga.text = total.round().toString();
@@ -900,7 +962,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
         return total;
       } else {
         setState(() {
-          print('others2');
+          postLabour = totalLabour.round();
+          postEmas = totalEmas.round();
+          postDiamond = totalDiamond.round();
+          print('parva/fine others2 ori');
+          print(
+              'Labour : Rp. ${CurrencyFormat.convertToDollar(totalLabour, 0)}');
+          print('Emas : Rp. ${CurrencyFormat.convertToDollar(totalEmas, 0)}');
+          print(
+              'Diamond : Rp. ${CurrencyFormat.convertToDollar(totalDiamond, 0)}');
 
           estimasiHarga.text = total.round().toString();
         });
@@ -990,14 +1060,30 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
           total.round().toString()[total.round().toString().length - 1];
       if (int.parse(output) >= 1 && int.parse(output) <= 4) {
         setState(() {
-          print('others3');
+          postLabour = totalLabour.round();
+          postEmas = totalEmas.round();
+          postDiamond = totalDiamond.round();
+          print('parva/fine others3 a');
+          print(
+              'Labour : Rp. ${CurrencyFormat.convertToDollar(totalLabour, 0)}');
+          print('Emas : Rp. ${CurrencyFormat.convertToDollar(totalEmas, 0)}');
+          print(
+              'Diamond : Rp. ${CurrencyFormat.convertToDollar(totalDiamond, 0)}');
           total = (total + (5 - int.parse(output)));
           estimasiHarga.text = total.round().toString();
         });
         return total;
       } else if (int.parse(output) >= 6 && int.parse(output) <= 9) {
         setState(() {
-          print('others3');
+          postLabour = totalLabour.round();
+          postEmas = totalEmas.round();
+          postDiamond = totalDiamond.round();
+          print('parva/fine others3 b');
+          print(
+              'Labour : Rp. ${CurrencyFormat.convertToDollar(totalLabour, 0)}');
+          print('Emas : Rp. ${CurrencyFormat.convertToDollar(totalEmas, 0)}');
+          print(
+              'Diamond : Rp. ${CurrencyFormat.convertToDollar(totalDiamond, 0)}');
           total = (total + (10 - int.parse(output)));
 
           estimasiHarga.text = total.round().toString();
@@ -1005,7 +1091,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
         return total;
       } else {
         setState(() {
-          print('others3');
+          postLabour = totalLabour.round();
+          postEmas = totalEmas.round();
+          postDiamond = totalDiamond.round();
+          print('parva/fine others3 ori');
+          print(
+              'Labour : Rp. ${CurrencyFormat.convertToDollar(totalLabour, 0)}');
+          print('Emas : Rp. ${CurrencyFormat.convertToDollar(totalEmas, 0)}');
+          print(
+              'Diamond : Rp. ${CurrencyFormat.convertToDollar(totalDiamond, 0)}');
 
           estimasiHarga.text = total.round().toString();
         });
@@ -1049,7 +1143,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
         (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
         (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
         (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
-    print('Diamond $totalDiamond');
+
     var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
                 (caratPcsBatu2 * qtyIntBatu2!) +
                 (caratPcsBatu3 * qtyIntBatu3!) +
@@ -1181,6 +1275,9 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
 
       if (int.parse(output) >= 1 && int.parse(output) <= 4) {
         setState(() {
+          postLabour = totalLabour.round();
+          postEmas = totalEmas.round();
+          postDiamond = totalDiamond.round();
           print('tanpa others');
 
           total = (total + (5 - int.parse(output)));
@@ -1189,6 +1286,9 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
         return total;
       } else if (int.parse(output) >= 6 && int.parse(output) <= 9) {
         setState(() {
+          postLabour = totalLabour.round();
+          postEmas = totalEmas.round();
+          postDiamond = totalDiamond.round();
           print('tanpa others');
 
           total = (total + (10 - int.parse(output)));
@@ -1197,6 +1297,9 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
         return total;
       } else {
         setState(() {
+          postLabour = totalLabour.round();
+          postEmas = totalEmas.round();
+          postDiamond = totalDiamond.round();
           print('tanpa others');
 
           estimasiHarga.text = total.round().toString();
@@ -1287,6 +1390,9 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
 
       if (int.parse(output) >= 1 && int.parse(output) <= 4) {
         setState(() {
+          postLabour = totalLabour.round();
+          postEmas = totalEmas.round();
+          postDiamond = totalDiamond.round();
           print('others1');
           total = (total + (5 - int.parse(output)));
           estimasiHarga.text = total.round().toString();
@@ -1294,6 +1400,9 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
         return total;
       } else if (int.parse(output) >= 6 && int.parse(output) <= 9) {
         setState(() {
+          postLabour = totalLabour.round();
+          postEmas = totalEmas.round();
+          postDiamond = totalDiamond.round();
           print('others1');
           total = (total + (10 - int.parse(output)));
           estimasiHarga.text = total.round().toString();
@@ -1301,6 +1410,9 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
         return total;
       } else {
         setState(() {
+          postLabour = totalLabour.round();
+          postEmas = totalEmas.round();
+          postDiamond = totalDiamond.round();
           print('others1');
 
           estimasiHarga.text = total.round().toString();
@@ -1390,6 +1502,9 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
           total.round().toString()[total.round().toString().length - 1];
       if (int.parse(output) >= 1 && int.parse(output) <= 4) {
         setState(() {
+          postLabour = totalLabour.round();
+          postEmas = totalEmas.round();
+          postDiamond = totalDiamond.round();
           print('others2');
           total = (total + (5 - int.parse(output)));
 
@@ -1398,6 +1513,9 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
         return total;
       } else if (int.parse(output) >= 6 && int.parse(output) <= 9) {
         setState(() {
+          postLabour = totalLabour.round();
+          postEmas = totalEmas.round();
+          postDiamond = totalDiamond.round();
           print('others2');
           total = (total + (10 - int.parse(output)));
 
@@ -1406,6 +1524,9 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
         return total;
       } else {
         setState(() {
+          postLabour = totalLabour.round();
+          postEmas = totalEmas.round();
+          postDiamond = totalDiamond.round();
           print('others2');
 
           estimasiHarga.text = total.round().toString();
@@ -1495,6 +1616,9 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
           total.round().toString()[total.round().toString().length - 1];
       if (int.parse(output) >= 1 && int.parse(output) <= 4) {
         setState(() {
+          postLabour = totalLabour.round();
+          postEmas = totalEmas.round();
+          postDiamond = totalDiamond.round();
           print('others3');
           total = (total + (5 - int.parse(output)));
 
@@ -1503,6 +1627,9 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
         return total;
       } else if (int.parse(output) >= 6 && int.parse(output) <= 9) {
         setState(() {
+          postLabour = totalLabour.round();
+          postEmas = totalEmas.round();
+          postDiamond = totalDiamond.round();
           print('others3');
           total = (total + (10 - int.parse(output)));
 
@@ -1511,6 +1638,9 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
         return total;
       } else {
         setState(() {
+          postLabour = totalLabour.round();
+          postEmas = totalEmas.round();
+          postDiamond = totalDiamond.round();
           print('others3');
 
           estimasiHarga.text = total.round().toString();
@@ -1555,7 +1685,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
         (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
         (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
         (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
-    print('Diamond $totalDiamond');
+
     var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
                 (caratPcsBatu2 * qtyIntBatu2!) +
                 (caratPcsBatu3 * qtyIntBatu3!) +
@@ -1679,11 +1809,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
           5);
       double totalEmas;
       totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmasMetier);
-      print('ini diamond : $totalDiamond * $upDiamondMetier');
-      print('ini emas : $totalEmas');
+
       var totalLabour = ((labour!) * upLabour);
-      print('ini labour : $totalLabour');
-      print('$labour! & $upLabour');
 
       double total;
       total = (((totalDiamond * upDiamondMetier) +
@@ -1697,6 +1824,9 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
       var result = total.round().toString().lastChars(5); // 'World'
       if (int.parse(output) >= 0 && int.parse(output) <= 4) {
         setState(() {
+          postLabour = totalLabour.round();
+          postEmas = totalEmas.round();
+          postDiamond = totalDiamond.round();
           print('tanpa others');
 
           total = (total + (50000 - int.parse(result)));
@@ -1705,6 +1835,9 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
         return total;
       } else if (int.parse(output) >= 6 && int.parse(output) <= 9) {
         setState(() {
+          postLabour = totalLabour.round();
+          postEmas = totalEmas.round();
+          postDiamond = totalDiamond.round();
           print('tanpa others');
 
           total = (total + (100000 - int.parse(result)));
@@ -1714,6 +1847,9 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
         return total;
       } else {
         setState(() {
+          postLabour = totalLabour.round();
+          postEmas = totalEmas.round();
+          postDiamond = totalDiamond.round();
           print('tanpa others');
 
           estimasiHarga.text = total.round().toString();
@@ -1795,11 +1931,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
           5);
       double totalEmas;
       totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmasMetier);
-      print('ini diamond : $totalDiamond * $upDiamondMetier');
-      print('ini emas : $totalEmas');
+
       var totalLabour = ((labour! + others1) * upLabour);
-      print('ini labour : $totalLabour');
-      print('$labour! & $others1 & $upLabour');
 
       double total;
       total = (((totalDiamond * upDiamondMetier) +
@@ -1813,6 +1946,9 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
       var result = total.round().toString().lastChars(5); // 'World'
       if (int.parse(output) >= 0 && int.parse(output) <= 4) {
         setState(() {
+          postLabour = totalLabour.round();
+          postEmas = totalEmas.round();
+          postDiamond = totalDiamond.round();
           print('others1');
           total = (total + (50000 - int.parse(result)));
           estimasiHarga.text = total.round().toString();
@@ -1820,6 +1956,9 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
         return total;
       } else if (int.parse(output) >= 6 && int.parse(output) <= 9) {
         setState(() {
+          postLabour = totalLabour.round();
+          postEmas = totalEmas.round();
+          postDiamond = totalDiamond.round();
           print('others1');
           total = (total + (100000 - int.parse(result)));
 
@@ -1828,6 +1967,9 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
         return total;
       } else {
         setState(() {
+          postLabour = totalLabour.round();
+          postEmas = totalEmas.round();
+          postDiamond = totalDiamond.round();
           print('others1');
 
           estimasiHarga.text = total.round().toString();
@@ -1909,13 +2051,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
           5);
       double totalEmas;
       totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmasMetier);
-      print('ini emas : $totalEmas');
-      print('ini diamond : $totalDiamond * $upDiamondMetier');
 
       var totalLabour = ((labour! + others2) * upLabour);
       double total;
-      print('$labour! & $others2 & $upLabour');
-      print('ini labour : $totalLabour');
+
       total = (((totalDiamond * upDiamondMetier) +
           totalEmas +
           totalLabour)); //final
@@ -1928,6 +2067,9 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
       print(result);
       if (int.parse(output) >= 0 && int.parse(output) <= 4) {
         setState(() {
+          postLabour = totalLabour.round();
+          postEmas = totalEmas.round();
+          postDiamond = totalDiamond.round();
           print('others2');
           total = (total + (50000 - int.parse(result)));
 
@@ -1936,6 +2078,9 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
         return total;
       } else if (int.parse(output) >= 6 && int.parse(output) <= 9) {
         setState(() {
+          postLabour = totalLabour.round();
+          postEmas = totalEmas.round();
+          postDiamond = totalDiamond.round();
           print('others2');
           total = (total + (100000 - int.parse(result)));
 
@@ -1944,6 +2089,9 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
         return total;
       } else {
         setState(() {
+          postLabour = totalLabour.round();
+          postEmas = totalEmas.round();
+          postDiamond = totalDiamond.round();
           print('others2');
 
           estimasiHarga.text = total.round().toString();
@@ -2025,8 +2173,6 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
           5);
       double totalEmas;
       totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmasMetier);
-      print('ini emas : $totalEmas');
-      print('ini diamond : $totalDiamond * $upDiamondMetier');
 
       var totalLabour = ((labour! + others3) * upLabour);
       double total;
@@ -2036,8 +2182,6 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
       var totalwholesale = (((total.round()) * 1.2)); //wholesale
       total = (((total.round()) * 1.2) * 1.65); //retail
       print(totalwholesale);
-      print('ini labour : $totalLabour');
-      print('$labour! & $others3 & $upLabour');
 
       var output =
           total.round().toString()[total.round().toString().length - 5];
@@ -2045,6 +2189,9 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
       print(result);
       if (int.parse(output) >= 0 && int.parse(output) <= 4) {
         setState(() {
+          postLabour = totalLabour.round();
+          postEmas = totalEmas.round();
+          postDiamond = totalDiamond.round();
           print('others3');
           total = (total + (50000 - int.parse(result)));
 
@@ -2053,6 +2200,9 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
         return total;
       } else if (int.parse(output) >= 6 && int.parse(output) <= 9) {
         setState(() {
+          postLabour = totalLabour.round();
+          postEmas = totalEmas.round();
+          postDiamond = totalDiamond.round();
           print('others3');
           total = (total + (100000 - int.parse(result)));
 
@@ -2061,6 +2211,9 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
         return total;
       } else {
         setState(() {
+          postLabour = totalLabour.round();
+          postEmas = totalEmas.round();
+          postDiamond = totalDiamond.round();
           print('others3');
 
           estimasiHarga.text = total.round().toString();
@@ -15281,6 +15434,9 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
       'carat_pcs_gia': caratPcsGIA.text,
       'harga_gia': hargaGIA.text,
       'keterangan': keterangan.text,
+      'labour': postLabour.toString(),
+      'emas': postEmas.toString(),
+      'diamond': postDiamond.toString(),
     };
     final response = await http.post(
         Uri.parse(ApiConstants.baseUrl + ApiConstants.postFormEstimasiPricing),

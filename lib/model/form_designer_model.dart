@@ -111,6 +111,10 @@ class FormDesignerModel {
   int? edit;
   String? keteranganStatusBatu;
   String? pointModeller;
+  String? tanggalInModeller;
+  String? tanggalOutModeller;
+  String? tanggalInProduksi;
+  String? beratModeller;
 
   FormDesignerModel({
     this.id,
@@ -214,6 +218,10 @@ class FormDesignerModel {
     this.edit,
     this.keteranganStatusBatu,
     this.pointModeller,
+    this.tanggalInModeller,
+    this.tanggalOutModeller,
+    this.tanggalInProduksi,
+    this.beratModeller,
   });
 
   // ignore: avoid_types_as_parameter_names
@@ -221,10 +229,10 @@ class FormDesignerModel {
       FormDesignerModel(
         id: json["id"] ?? 0,
         kodeDesignMdbc: json["kodeDesignMdbc"],
-        kodeMarketing: json["kodeMarketing"],
+        kodeMarketing: json["kodeMarketing"] ?? '',
         kodeProduksi: json["kodeProduksi"],
         namaDesigner: json["namaDesigner"],
-        namaModeller: json["namaModeller"],
+        namaModeller: json["namaModeller"] ?? '',
         kodeDesign: json["kodeDesign"],
         siklus: json["siklus"],
         tema: json["tema"],
@@ -319,7 +327,11 @@ class FormDesignerModel {
         imageUrl: json["imageUrl"],
         edit: json["edit"],
         keteranganStatusBatu: json["keteranganStatusBatu"] ?? '',
-        pointModeller: json["pointModeller"] ?? '0',
+        pointModeller: (json["pointModeller"] ?? '0').toString(),
+        tanggalInModeller: json["tanggalInModeller"] ?? '',
+        tanggalOutModeller: json["tanggalOutModeller"] ?? '',
+        tanggalInProduksi: json["tanggalInProduksi"] ?? '',
+        beratModeller: (json["beratModeller"] ?? '0').toString(),
       );
 
   Map<String, dynamic> toJson() => {
@@ -424,5 +436,9 @@ class FormDesignerModel {
         "edit": edit,
         "keteranganStatusBatu": keteranganStatusBatu,
         "pointModeller": pointModeller,
+        "tanggalInModeller": tanggalInModeller,
+        "tanggalOutModeller": tanggalOutModeller,
+        "tanggalInProduksi": tanggalInProduksi,
+        "beratModeller": beratModeller,
       };
 }

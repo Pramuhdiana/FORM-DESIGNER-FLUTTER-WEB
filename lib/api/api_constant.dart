@@ -25,8 +25,11 @@ class ApiConstants {
   static String getListFormDesignerBySiklus =
       'spk/list_form_designer_by_siklus.php';
 
+  static String getBatuMdbcByKeyword = 'spk/get_batu_mdbc_by_keyword.php';
+
   static String getListEstimasiHarga = 'spk/get_estimasi_pricing.php';
   static String getSiklus = 'spk/get_siklus.php';
+  static String getSumPenyesuaian = 'spk/get_sum_penyesuaian.php';
 
   static String postDataBatu = 'spk/create_batu.php';
   static String postLogin = 'spk/login.php';
@@ -43,9 +46,13 @@ class ApiConstants {
   static String postUpdateListDataBatu = 'spk/update_batu.php';
   static String updateFormDesigner = 'spk/update_form_designer.php';
 
+  static String updateSiklusdesigner = 'spk/update_siklus_designer.php';
+
   static String addModeller = 'spk/add_modeller.php';
   static String addPointModeller = 'spk/add_point_modeller.php';
   static String addSiklus = 'spk/add_siklus.php';
+  static String addTanggalProduksi = 'spk/add_tanggal_in_produksi.php';
+  static String addTanggalModeller = 'spk/add_tanggal_out_modeller.php';
 
   static String keyById = 'spk/key.php';
 }

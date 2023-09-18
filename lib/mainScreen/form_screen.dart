@@ -43,6 +43,93 @@ class _FormScreenState extends State<FormScreen> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   double doubleBeratEmasDariCustomer = 0;
 
+  TextEditingController ukuranBatu1 = TextEditingController();
+  TextEditingController ukuranBatu2 = TextEditingController();
+  TextEditingController ukuranBatu3 = TextEditingController();
+  TextEditingController ukuranBatu4 = TextEditingController();
+  TextEditingController ukuranBatu5 = TextEditingController();
+  TextEditingController ukuranBatu6 = TextEditingController();
+  TextEditingController ukuranBatu7 = TextEditingController();
+  TextEditingController ukuranBatu8 = TextEditingController();
+  TextEditingController ukuranBatu9 = TextEditingController();
+  TextEditingController ukuranBatu10 = TextEditingController();
+  TextEditingController ukuranBatu11 = TextEditingController();
+  TextEditingController ukuranBatu12 = TextEditingController();
+  TextEditingController ukuranBatu13 = TextEditingController();
+  TextEditingController ukuranBatu14 = TextEditingController();
+  TextEditingController ukuranBatu15 = TextEditingController();
+  TextEditingController ukuranBatu16 = TextEditingController();
+  TextEditingController ukuranBatu17 = TextEditingController();
+  TextEditingController ukuranBatu18 = TextEditingController();
+  TextEditingController ukuranBatu19 = TextEditingController();
+  TextEditingController ukuranBatu20 = TextEditingController();
+  TextEditingController ukuranBatu21 = TextEditingController();
+  TextEditingController ukuranBatu22 = TextEditingController();
+  TextEditingController ukuranBatu23 = TextEditingController();
+  TextEditingController ukuranBatu24 = TextEditingController();
+  TextEditingController ukuranBatu25 = TextEditingController();
+  TextEditingController ukuranBatu26 = TextEditingController();
+  TextEditingController ukuranBatu27 = TextEditingController();
+  TextEditingController ukuranBatu28 = TextEditingController();
+  TextEditingController ukuranBatu29 = TextEditingController();
+  TextEditingController ukuranBatu30 = TextEditingController();
+  TextEditingController ukuranBatu31 = TextEditingController();
+  TextEditingController ukuranBatu32 = TextEditingController();
+  TextEditingController ukuranBatu33 = TextEditingController();
+  TextEditingController ukuranBatu34 = TextEditingController();
+  TextEditingController ukuranBatu35 = TextEditingController();
+
+  double? customGol1 = 15112500;
+  double? customGol2 = 18600000;
+  double? customGol3 = 20615000;
+  double? customGol4 = 23870000;
+  double? customGol5 = 28210000;
+  double? customGol6 = 34255000;
+  double? customGol7 = 40300000;
+  double? customGol8 = 45337500;
+  double? customGol9 = 48437500;
+  double? customGol10 = 52312500;
+  double? customGol11 = 56187500;
+  double? customGol12 = 60062500;
+  double? customGol13 = 63937500;
+  double? customGol14 = 67812500;
+
+  int? idStone1 = -1;
+  int? idStone2 = -1;
+  int? idStone3 = -1;
+  int? idStone4 = -1;
+  int? idStone5 = -1;
+  int? idStone6 = -1;
+  int? idStone7 = -1;
+  int? idStone8 = -1;
+  int? idStone9 = -1;
+  int? idStone10 = -1;
+  int? idStone11 = -1;
+  int? idStone12 = -1;
+  int? idStone13 = -1;
+  int? idStone14 = -1;
+  int? idStone15 = -1;
+  int? idStone16 = -1;
+  int? idStone17 = -1;
+  int? idStone18 = -1;
+  int? idStone19 = -1;
+  int? idStone20 = -1;
+  int? idStone21 = -1;
+  int? idStone22 = -1;
+  int? idStone23 = -1;
+  int? idStone24 = -1;
+  int? idStone25 = -1;
+  int? idStone26 = -1;
+  int? idStone27 = -1;
+  int? idStone28 = -1;
+  int? idStone29 = -1;
+  int? idStone30 = -1;
+  int? idStone31 = -1;
+  int? idStone32 = -1;
+  int? idStone33 = -1;
+  int? idStone34 = -1;
+  int? idStone35 = -1;
+
   TextEditingController kodeDesignMdbc = TextEditingController();
   TextEditingController kodeMarketing = TextEditingController();
   TextEditingController siklus = TextEditingController();
@@ -471,7 +558,7 @@ class _FormScreenState extends State<FormScreen> {
           upFinal = data[0]['upFinal'];
           kurs = data[0]['kurs'];
           others1 = data[0]['others1'];
-          others2 = data[0]['kurs'];
+          others2 = data[0]['others2'];
           others3 = data[0]['others3'];
         });
       }
@@ -2492,7 +2579,7 @@ class _FormScreenState extends State<FormScreen> {
                         borderRadius: BorderRadius.circular(10)),
                     child: Image.memory(
                       Uint8List.fromList(_imageFile!.bytes!),
-                      fit: BoxFit.cover,
+                      fit: BoxFit.fill,
                     ),
                   )
                 : Container(
@@ -3054,7 +3141,7 @@ class _FormScreenState extends State<FormScreen> {
     //bagian tengah
     return Container(
         padding: const EdgeInsets.only(left: 5, top: 0),
-        width: 700,
+        width: 1000,
         child: Row(
           children: [
             namaDesigner.text == ''
@@ -3116,13 +3203,13 @@ class _FormScreenState extends State<FormScreen> {
                                                 jsonDecode(response.body);
                                             print(data);
                                             setState(() {
-                                              hargaBatu1 = data[0]['unitCost'];
+                                              ukuranBatu1.text = '';
+                                              crtPcsBatu1.text = '';
+                                              idStone1 = item.idStone;
                                               idBatu1 = item.id;
+                                              hargaBatu1 = data[0]['unitCost'];
                                               caratPcsBatu1 =
                                                   data[0]['caratPcs'];
-                                              crtPcsBatu1.text = data[0]
-                                                      ['caratPcs']
-                                                  .toString();
                                               batu1 = item.keyWord.toString();
                                               stokBatu1.text =
                                                   item.qty.toString();
@@ -3136,18 +3223,37 @@ class _FormScreenState extends State<FormScreen> {
                                           const DropDownDecoratorProps(
                                         dropdownSearchDecoration:
                                             InputDecoration(
-                                          // label: Text(
-                                          //   batu1!,
-                                          //   style: const TextStyle(
-                                          //       fontSize: 18,
-                                          //       fontWeight: FontWeight.bold),
-                                          // ),
                                           filled: true,
                                           fillColor: Colors.white,
                                         ),
                                       ),
                                     ),
                                   ),
+
+                                  //ukuran batu1
+                                  idStone1 != -2
+                                      ? const SizedBox()
+                                      : Container(
+                                          width: 220,
+                                          height: 50,
+                                          padding: const EdgeInsets.only(
+                                              top: 10, left: 15),
+                                          child: TextFormField(
+                                            textInputAction:
+                                                TextInputAction.next,
+                                            controller: ukuranBatu1,
+                                            onChanged: (value) {
+                                              setState(() {});
+                                            },
+                                            decoration: InputDecoration(
+                                              label: const Text('Ukuran'),
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          5.0)),
+                                            ),
+                                          ),
+                                        ),
 
                                   //qty batu1
                                   Container(
@@ -3199,25 +3305,110 @@ class _FormScreenState extends State<FormScreen> {
 
                                   //crt/pcsbatu1
                                   Container(
-                                    width: 120,
-                                    height: 45,
+                                    width: 100,
+                                    height: 50,
                                     padding: const EdgeInsets.only(
                                         top: 10, left: 15),
                                     child: TextFormField(
-                                      enabled:
-                                          caratPcsBatu1 <= 0 ? true : false,
                                       textInputAction: TextInputAction.next,
                                       controller: crtPcsBatu1,
                                       onChanged: (value) {
-                                        caratPcsBatu1 = double.parse(value);
+                                        setState(() {
+                                          //todo: perhitungan batu custom
+                                          if (batu1!.toLowerCase() == "custom emerald" ||
+                                              batu1!.toLowerCase() ==
+                                                  "custom baguete" ||
+                                              batu1!.toLowerCase() ==
+                                                  "custom heart" ||
+                                              batu1!.toLowerCase() ==
+                                                  "custom marquise" ||
+                                              batu1!.toLowerCase() ==
+                                                  "custom oval" ||
+                                              batu1!.toLowerCase() ==
+                                                  "custom pear" ||
+                                              batu1!.toLowerCase() ==
+                                                  "custom princess cut" ||
+                                              batu1!.toLowerCase() ==
+                                                  "custom ruby" ||
+                                              batu1!.toLowerCase() ==
+                                                  "custom tapper") {
+                                            //? kondisi sesuai carat/pcs
+                                            if (double.parse(value) < 0.071) {
+                                              hargaBatu1 = customGol1!;
+                                              caratPcsBatu1 =
+                                                  double.parse(value);
+                                            } else if (double.parse(value) <
+                                                0.121) {
+                                              hargaBatu1 = customGol2!;
+                                              caratPcsBatu1 =
+                                                  double.parse(value);
+                                            } else if (double.parse(value) <
+                                                0.182) {
+                                              hargaBatu1 = customGol3!;
+                                              caratPcsBatu1 =
+                                                  double.parse(value);
+                                            } else if (double.parse(value) <
+                                                0.231) {
+                                              hargaBatu1 = customGol4!;
+                                              caratPcsBatu1 =
+                                                  double.parse(value);
+                                            } else if (double.parse(value) <
+                                                0.266) {
+                                              hargaBatu1 = customGol5!;
+                                              caratPcsBatu1 =
+                                                  double.parse(value);
+                                            } else if (double.parse(value) <
+                                                0.356) {
+                                              hargaBatu1 = customGol6!;
+                                              caratPcsBatu1 =
+                                                  double.parse(value);
+                                            } else if (double.parse(value) <
+                                                0.406) {
+                                              hargaBatu1 = customGol7!;
+                                              caratPcsBatu1 =
+                                                  double.parse(value);
+                                            } else if (double.parse(value) <
+                                                0.456) {
+                                              hargaBatu1 = customGol8!;
+                                              caratPcsBatu1 =
+                                                  double.parse(value);
+                                            } else if (double.parse(value) <
+                                                0.506) {
+                                              hargaBatu1 = customGol9!;
+                                              caratPcsBatu1 =
+                                                  double.parse(value);
+                                            } else if (double.parse(value) <
+                                                0.556) {
+                                              hargaBatu1 = customGol10!;
+                                              caratPcsBatu1 =
+                                                  double.parse(value);
+                                            } else if (double.parse(value) <
+                                                0.606) {
+                                              hargaBatu1 = customGol11!;
+                                              caratPcsBatu1 =
+                                                  double.parse(value);
+                                            } else if (double.parse(value) <
+                                                0.656) {
+                                              hargaBatu1 = customGol12!;
+                                              caratPcsBatu1 =
+                                                  double.parse(value);
+                                            } else if (double.parse(value) <
+                                                0.706) {
+                                              hargaBatu1 = customGol13!;
+                                              caratPcsBatu1 =
+                                                  double.parse(value);
+                                            } else {
+                                              hargaBatu1 = customGol14!;
+                                              caratPcsBatu1 =
+                                                  double.parse(value);
+                                            }
+                                          }
+                                          //! keluar dari kondisi batu custom
+                                          else {}
+                                        });
                                       },
                                       decoration: InputDecoration(
-                                        label: const Text(
-                                          'Carat/Pcs',
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold),
-                                        ),
+                                        label: const Text('Carat / Pcs'),
                                         border: OutlineInputBorder(
                                             borderRadius:
                                                 BorderRadius.circular(5.0)),
@@ -3235,10 +3426,12 @@ class _FormScreenState extends State<FormScreen> {
                                                 setState(() {
                                                   qtyBatu1.text = '0';
                                                   stokBatu1.text = '';
+                                                  crtPcsBatu1.text = '';
+                                                  ukuranBatu1.text = '';
+                                                  stokBatu1.text = '';
                                                   batu1 = '';
                                                   hargaBatu1 = 0;
                                                   caratPcsBatu1 = 0;
-                                                  crtPcsBatu1.text = '';
                                                 });
                                               },
                                               icon: const Icon(Icons.cancel)),
@@ -3247,12 +3440,10 @@ class _FormScreenState extends State<FormScreen> {
                               ),
                               // end row batu1
 
-                              //batu2
+                              //size batu2
                               qtyBatu1.text.isEmpty
                                   ? const SizedBox()
-                                  :
-                                  //size batu2
-                                  Row(
+                                  : Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
@@ -3287,14 +3478,14 @@ class _FormScreenState extends State<FormScreen> {
                                                       jsonDecode(response.body);
                                                   print(data);
                                                   setState(() {
+                                                    ukuranBatu2.text = '';
+                                                    crtPcsBatu2.text = '';
+                                                    idStone2 = item.idStone;
+                                                    idBatu2 = item.id;
                                                     hargaBatu2 =
                                                         data[0]['unitCost'];
-                                                    idBatu2 = item.id;
                                                     caratPcsBatu2 =
                                                         data[0]['caratPcs'];
-                                                    crtPcsBatu2.text = data[0]
-                                                            ['caratPcs']
-                                                        .toString();
                                                     batu2 =
                                                         item.keyWord.toString();
                                                     stokBatu2.text =
@@ -3309,18 +3500,37 @@ class _FormScreenState extends State<FormScreen> {
                                                 const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                // label: Text(
-                                                //   batu2!,
-                                                //   style: const TextStyle(
-                                                //       fontSize: 18,
-                                                //       fontWeight: FontWeight.bold),
-                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
                                             ),
                                           ),
                                         ),
+
+                                        //ukuran batu2
+                                        idStone2 != -2
+                                            ? const SizedBox()
+                                            : Container(
+                                                width: 220,
+                                                height: 50,
+                                                padding: const EdgeInsets.only(
+                                                    top: 10, left: 15),
+                                                child: TextFormField(
+                                                  textInputAction:
+                                                      TextInputAction.next,
+                                                  controller: ukuranBatu2,
+                                                  onChanged: (value) {
+                                                    setState(() {});
+                                                  },
+                                                  decoration: InputDecoration(
+                                                    label: const Text('Ukuran'),
+                                                    border: OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5.0)),
+                                                  ),
+                                                ),
+                                              ),
 
                                         //qty batu2
                                         Container(
@@ -3377,29 +3587,124 @@ class _FormScreenState extends State<FormScreen> {
 
                                         //crt/pcsbatu2
                                         Container(
-                                          width: 120,
-                                          height: 45,
+                                          width: 100,
+                                          height: 50,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
-                                            enabled: caratPcsBatu2 <= 0
-                                                ? true
-                                                : false,
                                             textInputAction:
                                                 TextInputAction.next,
                                             controller: crtPcsBatu2,
                                             onChanged: (value) {
-                                              caratPcsBatu2 =
-                                                  double.parse(value);
+                                              setState(() {
+                                                //todo: perhitungan batu custom
+                                                if (batu2!.toLowerCase() == "custom emerald" ||
+                                                    batu2!.toLowerCase() ==
+                                                        "custom baguete" ||
+                                                    batu2!.toLowerCase() ==
+                                                        "custom heart" ||
+                                                    batu2!.toLowerCase() ==
+                                                        "custom marquise" ||
+                                                    batu2!.toLowerCase() ==
+                                                        "custom oval" ||
+                                                    batu2!.toLowerCase() ==
+                                                        "custom pear" ||
+                                                    batu2!.toLowerCase() ==
+                                                        "custom princess cut" ||
+                                                    batu2!.toLowerCase() ==
+                                                        "custom ruby" ||
+                                                    batu2!.toLowerCase() ==
+                                                        "custom tapper") {
+                                                  //? kondisi sesuai carat/pcs
+                                                  if (double.parse(value) <
+                                                      0.071) {
+                                                    hargaBatu2 = customGol1!;
+                                                    caratPcsBatu2 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.121) {
+                                                    hargaBatu2 = customGol2!;
+                                                    caratPcsBatu2 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.182) {
+                                                    hargaBatu2 = customGol3!;
+                                                    caratPcsBatu2 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.231) {
+                                                    hargaBatu2 = customGol4!;
+                                                    caratPcsBatu2 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.266) {
+                                                    hargaBatu2 = customGol5!;
+                                                    caratPcsBatu2 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.356) {
+                                                    hargaBatu2 = customGol6!;
+                                                    caratPcsBatu2 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.406) {
+                                                    hargaBatu2 = customGol7!;
+                                                    caratPcsBatu2 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.456) {
+                                                    hargaBatu2 = customGol8!;
+                                                    caratPcsBatu2 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.506) {
+                                                    hargaBatu2 = customGol9!;
+                                                    caratPcsBatu2 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.556) {
+                                                    hargaBatu2 = customGol10!;
+                                                    caratPcsBatu2 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.606) {
+                                                    hargaBatu2 = customGol11!;
+                                                    caratPcsBatu2 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.656) {
+                                                    hargaBatu2 = customGol12!;
+                                                    caratPcsBatu2 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.706) {
+                                                    hargaBatu2 = customGol13!;
+                                                    caratPcsBatu2 =
+                                                        double.parse(value);
+                                                  } else {
+                                                    hargaBatu2 = customGol14!;
+                                                    caratPcsBatu2 =
+                                                        double.parse(value);
+                                                  }
+                                                }
+                                                //! keluar dari kondisi batu custom
+                                                else {}
+                                              });
                                             },
                                             decoration: InputDecoration(
-                                              label: const Text(
-                                                'Carat/Pcs',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
+                                              label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(
@@ -3418,10 +3723,12 @@ class _FormScreenState extends State<FormScreen> {
                                                       setState(() {
                                                         qtyBatu2.text = '0';
                                                         stokBatu2.text = '';
+                                                        crtPcsBatu2.text = '';
+                                                        ukuranBatu2.text = '';
+                                                        stokBatu2.text = '';
                                                         batu2 = '';
                                                         hargaBatu2 = 0;
                                                         caratPcsBatu2 = 0;
-                                                        crtPcsBatu2.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -3431,12 +3738,10 @@ class _FormScreenState extends State<FormScreen> {
                                     ),
                               // end row batu2
 
-                              //batu3
+                              //size batu3
                               qtyBatu2.text.isEmpty
                                   ? const SizedBox()
-                                  :
-                                  //size batu3
-                                  Row(
+                                  : Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
@@ -3471,14 +3776,14 @@ class _FormScreenState extends State<FormScreen> {
                                                       jsonDecode(response.body);
                                                   print(data);
                                                   setState(() {
+                                                    ukuranBatu3.text = '';
+                                                    crtPcsBatu3.text = '';
+                                                    idStone3 = item.idStone;
+                                                    idBatu3 = item.id;
                                                     hargaBatu3 =
                                                         data[0]['unitCost'];
-                                                    idBatu3 = item.id;
                                                     caratPcsBatu3 =
                                                         data[0]['caratPcs'];
-                                                    crtPcsBatu3.text = data[0]
-                                                            ['caratPcs']
-                                                        .toString();
                                                     batu3 =
                                                         item.keyWord.toString();
                                                     stokBatu3.text =
@@ -3493,18 +3798,37 @@ class _FormScreenState extends State<FormScreen> {
                                                 const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                // label: Text(
-                                                //   batu3!,
-                                                //   style: const TextStyle(
-                                                //       fontSize: 18,
-                                                //       fontWeight: FontWeight.bold),
-                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
                                             ),
                                           ),
                                         ),
+
+                                        //ukuran batu3
+                                        idStone3 != -2
+                                            ? const SizedBox()
+                                            : Container(
+                                                width: 220,
+                                                height: 50,
+                                                padding: const EdgeInsets.only(
+                                                    top: 10, left: 15),
+                                                child: TextFormField(
+                                                  textInputAction:
+                                                      TextInputAction.next,
+                                                  controller: ukuranBatu3,
+                                                  onChanged: (value) {
+                                                    setState(() {});
+                                                  },
+                                                  decoration: InputDecoration(
+                                                    label: const Text('Ukuran'),
+                                                    border: OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5.0)),
+                                                  ),
+                                                ),
+                                              ),
 
                                         //qty batu3
                                         Container(
@@ -3561,29 +3885,124 @@ class _FormScreenState extends State<FormScreen> {
 
                                         //crt/pcsbatu3
                                         Container(
-                                          width: 120,
-                                          height: 45,
+                                          width: 100,
+                                          height: 50,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
-                                            enabled: caratPcsBatu3 <= 0
-                                                ? true
-                                                : false,
                                             textInputAction:
                                                 TextInputAction.next,
                                             controller: crtPcsBatu3,
                                             onChanged: (value) {
-                                              caratPcsBatu3 =
-                                                  double.parse(value);
+                                              setState(() {
+                                                //todo: perhitungan batu custom
+                                                if (batu3!.toLowerCase() == "custom emerald" ||
+                                                    batu3!.toLowerCase() ==
+                                                        "custom baguete" ||
+                                                    batu3!.toLowerCase() ==
+                                                        "custom heart" ||
+                                                    batu3!.toLowerCase() ==
+                                                        "custom marquise" ||
+                                                    batu3!.toLowerCase() ==
+                                                        "custom oval" ||
+                                                    batu3!.toLowerCase() ==
+                                                        "custom pear" ||
+                                                    batu3!.toLowerCase() ==
+                                                        "custom princess cut" ||
+                                                    batu3!.toLowerCase() ==
+                                                        "custom ruby" ||
+                                                    batu3!.toLowerCase() ==
+                                                        "custom tapper") {
+                                                  //? kondisi sesuai carat/pcs
+                                                  if (double.parse(value) <
+                                                      0.071) {
+                                                    hargaBatu3 = customGol1!;
+                                                    caratPcsBatu3 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.121) {
+                                                    hargaBatu3 = customGol2!;
+                                                    caratPcsBatu3 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.182) {
+                                                    hargaBatu3 = customGol3!;
+                                                    caratPcsBatu3 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.231) {
+                                                    hargaBatu3 = customGol4!;
+                                                    caratPcsBatu3 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.266) {
+                                                    hargaBatu3 = customGol5!;
+                                                    caratPcsBatu3 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.356) {
+                                                    hargaBatu3 = customGol6!;
+                                                    caratPcsBatu3 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.406) {
+                                                    hargaBatu3 = customGol7!;
+                                                    caratPcsBatu3 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.456) {
+                                                    hargaBatu3 = customGol8!;
+                                                    caratPcsBatu3 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.506) {
+                                                    hargaBatu3 = customGol9!;
+                                                    caratPcsBatu3 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.556) {
+                                                    hargaBatu3 = customGol10!;
+                                                    caratPcsBatu3 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.606) {
+                                                    hargaBatu3 = customGol11!;
+                                                    caratPcsBatu3 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.656) {
+                                                    hargaBatu3 = customGol12!;
+                                                    caratPcsBatu3 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.706) {
+                                                    hargaBatu3 = customGol13!;
+                                                    caratPcsBatu3 =
+                                                        double.parse(value);
+                                                  } else {
+                                                    hargaBatu3 = customGol14!;
+                                                    caratPcsBatu3 =
+                                                        double.parse(value);
+                                                  }
+                                                }
+                                                //! keluar dari kondisi batu custom
+                                                else {}
+                                              });
                                             },
                                             decoration: InputDecoration(
-                                              label: const Text(
-                                                'Carat/Pcs',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
+                                              label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(
@@ -3602,10 +4021,12 @@ class _FormScreenState extends State<FormScreen> {
                                                       setState(() {
                                                         qtyBatu3.text = '0';
                                                         stokBatu3.text = '';
+                                                        crtPcsBatu3.text = '';
+                                                        ukuranBatu3.text = '';
+                                                        stokBatu3.text = '';
                                                         batu3 = '';
                                                         hargaBatu3 = 0;
                                                         caratPcsBatu3 = 0;
-                                                        crtPcsBatu3.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -3615,12 +4036,10 @@ class _FormScreenState extends State<FormScreen> {
                                     ),
                               // end row batu3
 
-                              //batu4
+                              //size batu4
                               qtyBatu3.text.isEmpty
                                   ? const SizedBox()
-                                  :
-                                  //size batu4
-                                  Row(
+                                  : Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
@@ -3655,14 +4074,14 @@ class _FormScreenState extends State<FormScreen> {
                                                       jsonDecode(response.body);
                                                   print(data);
                                                   setState(() {
+                                                    ukuranBatu4.text = '';
+                                                    crtPcsBatu4.text = '';
+                                                    idStone4 = item.idStone;
+                                                    idBatu4 = item.id;
                                                     hargaBatu4 =
                                                         data[0]['unitCost'];
-                                                    idBatu4 = item.id;
                                                     caratPcsBatu4 =
                                                         data[0]['caratPcs'];
-                                                    crtPcsBatu4.text = data[0]
-                                                            ['caratPcs']
-                                                        .toString();
                                                     batu4 =
                                                         item.keyWord.toString();
                                                     stokBatu4.text =
@@ -3677,18 +4096,37 @@ class _FormScreenState extends State<FormScreen> {
                                                 const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                // label: Text(
-                                                //   batu4!,
-                                                //   style: const TextStyle(
-                                                //       fontSize: 18,
-                                                //       fontWeight: FontWeight.bold),
-                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
                                             ),
                                           ),
                                         ),
+
+                                        //ukuran batu4
+                                        idStone4 != -2
+                                            ? const SizedBox()
+                                            : Container(
+                                                width: 220,
+                                                height: 50,
+                                                padding: const EdgeInsets.only(
+                                                    top: 10, left: 15),
+                                                child: TextFormField(
+                                                  textInputAction:
+                                                      TextInputAction.next,
+                                                  controller: ukuranBatu4,
+                                                  onChanged: (value) {
+                                                    setState(() {});
+                                                  },
+                                                  decoration: InputDecoration(
+                                                    label: const Text('Ukuran'),
+                                                    border: OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5.0)),
+                                                  ),
+                                                ),
+                                              ),
 
                                         //qty batu4
                                         Container(
@@ -3745,29 +4183,124 @@ class _FormScreenState extends State<FormScreen> {
 
                                         //crt/pcsbatu4
                                         Container(
-                                          width: 120,
-                                          height: 45,
+                                          width: 100,
+                                          height: 50,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
-                                            enabled: caratPcsBatu4 <= 0
-                                                ? true
-                                                : false,
                                             textInputAction:
                                                 TextInputAction.next,
                                             controller: crtPcsBatu4,
                                             onChanged: (value) {
-                                              caratPcsBatu4 =
-                                                  double.parse(value);
+                                              setState(() {
+                                                //todo: perhitungan batu custom
+                                                if (batu4!.toLowerCase() == "custom emerald" ||
+                                                    batu4!.toLowerCase() ==
+                                                        "custom baguete" ||
+                                                    batu4!.toLowerCase() ==
+                                                        "custom heart" ||
+                                                    batu4!.toLowerCase() ==
+                                                        "custom marquise" ||
+                                                    batu4!.toLowerCase() ==
+                                                        "custom oval" ||
+                                                    batu4!.toLowerCase() ==
+                                                        "custom pear" ||
+                                                    batu4!.toLowerCase() ==
+                                                        "custom princess cut" ||
+                                                    batu4!.toLowerCase() ==
+                                                        "custom ruby" ||
+                                                    batu4!.toLowerCase() ==
+                                                        "custom tapper") {
+                                                  //? kondisi sesuai carat/pcs
+                                                  if (double.parse(value) <
+                                                      0.071) {
+                                                    hargaBatu4 = customGol1!;
+                                                    caratPcsBatu4 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.121) {
+                                                    hargaBatu4 = customGol2!;
+                                                    caratPcsBatu4 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.182) {
+                                                    hargaBatu4 = customGol3!;
+                                                    caratPcsBatu4 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.231) {
+                                                    hargaBatu4 = customGol4!;
+                                                    caratPcsBatu4 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.266) {
+                                                    hargaBatu4 = customGol5!;
+                                                    caratPcsBatu4 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.356) {
+                                                    hargaBatu4 = customGol6!;
+                                                    caratPcsBatu4 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.406) {
+                                                    hargaBatu4 = customGol7!;
+                                                    caratPcsBatu4 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.456) {
+                                                    hargaBatu4 = customGol8!;
+                                                    caratPcsBatu4 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.506) {
+                                                    hargaBatu4 = customGol9!;
+                                                    caratPcsBatu4 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.556) {
+                                                    hargaBatu4 = customGol10!;
+                                                    caratPcsBatu4 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.606) {
+                                                    hargaBatu4 = customGol11!;
+                                                    caratPcsBatu4 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.656) {
+                                                    hargaBatu4 = customGol12!;
+                                                    caratPcsBatu4 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.706) {
+                                                    hargaBatu4 = customGol13!;
+                                                    caratPcsBatu4 =
+                                                        double.parse(value);
+                                                  } else {
+                                                    hargaBatu4 = customGol14!;
+                                                    caratPcsBatu4 =
+                                                        double.parse(value);
+                                                  }
+                                                }
+                                                //! keluar dari kondisi batu custom
+                                                else {}
+                                              });
                                             },
                                             decoration: InputDecoration(
-                                              label: const Text(
-                                                'Carat/Pcs',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
+                                              label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(
@@ -3786,10 +4319,12 @@ class _FormScreenState extends State<FormScreen> {
                                                       setState(() {
                                                         qtyBatu4.text = '0';
                                                         stokBatu4.text = '';
+                                                        crtPcsBatu4.text = '';
+                                                        ukuranBatu4.text = '';
+                                                        stokBatu4.text = '';
                                                         batu4 = '';
                                                         hargaBatu4 = 0;
                                                         caratPcsBatu4 = 0;
-                                                        crtPcsBatu4.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -3799,12 +4334,10 @@ class _FormScreenState extends State<FormScreen> {
                                     ),
                               // end row batu4
 
-                              //batu5
+                              //size batu5
                               qtyBatu4.text.isEmpty
                                   ? const SizedBox()
-                                  :
-                                  //size batu5
-                                  Row(
+                                  : Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
@@ -3839,14 +4372,14 @@ class _FormScreenState extends State<FormScreen> {
                                                       jsonDecode(response.body);
                                                   print(data);
                                                   setState(() {
+                                                    ukuranBatu5.text = '';
+                                                    crtPcsBatu5.text = '';
+                                                    idStone5 = item.idStone;
+                                                    idBatu5 = item.id;
                                                     hargaBatu5 =
                                                         data[0]['unitCost'];
-                                                    idBatu5 = item.id;
                                                     caratPcsBatu5 =
                                                         data[0]['caratPcs'];
-                                                    crtPcsBatu5.text = data[0]
-                                                            ['caratPcs']
-                                                        .toString();
                                                     batu5 =
                                                         item.keyWord.toString();
                                                     stokBatu5.text =
@@ -3861,18 +4394,37 @@ class _FormScreenState extends State<FormScreen> {
                                                 const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                // label: Text(
-                                                //   batu5!,
-                                                //   style: const TextStyle(
-                                                //       fontSize: 18,
-                                                //       fontWeight: FontWeight.bold),
-                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
                                             ),
                                           ),
                                         ),
+
+                                        //ukuran batu5
+                                        idStone5 != -2
+                                            ? const SizedBox()
+                                            : Container(
+                                                width: 220,
+                                                height: 50,
+                                                padding: const EdgeInsets.only(
+                                                    top: 10, left: 15),
+                                                child: TextFormField(
+                                                  textInputAction:
+                                                      TextInputAction.next,
+                                                  controller: ukuranBatu5,
+                                                  onChanged: (value) {
+                                                    setState(() {});
+                                                  },
+                                                  decoration: InputDecoration(
+                                                    label: const Text('Ukuran'),
+                                                    border: OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5.0)),
+                                                  ),
+                                                ),
+                                              ),
 
                                         //qty batu5
                                         Container(
@@ -3929,29 +4481,124 @@ class _FormScreenState extends State<FormScreen> {
 
                                         //crt/pcsbatu5
                                         Container(
-                                          width: 120,
-                                          height: 45,
+                                          width: 100,
+                                          height: 50,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
-                                            enabled: caratPcsBatu5 <= 0
-                                                ? true
-                                                : false,
                                             textInputAction:
                                                 TextInputAction.next,
                                             controller: crtPcsBatu5,
                                             onChanged: (value) {
-                                              caratPcsBatu5 =
-                                                  double.parse(value);
+                                              setState(() {
+                                                //todo: perhitungan batu custom
+                                                if (batu5!.toLowerCase() == "custom emerald" ||
+                                                    batu5!.toLowerCase() ==
+                                                        "custom baguete" ||
+                                                    batu5!.toLowerCase() ==
+                                                        "custom heart" ||
+                                                    batu5!.toLowerCase() ==
+                                                        "custom marquise" ||
+                                                    batu5!.toLowerCase() ==
+                                                        "custom oval" ||
+                                                    batu5!.toLowerCase() ==
+                                                        "custom pear" ||
+                                                    batu5!.toLowerCase() ==
+                                                        "custom princess cut" ||
+                                                    batu5!.toLowerCase() ==
+                                                        "custom ruby" ||
+                                                    batu5!.toLowerCase() ==
+                                                        "custom tapper") {
+                                                  //? kondisi sesuai carat/pcs
+                                                  if (double.parse(value) <
+                                                      0.071) {
+                                                    hargaBatu5 = customGol1!;
+                                                    caratPcsBatu5 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.121) {
+                                                    hargaBatu5 = customGol2!;
+                                                    caratPcsBatu5 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.182) {
+                                                    hargaBatu5 = customGol3!;
+                                                    caratPcsBatu5 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.231) {
+                                                    hargaBatu5 = customGol4!;
+                                                    caratPcsBatu5 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.266) {
+                                                    hargaBatu5 = customGol5!;
+                                                    caratPcsBatu5 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.356) {
+                                                    hargaBatu5 = customGol6!;
+                                                    caratPcsBatu5 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.406) {
+                                                    hargaBatu5 = customGol7!;
+                                                    caratPcsBatu5 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.456) {
+                                                    hargaBatu5 = customGol8!;
+                                                    caratPcsBatu5 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.506) {
+                                                    hargaBatu5 = customGol9!;
+                                                    caratPcsBatu5 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.556) {
+                                                    hargaBatu5 = customGol10!;
+                                                    caratPcsBatu5 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.606) {
+                                                    hargaBatu5 = customGol11!;
+                                                    caratPcsBatu5 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.656) {
+                                                    hargaBatu5 = customGol12!;
+                                                    caratPcsBatu5 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.706) {
+                                                    hargaBatu5 = customGol13!;
+                                                    caratPcsBatu5 =
+                                                        double.parse(value);
+                                                  } else {
+                                                    hargaBatu5 = customGol14!;
+                                                    caratPcsBatu5 =
+                                                        double.parse(value);
+                                                  }
+                                                }
+                                                //! keluar dari kondisi batu custom
+                                                else {}
+                                              });
                                             },
                                             decoration: InputDecoration(
-                                              label: const Text(
-                                                'Carat/Pcs',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
+                                              label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(
@@ -3970,10 +4617,12 @@ class _FormScreenState extends State<FormScreen> {
                                                       setState(() {
                                                         qtyBatu5.text = '0';
                                                         stokBatu5.text = '';
+                                                        crtPcsBatu5.text = '';
+                                                        ukuranBatu5.text = '';
+                                                        stokBatu5.text = '';
                                                         batu5 = '';
                                                         hargaBatu5 = 0;
                                                         caratPcsBatu5 = 0;
-                                                        crtPcsBatu5.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -3983,12 +4632,10 @@ class _FormScreenState extends State<FormScreen> {
                                     ),
                               // end row batu5
 
-                              //batu6
+                              //size batu6
                               qtyBatu5.text.isEmpty
                                   ? const SizedBox()
-                                  :
-                                  //size batu6
-                                  Row(
+                                  : Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
@@ -4023,14 +4670,14 @@ class _FormScreenState extends State<FormScreen> {
                                                       jsonDecode(response.body);
                                                   print(data);
                                                   setState(() {
+                                                    ukuranBatu6.text = '';
+                                                    crtPcsBatu6.text = '';
+                                                    idStone6 = item.idStone;
+                                                    idBatu6 = item.id;
                                                     hargaBatu6 =
                                                         data[0]['unitCost'];
-                                                    idBatu6 = item.id;
                                                     caratPcsBatu6 =
                                                         data[0]['caratPcs'];
-                                                    crtPcsBatu6.text = data[0]
-                                                            ['caratPcs']
-                                                        .toString();
                                                     batu6 =
                                                         item.keyWord.toString();
                                                     stokBatu6.text =
@@ -4045,18 +4692,37 @@ class _FormScreenState extends State<FormScreen> {
                                                 const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                // label: Text(
-                                                //   batu6!,
-                                                //   style: const TextStyle(
-                                                //       fontSize: 18,
-                                                //       fontWeight: FontWeight.bold),
-                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
                                             ),
                                           ),
                                         ),
+
+                                        //ukuran batu6
+                                        idStone6 != -2
+                                            ? const SizedBox()
+                                            : Container(
+                                                width: 220,
+                                                height: 50,
+                                                padding: const EdgeInsets.only(
+                                                    top: 10, left: 15),
+                                                child: TextFormField(
+                                                  textInputAction:
+                                                      TextInputAction.next,
+                                                  controller: ukuranBatu6,
+                                                  onChanged: (value) {
+                                                    setState(() {});
+                                                  },
+                                                  decoration: InputDecoration(
+                                                    label: const Text('Ukuran'),
+                                                    border: OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5.0)),
+                                                  ),
+                                                ),
+                                              ),
 
                                         //qty batu6
                                         Container(
@@ -4113,29 +4779,124 @@ class _FormScreenState extends State<FormScreen> {
 
                                         //crt/pcsbatu6
                                         Container(
-                                          width: 120,
-                                          height: 45,
+                                          width: 100,
+                                          height: 50,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
-                                            enabled: caratPcsBatu6 <= 0
-                                                ? true
-                                                : false,
                                             textInputAction:
                                                 TextInputAction.next,
                                             controller: crtPcsBatu6,
                                             onChanged: (value) {
-                                              caratPcsBatu6 =
-                                                  double.parse(value);
+                                              setState(() {
+                                                //todo: perhitungan batu custom
+                                                if (batu6!.toLowerCase() == "custom emerald" ||
+                                                    batu6!.toLowerCase() ==
+                                                        "custom baguete" ||
+                                                    batu6!.toLowerCase() ==
+                                                        "custom heart" ||
+                                                    batu6!.toLowerCase() ==
+                                                        "custom marquise" ||
+                                                    batu6!.toLowerCase() ==
+                                                        "custom oval" ||
+                                                    batu6!.toLowerCase() ==
+                                                        "custom pear" ||
+                                                    batu6!.toLowerCase() ==
+                                                        "custom princess cut" ||
+                                                    batu6!.toLowerCase() ==
+                                                        "custom ruby" ||
+                                                    batu6!.toLowerCase() ==
+                                                        "custom tapper") {
+                                                  //? kondisi sesuai carat/pcs
+                                                  if (double.parse(value) <
+                                                      0.071) {
+                                                    hargaBatu6 = customGol1!;
+                                                    caratPcsBatu6 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.121) {
+                                                    hargaBatu6 = customGol2!;
+                                                    caratPcsBatu6 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.182) {
+                                                    hargaBatu6 = customGol3!;
+                                                    caratPcsBatu6 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.231) {
+                                                    hargaBatu6 = customGol4!;
+                                                    caratPcsBatu6 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.266) {
+                                                    hargaBatu6 = customGol5!;
+                                                    caratPcsBatu6 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.356) {
+                                                    hargaBatu6 = customGol6!;
+                                                    caratPcsBatu6 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.406) {
+                                                    hargaBatu6 = customGol7!;
+                                                    caratPcsBatu6 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.456) {
+                                                    hargaBatu6 = customGol8!;
+                                                    caratPcsBatu6 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.506) {
+                                                    hargaBatu6 = customGol9!;
+                                                    caratPcsBatu6 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.556) {
+                                                    hargaBatu6 = customGol10!;
+                                                    caratPcsBatu6 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.606) {
+                                                    hargaBatu6 = customGol11!;
+                                                    caratPcsBatu6 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.656) {
+                                                    hargaBatu6 = customGol12!;
+                                                    caratPcsBatu6 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.706) {
+                                                    hargaBatu6 = customGol13!;
+                                                    caratPcsBatu6 =
+                                                        double.parse(value);
+                                                  } else {
+                                                    hargaBatu6 = customGol14!;
+                                                    caratPcsBatu6 =
+                                                        double.parse(value);
+                                                  }
+                                                }
+                                                //! keluar dari kondisi batu custom
+                                                else {}
+                                              });
                                             },
                                             decoration: InputDecoration(
-                                              label: const Text(
-                                                'Carat/Pcs',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
+                                              label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(
@@ -4154,10 +4915,12 @@ class _FormScreenState extends State<FormScreen> {
                                                       setState(() {
                                                         qtyBatu6.text = '0';
                                                         stokBatu6.text = '';
+                                                        crtPcsBatu6.text = '';
+                                                        ukuranBatu6.text = '';
+                                                        stokBatu6.text = '';
                                                         batu6 = '';
                                                         hargaBatu6 = 0;
                                                         caratPcsBatu6 = 0;
-                                                        crtPcsBatu6.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -4167,12 +4930,10 @@ class _FormScreenState extends State<FormScreen> {
                                     ),
                               // end row batu6
 
-                              //batu7
+                              //size batu7
                               qtyBatu6.text.isEmpty
                                   ? const SizedBox()
-                                  :
-                                  //size batu7
-                                  Row(
+                                  : Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
@@ -4207,14 +4968,14 @@ class _FormScreenState extends State<FormScreen> {
                                                       jsonDecode(response.body);
                                                   print(data);
                                                   setState(() {
+                                                    ukuranBatu7.text = '';
+                                                    crtPcsBatu7.text = '';
+                                                    idStone7 = item.idStone;
+                                                    idBatu7 = item.id;
                                                     hargaBatu7 =
                                                         data[0]['unitCost'];
-                                                    idBatu7 = item.id;
                                                     caratPcsBatu7 =
                                                         data[0]['caratPcs'];
-                                                    crtPcsBatu7.text = data[0]
-                                                            ['caratPcs']
-                                                        .toString();
                                                     batu7 =
                                                         item.keyWord.toString();
                                                     stokBatu7.text =
@@ -4229,18 +4990,37 @@ class _FormScreenState extends State<FormScreen> {
                                                 const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                // label: Text(
-                                                //   batu7!,
-                                                //   style: const TextStyle(
-                                                //       fontSize: 18,
-                                                //       fontWeight: FontWeight.bold),
-                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
                                             ),
                                           ),
                                         ),
+
+                                        //ukuran batu7
+                                        idStone7 != -2
+                                            ? const SizedBox()
+                                            : Container(
+                                                width: 220,
+                                                height: 50,
+                                                padding: const EdgeInsets.only(
+                                                    top: 10, left: 15),
+                                                child: TextFormField(
+                                                  textInputAction:
+                                                      TextInputAction.next,
+                                                  controller: ukuranBatu7,
+                                                  onChanged: (value) {
+                                                    setState(() {});
+                                                  },
+                                                  decoration: InputDecoration(
+                                                    label: const Text('Ukuran'),
+                                                    border: OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5.0)),
+                                                  ),
+                                                ),
+                                              ),
 
                                         //qty batu7
                                         Container(
@@ -4297,29 +5077,124 @@ class _FormScreenState extends State<FormScreen> {
 
                                         //crt/pcsbatu7
                                         Container(
-                                          width: 120,
-                                          height: 45,
+                                          width: 100,
+                                          height: 50,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
-                                            enabled: caratPcsBatu7 <= 0
-                                                ? true
-                                                : false,
                                             textInputAction:
                                                 TextInputAction.next,
                                             controller: crtPcsBatu7,
                                             onChanged: (value) {
-                                              caratPcsBatu7 =
-                                                  double.parse(value);
+                                              setState(() {
+                                                //todo: perhitungan batu custom
+                                                if (batu7!.toLowerCase() == "custom emerald" ||
+                                                    batu7!.toLowerCase() ==
+                                                        "custom baguete" ||
+                                                    batu7!.toLowerCase() ==
+                                                        "custom heart" ||
+                                                    batu7!.toLowerCase() ==
+                                                        "custom marquise" ||
+                                                    batu7!.toLowerCase() ==
+                                                        "custom oval" ||
+                                                    batu7!.toLowerCase() ==
+                                                        "custom pear" ||
+                                                    batu7!.toLowerCase() ==
+                                                        "custom princess cut" ||
+                                                    batu7!.toLowerCase() ==
+                                                        "custom ruby" ||
+                                                    batu7!.toLowerCase() ==
+                                                        "custom tapper") {
+                                                  //? kondisi sesuai carat/pcs
+                                                  if (double.parse(value) <
+                                                      0.071) {
+                                                    hargaBatu7 = customGol1!;
+                                                    caratPcsBatu7 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.121) {
+                                                    hargaBatu7 = customGol2!;
+                                                    caratPcsBatu7 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.182) {
+                                                    hargaBatu7 = customGol3!;
+                                                    caratPcsBatu7 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.231) {
+                                                    hargaBatu7 = customGol4!;
+                                                    caratPcsBatu7 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.266) {
+                                                    hargaBatu7 = customGol5!;
+                                                    caratPcsBatu7 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.356) {
+                                                    hargaBatu7 = customGol6!;
+                                                    caratPcsBatu7 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.406) {
+                                                    hargaBatu7 = customGol7!;
+                                                    caratPcsBatu7 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.456) {
+                                                    hargaBatu7 = customGol8!;
+                                                    caratPcsBatu7 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.506) {
+                                                    hargaBatu7 = customGol9!;
+                                                    caratPcsBatu7 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.556) {
+                                                    hargaBatu7 = customGol10!;
+                                                    caratPcsBatu7 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.606) {
+                                                    hargaBatu7 = customGol11!;
+                                                    caratPcsBatu7 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.656) {
+                                                    hargaBatu7 = customGol12!;
+                                                    caratPcsBatu7 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.706) {
+                                                    hargaBatu7 = customGol13!;
+                                                    caratPcsBatu7 =
+                                                        double.parse(value);
+                                                  } else {
+                                                    hargaBatu7 = customGol14!;
+                                                    caratPcsBatu7 =
+                                                        double.parse(value);
+                                                  }
+                                                }
+                                                //! keluar dari kondisi batu custom
+                                                else {}
+                                              });
                                             },
                                             decoration: InputDecoration(
-                                              label: const Text(
-                                                'Carat/Pcs',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
+                                              label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(
@@ -4338,10 +5213,12 @@ class _FormScreenState extends State<FormScreen> {
                                                       setState(() {
                                                         qtyBatu7.text = '0';
                                                         stokBatu7.text = '';
+                                                        crtPcsBatu7.text = '';
+                                                        ukuranBatu7.text = '';
+                                                        stokBatu7.text = '';
                                                         batu7 = '';
                                                         hargaBatu7 = 0;
                                                         caratPcsBatu7 = 0;
-                                                        crtPcsBatu7.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -4351,12 +5228,10 @@ class _FormScreenState extends State<FormScreen> {
                                     ),
                               // end row batu7
 
-                              //batu8
+                              //size batu8
                               qtyBatu7.text.isEmpty
                                   ? const SizedBox()
-                                  :
-                                  //size batu8
-                                  Row(
+                                  : Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
@@ -4391,14 +5266,14 @@ class _FormScreenState extends State<FormScreen> {
                                                       jsonDecode(response.body);
                                                   print(data);
                                                   setState(() {
+                                                    ukuranBatu8.text = '';
+                                                    crtPcsBatu8.text = '';
+                                                    idStone8 = item.idStone;
+                                                    idBatu8 = item.id;
                                                     hargaBatu8 =
                                                         data[0]['unitCost'];
-                                                    idBatu8 = item.id;
                                                     caratPcsBatu8 =
                                                         data[0]['caratPcs'];
-                                                    crtPcsBatu8.text = data[0]
-                                                            ['caratPcs']
-                                                        .toString();
                                                     batu8 =
                                                         item.keyWord.toString();
                                                     stokBatu8.text =
@@ -4413,18 +5288,37 @@ class _FormScreenState extends State<FormScreen> {
                                                 const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                // label: Text(
-                                                //   batu8!,
-                                                //   style: const TextStyle(
-                                                //       fontSize: 18,
-                                                //       fontWeight: FontWeight.bold),
-                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
                                             ),
                                           ),
                                         ),
+
+                                        //ukuran batu8
+                                        idStone8 != -2
+                                            ? const SizedBox()
+                                            : Container(
+                                                width: 220,
+                                                height: 50,
+                                                padding: const EdgeInsets.only(
+                                                    top: 10, left: 15),
+                                                child: TextFormField(
+                                                  textInputAction:
+                                                      TextInputAction.next,
+                                                  controller: ukuranBatu8,
+                                                  onChanged: (value) {
+                                                    setState(() {});
+                                                  },
+                                                  decoration: InputDecoration(
+                                                    label: const Text('Ukuran'),
+                                                    border: OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5.0)),
+                                                  ),
+                                                ),
+                                              ),
 
                                         //qty batu8
                                         Container(
@@ -4481,29 +5375,124 @@ class _FormScreenState extends State<FormScreen> {
 
                                         //crt/pcsbatu8
                                         Container(
-                                          width: 120,
-                                          height: 45,
+                                          width: 100,
+                                          height: 50,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
-                                            enabled: caratPcsBatu8 <= 0
-                                                ? true
-                                                : false,
                                             textInputAction:
                                                 TextInputAction.next,
                                             controller: crtPcsBatu8,
                                             onChanged: (value) {
-                                              caratPcsBatu8 =
-                                                  double.parse(value);
+                                              setState(() {
+                                                //todo: perhitungan batu custom
+                                                if (batu8!.toLowerCase() == "custom emerald" ||
+                                                    batu8!.toLowerCase() ==
+                                                        "custom baguete" ||
+                                                    batu8!.toLowerCase() ==
+                                                        "custom heart" ||
+                                                    batu8!.toLowerCase() ==
+                                                        "custom marquise" ||
+                                                    batu8!.toLowerCase() ==
+                                                        "custom oval" ||
+                                                    batu8!.toLowerCase() ==
+                                                        "custom pear" ||
+                                                    batu8!.toLowerCase() ==
+                                                        "custom princess cut" ||
+                                                    batu8!.toLowerCase() ==
+                                                        "custom ruby" ||
+                                                    batu8!.toLowerCase() ==
+                                                        "custom tapper") {
+                                                  //? kondisi sesuai carat/pcs
+                                                  if (double.parse(value) <
+                                                      0.071) {
+                                                    hargaBatu8 = customGol1!;
+                                                    caratPcsBatu8 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.121) {
+                                                    hargaBatu8 = customGol2!;
+                                                    caratPcsBatu8 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.182) {
+                                                    hargaBatu8 = customGol3!;
+                                                    caratPcsBatu8 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.231) {
+                                                    hargaBatu8 = customGol4!;
+                                                    caratPcsBatu8 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.266) {
+                                                    hargaBatu8 = customGol5!;
+                                                    caratPcsBatu8 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.356) {
+                                                    hargaBatu8 = customGol6!;
+                                                    caratPcsBatu8 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.406) {
+                                                    hargaBatu8 = customGol7!;
+                                                    caratPcsBatu8 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.456) {
+                                                    hargaBatu8 = customGol8!;
+                                                    caratPcsBatu8 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.506) {
+                                                    hargaBatu8 = customGol9!;
+                                                    caratPcsBatu8 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.556) {
+                                                    hargaBatu8 = customGol10!;
+                                                    caratPcsBatu8 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.606) {
+                                                    hargaBatu8 = customGol11!;
+                                                    caratPcsBatu8 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.656) {
+                                                    hargaBatu8 = customGol12!;
+                                                    caratPcsBatu8 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.706) {
+                                                    hargaBatu8 = customGol13!;
+                                                    caratPcsBatu8 =
+                                                        double.parse(value);
+                                                  } else {
+                                                    hargaBatu8 = customGol14!;
+                                                    caratPcsBatu8 =
+                                                        double.parse(value);
+                                                  }
+                                                }
+                                                //! keluar dari kondisi batu custom
+                                                else {}
+                                              });
                                             },
                                             decoration: InputDecoration(
-                                              label: const Text(
-                                                'Carat/Pcs',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
+                                              label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(
@@ -4522,10 +5511,12 @@ class _FormScreenState extends State<FormScreen> {
                                                       setState(() {
                                                         qtyBatu8.text = '0';
                                                         stokBatu8.text = '';
+                                                        crtPcsBatu8.text = '';
+                                                        ukuranBatu8.text = '';
+                                                        stokBatu8.text = '';
                                                         batu8 = '';
                                                         hargaBatu8 = 0;
                                                         caratPcsBatu8 = 0;
-                                                        crtPcsBatu8.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -4535,12 +5526,10 @@ class _FormScreenState extends State<FormScreen> {
                                     ),
                               // end row batu8
 
-                              //batu9
+                              //size batu9
                               qtyBatu8.text.isEmpty
                                   ? const SizedBox()
-                                  :
-                                  //size batu9
-                                  Row(
+                                  : Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
@@ -4575,14 +5564,14 @@ class _FormScreenState extends State<FormScreen> {
                                                       jsonDecode(response.body);
                                                   print(data);
                                                   setState(() {
+                                                    ukuranBatu9.text = '';
+                                                    crtPcsBatu9.text = '';
+                                                    idStone9 = item.idStone;
+                                                    idBatu9 = item.id;
                                                     hargaBatu9 =
                                                         data[0]['unitCost'];
-                                                    idBatu9 = item.id;
                                                     caratPcsBatu9 =
                                                         data[0]['caratPcs'];
-                                                    crtPcsBatu9.text = data[0]
-                                                            ['caratPcs']
-                                                        .toString();
                                                     batu9 =
                                                         item.keyWord.toString();
                                                     stokBatu9.text =
@@ -4597,18 +5586,37 @@ class _FormScreenState extends State<FormScreen> {
                                                 const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                // label: Text(
-                                                //   batu9!,
-                                                //   style: const TextStyle(
-                                                //       fontSize: 18,
-                                                //       fontWeight: FontWeight.bold),
-                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
                                             ),
                                           ),
                                         ),
+
+                                        //ukuran batu9
+                                        idStone9 != -2
+                                            ? const SizedBox()
+                                            : Container(
+                                                width: 220,
+                                                height: 50,
+                                                padding: const EdgeInsets.only(
+                                                    top: 10, left: 15),
+                                                child: TextFormField(
+                                                  textInputAction:
+                                                      TextInputAction.next,
+                                                  controller: ukuranBatu9,
+                                                  onChanged: (value) {
+                                                    setState(() {});
+                                                  },
+                                                  decoration: InputDecoration(
+                                                    label: const Text('Ukuran'),
+                                                    border: OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5.0)),
+                                                  ),
+                                                ),
+                                              ),
 
                                         //qty batu9
                                         Container(
@@ -4665,29 +5673,124 @@ class _FormScreenState extends State<FormScreen> {
 
                                         //crt/pcsbatu9
                                         Container(
-                                          width: 120,
-                                          height: 45,
+                                          width: 100,
+                                          height: 50,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
-                                            enabled: caratPcsBatu9 <= 0
-                                                ? true
-                                                : false,
                                             textInputAction:
                                                 TextInputAction.next,
                                             controller: crtPcsBatu9,
                                             onChanged: (value) {
-                                              caratPcsBatu9 =
-                                                  double.parse(value);
+                                              setState(() {
+                                                //todo: perhitungan batu custom
+                                                if (batu9!.toLowerCase() == "custom emerald" ||
+                                                    batu9!.toLowerCase() ==
+                                                        "custom baguete" ||
+                                                    batu9!.toLowerCase() ==
+                                                        "custom heart" ||
+                                                    batu9!.toLowerCase() ==
+                                                        "custom marquise" ||
+                                                    batu9!.toLowerCase() ==
+                                                        "custom oval" ||
+                                                    batu9!.toLowerCase() ==
+                                                        "custom pear" ||
+                                                    batu9!.toLowerCase() ==
+                                                        "custom princess cut" ||
+                                                    batu9!.toLowerCase() ==
+                                                        "custom ruby" ||
+                                                    batu9!.toLowerCase() ==
+                                                        "custom tapper") {
+                                                  //? kondisi sesuai carat/pcs
+                                                  if (double.parse(value) <
+                                                      0.071) {
+                                                    hargaBatu9 = customGol1!;
+                                                    caratPcsBatu9 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.121) {
+                                                    hargaBatu9 = customGol2!;
+                                                    caratPcsBatu9 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.182) {
+                                                    hargaBatu9 = customGol3!;
+                                                    caratPcsBatu9 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.231) {
+                                                    hargaBatu9 = customGol4!;
+                                                    caratPcsBatu9 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.266) {
+                                                    hargaBatu9 = customGol5!;
+                                                    caratPcsBatu9 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.356) {
+                                                    hargaBatu9 = customGol6!;
+                                                    caratPcsBatu9 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.406) {
+                                                    hargaBatu9 = customGol7!;
+                                                    caratPcsBatu9 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.456) {
+                                                    hargaBatu9 = customGol8!;
+                                                    caratPcsBatu9 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.506) {
+                                                    hargaBatu9 = customGol9!;
+                                                    caratPcsBatu9 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.556) {
+                                                    hargaBatu9 = customGol10!;
+                                                    caratPcsBatu9 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.606) {
+                                                    hargaBatu9 = customGol11!;
+                                                    caratPcsBatu9 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.656) {
+                                                    hargaBatu9 = customGol12!;
+                                                    caratPcsBatu9 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.706) {
+                                                    hargaBatu9 = customGol13!;
+                                                    caratPcsBatu9 =
+                                                        double.parse(value);
+                                                  } else {
+                                                    hargaBatu9 = customGol14!;
+                                                    caratPcsBatu9 =
+                                                        double.parse(value);
+                                                  }
+                                                }
+                                                //! keluar dari kondisi batu custom
+                                                else {}
+                                              });
                                             },
                                             decoration: InputDecoration(
-                                              label: const Text(
-                                                'Carat/Pcs',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
+                                              label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(
@@ -4706,10 +5809,12 @@ class _FormScreenState extends State<FormScreen> {
                                                       setState(() {
                                                         qtyBatu9.text = '0';
                                                         stokBatu9.text = '';
+                                                        crtPcsBatu9.text = '';
+                                                        ukuranBatu9.text = '';
+                                                        stokBatu9.text = '';
                                                         batu9 = '';
                                                         hargaBatu9 = 0;
                                                         caratPcsBatu9 = 0;
-                                                        crtPcsBatu9.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -4719,12 +5824,10 @@ class _FormScreenState extends State<FormScreen> {
                                     ),
                               // end row batu9
 
-                              //batu10
+                              //size batu10
                               qtyBatu9.text.isEmpty
                                   ? const SizedBox()
-                                  :
-                                  //size batu10
-                                  Row(
+                                  : Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
@@ -4759,14 +5862,14 @@ class _FormScreenState extends State<FormScreen> {
                                                       jsonDecode(response.body);
                                                   print(data);
                                                   setState(() {
+                                                    ukuranBatu10.text = '';
+                                                    crtPcsBatu10.text = '';
+                                                    idStone10 = item.idStone;
+                                                    idBatu10 = item.id;
                                                     hargaBatu10 =
                                                         data[0]['unitCost'];
-                                                    idBatu10 = item.id;
                                                     caratPcsBatu10 =
                                                         data[0]['caratPcs'];
-                                                    crtPcsBatu10.text = data[0]
-                                                            ['caratPcs']
-                                                        .toString();
                                                     batu10 =
                                                         item.keyWord.toString();
                                                     stokBatu10.text =
@@ -4781,18 +5884,37 @@ class _FormScreenState extends State<FormScreen> {
                                                 const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                // label: Text(
-                                                //   batu10!,
-                                                //   style: const TextStyle(
-                                                //       fontSize: 18,
-                                                //       fontWeight: FontWeight.bold),
-                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
                                             ),
                                           ),
                                         ),
+
+                                        //ukuran batu10
+                                        idStone10 != -2
+                                            ? const SizedBox()
+                                            : Container(
+                                                width: 220,
+                                                height: 50,
+                                                padding: const EdgeInsets.only(
+                                                    top: 10, left: 15),
+                                                child: TextFormField(
+                                                  textInputAction:
+                                                      TextInputAction.next,
+                                                  controller: ukuranBatu10,
+                                                  onChanged: (value) {
+                                                    setState(() {});
+                                                  },
+                                                  decoration: InputDecoration(
+                                                    label: const Text('Ukuran'),
+                                                    border: OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5.0)),
+                                                  ),
+                                                ),
+                                              ),
 
                                         //qty batu10
                                         Container(
@@ -4850,29 +5972,124 @@ class _FormScreenState extends State<FormScreen> {
 
                                         //crt/pcsbatu10
                                         Container(
-                                          width: 120,
-                                          height: 45,
+                                          width: 100,
+                                          height: 50,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
-                                            enabled: caratPcsBatu10 <= 0
-                                                ? true
-                                                : false,
                                             textInputAction:
                                                 TextInputAction.next,
                                             controller: crtPcsBatu10,
                                             onChanged: (value) {
-                                              caratPcsBatu10 =
-                                                  double.parse(value);
+                                              setState(() {
+                                                //todo: perhitungan batu custom
+                                                if (batu10!.toLowerCase() == "custom emerald" ||
+                                                    batu10!.toLowerCase() ==
+                                                        "custom baguete" ||
+                                                    batu10!.toLowerCase() ==
+                                                        "custom heart" ||
+                                                    batu10!.toLowerCase() ==
+                                                        "custom marquise" ||
+                                                    batu10!.toLowerCase() ==
+                                                        "custom oval" ||
+                                                    batu10!.toLowerCase() ==
+                                                        "custom pear" ||
+                                                    batu10!.toLowerCase() ==
+                                                        "custom princess cut" ||
+                                                    batu10!.toLowerCase() ==
+                                                        "custom ruby" ||
+                                                    batu10!.toLowerCase() ==
+                                                        "custom tapper") {
+                                                  //? kondisi sesuai carat/pcs
+                                                  if (double.parse(value) <
+                                                      0.071) {
+                                                    hargaBatu10 = customGol1!;
+                                                    caratPcsBatu10 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.121) {
+                                                    hargaBatu10 = customGol2!;
+                                                    caratPcsBatu10 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.182) {
+                                                    hargaBatu10 = customGol3!;
+                                                    caratPcsBatu10 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.231) {
+                                                    hargaBatu10 = customGol4!;
+                                                    caratPcsBatu10 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.266) {
+                                                    hargaBatu10 = customGol5!;
+                                                    caratPcsBatu10 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.356) {
+                                                    hargaBatu10 = customGol6!;
+                                                    caratPcsBatu10 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.406) {
+                                                    hargaBatu10 = customGol7!;
+                                                    caratPcsBatu10 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.456) {
+                                                    hargaBatu10 = customGol8!;
+                                                    caratPcsBatu10 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.506) {
+                                                    hargaBatu10 = customGol9!;
+                                                    caratPcsBatu10 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.556) {
+                                                    hargaBatu10 = customGol10!;
+                                                    caratPcsBatu10 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.606) {
+                                                    hargaBatu10 = customGol11!;
+                                                    caratPcsBatu10 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.656) {
+                                                    hargaBatu10 = customGol12!;
+                                                    caratPcsBatu10 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.706) {
+                                                    hargaBatu10 = customGol13!;
+                                                    caratPcsBatu10 =
+                                                        double.parse(value);
+                                                  } else {
+                                                    hargaBatu10 = customGol14!;
+                                                    caratPcsBatu10 =
+                                                        double.parse(value);
+                                                  }
+                                                }
+                                                //! keluar dari kondisi batu custom
+                                                else {}
+                                              });
                                             },
                                             decoration: InputDecoration(
-                                              label: const Text(
-                                                'Carat/Pcs',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
+                                              label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(
@@ -4891,10 +6108,12 @@ class _FormScreenState extends State<FormScreen> {
                                                       setState(() {
                                                         qtyBatu10.text = '0';
                                                         stokBatu10.text = '';
+                                                        crtPcsBatu10.text = '';
+                                                        ukuranBatu10.text = '';
+                                                        stokBatu10.text = '';
                                                         batu10 = '';
                                                         hargaBatu10 = 0;
                                                         caratPcsBatu10 = 0;
-                                                        crtPcsBatu10.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -4904,12 +6123,10 @@ class _FormScreenState extends State<FormScreen> {
                                     ),
                               // end row batu10
 
-                              //batu11
+                              //size batu11
                               qtyBatu10.text.isEmpty
                                   ? const SizedBox()
-                                  :
-                                  //size batu11
-                                  Row(
+                                  : Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
@@ -4944,14 +6161,14 @@ class _FormScreenState extends State<FormScreen> {
                                                       jsonDecode(response.body);
                                                   print(data);
                                                   setState(() {
+                                                    ukuranBatu11.text = '';
+                                                    crtPcsBatu11.text = '';
+                                                    idStone11 = item.idStone;
+                                                    idBatu11 = item.id;
                                                     hargaBatu11 =
                                                         data[0]['unitCost'];
-                                                    idBatu11 = item.id;
                                                     caratPcsBatu11 =
                                                         data[0]['caratPcs'];
-                                                    crtPcsBatu11.text = data[0]
-                                                            ['caratPcs']
-                                                        .toString();
                                                     batu11 =
                                                         item.keyWord.toString();
                                                     stokBatu11.text =
@@ -4966,18 +6183,37 @@ class _FormScreenState extends State<FormScreen> {
                                                 const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                // label: Text(
-                                                //   batu11!,
-                                                //   style: const TextStyle(
-                                                //       fontSize: 18,
-                                                //       fontWeight: FontWeight.bold),
-                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
                                             ),
                                           ),
                                         ),
+
+                                        //ukuran batu11
+                                        idStone11 != -2
+                                            ? const SizedBox()
+                                            : Container(
+                                                width: 220,
+                                                height: 50,
+                                                padding: const EdgeInsets.only(
+                                                    top: 10, left: 15),
+                                                child: TextFormField(
+                                                  textInputAction:
+                                                      TextInputAction.next,
+                                                  controller: ukuranBatu11,
+                                                  onChanged: (value) {
+                                                    setState(() {});
+                                                  },
+                                                  decoration: InputDecoration(
+                                                    label: const Text('Ukuran'),
+                                                    border: OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5.0)),
+                                                  ),
+                                                ),
+                                              ),
 
                                         //qty batu11
                                         Container(
@@ -5035,29 +6271,124 @@ class _FormScreenState extends State<FormScreen> {
 
                                         //crt/pcsbatu11
                                         Container(
-                                          width: 120,
-                                          height: 45,
+                                          width: 100,
+                                          height: 50,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
-                                            enabled: caratPcsBatu11 <= 0
-                                                ? true
-                                                : false,
                                             textInputAction:
                                                 TextInputAction.next,
                                             controller: crtPcsBatu11,
                                             onChanged: (value) {
-                                              caratPcsBatu11 =
-                                                  double.parse(value);
+                                              setState(() {
+                                                //todo: perhitungan batu custom
+                                                if (batu11!.toLowerCase() == "custom emerald" ||
+                                                    batu11!.toLowerCase() ==
+                                                        "custom baguete" ||
+                                                    batu11!.toLowerCase() ==
+                                                        "custom heart" ||
+                                                    batu11!.toLowerCase() ==
+                                                        "custom marquise" ||
+                                                    batu11!.toLowerCase() ==
+                                                        "custom oval" ||
+                                                    batu11!.toLowerCase() ==
+                                                        "custom pear" ||
+                                                    batu11!.toLowerCase() ==
+                                                        "custom princess cut" ||
+                                                    batu11!.toLowerCase() ==
+                                                        "custom ruby" ||
+                                                    batu11!.toLowerCase() ==
+                                                        "custom tapper") {
+                                                  //? kondisi sesuai carat/pcs
+                                                  if (double.parse(value) <
+                                                      0.071) {
+                                                    hargaBatu11 = customGol1!;
+                                                    caratPcsBatu11 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.121) {
+                                                    hargaBatu11 = customGol2!;
+                                                    caratPcsBatu11 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.182) {
+                                                    hargaBatu11 = customGol3!;
+                                                    caratPcsBatu11 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.231) {
+                                                    hargaBatu11 = customGol4!;
+                                                    caratPcsBatu11 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.266) {
+                                                    hargaBatu11 = customGol5!;
+                                                    caratPcsBatu11 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.356) {
+                                                    hargaBatu11 = customGol6!;
+                                                    caratPcsBatu11 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.406) {
+                                                    hargaBatu11 = customGol7!;
+                                                    caratPcsBatu11 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.456) {
+                                                    hargaBatu11 = customGol8!;
+                                                    caratPcsBatu11 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.506) {
+                                                    hargaBatu11 = customGol9!;
+                                                    caratPcsBatu11 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.556) {
+                                                    hargaBatu11 = customGol10!;
+                                                    caratPcsBatu11 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.606) {
+                                                    hargaBatu11 = customGol11!;
+                                                    caratPcsBatu11 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.656) {
+                                                    hargaBatu11 = customGol12!;
+                                                    caratPcsBatu11 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.706) {
+                                                    hargaBatu11 = customGol13!;
+                                                    caratPcsBatu11 =
+                                                        double.parse(value);
+                                                  } else {
+                                                    hargaBatu11 = customGol14!;
+                                                    caratPcsBatu11 =
+                                                        double.parse(value);
+                                                  }
+                                                }
+                                                //! keluar dari kondisi batu custom
+                                                else {}
+                                              });
                                             },
                                             decoration: InputDecoration(
-                                              label: const Text(
-                                                'Carat/Pcs',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
+                                              label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(
@@ -5076,10 +6407,12 @@ class _FormScreenState extends State<FormScreen> {
                                                       setState(() {
                                                         qtyBatu11.text = '0';
                                                         stokBatu11.text = '';
+                                                        crtPcsBatu11.text = '';
+                                                        ukuranBatu11.text = '';
+                                                        stokBatu11.text = '';
                                                         batu11 = '';
                                                         hargaBatu11 = 0;
                                                         caratPcsBatu11 = 0;
-                                                        crtPcsBatu11.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -5089,12 +6422,10 @@ class _FormScreenState extends State<FormScreen> {
                                     ),
                               // end row batu11
 
-                              //batu12
+                              //size batu12
                               qtyBatu11.text.isEmpty
                                   ? const SizedBox()
-                                  :
-                                  //size batu12
-                                  Row(
+                                  : Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
@@ -5129,14 +6460,14 @@ class _FormScreenState extends State<FormScreen> {
                                                       jsonDecode(response.body);
                                                   print(data);
                                                   setState(() {
+                                                    ukuranBatu12.text = '';
+                                                    crtPcsBatu12.text = '';
+                                                    idStone12 = item.idStone;
+                                                    idBatu12 = item.id;
                                                     hargaBatu12 =
                                                         data[0]['unitCost'];
-                                                    idBatu12 = item.id;
                                                     caratPcsBatu12 =
                                                         data[0]['caratPcs'];
-                                                    crtPcsBatu12.text = data[0]
-                                                            ['caratPcs']
-                                                        .toString();
                                                     batu12 =
                                                         item.keyWord.toString();
                                                     stokBatu12.text =
@@ -5151,18 +6482,37 @@ class _FormScreenState extends State<FormScreen> {
                                                 const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                // label: Text(
-                                                //   batu12!,
-                                                //   style: const TextStyle(
-                                                //       fontSize: 18,
-                                                //       fontWeight: FontWeight.bold),
-                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
                                             ),
                                           ),
                                         ),
+
+                                        //ukuran batu12
+                                        idStone12 != -2
+                                            ? const SizedBox()
+                                            : Container(
+                                                width: 220,
+                                                height: 50,
+                                                padding: const EdgeInsets.only(
+                                                    top: 10, left: 15),
+                                                child: TextFormField(
+                                                  textInputAction:
+                                                      TextInputAction.next,
+                                                  controller: ukuranBatu12,
+                                                  onChanged: (value) {
+                                                    setState(() {});
+                                                  },
+                                                  decoration: InputDecoration(
+                                                    label: const Text('Ukuran'),
+                                                    border: OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5.0)),
+                                                  ),
+                                                ),
+                                              ),
 
                                         //qty batu12
                                         Container(
@@ -5220,29 +6570,124 @@ class _FormScreenState extends State<FormScreen> {
 
                                         //crt/pcsbatu12
                                         Container(
-                                          width: 120,
-                                          height: 45,
+                                          width: 100,
+                                          height: 50,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
-                                            enabled: caratPcsBatu12 <= 0
-                                                ? true
-                                                : false,
                                             textInputAction:
                                                 TextInputAction.next,
                                             controller: crtPcsBatu12,
                                             onChanged: (value) {
-                                              caratPcsBatu12 =
-                                                  double.parse(value);
+                                              setState(() {
+                                                //todo: perhitungan batu custom
+                                                if (batu12!.toLowerCase() == "custom emerald" ||
+                                                    batu12!.toLowerCase() ==
+                                                        "custom baguete" ||
+                                                    batu12!.toLowerCase() ==
+                                                        "custom heart" ||
+                                                    batu12!.toLowerCase() ==
+                                                        "custom marquise" ||
+                                                    batu12!.toLowerCase() ==
+                                                        "custom oval" ||
+                                                    batu12!.toLowerCase() ==
+                                                        "custom pear" ||
+                                                    batu12!.toLowerCase() ==
+                                                        "custom princess cut" ||
+                                                    batu12!.toLowerCase() ==
+                                                        "custom ruby" ||
+                                                    batu12!.toLowerCase() ==
+                                                        "custom tapper") {
+                                                  //? kondisi sesuai carat/pcs
+                                                  if (double.parse(value) <
+                                                      0.071) {
+                                                    hargaBatu12 = customGol1!;
+                                                    caratPcsBatu12 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.121) {
+                                                    hargaBatu12 = customGol2!;
+                                                    caratPcsBatu12 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.182) {
+                                                    hargaBatu12 = customGol3!;
+                                                    caratPcsBatu12 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.231) {
+                                                    hargaBatu12 = customGol4!;
+                                                    caratPcsBatu12 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.266) {
+                                                    hargaBatu12 = customGol5!;
+                                                    caratPcsBatu12 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.356) {
+                                                    hargaBatu12 = customGol6!;
+                                                    caratPcsBatu12 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.406) {
+                                                    hargaBatu12 = customGol7!;
+                                                    caratPcsBatu12 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.456) {
+                                                    hargaBatu12 = customGol8!;
+                                                    caratPcsBatu12 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.506) {
+                                                    hargaBatu12 = customGol9!;
+                                                    caratPcsBatu12 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.556) {
+                                                    hargaBatu12 = customGol10!;
+                                                    caratPcsBatu12 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.606) {
+                                                    hargaBatu12 = customGol11!;
+                                                    caratPcsBatu12 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.656) {
+                                                    hargaBatu12 = customGol12!;
+                                                    caratPcsBatu12 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.706) {
+                                                    hargaBatu12 = customGol13!;
+                                                    caratPcsBatu12 =
+                                                        double.parse(value);
+                                                  } else {
+                                                    hargaBatu12 = customGol14!;
+                                                    caratPcsBatu12 =
+                                                        double.parse(value);
+                                                  }
+                                                }
+                                                //! keluar dari kondisi batu custom
+                                                else {}
+                                              });
                                             },
                                             decoration: InputDecoration(
-                                              label: const Text(
-                                                'Carat/Pcs',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
+                                              label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(
@@ -5261,10 +6706,12 @@ class _FormScreenState extends State<FormScreen> {
                                                       setState(() {
                                                         qtyBatu12.text = '0';
                                                         stokBatu12.text = '';
+                                                        crtPcsBatu12.text = '';
+                                                        ukuranBatu12.text = '';
+                                                        stokBatu12.text = '';
                                                         batu12 = '';
                                                         hargaBatu12 = 0;
                                                         caratPcsBatu12 = 0;
-                                                        crtPcsBatu12.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -5274,12 +6721,10 @@ class _FormScreenState extends State<FormScreen> {
                                     ),
                               // end row batu12
 
-                              //batu13
+                              //size batu13
                               qtyBatu12.text.isEmpty
                                   ? const SizedBox()
-                                  :
-                                  //size batu13
-                                  Row(
+                                  : Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
@@ -5314,14 +6759,14 @@ class _FormScreenState extends State<FormScreen> {
                                                       jsonDecode(response.body);
                                                   print(data);
                                                   setState(() {
+                                                    ukuranBatu13.text = '';
+                                                    crtPcsBatu13.text = '';
+                                                    idStone13 = item.idStone;
+                                                    idBatu13 = item.id;
                                                     hargaBatu13 =
                                                         data[0]['unitCost'];
-                                                    idBatu13 = item.id;
                                                     caratPcsBatu13 =
                                                         data[0]['caratPcs'];
-                                                    crtPcsBatu13.text = data[0]
-                                                            ['caratPcs']
-                                                        .toString();
                                                     batu13 =
                                                         item.keyWord.toString();
                                                     stokBatu13.text =
@@ -5336,18 +6781,37 @@ class _FormScreenState extends State<FormScreen> {
                                                 const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                // label: Text(
-                                                //   batu13!,
-                                                //   style: const TextStyle(
-                                                //       fontSize: 18,
-                                                //       fontWeight: FontWeight.bold),
-                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
                                             ),
                                           ),
                                         ),
+
+                                        //ukuran batu13
+                                        idStone13 != -2
+                                            ? const SizedBox()
+                                            : Container(
+                                                width: 220,
+                                                height: 50,
+                                                padding: const EdgeInsets.only(
+                                                    top: 10, left: 15),
+                                                child: TextFormField(
+                                                  textInputAction:
+                                                      TextInputAction.next,
+                                                  controller: ukuranBatu13,
+                                                  onChanged: (value) {
+                                                    setState(() {});
+                                                  },
+                                                  decoration: InputDecoration(
+                                                    label: const Text('Ukuran'),
+                                                    border: OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5.0)),
+                                                  ),
+                                                ),
+                                              ),
 
                                         //qty batu13
                                         Container(
@@ -5405,29 +6869,124 @@ class _FormScreenState extends State<FormScreen> {
 
                                         //crt/pcsbatu13
                                         Container(
-                                          width: 120,
-                                          height: 45,
+                                          width: 100,
+                                          height: 50,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
-                                            enabled: caratPcsBatu13 <= 0
-                                                ? true
-                                                : false,
                                             textInputAction:
                                                 TextInputAction.next,
                                             controller: crtPcsBatu13,
                                             onChanged: (value) {
-                                              caratPcsBatu13 =
-                                                  double.parse(value);
+                                              setState(() {
+                                                //todo: perhitungan batu custom
+                                                if (batu13!.toLowerCase() == "custom emerald" ||
+                                                    batu13!.toLowerCase() ==
+                                                        "custom baguete" ||
+                                                    batu13!.toLowerCase() ==
+                                                        "custom heart" ||
+                                                    batu13!.toLowerCase() ==
+                                                        "custom marquise" ||
+                                                    batu13!.toLowerCase() ==
+                                                        "custom oval" ||
+                                                    batu13!.toLowerCase() ==
+                                                        "custom pear" ||
+                                                    batu13!.toLowerCase() ==
+                                                        "custom princess cut" ||
+                                                    batu13!.toLowerCase() ==
+                                                        "custom ruby" ||
+                                                    batu13!.toLowerCase() ==
+                                                        "custom tapper") {
+                                                  //? kondisi sesuai carat/pcs
+                                                  if (double.parse(value) <
+                                                      0.071) {
+                                                    hargaBatu13 = customGol1!;
+                                                    caratPcsBatu13 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.121) {
+                                                    hargaBatu13 = customGol2!;
+                                                    caratPcsBatu13 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.182) {
+                                                    hargaBatu13 = customGol3!;
+                                                    caratPcsBatu13 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.231) {
+                                                    hargaBatu13 = customGol4!;
+                                                    caratPcsBatu13 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.266) {
+                                                    hargaBatu13 = customGol5!;
+                                                    caratPcsBatu13 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.356) {
+                                                    hargaBatu13 = customGol6!;
+                                                    caratPcsBatu13 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.406) {
+                                                    hargaBatu13 = customGol7!;
+                                                    caratPcsBatu13 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.456) {
+                                                    hargaBatu13 = customGol8!;
+                                                    caratPcsBatu13 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.506) {
+                                                    hargaBatu13 = customGol9!;
+                                                    caratPcsBatu13 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.556) {
+                                                    hargaBatu13 = customGol10!;
+                                                    caratPcsBatu13 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.606) {
+                                                    hargaBatu13 = customGol11!;
+                                                    caratPcsBatu13 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.656) {
+                                                    hargaBatu13 = customGol12!;
+                                                    caratPcsBatu13 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.706) {
+                                                    hargaBatu13 = customGol13!;
+                                                    caratPcsBatu13 =
+                                                        double.parse(value);
+                                                  } else {
+                                                    hargaBatu13 = customGol14!;
+                                                    caratPcsBatu13 =
+                                                        double.parse(value);
+                                                  }
+                                                }
+                                                //! keluar dari kondisi batu custom
+                                                else {}
+                                              });
                                             },
                                             decoration: InputDecoration(
-                                              label: const Text(
-                                                'Carat/Pcs',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
+                                              label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(
@@ -5446,10 +7005,12 @@ class _FormScreenState extends State<FormScreen> {
                                                       setState(() {
                                                         qtyBatu13.text = '0';
                                                         stokBatu13.text = '';
+                                                        crtPcsBatu13.text = '';
+                                                        ukuranBatu13.text = '';
+                                                        stokBatu13.text = '';
                                                         batu13 = '';
                                                         hargaBatu13 = 0;
                                                         caratPcsBatu13 = 0;
-                                                        crtPcsBatu13.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -5459,12 +7020,10 @@ class _FormScreenState extends State<FormScreen> {
                                     ),
                               // end row batu13
 
-                              //batu14
+                              //size batu14
                               qtyBatu13.text.isEmpty
                                   ? const SizedBox()
-                                  :
-                                  //size batu14
-                                  Row(
+                                  : Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
@@ -5499,14 +7058,14 @@ class _FormScreenState extends State<FormScreen> {
                                                       jsonDecode(response.body);
                                                   print(data);
                                                   setState(() {
+                                                    ukuranBatu14.text = '';
+                                                    crtPcsBatu14.text = '';
+                                                    idStone14 = item.idStone;
+                                                    idBatu14 = item.id;
                                                     hargaBatu14 =
                                                         data[0]['unitCost'];
-                                                    idBatu14 = item.id;
                                                     caratPcsBatu14 =
                                                         data[0]['caratPcs'];
-                                                    crtPcsBatu14.text = data[0]
-                                                            ['caratPcs']
-                                                        .toString();
                                                     batu14 =
                                                         item.keyWord.toString();
                                                     stokBatu14.text =
@@ -5521,18 +7080,37 @@ class _FormScreenState extends State<FormScreen> {
                                                 const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                // label: Text(
-                                                //   batu14!,
-                                                //   style: const TextStyle(
-                                                //       fontSize: 18,
-                                                //       fontWeight: FontWeight.bold),
-                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
                                             ),
                                           ),
                                         ),
+
+                                        //ukuran batu14
+                                        idStone14 != -2
+                                            ? const SizedBox()
+                                            : Container(
+                                                width: 220,
+                                                height: 50,
+                                                padding: const EdgeInsets.only(
+                                                    top: 10, left: 15),
+                                                child: TextFormField(
+                                                  textInputAction:
+                                                      TextInputAction.next,
+                                                  controller: ukuranBatu14,
+                                                  onChanged: (value) {
+                                                    setState(() {});
+                                                  },
+                                                  decoration: InputDecoration(
+                                                    label: const Text('Ukuran'),
+                                                    border: OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5.0)),
+                                                  ),
+                                                ),
+                                              ),
 
                                         //qty batu14
                                         Container(
@@ -5590,29 +7168,124 @@ class _FormScreenState extends State<FormScreen> {
 
                                         //crt/pcsbatu14
                                         Container(
-                                          width: 120,
-                                          height: 45,
+                                          width: 100,
+                                          height: 50,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
-                                            enabled: caratPcsBatu14 <= 0
-                                                ? true
-                                                : false,
                                             textInputAction:
                                                 TextInputAction.next,
                                             controller: crtPcsBatu14,
                                             onChanged: (value) {
-                                              caratPcsBatu14 =
-                                                  double.parse(value);
+                                              setState(() {
+                                                //todo: perhitungan batu custom
+                                                if (batu14!.toLowerCase() == "custom emerald" ||
+                                                    batu14!.toLowerCase() ==
+                                                        "custom baguete" ||
+                                                    batu14!.toLowerCase() ==
+                                                        "custom heart" ||
+                                                    batu14!.toLowerCase() ==
+                                                        "custom marquise" ||
+                                                    batu14!.toLowerCase() ==
+                                                        "custom oval" ||
+                                                    batu14!.toLowerCase() ==
+                                                        "custom pear" ||
+                                                    batu14!.toLowerCase() ==
+                                                        "custom princess cut" ||
+                                                    batu14!.toLowerCase() ==
+                                                        "custom ruby" ||
+                                                    batu14!.toLowerCase() ==
+                                                        "custom tapper") {
+                                                  //? kondisi sesuai carat/pcs
+                                                  if (double.parse(value) <
+                                                      0.071) {
+                                                    hargaBatu14 = customGol1!;
+                                                    caratPcsBatu14 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.121) {
+                                                    hargaBatu14 = customGol2!;
+                                                    caratPcsBatu14 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.182) {
+                                                    hargaBatu14 = customGol3!;
+                                                    caratPcsBatu14 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.231) {
+                                                    hargaBatu14 = customGol4!;
+                                                    caratPcsBatu14 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.266) {
+                                                    hargaBatu14 = customGol5!;
+                                                    caratPcsBatu14 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.356) {
+                                                    hargaBatu14 = customGol6!;
+                                                    caratPcsBatu14 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.406) {
+                                                    hargaBatu14 = customGol7!;
+                                                    caratPcsBatu14 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.456) {
+                                                    hargaBatu14 = customGol8!;
+                                                    caratPcsBatu14 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.506) {
+                                                    hargaBatu14 = customGol9!;
+                                                    caratPcsBatu14 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.556) {
+                                                    hargaBatu14 = customGol10!;
+                                                    caratPcsBatu14 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.606) {
+                                                    hargaBatu14 = customGol11!;
+                                                    caratPcsBatu14 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.656) {
+                                                    hargaBatu14 = customGol12!;
+                                                    caratPcsBatu14 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.706) {
+                                                    hargaBatu14 = customGol13!;
+                                                    caratPcsBatu14 =
+                                                        double.parse(value);
+                                                  } else {
+                                                    hargaBatu14 = customGol14!;
+                                                    caratPcsBatu14 =
+                                                        double.parse(value);
+                                                  }
+                                                }
+                                                //! keluar dari kondisi batu custom
+                                                else {}
+                                              });
                                             },
                                             decoration: InputDecoration(
-                                              label: const Text(
-                                                'Carat/Pcs',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
+                                              label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(
@@ -5631,10 +7304,12 @@ class _FormScreenState extends State<FormScreen> {
                                                       setState(() {
                                                         qtyBatu14.text = '0';
                                                         stokBatu14.text = '';
+                                                        crtPcsBatu14.text = '';
+                                                        ukuranBatu14.text = '';
+                                                        stokBatu14.text = '';
                                                         batu14 = '';
                                                         hargaBatu14 = 0;
                                                         caratPcsBatu14 = 0;
-                                                        crtPcsBatu14.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -5644,12 +7319,10 @@ class _FormScreenState extends State<FormScreen> {
                                     ),
                               // end row batu14
 
-                              //batu15
+                              //size batu15
                               qtyBatu14.text.isEmpty
                                   ? const SizedBox()
-                                  :
-                                  //size batu15
-                                  Row(
+                                  : Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
@@ -5684,14 +7357,14 @@ class _FormScreenState extends State<FormScreen> {
                                                       jsonDecode(response.body);
                                                   print(data);
                                                   setState(() {
+                                                    ukuranBatu15.text = '';
+                                                    crtPcsBatu15.text = '';
+                                                    idStone15 = item.idStone;
+                                                    idBatu15 = item.id;
                                                     hargaBatu15 =
                                                         data[0]['unitCost'];
-                                                    idBatu15 = item.id;
                                                     caratPcsBatu15 =
                                                         data[0]['caratPcs'];
-                                                    crtPcsBatu15.text = data[0]
-                                                            ['caratPcs']
-                                                        .toString();
                                                     batu15 =
                                                         item.keyWord.toString();
                                                     stokBatu15.text =
@@ -5706,18 +7379,37 @@ class _FormScreenState extends State<FormScreen> {
                                                 const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                // label: Text(
-                                                //   batu15!,
-                                                //   style: const TextStyle(
-                                                //       fontSize: 18,
-                                                //       fontWeight: FontWeight.bold),
-                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
                                             ),
                                           ),
                                         ),
+
+                                        //ukuran batu15
+                                        idStone15 != -2
+                                            ? const SizedBox()
+                                            : Container(
+                                                width: 220,
+                                                height: 50,
+                                                padding: const EdgeInsets.only(
+                                                    top: 10, left: 15),
+                                                child: TextFormField(
+                                                  textInputAction:
+                                                      TextInputAction.next,
+                                                  controller: ukuranBatu15,
+                                                  onChanged: (value) {
+                                                    setState(() {});
+                                                  },
+                                                  decoration: InputDecoration(
+                                                    label: const Text('Ukuran'),
+                                                    border: OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5.0)),
+                                                  ),
+                                                ),
+                                              ),
 
                                         //qty batu15
                                         Container(
@@ -5775,29 +7467,124 @@ class _FormScreenState extends State<FormScreen> {
 
                                         //crt/pcsbatu15
                                         Container(
-                                          width: 120,
-                                          height: 45,
+                                          width: 100,
+                                          height: 50,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
-                                            enabled: caratPcsBatu15 <= 0
-                                                ? true
-                                                : false,
                                             textInputAction:
                                                 TextInputAction.next,
                                             controller: crtPcsBatu15,
                                             onChanged: (value) {
-                                              caratPcsBatu15 =
-                                                  double.parse(value);
+                                              setState(() {
+                                                //todo: perhitungan batu custom
+                                                if (batu15!.toLowerCase() == "custom emerald" ||
+                                                    batu15!.toLowerCase() ==
+                                                        "custom baguete" ||
+                                                    batu15!.toLowerCase() ==
+                                                        "custom heart" ||
+                                                    batu15!.toLowerCase() ==
+                                                        "custom marquise" ||
+                                                    batu15!.toLowerCase() ==
+                                                        "custom oval" ||
+                                                    batu15!.toLowerCase() ==
+                                                        "custom pear" ||
+                                                    batu15!.toLowerCase() ==
+                                                        "custom princess cut" ||
+                                                    batu15!.toLowerCase() ==
+                                                        "custom ruby" ||
+                                                    batu15!.toLowerCase() ==
+                                                        "custom tapper") {
+                                                  //? kondisi sesuai carat/pcs
+                                                  if (double.parse(value) <
+                                                      0.071) {
+                                                    hargaBatu15 = customGol1!;
+                                                    caratPcsBatu15 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.121) {
+                                                    hargaBatu15 = customGol2!;
+                                                    caratPcsBatu15 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.182) {
+                                                    hargaBatu15 = customGol3!;
+                                                    caratPcsBatu15 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.231) {
+                                                    hargaBatu15 = customGol4!;
+                                                    caratPcsBatu15 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.266) {
+                                                    hargaBatu15 = customGol5!;
+                                                    caratPcsBatu15 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.356) {
+                                                    hargaBatu15 = customGol6!;
+                                                    caratPcsBatu15 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.406) {
+                                                    hargaBatu15 = customGol7!;
+                                                    caratPcsBatu15 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.456) {
+                                                    hargaBatu15 = customGol8!;
+                                                    caratPcsBatu15 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.506) {
+                                                    hargaBatu15 = customGol9!;
+                                                    caratPcsBatu15 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.556) {
+                                                    hargaBatu15 = customGol10!;
+                                                    caratPcsBatu15 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.606) {
+                                                    hargaBatu15 = customGol11!;
+                                                    caratPcsBatu15 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.656) {
+                                                    hargaBatu15 = customGol12!;
+                                                    caratPcsBatu15 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.706) {
+                                                    hargaBatu15 = customGol13!;
+                                                    caratPcsBatu15 =
+                                                        double.parse(value);
+                                                  } else {
+                                                    hargaBatu15 = customGol14!;
+                                                    caratPcsBatu15 =
+                                                        double.parse(value);
+                                                  }
+                                                }
+                                                //! keluar dari kondisi batu custom
+                                                else {}
+                                              });
                                             },
                                             decoration: InputDecoration(
-                                              label: const Text(
-                                                'Carat/Pcs',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
+                                              label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(
@@ -5816,10 +7603,12 @@ class _FormScreenState extends State<FormScreen> {
                                                       setState(() {
                                                         qtyBatu15.text = '0';
                                                         stokBatu15.text = '';
+                                                        crtPcsBatu15.text = '';
+                                                        ukuranBatu15.text = '';
+                                                        stokBatu15.text = '';
                                                         batu15 = '';
                                                         hargaBatu15 = 0;
                                                         caratPcsBatu15 = 0;
-                                                        crtPcsBatu15.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -5829,12 +7618,10 @@ class _FormScreenState extends State<FormScreen> {
                                     ),
                               // end row batu15
 
-                              //batu16
+                              //size batu16
                               qtyBatu15.text.isEmpty
                                   ? const SizedBox()
-                                  :
-                                  //size batu16
-                                  Row(
+                                  : Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
@@ -5869,14 +7656,14 @@ class _FormScreenState extends State<FormScreen> {
                                                       jsonDecode(response.body);
                                                   print(data);
                                                   setState(() {
+                                                    ukuranBatu16.text = '';
+                                                    crtPcsBatu16.text = '';
+                                                    idStone16 = item.idStone;
+                                                    idBatu16 = item.id;
                                                     hargaBatu16 =
                                                         data[0]['unitCost'];
-                                                    idBatu16 = item.id;
                                                     caratPcsBatu16 =
                                                         data[0]['caratPcs'];
-                                                    crtPcsBatu16.text = data[0]
-                                                            ['caratPcs']
-                                                        .toString();
                                                     batu16 =
                                                         item.keyWord.toString();
                                                     stokBatu16.text =
@@ -5891,18 +7678,37 @@ class _FormScreenState extends State<FormScreen> {
                                                 const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                // label: Text(
-                                                //   batu16!,
-                                                //   style: const TextStyle(
-                                                //       fontSize: 18,
-                                                //       fontWeight: FontWeight.bold),
-                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
                                             ),
                                           ),
                                         ),
+
+                                        //ukuran batu16
+                                        idStone16 != -2
+                                            ? const SizedBox()
+                                            : Container(
+                                                width: 220,
+                                                height: 50,
+                                                padding: const EdgeInsets.only(
+                                                    top: 10, left: 15),
+                                                child: TextFormField(
+                                                  textInputAction:
+                                                      TextInputAction.next,
+                                                  controller: ukuranBatu16,
+                                                  onChanged: (value) {
+                                                    setState(() {});
+                                                  },
+                                                  decoration: InputDecoration(
+                                                    label: const Text('Ukuran'),
+                                                    border: OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5.0)),
+                                                  ),
+                                                ),
+                                              ),
 
                                         //qty batu16
                                         Container(
@@ -5960,29 +7766,124 @@ class _FormScreenState extends State<FormScreen> {
 
                                         //crt/pcsbatu16
                                         Container(
-                                          width: 120,
-                                          height: 45,
+                                          width: 100,
+                                          height: 50,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
-                                            enabled: caratPcsBatu16 <= 0
-                                                ? true
-                                                : false,
                                             textInputAction:
                                                 TextInputAction.next,
                                             controller: crtPcsBatu16,
                                             onChanged: (value) {
-                                              caratPcsBatu16 =
-                                                  double.parse(value);
+                                              setState(() {
+                                                //todo: perhitungan batu custom
+                                                if (batu16!.toLowerCase() == "custom emerald" ||
+                                                    batu16!.toLowerCase() ==
+                                                        "custom baguete" ||
+                                                    batu16!.toLowerCase() ==
+                                                        "custom heart" ||
+                                                    batu16!.toLowerCase() ==
+                                                        "custom marquise" ||
+                                                    batu16!.toLowerCase() ==
+                                                        "custom oval" ||
+                                                    batu16!.toLowerCase() ==
+                                                        "custom pear" ||
+                                                    batu16!.toLowerCase() ==
+                                                        "custom princess cut" ||
+                                                    batu16!.toLowerCase() ==
+                                                        "custom ruby" ||
+                                                    batu16!.toLowerCase() ==
+                                                        "custom tapper") {
+                                                  //? kondisi sesuai carat/pcs
+                                                  if (double.parse(value) <
+                                                      0.071) {
+                                                    hargaBatu16 = customGol1!;
+                                                    caratPcsBatu16 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.121) {
+                                                    hargaBatu16 = customGol2!;
+                                                    caratPcsBatu16 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.182) {
+                                                    hargaBatu16 = customGol3!;
+                                                    caratPcsBatu16 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.231) {
+                                                    hargaBatu16 = customGol4!;
+                                                    caratPcsBatu16 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.266) {
+                                                    hargaBatu16 = customGol5!;
+                                                    caratPcsBatu16 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.356) {
+                                                    hargaBatu16 = customGol6!;
+                                                    caratPcsBatu16 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.406) {
+                                                    hargaBatu16 = customGol7!;
+                                                    caratPcsBatu16 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.456) {
+                                                    hargaBatu16 = customGol8!;
+                                                    caratPcsBatu16 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.506) {
+                                                    hargaBatu16 = customGol9!;
+                                                    caratPcsBatu16 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.556) {
+                                                    hargaBatu16 = customGol10!;
+                                                    caratPcsBatu16 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.606) {
+                                                    hargaBatu16 = customGol11!;
+                                                    caratPcsBatu16 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.656) {
+                                                    hargaBatu16 = customGol12!;
+                                                    caratPcsBatu16 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.706) {
+                                                    hargaBatu16 = customGol13!;
+                                                    caratPcsBatu16 =
+                                                        double.parse(value);
+                                                  } else {
+                                                    hargaBatu16 = customGol14!;
+                                                    caratPcsBatu16 =
+                                                        double.parse(value);
+                                                  }
+                                                }
+                                                //! keluar dari kondisi batu custom
+                                                else {}
+                                              });
                                             },
                                             decoration: InputDecoration(
-                                              label: const Text(
-                                                'Carat/Pcs',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
+                                              label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(
@@ -6001,10 +7902,12 @@ class _FormScreenState extends State<FormScreen> {
                                                       setState(() {
                                                         qtyBatu16.text = '0';
                                                         stokBatu16.text = '';
+                                                        crtPcsBatu16.text = '';
+                                                        ukuranBatu16.text = '';
+                                                        stokBatu16.text = '';
                                                         batu16 = '';
                                                         hargaBatu16 = 0;
                                                         caratPcsBatu16 = 0;
-                                                        crtPcsBatu16.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -6014,12 +7917,10 @@ class _FormScreenState extends State<FormScreen> {
                                     ),
                               // end row batu16
 
-                              //batu17
+                              //size batu17
                               qtyBatu16.text.isEmpty
                                   ? const SizedBox()
-                                  :
-                                  //size batu17
-                                  Row(
+                                  : Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
@@ -6054,14 +7955,14 @@ class _FormScreenState extends State<FormScreen> {
                                                       jsonDecode(response.body);
                                                   print(data);
                                                   setState(() {
+                                                    ukuranBatu17.text = '';
+                                                    crtPcsBatu17.text = '';
+                                                    idStone17 = item.idStone;
+                                                    idBatu17 = item.id;
                                                     hargaBatu17 =
                                                         data[0]['unitCost'];
-                                                    idBatu17 = item.id;
                                                     caratPcsBatu17 =
                                                         data[0]['caratPcs'];
-                                                    crtPcsBatu17.text = data[0]
-                                                            ['caratPcs']
-                                                        .toString();
                                                     batu17 =
                                                         item.keyWord.toString();
                                                     stokBatu17.text =
@@ -6076,18 +7977,37 @@ class _FormScreenState extends State<FormScreen> {
                                                 const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                // label: Text(
-                                                //   batu17!,
-                                                //   style: const TextStyle(
-                                                //       fontSize: 18,
-                                                //       fontWeight: FontWeight.bold),
-                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
                                             ),
                                           ),
                                         ),
+
+                                        //ukuran batu17
+                                        idStone17 != -2
+                                            ? const SizedBox()
+                                            : Container(
+                                                width: 220,
+                                                height: 50,
+                                                padding: const EdgeInsets.only(
+                                                    top: 10, left: 15),
+                                                child: TextFormField(
+                                                  textInputAction:
+                                                      TextInputAction.next,
+                                                  controller: ukuranBatu17,
+                                                  onChanged: (value) {
+                                                    setState(() {});
+                                                  },
+                                                  decoration: InputDecoration(
+                                                    label: const Text('Ukuran'),
+                                                    border: OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5.0)),
+                                                  ),
+                                                ),
+                                              ),
 
                                         //qty batu17
                                         Container(
@@ -6145,29 +8065,124 @@ class _FormScreenState extends State<FormScreen> {
 
                                         //crt/pcsbatu17
                                         Container(
-                                          width: 120,
-                                          height: 45,
+                                          width: 100,
+                                          height: 50,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
-                                            enabled: caratPcsBatu17 <= 0
-                                                ? true
-                                                : false,
                                             textInputAction:
                                                 TextInputAction.next,
                                             controller: crtPcsBatu17,
                                             onChanged: (value) {
-                                              caratPcsBatu17 =
-                                                  double.parse(value);
+                                              setState(() {
+                                                //todo: perhitungan batu custom
+                                                if (batu17!.toLowerCase() == "custom emerald" ||
+                                                    batu17!.toLowerCase() ==
+                                                        "custom baguete" ||
+                                                    batu17!.toLowerCase() ==
+                                                        "custom heart" ||
+                                                    batu17!.toLowerCase() ==
+                                                        "custom marquise" ||
+                                                    batu17!.toLowerCase() ==
+                                                        "custom oval" ||
+                                                    batu17!.toLowerCase() ==
+                                                        "custom pear" ||
+                                                    batu17!.toLowerCase() ==
+                                                        "custom princess cut" ||
+                                                    batu17!.toLowerCase() ==
+                                                        "custom ruby" ||
+                                                    batu17!.toLowerCase() ==
+                                                        "custom tapper") {
+                                                  //? kondisi sesuai carat/pcs
+                                                  if (double.parse(value) <
+                                                      0.071) {
+                                                    hargaBatu17 = customGol1!;
+                                                    caratPcsBatu17 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.121) {
+                                                    hargaBatu17 = customGol2!;
+                                                    caratPcsBatu17 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.182) {
+                                                    hargaBatu17 = customGol3!;
+                                                    caratPcsBatu17 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.231) {
+                                                    hargaBatu17 = customGol4!;
+                                                    caratPcsBatu17 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.266) {
+                                                    hargaBatu17 = customGol5!;
+                                                    caratPcsBatu17 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.356) {
+                                                    hargaBatu17 = customGol6!;
+                                                    caratPcsBatu17 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.406) {
+                                                    hargaBatu17 = customGol7!;
+                                                    caratPcsBatu17 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.456) {
+                                                    hargaBatu17 = customGol8!;
+                                                    caratPcsBatu17 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.506) {
+                                                    hargaBatu17 = customGol9!;
+                                                    caratPcsBatu17 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.556) {
+                                                    hargaBatu17 = customGol10!;
+                                                    caratPcsBatu17 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.606) {
+                                                    hargaBatu17 = customGol11!;
+                                                    caratPcsBatu17 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.656) {
+                                                    hargaBatu17 = customGol12!;
+                                                    caratPcsBatu17 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.706) {
+                                                    hargaBatu17 = customGol13!;
+                                                    caratPcsBatu17 =
+                                                        double.parse(value);
+                                                  } else {
+                                                    hargaBatu17 = customGol14!;
+                                                    caratPcsBatu17 =
+                                                        double.parse(value);
+                                                  }
+                                                }
+                                                //! keluar dari kondisi batu custom
+                                                else {}
+                                              });
                                             },
                                             decoration: InputDecoration(
-                                              label: const Text(
-                                                'Carat/Pcs',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
+                                              label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(
@@ -6186,10 +8201,12 @@ class _FormScreenState extends State<FormScreen> {
                                                       setState(() {
                                                         qtyBatu17.text = '0';
                                                         stokBatu17.text = '';
+                                                        crtPcsBatu17.text = '';
+                                                        ukuranBatu17.text = '';
+                                                        stokBatu17.text = '';
                                                         batu17 = '';
                                                         hargaBatu17 = 0;
                                                         caratPcsBatu17 = 0;
-                                                        crtPcsBatu17.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -6199,12 +8216,10 @@ class _FormScreenState extends State<FormScreen> {
                                     ),
                               // end row batu17
 
-                              //batu18
+                              //size batu18
                               qtyBatu17.text.isEmpty
                                   ? const SizedBox()
-                                  :
-                                  //size batu18
-                                  Row(
+                                  : Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
@@ -6239,14 +8254,14 @@ class _FormScreenState extends State<FormScreen> {
                                                       jsonDecode(response.body);
                                                   print(data);
                                                   setState(() {
+                                                    ukuranBatu18.text = '';
+                                                    crtPcsBatu18.text = '';
+                                                    idStone18 = item.idStone;
+                                                    idBatu18 = item.id;
                                                     hargaBatu18 =
                                                         data[0]['unitCost'];
-                                                    idBatu18 = item.id;
                                                     caratPcsBatu18 =
                                                         data[0]['caratPcs'];
-                                                    crtPcsBatu18.text = data[0]
-                                                            ['caratPcs']
-                                                        .toString();
                                                     batu18 =
                                                         item.keyWord.toString();
                                                     stokBatu18.text =
@@ -6261,18 +8276,37 @@ class _FormScreenState extends State<FormScreen> {
                                                 const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                // label: Text(
-                                                //   batu18!,
-                                                //   style: const TextStyle(
-                                                //       fontSize: 18,
-                                                //       fontWeight: FontWeight.bold),
-                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
                                             ),
                                           ),
                                         ),
+
+                                        //ukuran batu18
+                                        idStone18 != -2
+                                            ? const SizedBox()
+                                            : Container(
+                                                width: 220,
+                                                height: 50,
+                                                padding: const EdgeInsets.only(
+                                                    top: 10, left: 15),
+                                                child: TextFormField(
+                                                  textInputAction:
+                                                      TextInputAction.next,
+                                                  controller: ukuranBatu18,
+                                                  onChanged: (value) {
+                                                    setState(() {});
+                                                  },
+                                                  decoration: InputDecoration(
+                                                    label: const Text('Ukuran'),
+                                                    border: OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5.0)),
+                                                  ),
+                                                ),
+                                              ),
 
                                         //qty batu18
                                         Container(
@@ -6330,29 +8364,124 @@ class _FormScreenState extends State<FormScreen> {
 
                                         //crt/pcsbatu18
                                         Container(
-                                          width: 120,
-                                          height: 45,
+                                          width: 100,
+                                          height: 50,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
-                                            enabled: caratPcsBatu18 <= 0
-                                                ? true
-                                                : false,
                                             textInputAction:
                                                 TextInputAction.next,
                                             controller: crtPcsBatu18,
                                             onChanged: (value) {
-                                              caratPcsBatu18 =
-                                                  double.parse(value);
+                                              setState(() {
+                                                //todo: perhitungan batu custom
+                                                if (batu18!.toLowerCase() == "custom emerald" ||
+                                                    batu18!.toLowerCase() ==
+                                                        "custom baguete" ||
+                                                    batu18!.toLowerCase() ==
+                                                        "custom heart" ||
+                                                    batu18!.toLowerCase() ==
+                                                        "custom marquise" ||
+                                                    batu18!.toLowerCase() ==
+                                                        "custom oval" ||
+                                                    batu18!.toLowerCase() ==
+                                                        "custom pear" ||
+                                                    batu18!.toLowerCase() ==
+                                                        "custom princess cut" ||
+                                                    batu18!.toLowerCase() ==
+                                                        "custom ruby" ||
+                                                    batu18!.toLowerCase() ==
+                                                        "custom tapper") {
+                                                  //? kondisi sesuai carat/pcs
+                                                  if (double.parse(value) <
+                                                      0.071) {
+                                                    hargaBatu18 = customGol1!;
+                                                    caratPcsBatu18 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.121) {
+                                                    hargaBatu18 = customGol2!;
+                                                    caratPcsBatu18 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.182) {
+                                                    hargaBatu18 = customGol3!;
+                                                    caratPcsBatu18 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.231) {
+                                                    hargaBatu18 = customGol4!;
+                                                    caratPcsBatu18 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.266) {
+                                                    hargaBatu18 = customGol5!;
+                                                    caratPcsBatu18 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.356) {
+                                                    hargaBatu18 = customGol6!;
+                                                    caratPcsBatu18 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.406) {
+                                                    hargaBatu18 = customGol7!;
+                                                    caratPcsBatu18 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.456) {
+                                                    hargaBatu18 = customGol8!;
+                                                    caratPcsBatu18 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.506) {
+                                                    hargaBatu18 = customGol9!;
+                                                    caratPcsBatu18 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.556) {
+                                                    hargaBatu18 = customGol10!;
+                                                    caratPcsBatu18 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.606) {
+                                                    hargaBatu18 = customGol11!;
+                                                    caratPcsBatu18 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.656) {
+                                                    hargaBatu18 = customGol12!;
+                                                    caratPcsBatu18 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.706) {
+                                                    hargaBatu18 = customGol13!;
+                                                    caratPcsBatu18 =
+                                                        double.parse(value);
+                                                  } else {
+                                                    hargaBatu18 = customGol14!;
+                                                    caratPcsBatu18 =
+                                                        double.parse(value);
+                                                  }
+                                                }
+                                                //! keluar dari kondisi batu custom
+                                                else {}
+                                              });
                                             },
                                             decoration: InputDecoration(
-                                              label: const Text(
-                                                'Carat/Pcs',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
+                                              label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(
@@ -6371,10 +8500,12 @@ class _FormScreenState extends State<FormScreen> {
                                                       setState(() {
                                                         qtyBatu18.text = '0';
                                                         stokBatu18.text = '';
+                                                        crtPcsBatu18.text = '';
+                                                        ukuranBatu18.text = '';
+                                                        stokBatu18.text = '';
                                                         batu18 = '';
                                                         hargaBatu18 = 0;
                                                         caratPcsBatu18 = 0;
-                                                        crtPcsBatu18.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -6384,12 +8515,10 @@ class _FormScreenState extends State<FormScreen> {
                                     ),
                               // end row batu18
 
-                              //batu19
-                              qtyBatu18.text.isEmpty
+                              //size batu19
+                              qtyBatu8.text.isEmpty
                                   ? const SizedBox()
-                                  :
-                                  //size batu19
-                                  Row(
+                                  : Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
@@ -6424,14 +8553,14 @@ class _FormScreenState extends State<FormScreen> {
                                                       jsonDecode(response.body);
                                                   print(data);
                                                   setState(() {
+                                                    ukuranBatu19.text = '';
+                                                    crtPcsBatu19.text = '';
+                                                    idStone19 = item.idStone;
+                                                    idBatu19 = item.id;
                                                     hargaBatu19 =
                                                         data[0]['unitCost'];
-                                                    idBatu19 = item.id;
                                                     caratPcsBatu19 =
                                                         data[0]['caratPcs'];
-                                                    crtPcsBatu19.text = data[0]
-                                                            ['caratPcs']
-                                                        .toString();
                                                     batu19 =
                                                         item.keyWord.toString();
                                                     stokBatu19.text =
@@ -6446,18 +8575,37 @@ class _FormScreenState extends State<FormScreen> {
                                                 const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                // label: Text(
-                                                //   batu19!,
-                                                //   style: const TextStyle(
-                                                //       fontSize: 18,
-                                                //       fontWeight: FontWeight.bold),
-                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
                                             ),
                                           ),
                                         ),
+
+                                        //ukuran batu19
+                                        idStone19 != -2
+                                            ? const SizedBox()
+                                            : Container(
+                                                width: 220,
+                                                height: 50,
+                                                padding: const EdgeInsets.only(
+                                                    top: 10, left: 15),
+                                                child: TextFormField(
+                                                  textInputAction:
+                                                      TextInputAction.next,
+                                                  controller: ukuranBatu19,
+                                                  onChanged: (value) {
+                                                    setState(() {});
+                                                  },
+                                                  decoration: InputDecoration(
+                                                    label: const Text('Ukuran'),
+                                                    border: OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5.0)),
+                                                  ),
+                                                ),
+                                              ),
 
                                         //qty batu19
                                         Container(
@@ -6515,29 +8663,124 @@ class _FormScreenState extends State<FormScreen> {
 
                                         //crt/pcsbatu19
                                         Container(
-                                          width: 120,
-                                          height: 45,
+                                          width: 100,
+                                          height: 50,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
-                                            enabled: caratPcsBatu19 <= 0
-                                                ? true
-                                                : false,
                                             textInputAction:
                                                 TextInputAction.next,
                                             controller: crtPcsBatu19,
                                             onChanged: (value) {
-                                              caratPcsBatu19 =
-                                                  double.parse(value);
+                                              setState(() {
+                                                //todo: perhitungan batu custom
+                                                if (batu19!.toLowerCase() == "custom emerald" ||
+                                                    batu19!.toLowerCase() ==
+                                                        "custom baguete" ||
+                                                    batu19!.toLowerCase() ==
+                                                        "custom heart" ||
+                                                    batu19!.toLowerCase() ==
+                                                        "custom marquise" ||
+                                                    batu19!.toLowerCase() ==
+                                                        "custom oval" ||
+                                                    batu19!.toLowerCase() ==
+                                                        "custom pear" ||
+                                                    batu19!.toLowerCase() ==
+                                                        "custom princess cut" ||
+                                                    batu19!.toLowerCase() ==
+                                                        "custom ruby" ||
+                                                    batu19!.toLowerCase() ==
+                                                        "custom tapper") {
+                                                  //? kondisi sesuai carat/pcs
+                                                  if (double.parse(value) <
+                                                      0.071) {
+                                                    hargaBatu19 = customGol1!;
+                                                    caratPcsBatu19 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.121) {
+                                                    hargaBatu19 = customGol2!;
+                                                    caratPcsBatu19 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.182) {
+                                                    hargaBatu19 = customGol3!;
+                                                    caratPcsBatu19 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.231) {
+                                                    hargaBatu19 = customGol4!;
+                                                    caratPcsBatu19 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.266) {
+                                                    hargaBatu19 = customGol5!;
+                                                    caratPcsBatu19 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.356) {
+                                                    hargaBatu19 = customGol6!;
+                                                    caratPcsBatu19 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.406) {
+                                                    hargaBatu19 = customGol7!;
+                                                    caratPcsBatu19 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.456) {
+                                                    hargaBatu19 = customGol8!;
+                                                    caratPcsBatu19 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.506) {
+                                                    hargaBatu19 = customGol9!;
+                                                    caratPcsBatu19 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.556) {
+                                                    hargaBatu19 = customGol10!;
+                                                    caratPcsBatu19 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.606) {
+                                                    hargaBatu19 = customGol11!;
+                                                    caratPcsBatu19 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.656) {
+                                                    hargaBatu19 = customGol12!;
+                                                    caratPcsBatu19 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.706) {
+                                                    hargaBatu19 = customGol13!;
+                                                    caratPcsBatu19 =
+                                                        double.parse(value);
+                                                  } else {
+                                                    hargaBatu19 = customGol14!;
+                                                    caratPcsBatu19 =
+                                                        double.parse(value);
+                                                  }
+                                                }
+                                                //! keluar dari kondisi batu custom
+                                                else {}
+                                              });
                                             },
                                             decoration: InputDecoration(
-                                              label: const Text(
-                                                'Carat/Pcs',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
+                                              label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(
@@ -6556,10 +8799,12 @@ class _FormScreenState extends State<FormScreen> {
                                                       setState(() {
                                                         qtyBatu19.text = '0';
                                                         stokBatu19.text = '';
+                                                        crtPcsBatu19.text = '';
+                                                        ukuranBatu19.text = '';
+                                                        stokBatu19.text = '';
                                                         batu19 = '';
                                                         hargaBatu19 = 0;
                                                         caratPcsBatu19 = 0;
-                                                        crtPcsBatu19.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -6569,12 +8814,10 @@ class _FormScreenState extends State<FormScreen> {
                                     ),
                               // end row batu19
 
-                              //batu20
+                              //size batu20
                               qtyBatu19.text.isEmpty
                                   ? const SizedBox()
-                                  :
-                                  //size batu20
-                                  Row(
+                                  : Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
@@ -6609,14 +8852,14 @@ class _FormScreenState extends State<FormScreen> {
                                                       jsonDecode(response.body);
                                                   print(data);
                                                   setState(() {
+                                                    ukuranBatu20.text = '';
+                                                    crtPcsBatu20.text = '';
+                                                    idStone20 = item.idStone;
+                                                    idBatu20 = item.id;
                                                     hargaBatu20 =
                                                         data[0]['unitCost'];
-                                                    idBatu20 = item.id;
                                                     caratPcsBatu20 =
                                                         data[0]['caratPcs'];
-                                                    crtPcsBatu20.text = data[0]
-                                                            ['caratPcs']
-                                                        .toString();
                                                     batu20 =
                                                         item.keyWord.toString();
                                                     stokBatu20.text =
@@ -6631,18 +8874,37 @@ class _FormScreenState extends State<FormScreen> {
                                                 const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                // label: Text(
-                                                //   batu20!,
-                                                //   style: const TextStyle(
-                                                //       fontSize: 18,
-                                                //       fontWeight: FontWeight.bold),
-                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
                                             ),
                                           ),
                                         ),
+
+                                        //ukuran batu20
+                                        idStone20 != -2
+                                            ? const SizedBox()
+                                            : Container(
+                                                width: 220,
+                                                height: 50,
+                                                padding: const EdgeInsets.only(
+                                                    top: 10, left: 15),
+                                                child: TextFormField(
+                                                  textInputAction:
+                                                      TextInputAction.next,
+                                                  controller: ukuranBatu20,
+                                                  onChanged: (value) {
+                                                    setState(() {});
+                                                  },
+                                                  decoration: InputDecoration(
+                                                    label: const Text('Ukuran'),
+                                                    border: OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5.0)),
+                                                  ),
+                                                ),
+                                              ),
 
                                         //qty batu20
                                         Container(
@@ -6700,29 +8962,124 @@ class _FormScreenState extends State<FormScreen> {
 
                                         //crt/pcsbatu20
                                         Container(
-                                          width: 120,
-                                          height: 45,
+                                          width: 100,
+                                          height: 50,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
-                                            enabled: caratPcsBatu20 <= 0
-                                                ? true
-                                                : false,
                                             textInputAction:
                                                 TextInputAction.next,
                                             controller: crtPcsBatu20,
                                             onChanged: (value) {
-                                              caratPcsBatu20 =
-                                                  double.parse(value);
+                                              setState(() {
+                                                //todo: perhitungan batu custom
+                                                if (batu20!.toLowerCase() == "custom emerald" ||
+                                                    batu20!.toLowerCase() ==
+                                                        "custom baguete" ||
+                                                    batu20!.toLowerCase() ==
+                                                        "custom heart" ||
+                                                    batu20!.toLowerCase() ==
+                                                        "custom marquise" ||
+                                                    batu20!.toLowerCase() ==
+                                                        "custom oval" ||
+                                                    batu20!.toLowerCase() ==
+                                                        "custom pear" ||
+                                                    batu20!.toLowerCase() ==
+                                                        "custom princess cut" ||
+                                                    batu20!.toLowerCase() ==
+                                                        "custom ruby" ||
+                                                    batu20!.toLowerCase() ==
+                                                        "custom tapper") {
+                                                  //? kondisi sesuai carat/pcs
+                                                  if (double.parse(value) <
+                                                      0.071) {
+                                                    hargaBatu20 = customGol1!;
+                                                    caratPcsBatu20 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.121) {
+                                                    hargaBatu20 = customGol2!;
+                                                    caratPcsBatu20 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.182) {
+                                                    hargaBatu20 = customGol3!;
+                                                    caratPcsBatu20 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.231) {
+                                                    hargaBatu20 = customGol4!;
+                                                    caratPcsBatu20 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.266) {
+                                                    hargaBatu20 = customGol5!;
+                                                    caratPcsBatu20 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.356) {
+                                                    hargaBatu20 = customGol6!;
+                                                    caratPcsBatu20 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.406) {
+                                                    hargaBatu20 = customGol7!;
+                                                    caratPcsBatu20 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.456) {
+                                                    hargaBatu20 = customGol8!;
+                                                    caratPcsBatu20 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.506) {
+                                                    hargaBatu20 = customGol9!;
+                                                    caratPcsBatu20 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.556) {
+                                                    hargaBatu20 = customGol10!;
+                                                    caratPcsBatu20 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.606) {
+                                                    hargaBatu20 = customGol11!;
+                                                    caratPcsBatu20 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.656) {
+                                                    hargaBatu20 = customGol12!;
+                                                    caratPcsBatu20 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.706) {
+                                                    hargaBatu20 = customGol13!;
+                                                    caratPcsBatu20 =
+                                                        double.parse(value);
+                                                  } else {
+                                                    hargaBatu20 = customGol14!;
+                                                    caratPcsBatu20 =
+                                                        double.parse(value);
+                                                  }
+                                                }
+                                                //! keluar dari kondisi batu custom
+                                                else {}
+                                              });
                                             },
                                             decoration: InputDecoration(
-                                              label: const Text(
-                                                'Carat/Pcs',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
+                                              label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(
@@ -6741,10 +9098,12 @@ class _FormScreenState extends State<FormScreen> {
                                                       setState(() {
                                                         qtyBatu20.text = '0';
                                                         stokBatu20.text = '';
+                                                        crtPcsBatu20.text = '';
+                                                        ukuranBatu20.text = '';
+                                                        stokBatu20.text = '';
                                                         batu20 = '';
                                                         hargaBatu20 = 0;
                                                         caratPcsBatu20 = 0;
-                                                        crtPcsBatu20.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -6754,12 +9113,10 @@ class _FormScreenState extends State<FormScreen> {
                                     ),
                               // end row batu20
 
-                              //batu21
+                              //size batu21
                               qtyBatu20.text.isEmpty
                                   ? const SizedBox()
-                                  :
-                                  //size batu21
-                                  Row(
+                                  : Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
@@ -6794,14 +9151,14 @@ class _FormScreenState extends State<FormScreen> {
                                                       jsonDecode(response.body);
                                                   print(data);
                                                   setState(() {
+                                                    ukuranBatu21.text = '';
+                                                    crtPcsBatu21.text = '';
+                                                    idStone21 = item.idStone;
+                                                    idBatu21 = item.id;
                                                     hargaBatu21 =
                                                         data[0]['unitCost'];
-                                                    idBatu21 = item.id;
                                                     caratPcsBatu21 =
                                                         data[0]['caratPcs'];
-                                                    crtPcsBatu21.text = data[0]
-                                                            ['caratPcs']
-                                                        .toString();
                                                     batu21 =
                                                         item.keyWord.toString();
                                                     stokBatu21.text =
@@ -6816,18 +9173,37 @@ class _FormScreenState extends State<FormScreen> {
                                                 const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                // label: Text(
-                                                //   batu21!,
-                                                //   style: const TextStyle(
-                                                //       fontSize: 18,
-                                                //       fontWeight: FontWeight.bold),
-                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
                                             ),
                                           ),
                                         ),
+
+                                        //ukuran batu21
+                                        idStone21 != -2
+                                            ? const SizedBox()
+                                            : Container(
+                                                width: 220,
+                                                height: 50,
+                                                padding: const EdgeInsets.only(
+                                                    top: 10, left: 15),
+                                                child: TextFormField(
+                                                  textInputAction:
+                                                      TextInputAction.next,
+                                                  controller: ukuranBatu21,
+                                                  onChanged: (value) {
+                                                    setState(() {});
+                                                  },
+                                                  decoration: InputDecoration(
+                                                    label: const Text('Ukuran'),
+                                                    border: OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5.0)),
+                                                  ),
+                                                ),
+                                              ),
 
                                         //qty batu21
                                         Container(
@@ -6885,29 +9261,124 @@ class _FormScreenState extends State<FormScreen> {
 
                                         //crt/pcsbatu21
                                         Container(
-                                          width: 120,
-                                          height: 45,
+                                          width: 100,
+                                          height: 50,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
-                                            enabled: caratPcsBatu21 <= 0
-                                                ? true
-                                                : false,
                                             textInputAction:
                                                 TextInputAction.next,
                                             controller: crtPcsBatu21,
                                             onChanged: (value) {
-                                              caratPcsBatu21 =
-                                                  double.parse(value);
+                                              setState(() {
+                                                //todo: perhitungan batu custom
+                                                if (batu21!.toLowerCase() == "custom emerald" ||
+                                                    batu21!.toLowerCase() ==
+                                                        "custom baguete" ||
+                                                    batu21!.toLowerCase() ==
+                                                        "custom heart" ||
+                                                    batu21!.toLowerCase() ==
+                                                        "custom marquise" ||
+                                                    batu21!.toLowerCase() ==
+                                                        "custom oval" ||
+                                                    batu21!.toLowerCase() ==
+                                                        "custom pear" ||
+                                                    batu21!.toLowerCase() ==
+                                                        "custom princess cut" ||
+                                                    batu21!.toLowerCase() ==
+                                                        "custom ruby" ||
+                                                    batu21!.toLowerCase() ==
+                                                        "custom tapper") {
+                                                  //? kondisi sesuai carat/pcs
+                                                  if (double.parse(value) <
+                                                      0.071) {
+                                                    hargaBatu21 = customGol1!;
+                                                    caratPcsBatu21 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.121) {
+                                                    hargaBatu21 = customGol2!;
+                                                    caratPcsBatu21 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.182) {
+                                                    hargaBatu21 = customGol3!;
+                                                    caratPcsBatu21 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.231) {
+                                                    hargaBatu21 = customGol4!;
+                                                    caratPcsBatu21 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.266) {
+                                                    hargaBatu21 = customGol5!;
+                                                    caratPcsBatu21 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.356) {
+                                                    hargaBatu21 = customGol6!;
+                                                    caratPcsBatu21 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.406) {
+                                                    hargaBatu21 = customGol7!;
+                                                    caratPcsBatu21 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.456) {
+                                                    hargaBatu21 = customGol8!;
+                                                    caratPcsBatu21 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.506) {
+                                                    hargaBatu21 = customGol9!;
+                                                    caratPcsBatu21 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.556) {
+                                                    hargaBatu21 = customGol10!;
+                                                    caratPcsBatu21 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.606) {
+                                                    hargaBatu21 = customGol11!;
+                                                    caratPcsBatu21 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.656) {
+                                                    hargaBatu21 = customGol12!;
+                                                    caratPcsBatu21 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.706) {
+                                                    hargaBatu21 = customGol13!;
+                                                    caratPcsBatu21 =
+                                                        double.parse(value);
+                                                  } else {
+                                                    hargaBatu21 = customGol14!;
+                                                    caratPcsBatu21 =
+                                                        double.parse(value);
+                                                  }
+                                                }
+                                                //! keluar dari kondisi batu custom
+                                                else {}
+                                              });
                                             },
                                             decoration: InputDecoration(
-                                              label: const Text(
-                                                'Carat/Pcs',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
+                                              label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(
@@ -6926,10 +9397,12 @@ class _FormScreenState extends State<FormScreen> {
                                                       setState(() {
                                                         qtyBatu21.text = '0';
                                                         stokBatu21.text = '';
+                                                        crtPcsBatu21.text = '';
+                                                        ukuranBatu21.text = '';
+                                                        stokBatu21.text = '';
                                                         batu21 = '';
                                                         hargaBatu21 = 0;
                                                         caratPcsBatu21 = 0;
-                                                        crtPcsBatu21.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -6939,12 +9412,10 @@ class _FormScreenState extends State<FormScreen> {
                                     ),
                               // end row batu21
 
-                              //batu22
+                              //size batu22
                               qtyBatu21.text.isEmpty
                                   ? const SizedBox()
-                                  :
-                                  //size batu22
-                                  Row(
+                                  : Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
@@ -6979,14 +9450,14 @@ class _FormScreenState extends State<FormScreen> {
                                                       jsonDecode(response.body);
                                                   print(data);
                                                   setState(() {
+                                                    ukuranBatu22.text = '';
+                                                    crtPcsBatu22.text = '';
+                                                    idStone22 = item.idStone;
+                                                    idBatu22 = item.id;
                                                     hargaBatu22 =
                                                         data[0]['unitCost'];
-                                                    idBatu22 = item.id;
                                                     caratPcsBatu22 =
                                                         data[0]['caratPcs'];
-                                                    crtPcsBatu22.text = data[0]
-                                                            ['caratPcs']
-                                                        .toString();
                                                     batu22 =
                                                         item.keyWord.toString();
                                                     stokBatu22.text =
@@ -7001,18 +9472,37 @@ class _FormScreenState extends State<FormScreen> {
                                                 const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                // label: Text(
-                                                //   batu22!,
-                                                //   style: const TextStyle(
-                                                //       fontSize: 18,
-                                                //       fontWeight: FontWeight.bold),
-                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
                                             ),
                                           ),
                                         ),
+
+                                        //ukuran batu22
+                                        idStone22 != -2
+                                            ? const SizedBox()
+                                            : Container(
+                                                width: 220,
+                                                height: 50,
+                                                padding: const EdgeInsets.only(
+                                                    top: 10, left: 15),
+                                                child: TextFormField(
+                                                  textInputAction:
+                                                      TextInputAction.next,
+                                                  controller: ukuranBatu22,
+                                                  onChanged: (value) {
+                                                    setState(() {});
+                                                  },
+                                                  decoration: InputDecoration(
+                                                    label: const Text('Ukuran'),
+                                                    border: OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5.0)),
+                                                  ),
+                                                ),
+                                              ),
 
                                         //qty batu22
                                         Container(
@@ -7070,29 +9560,124 @@ class _FormScreenState extends State<FormScreen> {
 
                                         //crt/pcsbatu22
                                         Container(
-                                          width: 120,
-                                          height: 45,
+                                          width: 100,
+                                          height: 50,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
-                                            enabled: caratPcsBatu22 <= 0
-                                                ? true
-                                                : false,
                                             textInputAction:
                                                 TextInputAction.next,
                                             controller: crtPcsBatu22,
                                             onChanged: (value) {
-                                              caratPcsBatu22 =
-                                                  double.parse(value);
+                                              setState(() {
+                                                //todo: perhitungan batu custom
+                                                if (batu22!.toLowerCase() == "custom emerald" ||
+                                                    batu22!.toLowerCase() ==
+                                                        "custom baguete" ||
+                                                    batu22!.toLowerCase() ==
+                                                        "custom heart" ||
+                                                    batu22!.toLowerCase() ==
+                                                        "custom marquise" ||
+                                                    batu22!.toLowerCase() ==
+                                                        "custom oval" ||
+                                                    batu22!.toLowerCase() ==
+                                                        "custom pear" ||
+                                                    batu22!.toLowerCase() ==
+                                                        "custom princess cut" ||
+                                                    batu22!.toLowerCase() ==
+                                                        "custom ruby" ||
+                                                    batu22!.toLowerCase() ==
+                                                        "custom tapper") {
+                                                  //? kondisi sesuai carat/pcs
+                                                  if (double.parse(value) <
+                                                      0.071) {
+                                                    hargaBatu22 = customGol1!;
+                                                    caratPcsBatu22 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.121) {
+                                                    hargaBatu22 = customGol2!;
+                                                    caratPcsBatu22 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.182) {
+                                                    hargaBatu22 = customGol3!;
+                                                    caratPcsBatu22 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.231) {
+                                                    hargaBatu22 = customGol4!;
+                                                    caratPcsBatu22 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.266) {
+                                                    hargaBatu22 = customGol5!;
+                                                    caratPcsBatu22 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.356) {
+                                                    hargaBatu22 = customGol6!;
+                                                    caratPcsBatu22 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.406) {
+                                                    hargaBatu22 = customGol7!;
+                                                    caratPcsBatu22 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.456) {
+                                                    hargaBatu22 = customGol8!;
+                                                    caratPcsBatu22 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.506) {
+                                                    hargaBatu22 = customGol9!;
+                                                    caratPcsBatu22 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.556) {
+                                                    hargaBatu22 = customGol10!;
+                                                    caratPcsBatu22 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.606) {
+                                                    hargaBatu22 = customGol11!;
+                                                    caratPcsBatu22 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.656) {
+                                                    hargaBatu22 = customGol12!;
+                                                    caratPcsBatu22 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.706) {
+                                                    hargaBatu22 = customGol13!;
+                                                    caratPcsBatu22 =
+                                                        double.parse(value);
+                                                  } else {
+                                                    hargaBatu22 = customGol14!;
+                                                    caratPcsBatu22 =
+                                                        double.parse(value);
+                                                  }
+                                                }
+                                                //! keluar dari kondisi batu custom
+                                                else {}
+                                              });
                                             },
                                             decoration: InputDecoration(
-                                              label: const Text(
-                                                'Carat/Pcs',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
+                                              label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(
@@ -7111,10 +9696,12 @@ class _FormScreenState extends State<FormScreen> {
                                                       setState(() {
                                                         qtyBatu22.text = '0';
                                                         stokBatu22.text = '';
+                                                        crtPcsBatu22.text = '';
+                                                        ukuranBatu22.text = '';
+                                                        stokBatu22.text = '';
                                                         batu22 = '';
                                                         hargaBatu22 = 0;
                                                         caratPcsBatu22 = 0;
-                                                        crtPcsBatu22.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -7124,12 +9711,10 @@ class _FormScreenState extends State<FormScreen> {
                                     ),
                               // end row batu22
 
-                              //batu23
+                              //size batu23
                               qtyBatu22.text.isEmpty
                                   ? const SizedBox()
-                                  :
-                                  //size batu23
-                                  Row(
+                                  : Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
@@ -7164,14 +9749,14 @@ class _FormScreenState extends State<FormScreen> {
                                                       jsonDecode(response.body);
                                                   print(data);
                                                   setState(() {
+                                                    ukuranBatu23.text = '';
+                                                    crtPcsBatu23.text = '';
+                                                    idStone23 = item.idStone;
+                                                    idBatu23 = item.id;
                                                     hargaBatu23 =
                                                         data[0]['unitCost'];
-                                                    idBatu23 = item.id;
                                                     caratPcsBatu23 =
                                                         data[0]['caratPcs'];
-                                                    crtPcsBatu23.text = data[0]
-                                                            ['caratPcs']
-                                                        .toString();
                                                     batu23 =
                                                         item.keyWord.toString();
                                                     stokBatu23.text =
@@ -7186,18 +9771,37 @@ class _FormScreenState extends State<FormScreen> {
                                                 const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                // label: Text(
-                                                //   batu23!,
-                                                //   style: const TextStyle(
-                                                //       fontSize: 18,
-                                                //       fontWeight: FontWeight.bold),
-                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
                                             ),
                                           ),
                                         ),
+
+                                        //ukuran batu23
+                                        idStone23 != -2
+                                            ? const SizedBox()
+                                            : Container(
+                                                width: 220,
+                                                height: 50,
+                                                padding: const EdgeInsets.only(
+                                                    top: 10, left: 15),
+                                                child: TextFormField(
+                                                  textInputAction:
+                                                      TextInputAction.next,
+                                                  controller: ukuranBatu23,
+                                                  onChanged: (value) {
+                                                    setState(() {});
+                                                  },
+                                                  decoration: InputDecoration(
+                                                    label: const Text('Ukuran'),
+                                                    border: OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5.0)),
+                                                  ),
+                                                ),
+                                              ),
 
                                         //qty batu23
                                         Container(
@@ -7255,29 +9859,124 @@ class _FormScreenState extends State<FormScreen> {
 
                                         //crt/pcsbatu23
                                         Container(
-                                          width: 120,
-                                          height: 45,
+                                          width: 100,
+                                          height: 50,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
-                                            enabled: caratPcsBatu23 <= 0
-                                                ? true
-                                                : false,
                                             textInputAction:
                                                 TextInputAction.next,
                                             controller: crtPcsBatu23,
                                             onChanged: (value) {
-                                              caratPcsBatu23 =
-                                                  double.parse(value);
+                                              setState(() {
+                                                //todo: perhitungan batu custom
+                                                if (batu23!.toLowerCase() == "custom emerald" ||
+                                                    batu23!.toLowerCase() ==
+                                                        "custom baguete" ||
+                                                    batu23!.toLowerCase() ==
+                                                        "custom heart" ||
+                                                    batu23!.toLowerCase() ==
+                                                        "custom marquise" ||
+                                                    batu23!.toLowerCase() ==
+                                                        "custom oval" ||
+                                                    batu23!.toLowerCase() ==
+                                                        "custom pear" ||
+                                                    batu23!.toLowerCase() ==
+                                                        "custom princess cut" ||
+                                                    batu23!.toLowerCase() ==
+                                                        "custom ruby" ||
+                                                    batu23!.toLowerCase() ==
+                                                        "custom tapper") {
+                                                  //? kondisi sesuai carat/pcs
+                                                  if (double.parse(value) <
+                                                      0.071) {
+                                                    hargaBatu23 = customGol1!;
+                                                    caratPcsBatu23 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.121) {
+                                                    hargaBatu23 = customGol2!;
+                                                    caratPcsBatu23 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.182) {
+                                                    hargaBatu23 = customGol3!;
+                                                    caratPcsBatu23 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.231) {
+                                                    hargaBatu23 = customGol4!;
+                                                    caratPcsBatu23 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.266) {
+                                                    hargaBatu23 = customGol5!;
+                                                    caratPcsBatu23 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.356) {
+                                                    hargaBatu23 = customGol6!;
+                                                    caratPcsBatu23 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.406) {
+                                                    hargaBatu23 = customGol7!;
+                                                    caratPcsBatu23 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.456) {
+                                                    hargaBatu23 = customGol8!;
+                                                    caratPcsBatu23 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.506) {
+                                                    hargaBatu23 = customGol9!;
+                                                    caratPcsBatu23 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.556) {
+                                                    hargaBatu23 = customGol10!;
+                                                    caratPcsBatu23 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.606) {
+                                                    hargaBatu23 = customGol11!;
+                                                    caratPcsBatu23 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.656) {
+                                                    hargaBatu23 = customGol12!;
+                                                    caratPcsBatu23 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.706) {
+                                                    hargaBatu23 = customGol13!;
+                                                    caratPcsBatu23 =
+                                                        double.parse(value);
+                                                  } else {
+                                                    hargaBatu23 = customGol14!;
+                                                    caratPcsBatu23 =
+                                                        double.parse(value);
+                                                  }
+                                                }
+                                                //! keluar dari kondisi batu custom
+                                                else {}
+                                              });
                                             },
                                             decoration: InputDecoration(
-                                              label: const Text(
-                                                'Carat/Pcs',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
+                                              label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(
@@ -7296,10 +9995,12 @@ class _FormScreenState extends State<FormScreen> {
                                                       setState(() {
                                                         qtyBatu23.text = '0';
                                                         stokBatu23.text = '';
+                                                        crtPcsBatu23.text = '';
+                                                        ukuranBatu23.text = '';
+                                                        stokBatu23.text = '';
                                                         batu23 = '';
                                                         hargaBatu23 = 0;
                                                         caratPcsBatu23 = 0;
-                                                        crtPcsBatu23.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -7309,12 +10010,10 @@ class _FormScreenState extends State<FormScreen> {
                                     ),
                               // end row batu23
 
-                              //batu24
+                              //size batu24
                               qtyBatu23.text.isEmpty
                                   ? const SizedBox()
-                                  :
-                                  //size batu24
-                                  Row(
+                                  : Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
@@ -7349,14 +10048,14 @@ class _FormScreenState extends State<FormScreen> {
                                                       jsonDecode(response.body);
                                                   print(data);
                                                   setState(() {
+                                                    ukuranBatu24.text = '';
+                                                    crtPcsBatu24.text = '';
+                                                    idStone24 = item.idStone;
+                                                    idBatu24 = item.id;
                                                     hargaBatu24 =
                                                         data[0]['unitCost'];
-                                                    idBatu24 = item.id;
                                                     caratPcsBatu24 =
                                                         data[0]['caratPcs'];
-                                                    crtPcsBatu24.text = data[0]
-                                                            ['caratPcs']
-                                                        .toString();
                                                     batu24 =
                                                         item.keyWord.toString();
                                                     stokBatu24.text =
@@ -7371,18 +10070,37 @@ class _FormScreenState extends State<FormScreen> {
                                                 const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                // label: Text(
-                                                //   batu24!,
-                                                //   style: const TextStyle(
-                                                //       fontSize: 18,
-                                                //       fontWeight: FontWeight.bold),
-                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
                                             ),
                                           ),
                                         ),
+
+                                        //ukuran batu24
+                                        idStone24 != -2
+                                            ? const SizedBox()
+                                            : Container(
+                                                width: 220,
+                                                height: 50,
+                                                padding: const EdgeInsets.only(
+                                                    top: 10, left: 15),
+                                                child: TextFormField(
+                                                  textInputAction:
+                                                      TextInputAction.next,
+                                                  controller: ukuranBatu24,
+                                                  onChanged: (value) {
+                                                    setState(() {});
+                                                  },
+                                                  decoration: InputDecoration(
+                                                    label: const Text('Ukuran'),
+                                                    border: OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5.0)),
+                                                  ),
+                                                ),
+                                              ),
 
                                         //qty batu24
                                         Container(
@@ -7440,29 +10158,124 @@ class _FormScreenState extends State<FormScreen> {
 
                                         //crt/pcsbatu24
                                         Container(
-                                          width: 120,
-                                          height: 45,
+                                          width: 100,
+                                          height: 50,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
-                                            enabled: caratPcsBatu24 <= 0
-                                                ? true
-                                                : false,
                                             textInputAction:
                                                 TextInputAction.next,
                                             controller: crtPcsBatu24,
                                             onChanged: (value) {
-                                              caratPcsBatu24 =
-                                                  double.parse(value);
+                                              setState(() {
+                                                //todo: perhitungan batu custom
+                                                if (batu24!.toLowerCase() == "custom emerald" ||
+                                                    batu24!.toLowerCase() ==
+                                                        "custom baguete" ||
+                                                    batu24!.toLowerCase() ==
+                                                        "custom heart" ||
+                                                    batu24!.toLowerCase() ==
+                                                        "custom marquise" ||
+                                                    batu24!.toLowerCase() ==
+                                                        "custom oval" ||
+                                                    batu24!.toLowerCase() ==
+                                                        "custom pear" ||
+                                                    batu24!.toLowerCase() ==
+                                                        "custom princess cut" ||
+                                                    batu24!.toLowerCase() ==
+                                                        "custom ruby" ||
+                                                    batu24!.toLowerCase() ==
+                                                        "custom tapper") {
+                                                  //? kondisi sesuai carat/pcs
+                                                  if (double.parse(value) <
+                                                      0.071) {
+                                                    hargaBatu24 = customGol1!;
+                                                    caratPcsBatu24 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.121) {
+                                                    hargaBatu24 = customGol2!;
+                                                    caratPcsBatu24 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.182) {
+                                                    hargaBatu24 = customGol3!;
+                                                    caratPcsBatu24 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.231) {
+                                                    hargaBatu24 = customGol4!;
+                                                    caratPcsBatu24 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.266) {
+                                                    hargaBatu24 = customGol5!;
+                                                    caratPcsBatu24 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.356) {
+                                                    hargaBatu24 = customGol6!;
+                                                    caratPcsBatu24 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.406) {
+                                                    hargaBatu24 = customGol7!;
+                                                    caratPcsBatu24 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.456) {
+                                                    hargaBatu24 = customGol8!;
+                                                    caratPcsBatu24 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.506) {
+                                                    hargaBatu24 = customGol9!;
+                                                    caratPcsBatu24 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.556) {
+                                                    hargaBatu24 = customGol10!;
+                                                    caratPcsBatu24 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.606) {
+                                                    hargaBatu24 = customGol11!;
+                                                    caratPcsBatu24 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.656) {
+                                                    hargaBatu24 = customGol12!;
+                                                    caratPcsBatu24 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.706) {
+                                                    hargaBatu24 = customGol13!;
+                                                    caratPcsBatu24 =
+                                                        double.parse(value);
+                                                  } else {
+                                                    hargaBatu24 = customGol14!;
+                                                    caratPcsBatu24 =
+                                                        double.parse(value);
+                                                  }
+                                                }
+                                                //! keluar dari kondisi batu custom
+                                                else {}
+                                              });
                                             },
                                             decoration: InputDecoration(
-                                              label: const Text(
-                                                'Carat/Pcs',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
+                                              label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(
@@ -7481,10 +10294,12 @@ class _FormScreenState extends State<FormScreen> {
                                                       setState(() {
                                                         qtyBatu24.text = '0';
                                                         stokBatu24.text = '';
+                                                        crtPcsBatu24.text = '';
+                                                        ukuranBatu24.text = '';
+                                                        stokBatu24.text = '';
                                                         batu24 = '';
                                                         hargaBatu24 = 0;
                                                         caratPcsBatu24 = 0;
-                                                        crtPcsBatu24.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -7494,12 +10309,10 @@ class _FormScreenState extends State<FormScreen> {
                                     ),
                               // end row batu24
 
-                              //batu25
+                              //size batu25
                               qtyBatu24.text.isEmpty
                                   ? const SizedBox()
-                                  :
-                                  //size batu25
-                                  Row(
+                                  : Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
@@ -7534,14 +10347,14 @@ class _FormScreenState extends State<FormScreen> {
                                                       jsonDecode(response.body);
                                                   print(data);
                                                   setState(() {
+                                                    ukuranBatu25.text = '';
+                                                    crtPcsBatu25.text = '';
+                                                    idStone25 = item.idStone;
+                                                    idBatu25 = item.id;
                                                     hargaBatu25 =
                                                         data[0]['unitCost'];
-                                                    idBatu25 = item.id;
                                                     caratPcsBatu25 =
                                                         data[0]['caratPcs'];
-                                                    crtPcsBatu25.text = data[0]
-                                                            ['caratPcs']
-                                                        .toString();
                                                     batu25 =
                                                         item.keyWord.toString();
                                                     stokBatu25.text =
@@ -7556,18 +10369,37 @@ class _FormScreenState extends State<FormScreen> {
                                                 const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                // label: Text(
-                                                //   batu25!,
-                                                //   style: const TextStyle(
-                                                //       fontSize: 18,
-                                                //       fontWeight: FontWeight.bold),
-                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
                                             ),
                                           ),
                                         ),
+
+                                        //ukuran batu25
+                                        idStone25 != -2
+                                            ? const SizedBox()
+                                            : Container(
+                                                width: 220,
+                                                height: 50,
+                                                padding: const EdgeInsets.only(
+                                                    top: 10, left: 15),
+                                                child: TextFormField(
+                                                  textInputAction:
+                                                      TextInputAction.next,
+                                                  controller: ukuranBatu25,
+                                                  onChanged: (value) {
+                                                    setState(() {});
+                                                  },
+                                                  decoration: InputDecoration(
+                                                    label: const Text('Ukuran'),
+                                                    border: OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5.0)),
+                                                  ),
+                                                ),
+                                              ),
 
                                         //qty batu25
                                         Container(
@@ -7625,29 +10457,124 @@ class _FormScreenState extends State<FormScreen> {
 
                                         //crt/pcsbatu25
                                         Container(
-                                          width: 120,
-                                          height: 45,
+                                          width: 100,
+                                          height: 50,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
-                                            enabled: caratPcsBatu25 <= 0
-                                                ? true
-                                                : false,
                                             textInputAction:
                                                 TextInputAction.next,
                                             controller: crtPcsBatu25,
                                             onChanged: (value) {
-                                              caratPcsBatu25 =
-                                                  double.parse(value);
+                                              setState(() {
+                                                //todo: perhitungan batu custom
+                                                if (batu25!.toLowerCase() == "custom emerald" ||
+                                                    batu25!.toLowerCase() ==
+                                                        "custom baguete" ||
+                                                    batu25!.toLowerCase() ==
+                                                        "custom heart" ||
+                                                    batu25!.toLowerCase() ==
+                                                        "custom marquise" ||
+                                                    batu25!.toLowerCase() ==
+                                                        "custom oval" ||
+                                                    batu25!.toLowerCase() ==
+                                                        "custom pear" ||
+                                                    batu25!.toLowerCase() ==
+                                                        "custom princess cut" ||
+                                                    batu25!.toLowerCase() ==
+                                                        "custom ruby" ||
+                                                    batu25!.toLowerCase() ==
+                                                        "custom tapper") {
+                                                  //? kondisi sesuai carat/pcs
+                                                  if (double.parse(value) <
+                                                      0.071) {
+                                                    hargaBatu25 = customGol1!;
+                                                    caratPcsBatu25 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.121) {
+                                                    hargaBatu25 = customGol2!;
+                                                    caratPcsBatu25 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.182) {
+                                                    hargaBatu25 = customGol3!;
+                                                    caratPcsBatu25 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.231) {
+                                                    hargaBatu25 = customGol4!;
+                                                    caratPcsBatu25 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.266) {
+                                                    hargaBatu25 = customGol5!;
+                                                    caratPcsBatu25 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.356) {
+                                                    hargaBatu25 = customGol6!;
+                                                    caratPcsBatu25 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.406) {
+                                                    hargaBatu25 = customGol7!;
+                                                    caratPcsBatu25 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.456) {
+                                                    hargaBatu25 = customGol8!;
+                                                    caratPcsBatu25 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.506) {
+                                                    hargaBatu25 = customGol9!;
+                                                    caratPcsBatu25 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.556) {
+                                                    hargaBatu25 = customGol10!;
+                                                    caratPcsBatu25 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.606) {
+                                                    hargaBatu25 = customGol11!;
+                                                    caratPcsBatu25 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.656) {
+                                                    hargaBatu25 = customGol12!;
+                                                    caratPcsBatu25 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.706) {
+                                                    hargaBatu25 = customGol13!;
+                                                    caratPcsBatu25 =
+                                                        double.parse(value);
+                                                  } else {
+                                                    hargaBatu25 = customGol14!;
+                                                    caratPcsBatu25 =
+                                                        double.parse(value);
+                                                  }
+                                                }
+                                                //! keluar dari kondisi batu custom
+                                                else {}
+                                              });
                                             },
                                             decoration: InputDecoration(
-                                              label: const Text(
-                                                'Carat/Pcs',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
+                                              label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(
@@ -7666,10 +10593,12 @@ class _FormScreenState extends State<FormScreen> {
                                                       setState(() {
                                                         qtyBatu25.text = '0';
                                                         stokBatu25.text = '';
+                                                        crtPcsBatu25.text = '';
+                                                        ukuranBatu25.text = '';
+                                                        stokBatu25.text = '';
                                                         batu25 = '';
                                                         hargaBatu25 = 0;
                                                         caratPcsBatu25 = 0;
-                                                        crtPcsBatu25.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -7679,12 +10608,10 @@ class _FormScreenState extends State<FormScreen> {
                                     ),
                               // end row batu25
 
-                              //batu26
+                              //size batu26
                               qtyBatu25.text.isEmpty
                                   ? const SizedBox()
-                                  :
-                                  //size batu26
-                                  Row(
+                                  : Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
@@ -7719,14 +10646,14 @@ class _FormScreenState extends State<FormScreen> {
                                                       jsonDecode(response.body);
                                                   print(data);
                                                   setState(() {
+                                                    ukuranBatu26.text = '';
+                                                    crtPcsBatu26.text = '';
+                                                    idStone26 = item.idStone;
+                                                    idBatu26 = item.id;
                                                     hargaBatu26 =
                                                         data[0]['unitCost'];
-                                                    idBatu26 = item.id;
                                                     caratPcsBatu26 =
                                                         data[0]['caratPcs'];
-                                                    crtPcsBatu26.text = data[0]
-                                                            ['caratPcs']
-                                                        .toString();
                                                     batu26 =
                                                         item.keyWord.toString();
                                                     stokBatu26.text =
@@ -7741,18 +10668,37 @@ class _FormScreenState extends State<FormScreen> {
                                                 const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                // label: Text(
-                                                //   batu26!,
-                                                //   style: const TextStyle(
-                                                //       fontSize: 18,
-                                                //       fontWeight: FontWeight.bold),
-                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
                                             ),
                                           ),
                                         ),
+
+                                        //ukuran batu26
+                                        idStone26 != -2
+                                            ? const SizedBox()
+                                            : Container(
+                                                width: 220,
+                                                height: 50,
+                                                padding: const EdgeInsets.only(
+                                                    top: 10, left: 15),
+                                                child: TextFormField(
+                                                  textInputAction:
+                                                      TextInputAction.next,
+                                                  controller: ukuranBatu26,
+                                                  onChanged: (value) {
+                                                    setState(() {});
+                                                  },
+                                                  decoration: InputDecoration(
+                                                    label: const Text('Ukuran'),
+                                                    border: OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5.0)),
+                                                  ),
+                                                ),
+                                              ),
 
                                         //qty batu26
                                         Container(
@@ -7810,29 +10756,124 @@ class _FormScreenState extends State<FormScreen> {
 
                                         //crt/pcsbatu26
                                         Container(
-                                          width: 120,
-                                          height: 45,
+                                          width: 100,
+                                          height: 50,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
-                                            enabled: caratPcsBatu26 <= 0
-                                                ? true
-                                                : false,
                                             textInputAction:
                                                 TextInputAction.next,
                                             controller: crtPcsBatu26,
                                             onChanged: (value) {
-                                              caratPcsBatu26 =
-                                                  double.parse(value);
+                                              setState(() {
+                                                //todo: perhitungan batu custom
+                                                if (batu26!.toLowerCase() == "custom emerald" ||
+                                                    batu26!.toLowerCase() ==
+                                                        "custom baguete" ||
+                                                    batu26!.toLowerCase() ==
+                                                        "custom heart" ||
+                                                    batu26!.toLowerCase() ==
+                                                        "custom marquise" ||
+                                                    batu26!.toLowerCase() ==
+                                                        "custom oval" ||
+                                                    batu26!.toLowerCase() ==
+                                                        "custom pear" ||
+                                                    batu26!.toLowerCase() ==
+                                                        "custom princess cut" ||
+                                                    batu26!.toLowerCase() ==
+                                                        "custom ruby" ||
+                                                    batu26!.toLowerCase() ==
+                                                        "custom tapper") {
+                                                  //? kondisi sesuai carat/pcs
+                                                  if (double.parse(value) <
+                                                      0.071) {
+                                                    hargaBatu26 = customGol1!;
+                                                    caratPcsBatu26 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.121) {
+                                                    hargaBatu26 = customGol2!;
+                                                    caratPcsBatu26 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.182) {
+                                                    hargaBatu26 = customGol3!;
+                                                    caratPcsBatu26 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.231) {
+                                                    hargaBatu26 = customGol4!;
+                                                    caratPcsBatu26 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.266) {
+                                                    hargaBatu26 = customGol5!;
+                                                    caratPcsBatu26 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.356) {
+                                                    hargaBatu26 = customGol6!;
+                                                    caratPcsBatu26 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.406) {
+                                                    hargaBatu26 = customGol7!;
+                                                    caratPcsBatu26 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.456) {
+                                                    hargaBatu26 = customGol8!;
+                                                    caratPcsBatu26 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.506) {
+                                                    hargaBatu26 = customGol9!;
+                                                    caratPcsBatu26 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.556) {
+                                                    hargaBatu26 = customGol10!;
+                                                    caratPcsBatu26 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.606) {
+                                                    hargaBatu26 = customGol11!;
+                                                    caratPcsBatu26 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.656) {
+                                                    hargaBatu26 = customGol12!;
+                                                    caratPcsBatu26 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.706) {
+                                                    hargaBatu26 = customGol13!;
+                                                    caratPcsBatu26 =
+                                                        double.parse(value);
+                                                  } else {
+                                                    hargaBatu26 = customGol14!;
+                                                    caratPcsBatu26 =
+                                                        double.parse(value);
+                                                  }
+                                                }
+                                                //! keluar dari kondisi batu custom
+                                                else {}
+                                              });
                                             },
                                             decoration: InputDecoration(
-                                              label: const Text(
-                                                'Carat/Pcs',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
+                                              label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(
@@ -7851,10 +10892,12 @@ class _FormScreenState extends State<FormScreen> {
                                                       setState(() {
                                                         qtyBatu26.text = '0';
                                                         stokBatu26.text = '';
+                                                        crtPcsBatu26.text = '';
+                                                        ukuranBatu26.text = '';
+                                                        stokBatu26.text = '';
                                                         batu26 = '';
                                                         hargaBatu26 = 0;
                                                         caratPcsBatu26 = 0;
-                                                        crtPcsBatu26.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -7864,12 +10907,10 @@ class _FormScreenState extends State<FormScreen> {
                                     ),
                               // end row batu26
 
-                              //batu27
+                              //size batu27
                               qtyBatu26.text.isEmpty
                                   ? const SizedBox()
-                                  :
-                                  //size batu27
-                                  Row(
+                                  : Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
@@ -7904,14 +10945,14 @@ class _FormScreenState extends State<FormScreen> {
                                                       jsonDecode(response.body);
                                                   print(data);
                                                   setState(() {
+                                                    ukuranBatu27.text = '';
+                                                    crtPcsBatu27.text = '';
+                                                    idStone27 = item.idStone;
+                                                    idBatu27 = item.id;
                                                     hargaBatu27 =
                                                         data[0]['unitCost'];
-                                                    idBatu27 = item.id;
                                                     caratPcsBatu27 =
                                                         data[0]['caratPcs'];
-                                                    crtPcsBatu27.text = data[0]
-                                                            ['caratPcs']
-                                                        .toString();
                                                     batu27 =
                                                         item.keyWord.toString();
                                                     stokBatu27.text =
@@ -7926,18 +10967,37 @@ class _FormScreenState extends State<FormScreen> {
                                                 const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                // label: Text(
-                                                //   batu27!,
-                                                //   style: const TextStyle(
-                                                //       fontSize: 18,
-                                                //       fontWeight: FontWeight.bold),
-                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
                                             ),
                                           ),
                                         ),
+
+                                        //ukuran batu27
+                                        idStone27 != -2
+                                            ? const SizedBox()
+                                            : Container(
+                                                width: 220,
+                                                height: 50,
+                                                padding: const EdgeInsets.only(
+                                                    top: 10, left: 15),
+                                                child: TextFormField(
+                                                  textInputAction:
+                                                      TextInputAction.next,
+                                                  controller: ukuranBatu27,
+                                                  onChanged: (value) {
+                                                    setState(() {});
+                                                  },
+                                                  decoration: InputDecoration(
+                                                    label: const Text('Ukuran'),
+                                                    border: OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5.0)),
+                                                  ),
+                                                ),
+                                              ),
 
                                         //qty batu27
                                         Container(
@@ -7995,29 +11055,124 @@ class _FormScreenState extends State<FormScreen> {
 
                                         //crt/pcsbatu27
                                         Container(
-                                          width: 120,
-                                          height: 45,
+                                          width: 100,
+                                          height: 50,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
-                                            enabled: caratPcsBatu27 <= 0
-                                                ? true
-                                                : false,
                                             textInputAction:
                                                 TextInputAction.next,
                                             controller: crtPcsBatu27,
                                             onChanged: (value) {
-                                              caratPcsBatu27 =
-                                                  double.parse(value);
+                                              setState(() {
+                                                //todo: perhitungan batu custom
+                                                if (batu27!.toLowerCase() == "custom emerald" ||
+                                                    batu27!.toLowerCase() ==
+                                                        "custom baguete" ||
+                                                    batu27!.toLowerCase() ==
+                                                        "custom heart" ||
+                                                    batu27!.toLowerCase() ==
+                                                        "custom marquise" ||
+                                                    batu27!.toLowerCase() ==
+                                                        "custom oval" ||
+                                                    batu27!.toLowerCase() ==
+                                                        "custom pear" ||
+                                                    batu27!.toLowerCase() ==
+                                                        "custom princess cut" ||
+                                                    batu27!.toLowerCase() ==
+                                                        "custom ruby" ||
+                                                    batu27!.toLowerCase() ==
+                                                        "custom tapper") {
+                                                  //? kondisi sesuai carat/pcs
+                                                  if (double.parse(value) <
+                                                      0.071) {
+                                                    hargaBatu27 = customGol1!;
+                                                    caratPcsBatu27 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.121) {
+                                                    hargaBatu27 = customGol2!;
+                                                    caratPcsBatu27 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.182) {
+                                                    hargaBatu27 = customGol3!;
+                                                    caratPcsBatu27 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.231) {
+                                                    hargaBatu27 = customGol4!;
+                                                    caratPcsBatu27 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.266) {
+                                                    hargaBatu27 = customGol5!;
+                                                    caratPcsBatu27 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.356) {
+                                                    hargaBatu27 = customGol6!;
+                                                    caratPcsBatu27 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.406) {
+                                                    hargaBatu27 = customGol7!;
+                                                    caratPcsBatu27 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.456) {
+                                                    hargaBatu27 = customGol8!;
+                                                    caratPcsBatu27 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.506) {
+                                                    hargaBatu27 = customGol9!;
+                                                    caratPcsBatu27 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.556) {
+                                                    hargaBatu27 = customGol10!;
+                                                    caratPcsBatu27 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.606) {
+                                                    hargaBatu27 = customGol11!;
+                                                    caratPcsBatu27 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.656) {
+                                                    hargaBatu27 = customGol12!;
+                                                    caratPcsBatu27 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.706) {
+                                                    hargaBatu27 = customGol13!;
+                                                    caratPcsBatu27 =
+                                                        double.parse(value);
+                                                  } else {
+                                                    hargaBatu27 = customGol14!;
+                                                    caratPcsBatu27 =
+                                                        double.parse(value);
+                                                  }
+                                                }
+                                                //! keluar dari kondisi batu custom
+                                                else {}
+                                              });
                                             },
                                             decoration: InputDecoration(
-                                              label: const Text(
-                                                'Carat/Pcs',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
+                                              label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(
@@ -8036,10 +11191,12 @@ class _FormScreenState extends State<FormScreen> {
                                                       setState(() {
                                                         qtyBatu27.text = '0';
                                                         stokBatu27.text = '';
+                                                        crtPcsBatu27.text = '';
+                                                        ukuranBatu27.text = '';
+                                                        stokBatu27.text = '';
                                                         batu27 = '';
                                                         hargaBatu27 = 0;
                                                         caratPcsBatu27 = 0;
-                                                        crtPcsBatu27.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -8049,12 +11206,10 @@ class _FormScreenState extends State<FormScreen> {
                                     ),
                               // end row batu27
 
-                              //batu28
+                              //size batu28
                               qtyBatu27.text.isEmpty
                                   ? const SizedBox()
-                                  :
-                                  //size batu28
-                                  Row(
+                                  : Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
@@ -8089,14 +11244,14 @@ class _FormScreenState extends State<FormScreen> {
                                                       jsonDecode(response.body);
                                                   print(data);
                                                   setState(() {
+                                                    ukuranBatu28.text = '';
+                                                    crtPcsBatu28.text = '';
+                                                    idStone28 = item.idStone;
+                                                    idBatu28 = item.id;
                                                     hargaBatu28 =
                                                         data[0]['unitCost'];
-                                                    idBatu28 = item.id;
                                                     caratPcsBatu28 =
                                                         data[0]['caratPcs'];
-                                                    crtPcsBatu28.text = data[0]
-                                                            ['caratPcs']
-                                                        .toString();
                                                     batu28 =
                                                         item.keyWord.toString();
                                                     stokBatu28.text =
@@ -8111,18 +11266,37 @@ class _FormScreenState extends State<FormScreen> {
                                                 const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                // label: Text(
-                                                //   batu28!,
-                                                //   style: const TextStyle(
-                                                //       fontSize: 18,
-                                                //       fontWeight: FontWeight.bold),
-                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
                                             ),
                                           ),
                                         ),
+
+                                        //ukuran batu28
+                                        idStone28 != -2
+                                            ? const SizedBox()
+                                            : Container(
+                                                width: 220,
+                                                height: 50,
+                                                padding: const EdgeInsets.only(
+                                                    top: 10, left: 15),
+                                                child: TextFormField(
+                                                  textInputAction:
+                                                      TextInputAction.next,
+                                                  controller: ukuranBatu28,
+                                                  onChanged: (value) {
+                                                    setState(() {});
+                                                  },
+                                                  decoration: InputDecoration(
+                                                    label: const Text('Ukuran'),
+                                                    border: OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5.0)),
+                                                  ),
+                                                ),
+                                              ),
 
                                         //qty batu28
                                         Container(
@@ -8180,29 +11354,124 @@ class _FormScreenState extends State<FormScreen> {
 
                                         //crt/pcsbatu28
                                         Container(
-                                          width: 120,
-                                          height: 45,
+                                          width: 100,
+                                          height: 50,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
-                                            enabled: caratPcsBatu28 <= 0
-                                                ? true
-                                                : false,
                                             textInputAction:
                                                 TextInputAction.next,
                                             controller: crtPcsBatu28,
                                             onChanged: (value) {
-                                              caratPcsBatu28 =
-                                                  double.parse(value);
+                                              setState(() {
+                                                //todo: perhitungan batu custom
+                                                if (batu28!.toLowerCase() == "custom emerald" ||
+                                                    batu28!.toLowerCase() ==
+                                                        "custom baguete" ||
+                                                    batu28!.toLowerCase() ==
+                                                        "custom heart" ||
+                                                    batu28!.toLowerCase() ==
+                                                        "custom marquise" ||
+                                                    batu28!.toLowerCase() ==
+                                                        "custom oval" ||
+                                                    batu28!.toLowerCase() ==
+                                                        "custom pear" ||
+                                                    batu28!.toLowerCase() ==
+                                                        "custom princess cut" ||
+                                                    batu28!.toLowerCase() ==
+                                                        "custom ruby" ||
+                                                    batu28!.toLowerCase() ==
+                                                        "custom tapper") {
+                                                  //? kondisi sesuai carat/pcs
+                                                  if (double.parse(value) <
+                                                      0.071) {
+                                                    hargaBatu28 = customGol1!;
+                                                    caratPcsBatu28 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.121) {
+                                                    hargaBatu28 = customGol2!;
+                                                    caratPcsBatu28 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.182) {
+                                                    hargaBatu28 = customGol3!;
+                                                    caratPcsBatu28 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.231) {
+                                                    hargaBatu28 = customGol4!;
+                                                    caratPcsBatu28 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.266) {
+                                                    hargaBatu28 = customGol5!;
+                                                    caratPcsBatu28 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.356) {
+                                                    hargaBatu28 = customGol6!;
+                                                    caratPcsBatu28 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.406) {
+                                                    hargaBatu28 = customGol7!;
+                                                    caratPcsBatu28 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.456) {
+                                                    hargaBatu28 = customGol8!;
+                                                    caratPcsBatu28 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.506) {
+                                                    hargaBatu28 = customGol9!;
+                                                    caratPcsBatu28 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.556) {
+                                                    hargaBatu28 = customGol10!;
+                                                    caratPcsBatu28 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.606) {
+                                                    hargaBatu28 = customGol11!;
+                                                    caratPcsBatu28 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.656) {
+                                                    hargaBatu28 = customGol12!;
+                                                    caratPcsBatu28 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.706) {
+                                                    hargaBatu28 = customGol13!;
+                                                    caratPcsBatu28 =
+                                                        double.parse(value);
+                                                  } else {
+                                                    hargaBatu28 = customGol14!;
+                                                    caratPcsBatu28 =
+                                                        double.parse(value);
+                                                  }
+                                                }
+                                                //! keluar dari kondisi batu custom
+                                                else {}
+                                              });
                                             },
                                             decoration: InputDecoration(
-                                              label: const Text(
-                                                'Carat/Pcs',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
+                                              label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(
@@ -8221,10 +11490,12 @@ class _FormScreenState extends State<FormScreen> {
                                                       setState(() {
                                                         qtyBatu28.text = '0';
                                                         stokBatu28.text = '';
+                                                        crtPcsBatu28.text = '';
+                                                        ukuranBatu28.text = '';
+                                                        stokBatu28.text = '';
                                                         batu28 = '';
                                                         hargaBatu28 = 0;
                                                         caratPcsBatu28 = 0;
-                                                        crtPcsBatu28.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -8234,12 +11505,10 @@ class _FormScreenState extends State<FormScreen> {
                                     ),
                               // end row batu28
 
-                              //batu29
+                              //size batu29
                               qtyBatu28.text.isEmpty
                                   ? const SizedBox()
-                                  :
-                                  //size batu29
-                                  Row(
+                                  : Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
@@ -8274,14 +11543,14 @@ class _FormScreenState extends State<FormScreen> {
                                                       jsonDecode(response.body);
                                                   print(data);
                                                   setState(() {
+                                                    ukuranBatu29.text = '';
+                                                    crtPcsBatu29.text = '';
+                                                    idStone29 = item.idStone;
+                                                    idBatu29 = item.id;
                                                     hargaBatu29 =
                                                         data[0]['unitCost'];
-                                                    idBatu29 = item.id;
                                                     caratPcsBatu29 =
                                                         data[0]['caratPcs'];
-                                                    crtPcsBatu29.text = data[0]
-                                                            ['caratPcs']
-                                                        .toString();
                                                     batu29 =
                                                         item.keyWord.toString();
                                                     stokBatu29.text =
@@ -8296,18 +11565,37 @@ class _FormScreenState extends State<FormScreen> {
                                                 const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                // label: Text(
-                                                //   batu29!,
-                                                //   style: const TextStyle(
-                                                //       fontSize: 18,
-                                                //       fontWeight: FontWeight.bold),
-                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
                                             ),
                                           ),
                                         ),
+
+                                        //ukuran batu29
+                                        idStone29 != -2
+                                            ? const SizedBox()
+                                            : Container(
+                                                width: 220,
+                                                height: 50,
+                                                padding: const EdgeInsets.only(
+                                                    top: 10, left: 15),
+                                                child: TextFormField(
+                                                  textInputAction:
+                                                      TextInputAction.next,
+                                                  controller: ukuranBatu29,
+                                                  onChanged: (value) {
+                                                    setState(() {});
+                                                  },
+                                                  decoration: InputDecoration(
+                                                    label: const Text('Ukuran'),
+                                                    border: OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5.0)),
+                                                  ),
+                                                ),
+                                              ),
 
                                         //qty batu29
                                         Container(
@@ -8365,29 +11653,124 @@ class _FormScreenState extends State<FormScreen> {
 
                                         //crt/pcsbatu29
                                         Container(
-                                          width: 120,
-                                          height: 45,
+                                          width: 100,
+                                          height: 50,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
-                                            enabled: caratPcsBatu29 <= 0
-                                                ? true
-                                                : false,
                                             textInputAction:
                                                 TextInputAction.next,
                                             controller: crtPcsBatu29,
                                             onChanged: (value) {
-                                              caratPcsBatu29 =
-                                                  double.parse(value);
+                                              setState(() {
+                                                //todo: perhitungan batu custom
+                                                if (batu29!.toLowerCase() == "custom emerald" ||
+                                                    batu29!.toLowerCase() ==
+                                                        "custom baguete" ||
+                                                    batu29!.toLowerCase() ==
+                                                        "custom heart" ||
+                                                    batu29!.toLowerCase() ==
+                                                        "custom marquise" ||
+                                                    batu29!.toLowerCase() ==
+                                                        "custom oval" ||
+                                                    batu29!.toLowerCase() ==
+                                                        "custom pear" ||
+                                                    batu29!.toLowerCase() ==
+                                                        "custom princess cut" ||
+                                                    batu29!.toLowerCase() ==
+                                                        "custom ruby" ||
+                                                    batu29!.toLowerCase() ==
+                                                        "custom tapper") {
+                                                  //? kondisi sesuai carat/pcs
+                                                  if (double.parse(value) <
+                                                      0.071) {
+                                                    hargaBatu29 = customGol1!;
+                                                    caratPcsBatu29 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.121) {
+                                                    hargaBatu29 = customGol2!;
+                                                    caratPcsBatu29 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.182) {
+                                                    hargaBatu29 = customGol3!;
+                                                    caratPcsBatu29 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.231) {
+                                                    hargaBatu29 = customGol4!;
+                                                    caratPcsBatu29 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.266) {
+                                                    hargaBatu29 = customGol5!;
+                                                    caratPcsBatu29 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.356) {
+                                                    hargaBatu29 = customGol6!;
+                                                    caratPcsBatu29 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.406) {
+                                                    hargaBatu29 = customGol7!;
+                                                    caratPcsBatu29 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.456) {
+                                                    hargaBatu29 = customGol8!;
+                                                    caratPcsBatu29 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.506) {
+                                                    hargaBatu29 = customGol9!;
+                                                    caratPcsBatu29 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.556) {
+                                                    hargaBatu29 = customGol10!;
+                                                    caratPcsBatu29 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.606) {
+                                                    hargaBatu29 = customGol11!;
+                                                    caratPcsBatu29 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.656) {
+                                                    hargaBatu29 = customGol12!;
+                                                    caratPcsBatu29 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.706) {
+                                                    hargaBatu29 = customGol13!;
+                                                    caratPcsBatu29 =
+                                                        double.parse(value);
+                                                  } else {
+                                                    hargaBatu29 = customGol14!;
+                                                    caratPcsBatu29 =
+                                                        double.parse(value);
+                                                  }
+                                                }
+                                                //! keluar dari kondisi batu custom
+                                                else {}
+                                              });
                                             },
                                             decoration: InputDecoration(
-                                              label: const Text(
-                                                'Carat/Pcs',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
+                                              label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(
@@ -8406,10 +11789,12 @@ class _FormScreenState extends State<FormScreen> {
                                                       setState(() {
                                                         qtyBatu29.text = '0';
                                                         stokBatu29.text = '';
+                                                        crtPcsBatu29.text = '';
+                                                        ukuranBatu29.text = '';
+                                                        stokBatu29.text = '';
                                                         batu29 = '';
                                                         hargaBatu29 = 0;
                                                         caratPcsBatu29 = 0;
-                                                        crtPcsBatu19.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -8419,12 +11804,10 @@ class _FormScreenState extends State<FormScreen> {
                                     ),
                               // end row batu29
 
-                              //batu30
+                              //size batu30
                               qtyBatu29.text.isEmpty
                                   ? const SizedBox()
-                                  :
-                                  //size batu30
-                                  Row(
+                                  : Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
@@ -8459,14 +11842,14 @@ class _FormScreenState extends State<FormScreen> {
                                                       jsonDecode(response.body);
                                                   print(data);
                                                   setState(() {
+                                                    ukuranBatu30.text = '';
+                                                    crtPcsBatu30.text = '';
+                                                    idStone30 = item.idStone;
+                                                    idBatu30 = item.id;
                                                     hargaBatu30 =
                                                         data[0]['unitCost'];
-                                                    idBatu30 = item.id;
                                                     caratPcsBatu30 =
                                                         data[0]['caratPcs'];
-                                                    crtPcsBatu30.text = data[0]
-                                                            ['caratPcs']
-                                                        .toString();
                                                     batu30 =
                                                         item.keyWord.toString();
                                                     stokBatu30.text =
@@ -8481,18 +11864,37 @@ class _FormScreenState extends State<FormScreen> {
                                                 const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                // label: Text(
-                                                //   batu30!,
-                                                //   style: const TextStyle(
-                                                //       fontSize: 18,
-                                                //       fontWeight: FontWeight.bold),
-                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
                                             ),
                                           ),
                                         ),
+
+                                        //ukuran batu30
+                                        idStone30 != -2
+                                            ? const SizedBox()
+                                            : Container(
+                                                width: 220,
+                                                height: 50,
+                                                padding: const EdgeInsets.only(
+                                                    top: 10, left: 15),
+                                                child: TextFormField(
+                                                  textInputAction:
+                                                      TextInputAction.next,
+                                                  controller: ukuranBatu30,
+                                                  onChanged: (value) {
+                                                    setState(() {});
+                                                  },
+                                                  decoration: InputDecoration(
+                                                    label: const Text('Ukuran'),
+                                                    border: OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5.0)),
+                                                  ),
+                                                ),
+                                              ),
 
                                         //qty batu30
                                         Container(
@@ -8550,29 +11952,124 @@ class _FormScreenState extends State<FormScreen> {
 
                                         //crt/pcsbatu30
                                         Container(
-                                          width: 120,
-                                          height: 45,
+                                          width: 100,
+                                          height: 50,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
-                                            enabled: caratPcsBatu30 <= 0
-                                                ? true
-                                                : false,
                                             textInputAction:
                                                 TextInputAction.next,
                                             controller: crtPcsBatu30,
                                             onChanged: (value) {
-                                              caratPcsBatu30 =
-                                                  double.parse(value);
+                                              setState(() {
+                                                //todo: perhitungan batu custom
+                                                if (batu30!.toLowerCase() == "custom emerald" ||
+                                                    batu30!.toLowerCase() ==
+                                                        "custom baguete" ||
+                                                    batu30!.toLowerCase() ==
+                                                        "custom heart" ||
+                                                    batu30!.toLowerCase() ==
+                                                        "custom marquise" ||
+                                                    batu30!.toLowerCase() ==
+                                                        "custom oval" ||
+                                                    batu30!.toLowerCase() ==
+                                                        "custom pear" ||
+                                                    batu30!.toLowerCase() ==
+                                                        "custom princess cut" ||
+                                                    batu30!.toLowerCase() ==
+                                                        "custom ruby" ||
+                                                    batu30!.toLowerCase() ==
+                                                        "custom tapper") {
+                                                  //? kondisi sesuai carat/pcs
+                                                  if (double.parse(value) <
+                                                      0.071) {
+                                                    hargaBatu30 = customGol1!;
+                                                    caratPcsBatu30 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.121) {
+                                                    hargaBatu30 = customGol2!;
+                                                    caratPcsBatu30 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.182) {
+                                                    hargaBatu30 = customGol3!;
+                                                    caratPcsBatu30 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.231) {
+                                                    hargaBatu30 = customGol4!;
+                                                    caratPcsBatu30 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.266) {
+                                                    hargaBatu30 = customGol5!;
+                                                    caratPcsBatu30 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.356) {
+                                                    hargaBatu30 = customGol6!;
+                                                    caratPcsBatu30 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.406) {
+                                                    hargaBatu30 = customGol7!;
+                                                    caratPcsBatu30 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.456) {
+                                                    hargaBatu30 = customGol8!;
+                                                    caratPcsBatu30 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.506) {
+                                                    hargaBatu30 = customGol9!;
+                                                    caratPcsBatu30 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.556) {
+                                                    hargaBatu30 = customGol10!;
+                                                    caratPcsBatu30 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.606) {
+                                                    hargaBatu30 = customGol11!;
+                                                    caratPcsBatu30 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.656) {
+                                                    hargaBatu30 = customGol12!;
+                                                    caratPcsBatu30 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.706) {
+                                                    hargaBatu30 = customGol13!;
+                                                    caratPcsBatu30 =
+                                                        double.parse(value);
+                                                  } else {
+                                                    hargaBatu30 = customGol14!;
+                                                    caratPcsBatu30 =
+                                                        double.parse(value);
+                                                  }
+                                                }
+                                                //! keluar dari kondisi batu custom
+                                                else {}
+                                              });
                                             },
                                             decoration: InputDecoration(
-                                              label: const Text(
-                                                'Carat/Pcs',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
+                                              label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(
@@ -8591,10 +12088,12 @@ class _FormScreenState extends State<FormScreen> {
                                                       setState(() {
                                                         qtyBatu30.text = '0';
                                                         stokBatu30.text = '';
+                                                        crtPcsBatu30.text = '';
+                                                        ukuranBatu30.text = '';
+                                                        stokBatu30.text = '';
                                                         batu30 = '';
                                                         hargaBatu30 = 0;
                                                         caratPcsBatu30 = 0;
-                                                        crtPcsBatu30.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -8604,12 +12103,10 @@ class _FormScreenState extends State<FormScreen> {
                                     ),
                               // end row batu30
 
-                              //batu31
+                              //size batu31
                               qtyBatu30.text.isEmpty
                                   ? const SizedBox()
-                                  :
-                                  //size batu31
-                                  Row(
+                                  : Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
@@ -8644,14 +12141,14 @@ class _FormScreenState extends State<FormScreen> {
                                                       jsonDecode(response.body);
                                                   print(data);
                                                   setState(() {
+                                                    ukuranBatu31.text = '';
+                                                    crtPcsBatu31.text = '';
+                                                    idStone31 = item.idStone;
+                                                    idBatu31 = item.id;
                                                     hargaBatu31 =
                                                         data[0]['unitCost'];
-                                                    idBatu31 = item.id;
                                                     caratPcsBatu31 =
                                                         data[0]['caratPcs'];
-                                                    crtPcsBatu31.text = data[0]
-                                                            ['caratPcs']
-                                                        .toString();
                                                     batu31 =
                                                         item.keyWord.toString();
                                                     stokBatu31.text =
@@ -8666,18 +12163,37 @@ class _FormScreenState extends State<FormScreen> {
                                                 const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                // label: Text(
-                                                //   batu31!,
-                                                //   style: const TextStyle(
-                                                //       fontSize: 18,
-                                                //       fontWeight: FontWeight.bold),
-                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
                                             ),
                                           ),
                                         ),
+
+                                        //ukuran batu31
+                                        idStone31 != -2
+                                            ? const SizedBox()
+                                            : Container(
+                                                width: 220,
+                                                height: 50,
+                                                padding: const EdgeInsets.only(
+                                                    top: 10, left: 15),
+                                                child: TextFormField(
+                                                  textInputAction:
+                                                      TextInputAction.next,
+                                                  controller: ukuranBatu31,
+                                                  onChanged: (value) {
+                                                    setState(() {});
+                                                  },
+                                                  decoration: InputDecoration(
+                                                    label: const Text('Ukuran'),
+                                                    border: OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5.0)),
+                                                  ),
+                                                ),
+                                              ),
 
                                         //qty batu31
                                         Container(
@@ -8735,29 +12251,124 @@ class _FormScreenState extends State<FormScreen> {
 
                                         //crt/pcsbatu31
                                         Container(
-                                          width: 120,
-                                          height: 45,
+                                          width: 100,
+                                          height: 50,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
-                                            enabled: caratPcsBatu31 <= 0
-                                                ? true
-                                                : false,
                                             textInputAction:
                                                 TextInputAction.next,
                                             controller: crtPcsBatu31,
                                             onChanged: (value) {
-                                              caratPcsBatu31 =
-                                                  double.parse(value);
+                                              setState(() {
+                                                //todo: perhitungan batu custom
+                                                if (batu31!.toLowerCase() == "custom emerald" ||
+                                                    batu31!.toLowerCase() ==
+                                                        "custom baguete" ||
+                                                    batu31!.toLowerCase() ==
+                                                        "custom heart" ||
+                                                    batu31!.toLowerCase() ==
+                                                        "custom marquise" ||
+                                                    batu31!.toLowerCase() ==
+                                                        "custom oval" ||
+                                                    batu31!.toLowerCase() ==
+                                                        "custom pear" ||
+                                                    batu31!.toLowerCase() ==
+                                                        "custom princess cut" ||
+                                                    batu31!.toLowerCase() ==
+                                                        "custom ruby" ||
+                                                    batu31!.toLowerCase() ==
+                                                        "custom tapper") {
+                                                  //? kondisi sesuai carat/pcs
+                                                  if (double.parse(value) <
+                                                      0.071) {
+                                                    hargaBatu31 = customGol1!;
+                                                    caratPcsBatu31 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.121) {
+                                                    hargaBatu31 = customGol2!;
+                                                    caratPcsBatu31 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.182) {
+                                                    hargaBatu31 = customGol3!;
+                                                    caratPcsBatu31 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.231) {
+                                                    hargaBatu31 = customGol4!;
+                                                    caratPcsBatu31 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.266) {
+                                                    hargaBatu31 = customGol5!;
+                                                    caratPcsBatu31 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.356) {
+                                                    hargaBatu31 = customGol6!;
+                                                    caratPcsBatu31 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.406) {
+                                                    hargaBatu31 = customGol7!;
+                                                    caratPcsBatu31 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.456) {
+                                                    hargaBatu31 = customGol8!;
+                                                    caratPcsBatu31 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.506) {
+                                                    hargaBatu31 = customGol9!;
+                                                    caratPcsBatu31 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.556) {
+                                                    hargaBatu31 = customGol10!;
+                                                    caratPcsBatu31 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.606) {
+                                                    hargaBatu31 = customGol11!;
+                                                    caratPcsBatu31 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.656) {
+                                                    hargaBatu31 = customGol12!;
+                                                    caratPcsBatu31 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.706) {
+                                                    hargaBatu31 = customGol13!;
+                                                    caratPcsBatu31 =
+                                                        double.parse(value);
+                                                  } else {
+                                                    hargaBatu31 = customGol14!;
+                                                    caratPcsBatu31 =
+                                                        double.parse(value);
+                                                  }
+                                                }
+                                                //! keluar dari kondisi batu custom
+                                                else {}
+                                              });
                                             },
                                             decoration: InputDecoration(
-                                              label: const Text(
-                                                'Carat/Pcs',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
+                                              label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(
@@ -8776,10 +12387,12 @@ class _FormScreenState extends State<FormScreen> {
                                                       setState(() {
                                                         qtyBatu31.text = '0';
                                                         stokBatu31.text = '';
+                                                        crtPcsBatu31.text = '';
+                                                        ukuranBatu31.text = '';
+                                                        stokBatu31.text = '';
                                                         batu31 = '';
                                                         hargaBatu31 = 0;
                                                         caratPcsBatu31 = 0;
-                                                        crtPcsBatu31.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -8789,12 +12402,10 @@ class _FormScreenState extends State<FormScreen> {
                                     ),
                               // end row batu31
 
-                              //batu32
+                              //size batu32
                               qtyBatu31.text.isEmpty
                                   ? const SizedBox()
-                                  :
-                                  //size batu32
-                                  Row(
+                                  : Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
@@ -8829,14 +12440,14 @@ class _FormScreenState extends State<FormScreen> {
                                                       jsonDecode(response.body);
                                                   print(data);
                                                   setState(() {
+                                                    ukuranBatu32.text = '';
+                                                    crtPcsBatu32.text = '';
+                                                    idStone32 = item.idStone;
+                                                    idBatu32 = item.id;
                                                     hargaBatu32 =
                                                         data[0]['unitCost'];
-                                                    idBatu32 = item.id;
                                                     caratPcsBatu32 =
                                                         data[0]['caratPcs'];
-                                                    crtPcsBatu32.text = data[0]
-                                                            ['caratPcs']
-                                                        .toString();
                                                     batu32 =
                                                         item.keyWord.toString();
                                                     stokBatu32.text =
@@ -8851,18 +12462,37 @@ class _FormScreenState extends State<FormScreen> {
                                                 const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                // label: Text(
-                                                //   batu32!,
-                                                //   style: const TextStyle(
-                                                //       fontSize: 18,
-                                                //       fontWeight: FontWeight.bold),
-                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
                                             ),
                                           ),
                                         ),
+
+                                        //ukuran batu32
+                                        idStone32 != -2
+                                            ? const SizedBox()
+                                            : Container(
+                                                width: 220,
+                                                height: 50,
+                                                padding: const EdgeInsets.only(
+                                                    top: 10, left: 15),
+                                                child: TextFormField(
+                                                  textInputAction:
+                                                      TextInputAction.next,
+                                                  controller: ukuranBatu32,
+                                                  onChanged: (value) {
+                                                    setState(() {});
+                                                  },
+                                                  decoration: InputDecoration(
+                                                    label: const Text('Ukuran'),
+                                                    border: OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5.0)),
+                                                  ),
+                                                ),
+                                              ),
 
                                         //qty batu32
                                         Container(
@@ -8920,29 +12550,124 @@ class _FormScreenState extends State<FormScreen> {
 
                                         //crt/pcsbatu32
                                         Container(
-                                          width: 120,
-                                          height: 45,
+                                          width: 100,
+                                          height: 50,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
-                                            enabled: caratPcsBatu32 <= 0
-                                                ? true
-                                                : false,
                                             textInputAction:
                                                 TextInputAction.next,
                                             controller: crtPcsBatu32,
                                             onChanged: (value) {
-                                              caratPcsBatu32 =
-                                                  double.parse(value);
+                                              setState(() {
+                                                //todo: perhitungan batu custom
+                                                if (batu32!.toLowerCase() == "custom emerald" ||
+                                                    batu32!.toLowerCase() ==
+                                                        "custom baguete" ||
+                                                    batu32!.toLowerCase() ==
+                                                        "custom heart" ||
+                                                    batu32!.toLowerCase() ==
+                                                        "custom marquise" ||
+                                                    batu32!.toLowerCase() ==
+                                                        "custom oval" ||
+                                                    batu32!.toLowerCase() ==
+                                                        "custom pear" ||
+                                                    batu32!.toLowerCase() ==
+                                                        "custom princess cut" ||
+                                                    batu32!.toLowerCase() ==
+                                                        "custom ruby" ||
+                                                    batu32!.toLowerCase() ==
+                                                        "custom tapper") {
+                                                  //? kondisi sesuai carat/pcs
+                                                  if (double.parse(value) <
+                                                      0.071) {
+                                                    hargaBatu32 = customGol1!;
+                                                    caratPcsBatu32 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.121) {
+                                                    hargaBatu32 = customGol2!;
+                                                    caratPcsBatu32 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.182) {
+                                                    hargaBatu32 = customGol3!;
+                                                    caratPcsBatu32 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.231) {
+                                                    hargaBatu32 = customGol4!;
+                                                    caratPcsBatu32 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.266) {
+                                                    hargaBatu32 = customGol5!;
+                                                    caratPcsBatu32 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.356) {
+                                                    hargaBatu32 = customGol6!;
+                                                    caratPcsBatu32 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.406) {
+                                                    hargaBatu32 = customGol7!;
+                                                    caratPcsBatu32 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.456) {
+                                                    hargaBatu32 = customGol8!;
+                                                    caratPcsBatu32 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.506) {
+                                                    hargaBatu32 = customGol9!;
+                                                    caratPcsBatu32 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.556) {
+                                                    hargaBatu32 = customGol10!;
+                                                    caratPcsBatu32 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.606) {
+                                                    hargaBatu32 = customGol11!;
+                                                    caratPcsBatu32 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.656) {
+                                                    hargaBatu32 = customGol12!;
+                                                    caratPcsBatu32 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.706) {
+                                                    hargaBatu32 = customGol13!;
+                                                    caratPcsBatu32 =
+                                                        double.parse(value);
+                                                  } else {
+                                                    hargaBatu32 = customGol14!;
+                                                    caratPcsBatu32 =
+                                                        double.parse(value);
+                                                  }
+                                                }
+                                                //! keluar dari kondisi batu custom
+                                                else {}
+                                              });
                                             },
                                             decoration: InputDecoration(
-                                              label: const Text(
-                                                'Carat/Pcs',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
+                                              label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(
@@ -8961,10 +12686,12 @@ class _FormScreenState extends State<FormScreen> {
                                                       setState(() {
                                                         qtyBatu32.text = '0';
                                                         stokBatu32.text = '';
+                                                        crtPcsBatu32.text = '';
+                                                        ukuranBatu32.text = '';
+                                                        stokBatu32.text = '';
                                                         batu32 = '';
                                                         hargaBatu32 = 0;
                                                         caratPcsBatu32 = 0;
-                                                        crtPcsBatu32.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -8974,12 +12701,10 @@ class _FormScreenState extends State<FormScreen> {
                                     ),
                               // end row batu32
 
-                              //batu33
+                              //size batu33
                               qtyBatu32.text.isEmpty
                                   ? const SizedBox()
-                                  :
-                                  //size batu33
-                                  Row(
+                                  : Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
@@ -9014,14 +12739,14 @@ class _FormScreenState extends State<FormScreen> {
                                                       jsonDecode(response.body);
                                                   print(data);
                                                   setState(() {
+                                                    ukuranBatu33.text = '';
+                                                    crtPcsBatu33.text = '';
+                                                    idStone33 = item.idStone;
+                                                    idBatu33 = item.id;
                                                     hargaBatu33 =
                                                         data[0]['unitCost'];
-                                                    idBatu33 = item.id;
                                                     caratPcsBatu33 =
                                                         data[0]['caratPcs'];
-                                                    crtPcsBatu33.text = data[0]
-                                                            ['caratPcs']
-                                                        .toString();
                                                     batu33 =
                                                         item.keyWord.toString();
                                                     stokBatu33.text =
@@ -9036,18 +12761,37 @@ class _FormScreenState extends State<FormScreen> {
                                                 const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                // label: Text(
-                                                //   batu33!,
-                                                //   style: const TextStyle(
-                                                //       fontSize: 18,
-                                                //       fontWeight: FontWeight.bold),
-                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
                                             ),
                                           ),
                                         ),
+
+                                        //ukuran batu33
+                                        idStone33 != -2
+                                            ? const SizedBox()
+                                            : Container(
+                                                width: 220,
+                                                height: 50,
+                                                padding: const EdgeInsets.only(
+                                                    top: 10, left: 15),
+                                                child: TextFormField(
+                                                  textInputAction:
+                                                      TextInputAction.next,
+                                                  controller: ukuranBatu33,
+                                                  onChanged: (value) {
+                                                    setState(() {});
+                                                  },
+                                                  decoration: InputDecoration(
+                                                    label: const Text('Ukuran'),
+                                                    border: OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5.0)),
+                                                  ),
+                                                ),
+                                              ),
 
                                         //qty batu33
                                         Container(
@@ -9105,29 +12849,124 @@ class _FormScreenState extends State<FormScreen> {
 
                                         //crt/pcsbatu33
                                         Container(
-                                          width: 120,
-                                          height: 45,
+                                          width: 100,
+                                          height: 50,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
-                                            enabled: caratPcsBatu33 <= 0
-                                                ? true
-                                                : false,
                                             textInputAction:
                                                 TextInputAction.next,
                                             controller: crtPcsBatu33,
                                             onChanged: (value) {
-                                              caratPcsBatu33 =
-                                                  double.parse(value);
+                                              setState(() {
+                                                //todo: perhitungan batu custom
+                                                if (batu33!.toLowerCase() == "custom emerald" ||
+                                                    batu33!.toLowerCase() ==
+                                                        "custom baguete" ||
+                                                    batu33!.toLowerCase() ==
+                                                        "custom heart" ||
+                                                    batu33!.toLowerCase() ==
+                                                        "custom marquise" ||
+                                                    batu33!.toLowerCase() ==
+                                                        "custom oval" ||
+                                                    batu33!.toLowerCase() ==
+                                                        "custom pear" ||
+                                                    batu33!.toLowerCase() ==
+                                                        "custom princess cut" ||
+                                                    batu33!.toLowerCase() ==
+                                                        "custom ruby" ||
+                                                    batu33!.toLowerCase() ==
+                                                        "custom tapper") {
+                                                  //? kondisi sesuai carat/pcs
+                                                  if (double.parse(value) <
+                                                      0.071) {
+                                                    hargaBatu33 = customGol1!;
+                                                    caratPcsBatu33 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.121) {
+                                                    hargaBatu33 = customGol2!;
+                                                    caratPcsBatu33 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.182) {
+                                                    hargaBatu33 = customGol3!;
+                                                    caratPcsBatu33 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.231) {
+                                                    hargaBatu33 = customGol4!;
+                                                    caratPcsBatu33 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.266) {
+                                                    hargaBatu33 = customGol5!;
+                                                    caratPcsBatu33 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.356) {
+                                                    hargaBatu33 = customGol6!;
+                                                    caratPcsBatu33 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.406) {
+                                                    hargaBatu33 = customGol7!;
+                                                    caratPcsBatu33 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.456) {
+                                                    hargaBatu33 = customGol8!;
+                                                    caratPcsBatu33 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.506) {
+                                                    hargaBatu33 = customGol9!;
+                                                    caratPcsBatu33 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.556) {
+                                                    hargaBatu33 = customGol10!;
+                                                    caratPcsBatu33 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.606) {
+                                                    hargaBatu33 = customGol11!;
+                                                    caratPcsBatu33 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.656) {
+                                                    hargaBatu33 = customGol12!;
+                                                    caratPcsBatu33 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.706) {
+                                                    hargaBatu33 = customGol13!;
+                                                    caratPcsBatu33 =
+                                                        double.parse(value);
+                                                  } else {
+                                                    hargaBatu33 = customGol14!;
+                                                    caratPcsBatu33 =
+                                                        double.parse(value);
+                                                  }
+                                                }
+                                                //! keluar dari kondisi batu custom
+                                                else {}
+                                              });
                                             },
                                             decoration: InputDecoration(
-                                              label: const Text(
-                                                'Carat/Pcs',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
+                                              label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(
@@ -9146,10 +12985,12 @@ class _FormScreenState extends State<FormScreen> {
                                                       setState(() {
                                                         qtyBatu33.text = '0';
                                                         stokBatu33.text = '';
+                                                        crtPcsBatu33.text = '';
+                                                        ukuranBatu33.text = '';
+                                                        stokBatu33.text = '';
                                                         batu33 = '';
                                                         hargaBatu33 = 0;
                                                         caratPcsBatu33 = 0;
-                                                        crtPcsBatu33.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -9159,12 +13000,10 @@ class _FormScreenState extends State<FormScreen> {
                                     ),
                               // end row batu33
 
-                              //batu34
+                              //size batu34
                               qtyBatu33.text.isEmpty
                                   ? const SizedBox()
-                                  :
-                                  //size batu34
-                                  Row(
+                                  : Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
@@ -9199,14 +13038,14 @@ class _FormScreenState extends State<FormScreen> {
                                                       jsonDecode(response.body);
                                                   print(data);
                                                   setState(() {
+                                                    ukuranBatu34.text = '';
+                                                    crtPcsBatu34.text = '';
+                                                    idStone34 = item.idStone;
+                                                    idBatu34 = item.id;
                                                     hargaBatu34 =
                                                         data[0]['unitCost'];
-                                                    idBatu34 = item.id;
                                                     caratPcsBatu34 =
                                                         data[0]['caratPcs'];
-                                                    crtPcsBatu34.text = data[0]
-                                                            ['caratPcs']
-                                                        .toString();
                                                     batu34 =
                                                         item.keyWord.toString();
                                                     stokBatu34.text =
@@ -9221,18 +13060,37 @@ class _FormScreenState extends State<FormScreen> {
                                                 const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                // label: Text(
-                                                //   batu34!,
-                                                //   style: const TextStyle(
-                                                //       fontSize: 18,
-                                                //       fontWeight: FontWeight.bold),
-                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
                                             ),
                                           ),
                                         ),
+
+                                        //ukuran batu34
+                                        idStone34 != -2
+                                            ? const SizedBox()
+                                            : Container(
+                                                width: 220,
+                                                height: 50,
+                                                padding: const EdgeInsets.only(
+                                                    top: 10, left: 15),
+                                                child: TextFormField(
+                                                  textInputAction:
+                                                      TextInputAction.next,
+                                                  controller: ukuranBatu34,
+                                                  onChanged: (value) {
+                                                    setState(() {});
+                                                  },
+                                                  decoration: InputDecoration(
+                                                    label: const Text('Ukuran'),
+                                                    border: OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5.0)),
+                                                  ),
+                                                ),
+                                              ),
 
                                         //qty batu34
                                         Container(
@@ -9290,29 +13148,124 @@ class _FormScreenState extends State<FormScreen> {
 
                                         //crt/pcsbatu34
                                         Container(
-                                          width: 120,
-                                          height: 45,
+                                          width: 100,
+                                          height: 50,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
-                                            enabled: caratPcsBatu34 <= 0
-                                                ? true
-                                                : false,
                                             textInputAction:
                                                 TextInputAction.next,
                                             controller: crtPcsBatu34,
                                             onChanged: (value) {
-                                              caratPcsBatu34 =
-                                                  double.parse(value);
+                                              setState(() {
+                                                //todo: perhitungan batu custom
+                                                if (batu34!.toLowerCase() == "custom emerald" ||
+                                                    batu34!.toLowerCase() ==
+                                                        "custom baguete" ||
+                                                    batu34!.toLowerCase() ==
+                                                        "custom heart" ||
+                                                    batu34!.toLowerCase() ==
+                                                        "custom marquise" ||
+                                                    batu34!.toLowerCase() ==
+                                                        "custom oval" ||
+                                                    batu34!.toLowerCase() ==
+                                                        "custom pear" ||
+                                                    batu34!.toLowerCase() ==
+                                                        "custom princess cut" ||
+                                                    batu34!.toLowerCase() ==
+                                                        "custom ruby" ||
+                                                    batu34!.toLowerCase() ==
+                                                        "custom tapper") {
+                                                  //? kondisi sesuai carat/pcs
+                                                  if (double.parse(value) <
+                                                      0.071) {
+                                                    hargaBatu34 = customGol1!;
+                                                    caratPcsBatu34 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.121) {
+                                                    hargaBatu34 = customGol2!;
+                                                    caratPcsBatu34 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.182) {
+                                                    hargaBatu34 = customGol3!;
+                                                    caratPcsBatu34 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.231) {
+                                                    hargaBatu34 = customGol4!;
+                                                    caratPcsBatu34 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.266) {
+                                                    hargaBatu34 = customGol5!;
+                                                    caratPcsBatu34 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.356) {
+                                                    hargaBatu34 = customGol6!;
+                                                    caratPcsBatu34 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.406) {
+                                                    hargaBatu34 = customGol7!;
+                                                    caratPcsBatu34 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.456) {
+                                                    hargaBatu34 = customGol8!;
+                                                    caratPcsBatu34 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.506) {
+                                                    hargaBatu34 = customGol9!;
+                                                    caratPcsBatu34 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.556) {
+                                                    hargaBatu34 = customGol10!;
+                                                    caratPcsBatu34 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.606) {
+                                                    hargaBatu34 = customGol11!;
+                                                    caratPcsBatu34 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.656) {
+                                                    hargaBatu34 = customGol12!;
+                                                    caratPcsBatu34 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.706) {
+                                                    hargaBatu34 = customGol13!;
+                                                    caratPcsBatu34 =
+                                                        double.parse(value);
+                                                  } else {
+                                                    hargaBatu34 = customGol14!;
+                                                    caratPcsBatu34 =
+                                                        double.parse(value);
+                                                  }
+                                                }
+                                                //! keluar dari kondisi batu custom
+                                                else {}
+                                              });
                                             },
                                             decoration: InputDecoration(
-                                              label: const Text(
-                                                'Carat/Pcs',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
+                                              label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(
@@ -9331,10 +13284,12 @@ class _FormScreenState extends State<FormScreen> {
                                                       setState(() {
                                                         qtyBatu34.text = '0';
                                                         stokBatu34.text = '';
+                                                        crtPcsBatu34.text = '';
+                                                        ukuranBatu34.text = '';
+                                                        stokBatu34.text = '';
                                                         batu34 = '';
                                                         hargaBatu34 = 0;
                                                         caratPcsBatu34 = 0;
-                                                        crtPcsBatu34.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -9344,12 +13299,10 @@ class _FormScreenState extends State<FormScreen> {
                                     ),
                               // end row batu34
 
-                              //batu35
+                              //size batu35
                               qtyBatu34.text.isEmpty
                                   ? const SizedBox()
-                                  :
-                                  //size batu35
-                                  Row(
+                                  : Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
@@ -9384,14 +13337,14 @@ class _FormScreenState extends State<FormScreen> {
                                                       jsonDecode(response.body);
                                                   print(data);
                                                   setState(() {
+                                                    ukuranBatu35.text = '';
+                                                    crtPcsBatu35.text = '';
+                                                    idStone35 = item.idStone;
+                                                    idBatu35 = item.id;
                                                     hargaBatu35 =
                                                         data[0]['unitCost'];
-                                                    idBatu35 = item.id;
                                                     caratPcsBatu35 =
                                                         data[0]['caratPcs'];
-                                                    crtPcsBatu35.text = data[0]
-                                                            ['caratPcs']
-                                                        .toString();
                                                     batu35 =
                                                         item.keyWord.toString();
                                                     stokBatu35.text =
@@ -9406,18 +13359,37 @@ class _FormScreenState extends State<FormScreen> {
                                                 const DropDownDecoratorProps(
                                               dropdownSearchDecoration:
                                                   InputDecoration(
-                                                // label: Text(
-                                                //   batu35!,
-                                                //   style: const TextStyle(
-                                                //       fontSize: 18,
-                                                //       fontWeight: FontWeight.bold),
-                                                // ),
                                                 filled: true,
                                                 fillColor: Colors.white,
                                               ),
                                             ),
                                           ),
                                         ),
+
+                                        //ukuran batu35
+                                        idStone35 != -2
+                                            ? const SizedBox()
+                                            : Container(
+                                                width: 220,
+                                                height: 50,
+                                                padding: const EdgeInsets.only(
+                                                    top: 10, left: 15),
+                                                child: TextFormField(
+                                                  textInputAction:
+                                                      TextInputAction.next,
+                                                  controller: ukuranBatu35,
+                                                  onChanged: (value) {
+                                                    setState(() {});
+                                                  },
+                                                  decoration: InputDecoration(
+                                                    label: const Text('Ukuran'),
+                                                    border: OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5.0)),
+                                                  ),
+                                                ),
+                                              ),
 
                                         //qty batu35
                                         Container(
@@ -9475,29 +13447,124 @@ class _FormScreenState extends State<FormScreen> {
 
                                         //crt/pcsbatu35
                                         Container(
-                                          width: 120,
-                                          height: 45,
+                                          width: 100,
+                                          height: 50,
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 15),
                                           child: TextFormField(
-                                            enabled: caratPcsBatu35 <= 0
-                                                ? true
-                                                : false,
                                             textInputAction:
                                                 TextInputAction.next,
                                             controller: crtPcsBatu35,
                                             onChanged: (value) {
-                                              caratPcsBatu35 =
-                                                  double.parse(value);
+                                              setState(() {
+                                                //todo: perhitungan batu custom
+                                                if (batu35!.toLowerCase() == "custom emerald" ||
+                                                    batu35!.toLowerCase() ==
+                                                        "custom baguete" ||
+                                                    batu35!.toLowerCase() ==
+                                                        "custom heart" ||
+                                                    batu35!.toLowerCase() ==
+                                                        "custom marquise" ||
+                                                    batu35!.toLowerCase() ==
+                                                        "custom oval" ||
+                                                    batu35!.toLowerCase() ==
+                                                        "custom pear" ||
+                                                    batu35!.toLowerCase() ==
+                                                        "custom princess cut" ||
+                                                    batu35!.toLowerCase() ==
+                                                        "custom ruby" ||
+                                                    batu35!.toLowerCase() ==
+                                                        "custom tapper") {
+                                                  //? kondisi sesuai carat/pcs
+                                                  if (double.parse(value) <
+                                                      0.071) {
+                                                    hargaBatu35 = customGol1!;
+                                                    caratPcsBatu35 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.121) {
+                                                    hargaBatu35 = customGol2!;
+                                                    caratPcsBatu35 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.182) {
+                                                    hargaBatu35 = customGol3!;
+                                                    caratPcsBatu35 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.231) {
+                                                    hargaBatu35 = customGol4!;
+                                                    caratPcsBatu35 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.266) {
+                                                    hargaBatu35 = customGol5!;
+                                                    caratPcsBatu35 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.356) {
+                                                    hargaBatu35 = customGol6!;
+                                                    caratPcsBatu35 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.406) {
+                                                    hargaBatu35 = customGol7!;
+                                                    caratPcsBatu35 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.456) {
+                                                    hargaBatu35 = customGol8!;
+                                                    caratPcsBatu35 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.506) {
+                                                    hargaBatu35 = customGol9!;
+                                                    caratPcsBatu35 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.556) {
+                                                    hargaBatu35 = customGol10!;
+                                                    caratPcsBatu35 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.606) {
+                                                    hargaBatu35 = customGol11!;
+                                                    caratPcsBatu35 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.656) {
+                                                    hargaBatu35 = customGol12!;
+                                                    caratPcsBatu35 =
+                                                        double.parse(value);
+                                                  } else if (double.parse(
+                                                          value) <
+                                                      0.706) {
+                                                    hargaBatu35 = customGol13!;
+                                                    caratPcsBatu35 =
+                                                        double.parse(value);
+                                                  } else {
+                                                    hargaBatu35 = customGol14!;
+                                                    caratPcsBatu35 =
+                                                        double.parse(value);
+                                                  }
+                                                }
+                                                //! keluar dari kondisi batu custom
+                                                else {}
+                                              });
                                             },
                                             decoration: InputDecoration(
-                                              label: const Text(
-                                                'Carat/Pcs',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
+                                              label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(
@@ -9516,10 +13583,12 @@ class _FormScreenState extends State<FormScreen> {
                                                       setState(() {
                                                         qtyBatu35.text = '0';
                                                         stokBatu35.text = '';
+                                                        crtPcsBatu35.text = '';
+                                                        ukuranBatu35.text = '';
+                                                        stokBatu35.text = '';
                                                         batu35 = '';
                                                         hargaBatu35 = 0;
                                                         caratPcsBatu35 = 0;
-                                                        crtPcsBatu35.text = '';
                                                       });
                                                     },
                                                     icon: const Icon(
@@ -9718,6 +13787,112 @@ class _FormScreenState extends State<FormScreen> {
   }
 
   postAPI() async {
+    ukuranBatu1.text.isNotEmpty
+        ? batu1 = '$batu1 ${ukuranBatu1.text}'
+        : batu1 = batu1;
+    ukuranBatu2.text.isNotEmpty
+        ? batu2 = '$batu2 ${ukuranBatu2.text}'
+        : batu2 = batu2;
+    ukuranBatu3.text.isNotEmpty
+        ? batu3 = '$batu3 ${ukuranBatu3.text}'
+        : batu3 = batu3;
+    ukuranBatu4.text.isNotEmpty
+        ? batu4 = '$batu4 ${ukuranBatu4.text}'
+        : batu4 = batu4;
+    ukuranBatu5.text.isNotEmpty
+        ? batu5 = '$batu5 ${ukuranBatu5.text}'
+        : batu5 = batu5;
+    ukuranBatu6.text.isNotEmpty
+        ? batu6 = '$batu6 ${ukuranBatu6.text}'
+        : batu6 = batu6;
+    ukuranBatu7.text.isNotEmpty
+        ? batu7 = '$batu7 ${ukuranBatu7.text}'
+        : batu7 = batu7;
+    ukuranBatu8.text.isNotEmpty
+        ? batu8 = '$batu8 ${ukuranBatu8.text}'
+        : batu8 = batu8;
+    ukuranBatu9.text.isNotEmpty
+        ? batu9 = '$batu9 ${ukuranBatu9.text}'
+        : batu9 = batu9;
+    ukuranBatu10.text.isNotEmpty
+        ? batu10 = '$batu10 ${ukuranBatu10.text}'
+        : batu10 = batu10;
+    ukuranBatu11.text.isNotEmpty
+        ? batu11 = '$batu11 ${ukuranBatu11.text}'
+        : batu11 = batu11;
+    ukuranBatu12.text.isNotEmpty
+        ? batu12 = '$batu12 ${ukuranBatu12.text}'
+        : batu12 = batu12;
+    ukuranBatu13.text.isNotEmpty
+        ? batu13 = '$batu13 ${ukuranBatu13.text}'
+        : batu13 = batu13;
+    ukuranBatu14.text.isNotEmpty
+        ? batu14 = '$batu14 ${ukuranBatu14.text}'
+        : batu14 = batu14;
+    ukuranBatu15.text.isNotEmpty
+        ? batu15 = '$batu15 ${ukuranBatu15.text}'
+        : batu15 = batu15;
+    ukuranBatu16.text.isNotEmpty
+        ? batu16 = '$batu16 ${ukuranBatu16.text}'
+        : batu16 = batu16;
+    ukuranBatu17.text.isNotEmpty
+        ? batu17 = '$batu17 ${ukuranBatu17.text}'
+        : batu17 = batu17;
+    ukuranBatu18.text.isNotEmpty
+        ? batu18 = '$batu18 ${ukuranBatu18.text}'
+        : batu18 = batu18;
+    ukuranBatu19.text.isNotEmpty
+        ? batu19 = '$batu19 ${ukuranBatu19.text}'
+        : batu19 = batu19;
+    ukuranBatu20.text.isNotEmpty
+        ? batu20 = '$batu20 ${ukuranBatu20.text}'
+        : batu20 = batu20;
+    ukuranBatu21.text.isNotEmpty
+        ? batu21 = '$batu21 ${ukuranBatu21.text}'
+        : batu21 = batu21;
+    ukuranBatu22.text.isNotEmpty
+        ? batu22 = '$batu22 ${ukuranBatu22.text}'
+        : batu22 = batu22;
+    ukuranBatu23.text.isNotEmpty
+        ? batu23 = '$batu23 ${ukuranBatu23.text}'
+        : batu23 = batu23;
+    ukuranBatu24.text.isNotEmpty
+        ? batu24 = '$batu24 ${ukuranBatu24.text}'
+        : batu24 = batu24;
+    ukuranBatu25.text.isNotEmpty
+        ? batu25 = '$batu25 ${ukuranBatu25.text}'
+        : batu25 = batu25;
+    ukuranBatu26.text.isNotEmpty
+        ? batu26 = '$batu26 ${ukuranBatu26.text}'
+        : batu26 = batu26;
+    ukuranBatu27.text.isNotEmpty
+        ? batu27 = '$batu27 ${ukuranBatu27.text}'
+        : batu27 = batu27;
+    ukuranBatu28.text.isNotEmpty
+        ? batu28 = '$batu28 ${ukuranBatu28.text}'
+        : batu28 = batu28;
+    ukuranBatu29.text.isNotEmpty
+        ? batu29 = '$batu29 ${ukuranBatu29.text}'
+        : batu29 = batu29;
+    ukuranBatu30.text.isNotEmpty
+        ? batu30 = '$batu30 ${ukuranBatu30.text}'
+        : batu30 = batu30;
+    ukuranBatu31.text.isNotEmpty
+        ? batu31 = '$batu31 ${ukuranBatu31.text}'
+        : batu31 = batu31;
+    ukuranBatu32.text.isNotEmpty
+        ? batu32 = '$batu32 ${ukuranBatu32.text}'
+        : batu32 = batu32;
+    ukuranBatu33.text.isNotEmpty
+        ? batu33 = '$batu33 ${ukuranBatu33.text}'
+        : batu33 = batu33;
+    ukuranBatu34.text.isNotEmpty
+        ? batu34 = '$batu34 ${ukuranBatu34.text}'
+        : batu34 = batu34;
+    ukuranBatu35.text.isNotEmpty
+        ? batu35 = '$batu35 ${ukuranBatu35.text}'
+        : batu35 = batu35;
+
     Map<String, dynamic> body = {
       'kodeDesignMdbc': kodeDesignMdbc.text,
       'kodeMarketing': kodeMarketing.text,

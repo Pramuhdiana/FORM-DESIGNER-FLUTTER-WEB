@@ -8,6 +8,7 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:form_designer/global/global.dart';
+import 'package:form_designer/mainScreen/side_screen.dart';
 import 'package:form_designer/model/batu_model.dart';
 import 'package:form_designer/model/earnut_model.dart';
 import 'package:form_designer/model/form_designer_model.dart';
@@ -23,6 +24,8 @@ import '../dev/network.dart';
 import '../global/currency_format.dart';
 import '../model/rantai_model.dart';
 import '../widgets/custom_loading.dart';
+// ignore: depend_on_referenced_packages
+import 'package:intl/intl.dart';
 
 // ignore: must_be_immutable
 class FormViewScreen extends StatefulWidget {
@@ -190,7 +193,11 @@ class _FormViewScreenState extends State<FormViewScreen> {
   int? idBatu34 = 0;
   int? idBatu35 = 0;
 
+  TextEditingController tanggalInModeller = TextEditingController();
+  TextEditingController tanggalOutModeller = TextEditingController();
+  TextEditingController tanggalInProduksi = TextEditingController();
   TextEditingController pointModeller = TextEditingController();
+  TextEditingController beratModeller = TextEditingController();
   TextEditingController kodeDesignMdbc = TextEditingController();
   TextEditingController siklus = TextEditingController();
   TextEditingController kodeMarketing = TextEditingController();
@@ -561,6 +568,20 @@ class _FormViewScreenState extends State<FormViewScreen> {
     keteranganStatusBatu.text =
         widget.modelDesigner!.keteranganStatusBatu!.toString();
     pointModeller.text = widget.modelDesigner!.pointModeller!.toString();
+    beratModeller.text = widget.modelDesigner!.beratModeller!.toString();
+    tanggalInModeller.text = widget.modelDesigner!.tanggalInModeller!.isEmpty
+        ? ''
+        : DateFormat('dd/MMMM/yyyy').format(DateTime.parse(
+            widget.modelDesigner!.tanggalInModeller!.toString()));
+    tanggalOutModeller.text = widget.modelDesigner!.tanggalOutModeller!.isEmpty
+        ? ''
+        : DateFormat('dd/MMMM/yyyy').format(DateTime.parse(
+            widget.modelDesigner!.tanggalOutModeller!.toString()));
+
+    tanggalInProduksi.text = widget.modelDesigner!.tanggalInProduksi!.isEmpty
+        ? ''
+        : DateFormat('dd/MMMM/yyyy').format(DateTime.parse(
+            widget.modelDesigner!.tanggalInProduksi!.toString()));
     _getData();
     _getDataBatu();
   }
@@ -1698,6 +1719,99 @@ class _FormViewScreenState extends State<FormViewScreen> {
                 children: <Widget>[
                   _bagianKiri(),
                   _bagianTengah(),
+                  Container(
+                    width: 250,
+                    child: Column(
+                      children: [
+                        //in modeller
+                        SizedBox(
+                          height: 65,
+                          width: 200,
+                          child: TextFormField(
+                            readOnly: true,
+                            style: const TextStyle(
+                                fontSize: 14,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
+                            textInputAction: TextInputAction.next,
+                            controller: tanggalInModeller,
+                            onChanged: (value) {},
+                            decoration: InputDecoration(
+                              // hintText: "example: Cahaya Sanivokasi",
+                              labelText: "In Modeller",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5.0)),
+                            ),
+                          ),
+                        ),
+                        //out modeller
+                        SizedBox(
+                          height: 65,
+                          width: 200,
+                          child: TextFormField(
+                            readOnly: true,
+                            style: const TextStyle(
+                                fontSize: 14,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
+                            textInputAction: TextInputAction.next,
+                            controller: tanggalOutModeller,
+                            onChanged: (value) {},
+                            decoration: InputDecoration(
+                              // hintText: "example: Cahaya Sanivokasi",
+                              labelText: "Out Modeller",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5.0)),
+                            ),
+                          ),
+                        ),
+                        //in produksi
+                        sharedPreferences!.getString('level') != '1'
+                            ? const SizedBox()
+                            : tanggalInProduksi.text.isEmpty
+                                ? ElevatedButton(
+                                    onPressed: () {
+                                      postTanggalProduksi();
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (c) =>
+                                                  const MainView()));
+
+                                      showDialog<String>(
+                                          context: context,
+                                          builder: (BuildContext context) =>
+                                              const AlertDialog(
+                                                title: Text(
+                                                  'Tanggal In Produksi Terisi',
+                                                ),
+                                              ));
+                                    },
+                                    child: const Text('Kirim Ke Produksi'))
+                                : SizedBox(
+                                    height: 65,
+                                    width: 200,
+                                    child: TextFormField(
+                                      readOnly: true,
+                                      style: const TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold),
+                                      textInputAction: TextInputAction.next,
+                                      controller: tanggalInProduksi,
+                                      onChanged: (value) {},
+                                      decoration: InputDecoration(
+                                        // hintText: "example: Cahaya Sanivokasi",
+                                        labelText: "In Produksi",
+                                        border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(5.0)),
+                                      ),
+                                    ),
+                                  ),
+                      ],
+                    ),
+                  )
                 ],
               ),
             )),
@@ -1725,7 +1839,9 @@ class _FormViewScreenState extends State<FormViewScreen> {
                     Future.delayed(const Duration(seconds: 1)).then((value) {
                       btnController.reset(); //reset
                       // ignore: use_build_context_synchronously
-                      Navigator.pop(context);
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (c) => const MainView()));
+
                       showDialog<String>(
                           context: context,
                           builder: (BuildContext context) => const AlertDialog(
@@ -1770,7 +1886,11 @@ class _FormViewScreenState extends State<FormViewScreen> {
                             .then((value) {
                           btnController.reset(); //reset
                           // ignore: use_build_context_synchronously
-                          Navigator.pop(context);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (c) => const MainView()));
+
                           showDialog<String>(
                               context: context,
                               builder: (BuildContext context) =>
@@ -2114,33 +2234,97 @@ class _FormViewScreenState extends State<FormViewScreen> {
                 ],
               ),
             ),
-            Container(
-              padding: const EdgeInsets.only(top: 18, bottom: 10),
-              child: sharedPreferences!.getString('level') != '3'
-                  ? const SizedBox()
-                  : SizedBox(
-                      width: 150,
-                      height: 45,
-                      child: TextFormField(
-                        style: const TextStyle(
-                            fontSize: 14,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
-                        textInputAction: TextInputAction.next,
-                        controller: pointModeller,
-                        decoration: InputDecoration(
-                          labelText: "Point Modeller",
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                        ),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Point wajib diisi *';
-                          }
-                          return null;
-                        },
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Container(
+                  padding: const EdgeInsets.only(top: 18, bottom: 10),
+                  child: SizedBox(
+                    width: 150,
+                    height: 45,
+                    child: TextFormField(
+                      enabled: sharedPreferences!.getString('level') != '3'
+                          ? false
+                          : true,
+                      style: const TextStyle(
+                          fontSize: 14,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold),
+                      textInputAction: TextInputAction.next,
+                      controller: pointModeller,
+                      decoration: InputDecoration(
+                        labelText: "Point Modeller",
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0)),
                       ),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Point wajib diisi *';
+                        } else if (value == '0') {
+                          return 'Point wajib diisi *';
+                        }
+                        return null;
+                      },
                     ),
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.only(top: 18, bottom: 10, left: 40),
+                  child: SizedBox(
+                    width: 150,
+                    height: 45,
+                    child: TextFormField(
+                      enabled: sharedPreferences!.getString('level') != '3'
+                          ? false
+                          : true,
+                      style: const TextStyle(
+                          fontSize: 14,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold),
+                      textInputAction: TextInputAction.next,
+                      controller: beratModeller,
+                      decoration: InputDecoration(
+                        labelText: "Berat Modeller",
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0)),
+                      ),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Point wajib diisi *';
+                        } else if (value == '0') {
+                          return 'Point wajib diisi *';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                ),
+                sharedPreferences!.getString('level') != '2'
+                    ? const SizedBox()
+                    : (sharedPreferences!.getString('level') == '2' &&
+                            tanggalOutModeller.text.isNotEmpty)
+                        ? const SizedBox()
+                        : IconButton(
+                            color: Colors.green,
+                            onPressed: () {
+                              postTanggalOutModeller();
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (c) => const MainView()));
+
+                              showDialog<String>(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      const AlertDialog(
+                                        title: Text(
+                                          'Form Berhasil Di Approve',
+                                        ),
+                                      ));
+                            },
+                            icon: const Icon(Icons.done_outline_sharp),
+                          ),
+              ],
             ),
             imageUrl != null
                 ? Container(
@@ -6003,6 +6187,26 @@ class _FormViewScreenState extends State<FormViewScreen> {
     stokBatu35.text = '';
   }
 
+  postTanggalProduksi() async {
+    Map<String, String> body = {
+      'id': widget.modelDesigner!.id!.toString(),
+    };
+    final response = await http.post(
+        Uri.parse('${ApiConstants.baseUrl}${ApiConstants.addTanggalProduksi}'),
+        body: body);
+    print(response.body);
+  }
+
+  postTanggalOutModeller() async {
+    Map<String, String> body = {
+      'id': widget.modelDesigner!.id!.toString(),
+    };
+    final response = await http.post(
+        Uri.parse('${ApiConstants.baseUrl}${ApiConstants.addTanggalModeller}'),
+        body: body);
+    print(response.body);
+  }
+
   postAPI() async {
     Map<String, String> body = {
       'id': widget.modelDesigner!.id!.toString(),
@@ -6020,6 +6224,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
     Map<String, String> body = {
       'id': widget.modelDesigner!.id!.toString(),
       'pointModeller': pointModeller.text,
+      'beratModeller': beratModeller.text,
     };
     final response = await http.post(
         Uri.parse('${ApiConstants.baseUrl}${ApiConstants.addPointModeller}'),

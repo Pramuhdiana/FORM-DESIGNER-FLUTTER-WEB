@@ -11,6 +11,7 @@ import 'package:form_designer/mainScreen/side_screen_kebutuhan_batu.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:lottie/lottie.dart';
 
 class ListKebutuhanBatuScreen extends StatefulWidget {
   const ListKebutuhanBatuScreen({super.key});
@@ -27,7 +28,6 @@ Widget _verticalDivider = const VerticalDivider(
 
 class _ListKebutuhanBatuScreenState extends State<ListKebutuhanBatuScreen> {
   List<KebutuhanBatuModel>? filterListBatu;
-  List<KebutuhanBatuModel>? _listBatu;
   List<String> listAllBatu = [];
   List<String> listUniqBatu = [];
   List<int> listAllQtyBatu = [];
@@ -67,11 +67,9 @@ class _ListKebutuhanBatuScreenState extends State<ListKebutuhanBatuScreen> {
       var g = jsonResponse
           .map((data) => KebutuhanBatuModel.fromJson(data))
           .toList();
-      setState(() {
-        _listBatu = g;
-        print(_listBatu!.length);
-        isLoading = true;
-      });
+      // setState(() {
+      //   isLoading = true;
+      // });
       return g;
     } else {
       throw Exception('Unexpected error occured!');
@@ -460,12 +458,13 @@ class _ListKebutuhanBatuScreenState extends State<ListKebutuhanBatuScreen> {
       // print(listUniqBatu);
 
       var sum = 0;
+      //looping menyatukan size dan qty
       for (var i = 0; i < listUniqBatu.length; i++) {
         sum = 0;
-        //! ini 3
+
         for (var j = 0; j < listAllBatu.length; j++) {
           mylist[listUniqBatu[i]] = sum;
-          //! ini 7
+
           if (mylist[listUniqBatu[i]] != mylist[listAllBatu[j]]) {
           } else {
             sum = sum + listAllQtyBatu[j];
@@ -474,25 +473,20 @@ class _ListKebutuhanBatuScreenState extends State<ListKebutuhanBatuScreen> {
         }
       }
 
-      // print(mylist);
-      // Iterable<String> keys = mylist.keys;
-      // for (final key in keys) {
-      //   print(key);
-      //   listUniqBatu.add(key);
-      // }
       Iterable<int> values = mylist.values;
       for (final value in values) {
         listUniqQtyBatu.add(value);
       }
+
       // print(listUniqBatu);
       // print(listUniqQtyBatu);
       var g = jsonResponse
           .map((data) => KebutuhanBatuModel.fromJson(data))
           .toList();
-      setState(() {
-        filterListBatu = g;
-        isLoading = true;
-      });
+      filterListBatu = g;
+      // setState(() {
+      //   isLoading = true;
+      // });
       return g;
     } else {
       throw Exception('Unexpected error occured!');
@@ -535,203 +529,276 @@ class _ListKebutuhanBatuScreenState extends State<ListKebutuhanBatuScreen> {
           ),
           centerTitle: true,
         ),
-        body: isLoading == false
-            ? const Center(child: CircularProgressIndicator())
-            : Container(
-                padding: const EdgeInsets.only(top: 25),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    // Container(
-                    //   width: MediaQuery.of(context).size.width * 0.5,
-                    //   height: 45,
-                    //   padding: const EdgeInsets.all(5),
-                    //   decoration: BoxDecoration(
-                    //       border: Border.all(
-                    //         color: Colors.grey,
-                    //       ),
-                    //       borderRadius: BorderRadius.circular(12)),
-                    //   child: Align(
-                    //     alignment: Alignment.bottomCenter,
-                    //     child: TextField(
-                    //       textAlign: TextAlign.center,
-                    //       controller: controller,
-                    //       decoration:
-                    //           const InputDecoration(hintText: "Pilih Siklus"),
-                    //       onChanged: (value) {
-                    //         //fungsi search anyting
-                    //         // _listBatu = filterListBatu!
-                    //         //     .where((element) =>
-                    //         //         element.lot!
-                    //         //             .toLowerCase()
-                    //         //             .contains(value.toLowerCase()) ||
-                    //         //         element.size
-                    //         //             .toLowerCase()
-                    //         //             .contains(value.toLowerCase()) ||
-                    //         //         element.parcel!
-                    //         //             .toLowerCase()
-                    //         //             .contains(value.toLowerCase()) ||
-                    //         //         element.qty!
-                    //         //             .toString()
-                    //         //             .contains(value.toLowerCase()))
-                    //         //     .toList();
+        body: Container(
+          padding: const EdgeInsets.only(top: 25),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              // Container(
+              //   width: MediaQuery.of(context).size.width * 0.5,
+              //   height: 45,
+              //   padding: const EdgeInsets.all(5),
+              //   decoration: BoxDecoration(
+              //       border: Border.all(
+              //         color: Colors.grey,
+              //       ),
+              //       borderRadius: BorderRadius.circular(12)),
+              //   child: Align(
+              //     alignment: Alignment.bottomCenter,
+              //     child: TextField(
+              //       textAlign: TextAlign.center,
+              //       controller: controller,
+              //       decoration:
+              //           const InputDecoration(hintText: "Pilih Siklus"),
+              //       onChanged: (value) {
+              //         //fungsi search anyting
+              //         // _listBatu = filterListBatu!
+              //         //     .where((element) =>
+              //         //         element.lot!
+              //         //             .toLowerCase()
+              //         //             .contains(value.toLowerCase()) ||
+              //         //         element.size
+              //         //             .toLowerCase()
+              //         //             .contains(value.toLowerCase()) ||
+              //         //         element.parcel!
+              //         //             .toLowerCase()
+              //         //             .contains(value.toLowerCase()) ||
+              //         //         element.qty!
+              //         //             .toString()
+              //         //             .contains(value.toLowerCase()))
+              //         //     .toList();
 
-                    //         // setState(() {});
-                    //       },
-                    //     ),
-                    //   ),
-                    // ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 1),
-                      width: MediaQuery.of(context).size.width * 0.5,
-                      child: DropdownSearch<String>(
-                        items: const [
-                          "JANUARI",
-                          "FEBRUARI",
-                          "MARET",
-                          "APRIL",
-                          "MEI",
-                          "JUNI",
-                          "JULI",
-                          "AGUSTUS",
-                          "SEPTEMBER",
-                          "OKTOBER",
-                          "NOVEMBER",
-                          "DESEMBER"
-                        ],
-                        onChanged: (item) {
-                          setState(() {
-                            siklus.text = item!;
-                            siklusDesigner = siklus.text.toString();
-                            _getData(siklus.text);
-                          });
-                        },
-                        popupProps:
-                            const PopupPropsMultiSelection.modalBottomSheet(
-                          showSelectedItems: true,
-                          showSearchBox: true,
-                        ),
-                        dropdownDecoratorProps: const DropDownDecoratorProps(
-                          dropdownSearchDecoration: InputDecoration(
-                            labelText: "Pilih Siklus",
-                            filled: true,
-                            fillColor: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.vertical,
-                        child: Container(
-                          padding: const EdgeInsets.all(15),
-                          width: MediaQuery.of(context).size.width * 1,
-                          child: SizedBox(
-                            width: double.infinity,
-                            child: Theme(
-                              data: ThemeData.light().copyWith(
-                                  // cardColor: Theme.of(context).canvasColor),
-                                  cardColor: Colors.white,
-                                  hoverColor: Colors.grey.shade400,
-                                  dividerColor: Colors.grey),
-                              child: PaginatedDataTable(
-                                  sortColumnIndex: _currentSortColumn,
-                                  sortAscending: sort,
-                                  rowsPerPage: 25,
-                                  columnSpacing: 0,
-                                  columns: [
-                                    // LOT
-                                    const DataColumn(
-                                      label: SizedBox(
-                                          width: 120,
-                                          child: Text(
-                                            "LOT",
-                                            style: TextStyle(
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.bold),
-                                          )),
-                                    ),
-                                    DataColumn(label: _verticalDivider),
-                                    //UKURAN
-                                    DataColumn(
-                                        label: const SizedBox(
-                                            width: 120,
-                                            child: Text(
-                                              "UKURAN",
-                                              style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold),
-                                            )),
-                                        onSort: (columnIndex, _) {
-                                          setState(() {
-                                            _currentSortColumn = columnIndex;
-                                            if (sort == true) {
-                                              sort = false;
-                                              listUniqBatu.sort((a, b) => a
-                                                  .toLowerCase()
-                                                  .compareTo(b.toLowerCase()));
-                                            } else {
-                                              sort = true;
-                                              listUniqBatu.sort((a, b) => b
-                                                  .toLowerCase()
-                                                  .compareTo(a.toLowerCase()));
-                                            }
-                                          });
-                                        }),
-                                    DataColumn(label: _verticalDivider),
-
-                                    //QTY
-                                    const DataColumn(
-                                      label: SizedBox(
-                                          width: 120,
-                                          child: Text(
-                                            "QTY",
-                                            style: TextStyle(
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.bold),
-                                          )),
-                                    ),
-                                    DataColumn(label: _verticalDivider),
-                                    //? penyesuaian
-                                    DataColumn(
-                                      label: Container(
-                                          padding:
-                                              const EdgeInsets.only(left: 30),
-                                          width: 120,
-                                          child: const Text(
-                                            "Penyesuaian",
-                                            style: TextStyle(
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.bold),
-                                          )),
-                                    ),
-                                    DataColumn(label: _verticalDivider),
-
-                                    //stok
-                                    const DataColumn(
-                                      label: SizedBox(
-                                          width: 120,
-                                          child: Text(
-                                            "STOK",
-                                            style: TextStyle(
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.bold),
-                                          )),
-                                    ),
-                                  ],
-                                  source: RowSource(
-                                      size: listUniqBatu,
-                                      qty: listUniqQtyBatu,
-                                      count: listUniqBatu.length,
-                                      mylist: mylist)),
-                            ),
-                          ),
-                        ),
-                      ),
-                    )
+              //         // setState(() {});
+              //       },
+              //     ),
+              //   ),
+              // ),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 1),
+                width: MediaQuery.of(context).size.width * 0.5,
+                child: DropdownSearch<String>(
+                  items: const [
+                    "JANUARI",
+                    "FEBRUARI",
+                    "MARET",
+                    "APRIL",
+                    "MEI",
+                    "JUNI",
+                    "JULI",
+                    "AGUSTUS",
+                    "SEPTEMBER",
+                    "OKTOBER",
+                    "NOVEMBER",
+                    "DESEMBER"
                   ],
+                  onChanged: (item) async {
+                    setState(() {
+                      isLoading = false;
+                    });
+                    siklus.text = item!;
+                    siklusDesigner = siklus.text.toString();
+                    _getData(siklus.text);
+
+                    //? tunggu 2 detik
+                    Future.delayed(const Duration(seconds: 2)).then((value) {
+                      //! lalu eksekusi fungsi ini
+                      setState(() {
+                        isLoading = true;
+                      });
+                    });
+                  },
+                  popupProps: const PopupPropsMultiSelection.modalBottomSheet(
+                    showSelectedItems: true,
+                    showSearchBox: true,
+                  ),
+                  dropdownDecoratorProps: const DropDownDecoratorProps(
+                    dropdownSearchDecoration: InputDecoration(
+                      labelText: "Pilih Siklus",
+                      filled: true,
+                      fillColor: Colors.white,
+                    ),
+                  ),
                 ),
               ),
+              siklusDesigner.isEmpty
+                  ? Center(
+                      child: Column(
+                      children: [
+                        SizedBox(
+                          width: 250,
+                          height: 210,
+                          child: Lottie.asset("loadingJSON/selectDate.json"),
+                        ),
+                        const Text(
+                          'Pilih siklus terlebih dahulu',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: 26,
+                              color: Colors.blueGrey,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Acne',
+                              letterSpacing: 1.5),
+                        ),
+                      ],
+                    ))
+                  : isLoading == false
+                      ? Expanded(
+                          child: Center(
+                              child: Container(
+                          padding: const EdgeInsets.all(5),
+                          width: 90,
+                          height: 90,
+                          child: Lottie.asset("loadingJSON/loadingV1.json"),
+                        )))
+                      : Expanded(
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.vertical,
+                            child: Container(
+                              padding: const EdgeInsets.all(15),
+                              width: MediaQuery.of(context).size.width * 1,
+                              child: SizedBox(
+                                width: double.infinity,
+                                child: Theme(
+                                  data: ThemeData.light().copyWith(
+                                      // cardColor: Theme.of(context).canvasColor),
+                                      cardColor: Colors.white,
+                                      hoverColor: Colors.grey.shade400,
+                                      dividerColor: Colors.grey),
+                                  child: PaginatedDataTable(
+                                      sortColumnIndex: _currentSortColumn,
+                                      sortAscending: sort,
+                                      rowsPerPage: 25,
+                                      columnSpacing: 0,
+                                      columns: [
+                                        // LOT
+                                        const DataColumn(
+                                          label: SizedBox(
+                                              width: 120,
+                                              child: Text(
+                                                "LOT",
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              )),
+                                        ),
+                                        DataColumn(label: _verticalDivider),
+                                        //UKURAN
+                                        DataColumn(
+                                            label: const SizedBox(
+                                                width: 120,
+                                                child: Text(
+                                                  "UKURAN",
+                                                  style: TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                )),
+                                            onSort: (columnIndex, _) {
+                                              setState(() {
+                                                _currentSortColumn =
+                                                    columnIndex;
+                                                if (sort == true) {
+                                                  sort = false;
+                                                  listUniqBatu.sort((a, b) => a
+                                                      .toLowerCase()
+                                                      .compareTo(
+                                                          b.toLowerCase()));
+                                                } else {
+                                                  sort = true;
+                                                  listUniqBatu.sort((a, b) => b
+                                                      .toLowerCase()
+                                                      .compareTo(
+                                                          a.toLowerCase()));
+                                                }
+                                              });
+                                            }),
+                                        DataColumn(label: _verticalDivider),
+
+                                        //QTY
+                                        const DataColumn(
+                                          label: SizedBox(
+                                              width: 120,
+                                              child: Text(
+                                                "QTY AWAL",
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              )),
+                                        ),
+                                        DataColumn(label: _verticalDivider),
+                                        //? penyesuaian
+                                        DataColumn(
+                                          label: Container(
+                                              padding: const EdgeInsets.only(
+                                                  left: 30),
+                                              width: 120,
+                                              child: const Text(
+                                                "Penyesuaian",
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              )),
+                                        ),
+                                        DataColumn(label: _verticalDivider),
+
+                                        //stok
+                                        const DataColumn(
+                                          label: SizedBox(
+                                              width: 120,
+                                              child: Text(
+                                                "STOK",
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              )),
+                                        ),
+                                        DataColumn(label: _verticalDivider),
+
+                                        //total penyesuaian
+                                        const DataColumn(
+                                          label: SizedBox(
+                                              width: 120,
+                                              child: Text(
+                                                "ADJUSMENT",
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              )),
+                                        ),
+                                        DataColumn(label: _verticalDivider),
+
+                                        //hasil penyesuaian
+                                        const DataColumn(
+                                          label: SizedBox(
+                                              width: 120,
+                                              child: Text(
+                                                "QTY AKHIR",
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              )),
+                                        ),
+                                      ],
+                                      source: RowSource(
+                                          size: listUniqBatu,
+                                          qty: listUniqQtyBatu,
+                                          count: listUniqBatu.length,
+                                          mylist: mylist,
+                                          siklus: siklusDesigner)),
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -742,23 +809,29 @@ class RowSource extends DataTableSource {
   var qty;
   final count;
   var mylist;
+  var siklus;
+
   RowSource({
     required this.size,
     required this.qty,
     required this.count,
     required this.mylist,
+    required this.siklus,
   });
 
   @override
   DataRow? getRow(int index) {
     if (index < rowCount) {
-      return recentFileDataRow(size![index], mylist, qty![index]);
+      return recentFileDataRow(size![index], mylist, qty![index], siklus);
     } else {
       return null;
     }
   }
 
-  DataRow recentFileDataRow(var size, var mylist, var qty) {
+  DataRow recentFileDataRow(var size, var mylist, var qty, var siklus) {
+    print(mylist);
+    _getSum(size, siklus);
+
     return DataRow(cells: [
       //lot
       DataCell(FutureBuilder(
@@ -777,12 +850,13 @@ class RowSource extends DataTableSource {
       ),
       DataCell(_verticalDivider),
 
-      //qty
+      //qty AWAL
       DataCell(
         Padding(
             padding: const EdgeInsets.all(0),
             child: Text(mylist[size].toString())),
       ),
+
       DataCell(_verticalDivider),
       //? penyesuaian Qty
       DataCell(Builder(builder: (context) {
@@ -807,446 +881,480 @@ class RowSource extends DataTableSource {
                 ),
               ),
             ),
-            IconButton(
-                onPressed: () {
-                  final _formKey = GlobalKey<FormState>();
-                  // ignore: unused_local_variable
-                  bool isKodeAkses = false;
-                  TextEditingController kodeAkses = TextEditingController();
-                  penyesuaianQty.text.isEmpty
-                      ? null
-                      :
-                      //beri kode akses
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              content: Stack(
-                                clipBehavior: Clip.none,
-                                children: <Widget>[
-                                  Positioned(
-                                    right: -47.0,
-                                    top: -47.0,
-                                    child: InkResponse(
-                                      onTap: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: const CircleAvatar(
-                                        backgroundColor: Colors.red,
-                                        child: Icon(Icons.close),
+            siklus.toString().isEmpty
+                ? const SizedBox()
+                : IconButton(
+                    onPressed: () {
+                      final _formKey = GlobalKey<FormState>();
+                      // ignore: unused_local_variable
+                      bool isKodeAkses = false;
+                      TextEditingController kodeAkses = TextEditingController();
+                      penyesuaianQty.text.isEmpty
+                          ? null
+                          :
+                          //beri kode akses
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  content: Stack(
+                                    clipBehavior: Clip.none,
+                                    children: <Widget>[
+                                      Positioned(
+                                        right: -47.0,
+                                        top: -47.0,
+                                        child: InkResponse(
+                                          onTap: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: const CircleAvatar(
+                                            backgroundColor: Colors.red,
+                                            child: Icon(Icons.close),
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 190,
-                                    child: Form(
-                                      key: _formKey,
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: <Widget>[
-                                          const Padding(
-                                            padding: EdgeInsets.only(
-                                                top: 5, bottom: 10),
-                                            child: Text('Masukan Kode Akses'),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: TextFormField(
-                                              autofocus: true,
-                                              obscureText: true,
-                                              style: const TextStyle(
-                                                  fontSize: 14,
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.bold),
-                                              textInputAction:
-                                                  TextInputAction.next,
-                                              controller: kodeAkses,
-                                              validator: (value) {
-                                                if (value! != aksesKode) {
-                                                  return 'Kode akses salah';
-                                                }
-                                                return null;
-                                              },
-                                              onChanged: (value) {
-                                                isKodeAkses = true;
-                                                kodeAkses.text == aksesKode
-                                                    ? isKodeAkses = true
-                                                    : isKodeAkses = false;
-                                              },
-                                              decoration: InputDecoration(
-                                                labelText: "Kode Akses",
-                                                border: OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5.0)),
+                                      SizedBox(
+                                        height: 190,
+                                        child: Form(
+                                          key: _formKey,
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: <Widget>[
+                                              const Padding(
+                                                padding: EdgeInsets.only(
+                                                    top: 5, bottom: 10),
+                                                child:
+                                                    Text('Masukan Kode Akses'),
                                               ),
-                                            ),
-                                          ),
-                                          Container(
-                                            width: 200,
-                                            height: 50,
-                                            padding:
-                                                const EdgeInsets.only(top: 10),
-                                            child: ElevatedButton(
-                                              child: const Text("Submit"),
-                                              onPressed: () {
-                                                if (_formKey.currentState!
-                                                    .validate()) {
-                                                  _formKey.currentState!.save();
-                                                  Navigator.of(context).pop();
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: TextFormField(
+                                                  autofocus: true,
+                                                  obscureText: true,
+                                                  style: const TextStyle(
+                                                      fontSize: 14,
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                  textInputAction:
+                                                      TextInputAction.next,
+                                                  controller: kodeAkses,
+                                                  validator: (value) {
+                                                    if (value! != aksesKode) {
+                                                      return 'Kode akses salah';
+                                                    }
+                                                    return null;
+                                                  },
+                                                  onChanged: (value) {
+                                                    isKodeAkses = true;
+                                                    kodeAkses.text == aksesKode
+                                                        ? isKodeAkses = true
+                                                        : isKodeAkses = false;
+                                                  },
+                                                  decoration: InputDecoration(
+                                                    labelText: "Kode Akses",
+                                                    border: OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5.0)),
+                                                  ),
+                                                ),
+                                              ),
+                                              Container(
+                                                width: 200,
+                                                height: 50,
+                                                padding: const EdgeInsets.only(
+                                                    top: 10),
+                                                child: ElevatedButton(
+                                                  child: const Text("Submit"),
+                                                  onPressed: () {
+                                                    if (_formKey.currentState!
+                                                        .validate()) {
+                                                      _formKey.currentState!
+                                                          .save();
+                                                      Navigator.of(context)
+                                                          .pop();
 
-                                                  showDialog<String>(
-                                                    context: context,
-                                                    builder: (BuildContext
-                                                            context) =>
-                                                        AlertDialog(
-                                                      title: const Text(
-                                                        'Perhatian',
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        style: TextStyle(
-                                                            color: Colors.black,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
-                                                      ),
-                                                      content: Row(
-                                                        children: [
-                                                          const Text(
-                                                            'Apakah anda yakin ingin menambahkan penggunaan batu ',
-                                                          ),
-                                                          Text(
-                                                            '$size  ?',
-                                                            style: const TextStyle(
+                                                      showDialog<String>(
+                                                        context: context,
+                                                        builder: (BuildContext
+                                                                context) =>
+                                                            AlertDialog(
+                                                          title: const Text(
+                                                            'Perhatian',
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .black,
                                                                 fontWeight:
                                                                     FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
+                                                                        .bold),
                                                           ),
-                                                        ],
-                                                      ),
-                                                      actions: <Widget>[
-                                                        TextButton(
-                                                          onPressed: () =>
-                                                              Navigator.pop(
-                                                            context,
-                                                            'Batal',
+                                                          content: Row(
+                                                            children: [
+                                                              const Text(
+                                                                'Apakah anda yakin ingin menambahkan penggunaan batu ',
+                                                              ),
+                                                              Text(
+                                                                '$size  ?',
+                                                                style: const TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    color: Colors
+                                                                        .black),
+                                                              ),
+                                                            ],
                                                           ),
-                                                          child: const Text(
-                                                            'Batal',
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .amber),
-                                                          ),
-                                                        ),
-                                                        TextButton(
-                                                          onPressed: () async {
-                                                            final response =
-                                                                await http.get(
-                                                              Uri.parse(
-                                                                  '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$size"'),
-                                                            );
-                                                            if (response
-                                                                    .statusCode ==
-                                                                200) {
-                                                              final data =
-                                                                  jsonDecode(
-                                                                      response
-                                                                          .body);
-
-                                                              var stok = data[0]
-                                                                      ['qty'] -
-                                                                  int.parse(
-                                                                      penyesuaianQty
-                                                                          .text);
-                                                              await postUpdateQtyBatuBySize(
-                                                                  size, stok);
-                                                            } else {
-                                                              throw Exception(
-                                                                  'Unexpected error occured!');
-                                                            }
-
-                                                            await postPenyesuaianBatu(
-                                                                size,
-                                                                penyesuaianQty
-                                                                    .text);
-                                                            showDialog<String>(
-                                                                context:
-                                                                    context,
-                                                                builder: (BuildContext
-                                                                        context) =>
-                                                                    const AlertDialog(
-                                                                      title:
-                                                                          Text(
-                                                                        'Penyesuaian Batu Berhasil',
-                                                                      ),
-                                                                    ));
-
-                                                            Navigator.push(
+                                                          actions: <Widget>[
+                                                            TextButton(
+                                                              onPressed: () =>
+                                                                  Navigator.pop(
                                                                 context,
-                                                                MaterialPageRoute(
-                                                                    builder: (c) =>
-                                                                        const MainViewKebutuhanBatu()));
-                                                            showDialog<String>(
-                                                                context:
+                                                                'Batal',
+                                                              ),
+                                                              child: const Text(
+                                                                'Batal',
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .amber),
+                                                              ),
+                                                            ),
+                                                            TextButton(
+                                                              onPressed:
+                                                                  () async {
+                                                                final response =
+                                                                    await http
+                                                                        .get(
+                                                                  Uri.parse(
+                                                                      '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$size"'),
+                                                                );
+                                                                if (response
+                                                                        .statusCode ==
+                                                                    200) {
+                                                                  final data =
+                                                                      jsonDecode(
+                                                                          response
+                                                                              .body);
+
+                                                                  var stok = data[
+                                                                              0]
+                                                                          [
+                                                                          'qty'] -
+                                                                      int.parse(
+                                                                          penyesuaianQty
+                                                                              .text);
+                                                                  await postUpdateQtyBatuBySize(
+                                                                      size,
+                                                                      stok,
+                                                                      siklus);
+                                                                } else {
+                                                                  throw Exception(
+                                                                      'Unexpected error occured!');
+                                                                }
+
+                                                                await postPenyesuaianBatu(
+                                                                    size,
+                                                                    penyesuaianQty
+                                                                        .text);
+                                                                showDialog<
+                                                                        String>(
+                                                                    context:
+                                                                        context,
+                                                                    builder: (BuildContext
+                                                                            context) =>
+                                                                        const AlertDialog(
+                                                                          title:
+                                                                              Text(
+                                                                            'Penyesuaian Batu Berhasil',
+                                                                          ),
+                                                                        ));
+
+                                                                Navigator.push(
                                                                     context,
-                                                                builder: (BuildContext
-                                                                        context) =>
-                                                                    const AlertDialog(
-                                                                      title:
-                                                                          Text(
-                                                                        'Penyesuaian Batu Berhasil',
-                                                                      ),
-                                                                    ));
-                                                          },
-                                                          child: const Text(
-                                                            'Tambah',
+                                                                    MaterialPageRoute(
+                                                                        builder:
+                                                                            (c) =>
+                                                                                const MainViewKebutuhanBatu()));
+                                                                showDialog<
+                                                                        String>(
+                                                                    context:
+                                                                        context,
+                                                                    builder: (BuildContext
+                                                                            context) =>
+                                                                        const AlertDialog(
+                                                                          title:
+                                                                              Text(
+                                                                            'Penyesuaian Batu Berhasil',
+                                                                          ),
+                                                                        ));
+                                                              },
+                                                              child: const Text(
+                                                                'Tambah',
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .blue),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      );
+                                                    } else {}
+                                                  },
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              });
+                    },
+                    icon: const Icon(
+                      Icons.add,
+                      color: Colors.blue,
+                    )),
+            siklus.toString().isEmpty
+                ? const SizedBox()
+                : IconButton(
+                    onPressed: () {
+                      final _formKey = GlobalKey<FormState>();
+                      // ignore: unused_local_variable
+                      bool isKodeAkses = false;
+                      TextEditingController kodeAkses = TextEditingController();
+                      penyesuaianQty.text.isEmpty
+                          ? null
+                          :
+                          //beri kode akses
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  content: Stack(
+                                    clipBehavior: Clip.none,
+                                    children: <Widget>[
+                                      Positioned(
+                                        right: -47.0,
+                                        top: -47.0,
+                                        child: InkResponse(
+                                          onTap: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: const CircleAvatar(
+                                            backgroundColor: Colors.red,
+                                            child: Icon(Icons.close),
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 190,
+                                        child: Form(
+                                          key: _formKey,
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: <Widget>[
+                                              const Padding(
+                                                padding: EdgeInsets.only(
+                                                    top: 5, bottom: 10),
+                                                child:
+                                                    Text('Masukan Kode Akses'),
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: TextFormField(
+                                                  autofocus: true,
+                                                  obscureText: true,
+                                                  style: const TextStyle(
+                                                      fontSize: 14,
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                  textInputAction:
+                                                      TextInputAction.next,
+                                                  controller: kodeAkses,
+                                                  validator: (value) {
+                                                    if (value! != aksesKode) {
+                                                      return 'Kode akses salah';
+                                                    }
+                                                    return null;
+                                                  },
+                                                  onChanged: (value) {
+                                                    isKodeAkses = true;
+                                                    kodeAkses.text == aksesKode
+                                                        ? isKodeAkses = true
+                                                        : isKodeAkses = false;
+                                                  },
+                                                  decoration: InputDecoration(
+                                                    labelText: "Kode Akses",
+                                                    border: OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5.0)),
+                                                  ),
+                                                ),
+                                              ),
+                                              Container(
+                                                width: 200,
+                                                height: 50,
+                                                padding: const EdgeInsets.only(
+                                                    top: 10),
+                                                child: ElevatedButton(
+                                                  child: const Text("Submit"),
+                                                  onPressed: () {
+                                                    if (_formKey.currentState!
+                                                        .validate()) {
+                                                      _formKey.currentState!
+                                                          .save();
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                      showDialog<String>(
+                                                        context: context,
+                                                        builder: (BuildContext
+                                                                context) =>
+                                                            AlertDialog(
+                                                          title: const Text(
+                                                            'Perhatian',
+                                                            textAlign: TextAlign
+                                                                .center,
                                                             style: TextStyle(
                                                                 color: Colors
-                                                                    .blue),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  );
-                                                } else {}
-                                              },
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          });
-                },
-                icon: const Icon(
-                  Icons.add,
-                  color: Colors.blue,
-                )),
-            IconButton(
-                onPressed: () {
-                  final _formKey = GlobalKey<FormState>();
-                  // ignore: unused_local_variable
-                  bool isKodeAkses = false;
-                  TextEditingController kodeAkses = TextEditingController();
-                  penyesuaianQty.text.isEmpty
-                      ? null
-                      :
-                      //beri kode akses
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              content: Stack(
-                                clipBehavior: Clip.none,
-                                children: <Widget>[
-                                  Positioned(
-                                    right: -47.0,
-                                    top: -47.0,
-                                    child: InkResponse(
-                                      onTap: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: const CircleAvatar(
-                                        backgroundColor: Colors.red,
-                                        child: Icon(Icons.close),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 190,
-                                    child: Form(
-                                      key: _formKey,
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: <Widget>[
-                                          const Padding(
-                                            padding: EdgeInsets.only(
-                                                top: 5, bottom: 10),
-                                            child: Text('Masukan Kode Akses'),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: TextFormField(
-                                              autofocus: true,
-                                              obscureText: true,
-                                              style: const TextStyle(
-                                                  fontSize: 14,
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.bold),
-                                              textInputAction:
-                                                  TextInputAction.next,
-                                              controller: kodeAkses,
-                                              validator: (value) {
-                                                if (value! != aksesKode) {
-                                                  return 'Kode akses salah';
-                                                }
-                                                return null;
-                                              },
-                                              onChanged: (value) {
-                                                isKodeAkses = true;
-                                                kodeAkses.text == aksesKode
-                                                    ? isKodeAkses = true
-                                                    : isKodeAkses = false;
-                                              },
-                                              decoration: InputDecoration(
-                                                labelText: "Kode Akses",
-                                                border: OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5.0)),
-                                              ),
-                                            ),
-                                          ),
-                                          Container(
-                                            width: 200,
-                                            height: 50,
-                                            padding:
-                                                const EdgeInsets.only(top: 10),
-                                            child: ElevatedButton(
-                                              child: const Text("Submit"),
-                                              onPressed: () {
-                                                if (_formKey.currentState!
-                                                    .validate()) {
-                                                  _formKey.currentState!.save();
-                                                  Navigator.of(context).pop();
-                                                  showDialog<String>(
-                                                    context: context,
-                                                    builder: (BuildContext
-                                                            context) =>
-                                                        AlertDialog(
-                                                      title: const Text(
-                                                        'Perhatian',
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        style: TextStyle(
-                                                            color: Colors.black,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
-                                                      ),
-                                                      content: Row(
-                                                        children: [
-                                                          const Text(
-                                                            'Apakah anda yakin ingin mengurangi penggunaan batu ',
-                                                          ),
-                                                          Text(
-                                                            '$size  ?',
-                                                            style: const TextStyle(
+                                                                    .black,
                                                                 fontWeight:
                                                                     FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
+                                                                        .bold),
                                                           ),
-                                                        ],
-                                                      ),
-                                                      actions: <Widget>[
-                                                        TextButton(
-                                                          onPressed: () =>
-                                                              Navigator.pop(
-                                                            context,
-                                                            'Batal',
+                                                          content: Row(
+                                                            children: [
+                                                              const Text(
+                                                                'Apakah anda yakin ingin mengurangi penggunaan batu ',
+                                                              ),
+                                                              Text(
+                                                                '$size  ?',
+                                                                style: const TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    color: Colors
+                                                                        .black),
+                                                              ),
+                                                            ],
                                                           ),
-                                                          child: const Text(
-                                                            'Batal',
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .amber),
-                                                          ),
-                                                        ),
-                                                        TextButton(
-                                                          onPressed: () async {
-                                                            final response =
-                                                                await http.get(
-                                                              Uri.parse(
-                                                                  '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$size"'),
-                                                            );
-                                                            if (response
-                                                                    .statusCode ==
-                                                                200) {
-                                                              final data =
-                                                                  jsonDecode(
-                                                                      response
-                                                                          .body);
-
-                                                              var stok = data[0]
-                                                                      ['qty'] +
-                                                                  int.parse(
-                                                                      penyesuaianQty
-                                                                          .text);
-                                                              await postUpdateQtyBatuBySize(
-                                                                  size, stok);
-                                                            } else {
-                                                              throw Exception(
-                                                                  'Unexpected error occured!');
-                                                            }
-
-                                                            await postPenyesuaianBatu(
-                                                                size,
-                                                                (int.parse(penyesuaianQty
-                                                                        .text) *
-                                                                    -1));
-                                                            showDialog<String>(
-                                                                context:
-                                                                    context,
-                                                                builder: (BuildContext
-                                                                        context) =>
-                                                                    const AlertDialog(
-                                                                      title:
-                                                                          Text(
-                                                                        'Penyesuaian Batu Berhasil',
-                                                                      ),
-                                                                    ));
-
-                                                            Navigator.push(
+                                                          actions: <Widget>[
+                                                            TextButton(
+                                                              onPressed: () =>
+                                                                  Navigator.pop(
                                                                 context,
-                                                                MaterialPageRoute(
-                                                                    builder: (c) =>
-                                                                        const MainViewKebutuhanBatu()));
-                                                            showDialog<String>(
-                                                                context:
+                                                                'Batal',
+                                                              ),
+                                                              child: const Text(
+                                                                'Batal',
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .amber),
+                                                              ),
+                                                            ),
+                                                            TextButton(
+                                                              onPressed:
+                                                                  () async {
+                                                                final response =
+                                                                    await http
+                                                                        .get(
+                                                                  Uri.parse(
+                                                                      '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$size"'),
+                                                                );
+                                                                if (response
+                                                                        .statusCode ==
+                                                                    200) {
+                                                                  final data =
+                                                                      jsonDecode(
+                                                                          response
+                                                                              .body);
+
+                                                                  var stok = data[
+                                                                              0]
+                                                                          [
+                                                                          'qty'] +
+                                                                      int.parse(
+                                                                          penyesuaianQty
+                                                                              .text);
+                                                                  await postUpdateQtyBatuBySize(
+                                                                      size,
+                                                                      stok,
+                                                                      siklus);
+                                                                } else {
+                                                                  throw Exception(
+                                                                      'Unexpected error occured!');
+                                                                }
+
+                                                                await postPenyesuaianBatu(
+                                                                    size,
+                                                                    (int.parse(penyesuaianQty
+                                                                            .text) *
+                                                                        -1));
+                                                                showDialog<
+                                                                        String>(
+                                                                    context:
+                                                                        context,
+                                                                    builder: (BuildContext
+                                                                            context) =>
+                                                                        const AlertDialog(
+                                                                          title:
+                                                                              Text(
+                                                                            'Penyesuaian Batu Berhasil',
+                                                                          ),
+                                                                        ));
+
+                                                                Navigator.push(
                                                                     context,
-                                                                builder: (BuildContext
-                                                                        context) =>
-                                                                    const AlertDialog(
-                                                                      title:
-                                                                          Text(
-                                                                        'Penyesuaian Batu Berhasil',
-                                                                      ),
-                                                                    ));
-                                                          },
-                                                          child: const Text(
-                                                            'Kurangi',
-                                                            style: TextStyle(
-                                                                color:
-                                                                    Colors.red),
-                                                          ),
+                                                                    MaterialPageRoute(
+                                                                        builder:
+                                                                            (c) =>
+                                                                                const MainViewKebutuhanBatu()));
+                                                                showDialog<
+                                                                        String>(
+                                                                    context:
+                                                                        context,
+                                                                    builder: (BuildContext
+                                                                            context) =>
+                                                                        const AlertDialog(
+                                                                          title:
+                                                                              Text(
+                                                                            'Penyesuaian Batu Berhasil',
+                                                                          ),
+                                                                        ));
+                                                              },
+                                                              child: const Text(
+                                                                'Kurangi',
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .red),
+                                                              ),
+                                                            ),
+                                                          ],
                                                         ),
-                                                      ],
-                                                    ),
-                                                  );
-                                                } else {}
-                                              },
-                                            ),
-                                          )
-                                        ],
+                                                      );
+                                                    } else {}
+                                                  },
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ),
                                       ),
-                                    ),
+                                    ],
                                   ),
-                                ],
-                              ),
-                            );
-                          });
-                },
-                icon: const Icon(
-                  Icons.remove,
-                  color: Colors.red,
-                ))
+                                );
+                              });
+                    },
+                    icon: const Icon(
+                      Icons.remove,
+                      color: Colors.red,
+                    ))
           ],
         );
       })),
@@ -1262,7 +1370,58 @@ class RowSource extends DataTableSource {
               return const CircularProgressIndicator();
             }
           })),
+
+      DataCell(_verticalDivider),
+
+      //ADJUSMENT
+      DataCell(FutureBuilder(
+          future: _getSum(size, siklus),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return Text(snapshot.data!.toString());
+            } else {
+              return const CircularProgressIndicator();
+            }
+          })),
+      DataCell(_verticalDivider),
+
+      //qty setelah di kurangi penyesuaian
+      DataCell(FutureBuilder(
+          future: _getSum(size, siklus),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              var resultSum = int.parse(mylist[size].toString()) +
+                  int.parse(snapshot.data!.toString());
+
+              return Text(
+                '$resultSum',
+                style: const TextStyle(
+                    color: Colors.green,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18),
+              );
+            } else {
+              return const CircularProgressIndicator();
+            }
+          })),
     ]);
+  }
+
+  _getSum(size, siklus) async {
+    try {
+      final response = await http.get(
+        Uri.parse(
+            '${ApiConstants.baseUrl}${ApiConstants.getSumPenyesuaian}?size="$size"&siklus="$siklus"'),
+      );
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+
+        var sum = data[0]['SUM(qty)'] ?? 0;
+        return sum;
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 
   _getStokBySize(size) async {
@@ -1280,12 +1439,14 @@ class RowSource extends DataTableSource {
     }
   }
 
-  postUpdateQtyBatuBySize(size, qty) async {
+  postUpdateQtyBatuBySize(size, qty, siklus) async {
     print('ini qty update $qty');
+    print('ini siklus update $siklus');
     try {
       Map<String, String> body = {
         'size': size.toString(),
         'qty': qty.toString(),
+        'siklus': siklus.toString()
       };
       final response = await http.post(
           Uri.parse(

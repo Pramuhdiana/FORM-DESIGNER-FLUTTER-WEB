@@ -64,9 +64,44 @@ class _MainViewState extends State<MainView> {
 
   //screen dekstop
   screenDekstop() {
+    String greeting() {
+      var hour = DateTime.now().hour;
+      if (hour < 12) {
+        return 'Pagi';
+      }
+      if (hour < 15) {
+        return 'Siang';
+      }
+      if (hour < 17) {
+        return 'Sore';
+      }
+      return 'Malam';
+    }
+
     return Row(
       children: [
         SideNavigationBar(
+          header: SideNavigationBarHeader(
+              image: const CircleAvatar(
+                child: Icon(Icons.person_2_outlined),
+              ),
+              title: Text(
+                'Selamat ${greeting()}',
+                style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18),
+              ),
+              subtitle: Text(
+                sharedPreferences!.getString('nama')!,
+                style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18),
+              )),
+          footer: const SideNavigationBarFooter(
+              label: Text(
+                  '© Copyright PT Cahaya Sani Vokasi. All Rights Reserved')),
           initiallyExpanded: true,
           selectedIndex: selectedIndex,
           items: [
