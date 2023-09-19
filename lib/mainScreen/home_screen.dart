@@ -44,6 +44,8 @@ class _HomeScreenState extends State<HomeScreen> {
   List<int> sumHarga = [];
   int totalHarga = 0;
   int totalSPK = 0;
+  int batuLengkap = 0;
+  int batuBelumLengkap = 0;
   double pointArif = 0.0;
   double pointAris = 0.0;
   double pointFikri = 0.0;
@@ -54,6 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
   double beratyuse = 0.0;
   int totalSPKPending = 0;
   int totalSPKSelesai = 0;
+  bool isSelected1 = false;
   TextEditingController controller = TextEditingController();
   bool sort = true;
   int _currentSortColumn = 0;
@@ -87,10 +90,18 @@ class _HomeScreenState extends State<HomeScreen> {
       //! method scm
       if (sharedPreferences!.getString('level') == '1') {
         if (month.toString().toLowerCase() == "all") {
+          var filterByStatusBatu = allData.where((element) =>
+              element.keteranganStatusBatu.toString().toLowerCase() ==
+              "batu lengkap");
+          batuLengkap = filterByStatusBatu.toList().length;
         } else {
           var filterBySiklus = allData.where((element) =>
               element.siklus.toString().toLowerCase() ==
               month.toString().toLowerCase());
+          var filterByStatusBatu = filterBySiklus.where((element) =>
+              element.keteranganStatusBatu.toString().toLowerCase() ==
+              "batu lengkap");
+          batuLengkap = filterByStatusBatu.toList().length;
           allData = filterBySiklus.toList();
         }
       }
@@ -599,9 +610,7 @@ class _HomeScreenState extends State<HomeScreen> {
           }
         }
       }
-      print(sumHarga);
       totalHarga = sumHarga.reduce((a, b) => a + b);
-      print(listKelasHarga);
 
       // print(listKelasHarga.where((e) => e == "XS").length); //! mencari kalimat tertentu di dalam list yang menampilkan count dalam list
       // print(listKelasHarga.toSet().toList()); //! menghapus item duplikat di dalam 1 list
@@ -742,8 +751,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                                               //? method untuk mengganti siklus
                                                               await postSiklus();
                                                               // ignore: use_build_context_synchronously
-                                                              Navigator.pop(
-                                                                  context);
+                                                              Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                      builder:
+                                                                          (c) =>
+                                                                              const MainView()));
                                                               // ignore: use_build_context_synchronously
 
                                                               // ignore: use_build_context_synchronously
@@ -924,7 +937,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         )),
                                     const Divider(thickness: 5),
                                     Container(
-                                      padding: const EdgeInsets.all(5),
+                                      padding: const EdgeInsets.all(0),
                                       width: 90,
                                       height: 90,
                                       child: Lottie.asset(
@@ -967,7 +980,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Expanded(
                                       child: isLoading == false
                                           ? Container(
-                                              padding: const EdgeInsets.all(5),
+                                              padding: const EdgeInsets.all(0),
                                               width: 90,
                                               height: 90,
                                               child: Lottie.asset(
@@ -982,47 +995,69 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     snapshot.data![index];
                                                 return Container(
                                                   padding:
-                                                      const EdgeInsets.all(5),
+                                                      const EdgeInsets.all(0),
                                                   child: Column(
                                                     children: [
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          Text(
-                                                            data.jenisBarang
-                                                                .toString(),
-                                                            style: const TextStyle(
-                                                                fontSize: 14,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
+                                                      Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                                horizontal: 17),
+                                                        child: ElevatedButton(
+                                                          onPressed: () {
+                                                            setState(() {});
+                                                          },
+                                                          style: ElevatedButton.styleFrom(
+                                                              backgroundColor:
+                                                                  Colors.blue
+                                                                      .shade100,
+                                                              shape: RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              50.0))),
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              Text(
+                                                                data.jenisBarang
+                                                                    .toString(),
+                                                                style: const TextStyle(
+                                                                    fontSize:
+                                                                        14,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                              Text(
+                                                                listJenisBarang!
+                                                                    .where((element) =>
+                                                                        element
+                                                                            .jenisBarang
+                                                                            .toString()
+                                                                            .toLowerCase() ==
+                                                                        data.jenisBarang
+                                                                            .toString()
+                                                                            .toLowerCase())
+                                                                    .toList()
+                                                                    .length
+                                                                    .toString(),
+                                                                style: const TextStyle(
+                                                                    fontSize:
+                                                                        14,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                            ],
                                                           ),
-                                                          Text(
-                                                            listJenisBarang!
-                                                                .where((element) =>
-                                                                    element
-                                                                        .jenisBarang
-                                                                        .toString()
-                                                                        .toLowerCase() ==
-                                                                    data.jenisBarang
-                                                                        .toString()
-                                                                        .toLowerCase())
-                                                                .toList()
-                                                                .length
-                                                                .toString(),
-                                                            style: const TextStyle(
-                                                                fontSize: 14,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                          ),
-                                                        ],
+                                                        ),
                                                       ),
                                                       const Divider(
                                                         thickness: 1,
@@ -1045,7 +1080,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       )),
                                   const Divider(thickness: 5),
                                   Container(
-                                    padding: const EdgeInsets.all(5),
+                                    padding: const EdgeInsets.all(0),
                                     width: 90,
                                     height: 90,
                                     child: Lottie.asset(
@@ -1099,7 +1134,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         )),
                                     const Divider(thickness: 5),
                                     Container(
-                                      padding: const EdgeInsets.all(5),
+                                      padding: const EdgeInsets.all(0),
                                       width: 90,
                                       height: 90,
                                       child: Lottie.asset(
@@ -1142,7 +1177,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Expanded(
                                       child: isLoading == false
                                           ? Container(
-                                              padding: const EdgeInsets.all(5),
+                                              padding: const EdgeInsets.all(0),
                                               width: 90,
                                               height: 90,
                                               child: Lottie.asset(
@@ -1161,50 +1196,72 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     snapshot.data![index];
                                                 return Container(
                                                   padding:
-                                                      const EdgeInsets.all(5),
+                                                      const EdgeInsets.all(0),
                                                   child: Column(
                                                     children: [
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          // menampilkan list kelas harga di list dan menghilangkan duplikatnya
-                                                          Text(
-                                                            listKelasHarga
-                                                                .toSet()
-                                                                .toList()[index]
-                                                                .toString(),
-                                                            maxLines: 2,
-                                                            style: const TextStyle(
-                                                                fontSize: 14,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
+                                                      Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                                horizontal: 17),
+                                                        child: ElevatedButton(
+                                                          onPressed: () {
+                                                            setState(() {});
+                                                          },
+                                                          style: ElevatedButton.styleFrom(
+                                                              backgroundColor:
+                                                                  Colors.blue
+                                                                      .shade100,
+                                                              shape: RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              50.0))),
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              // menampilkan list kelas harga di list dan menghilangkan duplikatnya
+                                                              Text(
+                                                                listKelasHarga
+                                                                    .toSet()
+                                                                    .toList()[
+                                                                        index]
+                                                                    .toString(),
+                                                                maxLines: 2,
+                                                                style: const TextStyle(
+                                                                    fontSize:
+                                                                        14,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                              //fungsi menampilkan jumlah kelas harga di list
+                                                              Text(
+                                                                listKelasHarga
+                                                                    .where((element) =>
+                                                                        element ==
+                                                                        listKelasHarga
+                                                                            .toSet()
+                                                                            .toList()[index]
+                                                                            .toString())
+                                                                    .length
+                                                                    .toString(),
+                                                                style: const TextStyle(
+                                                                    fontSize:
+                                                                        14,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                            ],
                                                           ),
-                                                          //fungsi menampilkan jumlah kelas harga di list
-                                                          Text(
-                                                            listKelasHarga
-                                                                .where((element) =>
-                                                                    element ==
-                                                                    listKelasHarga
-                                                                        .toSet()
-                                                                        .toList()[
-                                                                            index]
-                                                                        .toString())
-                                                                .length
-                                                                .toString(),
-                                                            style: const TextStyle(
-                                                                fontSize: 14,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                          ),
-                                                        ],
+                                                        ),
                                                       ),
                                                       const Divider(
                                                         thickness: 1,
@@ -1227,7 +1284,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       )),
                                   const Divider(thickness: 5),
                                   Container(
-                                    padding: const EdgeInsets.all(5),
+                                    padding: const EdgeInsets.all(0),
                                     width: 90,
                                     height: 90,
                                     child: Lottie.asset(
@@ -1281,7 +1338,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         )),
                                     const Divider(thickness: 5),
                                     Container(
-                                      padding: const EdgeInsets.all(5),
+                                      padding: const EdgeInsets.all(0),
                                       width: 90,
                                       height: 90,
                                       child: Lottie.asset(
@@ -1313,6 +1370,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ]);
                                 }
                                 if (snapshot.hasData) {
+                                  batuBelumLengkap = totalSPK - batuLengkap;
                                   return Column(children: [
                                     const Text('Summary Report',
                                         style: TextStyle(
@@ -1325,7 +1383,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         child: isLoading == false
                                             ? Container(
                                                 padding:
-                                                    const EdgeInsets.all(5),
+                                                    const EdgeInsets.all(0),
                                                 width: 90,
                                                 height: 90,
                                                 child: Lottie.asset(
@@ -1335,166 +1393,252 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 scrollDirection: Axis.vertical,
                                                 child: Container(
                                                   padding:
-                                                      const EdgeInsets.all(5),
+                                                      const EdgeInsets.all(0),
                                                   child: Column(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment.start,
                                                     children: [
                                                       //? SPK
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          const Text(
-                                                            'SPK',
-                                                            maxLines: 2,
-                                                            style: TextStyle(
-                                                                fontSize: 14,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
+                                                      Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                                horizontal: 17),
+                                                        child: ElevatedButton(
+                                                          onPressed: () {
+                                                            setState(() {});
+                                                          },
+                                                          style: ElevatedButton.styleFrom(
+                                                              backgroundColor:
+                                                                  Colors.blue
+                                                                      .shade100,
+                                                              shape: RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              50.0))),
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              const Text(
+                                                                'SPK',
+                                                                maxLines: 2,
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        14,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                              //fungsi menampilkan jumlah SESUAI table
+                                                              Text(
+                                                                '$totalSPK',
+                                                                style: const TextStyle(
+                                                                    fontSize:
+                                                                        14,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                            ],
                                                           ),
-                                                          //fungsi menampilkan jumlah SESUAI table
-                                                          Text(
-                                                            '$totalSPK',
-                                                            style: const TextStyle(
-                                                                fontSize: 14,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                          ),
-                                                        ],
+                                                        ),
                                                       ),
 
                                                       const Padding(
                                                         padding:
                                                             EdgeInsets.only(
-                                                                bottom: 10),
+                                                                bottom: 0),
                                                         child: Divider(
                                                           thickness: 1,
                                                           color: Colors.grey,
                                                         ),
                                                       ),
                                                       //? SPK LENGKAP
-                                                      const Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          Text(
-                                                            'SPK Lengkap',
-                                                            maxLines: 2,
-                                                            style: TextStyle(
-                                                                fontSize: 14,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
+                                                      Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                                horizontal: 17),
+                                                        child: ElevatedButton(
+                                                          onPressed: () {
+                                                            setState(() {});
+                                                          },
+                                                          style: ElevatedButton.styleFrom(
+                                                              backgroundColor:
+                                                                  Colors.green,
+                                                              shape: RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              50.0))),
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              const Text(
+                                                                'SPK Lengkap',
+                                                                maxLines: 2,
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        14,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                              //fungsi menampilkan jumlah SESUAI table
+                                                              Text(
+                                                                '$batuLengkap',
+                                                                style: const TextStyle(
+                                                                    fontSize:
+                                                                        14,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                            ],
                                                           ),
-                                                          //fungsi menampilkan jumlah SESUAI table
-                                                          Text(
-                                                            '0',
-                                                            style: TextStyle(
-                                                                fontSize: 14,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                          ),
-                                                        ],
+                                                        ),
                                                       ),
 
                                                       const Padding(
                                                         padding:
                                                             EdgeInsets.only(
-                                                                bottom: 10),
+                                                                bottom: 0),
                                                         child: Divider(
                                                           thickness: 1,
                                                           color: Colors.grey,
                                                         ),
                                                       ),
                                                       //? SPK Tidak LENGKAP
-                                                      const Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          Text(
-                                                            'SPK Tidak Lengkap',
-                                                            maxLines: 2,
-                                                            style: TextStyle(
-                                                                fontSize: 14,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
+                                                      Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                                horizontal: 17),
+                                                        child: ElevatedButton(
+                                                          onPressed: () {
+                                                            setState(() {});
+                                                          },
+                                                          style: ElevatedButton.styleFrom(
+                                                              backgroundColor:
+                                                                  Colors.orange,
+                                                              shape: RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              50.0))),
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              const Text(
+                                                                'SPK Tidak Lengkap',
+                                                                maxLines: 2,
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        14,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                              //fungsi menampilkan jumlah SESUAI table
+                                                              Text(
+                                                                '$batuBelumLengkap',
+                                                                // '($totalSPK - $batuLengkap)',
+                                                                style: const TextStyle(
+                                                                    fontSize:
+                                                                        14,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                            ],
                                                           ),
-                                                          //fungsi menampilkan jumlah SESUAI table
-                                                          Text(
-                                                            '0',
-                                                            style: TextStyle(
-                                                                fontSize: 14,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                          ),
-                                                        ],
+                                                        ),
                                                       ),
 
                                                       const Padding(
                                                         padding:
                                                             EdgeInsets.only(
-                                                                bottom: 10),
+                                                                bottom: 0),
                                                         child: Divider(
                                                           thickness: 1,
                                                           color: Colors.grey,
                                                         ),
                                                       ),
                                                       //? SPK Cancel
-                                                      const Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          Text(
-                                                            'SPK Cancel',
-                                                            maxLines: 2,
-                                                            style: TextStyle(
-                                                                fontSize: 14,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
+                                                      Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                                horizontal: 17),
+                                                        child: ElevatedButton(
+                                                          onPressed: () {
+                                                            setState(() {});
+                                                          },
+                                                          style: ElevatedButton.styleFrom(
+                                                              backgroundColor:
+                                                                  Colors.red,
+                                                              shape: RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              50.0))),
+                                                          child: const Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              Text(
+                                                                'SPK Cancel',
+                                                                maxLines: 2,
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        14,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                              //fungsi menampilkan jumlah SESUAI table
+                                                              Text(
+                                                                '0',
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        14,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                            ],
                                                           ),
-                                                          //fungsi menampilkan jumlah SESUAI table
-                                                          Text(
-                                                            '0',
-                                                            style: TextStyle(
-                                                                fontSize: 14,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                          ),
-                                                        ],
+                                                        ),
                                                       ),
 
                                                       const Padding(
                                                         padding:
                                                             EdgeInsets.only(
-                                                                bottom: 10),
+                                                                bottom: 0),
                                                         child: Divider(
                                                           thickness: 1,
                                                           color: Colors.grey,
@@ -1502,40 +1646,62 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       ),
 
                                                       //? Total harga
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          const Text(
-                                                            'Total',
-                                                            maxLines: 2,
-                                                            style: TextStyle(
-                                                                fontSize: 14,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
+                                                      Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                                horizontal: 17),
+                                                        child: ElevatedButton(
+                                                          onPressed: () {
+                                                            setState(() {});
+                                                          },
+                                                          style: ElevatedButton.styleFrom(
+                                                              backgroundColor:
+                                                                  Colors.blue
+                                                                      .shade100,
+                                                              shape: RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              50.0))),
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              const Text(
+                                                                'Total',
+                                                                maxLines: 2,
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        14,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                              //fungsi menampilkan jumlah SESUAI table
+                                                              Text(
+                                                                'Rp. ${CurrencyFormat.convertToDollar(totalHarga, 0)}',
+                                                                style: const TextStyle(
+                                                                    fontSize:
+                                                                        14,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                            ],
                                                           ),
-                                                          //fungsi menampilkan jumlah SESUAI table
-                                                          Text(
-                                                            'Rp. ${CurrencyFormat.convertToDollar(totalHarga, 0)}',
-                                                            style: const TextStyle(
-                                                                fontSize: 14,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                          ),
-                                                        ],
+                                                        ),
                                                       ),
 
                                                       const Padding(
                                                         padding:
                                                             EdgeInsets.only(
-                                                                bottom: 10),
+                                                                bottom: 0),
                                                         child: Divider(
                                                           thickness: 1,
                                                           color: Colors.grey,
@@ -1556,7 +1722,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       )),
                                   const Divider(thickness: 5),
                                   Container(
-                                    padding: const EdgeInsets.all(5),
+                                    padding: const EdgeInsets.all(0),
                                     width: 90,
                                     height: 90,
                                     child: Lottie.asset(
@@ -1610,7 +1776,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         )),
                                     const Divider(thickness: 5),
                                     Container(
-                                      padding: const EdgeInsets.all(5),
+                                      padding: const EdgeInsets.all(0),
                                       width: 90,
                                       height: 90,
                                       child: Lottie.asset(
@@ -1654,7 +1820,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         child: isLoading == false
                                             ? Container(
                                                 padding:
-                                                    const EdgeInsets.all(5),
+                                                    const EdgeInsets.all(0),
                                                 width: 90,
                                                 height: 90,
                                                 child: Lottie.asset(
@@ -1664,46 +1830,68 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 scrollDirection: Axis.vertical,
                                                 child: Container(
                                                   padding:
-                                                      const EdgeInsets.all(5),
+                                                      const EdgeInsets.all(0),
                                                   child: Column(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment.start,
                                                     children: [
                                                       //? Arif Kurniawan
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          const Text(
-                                                            'Arif Kurniawan',
-                                                            maxLines: 2,
-                                                            style: TextStyle(
-                                                                fontSize: 14,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
+                                                      Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                                horizontal: 17),
+                                                        child: ElevatedButton(
+                                                          onPressed: () {
+                                                            setState(() {});
+                                                          },
+                                                          style: ElevatedButton.styleFrom(
+                                                              backgroundColor:
+                                                                  Colors.blue
+                                                                      .shade100,
+                                                              shape: RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              50.0))),
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              const Text(
+                                                                'Arif Kurniawan',
+                                                                maxLines: 2,
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        14,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                              //fungsi menampilkan jumlah SESUAI table
+                                                              Text(
+                                                                '$pointArif',
+                                                                style: const TextStyle(
+                                                                    fontSize:
+                                                                        14,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                            ],
                                                           ),
-                                                          //fungsi menampilkan jumlah SESUAI table
-                                                          Text(
-                                                            '$pointArif',
-                                                            style: const TextStyle(
-                                                                fontSize: 14,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                          ),
-                                                        ],
+                                                        ),
                                                       ),
 
                                                       const Padding(
                                                         padding:
                                                             EdgeInsets.only(
-                                                                bottom: 10),
+                                                                bottom: 0),
                                                         child: Divider(
                                                           thickness: 1,
                                                           color: Colors.grey,
@@ -1711,120 +1899,186 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       ),
 
                                                       //? Aris Pravidan
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          const Text(
-                                                            'Aris Pravidan',
-                                                            maxLines: 2,
-                                                            style: TextStyle(
-                                                                fontSize: 14,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
+                                                      Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                                horizontal: 17),
+                                                        child: ElevatedButton(
+                                                          onPressed: () {
+                                                            setState(() {});
+                                                          },
+                                                          style: ElevatedButton.styleFrom(
+                                                              backgroundColor:
+                                                                  Colors.blue
+                                                                      .shade100,
+                                                              shape: RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              50.0))),
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              const Text(
+                                                                'Aris Pravidan',
+                                                                maxLines: 2,
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        14,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                              //fungsi menampilkan jumlah SESUAI table
+                                                              Text(
+                                                                '$pointAris',
+                                                                style: const TextStyle(
+                                                                    fontSize:
+                                                                        14,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                            ],
                                                           ),
-                                                          //fungsi menampilkan jumlah SESUAI table
-                                                          Text(
-                                                            '$pointAris',
-                                                            style: const TextStyle(
-                                                                fontSize: 14,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                          ),
-                                                        ],
+                                                        ),
                                                       ),
 
                                                       const Padding(
                                                         padding:
                                                             EdgeInsets.only(
-                                                                bottom: 10),
+                                                                bottom: 0),
                                                         child: Divider(
                                                           thickness: 1,
                                                           color: Colors.grey,
                                                         ),
                                                       ),
                                                       //? Fikryansyah
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          const Text(
-                                                            'Fikryansyah',
-                                                            maxLines: 2,
-                                                            style: TextStyle(
-                                                                fontSize: 14,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
+                                                      Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                                horizontal: 17),
+                                                        child: ElevatedButton(
+                                                          onPressed: () {
+                                                            setState(() {});
+                                                          },
+                                                          style: ElevatedButton.styleFrom(
+                                                              backgroundColor:
+                                                                  Colors.blue
+                                                                      .shade100,
+                                                              shape: RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              50.0))),
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              const Text(
+                                                                'Fikryansyah',
+                                                                maxLines: 2,
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        14,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                              //fungsi menampilkan jumlah SESUAI table
+                                                              Text(
+                                                                '$pointFikri',
+                                                                style: const TextStyle(
+                                                                    fontSize:
+                                                                        14,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                            ],
                                                           ),
-                                                          //fungsi menampilkan jumlah SESUAI table
-                                                          Text(
-                                                            '$pointFikri',
-                                                            style: const TextStyle(
-                                                                fontSize: 14,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                          ),
-                                                        ],
+                                                        ),
                                                       ),
 
                                                       const Padding(
                                                         padding:
                                                             EdgeInsets.only(
-                                                                bottom: 10),
+                                                                bottom: 0),
                                                         child: Divider(
                                                           thickness: 1,
                                                           color: Colors.grey,
                                                         ),
                                                       ),
                                                       //? Yuse
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          const Text(
-                                                            'Yuse',
-                                                            maxLines: 2,
-                                                            style: TextStyle(
-                                                                fontSize: 14,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
+                                                      Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                                horizontal: 17),
+                                                        child: ElevatedButton(
+                                                          onPressed: () {
+                                                            setState(() {});
+                                                          },
+                                                          style: ElevatedButton.styleFrom(
+                                                              backgroundColor:
+                                                                  Colors.blue
+                                                                      .shade100,
+                                                              shape: RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              50.0))),
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              const Text(
+                                                                'Yuse',
+                                                                maxLines: 2,
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        14,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                              //fungsi menampilkan jumlah SESUAI table
+                                                              Text(
+                                                                '$pointyuse',
+                                                                style: const TextStyle(
+                                                                    fontSize:
+                                                                        14,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                            ],
                                                           ),
-                                                          //fungsi menampilkan jumlah SESUAI table
-                                                          Text(
-                                                            '$pointyuse',
-                                                            style: const TextStyle(
-                                                                fontSize: 14,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                          ),
-                                                        ],
+                                                        ),
                                                       ),
 
                                                       const Padding(
                                                         padding:
                                                             EdgeInsets.only(
-                                                                bottom: 10),
+                                                                bottom: 0),
                                                         child: Divider(
                                                           thickness: 1,
                                                           color: Colors.grey,
@@ -1845,7 +2099,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       )),
                                   const Divider(thickness: 5),
                                   Container(
-                                    padding: const EdgeInsets.all(5),
+                                    padding: const EdgeInsets.all(0),
                                     width: 90,
                                     height: 90,
                                     child: Lottie.asset(
@@ -1860,11 +2114,9 @@ class _HomeScreenState extends State<HomeScreen> {
         Container(
           width: MediaQuery.of(context).size.width * 0.5,
           height: 45,
-          padding: const EdgeInsets.all(5),
+          padding: const EdgeInsets.all(0),
           decoration: BoxDecoration(
-              border: Border.all(
-                color: Colors.grey,
-              ),
+              border: Border.all(color: Colors.black, style: BorderStyle.solid),
               borderRadius: BorderRadius.circular(12)),
           child: Align(
             alignment: Alignment.bottomCenter,
@@ -2242,7 +2494,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         )),
                                     const Divider(thickness: 5),
                                     Container(
-                                      padding: const EdgeInsets.all(5),
+                                      padding: const EdgeInsets.all(0),
                                       width: 90,
                                       height: 90,
                                       child: Lottie.asset(
@@ -2285,7 +2537,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Expanded(
                                       child: isLoading == false
                                           ? Container(
-                                              padding: const EdgeInsets.all(5),
+                                              padding: const EdgeInsets.all(0),
                                               width: 90,
                                               height: 90,
                                               child: Lottie.asset(
@@ -2300,47 +2552,69 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     snapshot.data![index];
                                                 return Container(
                                                   padding:
-                                                      const EdgeInsets.all(5),
+                                                      const EdgeInsets.all(0),
                                                   child: Column(
                                                     children: [
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          Text(
-                                                            data.jenisBarang
-                                                                .toString(),
-                                                            style: const TextStyle(
-                                                                fontSize: 14,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
+                                                      Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                                horizontal: 17),
+                                                        child: ElevatedButton(
+                                                          onPressed: () {
+                                                            setState(() {});
+                                                          },
+                                                          style: ElevatedButton.styleFrom(
+                                                              backgroundColor:
+                                                                  Colors.blue
+                                                                      .shade100,
+                                                              shape: RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              50.0))),
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              Text(
+                                                                data.jenisBarang
+                                                                    .toString(),
+                                                                style: const TextStyle(
+                                                                    fontSize:
+                                                                        14,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                              Text(
+                                                                listJenisBarang!
+                                                                    .where((element) =>
+                                                                        element
+                                                                            .jenisBarang
+                                                                            .toString()
+                                                                            .toLowerCase() ==
+                                                                        data.jenisBarang
+                                                                            .toString()
+                                                                            .toLowerCase())
+                                                                    .toList()
+                                                                    .length
+                                                                    .toString(),
+                                                                style: const TextStyle(
+                                                                    fontSize:
+                                                                        14,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                            ],
                                                           ),
-                                                          Text(
-                                                            listJenisBarang!
-                                                                .where((element) =>
-                                                                    element
-                                                                        .jenisBarang
-                                                                        .toString()
-                                                                        .toLowerCase() ==
-                                                                    data.jenisBarang
-                                                                        .toString()
-                                                                        .toLowerCase())
-                                                                .toList()
-                                                                .length
-                                                                .toString(),
-                                                            style: const TextStyle(
-                                                                fontSize: 14,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                          ),
-                                                        ],
+                                                        ),
                                                       ),
                                                       const Divider(
                                                         thickness: 1,
@@ -2363,7 +2637,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       )),
                                   const Divider(thickness: 5),
                                   Container(
-                                    padding: const EdgeInsets.all(5),
+                                    padding: const EdgeInsets.all(0),
                                     width: 90,
                                     height: 90,
                                     child: Lottie.asset(
@@ -2415,7 +2689,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         )),
                                     const Divider(thickness: 5),
                                     Container(
-                                      padding: const EdgeInsets.all(5),
+                                      padding: const EdgeInsets.all(0),
                                       width: 90,
                                       height: 90,
                                       child: Lottie.asset(
@@ -2458,7 +2732,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Expanded(
                                       child: isLoading == false
                                           ? Container(
-                                              padding: const EdgeInsets.all(5),
+                                              padding: const EdgeInsets.all(0),
                                               width: 90,
                                               height: 90,
                                               child: Lottie.asset(
@@ -2477,50 +2751,72 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     snapshot.data![index];
                                                 return Container(
                                                   padding:
-                                                      const EdgeInsets.all(5),
+                                                      const EdgeInsets.all(0),
                                                   child: Column(
                                                     children: [
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          // menampilkan list kelas harga di list dan menghilangkan duplikatnya
-                                                          Text(
-                                                            listKelasHarga
-                                                                .toSet()
-                                                                .toList()[index]
-                                                                .toString(),
-                                                            maxLines: 2,
-                                                            style: const TextStyle(
-                                                                fontSize: 14,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
+                                                      Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                                horizontal: 17),
+                                                        child: ElevatedButton(
+                                                          onPressed: () {
+                                                            setState(() {});
+                                                          },
+                                                          style: ElevatedButton.styleFrom(
+                                                              backgroundColor:
+                                                                  Colors.blue
+                                                                      .shade100,
+                                                              shape: RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              50.0))),
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              // menampilkan list kelas harga di list dan menghilangkan duplikatnya
+                                                              Text(
+                                                                listKelasHarga
+                                                                    .toSet()
+                                                                    .toList()[
+                                                                        index]
+                                                                    .toString(),
+                                                                maxLines: 2,
+                                                                style: const TextStyle(
+                                                                    fontSize:
+                                                                        14,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                              //fungsi menampilkan jumlah kelas harga di list
+                                                              Text(
+                                                                listKelasHarga
+                                                                    .where((element) =>
+                                                                        element ==
+                                                                        listKelasHarga
+                                                                            .toSet()
+                                                                            .toList()[index]
+                                                                            .toString())
+                                                                    .length
+                                                                    .toString(),
+                                                                style: const TextStyle(
+                                                                    fontSize:
+                                                                        14,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                            ],
                                                           ),
-                                                          //fungsi menampilkan jumlah kelas harga di list
-                                                          Text(
-                                                            listKelasHarga
-                                                                .where((element) =>
-                                                                    element ==
-                                                                    listKelasHarga
-                                                                        .toSet()
-                                                                        .toList()[
-                                                                            index]
-                                                                        .toString())
-                                                                .length
-                                                                .toString(),
-                                                            style: const TextStyle(
-                                                                fontSize: 14,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                          ),
-                                                        ],
+                                                        ),
                                                       ),
                                                       const Divider(
                                                         thickness: 1,
@@ -2543,7 +2839,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       )),
                                   const Divider(thickness: 5),
                                   Container(
-                                    padding: const EdgeInsets.all(5),
+                                    padding: const EdgeInsets.all(0),
                                     width: 90,
                                     height: 90,
                                     child: Lottie.asset(
@@ -2596,7 +2892,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         )),
                                     const Divider(thickness: 5),
                                     Container(
-                                      padding: const EdgeInsets.all(5),
+                                      padding: const EdgeInsets.all(0),
                                       width: 90,
                                       height: 90,
                                       child: Lottie.asset(
@@ -2606,7 +2902,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 }
                                 if (snapshot.data!.isEmpty) {
                                   return const Column(children: [
-                                    Text('Kelas Harga',
+                                    Text('Summary Report',
                                         style: TextStyle(
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
@@ -2640,7 +2936,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         child: isLoading == false
                                             ? Container(
                                                 padding:
-                                                    const EdgeInsets.all(5),
+                                                    const EdgeInsets.all(0),
                                                 width: 90,
                                                 height: 90,
                                                 child: Lottie.asset(
@@ -2650,46 +2946,68 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 scrollDirection: Axis.vertical,
                                                 child: Container(
                                                   padding:
-                                                      const EdgeInsets.all(5),
+                                                      const EdgeInsets.all(0),
                                                   child: Column(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment.start,
                                                     children: [
                                                       //? SPK
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          const Text(
-                                                            'SPK',
-                                                            maxLines: 2,
-                                                            style: TextStyle(
-                                                                fontSize: 14,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
+                                                      Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                                horizontal: 17),
+                                                        child: ElevatedButton(
+                                                          onPressed: () {
+                                                            setState(() {});
+                                                          },
+                                                          style: ElevatedButton.styleFrom(
+                                                              backgroundColor:
+                                                                  Colors.blue
+                                                                      .shade100,
+                                                              shape: RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              50.0))),
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              const Text(
+                                                                'SPK',
+                                                                maxLines: 2,
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        14,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                              //fungsi menampilkan jumlah SESUAI table
+                                                              Text(
+                                                                '$totalSPK',
+                                                                style: const TextStyle(
+                                                                    fontSize:
+                                                                        14,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                            ],
                                                           ),
-                                                          //fungsi menampilkan jumlah SESUAI table
-                                                          Text(
-                                                            '$totalSPK',
-                                                            style: const TextStyle(
-                                                                fontSize: 14,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                          ),
-                                                        ],
+                                                        ),
                                                       ),
 
                                                       const Padding(
                                                         padding:
                                                             EdgeInsets.only(
-                                                                bottom: 10),
+                                                                bottom: 0),
                                                         child: Divider(
                                                           thickness: 1,
                                                           color: Colors.grey,
@@ -2871,7 +3189,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       )),
                                   const Divider(thickness: 5),
                                   Container(
-                                    padding: const EdgeInsets.all(5),
+                                    padding: const EdgeInsets.all(0),
                                     width: 90,
                                     height: 90,
                                     child: Lottie.asset(
@@ -2886,7 +3204,7 @@ class _HomeScreenState extends State<HomeScreen> {
         Container(
           width: MediaQuery.of(context).size.width * 0.5,
           height: 45,
-          padding: const EdgeInsets.all(5),
+          padding: const EdgeInsets.all(0),
           decoration: BoxDecoration(
               border: Border.all(
                 color: Colors.grey,
@@ -3268,7 +3586,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         )),
                                     const Divider(thickness: 5),
                                     Container(
-                                      padding: const EdgeInsets.all(5),
+                                      padding: const EdgeInsets.all(0),
                                       width: 90,
                                       height: 90,
                                       child: Lottie.asset(
@@ -3311,7 +3629,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Expanded(
                                       child: isLoading == false
                                           ? Container(
-                                              padding: const EdgeInsets.all(5),
+                                              padding: const EdgeInsets.all(0),
                                               width: 90,
                                               height: 90,
                                               child: Lottie.asset(
@@ -3326,47 +3644,69 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     snapshot.data![index];
                                                 return Container(
                                                   padding:
-                                                      const EdgeInsets.all(5),
+                                                      const EdgeInsets.all(0),
                                                   child: Column(
                                                     children: [
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          Text(
-                                                            data.jenisBarang
-                                                                .toString(),
-                                                            style: const TextStyle(
-                                                                fontSize: 14,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
+                                                      Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                                horizontal: 17),
+                                                        child: ElevatedButton(
+                                                          onPressed: () {
+                                                            setState(() {});
+                                                          },
+                                                          style: ElevatedButton.styleFrom(
+                                                              backgroundColor:
+                                                                  Colors.blue
+                                                                      .shade100,
+                                                              shape: RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              50.0))),
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              Text(
+                                                                data.jenisBarang
+                                                                    .toString(),
+                                                                style: const TextStyle(
+                                                                    fontSize:
+                                                                        14,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                              Text(
+                                                                listJenisBarang!
+                                                                    .where((element) =>
+                                                                        element
+                                                                            .jenisBarang
+                                                                            .toString()
+                                                                            .toLowerCase() ==
+                                                                        data.jenisBarang
+                                                                            .toString()
+                                                                            .toLowerCase())
+                                                                    .toList()
+                                                                    .length
+                                                                    .toString(),
+                                                                style: const TextStyle(
+                                                                    fontSize:
+                                                                        14,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                            ],
                                                           ),
-                                                          Text(
-                                                            listJenisBarang!
-                                                                .where((element) =>
-                                                                    element
-                                                                        .jenisBarang
-                                                                        .toString()
-                                                                        .toLowerCase() ==
-                                                                    data.jenisBarang
-                                                                        .toString()
-                                                                        .toLowerCase())
-                                                                .toList()
-                                                                .length
-                                                                .toString(),
-                                                            style: const TextStyle(
-                                                                fontSize: 14,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                          ),
-                                                        ],
+                                                        ),
                                                       ),
                                                       const Divider(
                                                         thickness: 1,
@@ -3389,7 +3729,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       )),
                                   const Divider(thickness: 5),
                                   Container(
-                                    padding: const EdgeInsets.all(5),
+                                    padding: const EdgeInsets.all(0),
                                     width: 90,
                                     height: 90,
                                     child: Lottie.asset(
@@ -3442,7 +3782,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         )),
                                     const Divider(thickness: 5),
                                     Container(
-                                      padding: const EdgeInsets.all(5),
+                                      padding: const EdgeInsets.all(0),
                                       width: 90,
                                       height: 90,
                                       child: Lottie.asset(
@@ -3486,7 +3826,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         child: isLoading == false
                                             ? Container(
                                                 padding:
-                                                    const EdgeInsets.all(5),
+                                                    const EdgeInsets.all(0),
                                                 width: 90,
                                                 height: 90,
                                                 child: Lottie.asset(
@@ -3496,240 +3836,340 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 scrollDirection: Axis.vertical,
                                                 child: Container(
                                                   padding:
-                                                      const EdgeInsets.all(5),
+                                                      const EdgeInsets.all(0),
                                                   child: Column(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment.start,
                                                     children: [
                                                       //? Total SPK
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          const Text(
-                                                            'TOTAL SPK',
-                                                            maxLines: 2,
-                                                            style: TextStyle(
-                                                                fontSize: 18,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
+                                                      Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                                horizontal: 17),
+                                                        child: ElevatedButton(
+                                                          onPressed: () {
+                                                            setState(() {});
+                                                          },
+                                                          style: ElevatedButton.styleFrom(
+                                                              backgroundColor:
+                                                                  Colors.blue
+                                                                      .shade100,
+                                                              shape: RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              50.0))),
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              const Text(
+                                                                'TOTAL SPK',
+                                                                maxLines: 2,
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        18,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                              //fungsi menampilkan jumlah SESUAI table
+                                                              Text(
+                                                                '$totalSPK',
+                                                                style: const TextStyle(
+                                                                    fontSize:
+                                                                        18,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                            ],
                                                           ),
-                                                          //fungsi menampilkan jumlah SESUAI table
-                                                          Text(
-                                                            '$totalSPK',
-                                                            style: const TextStyle(
-                                                                fontSize: 18,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                          ),
-                                                        ],
+                                                        ),
                                                       ),
 
                                                       const Padding(
                                                         padding:
                                                             EdgeInsets.only(
-                                                                bottom: 10),
+                                                                bottom: 0),
                                                         child: Divider(
                                                           thickness: 1,
                                                           color: Colors.grey,
                                                         ),
                                                       ),
                                                       //? SPK PENDING
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          const Text(
-                                                            'SPK Pending',
-                                                            maxLines: 2,
-                                                            style: TextStyle(
-                                                                fontSize: 14,
-                                                                color: Colors
-                                                                    .orange,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
+                                                      Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                                horizontal: 17),
+                                                        child: ElevatedButton(
+                                                          onPressed: () {
+                                                            setState(() {});
+                                                          },
+                                                          style: ElevatedButton.styleFrom(
+                                                              backgroundColor:
+                                                                  Colors.orange,
+                                                              shape: RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              50.0))),
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              const Text(
+                                                                'SPK Pending',
+                                                                maxLines: 2,
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        14,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                              //fungsi menampilkan jumlah SESUAI table
+                                                              Text(
+                                                                '${totalSPK - totalSPKSelesai}',
+                                                                style: const TextStyle(
+                                                                    fontSize:
+                                                                        14,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                            ],
                                                           ),
-                                                          //fungsi menampilkan jumlah SESUAI table
-                                                          Text(
-                                                            '${totalSPK - totalSPKSelesai}',
-                                                            style: const TextStyle(
-                                                                fontSize: 14,
-                                                                color: Colors
-                                                                    .orange,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                          ),
-                                                        ],
+                                                        ),
                                                       ),
 
                                                       const Padding(
                                                         padding:
                                                             EdgeInsets.only(
-                                                                bottom: 10),
+                                                                bottom: 0),
                                                         child: Divider(
                                                           thickness: 1,
                                                           color: Colors.grey,
                                                         ),
                                                       ),
                                                       //? SPK selesai
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          const Text(
-                                                            'SPK Selesai',
-                                                            maxLines: 2,
-                                                            style: TextStyle(
-                                                                fontSize: 14,
-                                                                color: Colors
-                                                                    .green,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
+                                                      Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                                horizontal: 17),
+                                                        child: ElevatedButton(
+                                                          onPressed: () {
+                                                            setState(() {});
+                                                          },
+                                                          style: ElevatedButton.styleFrom(
+                                                              backgroundColor:
+                                                                  Colors.green,
+                                                              shape: RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              50.0))),
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              const Text(
+                                                                'SPK Selesai',
+                                                                maxLines: 2,
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        14,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                              //fungsi menampilkan jumlah SESUAI table
+                                                              Text(
+                                                                '$totalSPKSelesai',
+                                                                style: const TextStyle(
+                                                                    fontSize:
+                                                                        14,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                            ],
                                                           ),
-                                                          //fungsi menampilkan jumlah SESUAI table
-                                                          Text(
-                                                            '$totalSPKSelesai',
-                                                            style: const TextStyle(
-                                                                fontSize: 14,
-                                                                color: Colors
-                                                                    .green,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                          ),
-                                                        ],
+                                                        ),
                                                       ),
 
                                                       const Padding(
                                                         padding:
                                                             EdgeInsets.only(
-                                                                bottom: 10),
+                                                                bottom: 0),
                                                         child: Divider(
                                                           thickness: 1,
                                                           color: Colors.grey,
                                                         ),
                                                       ),
                                                       //? Point Modeller
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          const Text(
-                                                            'Point Modeller',
-                                                            maxLines: 2,
-                                                            style: TextStyle(
-                                                                fontSize: 14,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                          ),
-                                                          //fungsi menampilkan jumlah SESUAI table
-                                                          Text(
-                                                            sharedPreferences!
-                                                                        .getString(
-                                                                            'nama')!
-                                                                        .toString()
-                                                                        .toLowerCase() ==
-                                                                    "arif kurniawan"
-                                                                ? '$pointArif'
-                                                                : sharedPreferences!
+                                                      Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                                horizontal: 17),
+                                                        child: ElevatedButton(
+                                                          onPressed: () {
+                                                            setState(() {});
+                                                          },
+                                                          style: ElevatedButton.styleFrom(
+                                                              backgroundColor:
+                                                                  Colors.blue
+                                                                      .shade100,
+                                                              shape: RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              50.0))),
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              const Text(
+                                                                'Point Modeller',
+                                                                maxLines: 2,
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        14,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                              //fungsi menampilkan jumlah SESUAI table
+                                                              Text(
+                                                                sharedPreferences!
                                                                             .getString(
                                                                                 'nama')!
                                                                             .toString()
                                                                             .toLowerCase() ==
-                                                                        "aris pravidan"
-                                                                    ? '$pointAris'
+                                                                        "arif kurniawan"
+                                                                    ? '$pointArif'
                                                                     : sharedPreferences!.getString('nama')!.toString().toLowerCase() ==
-                                                                            "fikryansyah"
-                                                                        ? '$pointFikri'
-                                                                        : '$pointyuse',
-                                                            style: const TextStyle(
-                                                                fontSize: 14,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
+                                                                            "aris pravidan"
+                                                                        ? '$pointAris'
+                                                                        : sharedPreferences!.getString('nama')!.toString().toLowerCase() ==
+                                                                                "fikryansyah"
+                                                                            ? '$pointFikri'
+                                                                            : '$pointyuse',
+                                                                style: const TextStyle(
+                                                                    fontSize:
+                                                                        14,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                            ],
                                                           ),
-                                                        ],
+                                                        ),
                                                       ),
 
                                                       const Padding(
                                                         padding:
                                                             EdgeInsets.only(
-                                                                bottom: 10),
+                                                                bottom: 0),
                                                         child: Divider(
                                                           thickness: 1,
                                                           color: Colors.grey,
                                                         ),
                                                       ),
-//? berat Modeller
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          const Text(
-                                                            'Berat Modeller',
-                                                            maxLines: 2,
-                                                            style: TextStyle(
-                                                                fontSize: 14,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                          ),
-                                                          //fungsi menampilkan jumlah SESUAI table
-                                                          Text(
-                                                            sharedPreferences!
-                                                                        .getString(
-                                                                            'nama')!
-                                                                        .toString()
-                                                                        .toLowerCase() ==
-                                                                    "arif kurniawan"
-                                                                ? '$beratArif'
-                                                                : sharedPreferences!
+//? berat Modeller//! berat modeller
+                                                      Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                                horizontal: 17),
+                                                        child: ElevatedButton(
+                                                          onPressed: () {
+                                                            setState(() {});
+                                                          },
+                                                          style: ElevatedButton.styleFrom(
+                                                              backgroundColor:
+                                                                  Colors.blue
+                                                                      .shade100,
+                                                              shape: RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              50.0))),
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              const Text(
+                                                                'Berat Modeller',
+                                                                maxLines: 2,
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        14,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                              //fungsi menampilkan jumlah SESUAI table
+                                                              Text(
+                                                                sharedPreferences!
                                                                             .getString(
                                                                                 'nama')!
                                                                             .toString()
                                                                             .toLowerCase() ==
-                                                                        "aris pravidan"
-                                                                    ? '$beratAris'
+                                                                        "arif kurniawan"
+                                                                    ? '$beratArif'
                                                                     : sharedPreferences!.getString('nama')!.toString().toLowerCase() ==
-                                                                            "fikryansyah"
-                                                                        ? '$beratFikri'
-                                                                        : '$beratyuse',
-                                                            style: const TextStyle(
-                                                                fontSize: 14,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
+                                                                            "aris pravidan"
+                                                                        ? '$beratAris'
+                                                                        : sharedPreferences!.getString('nama')!.toString().toLowerCase() ==
+                                                                                "fikryansyah"
+                                                                            ? '$beratFikri'
+                                                                            : '$beratyuse',
+                                                                style: const TextStyle(
+                                                                    fontSize:
+                                                                        14,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                            ],
                                                           ),
-                                                        ],
+                                                        ),
                                                       ),
 
                                                       const Padding(
                                                         padding:
                                                             EdgeInsets.only(
-                                                                bottom: 10),
+                                                                bottom: 0),
                                                         child: Divider(
                                                           thickness: 1,
                                                           color: Colors.grey,
@@ -3790,7 +4230,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       )),
                                   const Divider(thickness: 5),
                                   Container(
-                                    padding: const EdgeInsets.all(5),
+                                    padding: const EdgeInsets.all(0),
                                     width: 90,
                                     height: 90,
                                     child: Lottie.asset(
@@ -3805,7 +4245,7 @@ class _HomeScreenState extends State<HomeScreen> {
         Container(
           width: MediaQuery.of(context).size.width * 0.5,
           height: 45,
-          padding: const EdgeInsets.all(5),
+          padding: const EdgeInsets.all(0),
           decoration: BoxDecoration(
               border: Border.all(
                 color: Colors.grey,
@@ -4185,7 +4625,6 @@ class RowSource extends DataTableSource {
                                                     if (dropdownFormKey
                                                         .currentState!
                                                         .validate()) {
-                                                      print("siklus terisiisi");
                                                       //? method untuk mengganti siklus
                                                       updateSiklusDesigner(
                                                           data.id,
@@ -4206,8 +4645,6 @@ class RowSource extends DataTableSource {
                                                                 ),
                                                               ));
                                                     }
-                                                    print(
-                                                        "siklus tidak di isi");
                                                   },
                                                   child: const Text(
                                                     "Submit",
@@ -4663,8 +5100,6 @@ class RowSource extends DataTableSource {
   }
 
   updateSiklusDesigner(id, siklus) async {
-    print(id);
-    print(siklus);
     Map<String, String> body = {
       'id': id.toString(),
       'siklus': siklus.toString(),

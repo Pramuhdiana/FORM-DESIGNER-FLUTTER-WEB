@@ -115,6 +115,7 @@ class FormDesignerModel {
   String? tanggalOutModeller;
   String? tanggalInProduksi;
   String? beratModeller;
+  String? posisi;
 
   FormDesignerModel({
     this.id,
@@ -222,6 +223,7 @@ class FormDesignerModel {
     this.tanggalOutModeller,
     this.tanggalInProduksi,
     this.beratModeller,
+    this.posisi,
   });
 
   // ignore: avoid_types_as_parameter_names
@@ -332,6 +334,7 @@ class FormDesignerModel {
         tanggalOutModeller: json["tanggalOutModeller"] ?? '',
         tanggalInProduksi: json["tanggalInProduksi"] ?? '',
         beratModeller: (json["beratModeller"] ?? '0').toString(),
+        posisi: (json["posisi"] ?? '').toString(),
       );
 
   Map<String, dynamic> toJson() => {
@@ -440,5 +443,6 @@ class FormDesignerModel {
         "tanggalOutModeller": tanggalOutModeller,
         "tanggalInProduksi": tanggalInProduksi,
         "beratModeller": beratModeller,
+        "posisi": posisi,
       };
 }

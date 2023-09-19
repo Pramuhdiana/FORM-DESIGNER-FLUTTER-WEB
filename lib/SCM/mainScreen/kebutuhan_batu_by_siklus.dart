@@ -837,6 +837,9 @@ class RowSource extends DataTableSource {
       DataCell(FutureBuilder(
           future: _getLotBySize(size),
           builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return const Text('CUSTOM');
+            }
             if (snapshot.hasData) {
               return Text(snapshot.data!.toString());
             } else {
@@ -1364,6 +1367,9 @@ class RowSource extends DataTableSource {
       DataCell(FutureBuilder(
           future: _getStokBySize(size),
           builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return const Text('0');
+            }
             if (snapshot.hasData) {
               return Text(snapshot.data!.toString());
             } else {

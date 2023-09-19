@@ -2571,20 +2571,20 @@ class _FormScreenState extends State<FormScreen> {
             ),
             _imageFile != null
                 ? Container(
-                    width: MediaQuery.of(context).size.width * 1,
-                    height: 350,
+                    width: MediaQuery.of(context).size.width * 0.4,
+                    height: 400,
                     padding: const EdgeInsets.all(2),
                     decoration: BoxDecoration(
-                        color: Colors.black,
+                        color: Colors.white,
                         borderRadius: BorderRadius.circular(10)),
                     child: Image.memory(
                       Uint8List.fromList(_imageFile!.bytes!),
-                      fit: BoxFit.fill,
+                      fit: BoxFit.contain,
                     ),
                   )
                 : Container(
-                    width: MediaQuery.of(context).size.width * 1,
-                    height: 350,
+                    width: MediaQuery.of(context).size.width * 0.4,
+                    height: 400,
                     padding: const EdgeInsets.only(top: 18),
                     decoration: BoxDecoration(
                         color: Colors.grey.shade200,

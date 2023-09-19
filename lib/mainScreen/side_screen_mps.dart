@@ -12,15 +12,15 @@ import '../calculatePricing/list_calculate_pricing_screen.dart';
 import '../global/global.dart';
 import 'login.dart';
 
-class MainViewFormDesign extends StatefulWidget {
-  const MainViewFormDesign({Key? key}) : super(key: key);
+class MainViewMps extends StatefulWidget {
+  const MainViewMps({Key? key}) : super(key: key);
 
   @override
   // ignore: library_private_types_in_public_api
-  _MainViewFormDesignState createState() => _MainViewFormDesignState();
+  _MainViewMpsState createState() => _MainViewMpsState();
 }
 
-class _MainViewFormDesignState extends State<MainViewFormDesign> {
+class _MainViewMpsState extends State<MainViewMps> {
   List<Widget> views = [
     //? 0
     const HomeScreen(),
@@ -50,7 +50,7 @@ class _MainViewFormDesignState extends State<MainViewFormDesign> {
 
   final _formKey = GlobalKey<FormState>();
 
-  int selectedIndex = 1;
+  int selectedIndex = 3;
   bool isKodeAkses = false;
   TextEditingController kodeAkses = TextEditingController();
 
