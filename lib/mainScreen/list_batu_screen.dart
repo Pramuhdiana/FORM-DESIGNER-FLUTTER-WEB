@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:form_designer/mainScreen/form_screen_by_id.dart';
 import 'package:form_designer/mainScreen/side_screen_batu.dart';
 import 'package:http/http.dart' as http;
+import 'package:lottie/lottie.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 import '../api/api_constant.dart';
@@ -126,7 +127,15 @@ class _ListBatuScreenState extends State<ListBatuScreen> {
                           value: _switchValue,
                           onChanged: (value) async {
                             setState(() {
-                              _switchValue = value;
+                              isLoading = false;
+                            });
+                            _switchValue = value;
+                            Future.delayed(const Duration(seconds: 2))
+                                .then((value) {
+                              //! lalu eksekusi fungsi ini
+                              setState(() {
+                                isLoading = true;
+                              });
                             });
                           },
                         ),
@@ -160,490 +169,515 @@ class _ListBatuScreenState extends State<ListBatuScreen> {
                 ],
               ),
         body: _switchValue != true
-            ? isLoading == false
-                ? const Center(child: CircularProgressIndicator())
-                : Container(
-                    padding: const EdgeInsets.only(top: 25),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.5,
-                          height: 45,
-                          padding: const EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Colors.grey,
-                              ),
-                              borderRadius: BorderRadius.circular(12)),
-                          child: Align(
-                            alignment: Alignment.bottomCenter,
-                            child: TextField(
-                              textAlign: TextAlign.center,
-                              controller: controller,
-                              decoration: const InputDecoration(
-                                  hintText: "Search Anything ..."),
-                              onChanged: (value) {
-                                //fungsi search anyting
-                                _listBatu = filterListBatu!
-                                    .where((element) =>
-                                        element.lot!
-                                            .toLowerCase()
-                                            .contains(value.toLowerCase()) ||
-                                        element.size
-                                            .toLowerCase()
-                                            .contains(value.toLowerCase()) ||
-                                        element.parcel!
-                                            .toLowerCase()
-                                            .contains(value.toLowerCase()) ||
-                                        element.qty!
-                                            .toString()
-                                            .contains(value.toLowerCase()))
-                                    .toList();
-
-                                setState(() {});
-                              },
-                            ),
+            ? Container(
+                padding: const EdgeInsets.only(top: 25),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.5,
+                      height: 45,
+                      padding: const EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.grey,
                           ),
+                          borderRadius: BorderRadius.circular(12)),
+                      child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: TextField(
+                          textAlign: TextAlign.center,
+                          controller: controller,
+                          decoration: const InputDecoration(
+                              hintText: "Search Anything ..."),
+                          onChanged: (value) {
+                            //fungsi search anyting
+                            _listBatu = filterListBatu!
+                                .where((element) =>
+                                    element.lot!
+                                        .toLowerCase()
+                                        .contains(value.toLowerCase()) ||
+                                    element.size
+                                        .toLowerCase()
+                                        .contains(value.toLowerCase()) ||
+                                    element.parcel!
+                                        .toLowerCase()
+                                        .contains(value.toLowerCase()) ||
+                                    element.qty!
+                                        .toString()
+                                        .contains(value.toLowerCase()))
+                                .toList();
+
+                            setState(() {});
+                          },
                         ),
-                        Expanded(
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.vertical,
-                            child: Container(
-                              padding: const EdgeInsets.all(15),
-                              width: MediaQuery.of(context).size.width * 1,
-                              child: SizedBox(
-                                width: double.infinity,
-                                child: Theme(
-                                  data: ThemeData.light().copyWith(
-                                      // cardColor: Theme.of(context).canvasColor),
-                                      cardColor: Colors.white,
-                                      hoverColor: Colors.grey.shade400,
-                                      dividerColor: Colors.grey),
-                                  child: PaginatedDataTable(
-                                      sortColumnIndex: _currentSortColumn,
-                                      sortAscending: sort,
-                                      rowsPerPage: 25,
-                                      columnSpacing: 0,
-                                      columns: [
-                                        // LOT
-                                        DataColumn(
-                                            label: const SizedBox(
+                      ),
+                    ),
+                    isLoading == false
+                        ? Expanded(
+                            child: Center(
+                                child: Container(
+                            padding: const EdgeInsets.all(5),
+                            width: 90,
+                            height: 90,
+                            child: Lottie.asset("loadingJSON/loadingV1.json"),
+                          )))
+                        : Expanded(
+                            child: SingleChildScrollView(
+                              scrollDirection: Axis.vertical,
+                              child: Container(
+                                padding: const EdgeInsets.all(15),
+                                width: MediaQuery.of(context).size.width * 1,
+                                child: SizedBox(
+                                  width: double.infinity,
+                                  child: Theme(
+                                    data: ThemeData.light().copyWith(
+                                        // cardColor: Theme.of(context).canvasColor),
+                                        cardColor: Colors.white,
+                                        hoverColor: Colors.grey.shade400,
+                                        dividerColor: Colors.grey),
+                                    child: PaginatedDataTable(
+                                        sortColumnIndex: _currentSortColumn,
+                                        sortAscending: sort,
+                                        rowsPerPage: 25,
+                                        columnSpacing: 0,
+                                        columns: [
+                                          // LOT
+                                          DataColumn(
+                                              label: const SizedBox(
+                                                  width: 120,
+                                                  child: Text(
+                                                    "LOT",
+                                                    style: TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  )),
+                                              onSort: (columnIndex, _) {
+                                                setState(() {
+                                                  _currentSortColumn =
+                                                      columnIndex;
+                                                  if (sort == true) {
+                                                    sort = false;
+                                                    filterListBatu!.sort(
+                                                        (a, b) => a
+                                                            .lot!
+                                                            .toLowerCase()
+                                                            .compareTo(b.lot!
+                                                                .toLowerCase()));
+                                                  } else {
+                                                    sort = true;
+                                                    filterListBatu!.sort(
+                                                        (a, b) => b
+                                                            .lot!
+                                                            .toLowerCase()
+                                                            .compareTo(a.lot!
+                                                                .toLowerCase()));
+                                                  }
+                                                });
+                                              }),
+                                          DataColumn(label: _verticalDivider),
+                                          //UKURAN
+                                          DataColumn(
+                                              label: const SizedBox(
+                                                  width: 120,
+                                                  child: Text(
+                                                    "UKURAN",
+                                                    style: TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  )),
+                                              onSort: (columnIndex, _) {
+                                                setState(() {
+                                                  _currentSortColumn =
+                                                      columnIndex;
+                                                  if (sort == true) {
+                                                    sort = false;
+                                                    filterListBatu!.sort(
+                                                        (a, b) => a
+                                                            .size
+                                                            .toLowerCase()
+                                                            .compareTo(b.size
+                                                                .toLowerCase()));
+                                                  } else {
+                                                    sort = true;
+                                                    filterListBatu!.sort(
+                                                        (a, b) => b
+                                                            .size
+                                                            .toLowerCase()
+                                                            .compareTo(a.size
+                                                                .toLowerCase()));
+                                                  }
+                                                });
+                                              }),
+                                          DataColumn(label: _verticalDivider),
+                                          //PARCEL
+                                          DataColumn(
+                                              label: const SizedBox(
+                                                  width: 120,
+                                                  child: Text(
+                                                    "PARCEL",
+                                                    style: TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  )),
+                                              onSort: (columnIndex, _) {
+                                                setState(() {
+                                                  _currentSortColumn =
+                                                      columnIndex;
+                                                  if (sort == true) {
+                                                    sort = false;
+                                                    filterListBatu!.sort(
+                                                        (a, b) => a
+                                                            .parcel!
+                                                            .toLowerCase()
+                                                            .compareTo(b.parcel!
+                                                                .toLowerCase()));
+                                                  } else {
+                                                    sort = true;
+                                                    filterListBatu!.sort(
+                                                        (a, b) => b
+                                                            .parcel!
+                                                            .toLowerCase()
+                                                            .compareTo(a.parcel!
+                                                                .toLowerCase()));
+                                                  }
+                                                });
+                                              }),
+                                          DataColumn(label: _verticalDivider),
+                                          //* carat / cps
+                                          const DataColumn(
+                                            label: SizedBox(
                                                 width: 120,
                                                 child: Text(
-                                                  "LOT",
+                                                  "CARAT PER PCS",
                                                   style: TextStyle(
                                                       fontSize: 15,
                                                       fontWeight:
                                                           FontWeight.bold),
                                                 )),
-                                            onSort: (columnIndex, _) {
-                                              setState(() {
-                                                _currentSortColumn =
-                                                    columnIndex;
-                                                if (sort == true) {
-                                                  sort = false;
-                                                  filterListBatu!.sort((a, b) =>
-                                                      a.lot!
-                                                          .toLowerCase()
-                                                          .compareTo(b.lot!
-                                                              .toLowerCase()));
-                                                } else {
-                                                  sort = true;
-                                                  filterListBatu!.sort((a, b) =>
-                                                      b.lot!
-                                                          .toLowerCase()
-                                                          .compareTo(a.lot!
-                                                              .toLowerCase()));
-                                                }
-                                              });
-                                            }),
-                                        DataColumn(label: _verticalDivider),
-                                        //UKURAN
-                                        DataColumn(
-                                            label: const SizedBox(
-                                                width: 120,
-                                                child: Text(
-                                                  "UKURAN",
-                                                  style: TextStyle(
-                                                      fontSize: 15,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                )),
-                                            onSort: (columnIndex, _) {
-                                              setState(() {
-                                                _currentSortColumn =
-                                                    columnIndex;
-                                                if (sort == true) {
-                                                  sort = false;
-                                                  filterListBatu!.sort((a, b) =>
-                                                      a.size
-                                                          .toLowerCase()
-                                                          .compareTo(b.size
-                                                              .toLowerCase()));
-                                                } else {
-                                                  sort = true;
-                                                  filterListBatu!.sort((a, b) =>
-                                                      b.size
-                                                          .toLowerCase()
-                                                          .compareTo(a.size
-                                                              .toLowerCase()));
-                                                }
-                                              });
-                                            }),
-                                        DataColumn(label: _verticalDivider),
-                                        //PARCEL
-                                        DataColumn(
-                                            label: const SizedBox(
-                                                width: 120,
-                                                child: Text(
-                                                  "PARCEL",
-                                                  style: TextStyle(
-                                                      fontSize: 15,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                )),
-                                            onSort: (columnIndex, _) {
-                                              setState(() {
-                                                _currentSortColumn =
-                                                    columnIndex;
-                                                if (sort == true) {
-                                                  sort = false;
-                                                  filterListBatu!.sort((a, b) =>
-                                                      a.parcel!
-                                                          .toLowerCase()
-                                                          .compareTo(b.parcel!
-                                                              .toLowerCase()));
-                                                } else {
-                                                  sort = true;
-                                                  filterListBatu!.sort((a, b) =>
-                                                      b.parcel!
-                                                          .toLowerCase()
-                                                          .compareTo(a.parcel!
-                                                              .toLowerCase()));
-                                                }
-                                              });
-                                            }),
-                                        DataColumn(label: _verticalDivider),
-                                        //* carat / cps
-                                        const DataColumn(
-                                          label: SizedBox(
-                                              width: 120,
-                                              child: Text(
-                                                "CARAT PER PCS",
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              )),
-                                          // onSort: (columnIndex, _) {
-                                          //   setState(() {
-                                          //     _currentSortColumn =
-                                          //         columnIndex;
-                                          //     if (sort == true) {
-                                          //       sort = false;
-                                          //       filterListBatu!.sort((a, b) =>
-                                          //           a.parcel!
-                                          //               .toLowerCase()
-                                          //               .compareTo(b.parcel!
-                                          //                   .toLowerCase()));
-                                          //     } else {
-                                          //       sort = true;
-                                          //       filterListBatu!.sort((a, b) =>
-                                          //           b.parcel!
-                                          //               .toLowerCase()
-                                          //               .compareTo(a.parcel!
-                                          //                   .toLowerCase()));
-                                          //     }
-                                          //   });
-                                          // }
-                                        ),
-                                        DataColumn(label: _verticalDivider),
-                                        //QTY
-                                        DataColumn(
-                                            label: const SizedBox(
-                                                width: 120,
-                                                child: Text(
-                                                  "QTY",
-                                                  style: TextStyle(
-                                                      fontSize: 15,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                )),
-                                            onSort: (columnIndex, _) {
-                                              setState(() {
-                                                _currentSortColumn =
-                                                    columnIndex;
-                                                if (sort == true) {
-                                                  sort = false;
-                                                  filterListBatu!.sort((a, b) =>
-                                                      b.qty!.compareTo(a.qty!));
-                                                } else {
-                                                  sort = true;
-                                                  filterListBatu!.sort((a, b) =>
-                                                      a.qty!.compareTo(b.qty!));
-                                                }
-                                              });
-                                            }),
-                                        sharedPreferences!.getString('level') !=
-                                                '1'
-                                            ? const DataColumn(
-                                                label: SizedBox())
-                                            : DataColumn(
-                                                label: _verticalDivider),
-                                        //AKSI
-                                        sharedPreferences!.getString('level') !=
-                                                '1'
-                                            ? const DataColumn(
-                                                label: SizedBox())
-                                            : DataColumn(
-                                                label: Container(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            left: 30),
-                                                    width: 120,
-                                                    child: const Text(
-                                                      "AKSI",
-                                                      style: TextStyle(
-                                                          fontSize: 15,
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                    )),
-                                              ),
-                                      ],
-                                      source:
-                                          // UserDataTableSource(userData: filterCrm!)),
-                                          RowSource(
-                                              myData: _listBatu,
-                                              count: _listBatu!.length)),
+                                            // onSort: (columnIndex, _) {
+                                            //   setState(() {
+                                            //     _currentSortColumn =
+                                            //         columnIndex;
+                                            //     if (sort == true) {
+                                            //       sort = false;
+                                            //       filterListBatu!.sort((a, b) =>
+                                            //           a.parcel!
+                                            //               .toLowerCase()
+                                            //               .compareTo(b.parcel!
+                                            //                   .toLowerCase()));
+                                            //     } else {
+                                            //       sort = true;
+                                            //       filterListBatu!.sort((a, b) =>
+                                            //           b.parcel!
+                                            //               .toLowerCase()
+                                            //               .compareTo(a.parcel!
+                                            //                   .toLowerCase()));
+                                            //     }
+                                            //   });
+                                            // }
+                                          ),
+                                          DataColumn(label: _verticalDivider),
+                                          //QTY
+                                          DataColumn(
+                                              label: const SizedBox(
+                                                  width: 120,
+                                                  child: Text(
+                                                    "QTY",
+                                                    style: TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  )),
+                                              onSort: (columnIndex, _) {
+                                                setState(() {
+                                                  _currentSortColumn =
+                                                      columnIndex;
+                                                  if (sort == true) {
+                                                    sort = false;
+                                                    filterListBatu!.sort(
+                                                        (a, b) => b.qty!
+                                                            .compareTo(a.qty!));
+                                                  } else {
+                                                    sort = true;
+                                                    filterListBatu!.sort(
+                                                        (a, b) => a.qty!
+                                                            .compareTo(b.qty!));
+                                                  }
+                                                });
+                                              }),
+                                          sharedPreferences!
+                                                      .getString('level') !=
+                                                  '1'
+                                              ? const DataColumn(
+                                                  label: SizedBox())
+                                              : DataColumn(
+                                                  label: _verticalDivider),
+                                          //AKSI
+                                          sharedPreferences!
+                                                      .getString('level') !=
+                                                  '1'
+                                              ? const DataColumn(
+                                                  label: SizedBox())
+                                              : DataColumn(
+                                                  label: Container(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 30),
+                                                      width: 120,
+                                                      child: const Text(
+                                                        "AKSI",
+                                                        style: TextStyle(
+                                                            fontSize: 15,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      )),
+                                                ),
+                                        ],
+                                        source:
+                                            // UserDataTableSource(userData: filterCrm!)),
+                                            RowSource(
+                                                myData: _listBatu,
+                                                count: _listBatu!.length)),
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        )
-                      ],
-                    ),
-                  )
+                          )
+                  ],
+                ),
+              )
             //? mode 2 (batu yang harus dibeli)
-            : isLoading == false
-                ? const Center(child: CircularProgressIndicator())
-                : Container(
-                    padding: const EdgeInsets.only(top: 25),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.5,
-                          height: 45,
-                          padding: const EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Colors.grey,
-                              ),
-                              borderRadius: BorderRadius.circular(12)),
-                          child: Align(
-                            alignment: Alignment.bottomCenter,
-                            child: TextField(
-                              textAlign: TextAlign.center,
-                              controller: controller,
-                              decoration: const InputDecoration(
-                                  hintText: "Search Anything ..."),
-                              onChanged: (value) {
-                                //fungsi search anyting
-                                _listBatuMode2 = filterListBatuMode2!
-                                    .where((element) =>
-                                        element.lot!
-                                            .toLowerCase()
-                                            .contains(value.toLowerCase()) ||
-                                        element.size
-                                            .toLowerCase()
-                                            .contains(value.toLowerCase()) ||
-                                        element.parcel!
-                                            .toLowerCase()
-                                            .contains(value.toLowerCase()) ||
-                                        element.qty!
-                                            .toString()
-                                            .contains(value.toLowerCase()))
-                                    .toList();
-
-                                setState(() {});
-                              },
-                            ),
+            : Container(
+                padding: const EdgeInsets.only(top: 25),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.5,
+                      height: 45,
+                      padding: const EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.grey,
                           ),
+                          borderRadius: BorderRadius.circular(12)),
+                      child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: TextField(
+                          textAlign: TextAlign.center,
+                          controller: controller,
+                          decoration: const InputDecoration(
+                              hintText: "Search Anything ..."),
+                          onChanged: (value) {
+                            //fungsi search anyting
+                            _listBatuMode2 = filterListBatuMode2!
+                                .where((element) =>
+                                    element.lot!
+                                        .toLowerCase()
+                                        .contains(value.toLowerCase()) ||
+                                    element.size
+                                        .toLowerCase()
+                                        .contains(value.toLowerCase()) ||
+                                    element.parcel!
+                                        .toLowerCase()
+                                        .contains(value.toLowerCase()) ||
+                                    element.qty!
+                                        .toString()
+                                        .contains(value.toLowerCase()))
+                                .toList();
+
+                            setState(() {});
+                          },
                         ),
-                        Expanded(
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.vertical,
-                            child: Container(
-                              padding: const EdgeInsets.all(15),
-                              width: MediaQuery.of(context).size.width * 1,
-                              child: SizedBox(
-                                width: double.infinity,
-                                child: Theme(
-                                  data: ThemeData.light().copyWith(
-                                      // cardColor: Theme.of(context).canvasColor),
-                                      cardColor: Colors.white,
-                                      hoverColor: Colors.grey.shade400,
-                                      dividerColor: Colors.grey),
-                                  child: PaginatedDataTable(
-                                      sortColumnIndex: _currentSortColumn,
-                                      sortAscending: sort,
-                                      rowsPerPage: 25,
-                                      columnSpacing: 0,
-                                      columns: [
-                                        // LOT
-                                        DataColumn(
-                                            label: const SizedBox(
-                                                width: 120,
-                                                child: Text(
-                                                  "LOT",
-                                                  style: TextStyle(
-                                                      fontSize: 15,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                )),
-                                            onSort: (columnIndex, _) {
-                                              setState(() {
-                                                _currentSortColumn =
-                                                    columnIndex;
-                                                if (sort == true) {
-                                                  sort = false;
-                                                  filterListBatuMode2!.sort(
-                                                      (a, b) => a.lot!
-                                                          .toLowerCase()
-                                                          .compareTo(b.lot!
-                                                              .toLowerCase()));
-                                                } else {
-                                                  sort = true;
-                                                  filterListBatuMode2!.sort(
-                                                      (a, b) => b.lot!
-                                                          .toLowerCase()
-                                                          .compareTo(a.lot!
-                                                              .toLowerCase()));
-                                                }
-                                              });
-                                            }),
-                                        DataColumn(label: _verticalDivider),
-                                        //UKURAN
-                                        DataColumn(
-                                            label: const SizedBox(
-                                                width: 120,
-                                                child: Text(
-                                                  "UKURAN",
-                                                  style: TextStyle(
-                                                      fontSize: 15,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                )),
-                                            onSort: (columnIndex, _) {
-                                              setState(() {
-                                                _currentSortColumn =
-                                                    columnIndex;
-                                                if (sort == true) {
-                                                  sort = false;
-                                                  filterListBatuMode2!.sort(
-                                                      (a, b) => a.size
-                                                          .toLowerCase()
-                                                          .compareTo(b.size
-                                                              .toLowerCase()));
-                                                } else {
-                                                  sort = true;
-                                                  filterListBatuMode2!.sort(
-                                                      (a, b) => b.size
-                                                          .toLowerCase()
-                                                          .compareTo(a.size
-                                                              .toLowerCase()));
-                                                }
-                                              });
-                                            }),
-                                        DataColumn(label: _verticalDivider),
-                                        //PARCEL
-                                        DataColumn(
-                                            label: const SizedBox(
-                                                width: 120,
-                                                child: Text(
-                                                  "PARCEL",
-                                                  style: TextStyle(
-                                                      fontSize: 15,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                )),
-                                            onSort: (columnIndex, _) {
-                                              setState(() {
-                                                _currentSortColumn =
-                                                    columnIndex;
-                                                if (sort == true) {
-                                                  sort = false;
-                                                  filterListBatuMode2!.sort(
-                                                      (a, b) => a.parcel!
-                                                          .toLowerCase()
-                                                          .compareTo(b.parcel!
-                                                              .toLowerCase()));
-                                                } else {
-                                                  sort = true;
-                                                  filterListBatuMode2!.sort(
-                                                      (a, b) => b.parcel!
-                                                          .toLowerCase()
-                                                          .compareTo(a.parcel!
-                                                              .toLowerCase()));
-                                                }
-                                              });
-                                            }),
-                                        DataColumn(label: _verticalDivider),
-                                        //QTY
-                                        DataColumn(
-                                            label: const SizedBox(
-                                                width: 120,
-                                                child: Text(
-                                                  "QTY",
-                                                  style: TextStyle(
-                                                      fontSize: 15,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                )),
-                                            onSort: (columnIndex, _) {
-                                              setState(() {
-                                                _currentSortColumn =
-                                                    columnIndex;
-                                                if (sort == true) {
-                                                  sort = false;
-                                                  filterListBatuMode2!.sort((a,
-                                                          b) =>
-                                                      b.qty!.compareTo(a.qty!));
-                                                } else {
-                                                  sort = true;
-                                                  filterListBatuMode2!.sort((a,
-                                                          b) =>
-                                                      a.qty!.compareTo(b.qty!));
-                                                }
-                                              });
-                                            }),
-                                        // DataColumn(label: _verticalDivider),
-                                        // //AKSI
-                                        // DataColumn(
-                                        //   label: Container(
-                                        //       padding:
-                                        //           const EdgeInsets.only(left: 30),
-                                        //       width: 120,
-                                        //       child: const Text(
-                                        //         "Aksi",
-                                        //         style: TextStyle(
-                                        //             fontSize: 15,
-                                        //             fontWeight: FontWeight.bold),
-                                        //       )),
-                                        // ),
-                                      ],
-                                      source: RowSourceMode2(
-                                          myData: _listBatuMode2,
-                                          count: _listBatuMode2!.length)),
+                      ),
+                    ),
+                    isLoading == false
+                        ? Expanded(
+                            child: Center(
+                                child: Container(
+                            padding: const EdgeInsets.all(5),
+                            width: 90,
+                            height: 90,
+                            child: Lottie.asset("loadingJSON/loadingV1.json"),
+                          )))
+                        : Expanded(
+                            child: SingleChildScrollView(
+                              scrollDirection: Axis.vertical,
+                              child: Container(
+                                padding: const EdgeInsets.all(15),
+                                width: MediaQuery.of(context).size.width * 1,
+                                child: SizedBox(
+                                  width: double.infinity,
+                                  child: Theme(
+                                    data: ThemeData.light().copyWith(
+                                        // cardColor: Theme.of(context).canvasColor),
+                                        cardColor: Colors.white,
+                                        hoverColor: Colors.grey.shade400,
+                                        dividerColor: Colors.grey),
+                                    child: PaginatedDataTable(
+                                        sortColumnIndex: _currentSortColumn,
+                                        sortAscending: sort,
+                                        rowsPerPage: 25,
+                                        columnSpacing: 0,
+                                        columns: [
+                                          // LOT
+                                          DataColumn(
+                                              label: const SizedBox(
+                                                  width: 120,
+                                                  child: Text(
+                                                    "LOT",
+                                                    style: TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  )),
+                                              onSort: (columnIndex, _) {
+                                                setState(() {
+                                                  _currentSortColumn =
+                                                      columnIndex;
+                                                  if (sort == true) {
+                                                    sort = false;
+                                                    filterListBatuMode2!.sort(
+                                                        (a, b) => a.lot!
+                                                            .toLowerCase()
+                                                            .compareTo(b.lot!
+                                                                .toLowerCase()));
+                                                  } else {
+                                                    sort = true;
+                                                    filterListBatuMode2!.sort(
+                                                        (a, b) => b.lot!
+                                                            .toLowerCase()
+                                                            .compareTo(a.lot!
+                                                                .toLowerCase()));
+                                                  }
+                                                });
+                                              }),
+                                          DataColumn(label: _verticalDivider),
+                                          //UKURAN
+                                          DataColumn(
+                                              label: const SizedBox(
+                                                  width: 120,
+                                                  child: Text(
+                                                    "UKURAN",
+                                                    style: TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  )),
+                                              onSort: (columnIndex, _) {
+                                                setState(() {
+                                                  _currentSortColumn =
+                                                      columnIndex;
+                                                  if (sort == true) {
+                                                    sort = false;
+                                                    filterListBatuMode2!.sort(
+                                                        (a, b) => a.size
+                                                            .toLowerCase()
+                                                            .compareTo(b.size
+                                                                .toLowerCase()));
+                                                  } else {
+                                                    sort = true;
+                                                    filterListBatuMode2!.sort(
+                                                        (a, b) => b.size
+                                                            .toLowerCase()
+                                                            .compareTo(a.size
+                                                                .toLowerCase()));
+                                                  }
+                                                });
+                                              }),
+                                          DataColumn(label: _verticalDivider),
+                                          //PARCEL
+                                          DataColumn(
+                                              label: const SizedBox(
+                                                  width: 120,
+                                                  child: Text(
+                                                    "PARCEL",
+                                                    style: TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  )),
+                                              onSort: (columnIndex, _) {
+                                                setState(() {
+                                                  _currentSortColumn =
+                                                      columnIndex;
+                                                  if (sort == true) {
+                                                    sort = false;
+                                                    filterListBatuMode2!.sort(
+                                                        (a, b) => a.parcel!
+                                                            .toLowerCase()
+                                                            .compareTo(b.parcel!
+                                                                .toLowerCase()));
+                                                  } else {
+                                                    sort = true;
+                                                    filterListBatuMode2!.sort(
+                                                        (a, b) => b.parcel!
+                                                            .toLowerCase()
+                                                            .compareTo(a.parcel!
+                                                                .toLowerCase()));
+                                                  }
+                                                });
+                                              }),
+                                          DataColumn(label: _verticalDivider),
+                                          //QTY
+                                          DataColumn(
+                                              label: const SizedBox(
+                                                  width: 120,
+                                                  child: Text(
+                                                    "QTY",
+                                                    style: TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  )),
+                                              onSort: (columnIndex, _) {
+                                                setState(() {
+                                                  _currentSortColumn =
+                                                      columnIndex;
+                                                  if (sort == true) {
+                                                    sort = false;
+                                                    filterListBatuMode2!.sort(
+                                                        (a, b) => b.qty!
+                                                            .compareTo(a.qty!));
+                                                  } else {
+                                                    sort = true;
+                                                    filterListBatuMode2!.sort(
+                                                        (a, b) => a.qty!
+                                                            .compareTo(b.qty!));
+                                                  }
+                                                });
+                                              }),
+                                          // DataColumn(label: _verticalDivider),
+                                          // //AKSI
+                                          // DataColumn(
+                                          //   label: Container(
+                                          //       padding:
+                                          //           const EdgeInsets.only(left: 30),
+                                          //       width: 120,
+                                          //       child: const Text(
+                                          //         "Aksi",
+                                          //         style: TextStyle(
+                                          //             fontSize: 15,
+                                          //             fontWeight: FontWeight.bold),
+                                          //       )),
+                                          // ),
+                                        ],
+                                        source: RowSourceMode2(
+                                            myData: _listBatuMode2,
+                                            count: _listBatuMode2!.length)),
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
+                          )
+                  ],
+                ),
+              ),
         floatingActionButton: sharedPreferences!.getString('level') != '1'
             ? null
             : _switchValue == true

@@ -534,45 +534,6 @@ class _ListKebutuhanBatuScreenState extends State<ListKebutuhanBatuScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              // Container(
-              //   width: MediaQuery.of(context).size.width * 0.5,
-              //   height: 45,
-              //   padding: const EdgeInsets.all(5),
-              //   decoration: BoxDecoration(
-              //       border: Border.all(
-              //         color: Colors.grey,
-              //       ),
-              //       borderRadius: BorderRadius.circular(12)),
-              //   child: Align(
-              //     alignment: Alignment.bottomCenter,
-              //     child: TextField(
-              //       textAlign: TextAlign.center,
-              //       controller: controller,
-              //       decoration:
-              //           const InputDecoration(hintText: "Pilih Siklus"),
-              //       onChanged: (value) {
-              //         //fungsi search anyting
-              //         // _listBatu = filterListBatu!
-              //         //     .where((element) =>
-              //         //         element.lot!
-              //         //             .toLowerCase()
-              //         //             .contains(value.toLowerCase()) ||
-              //         //         element.size
-              //         //             .toLowerCase()
-              //         //             .contains(value.toLowerCase()) ||
-              //         //         element.parcel!
-              //         //             .toLowerCase()
-              //         //             .contains(value.toLowerCase()) ||
-              //         //         element.qty!
-              //         //             .toString()
-              //         //             .contains(value.toLowerCase()))
-              //         //     .toList();
-
-              //         // setState(() {});
-              //       },
-              //     ),
-              //   ),
-              // ),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 1),
                 width: MediaQuery.of(context).size.width * 0.5,

@@ -13,6 +13,7 @@ import 'package:form_designer/mainScreen/form_view_screen.dart';
 import 'package:form_designer/mainScreen/side_screen_design.dart';
 import 'package:form_designer/model/form_designer_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:lottie/lottie.dart';
 
 import '../api/api_constant.dart';
 import '../global/global.dart';
@@ -160,102 +161,108 @@ class _ListDesignerScreenState extends State<ListDesignerScreen> {
                 ),
                 centerTitle: true,
               ),
-              body: isLoading == false
-                  ? const Center(child: CircularProgressIndicator())
-                  : Container(
-                      padding: const EdgeInsets.only(top: 25),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.only(bottom: 20),
-                            width: MediaQuery.of(context).size.width * 0.5,
-                            child: DropdownSearch<String>(
-                              items: const [
-                                "JANUARI",
-                                "FEBRUARI",
-                                "MARET",
-                                "APRIL",
-                                "MEI",
-                                "JUNI",
-                                "JULI",
-                                "AGUSTUS",
-                                "SEPTEMBER",
-                                "OKTOBER",
-                                "NOVEMBER",
-                                "DESEMBER"
-                              ],
-                              onChanged: (item) {
-                                setState(() {
-                                  siklus.text = item!;
-                                  siklusDesigner = siklus.text.toString();
-                                  _getDataBySiklus(siklus.text);
-                                });
-                              },
-                              popupProps: const PopupPropsMultiSelection
-                                  .modalBottomSheet(
-                                showSelectedItems: true,
-                                showSearchBox: true,
-                              ),
-                              dropdownDecoratorProps:
-                                  const DropDownDecoratorProps(
-                                dropdownSearchDecoration: InputDecoration(
-                                  labelText: "Pilih Siklus",
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                ),
-                              ),
-                            ),
+              body: Container(
+                padding: const EdgeInsets.only(top: 25),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.only(bottom: 20),
+                      width: MediaQuery.of(context).size.width * 0.5,
+                      child: DropdownSearch<String>(
+                        items: const [
+                          "JANUARI",
+                          "FEBRUARI",
+                          "MARET",
+                          "APRIL",
+                          "MEI",
+                          "JUNI",
+                          "JULI",
+                          "AGUSTUS",
+                          "SEPTEMBER",
+                          "OKTOBER",
+                          "NOVEMBER",
+                          "DESEMBER"
+                        ],
+                        onChanged: (item) {
+                          setState(() {
+                            siklus.text = item!;
+                            siklusDesigner = siklus.text.toString();
+                            _getDataBySiklus(siklus.text);
+                          });
+                        },
+                        popupProps:
+                            const PopupPropsMultiSelection.modalBottomSheet(
+                          showSelectedItems: true,
+                          showSearchBox: true,
+                        ),
+                        dropdownDecoratorProps: const DropDownDecoratorProps(
+                          dropdownSearchDecoration: InputDecoration(
+                            labelText: "Pilih Siklus",
+                            filled: true,
+                            fillColor: Colors.white,
                           ),
-                          Container(
-                            width: MediaQuery.of(context).size.width * 0.5,
-                            height: 45,
-                            padding: const EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.grey,
-                                ),
-                                borderRadius: BorderRadius.circular(12)),
-                            child: Align(
-                              alignment: Alignment.bottomCenter,
-                              child: TextField(
-                                textAlign: TextAlign.center,
-                                controller: controller,
-                                decoration: const InputDecoration(
-                                    hintText: "Search Anything ..."),
-                                onChanged: (value) {
-                                  //fungsi search anyting
-                                  myCrm = filterCrm!
-                                      .where((element) =>
-                                          element.kodeDesignMdbc!
-                                              .toLowerCase()
-                                              .contains(value.toLowerCase()) ||
-                                          element.namaDesigner!
-                                              .toLowerCase()
-                                              .contains(value.toLowerCase()) ||
-                                          element.kodeMarketing!
-                                              .toLowerCase()
-                                              .contains(value.toLowerCase()) ||
-                                          element.kodeDesign!
-                                              .toLowerCase()
-                                              .contains(value.toLowerCase()) ||
-                                          element.tema!
-                                              .toLowerCase()
-                                              .contains(value.toLowerCase()) ||
-                                          element.jenisBarang!
-                                              .toLowerCase()
-                                              .contains(value.toLowerCase()) ||
-                                          element.estimasiHarga!
-                                              .toString()
-                                              .contains(value.toLowerCase()))
-                                      .toList();
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.5,
+                      height: 45,
+                      padding: const EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.grey,
+                          ),
+                          borderRadius: BorderRadius.circular(12)),
+                      child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: TextField(
+                          textAlign: TextAlign.center,
+                          controller: controller,
+                          decoration: const InputDecoration(
+                              hintText: "Search Anything ..."),
+                          onChanged: (value) {
+                            //fungsi search anyting
+                            myCrm = filterCrm!
+                                .where((element) =>
+                                    element.kodeDesignMdbc!
+                                        .toLowerCase()
+                                        .contains(value.toLowerCase()) ||
+                                    element.namaDesigner!
+                                        .toLowerCase()
+                                        .contains(value.toLowerCase()) ||
+                                    element.kodeMarketing!
+                                        .toLowerCase()
+                                        .contains(value.toLowerCase()) ||
+                                    element.kodeDesign!
+                                        .toLowerCase()
+                                        .contains(value.toLowerCase()) ||
+                                    element.tema!
+                                        .toLowerCase()
+                                        .contains(value.toLowerCase()) ||
+                                    element.jenisBarang!
+                                        .toLowerCase()
+                                        .contains(value.toLowerCase()) ||
+                                    element.estimasiHarga!
+                                        .toString()
+                                        .contains(value.toLowerCase()))
+                                .toList();
 
-                                  setState(() {});
-                                },
-                              ),
-                            ),
-                          ),
-                          Expanded(
+                            setState(() {});
+                          },
+                        ),
+                      ),
+                    ),
+                    isLoading == false
+                        ? Expanded(
+                            child: Center(
+                                child: Container(
+                            padding: const EdgeInsets.all(5),
+                            width: 90,
+                            height: 90,
+                            child: Lottie.asset("loadingJSON/loadingV1.json"),
+                          )))
+                        : Expanded(
                             child: SingleChildScrollView(
                               scrollDirection: Axis.vertical,
                               child: Container(
@@ -545,9 +552,9 @@ class _ListDesignerScreenState extends State<ListDesignerScreen> {
                               ),
                             ),
                           )
-                        ],
-                      ),
-                    ),
+                  ],
+                ),
+              ),
               floatingActionButton: sharedPreferences!.getString('level') == '3'
                   ? null
                   : Stack(children: [

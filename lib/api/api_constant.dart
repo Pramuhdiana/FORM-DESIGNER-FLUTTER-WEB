@@ -54,6 +54,7 @@ class ApiConstants {
   static String addSiklus = 'spk/add_siklus.php';
   static String addTanggalProduksi = 'spk/add_tanggal_in_produksi.php';
   static String addTanggalModeller = 'spk/add_tanggal_out_modeller.php';
+  static String addHistoryPosisi = 'spk/create_history.php';
 
   static String keyById = 'spk/key.php';
 }

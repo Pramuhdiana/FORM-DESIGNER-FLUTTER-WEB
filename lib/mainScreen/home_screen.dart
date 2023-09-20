@@ -4999,7 +4999,6 @@ class RowSource extends DataTableSource {
             )),
       ),
       DataCell(_verticalDivider),
-
       //jenisBarang
       DataCell(
         Container(
@@ -5012,7 +5011,6 @@ class RowSource extends DataTableSource {
             )),
       ),
       DataCell(_verticalDivider),
-
       //estimasiHarga
       DataCell(
         Container(
@@ -5031,7 +5029,6 @@ class RowSource extends DataTableSource {
         ),
       ),
       DataCell(_verticalDivider),
-
       //kelas harga
       DataCell(
         Container(

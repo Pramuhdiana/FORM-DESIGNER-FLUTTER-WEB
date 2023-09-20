@@ -1826,12 +1826,15 @@ class _FormViewScreenState extends State<FormViewScreen> {
                 onPressed: () {
                   final isValid = formKey.currentState?.validate();
                   if (!isValid!) {
+                    print('gagal');
                     btnController.error();
                     Future.delayed(const Duration(seconds: 1)).then((value) {
                       btnController.reset(); //reset
                     });
                     return;
                   }
+                  print('berhasil');
+
                   Future.delayed(const Duration(seconds: 2))
                       .then((value) async {
                     btnController.success();
@@ -2257,14 +2260,14 @@ class _FormViewScreenState extends State<FormViewScreen> {
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5.0)),
                       ),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Point wajib diisi *';
-                        } else if (value == '0') {
-                          return 'Point wajib diisi *';
-                        }
-                        return null;
-                      },
+                      // validator: (value) {
+                      //   if (value!.isEmpty) {
+                      //     return 'Point wajib diisi *';
+                      //   } else if (value == '0') {
+                      //     return 'Point wajib diisi *';
+                      //   }
+                      //   return null;
+                      // },
                     ),
                   ),
                 ),
@@ -2288,14 +2291,14 @@ class _FormViewScreenState extends State<FormViewScreen> {
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5.0)),
                       ),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Point wajib diisi *';
-                        } else if (value == '0') {
-                          return 'Point wajib diisi *';
-                        }
-                        return null;
-                      },
+                      // validator: (value) {
+                      //   if (value!.isEmpty) {
+                      //     return 'Point wajib diisi *';
+                      //   } else if (value == '0') {
+                      //     return 'Point wajib diisi *';
+                      //   }
+                      //   return null;
+                      // },
                     ),
                   ),
                 ),

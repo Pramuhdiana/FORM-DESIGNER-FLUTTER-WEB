@@ -9,6 +9,7 @@ import 'package:form_designer/global/currency_format.dart';
 // ignore: unused_import
 import 'package:form_designer/mainScreen/form_screen_by_id.dart';
 import 'package:http/http.dart' as http;
+import 'package:lottie/lottie.dart';
 
 import '../api/api_constant.dart';
 import '../model/estimasi_pricing_model.dart';
@@ -127,61 +128,68 @@ class _ListCalculatePricingScreenState
                   )
                 ],
               ),
-              body: isLoading == false
-                  ? const Center(child: CircularProgressIndicator())
-                  : Container(
-                      padding: const EdgeInsets.only(top: 25),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Container(
-                            width: MediaQuery.of(context).size.width * 0.5,
-                            height: 45,
-                            padding: const EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.grey,
-                                ),
-                                borderRadius: BorderRadius.circular(12)),
-                            child: Align(
-                              alignment: Alignment.bottomCenter,
-                              child: TextField(
-                                textAlign: TextAlign.center,
-                                controller: controller,
-                                decoration: const InputDecoration(
-                                    hintText: "Search Anything ..."),
-                                onChanged: (value) {
-                                  //fungsi search anyting
-                                  myCrm = filterCrm!
-                                      .where((element) =>
-                                          element.id!
-                                              .toString()
-                                              .toLowerCase()
-                                              .contains(value.toLowerCase()) ||
-                                          element.namaDesigner!
-                                              .toLowerCase()
-                                              .contains(value.toLowerCase()) ||
-                                          element.brand!
-                                              .toLowerCase()
-                                              .contains(value.toLowerCase()) ||
-                                          element.beratEmas!
-                                              .toString()
-                                              .toLowerCase()
-                                              .contains(value.toLowerCase()) ||
-                                          element.jenisBarang!
-                                              .toLowerCase()
-                                              .contains(value.toLowerCase()) ||
-                                          element.estimasiHarga!
-                                              .toString()
-                                              .contains(value.toLowerCase()))
-                                      .toList();
-
-                                  setState(() {});
-                                },
-                              ),
-                            ),
+              body: Container(
+                padding: const EdgeInsets.only(top: 25),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.5,
+                      height: 45,
+                      padding: const EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.grey,
                           ),
-                          Expanded(
+                          borderRadius: BorderRadius.circular(12)),
+                      child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: TextField(
+                          textAlign: TextAlign.center,
+                          controller: controller,
+                          decoration: const InputDecoration(
+                              hintText: "Search Anything ..."),
+                          onChanged: (value) {
+                            //fungsi search anyting
+                            myCrm = filterCrm!
+                                .where((element) =>
+                                    element.id!
+                                        .toString()
+                                        .toLowerCase()
+                                        .contains(value.toLowerCase()) ||
+                                    element.namaDesigner!
+                                        .toLowerCase()
+                                        .contains(value.toLowerCase()) ||
+                                    element.brand!
+                                        .toLowerCase()
+                                        .contains(value.toLowerCase()) ||
+                                    element.beratEmas!
+                                        .toString()
+                                        .toLowerCase()
+                                        .contains(value.toLowerCase()) ||
+                                    element.jenisBarang!
+                                        .toLowerCase()
+                                        .contains(value.toLowerCase()) ||
+                                    element.estimasiHarga!
+                                        .toString()
+                                        .contains(value.toLowerCase()))
+                                .toList();
+
+                            setState(() {});
+                          },
+                        ),
+                      ),
+                    ),
+                    isLoading == false
+                        ? Expanded(
+                            child: Center(
+                                child: Container(
+                            padding: const EdgeInsets.all(5),
+                            width: 90,
+                            height: 90,
+                            child: Lottie.asset("loadingJSON/loadingV1.json"),
+                          )))
+                        : Expanded(
                             child: SingleChildScrollView(
                               scrollDirection: Axis.vertical,
                               child: Container(
@@ -397,9 +405,9 @@ class _ListCalculatePricingScreenState
                               ),
                             ),
                           )
-                        ],
-                      ),
-                    ),
+                  ],
+                ),
+              ),
               floatingActionButton: Stack(children: [
                 Positioned(
                   left: 40,
