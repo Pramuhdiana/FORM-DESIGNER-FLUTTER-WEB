@@ -1677,7 +1677,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
         automaticallyImplyLeading: true,
         backgroundColor: Colors.blue,
         title: Text(
-          'Form Edit Designer ${widget.modelDesigner!.jenisBarang}',
+          'Form Edit Designer ${widget.modelDesigner!.kodeDesignMdbc}',
           style: const TextStyle(fontSize: 25, color: Colors.white),
         ),
         centerTitle: true,
@@ -2701,7 +2701,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                         caratPcsBatu1 = data[0]['caratPcs'];
                                         batu1 = item.size;
                                         stokBatu1.text = item.qty.toString();
-                                        qtyBatu1.text = '0';
+                                        qtyBatu1.text = '';
                                       });
                                     }
                                   } catch (e) {
@@ -2775,7 +2775,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                     child: IconButton(
                                         onPressed: () {
                                           setState(() {
-                                            qtyBatu1.text = '0';
+                                            qtyBatu1.text = '';
                                             stokBatu1.text = '';
                                             batu1 = '';
                                             hargaBatu1 = 0;
@@ -2822,7 +2822,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                         caratPcsBatu2 = data[0]['caratPcs'];
                                         batu2 = item.size;
                                         stokBatu2.text = item.qty.toString();
-                                        qtyBatu2.text = '0';
+                                        qtyBatu2.text = '';
                                       });
                                     }
                                   } catch (e) {
@@ -2896,7 +2896,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                     child: IconButton(
                                         onPressed: () {
                                           setState(() {
-                                            qtyBatu2.text = '0';
+                                            qtyBatu2.text = '';
                                             stokBatu2.text = '';
                                             batu2 = '';
                                             hargaBatu2 = 0;
@@ -3029,7 +3029,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           child: IconButton(
                                               onPressed: () {
                                                 setState(() {
-                                                  qtyBatu3.text = '0';
+                                                  qtyBatu3.text = '';
                                                   stokBatu3.text = '';
                                                   batu3 = '';
                                                   hargaBatu3 = 0;
@@ -3162,7 +3162,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           child: IconButton(
                                               onPressed: () {
                                                 setState(() {
-                                                  qtyBatu4.text = '0';
+                                                  qtyBatu4.text = '';
                                                   stokBatu4.text = '';
                                                   batu4 = '';
                                                   hargaBatu4 = 0;
@@ -3295,7 +3295,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           child: IconButton(
                                               onPressed: () {
                                                 setState(() {
-                                                  qtyBatu5.text = '0';
+                                                  qtyBatu5.text = '';
                                                   stokBatu5.text = '';
                                                   batu5 = '';
                                                   hargaBatu5 = 0;
@@ -3428,7 +3428,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           child: IconButton(
                                               onPressed: () {
                                                 setState(() {
-                                                  qtyBatu6.text = '0';
+                                                  qtyBatu6.text = '';
                                                   stokBatu6.text = '';
                                                   batu6 = '';
                                                   hargaBatu6 = 0;
@@ -3561,7 +3561,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           child: IconButton(
                                               onPressed: () {
                                                 setState(() {
-                                                  qtyBatu7.text = '0';
+                                                  qtyBatu7.text = '';
                                                   stokBatu7.text = '';
                                                   batu7 = '';
                                                   hargaBatu7 = 0;
@@ -3694,7 +3694,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           child: IconButton(
                                               onPressed: () {
                                                 setState(() {
-                                                  qtyBatu8.text = '0';
+                                                  qtyBatu8.text = '';
                                                   stokBatu8.text = '';
                                                   batu8 = '';
                                                   hargaBatu8 = 0;
@@ -3827,7 +3827,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           child: IconButton(
                                               onPressed: () {
                                                 setState(() {
-                                                  qtyBatu9.text = '0';
+                                                  qtyBatu9.text = '';
                                                   stokBatu9.text = '';
                                                   batu9 = '';
                                                   hargaBatu9 = 0;
@@ -3960,7 +3960,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           child: IconButton(
                                               onPressed: () {
                                                 setState(() {
-                                                  qtyBatu10.text = '0';
+                                                  qtyBatu10.text = '';
                                                   stokBatu10.text = '';
                                                   batu10 = '';
                                                   hargaBatu10 = 0;
@@ -4093,7 +4093,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           child: IconButton(
                                               onPressed: () {
                                                 setState(() {
-                                                  qtyBatu11.text = '0';
+                                                  qtyBatu11.text = '';
                                                   stokBatu11.text = '';
                                                   batu11 = '';
                                                   hargaBatu11 = 0;
@@ -4226,7 +4226,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           child: IconButton(
                                               onPressed: () {
                                                 setState(() {
-                                                  qtyBatu12.text = '0';
+                                                  qtyBatu12.text = '';
                                                   stokBatu12.text = '';
                                                   batu12 = '';
                                                   hargaBatu12 = 0;
@@ -4359,7 +4359,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           child: IconButton(
                                               onPressed: () {
                                                 setState(() {
-                                                  qtyBatu13.text = '0';
+                                                  qtyBatu13.text = '';
                                                   stokBatu13.text = '';
                                                   batu13 = '';
                                                   hargaBatu13 = 0;
@@ -4492,7 +4492,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           child: IconButton(
                                               onPressed: () {
                                                 setState(() {
-                                                  qtyBatu14.text = '0';
+                                                  qtyBatu14.text = '';
                                                   stokBatu14.text = '';
                                                   batu14 = '';
                                                   hargaBatu14 = 0;
@@ -4625,7 +4625,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           child: IconButton(
                                               onPressed: () {
                                                 setState(() {
-                                                  qtyBatu15.text = '0';
+                                                  qtyBatu15.text = '';
                                                   stokBatu15.text = '';
                                                   batu15 = '';
                                                   hargaBatu15 = 0;
@@ -4758,7 +4758,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           child: IconButton(
                                               onPressed: () {
                                                 setState(() {
-                                                  qtyBatu16.text = '0';
+                                                  qtyBatu16.text = '';
                                                   stokBatu16.text = '';
                                                   batu16 = '';
                                                   hargaBatu16 = 0;
@@ -4891,7 +4891,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           child: IconButton(
                                               onPressed: () {
                                                 setState(() {
-                                                  qtyBatu17.text = '0';
+                                                  qtyBatu17.text = '';
                                                   stokBatu17.text = '';
                                                   batu17 = '';
                                                   hargaBatu17 = 0;
@@ -5024,7 +5024,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           child: IconButton(
                                               onPressed: () {
                                                 setState(() {
-                                                  qtyBatu18.text = '0';
+                                                  qtyBatu18.text = '';
                                                   stokBatu18.text = '';
                                                   batu18 = '';
                                                   hargaBatu18 = 0;
@@ -5157,7 +5157,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           child: IconButton(
                                               onPressed: () {
                                                 setState(() {
-                                                  qtyBatu19.text = '0';
+                                                  qtyBatu19.text = '';
                                                   stokBatu19.text = '';
                                                   batu19 = '';
                                                   hargaBatu19 = 0;
@@ -5290,7 +5290,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           child: IconButton(
                                               onPressed: () {
                                                 setState(() {
-                                                  qtyBatu20.text = '0';
+                                                  qtyBatu20.text = '';
                                                   stokBatu20.text = '';
                                                   batu20 = '';
                                                   hargaBatu20 = 0;
@@ -5423,7 +5423,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           child: IconButton(
                                               onPressed: () {
                                                 setState(() {
-                                                  qtyBatu21.text = '0';
+                                                  qtyBatu21.text = '';
                                                   stokBatu21.text = '';
                                                   batu21 = '';
                                                   hargaBatu21 = 0;
@@ -5556,7 +5556,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           child: IconButton(
                                               onPressed: () {
                                                 setState(() {
-                                                  qtyBatu22.text = '0';
+                                                  qtyBatu22.text = '';
                                                   stokBatu22.text = '';
                                                   batu22 = '';
                                                   hargaBatu22 = 0;
@@ -5689,7 +5689,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           child: IconButton(
                                               onPressed: () {
                                                 setState(() {
-                                                  qtyBatu23.text = '0';
+                                                  qtyBatu23.text = '';
                                                   stokBatu23.text = '';
                                                   batu23 = '';
                                                   hargaBatu23 = 0;
@@ -5822,7 +5822,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           child: IconButton(
                                               onPressed: () {
                                                 setState(() {
-                                                  qtyBatu24.text = '0';
+                                                  qtyBatu24.text = '';
                                                   stokBatu24.text = '';
                                                   batu24 = '';
                                                   hargaBatu24 = 0;
@@ -5955,7 +5955,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           child: IconButton(
                                               onPressed: () {
                                                 setState(() {
-                                                  qtyBatu25.text = '0';
+                                                  qtyBatu25.text = '';
                                                   stokBatu25.text = '';
                                                   batu25 = '';
                                                   hargaBatu25 = 0;
@@ -6088,7 +6088,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           child: IconButton(
                                               onPressed: () {
                                                 setState(() {
-                                                  qtyBatu26.text = '0';
+                                                  qtyBatu26.text = '';
                                                   stokBatu26.text = '';
                                                   batu26 = '';
                                                   hargaBatu26 = 0;
@@ -6221,7 +6221,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           child: IconButton(
                                               onPressed: () {
                                                 setState(() {
-                                                  qtyBatu27.text = '0';
+                                                  qtyBatu27.text = '';
                                                   stokBatu27.text = '';
                                                   batu27 = '';
                                                   hargaBatu27 = 0;
@@ -6354,7 +6354,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           child: IconButton(
                                               onPressed: () {
                                                 setState(() {
-                                                  qtyBatu28.text = '0';
+                                                  qtyBatu28.text = '';
                                                   stokBatu28.text = '';
                                                   batu28 = '';
                                                   hargaBatu28 = 0;
@@ -6487,7 +6487,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           child: IconButton(
                                               onPressed: () {
                                                 setState(() {
-                                                  qtyBatu29.text = '0';
+                                                  qtyBatu29.text = '';
                                                   stokBatu29.text = '';
                                                   batu29 = '';
                                                   hargaBatu29 = 0;
@@ -6620,7 +6620,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           child: IconButton(
                                               onPressed: () {
                                                 setState(() {
-                                                  qtyBatu30.text = '0';
+                                                  qtyBatu30.text = '';
                                                   stokBatu30.text = '';
                                                   batu30 = '';
                                                   hargaBatu30 = 0;
@@ -6753,7 +6753,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           child: IconButton(
                                               onPressed: () {
                                                 setState(() {
-                                                  qtyBatu31.text = '0';
+                                                  qtyBatu31.text = '';
                                                   stokBatu31.text = '';
                                                   batu31 = '';
                                                   hargaBatu31 = 0;
@@ -6886,7 +6886,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           child: IconButton(
                                               onPressed: () {
                                                 setState(() {
-                                                  qtyBatu32.text = '0';
+                                                  qtyBatu32.text = '';
                                                   stokBatu32.text = '';
                                                   batu32 = '';
                                                   hargaBatu32 = 0;
@@ -7019,7 +7019,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           child: IconButton(
                                               onPressed: () {
                                                 setState(() {
-                                                  qtyBatu33.text = '0';
+                                                  qtyBatu33.text = '';
                                                   stokBatu33.text = '';
                                                   batu33 = '';
                                                   hargaBatu33 = 0;
@@ -7152,7 +7152,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           child: IconButton(
                                               onPressed: () {
                                                 setState(() {
-                                                  qtyBatu34.text = '0';
+                                                  qtyBatu34.text = '';
                                                   stokBatu34.text = '';
                                                   batu34 = '';
                                                   hargaBatu34 = 0;
@@ -7285,7 +7285,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                                           child: IconButton(
                                               onPressed: () {
                                                 setState(() {
-                                                  qtyBatu35.text = '0';
+                                                  qtyBatu35.text = '';
                                                   stokBatu35.text = '';
                                                   batu35 = '';
                                                   hargaBatu35 = 0;

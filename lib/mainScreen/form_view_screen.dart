@@ -2335,11 +2335,11 @@ class _FormViewScreenState extends State<FormViewScreen> {
                     height: 350,
                     padding: const EdgeInsets.all(2),
                     decoration: BoxDecoration(
-                        color: Colors.black,
+                        color: Colors.white,
                         borderRadius: BorderRadius.circular(10)),
                     child: Image.network(
                       ApiConstants.baseUrlImage + imageUrl!,
-                      fit: BoxFit.cover,
+                      fit: BoxFit.scaleDown,
                     ),
                   )
                 : Container(

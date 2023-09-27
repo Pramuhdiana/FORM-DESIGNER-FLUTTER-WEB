@@ -6,8 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:form_designer/api/api_constant.dart';
 import 'package:form_designer/global/currency_format.dart';
 import 'package:form_designer/global/global.dart';
+import 'package:form_designer/mainScreen/excel.dart';
+// import 'package:form_designer/mainScreen/form_ro.dart';
 import 'dart:convert';
-
 // ignore: unused_import
 import 'package:form_designer/mainScreen/form_screen_by_id.dart';
 import 'package:form_designer/mainScreen/form_view_screen.dart';
@@ -40,6 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   String siklusDesigner = '';
   List<FormDesignerModel>? listJenisBarang;
+  List<FormDesignerModel>? listJenisBarangView1;
   List<String> listKelasHarga = [];
   List<int> sumHarga = [];
   int totalHarga = 0;
@@ -64,7 +66,10 @@ class _HomeScreenState extends State<HomeScreen> {
   List<FormDesignerModel>? myCrm;
   final searchController = TextEditingController();
   bool isLoading = false;
+  bool isJenisBarangView1 = false;
+  bool isLoadingJenisBarang = false;
   var nowSiklus = '';
+  String? namaJenisBarangView1 = '';
 
   @override
   initState() {
@@ -149,12 +154,46 @@ class _HomeScreenState extends State<HomeScreen> {
         filterCrm = allData;
         myCrm = allData;
         isLoading = true;
+        isLoadingJenisBarang = true;
         totalSPK = allData.length;
         totalSPKSelesai = allData
             .where((element) => double.parse(element.pointModeller!) > 0)
             .length;
       });
       return allData;
+    } else {
+      throw Exception('Unexpected error occured!');
+    }
+  }
+
+  Future<List<FormDesignerModel>> _getDataJeniBarangView1(
+      chooseSiklus, nama, jenisBarangView1) async {
+    final response = await http.get(
+        Uri.parse(ApiConstants.baseUrl + ApiConstants.getListFormDesigner));
+    if (response.statusCode == 200) {
+      List jsonResponse = json.decode(response.body);
+
+      var g =
+          jsonResponse.map((data) => FormDesignerModel.fromJson(data)).toList();
+      //! method scm
+      if (chooseSiklus.toString().toLowerCase() == "all") {
+        var filterByJenisBarang = g.where((element) =>
+            element.jenisBarang.toString().toLowerCase() ==
+            jenisBarangView1.toString().toLowerCase());
+        listJenisBarangView1 = filterByJenisBarang.toList();
+      } else {
+        var filterBySiklus = g.where((element) =>
+            element.siklus.toString().toLowerCase() ==
+            chooseSiklus.toString().toLowerCase());
+        var filterByJenisBarang = filterBySiklus.where((element) =>
+            element.jenisBarang.toString().toLowerCase() ==
+            jenisBarangView1.toString().toLowerCase());
+        listJenisBarangView1 = filterByJenisBarang.toList();
+      }
+
+      // g = removeDuplicates(listJenisBarangView1!);
+      g = listJenisBarangView1!;
+      return g;
     } else {
       throw Exception('Unexpected error occured!');
     }
@@ -182,14 +221,14 @@ class _HomeScreenState extends State<HomeScreen> {
               "arif kurniawan");
           pointArif = 0.0;
           for (var i = 0; i < filterByArif.length; i++) {
-            pointArif += double.parse(filterByPoint.toList()[i].pointModeller!);
+            pointArif += double.parse(filterByArif.toList()[i].pointModeller!);
           }
           //? point modeller aris
           var filterByAris = filterByPoint.where((element) =>
               element.namaModeller.toString().toLowerCase() == "aris pravidan");
           pointAris = 0.0;
           for (var i = 0; i < filterByAris.length; i++) {
-            pointAris += double.parse(filterByPoint.toList()[i].pointModeller!);
+            pointAris += double.parse(filterByAris.toList()[i].pointModeller!);
           }
 
           //? point modeller fikri
@@ -198,7 +237,7 @@ class _HomeScreenState extends State<HomeScreen> {
           pointFikri = 0.0;
           for (var i = 0; i < filterByFikri.length; i++) {
             pointFikri +=
-                double.parse(filterByPoint.toList()[i].pointModeller!);
+                double.parse(filterByFikri.toList()[i].pointModeller!);
           }
 
           //? point modeller yuse
@@ -206,86 +245,7 @@ class _HomeScreenState extends State<HomeScreen> {
               element.namaModeller.toString().toLowerCase() == "yuse");
           pointyuse = 0.0;
           for (var i = 0; i < filterByyuse.length; i++) {
-            pointyuse += double.parse(filterByPoint.toList()[i].pointModeller!);
-          }
-
-          //! berat modeller
-          var filterByberat =
-              g.where((element) => double.parse(element.beratModeller!) > 0);
-          //? berat modeller arif
-          var filterBeratByArif = filterByberat.where((element) =>
-              element.namaModeller.toString().toLowerCase() ==
-              "arif kurniawan");
-          beratArif = 0.0;
-          for (var i = 0; i < filterBeratByArif.length; i++) {
-            beratArif += double.parse(filterByberat.toList()[i].beratModeller!);
-          }
-          //? berat modeller aris
-          var filterBeratByAris = filterByberat.where((element) =>
-              element.namaModeller.toString().toLowerCase() == "aris pravidan");
-          beratAris = 0.0;
-          for (var i = 0; i < filterBeratByAris.length; i++) {
-            beratAris += double.parse(filterByberat.toList()[i].beratModeller!);
-          }
-
-          //? berat modeller fikri
-          var filterBeratByFikri = filterByberat.where((element) =>
-              element.namaModeller.toString().toLowerCase() == "fikryansyah");
-          beratFikri = 0.0;
-          for (var i = 0; i < filterBeratByFikri.length; i++) {
-            beratFikri +=
-                double.parse(filterByberat.toList()[i].beratModeller!);
-          }
-
-          //? berat modeller yuse
-          var filterBeratByyuse = filterByberat.where((element) =>
-              element.namaModeller.toString().toLowerCase() == "yuse");
-          beratyuse = 0.0;
-          for (var i = 0; i < filterBeratByyuse.length; i++) {
-            beratyuse += double.parse(filterByberat.toList()[i].beratModeller!);
-          }
-        } else {
-          var filterBySiklus = g.where((element) =>
-              element.siklus.toString().toLowerCase() ==
-              chooseSiklus.toString().toLowerCase());
-
-          filterBySiklus.toList();
-          listJenisBarang = filterBySiklus.toList();
-
-          //! point modeller
-          var filterByPoint = filterBySiklus
-              .where((element) => double.parse(element.pointModeller!) > 0.0);
-          //? point modeller arif
-          var filterByArif = filterByPoint.where((element) =>
-              element.namaModeller.toString().toLowerCase() ==
-              "arif kurniawan");
-          pointArif = 0.0;
-          for (var i = 0; i < filterByArif.length; i++) {
-            pointArif += double.parse(filterByPoint.toList()[i].pointModeller!);
-          }
-          //? point modeller aris
-          var filterByAris = filterByPoint.where((element) =>
-              element.namaModeller.toString().toLowerCase() == "aris pravidan");
-          pointAris = 0.0;
-          for (var i = 0; i < filterByAris.length; i++) {
-            pointAris += double.parse(filterByPoint.toList()[i].pointModeller!);
-          }
-
-          //? point modeller fikri
-          var filterByFikri = filterByPoint.where((element) =>
-              element.namaModeller.toString().toLowerCase() == "fikryansyah");
-          pointFikri = 0.0;
-          for (var i = 0; i < filterByFikri.length; i++) {
-            pointFikri +=
-                double.parse(filterByPoint.toList()[i].pointModeller!);
-          }
-
-          //? point modeller yuse
-          var filterByyuse = filterByPoint.where((element) =>
-              element.namaModeller.toString().toLowerCase() == "yuse");
-          pointyuse = 0.0;
-          for (var i = 0; i < filterByyuse.length; i++) {
-            pointyuse += double.parse(filterByPoint.toList()[i].pointModeller!);
+            pointyuse += double.parse(filterByyuse.toList()[i].pointModeller!);
           }
 
 //! berat modeller
@@ -297,14 +257,16 @@ class _HomeScreenState extends State<HomeScreen> {
               "arif kurniawan");
           beratArif = 0.0;
           for (var i = 0; i < filterBeratByArif.length; i++) {
-            beratArif += double.parse(filterByberat.toList()[i].beratModeller!);
+            beratArif +=
+                double.parse(filterBeratByArif.toList()[i].beratModeller!);
           }
           //? berat modeller aris
           var filterBeratByAris = filterByberat.where((element) =>
               element.namaModeller.toString().toLowerCase() == "aris pravidan");
           beratAris = 0.0;
           for (var i = 0; i < filterBeratByAris.length; i++) {
-            beratAris += double.parse(filterByberat.toList()[i].beratModeller!);
+            beratAris +=
+                double.parse(filterBeratByAris.toList()[i].beratModeller!);
           }
 
           //? berat modeller fikri
@@ -313,7 +275,7 @@ class _HomeScreenState extends State<HomeScreen> {
           beratFikri = 0.0;
           for (var i = 0; i < filterBeratByFikri.length; i++) {
             beratFikri +=
-                double.parse(filterByberat.toList()[i].beratModeller!);
+                double.parse(filterBeratByFikri.toList()[i].beratModeller!);
           }
 
           //? berat modeller yuse
@@ -321,7 +283,90 @@ class _HomeScreenState extends State<HomeScreen> {
               element.namaModeller.toString().toLowerCase() == "yuse");
           beratyuse = 0.0;
           for (var i = 0; i < filterBeratByyuse.length; i++) {
-            beratyuse += double.parse(filterByberat.toList()[i].beratModeller!);
+            beratyuse +=
+                double.parse(filterBeratByyuse.toList()[i].beratModeller!);
+          }
+        } else {
+          var filterBySiklus = g.where((element) =>
+              element.siklus.toString().toLowerCase() ==
+              chooseSiklus.toString().toLowerCase());
+
+          filterBySiklus.toList();
+          listJenisBarang = filterBySiklus.toList();
+
+          //! point modeller
+          var filterByPoint =
+              g.where((element) => double.parse(element.pointModeller!) > 0);
+          //? point modeller arif
+          var filterByArif = filterByPoint.where((element) =>
+              element.namaModeller.toString().toLowerCase() ==
+              "arif kurniawan");
+          pointArif = 0.0;
+          for (var i = 0; i < filterByArif.length; i++) {
+            pointArif += double.parse(filterByArif.toList()[i].pointModeller!);
+          }
+          //? point modeller aris
+          var filterByAris = filterByPoint.where((element) =>
+              element.namaModeller.toString().toLowerCase() == "aris pravidan");
+          pointAris = 0.0;
+          for (var i = 0; i < filterByAris.length; i++) {
+            pointAris += double.parse(filterByAris.toList()[i].pointModeller!);
+          }
+
+          //? point modeller fikri
+          var filterByFikri = filterByPoint.where((element) =>
+              element.namaModeller.toString().toLowerCase() == "fikryansyah");
+          pointFikri = 0.0;
+          for (var i = 0; i < filterByFikri.length; i++) {
+            pointFikri +=
+                double.parse(filterByFikri.toList()[i].pointModeller!);
+          }
+
+          //? point modeller yuse
+          var filterByyuse = filterByPoint.where((element) =>
+              element.namaModeller.toString().toLowerCase() == "yuse");
+          pointyuse = 0.0;
+          for (var i = 0; i < filterByyuse.length; i++) {
+            pointyuse += double.parse(filterByyuse.toList()[i].pointModeller!);
+          }
+
+//! berat modeller
+          var filterByberat =
+              g.where((element) => double.parse(element.beratModeller!) > 0);
+          //? berat modeller arif
+          var filterBeratByArif = filterByberat.where((element) =>
+              element.namaModeller.toString().toLowerCase() ==
+              "arif kurniawan");
+          beratArif = 0.0;
+          for (var i = 0; i < filterBeratByArif.length; i++) {
+            beratArif +=
+                double.parse(filterBeratByArif.toList()[i].beratModeller!);
+          }
+          //? berat modeller aris
+          var filterBeratByAris = filterByberat.where((element) =>
+              element.namaModeller.toString().toLowerCase() == "aris pravidan");
+          beratAris = 0.0;
+          for (var i = 0; i < filterBeratByAris.length; i++) {
+            beratAris +=
+                double.parse(filterBeratByAris.toList()[i].beratModeller!);
+          }
+
+          //? berat modeller fikri
+          var filterBeratByFikri = filterByberat.where((element) =>
+              element.namaModeller.toString().toLowerCase() == "fikryansyah");
+          beratFikri = 0.0;
+          for (var i = 0; i < filterBeratByFikri.length; i++) {
+            beratFikri +=
+                double.parse(filterBeratByFikri.toList()[i].beratModeller!);
+          }
+
+          //? berat modeller yuse
+          var filterBeratByyuse = filterByberat.where((element) =>
+              element.namaModeller.toString().toLowerCase() == "yuse");
+          beratyuse = 0.0;
+          for (var i = 0; i < filterBeratByyuse.length; i++) {
+            beratyuse +=
+                double.parse(filterBeratByyuse.toList()[i].beratModeller!);
           }
         }
       }
@@ -363,14 +408,14 @@ class _HomeScreenState extends State<HomeScreen> {
               "arif kurniawan");
           pointArif = 0.0;
           for (var i = 0; i < filterByArif.length; i++) {
-            pointArif += double.parse(filterByPoint.toList()[i].pointModeller!);
+            pointArif += double.parse(filterByArif.toList()[i].pointModeller!);
           }
           //? point modeller aris
           var filterByAris = filterByPoint.where((element) =>
               element.namaModeller.toString().toLowerCase() == "aris pravidan");
           pointAris = 0.0;
           for (var i = 0; i < filterByAris.length; i++) {
-            pointAris += double.parse(filterByPoint.toList()[i].pointModeller!);
+            pointAris += double.parse(filterByAris.toList()[i].pointModeller!);
           }
 
           //? point modeller fikri
@@ -379,7 +424,7 @@ class _HomeScreenState extends State<HomeScreen> {
           pointFikri = 0.0;
           for (var i = 0; i < filterByFikri.length; i++) {
             pointFikri +=
-                double.parse(filterByPoint.toList()[i].pointModeller!);
+                double.parse(filterByFikri.toList()[i].pointModeller!);
           }
 
           //? point modeller yuse
@@ -387,7 +432,7 @@ class _HomeScreenState extends State<HomeScreen> {
               element.namaModeller.toString().toLowerCase() == "yuse");
           pointyuse = 0.0;
           for (var i = 0; i < filterByyuse.length; i++) {
-            pointyuse += double.parse(filterByPoint.toList()[i].pointModeller!);
+            pointyuse += double.parse(filterByyuse.toList()[i].pointModeller!);
           }
 
 //! berat modeller
@@ -399,14 +444,16 @@ class _HomeScreenState extends State<HomeScreen> {
               "arif kurniawan");
           beratArif = 0.0;
           for (var i = 0; i < filterBeratByArif.length; i++) {
-            beratArif += double.parse(filterByberat.toList()[i].beratModeller!);
+            beratArif +=
+                double.parse(filterBeratByArif.toList()[i].beratModeller!);
           }
           //? berat modeller aris
           var filterBeratByAris = filterByberat.where((element) =>
               element.namaModeller.toString().toLowerCase() == "aris pravidan");
           beratAris = 0.0;
           for (var i = 0; i < filterBeratByAris.length; i++) {
-            beratAris += double.parse(filterByberat.toList()[i].beratModeller!);
+            beratAris +=
+                double.parse(filterBeratByAris.toList()[i].beratModeller!);
           }
 
           //? berat modeller fikri
@@ -415,7 +462,7 @@ class _HomeScreenState extends State<HomeScreen> {
           beratFikri = 0.0;
           for (var i = 0; i < filterBeratByFikri.length; i++) {
             beratFikri +=
-                double.parse(filterByberat.toList()[i].beratModeller!);
+                double.parse(filterBeratByFikri.toList()[i].beratModeller!);
           }
 
           //? berat modeller yuse
@@ -423,7 +470,8 @@ class _HomeScreenState extends State<HomeScreen> {
               element.namaModeller.toString().toLowerCase() == "yuse");
           beratyuse = 0.0;
           for (var i = 0; i < filterBeratByyuse.length; i++) {
-            beratyuse += double.parse(filterByberat.toList()[i].beratModeller!);
+            beratyuse +=
+                double.parse(filterBeratByyuse.toList()[i].beratModeller!);
           }
         } else {
           var filterBySiklus = g.where((element) =>
@@ -443,14 +491,14 @@ class _HomeScreenState extends State<HomeScreen> {
               "arif kurniawan");
           pointArif = 0.0;
           for (var i = 0; i < filterByArif.length; i++) {
-            pointArif += double.parse(filterByPoint.toList()[i].pointModeller!);
+            pointArif += double.parse(filterByArif.toList()[i].pointModeller!);
           }
           //? point modeller aris
           var filterByAris = filterByPoint.where((element) =>
               element.namaModeller.toString().toLowerCase() == "aris pravidan");
           pointAris = 0.0;
           for (var i = 0; i < filterByAris.length; i++) {
-            pointAris += double.parse(filterByPoint.toList()[i].pointModeller!);
+            pointAris += double.parse(filterByAris.toList()[i].pointModeller!);
           }
 
           //? point modeller fikri
@@ -459,7 +507,7 @@ class _HomeScreenState extends State<HomeScreen> {
           pointFikri = 0.0;
           for (var i = 0; i < filterByFikri.length; i++) {
             pointFikri +=
-                double.parse(filterByPoint.toList()[i].pointModeller!);
+                double.parse(filterByFikri.toList()[i].pointModeller!);
           }
 
           //? point modeller yuse
@@ -467,10 +515,10 @@ class _HomeScreenState extends State<HomeScreen> {
               element.namaModeller.toString().toLowerCase() == "yuse");
           pointyuse = 0.0;
           for (var i = 0; i < filterByyuse.length; i++) {
-            pointyuse += double.parse(filterByPoint.toList()[i].pointModeller!);
+            pointyuse += double.parse(filterByyuse.toList()[i].pointModeller!);
           }
 
-          //! berat modeller
+//! berat modeller
           var filterByberat =
               g.where((element) => double.parse(element.beratModeller!) > 0);
           //? berat modeller arif
@@ -479,14 +527,16 @@ class _HomeScreenState extends State<HomeScreen> {
               "arif kurniawan");
           beratArif = 0.0;
           for (var i = 0; i < filterBeratByArif.length; i++) {
-            beratArif += double.parse(filterByberat.toList()[i].beratModeller!);
+            beratArif +=
+                double.parse(filterBeratByArif.toList()[i].beratModeller!);
           }
           //? berat modeller aris
           var filterBeratByAris = filterByberat.where((element) =>
               element.namaModeller.toString().toLowerCase() == "aris pravidan");
           beratAris = 0.0;
           for (var i = 0; i < filterBeratByAris.length; i++) {
-            beratAris += double.parse(filterByberat.toList()[i].beratModeller!);
+            beratAris +=
+                double.parse(filterBeratByAris.toList()[i].beratModeller!);
           }
 
           //? berat modeller fikri
@@ -495,7 +545,7 @@ class _HomeScreenState extends State<HomeScreen> {
           beratFikri = 0.0;
           for (var i = 0; i < filterBeratByFikri.length; i++) {
             beratFikri +=
-                double.parse(filterByberat.toList()[i].beratModeller!);
+                double.parse(filterBeratByFikri.toList()[i].beratModeller!);
           }
 
           //? berat modeller yuse
@@ -503,7 +553,8 @@ class _HomeScreenState extends State<HomeScreen> {
               element.namaModeller.toString().toLowerCase() == "yuse");
           beratyuse = 0.0;
           for (var i = 0; i < filterBeratByyuse.length; i++) {
-            beratyuse += double.parse(filterByberat.toList()[i].beratModeller!);
+            beratyuse +=
+                double.parse(filterBeratByyuse.toList()[i].beratModeller!);
           }
         }
       }
@@ -810,10 +861,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 style: TextStyle(fontSize: 25, color: Colors.white),
               ),
               centerTitle: true,
-              actions: const [
+              actions: [
                 Text(
-                  "v(1.2.0)",
-                  style: TextStyle(fontSize: 14, color: Colors.white),
+                  version,
+                  style: const TextStyle(fontSize: 14, color: Colors.white),
                 ),
               ],
             ),
@@ -852,7 +903,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 setState(() {
                   listKelasHarga.clear();
 
-                  isLoading = false;
+                  isLoadingJenisBarang = false;
                   siklus.text = item!;
                   siklusDesigner = siklus.text.toString();
                   _getData(
@@ -862,7 +913,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 });
                 Future.delayed(const Duration(milliseconds: 500)).then((value) {
                   setState(() {
-                    isLoading = true;
+                    isLoadingJenisBarang = true;
                   });
                 });
               },
@@ -891,203 +942,211 @@ class _HomeScreenState extends State<HomeScreen> {
           scrollDirection: Axis.horizontal,
           child: Row(
             children: [
-              //*report jenis barang
-              Align(
-                  alignment: Alignment.bottomLeft,
-                  child: Container(
-                      padding: const EdgeInsets.all(12),
-                      width: 300,
-                      height: 300,
-                      child: Card(
-                          color: Colors.grey.shade200,
-                          child: FutureBuilder(
-                              future: siklus.text.isEmpty
-                                  ? _getData("all",
-                                      sharedPreferences!.getString('nama')!)
-                                  : _getData(siklusDesigner,
-                                      sharedPreferences!.getString('nama')!),
-                              builder: (context, snapshot) {
-                                if (snapshot.hasError) {
-                                  return Column(children: [
-                                    const Text('Jenis Barang',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 24,
-                                        )),
-                                    const Divider(thickness: 5),
-                                    Center(
-                                        child: SizedBox(
-                                      width: 250,
-                                      height: 210,
-                                      child: Lottie.asset(
-                                          "loadingJSON/somethingwentwrong.json"),
-                                    ))
-                                  ]);
-                                }
+              //*report jenis barang SCM
+              isJenisBarangView1 == true
+                  ? jenisBarangView1(namaJenisBarangView1)
+                  : Align(
+                      alignment: Alignment.bottomLeft,
+                      child: Container(
+                          padding: const EdgeInsets.all(12),
+                          width: 300,
+                          height: 300,
+                          child: Card(
+                              color: Colors.grey.shade200,
+                              child: FutureBuilder(
+                                  future: siklus.text.isEmpty
+                                      ? _getData("all",
+                                          sharedPreferences!.getString('nama')!)
+                                      : _getData(
+                                          siklusDesigner,
+                                          sharedPreferences!
+                                              .getString('nama')!),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.hasError) {
+                                      return Column(children: [
+                                        const Text('Jenis Barang',
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 24,
+                                            )),
+                                        const Divider(thickness: 5),
+                                        Center(
+                                            child: SizedBox(
+                                          width: 250,
+                                          height: 210,
+                                          child: Lottie.asset(
+                                              "loadingJSON/somethingwentwrong.json"),
+                                        ))
+                                      ]);
+                                    }
 
-                                if (snapshot.connectionState ==
-                                    ConnectionState.waiting) {
-                                  return Column(children: [
-                                    const Text('Jenis Barang',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 24,
-                                        )),
-                                    const Divider(thickness: 5),
-                                    Container(
-                                      padding: const EdgeInsets.all(0),
-                                      width: 90,
-                                      height: 90,
-                                      child: Lottie.asset(
-                                          "loadingJSON/loadingV1.json"),
-                                    )
-                                  ]);
-                                }
-                                if (snapshot.data!.isEmpty) {
-                                  return const Column(children: [
-                                    Text('Jenis Barang',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 24,
-                                        )),
-                                    Divider(thickness: 5),
-                                    Center(
-                                      child: Text(
-                                        'Tidak ada data',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            fontSize: 26,
-                                            color: Colors.blueGrey,
-                                            fontWeight: FontWeight.bold,
-                                            fontFamily: 'Acne',
-                                            letterSpacing: 1.5),
-                                      ),
-                                    )
-                                  ]);
-                                }
-                                if (snapshot.hasData) {
-                                  return Column(children: [
-                                    const Text('Jenis Barang',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 24,
-                                        )),
-                                    const Divider(thickness: 5),
-                                    Expanded(
-                                      child: isLoading == false
-                                          ? Container(
-                                              padding: const EdgeInsets.all(0),
-                                              width: 90,
-                                              height: 90,
-                                              child: Lottie.asset(
-                                                  "loadingJSON/loadingV1.json"),
-                                            )
-                                          : ListView.builder(
-                                              itemCount: snapshot.data!.length,
-                                              itemBuilder:
-                                                  (BuildContext context,
-                                                      int index) {
-                                                var data =
-                                                    snapshot.data![index];
-                                                return Container(
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return Column(children: [
+                                        const Text('Jenis Barang',
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 24,
+                                            )),
+                                        const Divider(thickness: 5),
+                                        Container(
+                                          padding: const EdgeInsets.all(0),
+                                          width: 90,
+                                          height: 90,
+                                          child: Lottie.asset(
+                                              "loadingJSON/loadingV1.json"),
+                                        )
+                                      ]);
+                                    }
+                                    if (snapshot.data!.isEmpty) {
+                                      return const Column(children: [
+                                        Text('Jenis Barang',
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 24,
+                                            )),
+                                        Divider(thickness: 5),
+                                        Center(
+                                          child: Text(
+                                            'Tidak ada data',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                                fontSize: 26,
+                                                color: Colors.blueGrey,
+                                                fontWeight: FontWeight.bold,
+                                                fontFamily: 'Acne',
+                                                letterSpacing: 1.5),
+                                          ),
+                                        )
+                                      ]);
+                                    }
+                                    if (snapshot.hasData) {
+                                      return Column(children: [
+                                        const Text('Jenis Barang',
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 24,
+                                            )),
+                                        const Divider(thickness: 5),
+                                        Expanded(
+                                          child: isLoadingJenisBarang == false
+                                              ? Container(
                                                   padding:
                                                       const EdgeInsets.all(0),
-                                                  child: Column(
-                                                    children: [
-                                                      Container(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .symmetric(
-                                                                horizontal: 17),
-                                                        child: ElevatedButton(
-                                                          onPressed: () {
-                                                            setState(() {});
-                                                          },
-                                                          style: ElevatedButton.styleFrom(
-                                                              backgroundColor:
-                                                                  Colors.blue
-                                                                      .shade100,
-                                                              shape: RoundedRectangleBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
+                                                  width: 90,
+                                                  height: 90,
+                                                  child: Lottie.asset(
+                                                      "loadingJSON/loadingV1.json"),
+                                                )
+                                              : ListView.builder(
+                                                  itemCount:
+                                                      snapshot.data!.length,
+                                                  itemBuilder:
+                                                      (BuildContext context,
+                                                          int index) {
+                                                    var data =
+                                                        snapshot.data![index];
+                                                    return Container(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              0),
+                                                      child: Column(
+                                                        children: [
+                                                          Container(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .symmetric(
+                                                                    horizontal:
+                                                                        17),
+                                                            child:
+                                                                ElevatedButton(
+                                                              onPressed: () {
+                                                                setState(() {
+                                                                  namaJenisBarangView1 = data
+                                                                      .jenisBarang
+                                                                      .toString();
+                                                                  isJenisBarangView1 =
+                                                                      true;
+                                                                });
+                                                              },
+                                                              style: ElevatedButton.styleFrom(
+                                                                  backgroundColor:
+                                                                      Colors
+                                                                          .blue
+                                                                          .shade100,
+                                                                  shape: RoundedRectangleBorder(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
                                                                               50.0))),
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceBetween,
-                                                            children: [
-                                                              Text(
-                                                                data.jenisBarang
-                                                                    .toString(),
-                                                                style: const TextStyle(
-                                                                    fontSize:
-                                                                        14,
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold),
+                                                              child: Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceBetween,
+                                                                children: [
+                                                                  Text(
+                                                                    data.jenisBarang
+                                                                        .toString(),
+                                                                    style: const TextStyle(
+                                                                        fontSize:
+                                                                            14,
+                                                                        color: Colors
+                                                                            .black,
+                                                                        fontWeight:
+                                                                            FontWeight.bold),
+                                                                  ),
+                                                                  Text(
+                                                                    listJenisBarang!
+                                                                        .where((element) =>
+                                                                            element.jenisBarang.toString().toLowerCase() ==
+                                                                            data.jenisBarang.toString().toLowerCase())
+                                                                        .toList()
+                                                                        .length
+                                                                        .toString(),
+                                                                    style: const TextStyle(
+                                                                        fontSize:
+                                                                            14,
+                                                                        color: Colors
+                                                                            .black,
+                                                                        fontWeight:
+                                                                            FontWeight.bold),
+                                                                  ),
+                                                                ],
                                                               ),
-                                                              Text(
-                                                                listJenisBarang!
-                                                                    .where((element) =>
-                                                                        element
-                                                                            .jenisBarang
-                                                                            .toString()
-                                                                            .toLowerCase() ==
-                                                                        data.jenisBarang
-                                                                            .toString()
-                                                                            .toLowerCase())
-                                                                    .toList()
-                                                                    .length
-                                                                    .toString(),
-                                                                style: const TextStyle(
-                                                                    fontSize:
-                                                                        14,
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold),
-                                                              ),
-                                                            ],
+                                                            ),
                                                           ),
-                                                        ),
+                                                          const Divider(
+                                                            thickness: 1,
+                                                            color: Colors.grey,
+                                                          ),
+                                                        ],
                                                       ),
-                                                      const Divider(
-                                                        thickness: 1,
-                                                        color: Colors.grey,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                );
-                                              },
-                                            ),
-                                    ),
-                                  ]);
-                                }
-                                return Column(children: [
-                                  const Text('Jenis Barang',
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 24,
-                                      )),
-                                  const Divider(thickness: 5),
-                                  Container(
-                                    padding: const EdgeInsets.all(0),
-                                    width: 90,
-                                    height: 90,
-                                    child: Lottie.asset(
-                                        "loadingJSON/loadingV1.json"),
-                                  )
-                                ]);
-                              })))),
+                                                    );
+                                                  },
+                                                ),
+                                        ),
+                                      ]);
+                                    }
+                                    return Column(children: [
+                                      const Text('Jenis Barang',
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 24,
+                                          )),
+                                      const Divider(thickness: 5),
+                                      Container(
+                                        padding: const EdgeInsets.all(0),
+                                        width: 90,
+                                        height: 90,
+                                        child: Lottie.asset(
+                                            "loadingJSON/loadingV1.json"),
+                                      )
+                                    ]);
+                                  })))),
 
               //*report kelas harga
               Align(
@@ -2157,6 +2216,19 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ),
+        Container(
+            padding: const EdgeInsets.only(top: 10),
+            child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green.shade600),
+                onPressed: () {
+                  //call function another class
+                  ExcelScreen().exportExcel();
+                  // Navigator.push(context,
+                  //     MaterialPageRoute(builder: (c) => const ExcelScreen()));
+                },
+                child: const Text('Export to excel'))),
+
         //? table list
         isLoading == false
             ? Center(
@@ -2379,6 +2451,250 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
       ]),
     );
+  }
+
+  jenisBarangView1(jenisBarang) {
+    return Align(
+        alignment: Alignment.bottomLeft,
+        child: Container(
+            padding: const EdgeInsets.all(12),
+            width: 300,
+            height: 300,
+            child: Card(
+                color: Colors.grey.shade200,
+                child: FutureBuilder(
+                    future: siklus.text.isEmpty
+                        ? _getDataJeniBarangView1("all",
+                            sharedPreferences!.getString('nama')!, jenisBarang)
+                        : _getDataJeniBarangView1(siklusDesigner,
+                            sharedPreferences!.getString('nama')!, jenisBarang),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        return Column(children: [
+                          SizedBox(
+                            height: 33,
+                            child: Row(
+                              children: [
+                                IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        isJenisBarangView1 = false;
+                                      });
+                                    },
+                                    icon: const Icon(
+                                        Icons.arrow_back_ios_new_outlined)),
+                                Container(
+                                  padding: const EdgeInsets.only(left: 55),
+                                  child: Text(jenisBarang,
+                                      style: const TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 24,
+                                      )),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const Divider(thickness: 5),
+                          Center(
+                              child: SizedBox(
+                            width: 250,
+                            height: 210,
+                            child: Lottie.asset(
+                                "loadingJSON/somethingwentwrong.json"),
+                          ))
+                        ]);
+                      }
+
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Column(children: [
+                          SizedBox(
+                            height: 33,
+                            child: Row(
+                              children: [
+                                IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        isJenisBarangView1 = false;
+                                      });
+                                    },
+                                    icon: const Icon(
+                                        Icons.arrow_back_ios_new_outlined)),
+                                Container(
+                                  padding: const EdgeInsets.only(left: 55),
+                                  child: Text(jenisBarang,
+                                      style: const TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 24,
+                                      )),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const Divider(thickness: 5),
+                          Container(
+                            padding: const EdgeInsets.all(0),
+                            width: 90,
+                            height: 90,
+                            child: Lottie.asset("loadingJSON/loadingV1.json"),
+                          )
+                        ]);
+                      }
+                      if (snapshot.data!.isEmpty) {
+                        return Column(children: [
+                          SizedBox(
+                            height: 33,
+                            child: Row(
+                              children: [
+                                IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        isJenisBarangView1 = false;
+                                      });
+                                    },
+                                    icon: const Icon(
+                                        Icons.arrow_back_ios_new_outlined)),
+                                Container(
+                                  padding: const EdgeInsets.only(left: 55),
+                                  child: Text(jenisBarang,
+                                      style: const TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 24,
+                                      )),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const Divider(thickness: 5),
+                          const Center(
+                            child: Text(
+                              'Tidak ada data',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontSize: 26,
+                                  color: Colors.blueGrey,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Acne',
+                                  letterSpacing: 1.5),
+                            ),
+                          )
+                        ]);
+                      }
+                      if (snapshot.hasData) {
+                        return Column(children: [
+                          SizedBox(
+                            height: 33,
+                            child: Row(
+                              children: [
+                                IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        isJenisBarangView1 = false;
+                                      });
+                                    },
+                                    icon: const Icon(
+                                        Icons.arrow_back_ios_new_outlined)),
+                                Container(
+                                  padding: const EdgeInsets.only(left: 55),
+                                  child: Text(jenisBarang,
+                                      style: const TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 24,
+                                      )),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const Divider(thickness: 5),
+                          Expanded(
+                            child: isLoadingJenisBarang == false
+                                ? Container(
+                                    padding: const EdgeInsets.all(0),
+                                    width: 90,
+                                    height: 90,
+                                    child: Lottie.asset(
+                                        "loadingJSON/loadingV1.json"),
+                                  )
+                                : ListView.builder(
+                                    itemCount: listJenisBarangView1!.length,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      var data = snapshot.data![index];
+                                      return Container(
+                                        padding: const EdgeInsets.all(0),
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 17),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    data.kodeDesignMdbc
+                                                        .toString(),
+                                                    style: const TextStyle(
+                                                        fontSize: 14,
+                                                        color: Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                  Text(
+                                                    listJenisBarangView1!
+                                                        .where((element) =>
+                                                            element
+                                                                .kodeDesignMdbc
+                                                                .toString()
+                                                                .toLowerCase() ==
+                                                            data.kodeDesignMdbc
+                                                                .toString()
+                                                                .toLowerCase())
+                                                        .toList()
+                                                        .length
+                                                        .toString(),
+                                                    style: const TextStyle(
+                                                        fontSize: 14,
+                                                        color: Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            const Divider(
+                                              thickness: 1,
+                                              color: Colors.grey,
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  ),
+                          ),
+                        ]);
+                      }
+                      return Column(children: [
+                        const Text('Jenis Barang',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 24,
+                            )),
+                        const Divider(thickness: 5),
+                        Container(
+                          padding: const EdgeInsets.all(0),
+                          width: 90,
+                          height: 90,
+                          child: Lottie.asset("loadingJSON/loadingV1.json"),
+                        )
+                      ]);
+                    }))));
   }
 
   //! dashboard Designer
@@ -3013,167 +3329,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           color: Colors.grey,
                                                         ),
                                                       ),
-                                                      // //? SPK LENGKAP
-                                                      // const Row(
-                                                      //   mainAxisAlignment:
-                                                      //       MainAxisAlignment
-                                                      //           .spaceBetween,
-                                                      //   children: [
-                                                      //     Text(
-                                                      //       'SPK Lengkap',
-                                                      //       maxLines: 2,
-                                                      //       style: TextStyle(
-                                                      //           fontSize: 14,
-                                                      //           color: Colors
-                                                      //               .black,
-                                                      //           fontWeight:
-                                                      //               FontWeight
-                                                      //                   .bold),
-                                                      //     ),
-                                                      //     //fungsi menampilkan jumlah SESUAI table
-                                                      //     Text(
-                                                      //       '0',
-                                                      //       style: TextStyle(
-                                                      //           fontSize: 14,
-                                                      //           color: Colors
-                                                      //               .black,
-                                                      //           fontWeight:
-                                                      //               FontWeight
-                                                      //                   .bold),
-                                                      //     ),
-                                                      //   ],
-                                                      // ),
-
-                                                      // const Padding(
-                                                      //   padding:
-                                                      //       EdgeInsets.only(
-                                                      //           bottom: 10),
-                                                      //   child: Divider(
-                                                      //     thickness: 1,
-                                                      //     color: Colors.grey,
-                                                      //   ),
-                                                      // ),
-                                                      // //? SPK Tidak LENGKAP
-                                                      // const Row(
-                                                      //   mainAxisAlignment:
-                                                      //       MainAxisAlignment
-                                                      //           .spaceBetween,
-                                                      //   children: [
-                                                      //     Text(
-                                                      //       'SPK Tidak Lengkap',
-                                                      //       maxLines: 2,
-                                                      //       style: TextStyle(
-                                                      //           fontSize: 14,
-                                                      //           color: Colors
-                                                      //               .black,
-                                                      //           fontWeight:
-                                                      //               FontWeight
-                                                      //                   .bold),
-                                                      //     ),
-                                                      //     //fungsi menampilkan jumlah SESUAI table
-                                                      //     Text(
-                                                      //       '0',
-                                                      //       style: TextStyle(
-                                                      //           fontSize: 14,
-                                                      //           color: Colors
-                                                      //               .black,
-                                                      //           fontWeight:
-                                                      //               FontWeight
-                                                      //                   .bold),
-                                                      //     ),
-                                                      //   ],
-                                                      // ),
-
-                                                      // const Padding(
-                                                      //   padding:
-                                                      //       EdgeInsets.only(
-                                                      //           bottom: 10),
-                                                      //   child: Divider(
-                                                      //     thickness: 1,
-                                                      //     color: Colors.grey,
-                                                      //   ),
-                                                      // ),
-                                                      // //? SPK Cancel
-                                                      // const Row(
-                                                      //   mainAxisAlignment:
-                                                      //       MainAxisAlignment
-                                                      //           .spaceBetween,
-                                                      //   children: [
-                                                      //     Text(
-                                                      //       'SPK Cancel',
-                                                      //       maxLines: 2,
-                                                      //       style: TextStyle(
-                                                      //           fontSize: 14,
-                                                      //           color: Colors
-                                                      //               .black,
-                                                      //           fontWeight:
-                                                      //               FontWeight
-                                                      //                   .bold),
-                                                      //     ),
-                                                      //     //fungsi menampilkan jumlah SESUAI table
-                                                      //     Text(
-                                                      //       '0',
-                                                      //       style: TextStyle(
-                                                      //           fontSize: 14,
-                                                      //           color: Colors
-                                                      //               .black,
-                                                      //           fontWeight:
-                                                      //               FontWeight
-                                                      //                   .bold),
-                                                      //     ),
-                                                      //   ],
-                                                      // ),
-
-                                                      // const Padding(
-                                                      //   padding:
-                                                      //       EdgeInsets.only(
-                                                      //           bottom: 10),
-                                                      //   child: Divider(
-                                                      //     thickness: 1,
-                                                      //     color: Colors.grey,
-                                                      //   ),
-                                                      // ),
-
-                                                      // //? Total harga
-                                                      // Row(
-                                                      //   mainAxisAlignment:
-                                                      //       MainAxisAlignment
-                                                      //           .spaceBetween,
-                                                      //   children: [
-                                                      //     const Text(
-                                                      //       'Total',
-                                                      //       maxLines: 2,
-                                                      //       style: TextStyle(
-                                                      //           fontSize: 14,
-                                                      //           color: Colors
-                                                      //               .black,
-                                                      //           fontWeight:
-                                                      //               FontWeight
-                                                      //                   .bold),
-                                                      //     ),
-                                                      //     //fungsi menampilkan jumlah SESUAI table
-                                                      //     Text(
-                                                      //       'Rp. ${CurrencyFormat.convertToDollar(totalHarga, 0)}',
-                                                      //       style: const TextStyle(
-                                                      //           fontSize: 14,
-                                                      //           color: Colors
-                                                      //               .black,
-                                                      //           fontWeight:
-                                                      //               FontWeight
-                                                      //                   .bold),
-                                                      //     ),
-                                                      //   ],
-                                                      // ),
-
-                                                      // const Padding(
-                                                      //   padding:
-                                                      //       EdgeInsets.only(
-                                                      //           bottom: 10),
-                                                      //   child: Divider(
-                                                      //     thickness: 1,
-                                                      //     color: Colors.grey,
-                                                      //   ),
-                                                      // ),
                                                     ],
                                                   ),
                                                 ),
@@ -4552,9 +4707,8 @@ class RowSource extends DataTableSource {
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            sharedPreferences!.getString('level') != '1'
-                ? const SizedBox()
-                : IconButton(
+            sharedPreferences!.getString('level') == '1'
+                ? IconButton(
                     onPressed: () {
                       final dropdownFormKey = GlobalKey<FormState>();
                       showDialog(
@@ -4664,7 +4818,158 @@ class RowSource extends DataTableSource {
                     icon: const Icon(
                       Icons.rotate_90_degrees_ccw,
                       color: Colors.blue,
-                    )),
+                    ))
+                : sharedPreferences!.getString('level') == '2'
+                    ? IconButton(
+                        onPressed: () {
+                          // Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //         builder: (c) => FormROScreen(
+                          //               modelDesigner: FormDesignerModel(
+                          //                 id: data.id,
+                          //                 kodeDesignMdbc: data.kodeDesignMdbc,
+                          //                 kodeMarketing: data.kodeMarketing,
+                          //                 kodeProduksi: data.kodeProduksi,
+                          //                 namaDesigner: data.namaDesigner,
+                          //                 namaModeller: data.namaModeller,
+                          //                 kodeDesign: data.kodeDesign,
+                          //                 siklus: data.siklus,
+                          //                 tema: data.tema,
+                          //                 rantai: data.rantai,
+                          //                 qtyRantai: data.qtyRantai,
+                          //                 lain2: data.lain2,
+                          //                 qtyLain2: data.qtyLain2,
+                          //                 earnut: data.earnut,
+                          //                 qtyEarnut: data.qtyEarnut,
+                          //                 panjangRantai: data.panjangRantai,
+                          //                 customKomponen: data.customKomponen,
+                          //                 qtyCustomKomponen:
+                          //                     data.qtyCustomKomponen,
+                          //                 jenisBarang: data.jenisBarang,
+                          //                 kategoriBarang: data.kategoriBarang,
+                          //                 brand: data.brand,
+                          //                 photoShoot: data.photoShoot,
+                          //                 color: data.color,
+                          //                 beratEmas: data.beratEmas,
+                          //                 estimasiHarga: data.estimasiHarga,
+                          //                 ringSize: data.ringSize,
+                          //                 created_at: data.created_at,
+                          //                 batu1: data.batu1,
+                          //                 qtyBatu1: data.qtyBatu1,
+                          //                 batu2: data.batu2,
+                          //                 qtyBatu2: data.qtyBatu2,
+                          //                 batu3: data.batu3,
+                          //                 qtyBatu3: data.qtyBatu3,
+                          //                 batu4: data.batu4,
+                          //                 qtyBatu4: data.qtyBatu4,
+                          //                 batu5: data.batu5,
+                          //                 qtyBatu5: data.qtyBatu5,
+                          //                 batu6: data.batu6,
+                          //                 qtyBatu6: data.qtyBatu6,
+                          //                 batu7: data.batu7,
+                          //                 qtyBatu7: data.qtyBatu7,
+                          //                 batu8: data.batu8,
+                          //                 qtyBatu8: data.qtyBatu8,
+                          //                 batu9: data.batu9,
+                          //                 qtyBatu9: data.qtyBatu9,
+                          //                 batu10: data.batu10,
+                          //                 qtyBatu10: data.qtyBatu10,
+                          //                 batu11: data.batu11,
+                          //                 qtyBatu11: data.qtyBatu11,
+                          //                 batu12: data.batu12,
+                          //                 qtyBatu12: data.qtyBatu12,
+                          //                 batu13: data.batu13,
+                          //                 qtyBatu13: data.qtyBatu13,
+                          //                 batu14: data.batu14,
+                          //                 qtyBatu14: data.qtyBatu14,
+                          //                 batu15: data.batu15,
+                          //                 qtyBatu15: data.qtyBatu15,
+                          //                 batu16: data.batu16,
+                          //                 qtyBatu16: data.qtyBatu16,
+                          //                 batu17: data.batu17,
+                          //                 qtyBatu17: data.qtyBatu17,
+                          //                 batu18: data.batu18,
+                          //                 qtyBatu18: data.qtyBatu18,
+                          //                 batu19: data.batu19,
+                          //                 qtyBatu19: data.qtyBatu19,
+                          //                 batu20: data.batu20,
+                          //                 qtyBatu20: data.qtyBatu20,
+                          //                 batu21: data.batu21,
+                          //                 qtyBatu21: data.qtyBatu21,
+                          //                 batu22: data.batu22,
+                          //                 qtyBatu22: data.qtyBatu22,
+                          //                 batu23: data.batu23,
+                          //                 qtyBatu23: data.qtyBatu23,
+                          //                 batu24: data.batu24,
+                          //                 qtyBatu24: data.qtyBatu24,
+                          //                 batu25: data.batu25,
+                          //                 qtyBatu25: data.qtyBatu25,
+                          //                 batu26: data.batu26,
+                          //                 qtyBatu26: data.qtyBatu26,
+                          //                 batu27: data.batu27,
+                          //                 qtyBatu27: data.qtyBatu27,
+                          //                 batu28: data.batu28,
+                          //                 qtyBatu28: data.qtyBatu28,
+                          //                 batu29: data.batu29,
+                          //                 qtyBatu29: data.qtyBatu29,
+                          //                 batu30: data.batu30,
+                          //                 qtyBatu30: data.qtyBatu30,
+                          //                 batu31: data.batu31,
+                          //                 qtyBatu31: data.qtyBatu31,
+                          //                 batu32: data.batu32,
+                          //                 qtyBatu32: data.qtyBatu32,
+                          //                 batu33: data.batu33,
+                          //                 qtyBatu33: data.qtyBatu33,
+                          //                 batu34: data.batu34,
+                          //                 qtyBatu34: data.qtyBatu34,
+                          //                 batu35: data.batu35,
+                          //                 qtyBatu35: data.qtyBatu35,
+                          //                 imageUrl: data.imageUrl,
+                          //                 keteranganStatusBatu:
+                          //                     data.keteranganStatusBatu,
+                          //                 pointModeller: data.pointModeller,
+                          //                 tanggalInModeller:
+                          //                     data.tanggalInModeller,
+                          //                 tanggalOutModeller:
+                          //                     data.tanggalOutModeller,
+                          //                 tanggalInProduksi:
+                          //                     data.tanggalInProduksi,
+                          //                 beratModeller: data.beratModeller,
+                          //                 statusForm: data.statusForm,
+                          //               ),
+                          //             )));
+                        },
+                        icon: Stack(
+                          clipBehavior:
+                              Clip.none, //agar tidak menghalangi object
+
+                          children: [
+                            //tambahan icon ADD
+                            Positioned(
+                              right: -13.0,
+                              top: -10.0,
+                              child: InkResponse(
+                                onTap: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Icon(
+                                  Icons.add_circle_outline,
+                                  color: Colors.blue,
+                                  size: 20,
+                                ),
+                              ),
+                            ),
+                            const Text(
+                              'RO',
+                              style: TextStyle(
+                                  color: Colors.blue,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ))
+                    : const SizedBox(),
+
             Container(
                 alignment: Alignment.center,
                 padding: const EdgeInsets.all(0),
@@ -4959,6 +5264,10 @@ class RowSource extends DataTableSource {
                                 imageUrl: data.imageUrl,
                                 keteranganStatusBatu: data.keteranganStatusBatu,
                                 pointModeller: data.pointModeller,
+                                tanggalInModeller: data.tanggalInModeller,
+                                tanggalOutModeller: data.tanggalOutModeller,
+                                tanggalInProduksi: data.tanggalInProduksi,
+                                beratModeller: data.beratModeller,
                               ),
                             )));
               },

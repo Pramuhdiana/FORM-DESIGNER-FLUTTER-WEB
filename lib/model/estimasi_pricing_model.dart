@@ -98,6 +98,41 @@ class EstimasiPricingModel {
   String? labour;
   String? emas;
   String? diamond;
+  String? caratPcsBatu1;
+  String? caratPcsBatu2;
+  String? caratPcsBatu3;
+  String? caratPcsBatu4;
+  String? caratPcsBatu5;
+  String? caratPcsBatu6;
+  String? caratPcsBatu7;
+  String? caratPcsBatu8;
+  String? caratPcsBatu9;
+  String? caratPcsBatu10;
+  String? caratPcsBatu11;
+  String? caratPcsBatu12;
+  String? caratPcsBatu13;
+  String? caratPcsBatu14;
+  String? caratPcsBatu15;
+  String? caratPcsBatu16;
+  String? caratPcsBatu17;
+  String? caratPcsBatu18;
+  String? caratPcsBatu19;
+  String? caratPcsBatu20;
+  String? caratPcsBatu21;
+  String? caratPcsBatu22;
+  String? caratPcsBatu23;
+  String? caratPcsBatu24;
+  String? caratPcsBatu25;
+  String? caratPcsBatu26;
+  String? caratPcsBatu27;
+  String? caratPcsBatu28;
+  String? caratPcsBatu29;
+  String? caratPcsBatu30;
+  String? caratPcsBatu31;
+  String? caratPcsBatu32;
+  String? caratPcsBatu33;
+  String? caratPcsBatu34;
+  String? caratPcsBatu35;
 
   EstimasiPricingModel({
     this.id,
@@ -187,6 +222,41 @@ class EstimasiPricingModel {
     this.labour,
     this.emas,
     this.diamond,
+    this.caratPcsBatu1,
+    this.caratPcsBatu2,
+    this.caratPcsBatu3,
+    this.caratPcsBatu4,
+    this.caratPcsBatu5,
+    this.caratPcsBatu6,
+    this.caratPcsBatu7,
+    this.caratPcsBatu8,
+    this.caratPcsBatu9,
+    this.caratPcsBatu10,
+    this.caratPcsBatu11,
+    this.caratPcsBatu12,
+    this.caratPcsBatu13,
+    this.caratPcsBatu14,
+    this.caratPcsBatu15,
+    this.caratPcsBatu16,
+    this.caratPcsBatu17,
+    this.caratPcsBatu18,
+    this.caratPcsBatu19,
+    this.caratPcsBatu20,
+    this.caratPcsBatu21,
+    this.caratPcsBatu22,
+    this.caratPcsBatu23,
+    this.caratPcsBatu24,
+    this.caratPcsBatu25,
+    this.caratPcsBatu26,
+    this.caratPcsBatu27,
+    this.caratPcsBatu28,
+    this.caratPcsBatu29,
+    this.caratPcsBatu30,
+    this.caratPcsBatu31,
+    this.caratPcsBatu32,
+    this.caratPcsBatu33,
+    this.caratPcsBatu34,
+    this.caratPcsBatu35,
   });
 
   // ignore: avoid_types_as_parameter_names
@@ -279,6 +349,41 @@ class EstimasiPricingModel {
         labour: json["labour"].toString(),
         emas: json["emas"].toString(),
         diamond: json["diamond"].toString(),
+        caratPcsBatu1: (json["caratPcsBatu1"] ?? '0').toString(),
+        caratPcsBatu2: (json["caratPcsBatu2"] ?? '0').toString(),
+        caratPcsBatu3: (json["caratPcsBatu3"] ?? '0').toString(),
+        caratPcsBatu4: (json["caratPcsBatu4"] ?? '0').toString(),
+        caratPcsBatu5: (json["caratPcsBatu5"] ?? '0').toString(),
+        caratPcsBatu6: (json["caratPcsBatu6"] ?? '0').toString(),
+        caratPcsBatu7: (json["caratPcsBatu7"] ?? '0').toString(),
+        caratPcsBatu8: (json["caratPcsBatu8"] ?? '0').toString(),
+        caratPcsBatu9: (json["caratPcsBatu9"] ?? '0').toString(),
+        caratPcsBatu10: (json["caratPcsBatu10"] ?? '0').toString(),
+        caratPcsBatu11: (json["caratPcsBatu11"] ?? '0').toString(),
+        caratPcsBatu12: (json["caratPcsBatu12"] ?? '0').toString(),
+        caratPcsBatu13: (json["caratPcsBatu13"] ?? '0').toString(),
+        caratPcsBatu14: (json["caratPcsBatu14"] ?? '0').toString(),
+        caratPcsBatu15: (json["caratPcsBatu15"] ?? '0').toString(),
+        caratPcsBatu16: (json["caratPcsBatu16"] ?? '0').toString(),
+        caratPcsBatu17: (json["caratPcsBatu17"] ?? '0').toString(),
+        caratPcsBatu18: (json["caratPcsBatu18"] ?? '0').toString(),
+        caratPcsBatu19: (json["caratPcsBatu19"] ?? '0').toString(),
+        caratPcsBatu20: (json["caratPcsBatu20"] ?? '0').toString(),
+        caratPcsBatu21: (json["caratPcsBatu21"] ?? '0').toString(),
+        caratPcsBatu22: (json["caratPcsBatu22"] ?? '0').toString(),
+        caratPcsBatu23: (json["caratPcsBatu23"] ?? '0').toString(),
+        caratPcsBatu24: (json["caratPcsBatu24"] ?? '0').toString(),
+        caratPcsBatu25: (json["caratPcsBatu25"] ?? '0').toString(),
+        caratPcsBatu26: (json["caratPcsBatu26"] ?? '0').toString(),
+        caratPcsBatu27: (json["caratPcsBatu27"] ?? '0').toString(),
+        caratPcsBatu28: (json["caratPcsBatu28"] ?? '0').toString(),
+        caratPcsBatu29: (json["caratPcsBatu29"] ?? '0').toString(),
+        caratPcsBatu30: (json["caratPcsBatu30"] ?? '0').toString(),
+        caratPcsBatu31: (json["caratPcsBatu31"] ?? '0').toString(),
+        caratPcsBatu32: (json["caratPcsBatu32"] ?? '0').toString(),
+        caratPcsBatu33: (json["caratPcsBatu33"] ?? '0').toString(),
+        caratPcsBatu34: (json["caratPcsBatu34"] ?? '0').toString(),
+        caratPcsBatu35: (json["caratPcsBatu35"] ?? '0').toString(),
       );
 
   Map<String, dynamic> toJson() => {
@@ -369,5 +474,40 @@ class EstimasiPricingModel {
         "labour": labour,
         "emas": emas,
         "diamond": diamond,
+        "caratPcsBatu1": caratPcsBatu1,
+        "caratPcsBatu2": caratPcsBatu2,
+        "caratPcsBatu3": caratPcsBatu3,
+        "caratPcsBatu4": caratPcsBatu4,
+        "caratPcsBatu5": caratPcsBatu5,
+        "caratPcsBatu6": caratPcsBatu6,
+        "caratPcsBatu7": caratPcsBatu7,
+        "caratPcsBatu8": caratPcsBatu8,
+        "caratPcsBatu9": caratPcsBatu9,
+        "caratPcsBatu10": caratPcsBatu10,
+        "caratPcsBatu11": caratPcsBatu11,
+        "caratPcsBatu12": caratPcsBatu12,
+        "caratPcsBatu13": caratPcsBatu13,
+        "caratPcsBatu14": caratPcsBatu14,
+        "caratPcsBatu15": caratPcsBatu15,
+        "caratPcsBatu16": caratPcsBatu16,
+        "caratPcsBatu17": caratPcsBatu17,
+        "caratPcsBatu18": caratPcsBatu18,
+        "caratPcsBatu19": caratPcsBatu19,
+        "caratPcsBatu20": caratPcsBatu20,
+        "caratPcsBatu21": caratPcsBatu21,
+        "caratPcsBatu22": caratPcsBatu22,
+        "caratPcsBatu23": caratPcsBatu23,
+        "caratPcsBatu24": caratPcsBatu24,
+        "caratPcsBatu25": caratPcsBatu25,
+        "caratPcsBatu26": caratPcsBatu26,
+        "caratPcsBatu27": caratPcsBatu27,
+        "caratPcsBatu28": caratPcsBatu28,
+        "caratPcsBatu29": caratPcsBatu29,
+        "caratPcsBatu30": caratPcsBatu30,
+        "caratPcsBatu31": caratPcsBatu31,
+        "caratPcsBatu32": caratPcsBatu32,
+        "caratPcsBatu33": caratPcsBatu33,
+        "caratPcsBatu34": caratPcsBatu34,
+        "caratPcsBatu35": caratPcsBatu35,
       };
 }

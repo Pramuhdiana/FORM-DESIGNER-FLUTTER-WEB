@@ -159,7 +159,7 @@ class _MainViewFormDesignState extends State<MainViewFormDesign> {
                 sharedPreferences!.getString('level') == '4')
               const SideNavigationBarItem(
                 icon: Icons.moving_outlined,
-                label: 'MPS',
+                label: 'Monitoring Per Siklus',
               ),
           ],
 
@@ -501,7 +501,7 @@ class _MainViewFormDesignState extends State<MainViewFormDesign> {
                 sharedPreferences!.getString('level') == '4')
               const SideNavigationBarItem(
                 icon: Icons.moving_outlined,
-                label: 'MPS',
+                label: 'Monitoring Per Siklus',
               ),
           ],
 

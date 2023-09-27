@@ -62,14 +62,7 @@ class _ListCalculatePricingScreenState
   Future<List<EstimasiPricingModel>> _getData() async {
     final response = await http.get(
         Uri.parse(ApiConstants.baseUrl + ApiConstants.getListEstimasiHarga));
-    // final response = sharedPreferences!.getString('level') == '1'
-    //     ? await http.get(
-    //         Uri.parse(ApiConstants.baseUrl + ApiConstants.getListEstimasiHarga))
-    //     : await http.get(Uri.parse(
-    //         '${ApiConstants.baseUrl}${ApiConstants.getListFormDesignerByName}?nama=${sharedPreferences!.getString('nama')!}'));
-
     // if response successful
-
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);
 
@@ -616,28 +609,14 @@ class RowSource extends DataTableSource {
                                                   padding:
                                                       const EdgeInsets.only(
                                                           left: 15),
-                                                  child: FutureBuilder(
-                                                      future: _getDataMdbc(
-                                                          data.batu1),
-                                                      builder:
-                                                          (context, snapshot) {
-                                                        if (snapshot.hasData) {
-                                                          return Text(
-                                                            '(${snapshot.data!} Crt/Pcs)',
-                                                            textAlign:
-                                                                TextAlign.left,
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          );
-                                                        } else {
-                                                          return const CircularProgressIndicator();
-                                                        }
-                                                      }),
+                                                  child: Text(
+                                                    '(${data.caratPcsBatu1} Pcs)',
+                                                    style: const TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.black),
+                                                  ),
                                                 )
                                               ],
                                             ),

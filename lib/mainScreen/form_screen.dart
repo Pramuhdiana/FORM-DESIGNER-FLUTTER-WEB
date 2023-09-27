@@ -133,6 +133,7 @@ class _FormScreenState extends State<FormScreen> {
   TextEditingController kodeDesignMdbc = TextEditingController();
   TextEditingController kodeMarketing = TextEditingController();
   TextEditingController siklus = TextEditingController();
+  TextEditingController statusForm = TextEditingController();
   TextEditingController kodeProduksi = TextEditingController();
   TextEditingController namaDesigner = TextEditingController();
   TextEditingController namaModeller = TextEditingController();
@@ -513,32 +514,6 @@ class _FormScreenState extends State<FormScreen> {
         }
       }
     });
-    // try {
-    //   // Pick an image file using file_picker package
-    //   FilePickerResult? result = await FilePicker.platform.pickFiles(
-    //     type: FileType.image,
-    //   );
-
-    //   // If user cancels the picker, do nothing
-    //   if (result == null) return;
-    //   // Uint8List uploadfile = result.files.single.bytes!;
-    //   // String filename = (result.files.single.name);
-
-    //   PlatformFile file = result.files.first;
-
-    //   // If user picks an image, update the state with the new image file
-    //   setState(() {
-    //     // upload(File(uploadfile.toString()));
-    //     // imageUrl = file.name;
-    //   });
-    // } catch (e) {
-    //   // If there is an error, show a snackbar with the error message
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //     SnackBar(
-    //       content: Text(e.toString()),
-    //     ),
-    //   );
-    // }
   }
 
   Future _getData() async {
@@ -2325,9 +2300,7 @@ class _FormScreenState extends State<FormScreen> {
                               ),
                             ));
                   });
-                  setState(() {
-                    clearForm();
-                  });
+
                   Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -2537,6 +2510,40 @@ class _FormScreenState extends State<FormScreen> {
                       ),
                     ),
                   ),
+
+                  //statusForm
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 1),
+                    height: 65,
+                    width: 200,
+                    child: DropdownSearch<String>(
+                      items: const [
+                        "NO",
+                        "RO",
+                      ],
+                      onChanged: (item) {
+                        setState(() {
+                          statusForm.text = item!;
+                        });
+                      },
+                      popupProps:
+                          const PopupPropsMultiSelection.modalBottomSheet(
+                        showSelectedItems: true,
+                        showSearchBox: true,
+                      ),
+                      dropdownDecoratorProps: const DropDownDecoratorProps(
+                        dropdownSearchDecoration: InputDecoration(
+                          label: Text(
+                            'Status NO/RO',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          filled: true,
+                          fillColor: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+
                   //tema
                   SizedBox(
                     height: 65,
@@ -3416,26 +3423,29 @@ class _FormScreenState extends State<FormScreen> {
                                     ),
                                   ),
 
-                                  qtyBatu1.text.isEmpty
+                                  qtyBatu2.text.isNotEmpty
                                       ? const SizedBox()
-                                      : Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 10),
-                                          child: IconButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  qtyBatu1.text = '0';
-                                                  stokBatu1.text = '';
-                                                  crtPcsBatu1.text = '';
-                                                  ukuranBatu1.text = '';
-                                                  stokBatu1.text = '';
-                                                  batu1 = '';
-                                                  hargaBatu1 = 0;
-                                                  caratPcsBatu1 = 0;
-                                                });
-                                              },
-                                              icon: const Icon(Icons.cancel)),
-                                        ),
+                                      : qtyBatu1.text.isEmpty
+                                          ? const SizedBox()
+                                          : Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 10),
+                                              child: IconButton(
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      qtyBatu1.text = '';
+                                                      stokBatu1.text = '';
+                                                      crtPcsBatu1.text = '';
+                                                      ukuranBatu1.text = '';
+                                                      stokBatu1.text = '';
+                                                      batu1 = '';
+                                                      hargaBatu1 = 0;
+                                                      caratPcsBatu1 = 0;
+                                                    });
+                                                  },
+                                                  icon:
+                                                      const Icon(Icons.cancel)),
+                                            ),
                                 ],
                               ),
                               // end row batu1
@@ -3721,7 +3731,7 @@ class _FormScreenState extends State<FormScreen> {
                                                 child: IconButton(
                                                     onPressed: () {
                                                       setState(() {
-                                                        qtyBatu2.text = '0';
+                                                        qtyBatu2.text = '';
                                                         stokBatu2.text = '';
                                                         crtPcsBatu2.text = '';
                                                         ukuranBatu2.text = '';
@@ -4019,7 +4029,7 @@ class _FormScreenState extends State<FormScreen> {
                                                 child: IconButton(
                                                     onPressed: () {
                                                       setState(() {
-                                                        qtyBatu3.text = '0';
+                                                        qtyBatu3.text = '';
                                                         stokBatu3.text = '';
                                                         crtPcsBatu3.text = '';
                                                         ukuranBatu3.text = '';
@@ -4317,7 +4327,7 @@ class _FormScreenState extends State<FormScreen> {
                                                 child: IconButton(
                                                     onPressed: () {
                                                       setState(() {
-                                                        qtyBatu4.text = '0';
+                                                        qtyBatu4.text = '';
                                                         stokBatu4.text = '';
                                                         crtPcsBatu4.text = '';
                                                         ukuranBatu4.text = '';
@@ -4615,7 +4625,7 @@ class _FormScreenState extends State<FormScreen> {
                                                 child: IconButton(
                                                     onPressed: () {
                                                       setState(() {
-                                                        qtyBatu5.text = '0';
+                                                        qtyBatu5.text = '';
                                                         stokBatu5.text = '';
                                                         crtPcsBatu5.text = '';
                                                         ukuranBatu5.text = '';
@@ -4913,7 +4923,7 @@ class _FormScreenState extends State<FormScreen> {
                                                 child: IconButton(
                                                     onPressed: () {
                                                       setState(() {
-                                                        qtyBatu6.text = '0';
+                                                        qtyBatu6.text = '';
                                                         stokBatu6.text = '';
                                                         crtPcsBatu6.text = '';
                                                         ukuranBatu6.text = '';
@@ -5211,7 +5221,7 @@ class _FormScreenState extends State<FormScreen> {
                                                 child: IconButton(
                                                     onPressed: () {
                                                       setState(() {
-                                                        qtyBatu7.text = '0';
+                                                        qtyBatu7.text = '';
                                                         stokBatu7.text = '';
                                                         crtPcsBatu7.text = '';
                                                         ukuranBatu7.text = '';
@@ -5509,7 +5519,7 @@ class _FormScreenState extends State<FormScreen> {
                                                 child: IconButton(
                                                     onPressed: () {
                                                       setState(() {
-                                                        qtyBatu8.text = '0';
+                                                        qtyBatu8.text = '';
                                                         stokBatu8.text = '';
                                                         crtPcsBatu8.text = '';
                                                         ukuranBatu8.text = '';
@@ -5807,7 +5817,7 @@ class _FormScreenState extends State<FormScreen> {
                                                 child: IconButton(
                                                     onPressed: () {
                                                       setState(() {
-                                                        qtyBatu9.text = '0';
+                                                        qtyBatu9.text = '';
                                                         stokBatu9.text = '';
                                                         crtPcsBatu9.text = '';
                                                         ukuranBatu9.text = '';
@@ -6106,7 +6116,7 @@ class _FormScreenState extends State<FormScreen> {
                                                 child: IconButton(
                                                     onPressed: () {
                                                       setState(() {
-                                                        qtyBatu10.text = '0';
+                                                        qtyBatu10.text = '';
                                                         stokBatu10.text = '';
                                                         crtPcsBatu10.text = '';
                                                         ukuranBatu10.text = '';
@@ -6405,7 +6415,7 @@ class _FormScreenState extends State<FormScreen> {
                                                 child: IconButton(
                                                     onPressed: () {
                                                       setState(() {
-                                                        qtyBatu11.text = '0';
+                                                        qtyBatu11.text = '';
                                                         stokBatu11.text = '';
                                                         crtPcsBatu11.text = '';
                                                         ukuranBatu11.text = '';
@@ -6704,7 +6714,7 @@ class _FormScreenState extends State<FormScreen> {
                                                 child: IconButton(
                                                     onPressed: () {
                                                       setState(() {
-                                                        qtyBatu12.text = '0';
+                                                        qtyBatu12.text = '';
                                                         stokBatu12.text = '';
                                                         crtPcsBatu12.text = '';
                                                         ukuranBatu12.text = '';
@@ -7003,7 +7013,7 @@ class _FormScreenState extends State<FormScreen> {
                                                 child: IconButton(
                                                     onPressed: () {
                                                       setState(() {
-                                                        qtyBatu13.text = '0';
+                                                        qtyBatu13.text = '';
                                                         stokBatu13.text = '';
                                                         crtPcsBatu13.text = '';
                                                         ukuranBatu13.text = '';
@@ -7302,7 +7312,7 @@ class _FormScreenState extends State<FormScreen> {
                                                 child: IconButton(
                                                     onPressed: () {
                                                       setState(() {
-                                                        qtyBatu14.text = '0';
+                                                        qtyBatu14.text = '';
                                                         stokBatu14.text = '';
                                                         crtPcsBatu14.text = '';
                                                         ukuranBatu14.text = '';
@@ -7601,7 +7611,7 @@ class _FormScreenState extends State<FormScreen> {
                                                 child: IconButton(
                                                     onPressed: () {
                                                       setState(() {
-                                                        qtyBatu15.text = '0';
+                                                        qtyBatu15.text = '';
                                                         stokBatu15.text = '';
                                                         crtPcsBatu15.text = '';
                                                         ukuranBatu15.text = '';
@@ -7900,7 +7910,7 @@ class _FormScreenState extends State<FormScreen> {
                                                 child: IconButton(
                                                     onPressed: () {
                                                       setState(() {
-                                                        qtyBatu16.text = '0';
+                                                        qtyBatu16.text = '';
                                                         stokBatu16.text = '';
                                                         crtPcsBatu16.text = '';
                                                         ukuranBatu16.text = '';
@@ -8199,7 +8209,7 @@ class _FormScreenState extends State<FormScreen> {
                                                 child: IconButton(
                                                     onPressed: () {
                                                       setState(() {
-                                                        qtyBatu17.text = '0';
+                                                        qtyBatu17.text = '';
                                                         stokBatu17.text = '';
                                                         crtPcsBatu17.text = '';
                                                         ukuranBatu17.text = '';
@@ -8498,7 +8508,7 @@ class _FormScreenState extends State<FormScreen> {
                                                 child: IconButton(
                                                     onPressed: () {
                                                       setState(() {
-                                                        qtyBatu18.text = '0';
+                                                        qtyBatu18.text = '';
                                                         stokBatu18.text = '';
                                                         crtPcsBatu18.text = '';
                                                         ukuranBatu18.text = '';
@@ -8797,7 +8807,7 @@ class _FormScreenState extends State<FormScreen> {
                                                 child: IconButton(
                                                     onPressed: () {
                                                       setState(() {
-                                                        qtyBatu19.text = '0';
+                                                        qtyBatu19.text = '';
                                                         stokBatu19.text = '';
                                                         crtPcsBatu19.text = '';
                                                         ukuranBatu19.text = '';
@@ -9096,7 +9106,7 @@ class _FormScreenState extends State<FormScreen> {
                                                 child: IconButton(
                                                     onPressed: () {
                                                       setState(() {
-                                                        qtyBatu20.text = '0';
+                                                        qtyBatu20.text = '';
                                                         stokBatu20.text = '';
                                                         crtPcsBatu20.text = '';
                                                         ukuranBatu20.text = '';
@@ -9395,7 +9405,7 @@ class _FormScreenState extends State<FormScreen> {
                                                 child: IconButton(
                                                     onPressed: () {
                                                       setState(() {
-                                                        qtyBatu21.text = '0';
+                                                        qtyBatu21.text = '';
                                                         stokBatu21.text = '';
                                                         crtPcsBatu21.text = '';
                                                         ukuranBatu21.text = '';
@@ -9694,7 +9704,7 @@ class _FormScreenState extends State<FormScreen> {
                                                 child: IconButton(
                                                     onPressed: () {
                                                       setState(() {
-                                                        qtyBatu22.text = '0';
+                                                        qtyBatu22.text = '';
                                                         stokBatu22.text = '';
                                                         crtPcsBatu22.text = '';
                                                         ukuranBatu22.text = '';
@@ -9993,7 +10003,7 @@ class _FormScreenState extends State<FormScreen> {
                                                 child: IconButton(
                                                     onPressed: () {
                                                       setState(() {
-                                                        qtyBatu23.text = '0';
+                                                        qtyBatu23.text = '';
                                                         stokBatu23.text = '';
                                                         crtPcsBatu23.text = '';
                                                         ukuranBatu23.text = '';
@@ -10292,7 +10302,7 @@ class _FormScreenState extends State<FormScreen> {
                                                 child: IconButton(
                                                     onPressed: () {
                                                       setState(() {
-                                                        qtyBatu24.text = '0';
+                                                        qtyBatu24.text = '';
                                                         stokBatu24.text = '';
                                                         crtPcsBatu24.text = '';
                                                         ukuranBatu24.text = '';
@@ -10591,7 +10601,7 @@ class _FormScreenState extends State<FormScreen> {
                                                 child: IconButton(
                                                     onPressed: () {
                                                       setState(() {
-                                                        qtyBatu25.text = '0';
+                                                        qtyBatu25.text = '';
                                                         stokBatu25.text = '';
                                                         crtPcsBatu25.text = '';
                                                         ukuranBatu25.text = '';
@@ -10890,7 +10900,7 @@ class _FormScreenState extends State<FormScreen> {
                                                 child: IconButton(
                                                     onPressed: () {
                                                       setState(() {
-                                                        qtyBatu26.text = '0';
+                                                        qtyBatu26.text = '';
                                                         stokBatu26.text = '';
                                                         crtPcsBatu26.text = '';
                                                         ukuranBatu26.text = '';
@@ -11189,7 +11199,7 @@ class _FormScreenState extends State<FormScreen> {
                                                 child: IconButton(
                                                     onPressed: () {
                                                       setState(() {
-                                                        qtyBatu27.text = '0';
+                                                        qtyBatu27.text = '';
                                                         stokBatu27.text = '';
                                                         crtPcsBatu27.text = '';
                                                         ukuranBatu27.text = '';
@@ -11488,7 +11498,7 @@ class _FormScreenState extends State<FormScreen> {
                                                 child: IconButton(
                                                     onPressed: () {
                                                       setState(() {
-                                                        qtyBatu28.text = '0';
+                                                        qtyBatu28.text = '';
                                                         stokBatu28.text = '';
                                                         crtPcsBatu28.text = '';
                                                         ukuranBatu28.text = '';
@@ -11787,7 +11797,7 @@ class _FormScreenState extends State<FormScreen> {
                                                 child: IconButton(
                                                     onPressed: () {
                                                       setState(() {
-                                                        qtyBatu29.text = '0';
+                                                        qtyBatu29.text = '';
                                                         stokBatu29.text = '';
                                                         crtPcsBatu29.text = '';
                                                         ukuranBatu29.text = '';
@@ -12086,7 +12096,7 @@ class _FormScreenState extends State<FormScreen> {
                                                 child: IconButton(
                                                     onPressed: () {
                                                       setState(() {
-                                                        qtyBatu30.text = '0';
+                                                        qtyBatu30.text = '';
                                                         stokBatu30.text = '';
                                                         crtPcsBatu30.text = '';
                                                         ukuranBatu30.text = '';
@@ -12385,7 +12395,7 @@ class _FormScreenState extends State<FormScreen> {
                                                 child: IconButton(
                                                     onPressed: () {
                                                       setState(() {
-                                                        qtyBatu31.text = '0';
+                                                        qtyBatu31.text = '';
                                                         stokBatu31.text = '';
                                                         crtPcsBatu31.text = '';
                                                         ukuranBatu31.text = '';
@@ -12684,7 +12694,7 @@ class _FormScreenState extends State<FormScreen> {
                                                 child: IconButton(
                                                     onPressed: () {
                                                       setState(() {
-                                                        qtyBatu32.text = '0';
+                                                        qtyBatu32.text = '';
                                                         stokBatu32.text = '';
                                                         crtPcsBatu32.text = '';
                                                         ukuranBatu32.text = '';
@@ -12983,7 +12993,7 @@ class _FormScreenState extends State<FormScreen> {
                                                 child: IconButton(
                                                     onPressed: () {
                                                       setState(() {
-                                                        qtyBatu33.text = '0';
+                                                        qtyBatu33.text = '';
                                                         stokBatu33.text = '';
                                                         crtPcsBatu33.text = '';
                                                         ukuranBatu33.text = '';
@@ -13282,7 +13292,7 @@ class _FormScreenState extends State<FormScreen> {
                                                 child: IconButton(
                                                     onPressed: () {
                                                       setState(() {
-                                                        qtyBatu34.text = '0';
+                                                        qtyBatu34.text = '';
                                                         stokBatu34.text = '';
                                                         crtPcsBatu34.text = '';
                                                         ukuranBatu34.text = '';
@@ -13581,7 +13591,7 @@ class _FormScreenState extends State<FormScreen> {
                                                 child: IconButton(
                                                     onPressed: () {
                                                       setState(() {
-                                                        qtyBatu35.text = '0';
+                                                        qtyBatu35.text = '';
                                                         stokBatu35.text = '';
                                                         crtPcsBatu35.text = '';
                                                         ukuranBatu35.text = '';
@@ -13990,11 +14000,12 @@ class _FormScreenState extends State<FormScreen> {
       'batu35': batu35!,
       'qtyBatu35': qtyBatu35.text,
       'imageUrl': imageUrl,
+      'statusForm': statusForm.text,
     };
     final response = await http.post(
         Uri.parse(ApiConstants.baseUrl + ApiConstants.postFormDesigner),
         body: body);
-    print(response.statusCode);
+    print(response.body);
   }
 
   postApiQtyBatu1() async {
