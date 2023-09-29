@@ -1288,7 +1288,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
           upFinal = data[0]['upFinal'];
           kurs = data[0]['kurs'];
           others1 = data[0]['others1'];
-          others2 = data[0]['kurs'];
+          others2 = data[0]['others2'];
           others3 = data[0]['others3'];
         });
       }

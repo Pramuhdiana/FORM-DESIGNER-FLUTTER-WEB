@@ -572,6 +572,7 @@ class _FormScreenState extends State<FormScreen> {
         (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
         (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
         (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
+        (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
         (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
         (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
         (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
@@ -652,6 +653,7 @@ class _FormScreenState extends State<FormScreen> {
           (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
           (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
           (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
+          (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
           (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
           (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
           (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
@@ -760,6 +762,7 @@ class _FormScreenState extends State<FormScreen> {
           (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
           (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
           (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
+          (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
           (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
           (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
           (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
@@ -872,6 +875,7 @@ class _FormScreenState extends State<FormScreen> {
           (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
           (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
           (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
+          (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
           (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
           (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
           (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
@@ -979,6 +983,7 @@ class _FormScreenState extends State<FormScreen> {
           (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
           (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
           (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
+          (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
           (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
           (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
           (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
@@ -1087,6 +1092,7 @@ class _FormScreenState extends State<FormScreen> {
         (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
         (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
         (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
+        (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
         (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
         (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
         (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
@@ -1170,6 +1176,7 @@ class _FormScreenState extends State<FormScreen> {
           (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
           (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
           (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
+          (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
           (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
           (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
           (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
@@ -1276,6 +1283,7 @@ class _FormScreenState extends State<FormScreen> {
           (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
           (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
           (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
+          (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
           (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
           (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
           (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
@@ -1380,6 +1388,7 @@ class _FormScreenState extends State<FormScreen> {
           (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
           (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
           (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
+          (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
           (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
           (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
           (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
@@ -1485,6 +1494,7 @@ class _FormScreenState extends State<FormScreen> {
           (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
           (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
           (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
+          (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
           (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
           (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
           (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
@@ -1593,6 +1603,7 @@ class _FormScreenState extends State<FormScreen> {
         (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
         (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
         (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
+        (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
         (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
         (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
         (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
@@ -1677,6 +1688,7 @@ class _FormScreenState extends State<FormScreen> {
           (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
           (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
           (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
+          (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
           (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
           (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
           (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
@@ -1793,6 +1805,7 @@ class _FormScreenState extends State<FormScreen> {
           (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
           (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
           (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
+          (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
           (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
           (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
           (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
@@ -1907,6 +1920,7 @@ class _FormScreenState extends State<FormScreen> {
           (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
           (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
           (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
+          (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
           (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
           (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
           (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
@@ -2023,6 +2037,7 @@ class _FormScreenState extends State<FormScreen> {
           (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
           (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
           (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
+          (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
           (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
           (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
           (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
@@ -3211,7 +3226,9 @@ class _FormScreenState extends State<FormScreen> {
                                             print(data);
                                             setState(() {
                                               ukuranBatu1.text = '';
-                                              crtPcsBatu1.text = '';
+                                              crtPcsBatu1.text = data[0]
+                                                      ['caratPcs']
+                                                  .toString();
                                               idStone1 = item.idStone;
                                               idBatu1 = item.id;
                                               hargaBatu1 = data[0]['unitCost'];
@@ -3489,7 +3506,9 @@ class _FormScreenState extends State<FormScreen> {
                                                   print(data);
                                                   setState(() {
                                                     ukuranBatu2.text = '';
-                                                    crtPcsBatu2.text = '';
+                                                    crtPcsBatu2.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
                                                     idStone2 = item.idStone;
                                                     idBatu2 = item.id;
                                                     hargaBatu2 =
@@ -3787,7 +3806,9 @@ class _FormScreenState extends State<FormScreen> {
                                                   print(data);
                                                   setState(() {
                                                     ukuranBatu3.text = '';
-                                                    crtPcsBatu3.text = '';
+                                                    crtPcsBatu3.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
                                                     idStone3 = item.idStone;
                                                     idBatu3 = item.id;
                                                     hargaBatu3 =
@@ -4085,7 +4106,9 @@ class _FormScreenState extends State<FormScreen> {
                                                   print(data);
                                                   setState(() {
                                                     ukuranBatu4.text = '';
-                                                    crtPcsBatu4.text = '';
+                                                    crtPcsBatu4.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
                                                     idStone4 = item.idStone;
                                                     idBatu4 = item.id;
                                                     hargaBatu4 =
@@ -4383,7 +4406,9 @@ class _FormScreenState extends State<FormScreen> {
                                                   print(data);
                                                   setState(() {
                                                     ukuranBatu5.text = '';
-                                                    crtPcsBatu5.text = '';
+                                                    crtPcsBatu5.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
                                                     idStone5 = item.idStone;
                                                     idBatu5 = item.id;
                                                     hargaBatu5 =
@@ -4681,7 +4706,9 @@ class _FormScreenState extends State<FormScreen> {
                                                   print(data);
                                                   setState(() {
                                                     ukuranBatu6.text = '';
-                                                    crtPcsBatu6.text = '';
+                                                    crtPcsBatu6.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
                                                     idStone6 = item.idStone;
                                                     idBatu6 = item.id;
                                                     hargaBatu6 =
@@ -4979,7 +5006,9 @@ class _FormScreenState extends State<FormScreen> {
                                                   print(data);
                                                   setState(() {
                                                     ukuranBatu7.text = '';
-                                                    crtPcsBatu7.text = '';
+                                                    crtPcsBatu7.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
                                                     idStone7 = item.idStone;
                                                     idBatu7 = item.id;
                                                     hargaBatu7 =
@@ -5277,7 +5306,9 @@ class _FormScreenState extends State<FormScreen> {
                                                   print(data);
                                                   setState(() {
                                                     ukuranBatu8.text = '';
-                                                    crtPcsBatu8.text = '';
+                                                    crtPcsBatu8.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
                                                     idStone8 = item.idStone;
                                                     idBatu8 = item.id;
                                                     hargaBatu8 =
@@ -5575,7 +5606,9 @@ class _FormScreenState extends State<FormScreen> {
                                                   print(data);
                                                   setState(() {
                                                     ukuranBatu9.text = '';
-                                                    crtPcsBatu9.text = '';
+                                                    crtPcsBatu9.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
                                                     idStone9 = item.idStone;
                                                     idBatu9 = item.id;
                                                     hargaBatu9 =
@@ -5873,7 +5906,9 @@ class _FormScreenState extends State<FormScreen> {
                                                   print(data);
                                                   setState(() {
                                                     ukuranBatu10.text = '';
-                                                    crtPcsBatu10.text = '';
+                                                    crtPcsBatu10.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
                                                     idStone10 = item.idStone;
                                                     idBatu10 = item.id;
                                                     hargaBatu10 =
@@ -6172,7 +6207,9 @@ class _FormScreenState extends State<FormScreen> {
                                                   print(data);
                                                   setState(() {
                                                     ukuranBatu11.text = '';
-                                                    crtPcsBatu11.text = '';
+                                                    crtPcsBatu11.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
                                                     idStone11 = item.idStone;
                                                     idBatu11 = item.id;
                                                     hargaBatu11 =
@@ -6471,7 +6508,9 @@ class _FormScreenState extends State<FormScreen> {
                                                   print(data);
                                                   setState(() {
                                                     ukuranBatu12.text = '';
-                                                    crtPcsBatu12.text = '';
+                                                    crtPcsBatu12.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
                                                     idStone12 = item.idStone;
                                                     idBatu12 = item.id;
                                                     hargaBatu12 =
@@ -6770,7 +6809,9 @@ class _FormScreenState extends State<FormScreen> {
                                                   print(data);
                                                   setState(() {
                                                     ukuranBatu13.text = '';
-                                                    crtPcsBatu13.text = '';
+                                                    crtPcsBatu13.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
                                                     idStone13 = item.idStone;
                                                     idBatu13 = item.id;
                                                     hargaBatu13 =
@@ -7069,7 +7110,9 @@ class _FormScreenState extends State<FormScreen> {
                                                   print(data);
                                                   setState(() {
                                                     ukuranBatu14.text = '';
-                                                    crtPcsBatu14.text = '';
+                                                    crtPcsBatu14.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
                                                     idStone14 = item.idStone;
                                                     idBatu14 = item.id;
                                                     hargaBatu14 =
@@ -7368,7 +7411,9 @@ class _FormScreenState extends State<FormScreen> {
                                                   print(data);
                                                   setState(() {
                                                     ukuranBatu15.text = '';
-                                                    crtPcsBatu15.text = '';
+                                                    crtPcsBatu15.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
                                                     idStone15 = item.idStone;
                                                     idBatu15 = item.id;
                                                     hargaBatu15 =
@@ -7667,7 +7712,9 @@ class _FormScreenState extends State<FormScreen> {
                                                   print(data);
                                                   setState(() {
                                                     ukuranBatu16.text = '';
-                                                    crtPcsBatu16.text = '';
+                                                    crtPcsBatu16.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
                                                     idStone16 = item.idStone;
                                                     idBatu16 = item.id;
                                                     hargaBatu16 =
@@ -7966,7 +8013,9 @@ class _FormScreenState extends State<FormScreen> {
                                                   print(data);
                                                   setState(() {
                                                     ukuranBatu17.text = '';
-                                                    crtPcsBatu17.text = '';
+                                                    crtPcsBatu17.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
                                                     idStone17 = item.idStone;
                                                     idBatu17 = item.id;
                                                     hargaBatu17 =
@@ -8265,7 +8314,9 @@ class _FormScreenState extends State<FormScreen> {
                                                   print(data);
                                                   setState(() {
                                                     ukuranBatu18.text = '';
-                                                    crtPcsBatu18.text = '';
+                                                    crtPcsBatu18.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
                                                     idStone18 = item.idStone;
                                                     idBatu18 = item.id;
                                                     hargaBatu18 =
@@ -8564,7 +8615,9 @@ class _FormScreenState extends State<FormScreen> {
                                                   print(data);
                                                   setState(() {
                                                     ukuranBatu19.text = '';
-                                                    crtPcsBatu19.text = '';
+                                                    crtPcsBatu19.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
                                                     idStone19 = item.idStone;
                                                     idBatu19 = item.id;
                                                     hargaBatu19 =
@@ -8863,7 +8916,9 @@ class _FormScreenState extends State<FormScreen> {
                                                   print(data);
                                                   setState(() {
                                                     ukuranBatu20.text = '';
-                                                    crtPcsBatu20.text = '';
+                                                    crtPcsBatu20.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
                                                     idStone20 = item.idStone;
                                                     idBatu20 = item.id;
                                                     hargaBatu20 =
@@ -9162,7 +9217,9 @@ class _FormScreenState extends State<FormScreen> {
                                                   print(data);
                                                   setState(() {
                                                     ukuranBatu21.text = '';
-                                                    crtPcsBatu21.text = '';
+                                                    crtPcsBatu21.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
                                                     idStone21 = item.idStone;
                                                     idBatu21 = item.id;
                                                     hargaBatu21 =
@@ -9461,7 +9518,9 @@ class _FormScreenState extends State<FormScreen> {
                                                   print(data);
                                                   setState(() {
                                                     ukuranBatu22.text = '';
-                                                    crtPcsBatu22.text = '';
+                                                    crtPcsBatu22.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
                                                     idStone22 = item.idStone;
                                                     idBatu22 = item.id;
                                                     hargaBatu22 =
@@ -9760,7 +9819,9 @@ class _FormScreenState extends State<FormScreen> {
                                                   print(data);
                                                   setState(() {
                                                     ukuranBatu23.text = '';
-                                                    crtPcsBatu23.text = '';
+                                                    crtPcsBatu23.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
                                                     idStone23 = item.idStone;
                                                     idBatu23 = item.id;
                                                     hargaBatu23 =
@@ -10059,7 +10120,9 @@ class _FormScreenState extends State<FormScreen> {
                                                   print(data);
                                                   setState(() {
                                                     ukuranBatu24.text = '';
-                                                    crtPcsBatu24.text = '';
+                                                    crtPcsBatu24.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
                                                     idStone24 = item.idStone;
                                                     idBatu24 = item.id;
                                                     hargaBatu24 =
@@ -10358,7 +10421,9 @@ class _FormScreenState extends State<FormScreen> {
                                                   print(data);
                                                   setState(() {
                                                     ukuranBatu25.text = '';
-                                                    crtPcsBatu25.text = '';
+                                                    crtPcsBatu25.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
                                                     idStone25 = item.idStone;
                                                     idBatu25 = item.id;
                                                     hargaBatu25 =
@@ -10657,7 +10722,9 @@ class _FormScreenState extends State<FormScreen> {
                                                   print(data);
                                                   setState(() {
                                                     ukuranBatu26.text = '';
-                                                    crtPcsBatu26.text = '';
+                                                    crtPcsBatu26.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
                                                     idStone26 = item.idStone;
                                                     idBatu26 = item.id;
                                                     hargaBatu26 =
@@ -10956,7 +11023,9 @@ class _FormScreenState extends State<FormScreen> {
                                                   print(data);
                                                   setState(() {
                                                     ukuranBatu27.text = '';
-                                                    crtPcsBatu27.text = '';
+                                                    crtPcsBatu27.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
                                                     idStone27 = item.idStone;
                                                     idBatu27 = item.id;
                                                     hargaBatu27 =
@@ -11255,7 +11324,9 @@ class _FormScreenState extends State<FormScreen> {
                                                   print(data);
                                                   setState(() {
                                                     ukuranBatu28.text = '';
-                                                    crtPcsBatu28.text = '';
+                                                    crtPcsBatu28.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
                                                     idStone28 = item.idStone;
                                                     idBatu28 = item.id;
                                                     hargaBatu28 =
@@ -11554,7 +11625,9 @@ class _FormScreenState extends State<FormScreen> {
                                                   print(data);
                                                   setState(() {
                                                     ukuranBatu29.text = '';
-                                                    crtPcsBatu29.text = '';
+                                                    crtPcsBatu29.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
                                                     idStone29 = item.idStone;
                                                     idBatu29 = item.id;
                                                     hargaBatu29 =
@@ -11853,7 +11926,9 @@ class _FormScreenState extends State<FormScreen> {
                                                   print(data);
                                                   setState(() {
                                                     ukuranBatu30.text = '';
-                                                    crtPcsBatu30.text = '';
+                                                    crtPcsBatu30.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
                                                     idStone30 = item.idStone;
                                                     idBatu30 = item.id;
                                                     hargaBatu30 =
@@ -12152,7 +12227,9 @@ class _FormScreenState extends State<FormScreen> {
                                                   print(data);
                                                   setState(() {
                                                     ukuranBatu31.text = '';
-                                                    crtPcsBatu31.text = '';
+                                                    crtPcsBatu31.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
                                                     idStone31 = item.idStone;
                                                     idBatu31 = item.id;
                                                     hargaBatu31 =
@@ -12451,7 +12528,9 @@ class _FormScreenState extends State<FormScreen> {
                                                   print(data);
                                                   setState(() {
                                                     ukuranBatu32.text = '';
-                                                    crtPcsBatu32.text = '';
+                                                    crtPcsBatu32.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
                                                     idStone32 = item.idStone;
                                                     idBatu32 = item.id;
                                                     hargaBatu32 =
@@ -12750,7 +12829,9 @@ class _FormScreenState extends State<FormScreen> {
                                                   print(data);
                                                   setState(() {
                                                     ukuranBatu33.text = '';
-                                                    crtPcsBatu33.text = '';
+                                                    crtPcsBatu33.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
                                                     idStone33 = item.idStone;
                                                     idBatu33 = item.id;
                                                     hargaBatu33 =
@@ -13049,7 +13130,9 @@ class _FormScreenState extends State<FormScreen> {
                                                   print(data);
                                                   setState(() {
                                                     ukuranBatu34.text = '';
-                                                    crtPcsBatu34.text = '';
+                                                    crtPcsBatu34.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
                                                     idStone34 = item.idStone;
                                                     idBatu34 = item.id;
                                                     hargaBatu34 =
@@ -13348,7 +13431,9 @@ class _FormScreenState extends State<FormScreen> {
                                                   print(data);
                                                   setState(() {
                                                     ukuranBatu35.text = '';
-                                                    crtPcsBatu35.text = '';
+                                                    crtPcsBatu35.text = data[0]
+                                                            ['caratPcs']
+                                                        .toString();
                                                     idStone35 = item.idStone;
                                                     idBatu35 = item.id;
                                                     hargaBatu35 =
