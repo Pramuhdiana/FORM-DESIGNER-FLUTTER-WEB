@@ -4300,14 +4300,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                             .toString()
                                                                             .toLowerCase() ==
                                                                         "arif kurniawan"
-                                                                    ? '$beratArif'
+                                                                    ? beratArif
+                                                                        .toStringAsFixed(
+                                                                            3)
                                                                     : sharedPreferences!.getString('nama')!.toString().toLowerCase() ==
                                                                             "aris pravidan"
-                                                                        ? '$beratAris'
+                                                                        ? beratAris
+                                                                            .toStringAsFixed(
+                                                                                3)
                                                                         : sharedPreferences!.getString('nama')!.toString().toLowerCase() ==
                                                                                 "fikryansyah"
-                                                                            ? '$beratFikri'
-                                                                            : '$beratyuse',
+                                                                            ? beratFikri.toStringAsFixed(3)
+                                                                            : beratyuse.toStringAsFixed(3),
                                                                 style: const TextStyle(
                                                                     fontSize:
                                                                         14,

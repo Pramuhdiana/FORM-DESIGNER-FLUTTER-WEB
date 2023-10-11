@@ -10,6 +10,7 @@ class ApiConstants {
   //     'http://110.5.102.154:1212/Api_Flutter/spk/upload/';
   // static String baseUrl = 'http://110.5.102.154:1212/Api_Flutter/';
   static String getDataBatu = 'spk/batu.php';
+  static String getDataBatuCalculator = 'spk/batu_calculator.php';
   static String getDataBatuByName = 'spk/get_batu_by_name.php';
   static String getDataBatuMdbc = 'spk/batu_mdbc.php';
   static String getNilaiData = 'spk/nilaidata.php';

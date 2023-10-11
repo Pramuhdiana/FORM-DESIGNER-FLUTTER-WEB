@@ -1206,6 +1206,7 @@ class RowSource extends DataTableSource {
                                             tanggalInProduksi:
                                                 data.tanggalInProduksi,
                                             beratModeller: data.beratModeller,
+                                            statusForm: data.statusForm,
                                           ),
                                         )));
                       },

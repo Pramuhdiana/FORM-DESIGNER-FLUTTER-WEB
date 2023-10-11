@@ -35436,7 +35436,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
     // 'http://192.168.22.228/Api_Flutter/spk/batu.php',
     // 'https://fakestoreapi.com/products',
     var response = await Dio().get(
-      ApiConstants.baseUrl + ApiConstants.getDataBatu,
+      ApiConstants.baseUrl + ApiConstants.getDataBatuCalculator,
       queryParameters: {"filter": filter.toLowerCase()},
     );
     final data = response.data;

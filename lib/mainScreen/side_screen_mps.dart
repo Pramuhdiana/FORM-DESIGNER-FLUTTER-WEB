@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:form_designer/SCM/mainScreen/kebutuhan_batu_by_siklus.dart';
 import 'package:form_designer/mainScreen/home_screen.dart';
@@ -39,18 +41,18 @@ class _MainViewMpsState extends State<MainViewMps> {
         ? const ListMpsScreen() //* produksi
         : const ListCalculatePricingScreen(),
     //? 4
-    const ListDesignerScreen(),
-    //? 5
     const ListKebutuhanBatuScreen(),
-    //? 6
+    //? 5
     const ListStatusApprovalScreen(),
-    //? 7
-    const ListMpsScreen()
+    //? 6
+    const ListMpsScreen(),
+    //! keluar untuk scm dan admin
+    const HomeScreen()
   ];
 
   final _formKey = GlobalKey<FormState>();
 
-  int selectedIndex = 3;
+  int selectedIndex = 2;
   bool isKodeAkses = false;
   TextEditingController kodeAkses = TextEditingController();
 
@@ -141,10 +143,6 @@ class _MainViewMpsState extends State<MainViewMps> {
                 icon: Icons.calculate_outlined,
                 label: 'Calculate Price',
               ),
-            const SideNavigationBarItem(
-              icon: Icons.logout,
-              label: 'Keluar',
-            ),
             if (sharedPreferences!.getString('level') == '1')
               const SideNavigationBarItem(
                 icon: Icons.bar_chart_sharp,
@@ -161,11 +159,16 @@ class _MainViewMpsState extends State<MainViewMps> {
                 icon: Icons.moving_outlined,
                 label: 'Monitoring Per Siklus',
               ),
+            const SideNavigationBarItem(
+              icon: Icons.logout,
+              label: 'Keluar',
+            ),
           ],
 
           onTap: (index) {
-            if ((index == 2 && sharedPreferences!.getString('level') == '4') ||
-                (index == 2 && sharedPreferences!.getString('level') == '3')) {
+            print(index);
+            print(sharedPreferences!.getString('level'));
+            if (index == 7) {
               showDialog(
                   context: context,
                   builder: (BuildContext context) {
@@ -228,7 +231,134 @@ class _MainViewMpsState extends State<MainViewMps> {
                     );
                   });
             } else if (index == 3 &&
-                sharedPreferences!.getString('level') != '4') {
+                sharedPreferences!.getString('level') == '4') {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      content: Stack(
+                        clipBehavior: Clip.none,
+                        children: <Widget>[
+                          Positioned(
+                            right: -47.0,
+                            top: -47.0,
+                            child: InkResponse(
+                              onTap: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const CircleAvatar(
+                                backgroundColor: Colors.red,
+                                child: Icon(Icons.close),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            child: Form(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  const Padding(
+                                    padding:
+                                        EdgeInsets.only(top: 5, bottom: 10),
+                                    child: Text('Yakin ingin keluar ?'),
+                                  ),
+                                  Container(
+                                    width: 200,
+                                    height: 50,
+                                    padding: const EdgeInsets.only(top: 10),
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.red),
+                                      child: const Text("Keluar"),
+                                      onPressed: () async {
+                                        SharedPreferences prefs =
+                                            await SharedPreferences
+                                                .getInstance();
+                                        prefs.clear();
+                                        prefs.setString('token', 'null');
+                                        // ignore: use_build_context_synchronously
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (c) =>
+                                                    const LoginScreen()));
+                                      },
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  });
+            } else if (index == 2 &&
+                sharedPreferences!.getString('level') == '3') {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      content: Stack(
+                        clipBehavior: Clip.none,
+                        children: <Widget>[
+                          Positioned(
+                            right: -47.0,
+                            top: -47.0,
+                            child: InkResponse(
+                              onTap: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const CircleAvatar(
+                                backgroundColor: Colors.red,
+                                child: Icon(Icons.close),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            child: Form(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  const Padding(
+                                    padding:
+                                        EdgeInsets.only(top: 5, bottom: 10),
+                                    child: Text('Yakin ingin keluar ?'),
+                                  ),
+                                  Container(
+                                    width: 200,
+                                    height: 50,
+                                    padding: const EdgeInsets.only(top: 10),
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.red),
+                                      child: const Text("Keluar"),
+                                      onPressed: () async {
+                                        SharedPreferences prefs =
+                                            await SharedPreferences
+                                                .getInstance();
+                                        prefs.clear();
+                                        prefs.setString('token', 'null');
+                                        // ignore: use_build_context_synchronously
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (c) =>
+                                                    const LoginScreen()));
+                                      },
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  });
+            } else if (index == 3 &&
+                (sharedPreferences!.getString('level') == '1' ||
+                    sharedPreferences!.getString('level') == '2')) {
               showDialog(
                   context: context,
                   builder: (BuildContext context) {
@@ -317,7 +447,8 @@ class _MainViewMpsState extends State<MainViewMps> {
                       ),
                     );
                   });
-            } else if (index == 4) {
+            } else if (index == 4 &&
+                sharedPreferences!.getString('level') == '2') {
               showDialog(
                   context: context,
                   builder: (BuildContext context) {
@@ -483,10 +614,6 @@ class _MainViewMpsState extends State<MainViewMps> {
                 icon: Icons.calculate_outlined,
                 label: 'Calculate Price',
               ),
-            const SideNavigationBarItem(
-              icon: Icons.logout,
-              label: 'Keluar',
-            ),
             if (sharedPreferences!.getString('level') == '1')
               const SideNavigationBarItem(
                 icon: Icons.bar_chart_sharp,
@@ -503,11 +630,16 @@ class _MainViewMpsState extends State<MainViewMps> {
                 icon: Icons.moving_outlined,
                 label: 'Monitoring Per Siklus',
               ),
+            const SideNavigationBarItem(
+              icon: Icons.logout,
+              label: 'Keluar',
+            ),
           ],
 
           onTap: (index) {
-            if ((index == 2 && sharedPreferences!.getString('level') == '4') ||
-                (index == 2 && sharedPreferences!.getString('level') == '3')) {
+            print(index);
+            print(sharedPreferences!.getString('level'));
+            if (index == 7) {
               showDialog(
                   context: context,
                   builder: (BuildContext context) {
@@ -570,7 +702,134 @@ class _MainViewMpsState extends State<MainViewMps> {
                     );
                   });
             } else if (index == 3 &&
-                sharedPreferences!.getString('level') != '4') {
+                sharedPreferences!.getString('level') == '4') {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      content: Stack(
+                        clipBehavior: Clip.none,
+                        children: <Widget>[
+                          Positioned(
+                            right: -47.0,
+                            top: -47.0,
+                            child: InkResponse(
+                              onTap: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const CircleAvatar(
+                                backgroundColor: Colors.red,
+                                child: Icon(Icons.close),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            child: Form(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  const Padding(
+                                    padding:
+                                        EdgeInsets.only(top: 5, bottom: 10),
+                                    child: Text('Yakin ingin keluar ?'),
+                                  ),
+                                  Container(
+                                    width: 200,
+                                    height: 50,
+                                    padding: const EdgeInsets.only(top: 10),
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.red),
+                                      child: const Text("Keluar"),
+                                      onPressed: () async {
+                                        SharedPreferences prefs =
+                                            await SharedPreferences
+                                                .getInstance();
+                                        prefs.clear();
+                                        prefs.setString('token', 'null');
+                                        // ignore: use_build_context_synchronously
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (c) =>
+                                                    const LoginScreen()));
+                                      },
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  });
+            } else if (index == 2 &&
+                sharedPreferences!.getString('level') == '3') {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      content: Stack(
+                        clipBehavior: Clip.none,
+                        children: <Widget>[
+                          Positioned(
+                            right: -47.0,
+                            top: -47.0,
+                            child: InkResponse(
+                              onTap: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const CircleAvatar(
+                                backgroundColor: Colors.red,
+                                child: Icon(Icons.close),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            child: Form(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  const Padding(
+                                    padding:
+                                        EdgeInsets.only(top: 5, bottom: 10),
+                                    child: Text('Yakin ingin keluar ?'),
+                                  ),
+                                  Container(
+                                    width: 200,
+                                    height: 50,
+                                    padding: const EdgeInsets.only(top: 10),
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.red),
+                                      child: const Text("Keluar"),
+                                      onPressed: () async {
+                                        SharedPreferences prefs =
+                                            await SharedPreferences
+                                                .getInstance();
+                                        prefs.clear();
+                                        prefs.setString('token', 'null');
+                                        // ignore: use_build_context_synchronously
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (c) =>
+                                                    const LoginScreen()));
+                                      },
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  });
+            } else if (index == 3 &&
+                (sharedPreferences!.getString('level') == '1' ||
+                    sharedPreferences!.getString('level') == '2')) {
               showDialog(
                   context: context,
                   builder: (BuildContext context) {
@@ -659,7 +918,8 @@ class _MainViewMpsState extends State<MainViewMps> {
                       ),
                     );
                   });
-            } else if (index == 4) {
+            } else if (index == 4 &&
+                sharedPreferences!.getString('level') == '2') {
               showDialog(
                   context: context,
                   builder: (BuildContext context) {
