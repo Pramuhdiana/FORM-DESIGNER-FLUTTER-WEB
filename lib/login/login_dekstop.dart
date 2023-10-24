@@ -177,6 +177,7 @@ class _LoginDesktopState extends State<LoginDesktop> {
                             String namaAPI = data['nama'];
                             String levelAPI = data['level'];
                             String statusAPI = data['status'];
+                            String divisiAPI = data['divisi'];
                             setState(() {
                               sharedPreferences!
                                   .setString('token', 'ingat saya');
@@ -185,6 +186,7 @@ class _LoginDesktopState extends State<LoginDesktop> {
                               sharedPreferences!.setString('email', emailAPI);
                               sharedPreferences!.setString('level', levelAPI);
                               sharedPreferences!.setString('status', statusAPI);
+                              sharedPreferences!.setString('divisi', divisiAPI);
                               sharedPreferences!.setBool('isLogin', true);
                               // savePref(
                               //     id, emailAPI, namaAPI, levelAPI, statusAPI);

@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:form_designer/login/my_splash_screen.dart';
+import 'package:overlay_support/overlay_support.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'global/global.dart';
@@ -14,13 +15,15 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      scrollBehavior: CustomScrollBehavior(),
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return OverlaySupport.global(
+      child: MaterialApp(
+        scrollBehavior: CustomScrollBehavior(),
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        debugShowCheckedModeBanner: false,
+        home: const MySplashScreen(),
       ),
-      debugShowCheckedModeBanner: false,
-      home: const MySplashScreen(),
     );
   }
 }

@@ -10,3 +10,4 @@ int rilisPerbaikanbug =
 
 String version = 'v$revisiBesar.$revisiKecil.$rilisPerbaikanbug';
 String aksesKode = "S@niv0kasi";
+double tinggiTextfield = 75.0; // tinggi text field

@@ -3,13 +3,12 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:form_designer/api/api_constant.dart';
 import 'package:form_designer/mainScreen/login.dart';
 import 'package:form_designer/mainScreen/side_screen.dart';
+import 'package:form_designer/mainScreen/side_screen_produksi.dart';
 import 'package:form_designer/model/siklus_model.dart';
 import '../global/global.dart';
 import 'package:http/http.dart' as http;
@@ -46,8 +45,14 @@ class _MySplashScreenState extends State<MySplashScreen> {
           } else {
             throw Exception('Unexpected error occured!');
           }
-          Navigator.push(
-              context, MaterialPageRoute(builder: (c) => const MainView()));
+          if (sharedPreferences!.getString('divisi') == 'produksi') {
+            print('masuk area produksi');
+            Navigator.push(context,
+                MaterialPageRoute(builder: (c) => const MainViewProduksi()));
+          } else {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (c) => const MainView()));
+          }
         } catch (c) {
           Fluttertoast.showToast(msg: "Failed get database");
           Navigator.push(
@@ -59,69 +64,6 @@ class _MySplashScreenState extends State<MySplashScreen> {
         Navigator.push(
             context, MaterialPageRoute(builder: (c) => const LoginScreen()));
       }
-    });
-  }
-
-//get token
-  getToken() async {
-    await FirebaseMessaging.instance.getToken().then((token) {
-      setState(() {
-        mtoken = token;
-        print("token notif is $mtoken");
-      });
-      saveToken(token!);
-    });
-  }
-
-  //save token
-  saveToken(String token) async {
-    await FirebaseFirestore.instance
-        .collection("UserTokens")
-        .doc(sharedPreferences!.getString("name").toString())
-        .set({
-      'token': token,
-    });
-    FirebaseMessaging.instance.subscribeToTopic("allUsers");
-  }
-
-  //request permission
-  requestPermission() async {
-    FirebaseMessaging messaging = FirebaseMessaging.instance;
-
-    NotificationSettings settings = await messaging.requestPermission(
-      alert: true,
-      announcement: false,
-      badge: true,
-      carPlay: false,
-      criticalAlert: false,
-      provisional: false,
-      sound: true,
-    );
-    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-      print('User granted permission');
-    } else if (settings.authorizationStatus ==
-        AuthorizationStatus.provisional) {
-      print('User granted provosional permission');
-    } else {
-      print('user declined or has not accepted permission');
-    }
-  }
-
-  // ignore: unused_element
-  _loadFromApi() async {
-    setState(() {
-      isLoading = true;
-    });
-    FirebaseFirestore.instance
-        .collection("UserTokens")
-        .doc('Sandy')
-        .snapshots()
-        .listen((event) {
-      setState(() {});
-    });
-
-    setState(() {
-      isLoading = false;
     });
   }
 

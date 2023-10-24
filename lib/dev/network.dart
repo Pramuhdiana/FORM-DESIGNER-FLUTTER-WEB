@@ -19,4 +19,16 @@ class ApiClient {
         data: formData);
     return response.data;
   }
+
+  static Future<String> uploadFileExcel(List<int> file, String fileName) async {
+    FormData formData = FormData.fromMap({
+      "imageUrl": MultipartFile.fromBytes(
+        file,
+        filename: fileName,
+      )
+    });
+    var response = await dio.post("${ApiConstants.baseUrl}spk/all_image.php",
+        data: formData);
+    return response.data;
+  }
 }

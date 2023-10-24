@@ -1,10 +1,12 @@
-// ignore_for_file: prefer_typing_uninitialized_variables, avoid_print, use_build_context_synchronously, no_leading_underscores_for_local_identifiers
+// ignore_for_file: prefer_typing_uninitialized_variables, avoid_print, use_build_context_synchronously, no_leading_underscores_for_local_identifiers, unused_import
 
 import 'dart:convert';
+import 'dart:io';
+import 'package:overlay_support/overlay_support.dart';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-// ignore: unused_import
 import 'package:form_designer/mainScreen/form_screen_by_id.dart';
 import 'package:form_designer/mainScreen/side_screen_batu.dart';
 import 'package:http/http.dart' as http;
@@ -95,6 +97,40 @@ class _ListBatuScreenState extends State<ListBatuScreen> {
       throw Exception(response.statusCode);
     }
   }
+
+//! function send file to api
+  Future<void> sendFileToApi(File file, String url) async {
+    // ignore: unnecessary_null_comparison
+    if (file == null) {
+      throw ArgumentError('File cannot be null.');
+    }
+
+    if (url.isEmpty) {
+      throw ArgumentError('URL cannot be empty.');
+    }
+
+    final request = http.MultipartRequest('POST', Uri.parse(url));
+    final fileStream = http.ByteStream(file.openRead());
+    final fileLength = await file.length();
+
+    final multipartFile = http.MultipartFile(
+      'file',
+      fileStream,
+      fileLength,
+      filename: file.path.split('/').last,
+    );
+
+    request.files.add(multipartFile);
+
+    final response = await request.send();
+
+    if (response.statusCode != 200) {
+      throw HttpException(
+          'Failed to send file. Status code: ${response.statusCode}');
+    }
+  }
+
+//! end fungsi send file api
 
   @override
   Widget build(BuildContext context) {
@@ -213,6 +249,51 @@ class _ListBatuScreenState extends State<ListBatuScreen> {
                         ),
                       ),
                     ),
+                    Container(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.green.shade600),
+                            onPressed: () async {
+                              // FilePickerResult? result =
+                              //     await FilePicker.platform.pickFiles();
+
+                              // if (result != null) {
+                              //   PlatformFile file = result.files.first;
+                              //   print(file.name);
+                              //   print(file.size);
+                              //   print(file.extension);
+                              //   // print(file.path);
+                              //   showSimpleNotification(
+                              //     const Center(
+                              //         child: Text(
+                              //       'Import Data Berhasil',
+                              //       style: TextStyle(
+                              //           fontSize: 25,
+                              //           color: Colors.white,
+                              //           fontWeight: FontWeight.bold),
+                              //     )),
+                              //     subtitle: const Center(
+                              //         child: Text('Mohon segera refresh data')),
+                              //     background: Colors.green,
+                              //     duration: const Duration(seconds: 5),
+                              //   );
+                              //   // Fluttertoast.showToast(
+                              //   //     msg: "Import Data Berhasil");
+                              // } else {
+                              //   // User canceled the picker
+                              //   print('cancel pick');
+                              // }
+
+                              // // try {
+                              // //   await sendFileToApi(
+                              // //       result as File, ApiConstants.addSiklus);
+                              // //   print('File sent successfully.');
+                              // // } catch (e) {
+                              // //   print('Error sending file: $e');
+                              // // }
+                            },
+                            child: const Text('Import to excel'))),
                     isLoading == false
                         ? Expanded(
                             child: Center(

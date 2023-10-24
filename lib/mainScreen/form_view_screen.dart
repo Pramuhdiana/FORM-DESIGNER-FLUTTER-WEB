@@ -1725,7 +1725,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
                       children: [
                         //in modeller
                         SizedBox(
-                          height: 65,
+                          height: tinggiTextfield,
                           width: 200,
                           child: TextFormField(
                             readOnly: true,
@@ -1746,7 +1746,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
                         ),
                         //out modeller
                         SizedBox(
-                          height: 65,
+                          height: tinggiTextfield,
                           width: 200,
                           child: TextFormField(
                             readOnly: true,
@@ -1769,27 +1769,37 @@ class _FormViewScreenState extends State<FormViewScreen> {
                         sharedPreferences!.getString('level') != '1'
                             ? const SizedBox()
                             : tanggalInProduksi.text.isEmpty
-                                ? ElevatedButton(
-                                    onPressed: () {
-                                      postTanggalProduksi();
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (c) =>
-                                                  const MainView()));
+                                ? Container(
+                                    width: 200,
+                                    height: 50,
+                                    child: ElevatedButton(
+                                        onPressed: () {
+                                          postTanggalProduksi();
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (c) =>
+                                                      const MainView()));
 
-                                      showDialog<String>(
-                                          context: context,
-                                          builder: (BuildContext context) =>
-                                              const AlertDialog(
-                                                title: Text(
-                                                  'Tanggal In Produksi Terisi',
-                                                ),
-                                              ));
-                                    },
-                                    child: const Text('Kirim Ke Produksi'))
+                                          showDialog<String>(
+                                              context: context,
+                                              builder: (BuildContext context) =>
+                                                  const AlertDialog(
+                                                    title: Text(
+                                                      'Tanggal In Produksi Terisi',
+                                                    ),
+                                                  ));
+                                        },
+                                        child: const Text(
+                                          'Kirim Ke Produksi',
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white),
+                                        )),
+                                  )
                                 : SizedBox(
-                                    height: 65,
+                                    height: tinggiTextfield,
                                     width: 200,
                                     child: TextFormField(
                                       readOnly: true,
@@ -1956,7 +1966,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
                 //kode design mdbc
                 SizedBox(
                   width: 200,
-                  height: 65,
+                  height: tinggiTextfield,
                   child: TextFormField(
                     readOnly: true,
                     style: const TextStyle(
@@ -1981,7 +1991,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
 
                 //nama deisner
                 SizedBox(
-                  height: 65,
+                  height: tinggiTextfield,
                   width: 200,
                   child: TextFormField(
                     readOnly: true,
@@ -2013,7 +2023,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
                 //nama modeller
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 1),
-                  height: 65,
+                  height: tinggiTextfield,
                   width: 200,
                   child: DropdownSearch<String>(
                     enabled: sharedPreferences!.getString('level') == '1'
@@ -2051,13 +2061,13 @@ class _FormViewScreenState extends State<FormViewScreen> {
               ],
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 10),
+              padding: const EdgeInsets.only(top: 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   //kode marketing
                   SizedBox(
-                    height: 65,
+                    height: tinggiTextfield,
                     width: 200,
                     child: TextFormField(
                       readOnly: sharedPreferences!.getString('level') != '1'
@@ -2080,7 +2090,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
                   //Siklus
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 1),
-                    height: 65,
+                    height: tinggiTextfield,
                     width: 200,
                     child: DropdownSearch<String>(
                       enabled: false,
@@ -2125,7 +2135,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
 
                   //kode deisgn
                   SizedBox(
-                    height: 65,
+                    height: tinggiTextfield,
                     width: 200,
                     child: TextFormField(
                       readOnly: true,
@@ -2147,13 +2157,13 @@ class _FormViewScreenState extends State<FormViewScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 10),
+              padding: const EdgeInsets.only(top: 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   //kode produksi
                   SizedBox(
-                    height: 65,
+                    height: tinggiTextfield,
                     width: 200,
                     child: TextFormField(
                       readOnly: true,
@@ -2174,7 +2184,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
                   //keteranganStatus Batu
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 1),
-                    height: 65,
+                    height: tinggiTextfield,
                     width: 250,
                     child: DropdownSearch<String>(
                       enabled: sharedPreferences!.getString('level') == '1'
@@ -2216,7 +2226,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
                   ),
                   //tema
                   SizedBox(
-                    height: 65,
+                    height: tinggiTextfield,
                     width: 200,
                     child: TextFormField(
                       readOnly: true,
@@ -2240,68 +2250,98 @@ class _FormViewScreenState extends State<FormViewScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Container(
-                  padding: const EdgeInsets.only(top: 18, bottom: 10),
-                  child: SizedBox(
-                    width: 150,
-                    height: 45,
-                    child: TextFormField(
-                      enabled: sharedPreferences!.getString('level') != '3'
-                          ? false
-                          : true,
-                      style: const TextStyle(
-                          fontSize: 14,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold),
-                      textInputAction: TextInputAction.next,
-                      controller: pointModeller,
-                      decoration: InputDecoration(
-                        labelText: "Point Modeller",
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5.0)),
+                Stack(
+                  clipBehavior: Clip.none, //agar tidak menghalangi object
+
+                  children: [
+                    const Positioned(
+                        right: 5,
+                        bottom: 15,
+                        child: Text(
+                          'Gram',
+                          style: TextStyle(
+                              color: Colors.black, fontWeight: FontWeight.bold),
+                        )),
+                    Container(
+                      padding: const EdgeInsets.only(top: 18, bottom: 10),
+                      child: SizedBox(
+                        width: 150,
+                        height: 45,
+                        child: TextFormField(
+                          enabled: sharedPreferences!.getString('level') != '3'
+                              ? false
+                              : true,
+                          style: const TextStyle(
+                              fontSize: 14,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold),
+                          textInputAction: TextInputAction.next,
+                          controller: pointModeller,
+                          decoration: InputDecoration(
+                            labelText: "Point Modeller",
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0)),
+                          ),
+                          // validator: (value) {
+                          //   if (value!.isEmpty) {
+                          //     return 'Point wajib diisi *';
+                          //   } else if (value == '0') {
+                          //     return 'Point wajib diisi *';
+                          //   }
+                          //   return null;
+                          // },
+                        ),
                       ),
-                      // validator: (value) {
-                      //   if (value!.isEmpty) {
-                      //     return 'Point wajib diisi *';
-                      //   } else if (value == '0') {
-                      //     return 'Point wajib diisi *';
-                      //   }
-                      //   return null;
-                      // },
                     ),
-                  ),
+                  ],
                 ),
-                Container(
-                  padding: const EdgeInsets.only(top: 18, bottom: 10, left: 40),
-                  child: SizedBox(
-                    width: 150,
-                    height: 45,
-                    child: TextFormField(
-                      enabled: sharedPreferences!.getString('level') != '3'
-                          ? false
-                          : true,
-                      style: const TextStyle(
-                          fontSize: 14,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold),
-                      textInputAction: TextInputAction.next,
-                      controller: beratModeller,
-                      decoration: InputDecoration(
-                        labelText: "Berat Modeller",
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5.0)),
+                Stack(
+                    clipBehavior: Clip.none, //agar tidak menghalangi object
+
+                    children: [
+                      const Positioned(
+                          right: 5,
+                          bottom: 15,
+                          child: Text(
+                            'Gram',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
+                          )),
+                      Container(
+                        padding: const EdgeInsets.only(
+                            top: 18, bottom: 10, left: 40),
+                        child: SizedBox(
+                          width: 150,
+                          height: 45,
+                          child: TextFormField(
+                            enabled:
+                                sharedPreferences!.getString('level') != '3'
+                                    ? false
+                                    : true,
+                            style: const TextStyle(
+                                fontSize: 14,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
+                            textInputAction: TextInputAction.next,
+                            controller: beratModeller,
+                            decoration: InputDecoration(
+                              labelText: "Berat Modeller",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5.0)),
+                            ),
+                            // validator: (value) {
+                            //   if (value!.isEmpty) {
+                            //     return 'Point wajib diisi *';
+                            //   } else if (value == '0') {
+                            //     return 'Point wajib diisi *';
+                            //   }
+                            //   return null;
+                            // },
+                          ),
+                        ),
                       ),
-                      // validator: (value) {
-                      //   if (value!.isEmpty) {
-                      //     return 'Point wajib diisi *';
-                      //   } else if (value == '0') {
-                      //     return 'Point wajib diisi *';
-                      //   }
-                      //   return null;
-                      // },
-                    ),
-                  ),
-                ),
+                    ]),
                 sharedPreferences!.getString('level') != '2'
                     ? const SizedBox()
                     : (sharedPreferences!.getString('level') == '2' &&
@@ -2361,7 +2401,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         SizedBox(
-                          height: 65,
+                          height: tinggiTextfield,
                           width: 230,
                           child: DropdownSearch<RantaiModel>(
                             enabled: false,
@@ -2396,7 +2436,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
                         ),
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 15),
-                          height: 65,
+                          height: tinggiTextfield,
                           width: 100,
                           child: TextFormField(
                             readOnly: true,
@@ -2416,7 +2456,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
                         ),
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 1),
-                          height: 65,
+                          height: tinggiTextfield,
                           width: 100,
                           child: TextFormField(
                             readOnly: true,
@@ -2440,7 +2480,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
                   ),
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 1),
-                    height: 65,
+                    height: tinggiTextfield,
                     width: 230,
                     child: DropdownSearch<JenisbarangModel>(
                       enabled: false,
@@ -2476,7 +2516,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 10),
+              padding: const EdgeInsets.only(top: 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -2486,7 +2526,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         SizedBox(
-                          height: 65,
+                          height: tinggiTextfield,
                           width: 230,
                           child: DropdownSearch<Lain2Model>(
                             enabled: false,
@@ -2521,7 +2561,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
                         ),
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 15),
-                          height: 65,
+                          height: tinggiTextfield,
                           width: 100,
                           child: TextFormField(
                             readOnly: true,
@@ -2541,7 +2581,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
                         ),
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 1),
-                          height: 65,
+                          height: tinggiTextfield,
                           width: 100,
                           child: TextFormField(
                             readOnly: true,
@@ -2565,7 +2605,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
                   ),
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 1),
-                    height: 65,
+                    height: tinggiTextfield,
                     width: 230,
                     child: TextFormField(
                       readOnly: true,
@@ -2590,7 +2630,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 10),
+              padding: const EdgeInsets.only(top: 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -2600,7 +2640,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         SizedBox(
-                          height: 65,
+                          height: tinggiTextfield,
                           width: 230,
                           child: DropdownSearch<EarnutModel>(
                             enabled: false,
@@ -2635,7 +2675,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
                         ),
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 15),
-                          height: 65,
+                          height: tinggiTextfield,
                           width: 100,
                           child: TextFormField(
                             readOnly: true,
@@ -2655,7 +2695,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
                         ),
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 1),
-                          height: 65,
+                          height: tinggiTextfield,
                           width: 100,
                           child: TextFormField(
                             enabled: false,
@@ -2678,7 +2718,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
                   ),
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 1),
-                    height: 65,
+                    height: tinggiTextfield,
                     width: 230,
                     child: DropdownSearch<String>(
                       enabled: false,
@@ -2705,7 +2745,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 10),
+              padding: const EdgeInsets.only(top: 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -2715,7 +2755,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         SizedBox(
-                          height: 65,
+                          height: tinggiTextfield,
                           width: 230,
                           child: TextFormField(
                             readOnly: true,
@@ -2737,7 +2777,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
                   ),
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 1),
-                    height: 65,
+                    height: tinggiTextfield,
                     width: 230,
                     child: TextFormField(
                       readOnly: true,
@@ -2759,7 +2799,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 10),
+              padding: const EdgeInsets.only(top: 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -2769,7 +2809,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         SizedBox(
-                          height: 65,
+                          height: tinggiTextfield,
                           width: 230,
                           child: TextFormField(
                             readOnly: true,
@@ -2789,7 +2829,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
                         ),
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 15),
-                          height: 65,
+                          height: tinggiTextfield,
                           width: 100,
                           child: TextFormField(
                             readOnly: true,
@@ -2809,7 +2849,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
                         ),
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 1),
-                          height: 65,
+                          height: tinggiTextfield,
                           width: 100,
                           child: TextFormField(
                             readOnly: true,
@@ -2833,7 +2873,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
                   ),
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 1),
-                    height: 65,
+                    height: tinggiTextfield,
                     width: 230,
                     child: DropdownSearch<String>(
                       enabled: false,
@@ -2859,12 +2899,12 @@ class _FormViewScreenState extends State<FormViewScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 10),
+              padding: const EdgeInsets.only(top: 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SizedBox(
-                    height: 65,
+                    height: tinggiTextfield,
                     width: 230,
                     child: TextFormField(
                       readOnly: true,
@@ -2888,7 +2928,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
                   ),
                   Container(
                     padding: const EdgeInsets.only(left: 0),
-                    height: 65,
+                    height: tinggiTextfield,
                     width: 200,
                     child: TextFormField(
                       readOnly: true,
@@ -2912,7 +2952,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: 65,
+                    height: tinggiTextfield,
                     width: 230,
                     child: TextFormField(
                       readOnly: true,

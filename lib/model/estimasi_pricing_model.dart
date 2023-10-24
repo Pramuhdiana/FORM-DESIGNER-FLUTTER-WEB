@@ -16,6 +16,7 @@ class EstimasiPricingModel {
   String? jenisBarang;
   String? brand;
   double? beratEmas;
+  double? beratDiamond;
   int? estimasiHarga;
   String? created_at;
   String? batu1;
@@ -140,6 +141,7 @@ class EstimasiPricingModel {
     this.jenisBarang,
     this.brand,
     this.beratEmas,
+    this.beratDiamond,
     this.estimasiHarga,
     this.created_at,
     this.batu1,
@@ -267,6 +269,7 @@ class EstimasiPricingModel {
         jenisBarang: json["jenisBarang"],
         brand: json["brand"],
         beratEmas: json["beratEmas"],
+        beratDiamond: json["beratDiamond"],
         estimasiHarga: json["estimasiHarga"],
         created_at: json["created_at"],
         batu1: json["batu1"],
@@ -392,6 +395,7 @@ class EstimasiPricingModel {
         "jenisBarang": jenisBarang,
         "brand": brand,
         "beratEmas": beratEmas,
+        "beratDiamond": beratDiamond,
         "estimasiHarga": estimasiHarga,
         "created_at": created_at,
         "batu1": batu1,

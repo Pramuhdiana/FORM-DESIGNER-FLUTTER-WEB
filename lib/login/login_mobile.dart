@@ -161,6 +161,7 @@ class _LoginMobileState extends State<LoginMobile> {
                             String namaAPI = data['nama'];
                             String levelAPI = data['level'];
                             String statusAPI = data['status'];
+                            String divisiAPI = data['divisi'];
                             if (value == 1) {
                               setState(() {
                                 sharedPreferences!.setString('id', id);
@@ -169,6 +170,8 @@ class _LoginMobileState extends State<LoginMobile> {
                                 sharedPreferences!.setString('level', levelAPI);
                                 sharedPreferences!
                                     .setString('status', statusAPI);
+                                sharedPreferences!
+                                    .setString('divisi', divisiAPI);
                                 sharedPreferences!.setBool('isLogin', true);
                                 // savePref(
                                 //     id, emailAPI, namaAPI, levelAPI, statusAPI);

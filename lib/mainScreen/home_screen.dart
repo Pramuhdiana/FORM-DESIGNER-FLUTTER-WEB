@@ -204,6 +204,8 @@ class _HomeScreenState extends State<HomeScreen> {
     final response = await http.get(
         Uri.parse(ApiConstants.baseUrl + ApiConstants.getListFormDesigner));
     if (response.statusCode == 200) {
+      print('fungsi jenis barang oke');
+
       List jsonResponse = json.decode(response.body);
 
       var g =
@@ -249,7 +251,7 @@ class _HomeScreenState extends State<HomeScreen> {
             pointyuse += double.parse(filterByyuse.toList()[i].pointModeller!);
           }
 
-//! berat modeller
+          //! berat modeller
           var filterByberat =
               g.where((element) => double.parse(element.beratModeller!) > 0);
           //? berat modeller arif
@@ -1933,7 +1935,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                               ),
                                                               //fungsi menampilkan jumlah SESUAI table
                                                               Text(
-                                                                '$pointArif',
+                                                                pointArif
+                                                                    .toStringAsFixed(
+                                                                        2),
                                                                 style: const TextStyle(
                                                                     fontSize:
                                                                         14,
@@ -1996,7 +2000,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                               ),
                                                               //fungsi menampilkan jumlah SESUAI table
                                                               Text(
-                                                                '$pointAris',
+                                                                pointAris
+                                                                    .toStringAsFixed(
+                                                                        2),
                                                                 style: const TextStyle(
                                                                     fontSize:
                                                                         14,
@@ -2058,7 +2064,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                               ),
                                                               //fungsi menampilkan jumlah SESUAI table
                                                               Text(
-                                                                '$pointFikri',
+                                                                pointFikri
+                                                                    .toStringAsFixed(
+                                                                        2),
                                                                 style: const TextStyle(
                                                                     fontSize:
                                                                         14,
@@ -2120,7 +2128,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                               ),
                                                               //fungsi menampilkan jumlah SESUAI table
                                                               Text(
-                                                                '$pointyuse',
+                                                                pointyuse
+                                                                    .toStringAsFixed(
+                                                                        2),
                                                                 style: const TextStyle(
                                                                     fontSize:
                                                                         14,

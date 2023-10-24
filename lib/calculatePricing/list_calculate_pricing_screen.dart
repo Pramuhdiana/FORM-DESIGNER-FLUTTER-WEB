@@ -200,7 +200,7 @@ class _ListCalculatePricingScreenState
                                         sortColumnIndex: _currentSortColumn,
                                         sortAscending: sort,
                                         rowsPerPage: 10,
-                                        columnSpacing: 0,
+                                        columnSpacing: 1,
                                         columns: [
                                           DataColumn(
                                               label: const SizedBox(
@@ -296,14 +296,13 @@ class _ListCalculatePricingScreenState
                                           DataColumn(label: _verticalDivider),
                                           DataColumn(
                                               label: const SizedBox(
-                                                  width: 120,
                                                   child: Text(
-                                                    "BERAT EMAS",
-                                                    style: TextStyle(
-                                                        fontSize: 15,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  )),
+                                                "BERAT EMAS",
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              )),
                                               onSort: (columnIndex, _) {
                                                 setState(() {
                                                   _currentSortColumn =
@@ -321,6 +320,16 @@ class _ListCalculatePricingScreenState
                                                   }
                                                 });
                                               }),
+                                          DataColumn(label: _verticalDivider),
+                                          const DataColumn(
+                                            label: SizedBox(
+                                                child: Text(
+                                              "BERAT DIAMOND",
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold),
+                                            )),
+                                          ),
                                           DataColumn(label: _verticalDivider),
                                           DataColumn(
                                               label: const SizedBox(
@@ -2959,6 +2968,14 @@ class RowSource extends DataTableSource {
         Padding(
             padding: const EdgeInsets.all(0),
             child: Text(data.beratEmas.toString())),
+      ),
+      DataCell(_verticalDivider),
+
+      //Berat diamond
+      DataCell(
+        Padding(
+            padding: const EdgeInsets.all(0),
+            child: Text(data.beratDiamond.toString())),
       ),
       DataCell(_verticalDivider),
 
