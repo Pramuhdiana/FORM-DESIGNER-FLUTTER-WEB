@@ -30,6 +30,7 @@ class ApiConstants {
   static String getSiklus = 'spk/get_siklus.php';
   static String getSumPenyesuaian = 'spk/get_sum_penyesuaian.php';
   static String getProduksi = 'spk/get_produksi.php';
+  static String getProduksiSB = 'spk/get_produksi_SB.php';
 
   static String postDataBatu = 'spk/create_batu.php';
   static String postLogin = 'spk/login.php';

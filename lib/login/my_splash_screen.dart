@@ -28,7 +28,7 @@ class _MySplashScreenState extends State<MySplashScreen> {
 
   var isLoading = false;
   splashScreenTimer() {
-    Timer(const Duration(seconds: 4), () async {
+    Timer(const Duration(seconds: 3), () async {
       //user sudah login
       print('token $token');
       if (sharedPreferences!.getString("token").toString() != "null") {
@@ -70,7 +70,6 @@ class _MySplashScreenState extends State<MySplashScreen> {
   @override
   void initState() {
     super.initState();
-
     splashScreenTimer();
   }
 
@@ -97,6 +96,7 @@ class _MySplashScreenState extends State<MySplashScreen> {
                 height: MediaQuery.of(context).size.height * 0.8,
                 width: MediaQuery.of(context).size.width * 1,
                 padding: const EdgeInsets.all(12.0),
+                // child: Lottie.asset("loadingJSON/fixLogo.json"),
                 child: Lottie.asset("loadingJSON/animation_llvy7jo7.json"),
               ),
               const SizedBox(

@@ -17,6 +17,7 @@ import 'package:form_designer/mainScreen/printing.dart';
 import 'package:form_designer/mainScreen/side_screen.dart';
 import 'package:form_designer/mainScreen/view_photo_screen.dart';
 import 'package:form_designer/model/form_designer_model.dart';
+import 'package:form_designer/widgets/loading_widget.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -1903,53 +1904,51 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             const EdgeInsets
                                                                 .symmetric(
                                                                 horizontal: 17),
-                                                        child: ElevatedButton(
-                                                          onPressed: () {
-                                                            setState(() {});
-                                                          },
-                                                          style: ElevatedButton.styleFrom(
-                                                              backgroundColor:
-                                                                  Colors.blue
-                                                                      .shade100,
-                                                              shape: RoundedRectangleBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              50.0))),
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceBetween,
-                                                            children: [
-                                                              const Text(
-                                                                'Arif Kurniawan',
-                                                                maxLines: 2,
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        14,
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold),
-                                                              ),
-                                                              //fungsi menampilkan jumlah SESUAI table
-                                                              Text(
-                                                                pointArif
-                                                                    .toStringAsFixed(
-                                                                        2),
-                                                                style: const TextStyle(
-                                                                    fontSize:
-                                                                        14,
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold),
-                                                              ),
-                                                            ],
-                                                          ),
+                                                        // child: ElevatedButton(
+                                                        //   onPressed: () {
+                                                        //     setState(() {});
+                                                        //   },
+                                                        //   style: ElevatedButton.styleFrom(
+                                                        //       backgroundColor:
+                                                        //           Colors.blue
+                                                        //               .shade100,
+                                                        //       shape: RoundedRectangleBorder(
+                                                        //           borderRadius:
+                                                        //               BorderRadius
+                                                        //                   .circular(
+                                                        //                       50.0))),
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            const Text(
+                                                              'Arif Kurniawan',
+                                                              maxLines: 2,
+                                                              style: TextStyle(
+                                                                  fontSize: 14,
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
+                                                            ),
+                                                            //fungsi menampilkan jumlah SESUAI table
+                                                            Text(
+                                                              pointArif
+                                                                  .toStringAsFixed(
+                                                                      2),
+                                                              style: const TextStyle(
+                                                                  fontSize: 14,
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
+                                                            ),
+                                                          ],
                                                         ),
+                                                        // ),
                                                       ),
 
                                                       const Padding(
@@ -1968,53 +1967,51 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             const EdgeInsets
                                                                 .symmetric(
                                                                 horizontal: 17),
-                                                        child: ElevatedButton(
-                                                          onPressed: () {
-                                                            setState(() {});
-                                                          },
-                                                          style: ElevatedButton.styleFrom(
-                                                              backgroundColor:
-                                                                  Colors.blue
-                                                                      .shade100,
-                                                              shape: RoundedRectangleBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              50.0))),
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceBetween,
-                                                            children: [
-                                                              const Text(
-                                                                'Aris Pravidan',
-                                                                maxLines: 2,
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        14,
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold),
-                                                              ),
-                                                              //fungsi menampilkan jumlah SESUAI table
-                                                              Text(
-                                                                pointAris
-                                                                    .toStringAsFixed(
-                                                                        2),
-                                                                style: const TextStyle(
-                                                                    fontSize:
-                                                                        14,
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold),
-                                                              ),
-                                                            ],
-                                                          ),
+                                                        // child: ElevatedButton(
+                                                        //   onPressed: () {
+                                                        //     setState(() {});
+                                                        //   },
+                                                        //   style: ElevatedButton.styleFrom(
+                                                        //       backgroundColor:
+                                                        //           Colors.blue
+                                                        //               .shade100,
+                                                        //       shape: RoundedRectangleBorder(
+                                                        //           borderRadius:
+                                                        //               BorderRadius
+                                                        //                   .circular(
+                                                        //                       50.0))),
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            const Text(
+                                                              'Aris Pravidan',
+                                                              maxLines: 2,
+                                                              style: TextStyle(
+                                                                  fontSize: 14,
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
+                                                            ),
+                                                            //fungsi menampilkan jumlah SESUAI table
+                                                            Text(
+                                                              pointAris
+                                                                  .toStringAsFixed(
+                                                                      2),
+                                                              style: const TextStyle(
+                                                                  fontSize: 14,
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
+                                                            ),
+                                                          ],
                                                         ),
+                                                        // ),
                                                       ),
 
                                                       const Padding(
@@ -2032,53 +2029,51 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             const EdgeInsets
                                                                 .symmetric(
                                                                 horizontal: 17),
-                                                        child: ElevatedButton(
-                                                          onPressed: () {
-                                                            setState(() {});
-                                                          },
-                                                          style: ElevatedButton.styleFrom(
-                                                              backgroundColor:
-                                                                  Colors.blue
-                                                                      .shade100,
-                                                              shape: RoundedRectangleBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              50.0))),
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceBetween,
-                                                            children: [
-                                                              const Text(
-                                                                'Fikryansyah',
-                                                                maxLines: 2,
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        14,
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold),
-                                                              ),
-                                                              //fungsi menampilkan jumlah SESUAI table
-                                                              Text(
-                                                                pointFikri
-                                                                    .toStringAsFixed(
-                                                                        2),
-                                                                style: const TextStyle(
-                                                                    fontSize:
-                                                                        14,
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold),
-                                                              ),
-                                                            ],
-                                                          ),
+                                                        // child: ElevatedButton(
+                                                        //   onPressed: () {
+                                                        //     setState(() {});
+                                                        //   },
+                                                        //   style: ElevatedButton.styleFrom(
+                                                        //       backgroundColor:
+                                                        //           Colors.blue
+                                                        //               .shade100,
+                                                        //       shape: RoundedRectangleBorder(
+                                                        //           borderRadius:
+                                                        //               BorderRadius
+                                                        //                   .circular(
+                                                        //                       50.0))),
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            const Text(
+                                                              'Fikryansyah',
+                                                              maxLines: 2,
+                                                              style: TextStyle(
+                                                                  fontSize: 14,
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
+                                                            ),
+                                                            //fungsi menampilkan jumlah SESUAI table
+                                                            Text(
+                                                              pointFikri
+                                                                  .toStringAsFixed(
+                                                                      2),
+                                                              style: const TextStyle(
+                                                                  fontSize: 14,
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
+                                                            ),
+                                                          ],
                                                         ),
+                                                        // ),
                                                       ),
 
                                                       const Padding(
@@ -2091,6 +2086,71 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         ),
                                                       ),
                                                       //? Yuse
+                                                      Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                                horizontal: 17),
+                                                        // child: ElevatedButton(
+                                                        //   onPressed: () {
+                                                        //     setState(() {});
+                                                        //   },
+                                                        //   style: ElevatedButton.styleFrom(
+                                                        //       backgroundColor:
+                                                        //           Colors.blue
+                                                        //               .shade100,
+                                                        //       shape: RoundedRectangleBorder(
+                                                        //           borderRadius:
+                                                        //               BorderRadius
+                                                        //                   .circular(
+                                                        //                       50.0))),
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            const Text(
+                                                              'Yuse',
+                                                              maxLines: 2,
+                                                              style: TextStyle(
+                                                                  fontSize: 14,
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
+                                                            ),
+                                                            //fungsi menampilkan jumlah SESUAI table
+                                                            Text(
+                                                              pointyuse
+                                                                  .toStringAsFixed(
+                                                                      2),
+                                                              style: const TextStyle(
+                                                                  fontSize: 14,
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        // ),
+                                                      ),
+
+                                                      const Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                bottom: 0),
+                                                        child: Divider(
+                                                          thickness: 1,
+                                                          color: Colors.grey,
+                                                        ),
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 30,
+                                                      ),
+                                                      //? Summary Report Modeller
                                                       Container(
                                                         padding:
                                                             const EdgeInsets
@@ -2109,13 +2169,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                       BorderRadius
                                                                           .circular(
                                                                               50.0))),
-                                                          child: Row(
+                                                          child: const Row(
                                                             mainAxisAlignment:
                                                                 MainAxisAlignment
                                                                     .spaceBetween,
                                                             children: [
-                                                              const Text(
-                                                                'Yuse',
+                                                              Text(
+                                                                'Summary Report',
                                                                 maxLines: 2,
                                                                 style: TextStyle(
                                                                     fontSize:
@@ -2127,31 +2187,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                             .bold),
                                                               ),
                                                               //fungsi menampilkan jumlah SESUAI table
-                                                              Text(
-                                                                pointyuse
-                                                                    .toStringAsFixed(
-                                                                        2),
-                                                                style: const TextStyle(
-                                                                    fontSize:
-                                                                        14,
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold),
-                                                              ),
+                                                              Icon(
+                                                                Icons
+                                                                    .arrow_forward_sharp,
+                                                                color: Colors
+                                                                    .black,
+                                                              )
                                                             ],
                                                           ),
-                                                        ),
-                                                      ),
-
-                                                      const Padding(
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                                bottom: 0),
-                                                        child: Divider(
-                                                          thickness: 1,
-                                                          color: Colors.grey,
                                                         ),
                                                       ),
                                                     ],
@@ -2232,9 +2275,23 @@ class _HomeScreenState extends State<HomeScreen> {
             child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.green.shade600),
-                onPressed: () {
+                onPressed: () async {
+                  showDialog(
+                      context: context,
+                      builder: (c) {
+                        return const LoadingDialogWidget(
+                          message: "Please Wait...",
+                        );
+                      });
                   //call function another class
-                  ExcelScreen().exportExcel();
+                  ExcelScreen().exportExcel(siklus.text);
+
+                  Future.delayed(const Duration(seconds: 2)).then((value) {
+                    //! lalu eksekusi fungsi ini
+                    // setState(() {
+                    Navigator.pop(context);
+                    // });
+                  });
                   // Navigator.push(context,
                   //     MaterialPageRoute(builder: (c) => const ExcelScreen()));
                 },

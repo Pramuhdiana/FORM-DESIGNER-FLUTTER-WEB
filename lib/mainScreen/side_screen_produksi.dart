@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:form_designer/mainScreen/list_batu_screen.dart';
 import 'package:form_designer/mainScreen/list_mps.dart';
 import 'package:form_designer/produksi/mainScreen/home_screen_produksi.dart';
+import 'package:form_designer/produksi/mainScreen/summary_pasang_batu.dart';
+import 'package:form_designer/produksi/mainScreen/summary_produktivitas.dart';
 import 'package:form_designer/produksi/mainScreen/summary_susut.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:side_navigation/side_navigation.dart';
@@ -30,11 +32,11 @@ class _MainViewProduksiState extends State<MainViewProduksi> {
     //? 3
     const SummarySusutScreen(),
     //? 4
-    const SummarySusutScreen(),
+    const SummaryPasangBatuScreen(),
     //? 5
-    const SummarySusutScreen(),
+    const SummaryProduktivitasScreen(),
     //? 6
-    const SummarySusutScreen(),
+    const HomeScreenProduksi(),
   ];
 
   // final _formKey = GlobalKey<FormState>();

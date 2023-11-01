@@ -116,7 +116,8 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
 
       var filterBySiklus = g.where((element) =>
           element.siklus.toString().toLowerCase() ==
-          chooseSiklus.toString().toLowerCase());
+              chooseSiklus.toString().toLowerCase() &&
+          element.namaModeller != '');
       var dataProduksi = filterBySiklus.where((element) =>
           element.tanggalInProduksi.toString().toLowerCase().isNotEmpty);
       filterBySiklus.toList();
@@ -470,6 +471,34 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
                                           });
                                         }),
                                     DataColumn(label: _verticalDivider),
+                                    //posisi
+                                    DataColumn(
+                                        label: const SizedBox(
+                                            width: 50,
+                                            child: Text(
+                                              "Posisi",
+                                              maxLines: 2,
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold),
+                                            )),
+                                        onSort: (columnIndex, _) {
+                                          setState(() {
+                                            _currentSortColumn = columnIndex;
+                                            if (sort == true) {
+                                              sort = false;
+                                              filterCrm!.sort((a, b) => a
+                                                  .photoShoot!
+                                                  .compareTo(b.photoShoot!));
+                                            } else {
+                                              sort = true;
+                                              filterCrm!.sort((a, b) => b
+                                                  .photoShoot!
+                                                  .compareTo(a.photoShoot!));
+                                            }
+                                          });
+                                        }),
+                                    DataColumn(label: _verticalDivider),
                                     //status batu
                                     DataColumn(
                                         label: const SizedBox(
@@ -637,34 +666,7 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
                                           )),
                                     ),
                                     DataColumn(label: _verticalDivider),
-                                    //posisi
-                                    DataColumn(
-                                        label: const SizedBox(
-                                            width: 50,
-                                            child: Text(
-                                              "Posisi",
-                                              maxLines: 2,
-                                              style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold),
-                                            )),
-                                        onSort: (columnIndex, _) {
-                                          setState(() {
-                                            _currentSortColumn = columnIndex;
-                                            if (sort == true) {
-                                              sort = false;
-                                              filterCrm!.sort((a, b) => a
-                                                  .photoShoot!
-                                                  .compareTo(b.photoShoot!));
-                                            } else {
-                                              sort = true;
-                                              filterCrm!.sort((a, b) => b
-                                                  .photoShoot!
-                                                  .compareTo(a.photoShoot!));
-                                            }
-                                          });
-                                        }),
-                                    DataColumn(label: _verticalDivider),
+
                                     //nama modeller
                                     DataColumn(
                                         label: const SizedBox(
@@ -1306,6 +1308,118 @@ class RowSource extends DataTableSource {
         }),
       ),
       DataCell(_verticalDivider),
+      //posisi
+      DataCell(Builder(builder: (context) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(data.posisi),
+            IconButton(
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8)),
+                            content: SizedBox(
+                                height: 150,
+                                child: SingleChildScrollView(
+                                    scrollDirection: Axis.vertical,
+                                    child: Column(children: [
+                                      const Text(
+                                        'Pilih Posisi',
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      Container(
+                                        padding: const EdgeInsets.only(top: 15),
+                                        child: ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                                backgroundColor: Colors.blue,
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            50.0))),
+                                            onPressed: () async {
+                                              await postPosisi(
+                                                  data.id, "Casting");
+                                              await postHistory(
+                                                  data.kodeDesignMdbc,
+                                                  data.kodeMarketing,
+                                                  "Casting",
+                                                  "Unknown");
+                                              Navigator.pop(context);
+                                              showDialog<String>(
+                                                  context: context,
+                                                  builder:
+                                                      (BuildContext context) =>
+                                                          const AlertDialog(
+                                                            title: Text(
+                                                              'Posisi Berhasil Diupdate',
+                                                            ),
+                                                          ));
+                                            },
+                                            child: const Text(
+                                              "Casting",
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                              ),
+                                            )),
+                                      ),
+                                      Container(
+                                        padding: const EdgeInsets.only(top: 15),
+                                        child: ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                                backgroundColor: Colors.blue,
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            50.0))),
+                                            onPressed: () async {
+                                              await postPosisi(data.id, "BRJ");
+                                              await postHistory(
+                                                  data.kodeDesignMdbc,
+                                                  data.kodeMarketing,
+                                                  "BRJ",
+                                                  "Unknown");
+
+                                              Navigator.pop(context);
+                                              // Navigator.push(
+                                              //           context,
+                                              //           MaterialPageRoute(
+                                              //               builder: (c) =>
+                                              //                   const MainView()));
+                                              showDialog<String>(
+                                                  context: context,
+                                                  builder:
+                                                      (BuildContext context) =>
+                                                          const AlertDialog(
+                                                            title: Text(
+                                                              'Posisi Berhasil Diupdate\n Tekan refresh di pojok kanan atas untuk update data',
+                                                            ),
+                                                          ));
+                                            },
+                                            child: const Text(
+                                              "BRJ",
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                              ),
+                                            )),
+                                      ),
+                                    ]))));
+                      });
+                },
+                icon: const Icon(
+                  Icons.change_circle,
+                  color: Colors.blue,
+                )),
+          ],
+        );
+      })),
+      DataCell(_verticalDivider),
       //status batu
       DataCell(
         Padding(
@@ -1366,16 +1480,7 @@ class RowSource extends DataTableSource {
                               )),
       ),
       DataCell(_verticalDivider),
-      //posisi
-      DataCell(Builder(builder: (context) {
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(data.posisi),
-          ],
-        );
-      })),
-      DataCell(_verticalDivider),
+
       //nama modeller
       DataCell(
         Padding(
@@ -1408,6 +1513,30 @@ class RowSource extends DataTableSource {
 
   @override
   int get selectedRowCount => 0;
+
+  postPosisi(id, posisi) async {
+    Map<String, String> body = {
+      'id': id.toString(),
+      'posisi': posisi.toString(),
+    };
+    final response = await http.post(
+        Uri.parse('${ApiConstants.baseUrl}${ApiConstants.updatePosisi}'),
+        body: body);
+    print(response.body);
+  }
+
+  postHistory(kodeDesignMdbc, kodeMarketing, posisi, namaArtist) async {
+    Map<String, String> body = {
+      'kodeDesignMdbc': kodeDesignMdbc.toString(),
+      'kodeMarketing': kodeMarketing.toString(),
+      'posisi': posisi.toString(),
+      'namaArtis': namaArtist.toString()
+    };
+    final response = await http.post(
+        Uri.parse('${ApiConstants.baseUrl}${ApiConstants.addHistoryPosisi}'),
+        body: body);
+    print(response.body);
+  }
 
   postApiQtyBatu1(batu1, qtyBatu1) async {
     if (qtyBatu1 > 0) {

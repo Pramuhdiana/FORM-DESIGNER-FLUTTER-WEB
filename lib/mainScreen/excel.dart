@@ -10,14 +10,24 @@ import 'package:http/http.dart' as http;
 class ExcelScreen {
   List<FormDesignerModel>? myData;
 
-  Future<void> exportExcel() async {
+  Future<void> exportExcel(siklus) async {
 //get data
+    // ignore: avoid_print
+    print(siklus);
     final response = await http.get(
         Uri.parse(ApiConstants.baseUrl + ApiConstants.getListFormDesigner));
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);
       var allData =
           jsonResponse.map((data) => FormDesignerModel.fromJson(data)).toList();
+      if (siklus != '') {
+        var filterBySiklus = allData.where((element) =>
+            element.siklus!.toLowerCase() == siklus.toString().toLowerCase());
+        allData = filterBySiklus.toList();
+      } else {
+        allData = allData;
+      }
+
       myData = allData.toList();
     }
 
@@ -282,6 +292,9 @@ class ExcelScreen {
     var qtyBatu35 = sheet.cell(CellIndex.indexByString("CF1"));
     qtyBatu35.value = "Qty Batu35";
     qtyBatu35.cellStyle = headStyle;
+    var head36 = sheet.cell(CellIndex.indexByString("CG1"));
+    head36.value = "Siklus";
+    head36.cellStyle = headStyle;
 
     for (int row = 0; row < myData!.length; row++) {
       //belum bisa image  Image.network( ApiConstants.baseUrlImage + myData![row].imageUrl!,);
@@ -635,6 +648,11 @@ class ExcelScreen {
       var qtyBatu35 = sheet
           .cell(CellIndex.indexByColumnRow(columnIndex: 83, rowIndex: row + 1));
       qtyBatu35.value = data.qtyBatu35;
+
+      //? SIKLUS
+      var siklus = sheet
+          .cell(CellIndex.indexByColumnRow(columnIndex: 84, rowIndex: row + 1));
+      siklus.value = data.siklus;
     }
 
     excel.rename("mySheet", "result");
