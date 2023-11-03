@@ -60,49 +60,50 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
   void initState() {
     super.initState();
 
-    _getData();
+    // _getData();
   }
 
-  Future<List<FormDesignerModel>> _getData() async {
-    final response = sharedPreferences!.getString('level') != '2'
-        ? await http.get(
-            Uri.parse(ApiConstants.baseUrl + ApiConstants.getListFormDesigner))
-        : await http.get(Uri.parse(
-            '${ApiConstants.baseUrl}${ApiConstants.getListFormDesignerByName}?nama=${sharedPreferences!.getString('nama')!}'));
+  // Future<List<FormDesignerModel>> _getData() async {
+  //   final response = sharedPreferences!.getString('level') != '2'
+  //       ? await http.get(
+  //           Uri.parse(ApiConstants.baseUrl + ApiConstants.getListFormDesigner))
+  //       : await http.get(Uri.parse(
+  //           '${ApiConstants.baseUrl}${ApiConstants.getListFormDesignerByName}?nama=${sharedPreferences!.getString('nama')!}'));
 
-    if (response.statusCode == 200) {
-      List jsonResponse = json.decode(response.body);
+  //   if (response.statusCode == 200) {
+  //     List jsonResponse = json.decode(response.body);
 
-      var g =
-          jsonResponse.map((data) => FormDesignerModel.fromJson(data)).toList();
+  //     var g =
+  //         jsonResponse.map((data) => FormDesignerModel.fromJson(data)).toList();
 
-      if (sharedPreferences!.getString('level') == '3') {
-        var nama = sharedPreferences!.getString('nama');
-        print(nama);
-        var filterByModeller = g.where((element) =>
-            element.namaModeller.toString().toLowerCase() ==
-            nama.toString().toLowerCase());
+  //     if (sharedPreferences!.getString('level') == '3') {
+  //       var nama = sharedPreferences!.getString('nama');
+  //       print(nama);
+  //       var filterByModeller = g.where((element) =>
+  //           element.namaModeller.toString().toLowerCase() ==
+  //           nama.toString().toLowerCase());
 
-        g = filterByModeller.toList();
-        setState(() {
-          filterCrm = g;
-          myCrm = g;
-        });
-      } else {
-        var dataProduksi = g.where((element) =>
-            element.tanggalInProduksi.toString().toLowerCase().isNotEmpty);
-        setState(() {
-          myDataProduksi = dataProduksi.toList();
-          filterCrm = g;
-          myCrm = g;
-        });
-      }
+  //       g = filterByModeller.toList();
+  //       setState(() {
+  //         filterCrm = g;
+  //         myCrm = g;
+  //       });
+  //     } else {
+  //       var dataProduksi = g.where((element) =>
+  //           element.tanggalInProduksi.toString().toLowerCase().isNotEmpty);
 
-      return g;
-    } else {
-      throw Exception('Unexpected error occured!');
-    }
-  }
+  //       setState(() {
+  //         myDataProduksi = dataProduksi.toList();
+  //         filterCrm = g;
+  //         myCrm = g;
+  //       });
+  //     }
+
+  //     return g;
+  //   } else {
+  //     throw Exception('Unexpected error occured!');
+  //   }
+  // }
 
   Future<List<FormDesignerModel>> _getDataBySiklus(chooseSiklus) async {
     final response = await http.get(
@@ -116,14 +117,16 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
 
       var filterBySiklus = g.where((element) =>
           element.siklus.toString().toLowerCase() ==
-              chooseSiklus.toString().toLowerCase() &&
-          element.namaModeller != '');
-      var dataProduksi = filterBySiklus.where((element) =>
-          element.tanggalInProduksi.toString().toLowerCase().isNotEmpty);
+          chooseSiklus.toString().toLowerCase());
+
+      // ignore: unused_local_variable
+      var dataProduksi = filterBySiklus.toList();
+      // var dataProduksi = filterBySiklus.where((element) =>
+      //     element.tanggalInProduksi.toString().toLowerCase().isNotEmpty);
       filterBySiklus.toList();
 
       setState(() {
-        myDataProduksi = dataProduksi.toList();
+        myDataProduksi = filterBySiklus.toList();
         filterCrm = filterBySiklus.toList();
         myCrm = filterBySiklus.toList();
       });
@@ -1082,6 +1085,41 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
                                             }
                                           });
                                         }),
+                                    DataColumn(label: _verticalDivider),
+                                    //ketrangan batu
+                                    const DataColumn(
+                                      label: SizedBox(
+                                          width: 120,
+                                          child: Text(
+                                            "Keterangan Batu",
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold),
+                                          )),
+                                      // onSort: (columnIndex, _) {
+                                      //   setState(() {
+                                      //     _currentSortColumn = columnIndex;
+
+                                      //     if (sort == true) {
+                                      //       sort = false;
+                                      //       filterCrm!.sort((a, b) => a
+                                      //           .keteranganStatusBatu!
+                                      //           .toLowerCase()
+                                      //           .compareTo(b
+                                      //               .keteranganStatusBatu!
+                                      //               .toLowerCase()));
+                                      //     } else {
+                                      //       sort = true;
+                                      //       filterCrm!.sort((a, b) => b
+                                      //           .keteranganStatusBatu!
+                                      //           .toLowerCase()
+                                      //           .compareTo(a
+                                      //               .keteranganStatusBatu!
+                                      //               .toLowerCase()));
+                                      //     }
+                                      //   });
+                                      // }
+                                    ),
                                     DataColumn(label: _verticalDivider),
                                     //tema
                                     DataColumn(
@@ -2772,7 +2810,7 @@ class RowSourceProduksi extends DataTableSource {
             child: SizedBox(
               width: 150,
               height: 190,
-              child: GestureDetector(
+              child: InkWell(
                 onTap: () {
                   Navigator.push(
                       context,
@@ -2798,9 +2836,206 @@ class RowSourceProduksi extends DataTableSource {
           return Padding(
               padding: const EdgeInsets.all(0),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Text(data.kodeDesignMdbc),
+                  data.namaModeller.toString().isNotEmpty
+                      ? const SizedBox()
+                      : Stack(
+                          clipBehavior:
+                              Clip.none, //agar tidak menghalangi object
+                          children: [
+                            //tambahan icon ADD
+                            Positioned(
+                              right: -5.0,
+                              top: -3.0,
+                              child: InkResponse(
+                                onTap: () {
+                                  // Navigator.of(context).pop();
+                                },
+                                child: const Icon(
+                                  Icons.add_circle_outline,
+                                  color: Colors.green,
+                                  size: 20,
+                                ),
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(8)),
+                                          content: SizedBox(
+                                              height: 250,
+                                              child: SingleChildScrollView(
+                                                  scrollDirection:
+                                                      Axis.vertical,
+                                                  child: Column(children: [
+                                                    const Text(
+                                                      'Pilih Waktu',
+                                                      style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontSize: 18,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                    Container(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              top: 15),
+                                                      child: ElevatedButton(
+                                                          style: ElevatedButton.styleFrom(
+                                                              backgroundColor:
+                                                                  Colors.blue,
+                                                              shape: RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              50.0))),
+                                                          onPressed: () async {
+                                                            Navigator.pop(
+                                                                context);
+                                                            showDialog<String>(
+                                                                context:
+                                                                    context,
+                                                                builder: (BuildContext
+                                                                        context) =>
+                                                                    const AlertDialog(
+                                                                      title:
+                                                                          Text(
+                                                                        'Waktu telah disimpan',
+                                                                      ),
+                                                                    ));
+                                                          },
+                                                          child: const Text(
+                                                            "WEEK 1",
+                                                            style: TextStyle(
+                                                              fontSize: 16,
+                                                            ),
+                                                          )),
+                                                    ),
+                                                    Container(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              top: 15),
+                                                      child: ElevatedButton(
+                                                          style: ElevatedButton.styleFrom(
+                                                              backgroundColor:
+                                                                  Colors.blue,
+                                                              shape: RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              50.0))),
+                                                          onPressed: () async {
+                                                            Navigator.pop(
+                                                                context);
+                                                            showDialog<String>(
+                                                                context:
+                                                                    context,
+                                                                builder: (BuildContext
+                                                                        context) =>
+                                                                    const AlertDialog(
+                                                                      title:
+                                                                          Text(
+                                                                        'Waktu telah disimpan',
+                                                                      ),
+                                                                    ));
+                                                          },
+                                                          child: const Text(
+                                                            "WEEK 2",
+                                                            style: TextStyle(
+                                                              fontSize: 16,
+                                                            ),
+                                                          )),
+                                                    ),
+                                                    Container(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              top: 15),
+                                                      child: ElevatedButton(
+                                                          style: ElevatedButton.styleFrom(
+                                                              backgroundColor:
+                                                                  Colors.blue,
+                                                              shape: RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              50.0))),
+                                                          onPressed: () async {
+                                                            Navigator.pop(
+                                                                context);
+                                                            showDialog<String>(
+                                                                context:
+                                                                    context,
+                                                                builder: (BuildContext
+                                                                        context) =>
+                                                                    const AlertDialog(
+                                                                      title:
+                                                                          Text(
+                                                                        'Waktu telah disimpan',
+                                                                      ),
+                                                                    ));
+                                                          },
+                                                          child: const Text(
+                                                            "WEEK 3",
+                                                            style: TextStyle(
+                                                              fontSize: 16,
+                                                            ),
+                                                          )),
+                                                    ),
+                                                    Container(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              top: 15),
+                                                      child: ElevatedButton(
+                                                          style: ElevatedButton.styleFrom(
+                                                              backgroundColor:
+                                                                  Colors.blue,
+                                                              shape: RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              50.0))),
+                                                          onPressed: () async {
+                                                            Navigator.pop(
+                                                                context);
+                                                            // Navigator.push(
+                                                            //           context,
+                                                            //           MaterialPageRoute(
+                                                            //               builder: (c) =>
+                                                            //                   const MainView()));
+                                                            showDialog<String>(
+                                                                context:
+                                                                    context,
+                                                                builder: (BuildContext
+                                                                        context) =>
+                                                                    const AlertDialog(
+                                                                      title:
+                                                                          Text(
+                                                                        'Waktu telah disimpan',
+                                                                      ),
+                                                                    ));
+                                                          },
+                                                          child: const Text(
+                                                            "WEEK 4",
+                                                            style: TextStyle(
+                                                              fontSize: 16,
+                                                            ),
+                                                          )),
+                                                    ),
+                                                  ]))));
+                                    });
+                              },
+                              icon: const Icon(Icons.group_add_sharp),
+                              color: Colors.green,
+                            ),
+                          ],
+                        )
                 ],
               ));
         }),
@@ -3432,6 +3667,13 @@ class RowSourceProduksi extends DataTableSource {
       })),
       DataCell(_verticalDivider),
       //status batu
+      DataCell(
+        Padding(
+            padding: const EdgeInsets.all(0),
+            child: Text(data.keteranganStatusBatu)),
+      ),
+      DataCell(_verticalDivider),
+      //keterangan batu
       DataCell(
         Padding(
             padding: const EdgeInsets.all(0),
