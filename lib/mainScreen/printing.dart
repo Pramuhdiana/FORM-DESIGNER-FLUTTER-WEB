@@ -684,7 +684,7 @@ class _PrintPageState extends State<PrintPage> {
                     //       color: Colors.black,
                     //       fontWeight: FontWeight.bold),
                     // )),
-                    GestureDetector(
+                    InkWell(
                       onTap: () {
                         Navigator.pop(context);
                       },

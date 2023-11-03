@@ -25,11 +25,11 @@ class ProduksiSBModel {
     bulan = json['bulan'];
     nama = json['nama'];
     divisi = json['divisi'];
-    debetKawat = json['debet_kawat'];
-    kreditKawat = json['kredit_kawat'];
-    sb = json['sb'];
-    sprue = json['sprue'];
-    reject = json['reject'];
+    debetKawat = json['debet_kawat'] ?? 0;
+    kreditKawat = json['kredit_kawat'] ?? 0;
+    sb = json['sb'] ?? 0;
+    sprue = json['sprue'] ?? 0;
+    reject = json['reject'] ?? 0;
   }
 
   Map<String, dynamic> toJson() {

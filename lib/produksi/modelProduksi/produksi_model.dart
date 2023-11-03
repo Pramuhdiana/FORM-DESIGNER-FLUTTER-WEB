@@ -13,6 +13,10 @@ class ProduksiModel {
   double? susutBarang;
   String? keterangan;
   double? kadar;
+  double? beratEmas;
+  double? beratDiamond;
+  int? butirDiamond;
+  int? totalOngkosan;
 
   ProduksiModel(
       {this.id,
@@ -28,7 +32,11 @@ class ProduksiModel {
       this.jatahSusut,
       this.susutBarang,
       this.keterangan,
-      this.kadar});
+      this.kadar,
+      this.beratEmas,
+      this.beratDiamond,
+      this.butirDiamond,
+      this.totalOngkosan});
 
   ProduksiModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -38,13 +46,17 @@ class ProduksiModel {
     tanggalIn = json['tanggal_in'];
     tanggalOut = json['tanggal_out'];
     kodeProduksi = json['kode_produksi'] ?? ' ';
-    debet = json['debet'];
-    kredit = json['kredit'];
-    point = json['point'];
-    jatahSusut = json['jatah_susut'];
-    susutBarang = json['susut_barang'];
+    debet = json['debet'] ?? 0;
+    kredit = json['kredit'] ?? 0;
+    point = json['point'] ?? 0;
+    jatahSusut = json['jatah_susut'] ?? 0;
+    susutBarang = json['susut_barang'] ?? 0;
     keterangan = json['keterangan'] ?? ' ';
-    kadar = json['kadar'];
+    kadar = json['kadar'] ?? 0;
+    beratEmas = json['berat_emas'] ?? 0;
+    beratDiamond = json['berat_diamond'] ?? 0;
+    butirDiamond = json['butir_diamond'] ?? 0;
+    totalOngkosan = json['total_ongkosan'] ?? 0;
   }
 
   Map<String, dynamic> toJson() {
@@ -63,6 +75,10 @@ class ProduksiModel {
     data['susut_barang'] = susutBarang;
     data['keterangan'] = keterangan;
     data['kadar'] = kadar;
+    data['berat_emas'] = beratEmas;
+    data['berat_diamond'] = beratDiamond;
+    data['butir_diamond'] = butirDiamond;
+    data['total_ongkosan'] = totalOngkosan;
     return data;
   }
 }
