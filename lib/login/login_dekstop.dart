@@ -23,7 +23,7 @@ class _LoginDesktopState extends State<LoginDesktop> {
   TextEditingController password = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool _isChecked = false;
-
+  bool isLogo = false;
   @override
   void initState() {
     super.initState();
@@ -41,8 +41,7 @@ class _LoginDesktopState extends State<LoginDesktop> {
               height: MediaQuery.of(context).size.height * 0.8,
               width: MediaQuery.of(context).size.width * 1,
               padding: const EdgeInsets.all(12.0),
-              child: Lottie.asset("loadingJSON/fixLogo.json"),
-              // child: Lottie.asset("loadingJSON/animation_llvy7jo7.json"),
+              child: Lottie.asset("loadingJSON/logo275kb.json"),
             ),
           ),
           Expanded(

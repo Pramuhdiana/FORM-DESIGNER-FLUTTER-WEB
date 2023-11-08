@@ -1,11 +1,12 @@
 // ignore_for_file: depend_on_referenced_packages, avoid_print, prefer_typing_uninitialized_variables, use_build_context_synchronously, prefer_final_fields, prefer_const_constructors, no_leading_underscores_for_local_identifiers, unused_element
 
+import 'dart:convert';
+
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:form_designer/api/api_constant.dart';
 import 'package:form_designer/global/global.dart';
-import 'dart:convert';
 import 'package:form_designer/model/form_designer_model.dart';
 import 'package:form_designer/produksi/modelProduksi/produksi_model.dart';
 import 'package:form_designer/produksi/modelProduksi/produksi_model_sb.dart';
@@ -33,7 +34,15 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
   TextEditingController addSiklus = TextEditingController();
 
   double? resultFinishingDikdikMaulana = 0;
-  double? resultFinishingMumahhadDeeko = 0;
+  double? bonusStell2DikdikMaulana = 0;
+  double? bonusStell2RepDikdikMaulana = 0;
+  double? susutStell2DikdikMaulana = 0;
+  double? susutStell2RepDikdikMaulana = 0;
+  double? resultFinishingMuhammadDeeko = 0;
+  double? bonusStell2MuhammadDeeko = 0;
+  double? bonusStell2RepMuhammadDeeko = 0;
+  double? susutStell2MuhammadDeeko = 0;
+  double? susutStell2RepMuhammadDeeko = 0;
 
   double? resultStellDikdikMaulana = 0;
   double? resultStellMumahhadDeeko = 0;
@@ -79,6 +88,34 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
   int qtyNamePoleshing1 = 0;
   //! end variable Poleshing1
 
+  //? variable Poleshing2
+  List artistPoleshing2 = [];
+  List spkPoleshing2 = [];
+  List pointPoleshing2 = [];
+  List beratAsalPoleshing2 = [];
+  List beratAkhirPoleshing2 = [];
+  List beratAsalSBPoleshing2 = [];
+  List beratAkhirSBPoleshing2 = [];
+  List susutPoleshing2 = [];
+  List jatahSusutPoleshing2 = [];
+  List resultPoleshing2 = [];
+  int qtyNamePoleshing2 = 0;
+  //! end variable Poleshing2
+
+  //? variable Poleshing2Rep
+  List artistPoleshing2Rep = [];
+  List spkPoleshing2Rep = [];
+  List pointPoleshing2Rep = [];
+  List beratAsalPoleshing2Rep = [];
+  List beratAkhirPoleshing2Rep = [];
+  List beratAsalSBPoleshing2Rep = [];
+  List beratAkhirSBPoleshing2Rep = [];
+  List susutPoleshing2Rep = [];
+  List jatahSusutPoleshing2Rep = [];
+  List resultPoleshing2Rep = [];
+  int qtyNamePoleshing2Rep = 0;
+  //! end variable Poleshing2Rep
+
   //? variable Stell1
   List artistStell1 = [];
   List spkStell1 = [];
@@ -93,6 +130,62 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
   int qtyNameStell1 = 0;
   //! end variable Stell1
 
+  //? variable Stell2
+  List artistStell2 = [];
+  List spkStell2 = [];
+  List pointStell2 = [];
+  List beratAsalStell2 = [];
+  List beratAkhirStell2 = [];
+  List beratAsalSBStell2 = [];
+  List beratAkhirSBStell2 = [];
+  List susutStell2 = [];
+  List jatahSusutStell2 = [];
+  List resultStell2 = [];
+  int qtyNameStell2 = 0;
+  //! end variable Stell2
+
+  //? variable Stell2Rep
+  List artistStell2Rep = [];
+  List spkStell2Rep = [];
+  List pointStell2Rep = [];
+  List beratAsalStell2Rep = [];
+  List beratAkhirStell2Rep = [];
+  List beratAsalSBStell2Rep = [];
+  List beratAkhirSBStell2Rep = [];
+  List susutStell2Rep = [];
+  List jatahSusutStell2Rep = [];
+  List resultStell2Rep = [];
+  int qtyNameStell2Rep = 0;
+  //! end variable Stell2Rep
+
+  //? variable Chrome
+  List artistChrome = [];
+  List spkChrome = [];
+  List pointChrome = [];
+  List beratAsalChrome = [];
+  List beratAkhirChrome = [];
+  List beratAsalSBChrome = [];
+  List beratAkhirSBChrome = [];
+  List susutChrome = [];
+  List jatahSusutChrome = [];
+  List resultChrome = [];
+  int qtyNameChrome = 0;
+  //! end variable Chrome
+
+  //? variable ChromeRep
+  List artistChromeRep = [];
+  List spkChromeRep = [];
+  List pointChromeRep = [];
+  List beratAsalChromeRep = [];
+  List beratAkhirChromeRep = [];
+  List beratAsalSBChromeRep = [];
+  List beratAkhirSBChromeRep = [];
+  List susutChromeRep = [];
+  List jatahSusutChromeRep = [];
+  List resultChromeRep = [];
+  int qtyNameChromeRep = 0;
+  //! end variable ChromeRep
+
   @override
   initState() {
     super.initState();
@@ -101,7 +194,7 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
     String month = DateFormat('MMMM', 'id').format(now);
     siklusDesigner = month;
     nowSiklus = sharedPreferences!.getString('siklus')!;
-    _getDataFinishing('all');
+    _getDataAll('all');
   }
 
 // fungsi remove duplicate object
@@ -116,7 +209,19 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
     return uniqueItems; //send back the unique items list
   }
 
-  void _getDataFinishing(month) async {
+// fungsi remove duplicate object
+  List<ProduksiModel> removeDuplicatesKode(List<ProduksiModel> items) {
+    List<ProduksiModel> uniqueItems = []; // uniqueList
+    var uniqueNames = items
+        .map((e) => e.kodeProduksi)
+        .toSet(); //list if UniqueID to remove duplicates
+    for (var e in uniqueNames) {
+      uniqueItems.add(items.firstWhere((i) => i.kodeProduksi == e));
+    } // populate uniqueItems with equivalent original Batch items
+    return uniqueItems; //send back the unique items list
+  }
+
+  void _getDataAll(month) async {
     setState(() {
       isLoading = true;
     });
@@ -124,6 +229,7 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
     await _getSpk(month);
     await _getPoint(month);
     await _getBeratAsal(month);
+
     setState(() {
       isLoading = false;
     });
@@ -133,6 +239,12 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
     artistFinishing = [];
     artistPoleshing1 = [];
     artistStell1 = [];
+    artistPoleshing2 = [];
+    artistStell2 = [];
+    artistPoleshing2Rep = [];
+    artistStell2Rep = [];
+    artistChrome = [];
+    artistChromeRep = [];
     final response = await http
         .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getProduksi));
     if (response.statusCode == 200) {
@@ -140,7 +252,6 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
       List jsonResponse = json.decode(response.body);
       var allData =
           jsonResponse.map((data) => ProduksiModel.fromJson(data)).toList();
-
       if (month.toString().toLowerCase() == "all") {
         //* function Finishing
         //? filter by divisi Finishing
@@ -153,6 +264,8 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
         for (var i = 0; i < allDataFinishing.length; i++) {
           artistFinishing.add(allDataFinishing[i].nama);
         }
+        artistFinishing.sort((a, b) => a.compareTo(b));
+
         qtyNameFinishing = artistFinishing.length;
 
         //* function Poleshing1
@@ -168,6 +281,32 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
         qtyNamePoleshing1 = artistPoleshing1.length;
         //! end function Poleshing1
 
+        //* function Poleshing2
+        //? filter by divisi Poleshing2
+        var filterByDivisiPoleshing2 = allData.where((element) =>
+            element.divisi.toString().toLowerCase() == 'poleshing 2');
+        var allDataPoleshing2 = filterByDivisiPoleshing2.toList();
+        allDataPoleshing2 = removeDuplicates(allDataPoleshing2);
+        //? ambil data nama
+        for (var i = 0; i < allDataPoleshing2.length; i++) {
+          artistPoleshing2.add(allDataPoleshing2[i].nama);
+        }
+        qtyNamePoleshing2 = artistPoleshing2.length;
+        //! end function Poleshing2
+
+        //* function Poleshing2Rep
+        //? filter by divisi Poleshing2Rep
+        var filterByDivisiPoleshing2Rep = allData.where((element) =>
+            element.divisi.toString().toLowerCase() == 'poleshing 2 rep');
+        var allDataPoleshing2Rep = filterByDivisiPoleshing2Rep.toList();
+        allDataPoleshing2Rep = removeDuplicates(allDataPoleshing2Rep);
+        //? ambil data nama
+        for (var i = 0; i < allDataPoleshing2Rep.length; i++) {
+          artistPoleshing2Rep.add(allDataPoleshing2Rep[i].nama);
+        }
+        qtyNamePoleshing2Rep = artistPoleshing2Rep.length;
+        //! end function Poleshing2Rep
+
         //* function Stell1
         //? filter by divisi Stell1
         var filterByDivisiStell1 = allData.where((element) =>
@@ -180,23 +319,81 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
         }
         qtyNameStell1 = artistStell1.length;
         //! end function Stell1
+
+        //* function Stell2
+        //? filter by divisi Stell2
+        var filterByDivisiStell2 = allData.where((element) =>
+            element.divisi.toString().toLowerCase() == 'stell rangka 2');
+        var allDataStell2 = filterByDivisiStell2.toList();
+        allDataStell2 = removeDuplicates(allDataStell2);
+        //? ambil data nama
+        for (var i = 0; i < allDataStell2.length; i++) {
+          artistStell2.add(allDataStell2[i].nama);
+        }
+        qtyNameStell2 = artistStell2.length;
+        //! end function Stell2
+
+        //* function Stell2Rep
+        //? filter by divisi Stell2Rep
+        var filterByDivisiStell2Rep = allData.where((element) =>
+            element.divisi.toString().toLowerCase() == 'stell rangka 2 rep');
+        var allDataStell2Rep = filterByDivisiStell2Rep.toList();
+        allDataStell2Rep = removeDuplicates(allDataStell2Rep);
+        //? ambil data nama
+        for (var i = 0; i < allDataStell2Rep.length; i++) {
+          artistStell2Rep.add(allDataStell2Rep[i].nama);
+        }
+        qtyNameStell2Rep = artistStell2Rep.length;
+        //! end function Stell2Rep
+
+        //* function Chrome
+        //? filter by divisi Chrome
+        var filterByDivisiChrome = allData.where(
+            (element) => element.divisi.toString().toLowerCase() == 'chrome');
+        var allDataChrome = filterByDivisiChrome.toList();
+        allDataChrome = removeDuplicates(allDataChrome);
+        //? ambil data nama
+        for (var i = 0; i < allDataChrome.length; i++) {
+          artistChrome.add(allDataChrome[i].nama);
+        }
+        artistChrome.removeWhere((element) => element == '');
+        qtyNameChrome = artistChrome.length;
+        print(artistChrome);
+        //! end function Chrome
+
+        //* function ChromeRep
+        //? filter by divisi ChromeRep
+        var filterByDivisiChromeRep = allData.where((element) =>
+            element.divisi.toString().toLowerCase() == 'chrome rep');
+        var allDataChromeRep = filterByDivisiChromeRep.toList();
+        allDataChromeRep = removeDuplicates(allDataChromeRep);
+        //? ambil data nama
+        for (var i = 0; i < allDataChromeRep.length; i++) {
+          artistChromeRep.add(allDataChromeRep[i].nama);
+        }
+        artistChromeRep.removeWhere((element) => element == '');
+        qtyNameChromeRep = artistChromeRep.length;
+        //! end function ChromeRep
       } else {
         //! jika siklus di pilih
         var filterBySiklus = allData.where((element) =>
             element.bulan.toString().toLowerCase() == month.toLowerCase());
 
+        //* function Finishing
         //? filter by divisi Finishing
         var filterByDivisiFinishing = filterBySiklus.where((element) =>
             element.divisi.toString().toLowerCase() == 'finishing');
         var allDataFinishing = filterByDivisiFinishing.toList();
+        //! jika suklis tidak di pilih
         allDataFinishing = removeDuplicates(allDataFinishing);
         //? ambil data nama
         for (var i = 0; i < allDataFinishing.length; i++) {
           artistFinishing.add(allDataFinishing[i].nama);
         }
+        artistFinishing.sort((a, b) => a.compareTo(b));
         qtyNameFinishing = artistFinishing.length;
-        //! end function finishing
 
+        //* function Poleshing1
         //? filter by divisi Poleshing1
         var filterByDivisiPoleshing1 = filterBySiklus.where((element) =>
             element.divisi.toString().toLowerCase() == 'poleshing 1');
@@ -209,6 +406,33 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
         qtyNamePoleshing1 = artistPoleshing1.length;
         //! end function Poleshing1
 
+        //* function Poleshing2
+        //? filter by divisi Poleshing2
+        var filterByDivisiPoleshing2 = filterBySiklus.where((element) =>
+            element.divisi.toString().toLowerCase() == 'poleshing 2');
+        var allDataPoleshing2 = filterByDivisiPoleshing2.toList();
+        allDataPoleshing2 = removeDuplicates(allDataPoleshing2);
+        //? ambil data nama
+        for (var i = 0; i < allDataPoleshing2.length; i++) {
+          artistPoleshing2.add(allDataPoleshing2[i].nama);
+        }
+        qtyNamePoleshing2 = artistPoleshing2.length;
+        //! end function Poleshing2
+
+        //* function Poleshing2Rep
+        //? filter by divisi Poleshing2Rep
+        var filterByDivisiPoleshing2Rep = filterBySiklus.where((element) =>
+            element.divisi.toString().toLowerCase() == 'poleshing 2 rep');
+        var allDataPoleshing2Rep = filterByDivisiPoleshing2Rep.toList();
+        allDataPoleshing2Rep = removeDuplicates(allDataPoleshing2Rep);
+        //? ambil data nama
+        for (var i = 0; i < allDataPoleshing2Rep.length; i++) {
+          artistPoleshing2Rep.add(allDataPoleshing2Rep[i].nama);
+        }
+        qtyNamePoleshing2Rep = artistPoleshing2Rep.length;
+        //! end function Poleshing2Rep
+
+        //* function Stell1
         //? filter by divisi Stell1
         var filterByDivisiStell1 = filterBySiklus.where((element) =>
             element.divisi.toString().toLowerCase() == 'stell rangka 1');
@@ -220,6 +444,60 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
         }
         qtyNameStell1 = artistStell1.length;
         //! end function Stell1
+
+        //* function Stell2
+        //? filter by divisi Stell2
+        var filterByDivisiStell2 = filterBySiklus.where((element) =>
+            element.divisi.toString().toLowerCase() == 'stell rangka 2');
+        var allDataStell2 = filterByDivisiStell2.toList();
+        allDataStell2 = removeDuplicates(allDataStell2);
+        //? ambil data nama
+        for (var i = 0; i < allDataStell2.length; i++) {
+          artistStell2.add(allDataStell2[i].nama);
+        }
+        qtyNameStell2 = artistStell2.length;
+        //! end function Stell2
+
+        //* function Stell2Rep
+        //? filter by divisi Stell2Rep
+        var filterByDivisiStell2Rep = filterBySiklus.where((element) =>
+            element.divisi.toString().toLowerCase() == 'stell rangka 2 rep');
+        var allDataStell2Rep = filterByDivisiStell2Rep.toList();
+        allDataStell2Rep = removeDuplicates(allDataStell2Rep);
+        //? ambil data nama
+        for (var i = 0; i < allDataStell2Rep.length; i++) {
+          artistStell2Rep.add(allDataStell2Rep[i].nama);
+        }
+        qtyNameStell2Rep = artistStell2Rep.length;
+        //! end function Stell2Rep
+
+        //* function Chrome
+        //? filter by divisi Chrome
+        var filterByDivisiChrome = filterBySiklus.where(
+            (element) => element.divisi.toString().toLowerCase() == 'chrome');
+        var allDataChrome = filterByDivisiChrome.toList();
+        allDataChrome = removeDuplicates(allDataChrome);
+        //? ambil data nama
+        for (var i = 0; i < allDataChrome.length; i++) {
+          artistChrome.add(allDataChrome[i].nama);
+        }
+        artistChrome.removeWhere((element) => element == '');
+        qtyNameChrome = artistChrome.length;
+        //! end function Chrome
+
+        //* function ChromeRep
+        //? filter by divisi ChromeRep
+        var filterByDivisiChromeRep = filterBySiklus.where((element) =>
+            element.divisi.toString().toLowerCase() == 'chrome rep');
+        var allDataChromeRep = filterByDivisiChromeRep.toList();
+        allDataChromeRep = removeDuplicates(allDataChromeRep);
+        //? ambil data nama
+        for (var i = 0; i < allDataChromeRep.length; i++) {
+          artistChromeRep.add(allDataChromeRep[i].nama);
+        }
+        artistChromeRep.removeWhere((element) => element == '');
+        qtyNameChromeRep = artistChromeRep.length;
+        //! end function ChromeRep
       }
       return allData;
     } else {
@@ -229,7 +507,15 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
 
   _getSpk(month) async {
     spkFinishing = [];
+    spkPoleshing1 = [];
     spkStell1 = [];
+    spkPoleshing2 = [];
+    spkStell2 = [];
+    spkPoleshing2Rep = [];
+    spkStell2Rep = [];
+    spkChrome = [];
+    spkChromeRep = [];
+
     final response = await http
         .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getProduksi));
     if (response.statusCode == 200) {
@@ -240,10 +526,12 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
 
       if (month.toString().toLowerCase() == "all") {
         //! jika suklis tidak di pilih
+
         //* filter by finishing
         //? filter by divisi
         var filterByDivisiFinishing = allData.where((element) =>
             element.divisi.toString().toLowerCase() == 'finishing' &&
+            element.keterangan!.toLowerCase() != 'ke bulan depan' &&
             element.keterangan!.toLowerCase() != 'orul');
         var allDataFinishing = filterByDivisiFinishing.toList();
 
@@ -255,6 +543,55 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
           spkFinishing.add(filterByNameFinishing.length.toString());
         }
         //! end of divisi finishing
+
+        //* filter by Poleshing1
+        //? filter by divisi
+        var filterByDivisiPoleshing1 = allData.where((element) =>
+            (element.divisi.toString().toLowerCase() == 'poleshing 1' &&
+                element.keterangan!.toLowerCase() != 'orul'));
+        var allDataPoleshing1 = filterByDivisiPoleshing1.toList();
+
+        //? ambil data spk by nama
+        for (var i = 0; i < qtyNamePoleshing1; i++) {
+          var filterByNamePoleshing1 = allDataPoleshing1.where((element) =>
+              element.nama.toString().toLowerCase() ==
+              artistPoleshing1[i].toLowerCase());
+          spkPoleshing1.add(filterByNamePoleshing1.length.toString());
+        }
+        //! end of divisi Poleshing1
+
+        //* filter by Poleshing2
+        //? filter by divisi
+        var filterByDivisiPoleshing2 = allData.where((element) =>
+            element.divisi.toString().toLowerCase() == 'poleshing 2' &&
+            element.keterangan!.toLowerCase() != 'orul' &&
+            element.point! > 0);
+
+        var allDataPoleshing2 = filterByDivisiPoleshing2.toList();
+        for (var i = 0; i < qtyNamePoleshing2; i++) {
+          var filterByNamePoleshing2 = allDataPoleshing2.where((element) =>
+              element.nama.toString().toLowerCase() ==
+              artistPoleshing2[i].toLowerCase());
+          spkPoleshing2.add(filterByNamePoleshing2.length.toString());
+        }
+        //! end of divisi Poleshing2
+
+        //* filter by Poleshing2Rep
+        //? filter by divisi
+        var filterByDivisiPoleshing2Rep = allData.where((element) =>
+            element.divisi.toString().toLowerCase() == 'poleshing 2 rep' &&
+            element.keterangan!.toLowerCase() != 'orul');
+        var allDataPoleshing2Rep = filterByDivisiPoleshing2Rep.toList();
+
+        //? ambil data spk by nama
+        for (var i = 0; i < qtyNamePoleshing2Rep; i++) {
+          var filterByNamePoleshing2Rep = allDataPoleshing2Rep.where(
+              (element) =>
+                  element.nama.toString().toLowerCase() ==
+                  artistPoleshing2Rep[i].toLowerCase());
+          spkPoleshing2Rep.add(filterByNamePoleshing2Rep.length.toString());
+        }
+        //! end of divisi Poleshing2Rep
 
         //* filter by Stell1
         //? filter by divisi
@@ -271,41 +608,224 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
           spkStell1.add(filterByNameStell1.length.toString());
         }
         //! end of divisi Stell1
+
+        //* filter by Stell2
+        //? filter by divisi
+        var filterByDivisiStell2 = allData.where((element) =>
+            element.divisi.toString().toLowerCase() == 'stell rangka 2' &&
+            element.keterangan!.toLowerCase() != 'orul' &&
+            element.point! > 0);
+        var allDataStell2 = filterByDivisiStell2.toList();
+
+        //? ambil data spk by nama
+        for (var i = 0; i < qtyNameStell2; i++) {
+          var filterByNameStell2 = allDataStell2.where((element) =>
+              element.nama.toString().toLowerCase() ==
+              artistStell2[i].toLowerCase());
+          spkStell2.add(filterByNameStell2.length.toString());
+        }
+        //! end of divisi Stell2
+
+        //* filter by Stell2Rep
+        //? filter by divisi
+        var filterByDivisiStell2Rep = allData.where((element) =>
+            element.divisi.toString().toLowerCase() == 'stell rangka 2 rep' &&
+            element.keterangan!.toLowerCase() != 'orul');
+        var allDataStell2Rep = filterByDivisiStell2Rep.toList();
+
+        //? ambil data spk by nama
+        for (var i = 0; i < qtyNameStell2Rep; i++) {
+          var filterByNameStell2Rep = allDataStell2Rep.where((element) =>
+              element.nama.toString().toLowerCase() ==
+              artistStell2Rep[i].toLowerCase());
+          spkStell2Rep.add(filterByNameStell2Rep.length.toString());
+        }
+        //! end of divisi Stell2Rep
+
+//* filter by Chrome
+        //? filter by divisi
+        var filterByDivisiChrome = allData.where((element) =>
+            element.divisi.toString().toLowerCase() == 'chrome' &&
+            element.keterangan!.toLowerCase() != 'orul');
+        var allDataChrome = filterByDivisiChrome.toList();
+
+        //? ambil data spk by nama
+        for (var i = 0; i < qtyNameChrome; i++) {
+          var filterByNameChrome = allDataChrome.where((element) =>
+              element.nama.toString().toLowerCase() ==
+              artistChrome[i].toLowerCase());
+          spkChrome.add(filterByNameChrome.length.toString());
+        }
+        //! end of divisi Chrome
+
+        //* filter by ChromeRep
+        //? filter by divisi
+        var filterByDivisiChromeRep = allData.where((element) =>
+            element.divisi.toString().toLowerCase() == 'chrome rep' &&
+            element.keterangan!.toLowerCase() != 'orul');
+        var allDataChromeRep = filterByDivisiChromeRep.toList();
+
+        //? ambil data spk by nama
+        for (var i = 0; i < qtyNameChromeRep; i++) {
+          var filterByNameChromeRep = allDataChromeRep.where((element) =>
+              element.nama.toString().toLowerCase() ==
+              artistChromeRep[i].toLowerCase());
+          spkChromeRep.add(filterByNameChromeRep.length.toString());
+        }
+        //! end of divisi ChromeRep
       } else {
         //! jika siklus di pilih
         //? filter by month
         var filterBySiklus = allData.where((element) =>
             element.bulan.toString().toLowerCase() == month.toLowerCase());
 
-        //* start divisi finishing
-        //? filter by divisi Finishing
+        //* filter by finishing
+        //? filter by divisi
         var filterByDivisiFinishing = filterBySiklus.where((element) =>
             element.divisi.toString().toLowerCase() == 'finishing' &&
-            element.keterangan!.toLowerCase() != 'orul');
+            (element.keterangan!.toLowerCase() != 'orul' ||
+                element.keterangan!.toLowerCase() != 'ke bulan depan'));
+
+        var allDataFinishing = filterByDivisiFinishing.toList();
 
         //? ambil data spk by nama
         for (var i = 0; i < qtyNameFinishing; i++) {
-          var filterByName = filterByDivisiFinishing.where((element) =>
+          var filterByNameFinishing = allDataFinishing.where((element) =>
               element.nama.toString().toLowerCase() ==
               artistFinishing[i].toLowerCase());
-          spkFinishing.add(filterByName.length.toString());
+          spkFinishing.add(filterByNameFinishing.length.toString());
         }
-        //! end divisi finishing
+        //! end of divisi finishing
 
-        //* start divisi Stell1
-        //? filter by divisi Stell1
+        //* filter by Poleshing1
+        //? filter by divisi
+        var filterByDivisiPoleshing1 = filterBySiklus.where((element) =>
+            element.divisi.toString().toLowerCase() == 'poleshing 1' &&
+            element.keterangan!.toLowerCase() != 'orul');
+        var allDataPoleshing1 = filterByDivisiPoleshing1.toList();
+
+        //? ambil data spk by nama
+        for (var i = 0; i < qtyNamePoleshing1; i++) {
+          var filterByNamePoleshing1 = allDataPoleshing1.where((element) =>
+              element.nama.toString().toLowerCase() ==
+              artistPoleshing1[i].toLowerCase());
+          spkPoleshing1.add(filterByNamePoleshing1.length.toString());
+        }
+        //! end of divisi Poleshing1
+
+        //* filter by Poleshing2
+        //? filter by divisi
+        var filterByDivisiPoleshing2 = filterBySiklus.where((element) =>
+            element.divisi.toString().toLowerCase() == 'poleshing 2' &&
+            element.keterangan!.toLowerCase() != 'orul' &&
+            element.point! > 0);
+        var allDataPoleshing2 = filterByDivisiPoleshing2.toList();
+
+        //? ambil data spk by nama
+        for (var i = 0; i < qtyNamePoleshing2; i++) {
+          var filterByNamePoleshing2 = allDataPoleshing2.where((element) =>
+              element.nama.toString().toLowerCase() ==
+              artistPoleshing2[i].toLowerCase());
+          spkPoleshing2.add(filterByNamePoleshing2.length.toString());
+        }
+        //! end of divisi Poleshing2
+
+        //* filter by Poleshing2Rep
+        //? filter by divisi
+        var filterByDivisiPoleshing2Rep = filterBySiklus.where((element) =>
+            element.divisi.toString().toLowerCase() == 'poleshing 2 rep' &&
+            element.keterangan!.toLowerCase() != 'orul');
+        var allDataPoleshing2Rep = filterByDivisiPoleshing2Rep.toList();
+
+        //? ambil data spk by nama
+        for (var i = 0; i < qtyNamePoleshing2Rep; i++) {
+          var filterByNamePoleshing2Rep = allDataPoleshing2Rep.where(
+              (element) =>
+                  element.nama.toString().toLowerCase() ==
+                  artistPoleshing2Rep[i].toLowerCase());
+          spkPoleshing2Rep.add(filterByNamePoleshing2Rep.length.toString());
+        }
+        //! end of divisi Poleshing2Rep
+
+        //* filter by Stell1
+        //? filter by divisi
         var filterByDivisiStell1 = filterBySiklus.where((element) =>
             element.divisi.toString().toLowerCase() == 'stell rangka 1' &&
             element.keterangan!.toLowerCase() != 'orul');
+        var allDataStell1 = filterByDivisiStell1.toList();
 
         //? ambil data spk by nama
         for (var i = 0; i < qtyNameStell1; i++) {
-          var filterByName = filterByDivisiStell1.where((element) =>
+          var filterByNameStell1 = allDataStell1.where((element) =>
               element.nama.toString().toLowerCase() ==
               artistStell1[i].toLowerCase());
-          spkStell1.add(filterByName.length.toString());
+          spkStell1.add(filterByNameStell1.length.toString());
         }
-        //! end divisi Stell1
+        //! end of divisi Stell1
+
+        //* filter by Stell2
+        //? filter by divisi
+        var filterByDivisiStell2 = filterBySiklus.where((element) =>
+            element.divisi.toString().toLowerCase() == 'stell rangka 2' &&
+            element.keterangan!.toLowerCase() != 'orul');
+        var allDataStell2 = filterByDivisiStell2.toList();
+
+        //? ambil data spk by nama
+        for (var i = 0; i < qtyNameStell2; i++) {
+          var filterByNameStell2 = allDataStell2.where((element) =>
+              element.nama.toString().toLowerCase() ==
+              artistStell2[i].toLowerCase());
+          spkStell2.add(filterByNameStell2.length.toString());
+        }
+        //! end of divisi Stell2
+
+        //* filter by Stell2Rep
+        //? filter by divisi
+        var filterByDivisiStell2Rep = filterBySiklus.where((element) =>
+            element.divisi.toString().toLowerCase() == 'stell rangka 2 rep' &&
+            element.keterangan!.toLowerCase() != 'orul');
+        var allDataStell2Rep = filterByDivisiStell2Rep.toList();
+
+        //? ambil data spk by nama
+        for (var i = 0; i < qtyNameStell2Rep; i++) {
+          var filterByNameStell2Rep = allDataStell2Rep.where((element) =>
+              element.nama.toString().toLowerCase() ==
+              artistStell2Rep[i].toLowerCase());
+          spkStell2Rep.add(filterByNameStell2Rep.length.toString());
+        }
+        //! end of divisi Stell2Rep
+
+//* filter by Chrome
+        //? filter by divisi
+        var filterByDivisiChrome = filterBySiklus.where((element) =>
+            element.divisi.toString().toLowerCase() == 'chrome' &&
+            element.keterangan!.toLowerCase() != 'orul');
+        var allDataChrome = filterByDivisiChrome.toList();
+
+        //? ambil data spk by nama
+        for (var i = 0; i < qtyNameChrome; i++) {
+          var filterByNameChrome = allDataChrome.where((element) =>
+              element.nama.toString().toLowerCase() ==
+              artistChrome[i].toLowerCase());
+          spkChrome.add(filterByNameChrome.length.toString());
+        }
+        //! end of divisi Chrome
+
+        //* filter by ChromeRep
+        //? filter by divisi
+        var filterByDivisiChromeRep = filterBySiklus.where((element) =>
+            element.divisi.toString().toLowerCase() == 'chrome rep' &&
+            element.keterangan!.toLowerCase() != 'orul');
+        var allDataChromeRep = filterByDivisiChromeRep.toList();
+
+        //? ambil data spk by nama
+        for (var i = 0; i < qtyNameChromeRep; i++) {
+          var filterByNameChromeRep = allDataChromeRep.where((element) =>
+              element.nama.toString().toLowerCase() ==
+              artistChromeRep[i].toLowerCase());
+          spkChromeRep.add(filterByNameChromeRep.length.toString());
+        }
+        //! end of divisi ChromeRep
       }
       return allData;
     } else {
@@ -315,9 +835,23 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
 
   _getPoint(month) async {
     pointFinishing = [];
-    pointStell1 = [];
     jatahSusutFinishing = [];
+    pointPoleshing1 = [];
+    jatahSusutPoleshing1 = [];
+    pointPoleshing2 = [];
+    jatahSusutPoleshing2 = [];
+    pointPoleshing2Rep = [];
+    jatahSusutPoleshing2Rep = [];
+    pointStell1 = [];
     jatahSusutStell1 = [];
+    pointStell2 = [];
+    jatahSusutStell2 = [];
+    pointStell2Rep = [];
+    jatahSusutStell2Rep = [];
+    pointChrome = [];
+    jatahSusutChrome = [];
+    pointChromeRep = [];
+    jatahSusutChromeRep = [];
 
     final response = await http
         .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getProduksi));
@@ -355,14 +889,118 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
               artistFinishing[i].toString().toLowerCase() ==
                   'muhammad abdul kodir' ||
               artistFinishing[i].toString().toLowerCase() == 'khoerul anwar') {
-            pointFinishing.add(apiPointFinishing.toStringAsFixed(2));
+            pointFinishing.add(apiPointFinishing);
             jatahSusutFinishing.add((apiJatahSusutFinishing + 0.075));
           } else {
-            pointFinishing.add(apiPointFinishing.toStringAsFixed(2));
+            pointFinishing.add(apiPointFinishing);
             jatahSusutFinishing.add(apiJatahSusutFinishing);
           }
         }
         //! end divisi finishing
+
+        //? divisi Poleshing2Rep
+        //? filter by divisi
+        var filterByDivisiPoleshing2Rep = allData.where((element) =>
+            element.divisi.toString().toLowerCase() == 'poleshing 2 rep');
+        var allDataPoleshing2Rep = filterByDivisiPoleshing2Rep.toList();
+        //? ambil data point by nama
+        for (var i = 0; i < qtyNamePoleshing2Rep; i++) {
+          double apiPointPoleshing2Rep = 0;
+          double apiJatahSusutPoleshing2Rep = 0;
+          var filterByNamePoleshing2Rep = allDataPoleshing2Rep
+              .where((element) =>
+                  element.nama.toString().toLowerCase() ==
+                  artistPoleshing2Rep[i].toLowerCase())
+              .toList();
+          for (var j = 0; j < filterByNamePoleshing2Rep.length; j++) {
+            apiPointPoleshing2Rep += filterByNamePoleshing2Rep[j].point!;
+            apiJatahSusutPoleshing2Rep +=
+                filterByNamePoleshing2Rep[j].jatahSusut!;
+          }
+          if (artistPoleshing2Rep[i].toString().toLowerCase() == 'asrori' ||
+              artistPoleshing2Rep[i].toString().toLowerCase() == 'carkiyad' ||
+              artistPoleshing2Rep[i].toString().toLowerCase() ==
+                  'encup supriatna' ||
+              artistPoleshing2Rep[i].toString().toLowerCase() ==
+                  'muhammad abdul kodir' ||
+              artistPoleshing2Rep[i].toString().toLowerCase() ==
+                  'khoerul anwar') {
+            pointPoleshing2Rep.add(apiPointPoleshing2Rep.toStringAsFixed(2));
+            jatahSusutPoleshing2Rep.add((apiJatahSusutPoleshing2Rep + 0.075));
+          } else {
+            pointPoleshing2Rep.add(apiPointPoleshing2Rep.toStringAsFixed(2));
+            jatahSusutPoleshing2Rep.add(apiJatahSusutPoleshing2Rep);
+          }
+        }
+        //! end divisi Poleshing2Rep
+
+        //? divisi Poleshing1
+        //? filter by divisi
+        var filterByDivisiPoleshing1 = allData.where((element) =>
+            element.divisi.toString().toLowerCase() == 'poleshing 1');
+        var allDataPoleshing1 = filterByDivisiPoleshing1.toList();
+        //? ambil data point by nama
+        for (var i = 0; i < qtyNamePoleshing1; i++) {
+          double apiPointPoleshing1 = 0;
+          double apiJatahSusutPoleshing1 = 0;
+          var filterByNamePoleshing1 = allDataPoleshing1
+              .where((element) =>
+                  element.nama.toString().toLowerCase() ==
+                  artistPoleshing1[i].toLowerCase())
+              .toList();
+          for (var j = 0; j < filterByNamePoleshing1.length; j++) {
+            apiPointPoleshing1 += filterByNamePoleshing1[j].point!;
+            apiJatahSusutPoleshing1 += filterByNamePoleshing1[j].jatahSusut!;
+          }
+          if (artistPoleshing1[i].toString().toLowerCase() == 'asrori' ||
+              artistPoleshing1[i].toString().toLowerCase() == 'carkiyad' ||
+              artistPoleshing1[i].toString().toLowerCase() ==
+                  'encup supriatna' ||
+              artistPoleshing1[i].toString().toLowerCase() ==
+                  'muhammad abdul kodir' ||
+              artistPoleshing1[i].toString().toLowerCase() == 'khoerul anwar') {
+            pointPoleshing1.add(apiPointPoleshing1.toStringAsFixed(2));
+            jatahSusutPoleshing1.add((apiJatahSusutPoleshing1 + 0.075));
+          } else {
+            pointPoleshing1.add(apiPointPoleshing1.toStringAsFixed(2));
+            jatahSusutPoleshing1.add(apiJatahSusutPoleshing1);
+          }
+        }
+        //! end divisi Poleshing1
+
+        //? divisi Poleshing2
+        //? filter by divisi
+        var filterByDivisiPoleshing2 = allData.where((element) =>
+            element.divisi.toString().toLowerCase() == 'poleshing 2');
+        var allDataPoleshing2 = filterByDivisiPoleshing2.toList();
+        //? ambil data point by nama
+        for (var i = 0; i < qtyNamePoleshing2; i++) {
+          double apiPointPoleshing2 = 0;
+          double apiJatahSusutPoleshing2 = 0;
+          var filterByNamePoleshing2 = allDataPoleshing2
+              .where((element) =>
+                  element.nama.toString().toLowerCase() ==
+                  artistPoleshing2[i].toLowerCase())
+              .toList();
+          for (var j = 0; j < filterByNamePoleshing2.length; j++) {
+            apiPointPoleshing2 += filterByNamePoleshing2[j].point!;
+            apiJatahSusutPoleshing2 += filterByNamePoleshing2[j].jatahSusut!;
+          }
+          if (artistPoleshing2[i].toString().toLowerCase() == 'asrori' ||
+              artistPoleshing2[i].toString().toLowerCase() == 'carkiyad' ||
+              artistPoleshing2[i].toString().toLowerCase() ==
+                  'encup supriatna' ||
+              artistPoleshing2[i].toString().toLowerCase() ==
+                  'muhammad abdul kodir' ||
+              artistPoleshing2[i].toString().toLowerCase() == 'khoerul anwar') {
+            pointPoleshing2.add(apiPointPoleshing2.toStringAsFixed(2));
+            jatahSusutPoleshing2.add((apiJatahSusutPoleshing2 + 0.075));
+          } else {
+            pointPoleshing2.add(apiPointPoleshing2.toStringAsFixed(2));
+            jatahSusutPoleshing2.add(apiJatahSusutPoleshing2);
+          }
+        }
+        //! end divisi Poleshing2
 
         //? divisi Stell1
         //? filter by divisi
@@ -396,22 +1034,157 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
           }
         }
         //! end divisi Stell1
+
+        //? divisi Stell2
+        //? filter by divisi
+        var filterByDivisiStell2 = allData.where((element) =>
+            element.divisi.toString().toLowerCase() == 'stell rangka 2');
+        var allDataStell2 = filterByDivisiStell2.toList();
+        //? ambil data point by nama
+        for (var i = 0; i < qtyNameStell2; i++) {
+          double apiPointStell2 = 0;
+          double apiJatahSusutStell2 = 0;
+          var filterByNameStell2 = allDataStell2
+              .where((element) =>
+                  element.nama.toString().toLowerCase() ==
+                  artistStell2[i].toLowerCase())
+              .toList();
+          for (var j = 0; j < filterByNameStell2.length; j++) {
+            apiPointStell2 += filterByNameStell2[j].point!;
+            apiJatahSusutStell2 += filterByNameStell2[j].jatahSusut!;
+          }
+          if (artistStell2[i].toString().toLowerCase() == 'asrori' ||
+              artistStell2[i].toString().toLowerCase() == 'carkiyad' ||
+              artistStell2[i].toString().toLowerCase() == 'encup supriatna' ||
+              artistStell2[i].toString().toLowerCase() ==
+                  'muhammad abdul kodir' ||
+              artistStell2[i].toString().toLowerCase() == 'khoerul anwar') {
+            pointStell2.add(apiPointStell2.toStringAsFixed(2));
+            jatahSusutStell2.add((apiJatahSusutStell2 + 0.075));
+          } else {
+            pointStell2.add(apiPointStell2.toStringAsFixed(2));
+            jatahSusutStell2.add(apiJatahSusutStell2);
+          }
+        }
+        //! end divisi Stell2
+
+        //? divisi Stell2Rep
+        //? filter by divisi
+        var filterByDivisiStell2Rep = allData.where((element) =>
+            element.divisi.toString().toLowerCase() == 'stell rangka 2 rep');
+        var allDataStell2Rep = filterByDivisiStell2Rep.toList();
+        //? ambil data point by nama
+        for (var i = 0; i < qtyNameStell2Rep; i++) {
+          double apiPointStell2Rep = 0;
+          double apiJatahSusutStell2Rep = 0;
+          var filterByNameStell2Rep = allDataStell2Rep
+              .where((element) =>
+                  element.nama.toString().toLowerCase() ==
+                  artistStell2Rep[i].toLowerCase())
+              .toList();
+          for (var j = 0; j < filterByNameStell2Rep.length; j++) {
+            apiPointStell2Rep += filterByNameStell2Rep[j].point!;
+            apiJatahSusutStell2Rep += filterByNameStell2Rep[j].jatahSusut!;
+          }
+          if (artistStell2Rep[i].toString().toLowerCase() == 'asrori' ||
+              artistStell2Rep[i].toString().toLowerCase() == 'carkiyad' ||
+              artistStell2Rep[i].toString().toLowerCase() ==
+                  'encup supriatna' ||
+              artistStell2Rep[i].toString().toLowerCase() ==
+                  'muhammad abdul kodir' ||
+              artistStell2Rep[i].toString().toLowerCase() == 'khoerul anwar') {
+            pointStell2Rep.add(apiPointStell2Rep.toStringAsFixed(2));
+            jatahSusutStell2Rep.add((apiJatahSusutStell2Rep + 0.075));
+          } else {
+            pointStell2Rep.add(apiPointStell2Rep.toStringAsFixed(2));
+            jatahSusutStell2Rep.add(apiJatahSusutStell2Rep);
+          }
+        }
+        //! end divisi Stell2Rep
+
+        //? divisi Chrome
+        //? filter by divisi
+        var filterByDivisiChrome = allData.where(
+            (element) => element.divisi.toString().toLowerCase() == 'chrome');
+        var allDataChrome = filterByDivisiChrome.toList();
+        //? ambil data point by nama
+        for (var i = 0; i < qtyNameChrome; i++) {
+          double apiPointChrome = 0;
+          double apiJatahSusutChrome = 0;
+          var filterByNameChrome = allDataChrome
+              .where((element) =>
+                  element.nama.toString().toLowerCase() ==
+                  artistChrome[i].toLowerCase())
+              .toList();
+          for (var j = 0; j < filterByNameChrome.length; j++) {
+            apiPointChrome += filterByNameChrome[j].point!;
+            apiJatahSusutChrome += filterByNameChrome[j].jatahSusut!;
+          }
+          if (artistChrome[i].toString().toLowerCase() == 'asrori' ||
+              artistChrome[i].toString().toLowerCase() == 'carkiyad' ||
+              artistChrome[i].toString().toLowerCase() == 'encup supriatna' ||
+              artistChrome[i].toString().toLowerCase() ==
+                  'muhammad abdul kodir' ||
+              artistChrome[i].toString().toLowerCase() == 'khoerul anwar') {
+            pointChrome.add(apiPointChrome.toStringAsFixed(2));
+            jatahSusutChrome.add((apiJatahSusutChrome + 0.075));
+          } else {
+            pointChrome.add(apiPointChrome.toStringAsFixed(2));
+            jatahSusutChrome.add(apiJatahSusutChrome);
+          }
+        }
+        //! end divisi Chrome
+
+        //? divisi ChromeRep
+        //? filter by divisi
+        var filterByDivisiChromeRep = allData.where((element) =>
+            element.divisi.toString().toLowerCase() == 'chrome rep');
+        var allDataChromeRep = filterByDivisiChromeRep.toList();
+        //? ambil data point by nama
+        for (var i = 0; i < qtyNameChromeRep; i++) {
+          double apiPointChromeRep = 0;
+          double apiJatahSusutChromeRep = 0;
+          var filterByNameChromeRep = allDataChromeRep
+              .where((element) =>
+                  element.nama.toString().toLowerCase() ==
+                  artistChromeRep[i].toLowerCase())
+              .toList();
+          for (var j = 0; j < filterByNameChromeRep.length; j++) {
+            apiPointChromeRep += filterByNameChromeRep[j].point!;
+            apiJatahSusutChromeRep += filterByNameChromeRep[j].jatahSusut!;
+          }
+          if (artistChromeRep[i].toString().toLowerCase() == 'asrori' ||
+              artistChromeRep[i].toString().toLowerCase() == 'carkiyad' ||
+              artistChromeRep[i].toString().toLowerCase() ==
+                  'encup supriatna' ||
+              artistChromeRep[i].toString().toLowerCase() ==
+                  'muhammad abdul kodir' ||
+              artistChromeRep[i].toString().toLowerCase() == 'khoerul anwar') {
+            pointChromeRep.add(apiPointChromeRep.toStringAsFixed(2));
+            jatahSusutChromeRep.add((apiJatahSusutChromeRep + 0.075));
+          } else {
+            pointChromeRep.add(apiPointChromeRep.toStringAsFixed(2));
+            jatahSusutChromeRep.add(apiJatahSusutChromeRep);
+          }
+        }
+        //! end divisi ChromeRep
       } else {
         //! jika siklus di pilih
+
         //? filter by month
         var filterBySiklus = allData.where((element) =>
             element.bulan.toString().toLowerCase() == month.toLowerCase());
 
         //? divisi finishing
-        //? filter by divisi Finishing
+        //? filter by divisi
         var filterByDivisiFinishing = filterBySiklus.where((element) =>
             element.divisi.toString().toLowerCase() == 'finishing');
-
+        var allDataFinishing = filterByDivisiFinishing.toList();
         //? ambil data point by nama
         for (var i = 0; i < qtyNameFinishing; i++) {
           double apiPointFinishing = 0;
           double apiJatahSusutFinishing = 0;
-          var filterByNameFinishing = filterByDivisiFinishing
+          var filterByNameFinishing = allDataFinishing
               .where((element) =>
                   element.nama.toString().toLowerCase() ==
                   artistFinishing[i].toLowerCase())
@@ -427,23 +1200,129 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
               artistFinishing[i].toString().toLowerCase() ==
                   'muhammad abdul kodir' ||
               artistFinishing[i].toString().toLowerCase() == 'khoerul anwar') {
-            pointFinishing.add(apiPointFinishing.toStringAsFixed(2));
+            pointFinishing.add(apiPointFinishing);
             jatahSusutFinishing.add((apiJatahSusutFinishing + 0.075));
           } else {
-            pointFinishing.add(apiPointFinishing.toStringAsFixed(2));
+            pointFinishing.add(apiPointFinishing);
             jatahSusutFinishing.add(apiJatahSusutFinishing);
           }
         }
         //! end divisi finishing
 
+        //? divisi Poleshing2Rep
+        //? filter by divisi
+        var filterByDivisiPoleshing2Rep = filterBySiklus.where((element) =>
+            element.divisi.toString().toLowerCase() == 'poleshing 2 rep');
+        var allDataPoleshing2Rep = filterByDivisiPoleshing2Rep.toList();
+        //? ambil data point by nama
+        for (var i = 0; i < qtyNamePoleshing2Rep; i++) {
+          double apiPointPoleshing2Rep = 0;
+          double apiJatahSusutPoleshing2Rep = 0;
+          var filterByNamePoleshing2Rep = allDataPoleshing2Rep
+              .where((element) =>
+                  element.nama.toString().toLowerCase() ==
+                  artistPoleshing2Rep[i].toLowerCase())
+              .toList();
+          for (var j = 0; j < filterByNamePoleshing2Rep.length; j++) {
+            apiPointPoleshing2Rep += filterByNamePoleshing2Rep[j].point!;
+            apiJatahSusutPoleshing2Rep +=
+                filterByNamePoleshing2Rep[j].jatahSusut!;
+          }
+          if (artistPoleshing2Rep[i].toString().toLowerCase() == 'asrori' ||
+              artistPoleshing2Rep[i].toString().toLowerCase() == 'carkiyad' ||
+              artistPoleshing2Rep[i].toString().toLowerCase() ==
+                  'encup supriatna' ||
+              artistPoleshing2Rep[i].toString().toLowerCase() ==
+                  'muhammad abdul kodir' ||
+              artistPoleshing2Rep[i].toString().toLowerCase() ==
+                  'khoerul anwar') {
+            pointPoleshing2Rep.add(apiPointPoleshing2Rep.toStringAsFixed(2));
+            jatahSusutPoleshing2Rep.add((apiJatahSusutPoleshing2Rep + 0.075));
+          } else {
+            pointPoleshing2Rep.add(apiPointPoleshing2Rep.toStringAsFixed(2));
+            jatahSusutPoleshing2Rep.add(apiJatahSusutPoleshing2Rep);
+          }
+        }
+        //! end divisi Poleshing2Rep
+
+        //? divisi Poleshing1
+        //? filter by divisi
+        var filterByDivisiPoleshing1 = filterBySiklus.where((element) =>
+            element.divisi.toString().toLowerCase() == 'poleshing 1');
+        var allDataPoleshing1 = filterByDivisiPoleshing1.toList();
+        //? ambil data point by nama
+        for (var i = 0; i < qtyNamePoleshing1; i++) {
+          double apiPointPoleshing1 = 0;
+          double apiJatahSusutPoleshing1 = 0;
+          var filterByNamePoleshing1 = allDataPoleshing1
+              .where((element) =>
+                  element.nama.toString().toLowerCase() ==
+                  artistPoleshing1[i].toLowerCase())
+              .toList();
+          for (var j = 0; j < filterByNamePoleshing1.length; j++) {
+            apiPointPoleshing1 += filterByNamePoleshing1[j].point!;
+            apiJatahSusutPoleshing1 += filterByNamePoleshing1[j].jatahSusut!;
+          }
+          if (artistPoleshing1[i].toString().toLowerCase() == 'asrori' ||
+              artistPoleshing1[i].toString().toLowerCase() == 'carkiyad' ||
+              artistPoleshing1[i].toString().toLowerCase() ==
+                  'encup supriatna' ||
+              artistPoleshing1[i].toString().toLowerCase() ==
+                  'muhammad abdul kodir' ||
+              artistPoleshing1[i].toString().toLowerCase() == 'khoerul anwar') {
+            pointPoleshing1.add(apiPointPoleshing1.toStringAsFixed(2));
+            jatahSusutPoleshing1.add((apiJatahSusutPoleshing1 + 0.075));
+          } else {
+            pointPoleshing1.add(apiPointPoleshing1.toStringAsFixed(2));
+            jatahSusutPoleshing1.add(apiJatahSusutPoleshing1);
+          }
+        }
+        //! end divisi Poleshing1
+
+        //? divisi Poleshing2
+        //? filter by divisi
+        var filterByDivisiPoleshing2 = filterBySiklus.where((element) =>
+            element.divisi.toString().toLowerCase() == 'poleshing 2');
+        var allDataPoleshing2 = filterByDivisiPoleshing2.toList();
+        //? ambil data point by nama
+        for (var i = 0; i < qtyNamePoleshing2; i++) {
+          double apiPointPoleshing2 = 0;
+          double apiJatahSusutPoleshing2 = 0;
+          var filterByNamePoleshing2 = allDataPoleshing2
+              .where((element) =>
+                  element.nama.toString().toLowerCase() ==
+                  artistPoleshing2[i].toLowerCase())
+              .toList();
+          for (var j = 0; j < filterByNamePoleshing2.length; j++) {
+            apiPointPoleshing2 += filterByNamePoleshing2[j].point!;
+            apiJatahSusutPoleshing2 += filterByNamePoleshing2[j].jatahSusut!;
+          }
+          if (artistPoleshing2[i].toString().toLowerCase() == 'asrori' ||
+              artistPoleshing2[i].toString().toLowerCase() == 'carkiyad' ||
+              artistPoleshing2[i].toString().toLowerCase() ==
+                  'encup supriatna' ||
+              artistPoleshing2[i].toString().toLowerCase() ==
+                  'muhammad abdul kodir' ||
+              artistPoleshing2[i].toString().toLowerCase() == 'khoerul anwar') {
+            pointPoleshing2.add(apiPointPoleshing2.toStringAsFixed(2));
+            jatahSusutPoleshing2.add((apiJatahSusutPoleshing2 + 0.075));
+          } else {
+            pointPoleshing2.add(apiPointPoleshing2.toStringAsFixed(2));
+            jatahSusutPoleshing2.add(apiJatahSusutPoleshing2);
+          }
+        }
+        //! end divisi Poleshing2
+
         //? divisi Stell1
+        //? filter by divisi
         var filterByDivisiStell1 = filterBySiklus.where((element) =>
             element.divisi.toString().toLowerCase() == 'stell rangka 1');
+        var allDataStell1 = filterByDivisiStell1.toList();
         //? ambil data point by nama
         for (var i = 0; i < qtyNameStell1; i++) {
           double apiPointStell1 = 0;
           double apiJatahSusutStell1 = 0;
-          var filterByNameStell1 = filterByDivisiStell1
+          var filterByNameStell1 = allDataStell1
               .where((element) =>
                   element.nama.toString().toLowerCase() ==
                   artistStell1[i].toLowerCase())
@@ -466,6 +1345,140 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
           }
         }
         //! end divisi Stell1
+
+        //? divisi Stell2
+        //? filter by divisi
+        var filterByDivisiStell2 = filterBySiklus.where((element) =>
+            element.divisi.toString().toLowerCase() == 'stell rangka 2');
+        var allDataStell2 = filterByDivisiStell2.toList();
+        //? ambil data point by nama
+        for (var i = 0; i < qtyNameStell2; i++) {
+          double apiPointStell2 = 0;
+          double apiJatahSusutStell2 = 0;
+          var filterByNameStell2 = allDataStell2
+              .where((element) =>
+                  element.nama.toString().toLowerCase() ==
+                  artistStell2[i].toLowerCase())
+              .toList();
+          for (var j = 0; j < filterByNameStell2.length; j++) {
+            apiPointStell2 += filterByNameStell2[j].point!;
+            apiJatahSusutStell2 += filterByNameStell2[j].jatahSusut!;
+          }
+          if (artistStell2[i].toString().toLowerCase() == 'asrori' ||
+              artistStell2[i].toString().toLowerCase() == 'carkiyad' ||
+              artistStell2[i].toString().toLowerCase() == 'encup supriatna' ||
+              artistStell2[i].toString().toLowerCase() ==
+                  'muhammad abdul kodir' ||
+              artistStell2[i].toString().toLowerCase() == 'khoerul anwar') {
+            pointStell2.add(apiPointStell2.toStringAsFixed(2));
+            jatahSusutStell2.add((apiJatahSusutStell2 + 0.075));
+          } else {
+            pointStell2.add(apiPointStell2.toStringAsFixed(2));
+            jatahSusutStell2.add(apiJatahSusutStell2);
+          }
+        }
+        //! end divisi Stell2
+
+        //? divisi Stell2Rep
+        //? filter by divisi
+        var filterByDivisiStell2Rep = filterBySiklus.where((element) =>
+            element.divisi.toString().toLowerCase() == 'stell rangka 2 rep');
+        var allDataStell2Rep = filterByDivisiStell2Rep.toList();
+        //? ambil data point by nama
+        for (var i = 0; i < qtyNameStell2Rep; i++) {
+          double apiPointStell2Rep = 0;
+          double apiJatahSusutStell2Rep = 0;
+          var filterByNameStell2Rep = allDataStell2Rep
+              .where((element) =>
+                  element.nama.toString().toLowerCase() ==
+                  artistStell2Rep[i].toLowerCase())
+              .toList();
+          for (var j = 0; j < filterByNameStell2Rep.length; j++) {
+            apiPointStell2Rep += filterByNameStell2Rep[j].point!;
+            apiJatahSusutStell2Rep += filterByNameStell2Rep[j].jatahSusut!;
+          }
+          if (artistStell2Rep[i].toString().toLowerCase() == 'asrori' ||
+              artistStell2Rep[i].toString().toLowerCase() == 'carkiyad' ||
+              artistStell2Rep[i].toString().toLowerCase() ==
+                  'encup supriatna' ||
+              artistStell2Rep[i].toString().toLowerCase() ==
+                  'muhammad abdul kodir' ||
+              artistStell2Rep[i].toString().toLowerCase() == 'khoerul anwar') {
+            pointStell2Rep.add(apiPointStell2Rep.toStringAsFixed(2));
+            jatahSusutStell2Rep.add((apiJatahSusutStell2Rep + 0.075));
+          } else {
+            pointStell2Rep.add(apiPointStell2Rep.toStringAsFixed(2));
+            jatahSusutStell2Rep.add(apiJatahSusutStell2Rep);
+          }
+        }
+        //! end divisi Stell2Rep
+
+        //? divisi Chrome
+        //? filter by divisi
+        var filterByDivisiChrome = filterBySiklus.where(
+            (element) => element.divisi.toString().toLowerCase() == 'chrome');
+        var allDataChrome = filterByDivisiChrome.toList();
+        //? ambil data point by nama
+        for (var i = 0; i < qtyNameChrome; i++) {
+          double apiPointChrome = 0;
+          double apiJatahSusutChrome = 0;
+          var filterByNameChrome = allDataChrome
+              .where((element) =>
+                  element.nama.toString().toLowerCase() ==
+                  artistChrome[i].toLowerCase())
+              .toList();
+          for (var j = 0; j < filterByNameChrome.length; j++) {
+            apiPointChrome += filterByNameChrome[j].point!;
+            apiJatahSusutChrome += filterByNameChrome[j].jatahSusut!;
+          }
+          if (artistChrome[i].toString().toLowerCase() == 'asrori' ||
+              artistChrome[i].toString().toLowerCase() == 'carkiyad' ||
+              artistChrome[i].toString().toLowerCase() == 'encup supriatna' ||
+              artistChrome[i].toString().toLowerCase() ==
+                  'muhammad abdul kodir' ||
+              artistChrome[i].toString().toLowerCase() == 'khoerul anwar') {
+            pointChrome.add(apiPointChrome.toStringAsFixed(2));
+            jatahSusutChrome.add((apiJatahSusutChrome + 0.075));
+          } else {
+            pointChrome.add(apiPointChrome.toStringAsFixed(2));
+            jatahSusutChrome.add(apiJatahSusutChrome);
+          }
+        }
+        //! end divisi Chrome
+
+        //? divisi ChromeRep
+        //? filter by divisi
+        var filterByDivisiChromeRep = filterBySiklus.where((element) =>
+            element.divisi.toString().toLowerCase() == 'chrome rep');
+        var allDataChromeRep = filterByDivisiChromeRep.toList();
+        //? ambil data point by nama
+        for (var i = 0; i < qtyNameChromeRep; i++) {
+          double apiPointChromeRep = 0;
+          double apiJatahSusutChromeRep = 0;
+          var filterByNameChromeRep = allDataChromeRep
+              .where((element) =>
+                  element.nama.toString().toLowerCase() ==
+                  artistChromeRep[i].toLowerCase())
+              .toList();
+          for (var j = 0; j < filterByNameChromeRep.length; j++) {
+            apiPointChromeRep += filterByNameChromeRep[j].point!;
+            apiJatahSusutChromeRep += filterByNameChromeRep[j].jatahSusut!;
+          }
+          if (artistChromeRep[i].toString().toLowerCase() == 'asrori' ||
+              artistChromeRep[i].toString().toLowerCase() == 'carkiyad' ||
+              artistChromeRep[i].toString().toLowerCase() ==
+                  'encup supriatna' ||
+              artistChromeRep[i].toString().toLowerCase() ==
+                  'muhammad abdul kodir' ||
+              artistChromeRep[i].toString().toLowerCase() == 'khoerul anwar') {
+            pointChromeRep.add(apiPointChromeRep.toStringAsFixed(2));
+            jatahSusutChromeRep.add((apiJatahSusutChromeRep + 0.075));
+          } else {
+            pointChromeRep.add(apiPointChromeRep.toStringAsFixed(2));
+            jatahSusutChromeRep.add(apiJatahSusutChromeRep);
+          }
+        }
+        //! end divisi ChromeRep
       }
       return allData;
     } else {
@@ -483,6 +1496,33 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
     resultFinishing = [];
     //!end variable finishing
 
+    //? variable Poleshing1
+    beratAsalPoleshing1 = [];
+    beratAkhirPoleshing1 = [];
+    beratAsalSBPoleshing1 = [];
+    beratAkhirSBPoleshing1 = [];
+    susutPoleshing1 = [];
+    resultPoleshing1 = [];
+    //!end variable Poleshing1
+
+    //? variable Poleshing2
+    beratAsalPoleshing2 = [];
+    beratAkhirPoleshing2 = [];
+    beratAsalSBPoleshing2 = [];
+    beratAkhirSBPoleshing2 = [];
+    susutPoleshing2 = [];
+    resultPoleshing2 = [];
+    //!end variable Poleshing2
+
+    //? variable Poleshing2
+    beratAsalPoleshing2 = [];
+    beratAkhirPoleshing2 = [];
+    beratAsalSBPoleshing2 = [];
+    beratAkhirSBPoleshing2 = [];
+    susutPoleshing2 = [];
+    resultPoleshing2 = [];
+    //!end variable Poleshing2
+
     //? variable Stell1
     beratAsalStell1 = [];
     beratAkhirStell1 = [];
@@ -491,6 +1531,42 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
     susutStell1 = [];
     resultStell1 = [];
     //!end variable Stell1
+
+    //? variable Stell2
+    beratAsalStell2 = [];
+    beratAkhirStell2 = [];
+    beratAsalSBStell2 = [];
+    beratAkhirSBStell2 = [];
+    susutStell2 = [];
+    resultStell2 = [];
+    //!end variable Stell2
+
+    //? variable Stell2Rep
+    beratAsalStell2Rep = [];
+    beratAkhirStell2Rep = [];
+    beratAsalSBStell2Rep = [];
+    beratAkhirSBStell2Rep = [];
+    susutStell2Rep = [];
+    resultStell2Rep = [];
+    //!end variable Stell2Rep
+
+    //? variable Chrome
+    beratAsalChrome = [];
+    beratAkhirChrome = [];
+    beratAsalSBChrome = [];
+    beratAkhirSBChrome = [];
+    susutChrome = [];
+    resultChrome = [];
+    //!end variable Chrome
+
+    //? variable ChromeRep
+    beratAsalChromeRep = [];
+    beratAkhirChromeRep = [];
+    beratAsalSBChromeRep = [];
+    beratAkhirSBChromeRep = [];
+    susutChromeRep = [];
+    resultChromeRep = [];
+    //!end variable ChromeRep
 
     final response = await http
         .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getProduksi));
@@ -502,6 +1578,7 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
 
       if (month.toString().toLowerCase() == "all") {
         //! fungsi add debet dan kredit
+
         //? filter by divisi
         var filterByDivisiFinishing = allData.where((element) =>
             element.divisi.toString().toLowerCase() == 'finishing');
@@ -596,6 +1673,303 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
         }
         //? end penggabungan
         //! end divisi finishing
+
+        //? filter by divisi Poleshing1
+        var filterByDivisiPoleshing1 = allData.where((element) =>
+            element.divisi.toString().toLowerCase() == 'poleshing 1');
+        var allDataPoleshing1 = filterByDivisiPoleshing1.toList();
+        for (var i = 0; i < qtyNamePoleshing1; i++) {
+          double apiBeratAsalPoleshing1 = 0;
+          double apiBeratAkirPoleshing1 = 0;
+          var filterByNamePoleshing1 = allDataPoleshing1
+              .where((element) =>
+                  element.nama.toString().toLowerCase() ==
+                  artistPoleshing1[i].toLowerCase())
+              .toList();
+          for (var j = 0; j < filterByNamePoleshing1.length; j++) {
+            apiBeratAsalPoleshing1 += filterByNamePoleshing1[j].debet!;
+            apiBeratAkirPoleshing1 += filterByNamePoleshing1[j].kredit!;
+          }
+          beratAsalPoleshing1.add(apiBeratAsalPoleshing1);
+          beratAkhirPoleshing1.add(apiBeratAkirPoleshing1);
+        }
+        //! fungsi add debet dan kredit dan SB
+        final responseSBPoleshing1 = await http
+            .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getProduksiSB));
+        if (responseSBPoleshing1.statusCode == 200) {
+          print('get data beratAsal dan akhir SB');
+          List jsonResponseSBPoleshing1 =
+              json.decode(responseSBPoleshing1.body);
+          var allDataSBPoleshing1 = jsonResponseSBPoleshing1
+              .map((data) => ProduksiSBModel.fromJson(data))
+              .toList();
+          //? filter by divisi
+          var filterByDivisiSBPoleshing1 = allDataSBPoleshing1.where(
+              (element) =>
+                  element.divisi.toString().toLowerCase() == 'poleshing 1');
+          allDataSBPoleshing1 = filterByDivisiSBPoleshing1.toList();
+          if (month.toString().toLowerCase() == "all") {
+            for (var i = 0; i < qtyNamePoleshing1; i++) {
+              double apiBeratAsalSBPoleshing1 = 0;
+              double apiBeratAkirSBPoleshing1 = 0;
+              var filterByNameSBPoleshing1 = allDataSBPoleshing1
+                  .where((element) =>
+                      element.nama.toString().toLowerCase() ==
+                      artistPoleshing1[i].toLowerCase())
+                  .toList();
+              for (var j = 0; j < filterByNameSBPoleshing1.length; j++) {
+                apiBeratAsalSBPoleshing1 +=
+                    filterByNameSBPoleshing1[j].debetKawat!;
+                apiBeratAkirSBPoleshing1 +=
+                    filterByNameSBPoleshing1[j].kreditKawat!;
+                apiBeratAkirSBPoleshing1 += filterByNameSBPoleshing1[j].sb!;
+                apiBeratAkirSBPoleshing1 += filterByNameSBPoleshing1[j].sprue!;
+              }
+              beratAsalSBPoleshing1.add(apiBeratAsalSBPoleshing1);
+              beratAkhirSBPoleshing1.add(apiBeratAkirSBPoleshing1);
+            }
+          } else {
+            for (var i = 0; i < qtyNamePoleshing1; i++) {
+              double apiBeratAsalSBPoleshing1 = 0;
+              double apiBeratAkirSBPoleshing1 = 0;
+              //? filter by month
+              var filterBySiklusSBPoleshing1 = allDataSBPoleshing1.where(
+                  (element) =>
+                      element.bulan.toString().toLowerCase() ==
+                      month.toLowerCase());
+              allDataSBPoleshing1 = filterBySiklusSBPoleshing1.toList();
+              var filterByNameSBPoleshing1 = allDataSBPoleshing1
+                  .where((element) =>
+                      element.nama.toString().toLowerCase() ==
+                      artistPoleshing1[i].toLowerCase())
+                  .toList();
+
+              for (var j = 0; j < filterByNameSBPoleshing1.length; j++) {
+                apiBeratAsalSBPoleshing1 +=
+                    filterByNameSBPoleshing1[j].debetKawat!;
+                apiBeratAkirSBPoleshing1 +=
+                    filterByNameSBPoleshing1[j].kreditKawat!;
+                apiBeratAkirSBPoleshing1 += filterByNameSBPoleshing1[j].sb!;
+                apiBeratAkirSBPoleshing1 += filterByNameSBPoleshing1[j].sprue!;
+              }
+              beratAsalSBPoleshing1.add(apiBeratAsalSBPoleshing1);
+              beratAkhirSBPoleshing1.add(apiBeratAkirSBPoleshing1);
+            }
+          }
+        } else {
+          throw Exception('Unexpected error occured!');
+        }
+        //? end fungsi add debet dan kredit dan sb
+
+        //! fungsi penggabungan
+        for (var i = 0; i < beratAsalPoleshing1.length; i++) {
+          beratAsalPoleshing1[i] += beratAsalSBPoleshing1[i];
+          beratAkhirPoleshing1[i] += beratAkhirSBPoleshing1[i];
+          susutPoleshing1.add(beratAsalPoleshing1[i] - beratAkhirPoleshing1[i]);
+          resultPoleshing1.add(susutPoleshing1[i] - jatahSusutPoleshing1[i]);
+        }
+        //? end penggabungan
+        //! end divisi Poleshing1
+
+        //? filter by divisi Poleshing2
+        var filterByDivisiPoleshing2 = allData.where((element) =>
+            element.divisi.toString().toLowerCase() == 'poleshing 2');
+        var allDataPoleshing2 = filterByDivisiPoleshing2.toList();
+        for (var i = 0; i < qtyNamePoleshing2; i++) {
+          double apiBeratAsalPoleshing2 = 0;
+          double apiBeratAkirPoleshing2 = 0;
+          var filterByNamePoleshing2 = allDataPoleshing2
+              .where((element) =>
+                  element.nama.toString().toLowerCase() ==
+                  artistPoleshing2[i].toLowerCase())
+              .toList();
+          for (var j = 0; j < filterByNamePoleshing2.length; j++) {
+            apiBeratAsalPoleshing2 += filterByNamePoleshing2[j].debet!;
+            apiBeratAkirPoleshing2 += filterByNamePoleshing2[j].kredit!;
+          }
+          beratAsalPoleshing2.add(apiBeratAsalPoleshing2);
+          beratAkhirPoleshing2.add(apiBeratAkirPoleshing2);
+        }
+        //! fungsi add debet dan kredit dan SB
+        final responseSBPoleshing2 = await http
+            .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getProduksiSB));
+        if (responseSBPoleshing2.statusCode == 200) {
+          print('get data beratAsal dan akhir SB');
+          List jsonResponseSBPoleshing2 =
+              json.decode(responseSBPoleshing2.body);
+          var allDataSBPoleshing2 = jsonResponseSBPoleshing2
+              .map((data) => ProduksiSBModel.fromJson(data))
+              .toList();
+          //? filter by divisi
+          var filterByDivisiSBPoleshing2 = allDataSBPoleshing2.where(
+              (element) =>
+                  element.divisi.toString().toLowerCase() == 'poleshing 2');
+          allDataSBPoleshing2 = filterByDivisiSBPoleshing2.toList();
+          if (month.toString().toLowerCase() == "all") {
+            for (var i = 0; i < qtyNamePoleshing2; i++) {
+              double apiBeratAsalSBPoleshing2 = 0;
+              double apiBeratAkirSBPoleshing2 = 0;
+              var filterByNameSBPoleshing2 = allDataSBPoleshing2
+                  .where((element) =>
+                      element.nama.toString().toLowerCase() ==
+                      artistPoleshing2[i].toLowerCase())
+                  .toList();
+              for (var j = 0; j < filterByNameSBPoleshing2.length; j++) {
+                apiBeratAsalSBPoleshing2 +=
+                    filterByNameSBPoleshing2[j].debetKawat!;
+                apiBeratAkirSBPoleshing2 +=
+                    filterByNameSBPoleshing2[j].kreditKawat!;
+                apiBeratAkirSBPoleshing2 += filterByNameSBPoleshing2[j].sb!;
+                apiBeratAkirSBPoleshing2 += filterByNameSBPoleshing2[j].sprue!;
+              }
+              beratAsalSBPoleshing2.add(apiBeratAsalSBPoleshing2);
+              beratAkhirSBPoleshing2.add(apiBeratAkirSBPoleshing2);
+            }
+          } else {
+            for (var i = 0; i < qtyNamePoleshing2; i++) {
+              double apiBeratAsalSBPoleshing2 = 0;
+              double apiBeratAkirSBPoleshing2 = 0;
+              //? filter by month
+              var filterBySiklusSBPoleshing2 = allDataSBPoleshing2.where(
+                  (element) =>
+                      element.bulan.toString().toLowerCase() ==
+                      month.toLowerCase());
+              allDataSBPoleshing2 = filterBySiklusSBPoleshing2.toList();
+              var filterByNameSBPoleshing2 = allDataSBPoleshing2
+                  .where((element) =>
+                      element.nama.toString().toLowerCase() ==
+                      artistPoleshing2[i].toLowerCase())
+                  .toList();
+
+              for (var j = 0; j < filterByNameSBPoleshing2.length; j++) {
+                apiBeratAsalSBPoleshing2 +=
+                    filterByNameSBPoleshing2[j].debetKawat!;
+                apiBeratAkirSBPoleshing2 +=
+                    filterByNameSBPoleshing2[j].kreditKawat!;
+                apiBeratAkirSBPoleshing2 += filterByNameSBPoleshing2[j].sb!;
+                apiBeratAkirSBPoleshing2 += filterByNameSBPoleshing2[j].sprue!;
+              }
+              beratAsalSBPoleshing2.add(apiBeratAsalSBPoleshing2);
+              beratAkhirSBPoleshing2.add(apiBeratAkirSBPoleshing2);
+            }
+          }
+        } else {
+          throw Exception('Unexpected error occured!');
+        }
+        //? end fungsi add debet dan kredit dan sb
+
+        //! fungsi penggabungan
+        for (var i = 0; i < beratAsalPoleshing2.length; i++) {
+          beratAsalPoleshing2[i] += beratAsalSBPoleshing2[i];
+          beratAkhirPoleshing2[i] += beratAkhirSBPoleshing2[i];
+          susutPoleshing2.add(beratAsalPoleshing2[i] - beratAkhirPoleshing2[i]);
+          resultPoleshing2.add(susutPoleshing2[i] - jatahSusutPoleshing2[i]);
+        }
+        //? end penggabungan
+        //! end divisi Poleshing2
+
+        //? filter by divisi Poleshing2Rep
+        var filterByDivisiPoleshing2Rep = allData.where((element) =>
+            element.divisi.toString().toLowerCase() == 'poleshing 2 rep');
+        var allDataPoleshing2Rep = filterByDivisiPoleshing2Rep.toList();
+        for (var i = 0; i < qtyNamePoleshing2Rep; i++) {
+          double apiBeratAsalPoleshing2Rep = 0;
+          double apiBeratAkirPoleshing2Rep = 0;
+          var filterByNamePoleshing2Rep = allDataPoleshing2Rep
+              .where((element) =>
+                  element.nama.toString().toLowerCase() ==
+                  artistPoleshing2Rep[i].toLowerCase())
+              .toList();
+          for (var j = 0; j < filterByNamePoleshing2Rep.length; j++) {
+            apiBeratAsalPoleshing2Rep += filterByNamePoleshing2Rep[j].debet!;
+            apiBeratAkirPoleshing2Rep += filterByNamePoleshing2Rep[j].kredit!;
+          }
+          beratAsalPoleshing2Rep.add(apiBeratAsalPoleshing2Rep);
+          beratAkhirPoleshing2Rep.add(apiBeratAkirPoleshing2Rep);
+        }
+        //! fungsi add debet dan kredit dan SB
+        final responseSBPoleshing2Rep = await http
+            .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getProduksiSB));
+        if (responseSBPoleshing2Rep.statusCode == 200) {
+          print('get data beratAsal dan akhir SB');
+          List jsonResponseSBPoleshing2Rep =
+              json.decode(responseSBPoleshing2Rep.body);
+          var allDataSBPoleshing2Rep = jsonResponseSBPoleshing2Rep
+              .map((data) => ProduksiSBModel.fromJson(data))
+              .toList();
+          //? filter by divisi
+          var filterByDivisiSBPoleshing2Rep = allDataSBPoleshing2Rep.where(
+              (element) =>
+                  element.divisi.toString().toLowerCase() == 'poleshing 2 rep');
+          allDataSBPoleshing2Rep = filterByDivisiSBPoleshing2Rep.toList();
+          if (month.toString().toLowerCase() == "all") {
+            for (var i = 0; i < qtyNamePoleshing2Rep; i++) {
+              double apiBeratAsalSBPoleshing2Rep = 0;
+              double apiBeratAkirSBPoleshing2Rep = 0;
+              var filterByNameSBPoleshing2Rep = allDataSBPoleshing2Rep
+                  .where((element) =>
+                      element.nama.toString().toLowerCase() ==
+                      artistPoleshing2Rep[i].toLowerCase())
+                  .toList();
+              for (var j = 0; j < filterByNameSBPoleshing2Rep.length; j++) {
+                apiBeratAsalSBPoleshing2Rep +=
+                    filterByNameSBPoleshing2Rep[j].debetKawat!;
+                apiBeratAkirSBPoleshing2Rep +=
+                    filterByNameSBPoleshing2Rep[j].kreditKawat!;
+                apiBeratAkirSBPoleshing2Rep +=
+                    filterByNameSBPoleshing2Rep[j].sb!;
+                apiBeratAkirSBPoleshing2Rep +=
+                    filterByNameSBPoleshing2Rep[j].sprue!;
+              }
+              beratAsalSBPoleshing2Rep.add(apiBeratAsalSBPoleshing2Rep);
+              beratAkhirSBPoleshing2Rep.add(apiBeratAkirSBPoleshing2Rep);
+            }
+          } else {
+            for (var i = 0; i < qtyNamePoleshing2Rep; i++) {
+              double apiBeratAsalSBPoleshing2Rep = 0;
+              double apiBeratAkirSBPoleshing2Rep = 0;
+              //? filter by month
+              var filterBySiklusSBPoleshing2Rep = allDataSBPoleshing2Rep.where(
+                  (element) =>
+                      element.bulan.toString().toLowerCase() ==
+                      month.toLowerCase());
+              allDataSBPoleshing2Rep = filterBySiklusSBPoleshing2Rep.toList();
+              var filterByNameSBPoleshing2Rep = allDataSBPoleshing2Rep
+                  .where((element) =>
+                      element.nama.toString().toLowerCase() ==
+                      artistPoleshing2Rep[i].toLowerCase())
+                  .toList();
+
+              for (var j = 0; j < filterByNameSBPoleshing2Rep.length; j++) {
+                apiBeratAsalSBPoleshing2Rep +=
+                    filterByNameSBPoleshing2Rep[j].debetKawat!;
+                apiBeratAkirSBPoleshing2Rep +=
+                    filterByNameSBPoleshing2Rep[j].kreditKawat!;
+                apiBeratAkirSBPoleshing2Rep +=
+                    filterByNameSBPoleshing2Rep[j].sb!;
+                apiBeratAkirSBPoleshing2Rep +=
+                    filterByNameSBPoleshing2Rep[j].sprue!;
+              }
+              beratAsalSBPoleshing2Rep.add(apiBeratAsalSBPoleshing2Rep);
+              beratAkhirSBPoleshing2Rep.add(apiBeratAkirSBPoleshing2Rep);
+            }
+          }
+        } else {
+          throw Exception('Unexpected error occured!');
+        }
+        //? end fungsi add debet dan kredit dan sb
+
+        //! fungsi penggabungan
+        for (var i = 0; i < beratAsalPoleshing2Rep.length; i++) {
+          beratAsalPoleshing2Rep[i] += beratAsalSBPoleshing2Rep[i];
+          beratAkhirPoleshing2Rep[i] += beratAkhirSBPoleshing2Rep[i];
+          susutPoleshing2Rep
+              .add(beratAsalPoleshing2Rep[i] - beratAkhirPoleshing2Rep[i]);
+          resultPoleshing2Rep
+              .add(susutPoleshing2Rep[i] - jatahSusutPoleshing2Rep[i]);
+        }
+        //? end penggabungan
+        //! end divisi Poleshing2Rep
 
         //? filter by divisi stell1
         var filterByDivisiStell1 = allData.where((element) =>
@@ -686,15 +2060,386 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
         }
         //? end penggabungan
         //! end divisi Stell1
+
+        //? filter by divisi stell2
+        var filterByDivisiStell2 = allData.where((element) =>
+            element.divisi.toString().toLowerCase() == 'stell rangka 2');
+        var allDataStell2 = filterByDivisiStell2.toList();
+        for (var i = 0; i < qtyNameStell2; i++) {
+          double apiBeratAsalStell2 = 0;
+          double apiBeratAkirStell2 = 0;
+          var filterByNameStell2 = allDataStell2
+              .where((element) =>
+                  element.nama.toString().toLowerCase() ==
+                  artistStell2[i].toLowerCase())
+              .toList();
+          for (var j = 0; j < filterByNameStell2.length; j++) {
+            apiBeratAsalStell2 += filterByNameStell2[j].debet!;
+            apiBeratAkirStell2 += filterByNameStell2[j].kredit!;
+          }
+          beratAsalStell2.add(apiBeratAsalStell2);
+          beratAkhirStell2.add(apiBeratAkirStell2);
+        }
+        //! fungsi add debet dan kredit dan SB
+        final responseSBStell2 = await http
+            .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getProduksiSB));
+        if (responseSBStell2.statusCode == 200) {
+          print('get data beratAsal dan akhir SB');
+          List jsonResponseSBStell2 = json.decode(responseSBStell2.body);
+          var allDataSBStell2 = jsonResponseSBStell2
+              .map((data) => ProduksiSBModel.fromJson(data))
+              .toList();
+          //? filter by divisi
+          var filterByDivisiSBStell2 = allDataSBStell2.where((element) =>
+              element.divisi.toString().toLowerCase() == 'stell rangka 2');
+          allDataSBStell2 = filterByDivisiSBStell2.toList();
+          if (month.toString().toLowerCase() == "all") {
+            for (var i = 0; i < qtyNameStell2; i++) {
+              double apiBeratAsalSBStell2 = 0;
+              double apiBeratAkirSBStell2 = 0;
+              var filterByNameSBStell2 = allDataSBStell2
+                  .where((element) =>
+                      element.nama.toString().toLowerCase() ==
+                      artistStell2[i].toLowerCase())
+                  .toList();
+              for (var j = 0; j < filterByNameSBStell2.length; j++) {
+                apiBeratAsalSBStell2 += filterByNameSBStell2[j].debetKawat!;
+                apiBeratAkirSBStell2 += filterByNameSBStell2[j].kreditKawat!;
+                apiBeratAkirSBStell2 += filterByNameSBStell2[j].sb!;
+                apiBeratAkirSBStell2 += filterByNameSBStell2[j].sprue!;
+              }
+              beratAsalSBStell2.add(apiBeratAsalSBStell2);
+              beratAkhirSBStell2.add(apiBeratAkirSBStell2);
+            }
+          } else {
+            for (var i = 0; i < qtyNameStell2; i++) {
+              double apiBeratAsalSBStell2 = 0;
+              double apiBeratAkirSBStell2 = 0;
+              //? filter by month
+              var filterBySiklusSBStell2 = allDataSBStell2.where((element) =>
+                  element.bulan.toString().toLowerCase() ==
+                  month.toLowerCase());
+              allDataSBStell2 = filterBySiklusSBStell2.toList();
+              var filterByNameSBStell2 = allDataSBStell2
+                  .where((element) =>
+                      element.nama.toString().toLowerCase() ==
+                      artistStell2[i].toLowerCase())
+                  .toList();
+
+              for (var j = 0; j < filterByNameSBStell2.length; j++) {
+                apiBeratAsalSBStell2 += filterByNameSBStell2[j].debetKawat!;
+                apiBeratAkirSBStell2 += filterByNameSBStell2[j].kreditKawat!;
+                apiBeratAkirSBStell2 += filterByNameSBStell2[j].sb!;
+                apiBeratAkirSBStell2 += filterByNameSBStell2[j].sprue!;
+              }
+              beratAsalSBStell2.add(apiBeratAsalSBStell2);
+              beratAkhirSBStell2.add(apiBeratAkirSBStell2);
+            }
+          }
+        } else {
+          throw Exception('Unexpected error occured!');
+        }
+        //? end fungsi add debet dan kredit dan sb
+
+        //! fungsi penggabungan
+        for (var i = 0; i < beratAsalStell2.length; i++) {
+          beratAsalStell2[i] += beratAsalSBStell2[i];
+          beratAkhirStell2[i] += beratAkhirSBStell2[i];
+          susutStell2.add(beratAsalStell2[i] - beratAkhirStell2[i]);
+          resultStell2.add(susutStell2[i] - jatahSusutStell2[i]);
+        }
+        //? end penggabungan
+        //! end divisi Stell2
+
+        //? filter by divisi stell2Rep
+        var filterByDivisiStell2Rep = allData.where((element) =>
+            element.divisi.toString().toLowerCase() == 'stell rangka 2 rep');
+        var allDataStell2Rep = filterByDivisiStell2Rep.toList();
+        for (var i = 0; i < qtyNameStell2Rep; i++) {
+          double apiBeratAsalStell2Rep = 0;
+          double apiBeratAkirStell2Rep = 0;
+          var filterByNameStell2Rep = allDataStell2Rep
+              .where((element) =>
+                  element.nama.toString().toLowerCase() ==
+                  artistStell2Rep[i].toLowerCase())
+              .toList();
+          for (var j = 0; j < filterByNameStell2Rep.length; j++) {
+            apiBeratAsalStell2Rep += filterByNameStell2Rep[j].debet!;
+            apiBeratAkirStell2Rep += filterByNameStell2Rep[j].kredit!;
+          }
+          beratAsalStell2Rep.add(apiBeratAsalStell2Rep);
+          beratAkhirStell2Rep.add(apiBeratAkirStell2Rep);
+        }
+        //! fungsi add debet dan kredit dan SB
+        final responseSBStell2Rep = await http
+            .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getProduksiSB));
+        if (responseSBStell2Rep.statusCode == 200) {
+          print('get data beratAsal dan akhir SB');
+          List jsonResponseSBStell2Rep = json.decode(responseSBStell2Rep.body);
+          var allDataSBStell2Rep = jsonResponseSBStell2Rep
+              .map((data) => ProduksiSBModel.fromJson(data))
+              .toList();
+          //? filter by divisi
+          var filterByDivisiSBStell2Rep = allDataSBStell2Rep.where((element) =>
+              element.divisi.toString().toLowerCase() == 'stell rangka 2 rep');
+          allDataSBStell2Rep = filterByDivisiSBStell2Rep.toList();
+          if (month.toString().toLowerCase() == "all") {
+            for (var i = 0; i < qtyNameStell2Rep; i++) {
+              double apiBeratAsalSBStell2Rep = 0;
+              double apiBeratAkirSBStell2Rep = 0;
+              var filterByNameSBStell2Rep = allDataSBStell2Rep
+                  .where((element) =>
+                      element.nama.toString().toLowerCase() ==
+                      artistStell2Rep[i].toLowerCase())
+                  .toList();
+              for (var j = 0; j < filterByNameSBStell2Rep.length; j++) {
+                apiBeratAsalSBStell2Rep +=
+                    filterByNameSBStell2Rep[j].debetKawat!;
+                apiBeratAkirSBStell2Rep +=
+                    filterByNameSBStell2Rep[j].kreditKawat!;
+                apiBeratAkirSBStell2Rep += filterByNameSBStell2Rep[j].sb!;
+                apiBeratAkirSBStell2Rep += filterByNameSBStell2Rep[j].sprue!;
+              }
+              beratAsalSBStell2Rep.add(apiBeratAsalSBStell2Rep);
+              beratAkhirSBStell2Rep.add(apiBeratAkirSBStell2Rep);
+            }
+          } else {
+            for (var i = 0; i < qtyNameStell2Rep; i++) {
+              double apiBeratAsalSBStell2Rep = 0;
+              double apiBeratAkirSBStell2Rep = 0;
+              //? filter by month
+              var filterBySiklusSBStell2Rep = allDataSBStell2Rep.where(
+                  (element) =>
+                      element.bulan.toString().toLowerCase() ==
+                      month.toLowerCase());
+              allDataSBStell2Rep = filterBySiklusSBStell2Rep.toList();
+              var filterByNameSBStell2Rep = allDataSBStell2Rep
+                  .where((element) =>
+                      element.nama.toString().toLowerCase() ==
+                      artistStell2Rep[i].toLowerCase())
+                  .toList();
+
+              for (var j = 0; j < filterByNameSBStell2Rep.length; j++) {
+                apiBeratAsalSBStell2Rep +=
+                    filterByNameSBStell2Rep[j].debetKawat!;
+                apiBeratAkirSBStell2Rep +=
+                    filterByNameSBStell2Rep[j].kreditKawat!;
+                apiBeratAkirSBStell2Rep += filterByNameSBStell2Rep[j].sb!;
+                apiBeratAkirSBStell2Rep += filterByNameSBStell2Rep[j].sprue!;
+              }
+              beratAsalSBStell2Rep.add(apiBeratAsalSBStell2Rep);
+              beratAkhirSBStell2Rep.add(apiBeratAkirSBStell2Rep);
+            }
+          }
+        } else {
+          throw Exception('Unexpected error occured!');
+        }
+        //? end fungsi add debet dan kredit dan sb
+
+        //! fungsi penggabungan
+        for (var i = 0; i < beratAsalStell2Rep.length; i++) {
+          beratAsalStell2Rep[i] += beratAsalSBStell2Rep[i];
+          beratAkhirStell2Rep[i] += beratAkhirSBStell2Rep[i];
+          susutStell2Rep.add(beratAsalStell2Rep[i] - beratAkhirStell2Rep[i]);
+          resultStell2Rep.add(susutStell2Rep[i] - jatahSusutStell2Rep[i]);
+        }
+        //? end penggabungan
+        //! end divisi Stell2Rep
+
+        // //? filter by divisi Chrome
+        // var filterByDivisiChrome = allData.where(
+        //     (element) => element.divisi.toString().toLowerCase() == 'chrome');
+        // var allDataChrome = filterByDivisiChrome.toList();
+        // for (var i = 0; i < qtyNameChrome; i++) {
+        //   double apiBeratAsalChrome = 0;
+        //   double apiBeratAkirChrome = 0;
+        //   var filterByNameChrome = allDataChrome
+        //       .where((element) =>
+        //           element.nama.toString().toLowerCase() ==
+        //           artistChrome[i].toLowerCase())
+        //       .toList();
+        //   for (var j = 0; j < filterByNameChrome.length; j++) {
+        //     apiBeratAsalChrome += filterByNameChrome[j].debet!;
+        //     apiBeratAkirChrome += filterByNameChrome[j].kredit!;
+        //   }
+        //   beratAsalChrome.add(apiBeratAsalChrome);
+        //   beratAkhirChrome.add(apiBeratAkirChrome);
+        // }
+        // //! fungsi add debet dan kredit dan SB
+        // final responseSBChrome = await http
+        //     .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getProduksiSB));
+        // if (responseSBChrome.statusCode == 200) {
+        //   print('get data beratAsal dan akhir SB');
+        //   List jsonResponseSBChrome = json.decode(responseSBChrome.body);
+        //   var allDataSBChrome = jsonResponseSBChrome
+        //       .map((data) => ProduksiSBModel.fromJson(data))
+        //       .toList();
+        //   //? filter by divisi
+        //   var filterByDivisiSBChrome = allDataSBChrome.where(
+        //       (element) => element.divisi.toString().toLowerCase() == 'chrome');
+        //   allDataSBChrome = filterByDivisiSBChrome.toList();
+        //   if (month.toString().toLowerCase() == "all") {
+        //     for (var i = 0; i < qtyNameChrome; i++) {
+        //       double apiBeratAsalSBChrome = 0;
+        //       double apiBeratAkirSBChrome = 0;
+        //       var filterByNameSBChrome = allDataSBChrome
+        //           .where((element) =>
+        //               element.nama.toString().toLowerCase() ==
+        //               artistChrome[i].toLowerCase())
+        //           .toList();
+        //       for (var j = 0; j < filterByNameSBChrome.length; j++) {
+        //         apiBeratAsalSBChrome += filterByNameSBChrome[j].debetKawat!;
+        //         apiBeratAkirSBChrome += filterByNameSBChrome[j].kreditKawat!;
+        //         apiBeratAkirSBChrome += filterByNameSBChrome[j].sb!;
+        //         apiBeratAkirSBChrome += filterByNameSBChrome[j].sprue!;
+        //       }
+        //       beratAsalSBChrome.add(apiBeratAsalSBChrome);
+        //       beratAkhirSBChrome.add(apiBeratAkirSBChrome);
+        //     }
+        //   } else {
+        //     for (var i = 0; i < qtyNameChrome; i++) {
+        //       double apiBeratAsalSBChrome = 0;
+        //       double apiBeratAkirSBChrome = 0;
+        //       //? filter by month
+        //       var filterBySiklusSBChrome = allDataSBChrome.where((element) =>
+        //           element.bulan.toString().toLowerCase() ==
+        //           month.toLowerCase());
+        //       allDataSBChrome = filterBySiklusSBChrome.toList();
+        //       var filterByNameSBChrome = allDataSBChrome
+        //           .where((element) =>
+        //               element.nama.toString().toLowerCase() ==
+        //               artistChrome[i].toLowerCase())
+        //           .toList();
+
+        //       for (var j = 0; j < filterByNameSBChrome.length; j++) {
+        //         apiBeratAsalSBChrome += filterByNameSBChrome[j].debetKawat!;
+        //         apiBeratAkirSBChrome += filterByNameSBChrome[j].kreditKawat!;
+        //         apiBeratAkirSBChrome += filterByNameSBChrome[j].sb!;
+        //         apiBeratAkirSBChrome += filterByNameSBChrome[j].sprue!;
+        //       }
+        //       beratAsalSBChrome.add(apiBeratAsalSBChrome);
+        //       beratAkhirSBChrome.add(apiBeratAkirSBChrome);
+        //     }
+        //   }
+        // } else {
+        //   throw Exception('Unexpected error occured!');
+        // }
+        // //? end fungsi add debet dan kredit dan sb
+
+        // //! fungsi penggabungan
+        // for (var i = 0; i < beratAsalChrome.length; i++) {
+        //   beratAsalChrome[i] += beratAsalSBChrome[i];
+        //   beratAkhirChrome[i] += beratAkhirSBChrome[i];
+        //   susutChrome.add(beratAsalChrome[i] - beratAkhirChrome[i]);
+        //   resultChrome.add(susutChrome[i] - jatahSusutChrome[i]);
+        // }
+        // //? end penggabungan
+        // //! end divisi Chrome
+
+        // //? filter by divisi ChromeRep
+        // var filterByDivisiChromeRep = allData.where((element) =>
+        //     element.divisi.toString().toLowerCase() == 'chrome rep');
+        // var allDataChromeRep = filterByDivisiChromeRep.toList();
+        // for (var i = 0; i < qtyNameChromeRep; i++) {
+        //   double apiBeratAsalChromeRep = 0;
+        //   double apiBeratAkirChromeRep = 0;
+        //   var filterByNameChromeRep = allDataChromeRep
+        //       .where((element) =>
+        //           element.nama.toString().toLowerCase() ==
+        //           artistChromeRep[i].toLowerCase())
+        //       .toList();
+        //   for (var j = 0; j < filterByNameChromeRep.length; j++) {
+        //     apiBeratAsalChromeRep += filterByNameChromeRep[j].debet!;
+        //     apiBeratAkirChromeRep += filterByNameChromeRep[j].kredit!;
+        //   }
+        //   beratAsalChromeRep.add(apiBeratAsalChromeRep);
+        //   beratAkhirChromeRep.add(apiBeratAkirChromeRep);
+        // }
+        // //! fungsi add debet dan kredit dan SB
+        // final responseSBChromeRep = await http
+        //     .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getProduksiSB));
+        // if (responseSBChromeRep.statusCode == 200) {
+        //   print('get data beratAsal dan akhir SB');
+        //   List jsonResponseSBChromeRep = json.decode(responseSBChromeRep.body);
+        //   var allDataSBChromeRep = jsonResponseSBChromeRep
+        //       .map((data) => ProduksiSBModel.fromJson(data))
+        //       .toList();
+        //   //? filter by divisi
+        //   var filterByDivisiSBChromeRep = allDataSBChromeRep.where((element) =>
+        //       element.divisi.toString().toLowerCase() == 'chrome rep');
+        //   allDataSBChromeRep = filterByDivisiSBChromeRep.toList();
+        //   if (month.toString().toLowerCase() == "all") {
+        //     for (var i = 0; i < qtyNameChromeRep; i++) {
+        //       double apiBeratAsalSBChromeRep = 0;
+        //       double apiBeratAkirSBChromeRep = 0;
+        //       var filterByNameSBChromeRep = allDataSBChromeRep
+        //           .where((element) =>
+        //               element.nama.toString().toLowerCase() ==
+        //               artistChromeRep[i].toLowerCase())
+        //           .toList();
+        //       for (var j = 0; j < filterByNameSBChromeRep.length; j++) {
+        //         apiBeratAsalSBChromeRep +=
+        //             filterByNameSBChromeRep[j].debetKawat!;
+        //         apiBeratAkirSBChromeRep +=
+        //             filterByNameSBChromeRep[j].kreditKawat!;
+        //         apiBeratAkirSBChromeRep += filterByNameSBChromeRep[j].sb!;
+        //         apiBeratAkirSBChromeRep += filterByNameSBChromeRep[j].sprue!;
+        //       }
+        //       beratAsalSBChromeRep.add(apiBeratAsalSBChromeRep);
+        //       beratAkhirSBChromeRep.add(apiBeratAkirSBChromeRep);
+        //     }
+        //   } else {
+        //     for (var i = 0; i < qtyNameChromeRep; i++) {
+        //       double apiBeratAsalSBChromeRep = 0;
+        //       double apiBeratAkirSBChromeRep = 0;
+        //       //? filter by month
+        //       var filterBySiklusSBChromeRep = allDataSBChromeRep.where(
+        //           (element) =>
+        //               element.bulan.toString().toLowerCase() ==
+        //               month.toLowerCase());
+        //       allDataSBChromeRep = filterBySiklusSBChromeRep.toList();
+        //       var filterByNameSBChromeRep = allDataSBChromeRep
+        //           .where((element) =>
+        //               element.nama.toString().toLowerCase() ==
+        //               artistChromeRep[i].toLowerCase())
+        //           .toList();
+
+        //       for (var j = 0; j < filterByNameSBChromeRep.length; j++) {
+        //         apiBeratAsalSBChromeRep +=
+        //             filterByNameSBChromeRep[j].debetKawat!;
+        //         apiBeratAkirSBChromeRep +=
+        //             filterByNameSBChromeRep[j].kreditKawat!;
+        //         apiBeratAkirSBChromeRep += filterByNameSBChromeRep[j].sb!;
+        //         apiBeratAkirSBChromeRep += filterByNameSBChromeRep[j].sprue!;
+        //       }
+        //       beratAsalSBChromeRep.add(apiBeratAsalSBChromeRep);
+        //       beratAkhirSBChromeRep.add(apiBeratAkirSBChromeRep);
+        //     }
+        //   }
+        // } else {
+        //   throw Exception('Unexpected error occured!');
+        // }
+        // //? end fungsi add debet dan kredit dan sb
+
+        // //! fungsi penggabungan
+        // for (var i = 0; i < beratAsalChromeRep.length; i++) {
+        //   beratAsalChromeRep[i] += beratAsalSBChromeRep[i];
+        //   beratAkhirChromeRep[i] += beratAkhirSBChromeRep[i];
+        //   susutChromeRep.add(beratAsalChromeRep[i] - beratAkhirChromeRep[i]);
+        //   resultChromeRep.add(susutChromeRep[i] - jatahSusutChromeRep[i]);
+        // }
+        // //? end penggabungan
+        // //! end divisi ChromeRep
       } else {
         //! jika siklus di pilih
         //? filter by month
         var filterBySiklus = allData.where((element) =>
             element.bulan.toString().toLowerCase() == month.toLowerCase());
 
-        //? divisi finishing
-        var allDataFinishing = filterBySiklus.toList();
-        //! fungsi add debet dan kredit
+        //? filter by divisi
+        var filterByDivisiFinishing = filterBySiklus.where((element) =>
+            element.divisi.toString().toLowerCase() == 'finishing');
+        var allDataFinishing = filterByDivisiFinishing.toList();
         for (var i = 0; i < qtyNameFinishing; i++) {
           double apiBeratAsalFinishing = 0;
           double apiBeratAkirFinishing = 0;
@@ -786,12 +2531,307 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
         //? end penggabungan
         //! end divisi finishing
 
-        //? divisi Stell1
+        //? filter by divisi Poleshing1
+        var filterByDivisiPoleshing1 = filterBySiklus.where((element) =>
+            element.divisi.toString().toLowerCase() == 'poleshing 1');
+        var allDataPoleshing1 = filterByDivisiPoleshing1.toList();
+        for (var i = 0; i < qtyNamePoleshing1; i++) {
+          double apiBeratAsalPoleshing1 = 0;
+          double apiBeratAkirPoleshing1 = 0;
+          var filterByNamePoleshing1 = allDataPoleshing1
+              .where((element) =>
+                  element.nama.toString().toLowerCase() ==
+                  artistPoleshing1[i].toLowerCase())
+              .toList();
+          for (var j = 0; j < filterByNamePoleshing1.length; j++) {
+            apiBeratAsalPoleshing1 += filterByNamePoleshing1[j].debet!;
+            apiBeratAkirPoleshing1 += filterByNamePoleshing1[j].kredit!;
+          }
+          beratAsalPoleshing1.add(apiBeratAsalPoleshing1);
+          beratAkhirPoleshing1.add(apiBeratAkirPoleshing1);
+        }
+        //! fungsi add debet dan kredit dan SB
+        final responseSBPoleshing1 = await http
+            .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getProduksiSB));
+        if (responseSBPoleshing1.statusCode == 200) {
+          print('get data beratAsal dan akhir SB');
+          List jsonResponseSBPoleshing1 =
+              json.decode(responseSBPoleshing1.body);
+          var allDataSBPoleshing1 = jsonResponseSBPoleshing1
+              .map((data) => ProduksiSBModel.fromJson(data))
+              .toList();
+          //? filter by divisi
+          var filterByDivisiSBPoleshing1 = allDataSBPoleshing1.where(
+              (element) =>
+                  element.divisi.toString().toLowerCase() == 'poleshing 1');
+          allDataSBPoleshing1 = filterByDivisiSBPoleshing1.toList();
+          if (month.toString().toLowerCase() == "all") {
+            for (var i = 0; i < qtyNamePoleshing1; i++) {
+              double apiBeratAsalSBPoleshing1 = 0;
+              double apiBeratAkirSBPoleshing1 = 0;
+              var filterByNameSBPoleshing1 = allDataSBPoleshing1
+                  .where((element) =>
+                      element.nama.toString().toLowerCase() ==
+                      artistPoleshing1[i].toLowerCase())
+                  .toList();
+              for (var j = 0; j < filterByNameSBPoleshing1.length; j++) {
+                apiBeratAsalSBPoleshing1 +=
+                    filterByNameSBPoleshing1[j].debetKawat!;
+                apiBeratAkirSBPoleshing1 +=
+                    filterByNameSBPoleshing1[j].kreditKawat!;
+                apiBeratAkirSBPoleshing1 += filterByNameSBPoleshing1[j].sb!;
+                apiBeratAkirSBPoleshing1 += filterByNameSBPoleshing1[j].sprue!;
+              }
+              beratAsalSBPoleshing1.add(apiBeratAsalSBPoleshing1);
+              beratAkhirSBPoleshing1.add(apiBeratAkirSBPoleshing1);
+            }
+          } else {
+            for (var i = 0; i < qtyNamePoleshing1; i++) {
+              double apiBeratAsalSBPoleshing1 = 0;
+              double apiBeratAkirSBPoleshing1 = 0;
+              //? filter by month
+              var filterBySiklusSBPoleshing1 = allDataSBPoleshing1.where(
+                  (element) =>
+                      element.bulan.toString().toLowerCase() ==
+                      month.toLowerCase());
+              allDataSBPoleshing1 = filterBySiklusSBPoleshing1.toList();
+              var filterByNameSBPoleshing1 = allDataSBPoleshing1
+                  .where((element) =>
+                      element.nama.toString().toLowerCase() ==
+                      artistPoleshing1[i].toLowerCase())
+                  .toList();
+
+              for (var j = 0; j < filterByNameSBPoleshing1.length; j++) {
+                apiBeratAsalSBPoleshing1 +=
+                    filterByNameSBPoleshing1[j].debetKawat!;
+                apiBeratAkirSBPoleshing1 +=
+                    filterByNameSBPoleshing1[j].kreditKawat!;
+                apiBeratAkirSBPoleshing1 += filterByNameSBPoleshing1[j].sb!;
+                apiBeratAkirSBPoleshing1 += filterByNameSBPoleshing1[j].sprue!;
+              }
+              beratAsalSBPoleshing1.add(apiBeratAsalSBPoleshing1);
+              beratAkhirSBPoleshing1.add(apiBeratAkirSBPoleshing1);
+            }
+          }
+        } else {
+          throw Exception('Unexpected error occured!');
+        }
+        //? end fungsi add debet dan kredit dan sb
+
+        //! fungsi penggabungan
+        for (var i = 0; i < beratAsalPoleshing1.length; i++) {
+          beratAsalPoleshing1[i] += beratAsalSBPoleshing1[i];
+          beratAkhirPoleshing1[i] += beratAkhirSBPoleshing1[i];
+          susutPoleshing1.add(beratAsalPoleshing1[i] - beratAkhirPoleshing1[i]);
+          resultPoleshing1.add(susutPoleshing1[i] - jatahSusutPoleshing1[i]);
+        }
+        //? end penggabungan
+        //! end divisi Poleshing1
+
+        //? filter by divisi Poleshing2
+        var filterByDivisiPoleshing2 = filterBySiklus.where((element) =>
+            element.divisi.toString().toLowerCase() == 'poleshing 2');
+        var allDataPoleshing2 = filterByDivisiPoleshing2.toList();
+        for (var i = 0; i < qtyNamePoleshing2; i++) {
+          double apiBeratAsalPoleshing2 = 0;
+          double apiBeratAkirPoleshing2 = 0;
+          var filterByNamePoleshing2 = allDataPoleshing2
+              .where((element) =>
+                  element.nama.toString().toLowerCase() ==
+                  artistPoleshing2[i].toLowerCase())
+              .toList();
+          for (var j = 0; j < filterByNamePoleshing2.length; j++) {
+            apiBeratAsalPoleshing2 += filterByNamePoleshing2[j].debet!;
+            apiBeratAkirPoleshing2 += filterByNamePoleshing2[j].kredit!;
+          }
+          beratAsalPoleshing2.add(apiBeratAsalPoleshing2);
+          beratAkhirPoleshing2.add(apiBeratAkirPoleshing2);
+        }
+        //! fungsi add debet dan kredit dan SB
+        final responseSBPoleshing2 = await http
+            .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getProduksiSB));
+        if (responseSBPoleshing2.statusCode == 200) {
+          print('get data beratAsal dan akhir SB');
+          List jsonResponseSBPoleshing2 =
+              json.decode(responseSBPoleshing2.body);
+          var allDataSBPoleshing2 = jsonResponseSBPoleshing2
+              .map((data) => ProduksiSBModel.fromJson(data))
+              .toList();
+          //? filter by divisi
+          var filterByDivisiSBPoleshing2 = allDataSBPoleshing2.where(
+              (element) =>
+                  element.divisi.toString().toLowerCase() == 'poleshing 2');
+          allDataSBPoleshing2 = filterByDivisiSBPoleshing2.toList();
+          if (month.toString().toLowerCase() == "all") {
+            for (var i = 0; i < qtyNamePoleshing2; i++) {
+              double apiBeratAsalSBPoleshing2 = 0;
+              double apiBeratAkirSBPoleshing2 = 0;
+              var filterByNameSBPoleshing2 = allDataSBPoleshing2
+                  .where((element) =>
+                      element.nama.toString().toLowerCase() ==
+                      artistPoleshing2[i].toLowerCase())
+                  .toList();
+              for (var j = 0; j < filterByNameSBPoleshing2.length; j++) {
+                apiBeratAsalSBPoleshing2 +=
+                    filterByNameSBPoleshing2[j].debetKawat!;
+                apiBeratAkirSBPoleshing2 +=
+                    filterByNameSBPoleshing2[j].kreditKawat!;
+                apiBeratAkirSBPoleshing2 += filterByNameSBPoleshing2[j].sb!;
+                apiBeratAkirSBPoleshing2 += filterByNameSBPoleshing2[j].sprue!;
+              }
+              beratAsalSBPoleshing2.add(apiBeratAsalSBPoleshing2);
+              beratAkhirSBPoleshing2.add(apiBeratAkirSBPoleshing2);
+            }
+          } else {
+            for (var i = 0; i < qtyNamePoleshing2; i++) {
+              double apiBeratAsalSBPoleshing2 = 0;
+              double apiBeratAkirSBPoleshing2 = 0;
+              //? filter by month
+              var filterBySiklusSBPoleshing2 = allDataSBPoleshing2.where(
+                  (element) =>
+                      element.bulan.toString().toLowerCase() ==
+                      month.toLowerCase());
+              allDataSBPoleshing2 = filterBySiklusSBPoleshing2.toList();
+              var filterByNameSBPoleshing2 = allDataSBPoleshing2
+                  .where((element) =>
+                      element.nama.toString().toLowerCase() ==
+                      artistPoleshing2[i].toLowerCase())
+                  .toList();
+
+              for (var j = 0; j < filterByNameSBPoleshing2.length; j++) {
+                apiBeratAsalSBPoleshing2 +=
+                    filterByNameSBPoleshing2[j].debetKawat!;
+                apiBeratAkirSBPoleshing2 +=
+                    filterByNameSBPoleshing2[j].kreditKawat!;
+                apiBeratAkirSBPoleshing2 += filterByNameSBPoleshing2[j].sb!;
+                apiBeratAkirSBPoleshing2 += filterByNameSBPoleshing2[j].sprue!;
+              }
+              beratAsalSBPoleshing2.add(apiBeratAsalSBPoleshing2);
+              beratAkhirSBPoleshing2.add(apiBeratAkirSBPoleshing2);
+            }
+          }
+        } else {
+          throw Exception('Unexpected error occured!');
+        }
+        //? end fungsi add debet dan kredit dan sb
+
+        //! fungsi penggabungan
+        for (var i = 0; i < beratAsalPoleshing2.length; i++) {
+          beratAsalPoleshing2[i] += beratAsalSBPoleshing2[i];
+          beratAkhirPoleshing2[i] += beratAkhirSBPoleshing2[i];
+          susutPoleshing2.add(beratAsalPoleshing2[i] - beratAkhirPoleshing2[i]);
+          resultPoleshing2.add(susutPoleshing2[i] - jatahSusutPoleshing2[i]);
+        }
+        //? end penggabungan
+        //! end divisi Poleshing2
+
+        //? filter by divisi Poleshing2Rep
+        var filterByDivisiPoleshing2Rep = filterBySiklus.where((element) =>
+            element.divisi.toString().toLowerCase() == 'poleshing 2 rep');
+        var allDataPoleshing2Rep = filterByDivisiPoleshing2Rep.toList();
+        for (var i = 0; i < qtyNamePoleshing2Rep; i++) {
+          double apiBeratAsalPoleshing2Rep = 0;
+          double apiBeratAkirPoleshing2Rep = 0;
+          var filterByNamePoleshing2Rep = allDataPoleshing2Rep
+              .where((element) =>
+                  element.nama.toString().toLowerCase() ==
+                  artistPoleshing2Rep[i].toLowerCase())
+              .toList();
+          for (var j = 0; j < filterByNamePoleshing2Rep.length; j++) {
+            apiBeratAsalPoleshing2Rep += filterByNamePoleshing2Rep[j].debet!;
+            apiBeratAkirPoleshing2Rep += filterByNamePoleshing2Rep[j].kredit!;
+          }
+          beratAsalPoleshing2Rep.add(apiBeratAsalPoleshing2Rep);
+          beratAkhirPoleshing2Rep.add(apiBeratAkirPoleshing2Rep);
+        }
+        //! fungsi add debet dan kredit dan SB
+        final responseSBPoleshing2Rep = await http
+            .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getProduksiSB));
+        if (responseSBPoleshing2Rep.statusCode == 200) {
+          print('get data beratAsal dan akhir SB');
+          List jsonResponseSBPoleshing2Rep =
+              json.decode(responseSBPoleshing2Rep.body);
+          var allDataSBPoleshing2Rep = jsonResponseSBPoleshing2Rep
+              .map((data) => ProduksiSBModel.fromJson(data))
+              .toList();
+          //? filter by divisi
+          var filterByDivisiSBPoleshing2Rep = allDataSBPoleshing2Rep.where(
+              (element) =>
+                  element.divisi.toString().toLowerCase() == 'poleshing 2 rep');
+          allDataSBPoleshing2Rep = filterByDivisiSBPoleshing2Rep.toList();
+          if (month.toString().toLowerCase() == "all") {
+            for (var i = 0; i < qtyNamePoleshing2Rep; i++) {
+              double apiBeratAsalSBPoleshing2Rep = 0;
+              double apiBeratAkirSBPoleshing2Rep = 0;
+              var filterByNameSBPoleshing2Rep = allDataSBPoleshing2Rep
+                  .where((element) =>
+                      element.nama.toString().toLowerCase() ==
+                      artistPoleshing2Rep[i].toLowerCase())
+                  .toList();
+              for (var j = 0; j < filterByNameSBPoleshing2Rep.length; j++) {
+                apiBeratAsalSBPoleshing2Rep +=
+                    filterByNameSBPoleshing2Rep[j].debetKawat!;
+                apiBeratAkirSBPoleshing2Rep +=
+                    filterByNameSBPoleshing2Rep[j].kreditKawat!;
+                apiBeratAkirSBPoleshing2Rep +=
+                    filterByNameSBPoleshing2Rep[j].sb!;
+                apiBeratAkirSBPoleshing2Rep +=
+                    filterByNameSBPoleshing2Rep[j].sprue!;
+              }
+              beratAsalSBPoleshing2Rep.add(apiBeratAsalSBPoleshing2Rep);
+              beratAkhirSBPoleshing2Rep.add(apiBeratAkirSBPoleshing2Rep);
+            }
+          } else {
+            for (var i = 0; i < qtyNamePoleshing2Rep; i++) {
+              double apiBeratAsalSBPoleshing2Rep = 0;
+              double apiBeratAkirSBPoleshing2Rep = 0;
+              //? filter by month
+              var filterBySiklusSBPoleshing2Rep = allDataSBPoleshing2Rep.where(
+                  (element) =>
+                      element.bulan.toString().toLowerCase() ==
+                      month.toLowerCase());
+              allDataSBPoleshing2Rep = filterBySiklusSBPoleshing2Rep.toList();
+              var filterByNameSBPoleshing2Rep = allDataSBPoleshing2Rep
+                  .where((element) =>
+                      element.nama.toString().toLowerCase() ==
+                      artistPoleshing2Rep[i].toLowerCase())
+                  .toList();
+
+              for (var j = 0; j < filterByNameSBPoleshing2Rep.length; j++) {
+                apiBeratAsalSBPoleshing2Rep +=
+                    filterByNameSBPoleshing2Rep[j].debetKawat!;
+                apiBeratAkirSBPoleshing2Rep +=
+                    filterByNameSBPoleshing2Rep[j].kreditKawat!;
+                apiBeratAkirSBPoleshing2Rep +=
+                    filterByNameSBPoleshing2Rep[j].sb!;
+                apiBeratAkirSBPoleshing2Rep +=
+                    filterByNameSBPoleshing2Rep[j].sprue!;
+              }
+              beratAsalSBPoleshing2Rep.add(apiBeratAsalSBPoleshing2Rep);
+              beratAkhirSBPoleshing2Rep.add(apiBeratAkirSBPoleshing2Rep);
+            }
+          }
+        } else {
+          throw Exception('Unexpected error occured!');
+        }
+        //? end fungsi add debet dan kredit dan sb
+
+        //! fungsi penggabungan
+        for (var i = 0; i < beratAsalPoleshing2Rep.length; i++) {
+          beratAsalPoleshing2Rep[i] += beratAsalSBPoleshing2Rep[i];
+          beratAkhirPoleshing2Rep[i] += beratAkhirSBPoleshing2Rep[i];
+          susutPoleshing2Rep
+              .add(beratAsalPoleshing2Rep[i] - beratAkhirPoleshing2Rep[i]);
+          resultPoleshing2Rep
+              .add(susutPoleshing2Rep[i] - jatahSusutPoleshing2Rep[i]);
+        }
+        //? end penggabungan
+        //! end divisi Poleshing2Rep
+
+        //? filter by divisi stell1
         var filterByDivisiStell1 = filterBySiklus.where((element) =>
             element.divisi.toString().toLowerCase() == 'stell rangka 1');
         var allDataStell1 = filterByDivisiStell1.toList();
-
-        //! fungsi add debet dan kredit
         for (var i = 0; i < qtyNameStell1; i++) {
           double apiBeratAsalStell1 = 0;
           double apiBeratAkirStell1 = 0;
@@ -806,8 +2846,6 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
           }
           beratAsalStell1.add(apiBeratAsalStell1);
           beratAkhirStell1.add(apiBeratAkirStell1);
-          print('berat asal : ${beratAsalStell1[0]}'); //! done
-          print('berat akhir : ${beratAkhirStell1[0]}'); //! done
         }
         //! fungsi add debet dan kredit dan SB
         final responseSBStell1 = await http
@@ -839,8 +2877,6 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
               }
               beratAsalSBStell1.add(apiBeratAsalSBStell1);
               beratAkhirSBStell1.add(apiBeratAkirSBStell1);
-              print('berat asal sb : ${beratAsalSBStell1[0]}'); //! done
-              print('berat akhir sb : ${beratAkhirSBStell1[0]}'); //! done
             }
           } else {
             for (var i = 0; i < qtyNameStell1; i++) {
@@ -865,8 +2901,6 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
               }
               beratAsalSBStell1.add(apiBeratAsalSBStell1);
               beratAkhirSBStell1.add(apiBeratAkirSBStell1);
-              print('berat asal sb : ${beratAsalSBStell1[0]}'); //! done
-              print('berat akhir sb : ${beratAkhirSBStell1[0]}'); //! done
             }
           }
         } else {
@@ -883,6 +2917,376 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
         }
         //? end penggabungan
         //! end divisi Stell1
+
+        //? filter by divisi stell2
+        var filterByDivisiStell2 = filterBySiklus.where((element) =>
+            element.divisi.toString().toLowerCase() == 'stell rangka 2');
+        var allDataStell2 = filterByDivisiStell2.toList();
+        for (var i = 0; i < qtyNameStell2; i++) {
+          double apiBeratAsalStell2 = 0;
+          double apiBeratAkirStell2 = 0;
+          var filterByNameStell2 = allDataStell2
+              .where((element) =>
+                  element.nama.toString().toLowerCase() ==
+                  artistStell2[i].toLowerCase())
+              .toList();
+          for (var j = 0; j < filterByNameStell2.length; j++) {
+            apiBeratAsalStell2 += filterByNameStell2[j].debet!;
+            apiBeratAkirStell2 += filterByNameStell2[j].kredit!;
+          }
+          beratAsalStell2.add(apiBeratAsalStell2);
+          beratAkhirStell2.add(apiBeratAkirStell2);
+        }
+        //! fungsi add debet dan kredit dan SB
+        final responseSBStell2 = await http
+            .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getProduksiSB));
+        if (responseSBStell2.statusCode == 200) {
+          print('get data beratAsal dan akhir SB');
+          List jsonResponseSBStell2 = json.decode(responseSBStell2.body);
+          var allDataSBStell2 = jsonResponseSBStell2
+              .map((data) => ProduksiSBModel.fromJson(data))
+              .toList();
+          //? filter by divisi
+          var filterByDivisiSBStell2 = allDataSBStell2.where((element) =>
+              element.divisi.toString().toLowerCase() == 'stell rangka 2');
+          allDataSBStell2 = filterByDivisiSBStell2.toList();
+          if (month.toString().toLowerCase() == "all") {
+            for (var i = 0; i < qtyNameStell2; i++) {
+              double apiBeratAsalSBStell2 = 0;
+              double apiBeratAkirSBStell2 = 0;
+              var filterByNameSBStell2 = allDataSBStell2
+                  .where((element) =>
+                      element.nama.toString().toLowerCase() ==
+                      artistStell2[i].toLowerCase())
+                  .toList();
+              for (var j = 0; j < filterByNameSBStell2.length; j++) {
+                apiBeratAsalSBStell2 += filterByNameSBStell2[j].debetKawat!;
+                apiBeratAkirSBStell2 += filterByNameSBStell2[j].kreditKawat!;
+                apiBeratAkirSBStell2 += filterByNameSBStell2[j].sb!;
+                apiBeratAkirSBStell2 += filterByNameSBStell2[j].sprue!;
+              }
+              beratAsalSBStell2.add(apiBeratAsalSBStell2);
+              beratAkhirSBStell2.add(apiBeratAkirSBStell2);
+            }
+          } else {
+            for (var i = 0; i < qtyNameStell2; i++) {
+              double apiBeratAsalSBStell2 = 0;
+              double apiBeratAkirSBStell2 = 0;
+              //? filter by month
+              var filterBySiklusSBStell2 = allDataSBStell2.where((element) =>
+                  element.bulan.toString().toLowerCase() ==
+                  month.toLowerCase());
+              allDataSBStell2 = filterBySiklusSBStell2.toList();
+              var filterByNameSBStell2 = allDataSBStell2
+                  .where((element) =>
+                      element.nama.toString().toLowerCase() ==
+                      artistStell2[i].toLowerCase())
+                  .toList();
+
+              for (var j = 0; j < filterByNameSBStell2.length; j++) {
+                apiBeratAsalSBStell2 += filterByNameSBStell2[j].debetKawat!;
+                apiBeratAkirSBStell2 += filterByNameSBStell2[j].kreditKawat!;
+                apiBeratAkirSBStell2 += filterByNameSBStell2[j].sb!;
+                apiBeratAkirSBStell2 += filterByNameSBStell2[j].sprue!;
+              }
+              beratAsalSBStell2.add(apiBeratAsalSBStell2);
+              beratAkhirSBStell2.add(apiBeratAkirSBStell2);
+            }
+          }
+        } else {
+          throw Exception('Unexpected error occured!');
+        }
+        //? end fungsi add debet dan kredit dan sb
+
+        //! fungsi penggabungan
+        for (var i = 0; i < beratAsalStell2.length; i++) {
+          beratAsalStell2[i] += beratAsalSBStell2[i];
+          beratAkhirStell2[i] += beratAkhirSBStell2[i];
+          susutStell2.add(beratAsalStell2[i] - beratAkhirStell2[i]);
+          resultStell2.add(susutStell2[i] - jatahSusutStell2[i]);
+        }
+        //? end penggabungan
+        //! end divisi Stell2
+
+        //? filter by divisi stell2Rep
+        var filterByDivisiStell2Rep = filterBySiklus.where((element) =>
+            element.divisi.toString().toLowerCase() == 'stell rangka 2 rep');
+        var allDataStell2Rep = filterByDivisiStell2Rep.toList();
+        for (var i = 0; i < qtyNameStell2Rep; i++) {
+          double apiBeratAsalStell2Rep = 0;
+          double apiBeratAkirStell2Rep = 0;
+          var filterByNameStell2Rep = allDataStell2Rep
+              .where((element) =>
+                  element.nama.toString().toLowerCase() ==
+                  artistStell2Rep[i].toLowerCase())
+              .toList();
+          for (var j = 0; j < filterByNameStell2Rep.length; j++) {
+            apiBeratAsalStell2Rep += filterByNameStell2Rep[j].debet!;
+            apiBeratAkirStell2Rep += filterByNameStell2Rep[j].kredit!;
+          }
+          beratAsalStell2Rep.add(apiBeratAsalStell2Rep);
+          beratAkhirStell2Rep.add(apiBeratAkirStell2Rep);
+        }
+        //! fungsi add debet dan kredit dan SB
+        final responseSBStell2Rep = await http
+            .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getProduksiSB));
+        if (responseSBStell2Rep.statusCode == 200) {
+          print('get data beratAsal dan akhir SB');
+          List jsonResponseSBStell2Rep = json.decode(responseSBStell2Rep.body);
+          var allDataSBStell2Rep = jsonResponseSBStell2Rep
+              .map((data) => ProduksiSBModel.fromJson(data))
+              .toList();
+          //? filter by divisi
+          var filterByDivisiSBStell2Rep = allDataSBStell2Rep.where((element) =>
+              element.divisi.toString().toLowerCase() == 'stell rangka 2 rep');
+          allDataSBStell2Rep = filterByDivisiSBStell2Rep.toList();
+          if (month.toString().toLowerCase() == "all") {
+            for (var i = 0; i < qtyNameStell2Rep; i++) {
+              double apiBeratAsalSBStell2Rep = 0;
+              double apiBeratAkirSBStell2Rep = 0;
+              var filterByNameSBStell2Rep = allDataSBStell2Rep
+                  .where((element) =>
+                      element.nama.toString().toLowerCase() ==
+                      artistStell2Rep[i].toLowerCase())
+                  .toList();
+              for (var j = 0; j < filterByNameSBStell2Rep.length; j++) {
+                apiBeratAsalSBStell2Rep +=
+                    filterByNameSBStell2Rep[j].debetKawat!;
+                apiBeratAkirSBStell2Rep +=
+                    filterByNameSBStell2Rep[j].kreditKawat!;
+                apiBeratAkirSBStell2Rep += filterByNameSBStell2Rep[j].sb!;
+                apiBeratAkirSBStell2Rep += filterByNameSBStell2Rep[j].sprue!;
+              }
+              beratAsalSBStell2Rep.add(apiBeratAsalSBStell2Rep);
+              beratAkhirSBStell2Rep.add(apiBeratAkirSBStell2Rep);
+            }
+          } else {
+            for (var i = 0; i < qtyNameStell2Rep; i++) {
+              double apiBeratAsalSBStell2Rep = 0;
+              double apiBeratAkirSBStell2Rep = 0;
+              //? filter by month
+              var filterBySiklusSBStell2Rep = allDataSBStell2Rep.where(
+                  (element) =>
+                      element.bulan.toString().toLowerCase() ==
+                      month.toLowerCase());
+              allDataSBStell2Rep = filterBySiklusSBStell2Rep.toList();
+              var filterByNameSBStell2Rep = allDataSBStell2Rep
+                  .where((element) =>
+                      element.nama.toString().toLowerCase() ==
+                      artistStell2Rep[i].toLowerCase())
+                  .toList();
+
+              for (var j = 0; j < filterByNameSBStell2Rep.length; j++) {
+                apiBeratAsalSBStell2Rep +=
+                    filterByNameSBStell2Rep[j].debetKawat!;
+                apiBeratAkirSBStell2Rep +=
+                    filterByNameSBStell2Rep[j].kreditKawat!;
+                apiBeratAkirSBStell2Rep += filterByNameSBStell2Rep[j].sb!;
+                apiBeratAkirSBStell2Rep += filterByNameSBStell2Rep[j].sprue!;
+              }
+              beratAsalSBStell2Rep.add(apiBeratAsalSBStell2Rep);
+              beratAkhirSBStell2Rep.add(apiBeratAkirSBStell2Rep);
+            }
+          }
+        } else {
+          throw Exception('Unexpected error occured!');
+        }
+        //? end fungsi add debet dan kredit dan sb
+
+        //! fungsi penggabungan
+        for (var i = 0; i < beratAsalStell2Rep.length; i++) {
+          beratAsalStell2Rep[i] += beratAsalSBStell2Rep[i];
+          beratAkhirStell2Rep[i] += beratAkhirSBStell2Rep[i];
+          susutStell2Rep.add(beratAsalStell2Rep[i] - beratAkhirStell2Rep[i]);
+          resultStell2Rep.add(susutStell2Rep[i] - jatahSusutStell2Rep[i]);
+        }
+        //? end penggabungan
+        //! end divisi Stell2Rep
+
+        // //? filter by divisi Chrome
+        // var filterByDivisiChrome = filterBySiklus.where(
+        //     (element) => element.divisi.toString().toLowerCase() == 'chrome');
+        // var allDataChrome = filterByDivisiChrome.toList();
+        // for (var i = 0; i < qtyNameChrome; i++) {
+        //   double apiBeratAsalChrome = 0;
+        //   double apiBeratAkirChrome = 0;
+        //   var filterByNameChrome = allDataChrome
+        //       .where((element) =>
+        //           element.nama.toString().toLowerCase() ==
+        //           artistChrome[i].toLowerCase())
+        //       .toList();
+        //   for (var j = 0; j < filterByNameChrome.length; j++) {
+        //     apiBeratAsalChrome += filterByNameChrome[j].debet!;
+        //     apiBeratAkirChrome += filterByNameChrome[j].kredit!;
+        //   }
+        //   beratAsalChrome.add(apiBeratAsalChrome);
+        //   beratAkhirChrome.add(apiBeratAkirChrome);
+        // }
+        // //! fungsi add debet dan kredit dan SB
+        // final responseSBChrome = await http
+        //     .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getProduksiSB));
+        // if (responseSBChrome.statusCode == 200) {
+        //   print('get data beratAsal dan akhir SB');
+        //   List jsonResponseSBChrome = json.decode(responseSBChrome.body);
+        //   var allDataSBChrome = jsonResponseSBChrome
+        //       .map((data) => ProduksiSBModel.fromJson(data))
+        //       .toList();
+        //   //? filter by divisi
+        //   var filterByDivisiSBChrome = allDataSBChrome.where(
+        //       (element) => element.divisi.toString().toLowerCase() == 'chrome');
+        //   allDataSBChrome = filterByDivisiSBChrome.toList();
+        //   if (month.toString().toLowerCase() == "all") {
+        //     for (var i = 0; i < qtyNameChrome; i++) {
+        //       double apiBeratAsalSBChrome = 0;
+        //       double apiBeratAkirSBChrome = 0;
+        //       var filterByNameSBChrome = allDataSBChrome
+        //           .where((element) =>
+        //               element.nama.toString().toLowerCase() ==
+        //               artistChrome[i].toLowerCase())
+        //           .toList();
+        //       for (var j = 0; j < filterByNameSBChrome.length; j++) {
+        //         apiBeratAsalSBChrome += filterByNameSBChrome[j].debetKawat!;
+        //         apiBeratAkirSBChrome += filterByNameSBChrome[j].kreditKawat!;
+        //         apiBeratAkirSBChrome += filterByNameSBChrome[j].sb!;
+        //         apiBeratAkirSBChrome += filterByNameSBChrome[j].sprue!;
+        //       }
+        //       beratAsalSBChrome.add(apiBeratAsalSBChrome);
+        //       beratAkhirSBChrome.add(apiBeratAkirSBChrome);
+        //     }
+        //   } else {
+        //     for (var i = 0; i < qtyNameChrome; i++) {
+        //       double apiBeratAsalSBChrome = 0;
+        //       double apiBeratAkirSBChrome = 0;
+        //       //? filter by month
+        //       var filterBySiklusSBChrome = allDataSBChrome.where((element) =>
+        //           element.bulan.toString().toLowerCase() ==
+        //           month.toLowerCase());
+        //       allDataSBChrome = filterBySiklusSBChrome.toList();
+        //       var filterByNameSBChrome = allDataSBChrome
+        //           .where((element) =>
+        //               element.nama.toString().toLowerCase() ==
+        //               artistChrome[i].toLowerCase())
+        //           .toList();
+
+        //       for (var j = 0; j < filterByNameSBChrome.length; j++) {
+        //         apiBeratAsalSBChrome += filterByNameSBChrome[j].debetKawat!;
+        //         apiBeratAkirSBChrome += filterByNameSBChrome[j].kreditKawat!;
+        //         apiBeratAkirSBChrome += filterByNameSBChrome[j].sb!;
+        //         apiBeratAkirSBChrome += filterByNameSBChrome[j].sprue!;
+        //       }
+        //       beratAsalSBChrome.add(apiBeratAsalSBChrome);
+        //       beratAkhirSBChrome.add(apiBeratAkirSBChrome);
+        //     }
+        //   }
+        // } else {
+        //   throw Exception('Unexpected error occured!');
+        // }
+        // //? end fungsi add debet dan kredit dan sb
+
+        // //! fungsi penggabungan
+        // for (var i = 0; i < beratAsalChrome.length; i++) {
+        //   beratAsalChrome[i] += beratAsalSBChrome[i];
+        //   beratAkhirChrome[i] += beratAkhirSBChrome[i];
+        //   susutChrome.add(beratAsalChrome[i] - beratAkhirChrome[i]);
+        //   resultChrome.add(susutChrome[i] - jatahSusutChrome[i]);
+        // }
+        // //? end penggabungan
+        // //! end divisi Chrome
+
+        // //? filter by divisi ChromeRep
+        // var filterByDivisiChromeRep = filterBySiklus.where((element) =>
+        //     element.divisi.toString().toLowerCase() == 'chrome rep');
+        // var allDataChromeRep = filterByDivisiChromeRep.toList();
+        // for (var i = 0; i < qtyNameChromeRep; i++) {
+        //   double apiBeratAsalChromeRep = 0;
+        //   double apiBeratAkirChromeRep = 0;
+        //   var filterByNameChromeRep = allDataChromeRep
+        //       .where((element) =>
+        //           element.nama.toString().toLowerCase() ==
+        //           artistChromeRep[i].toLowerCase())
+        //       .toList();
+        //   for (var j = 0; j < filterByNameChromeRep.length; j++) {
+        //     apiBeratAsalChromeRep += filterByNameChromeRep[j].debet!;
+        //     apiBeratAkirChromeRep += filterByNameChromeRep[j].kredit!;
+        //   }
+        //   beratAsalChromeRep.add(apiBeratAsalChromeRep);
+        //   beratAkhirChromeRep.add(apiBeratAkirChromeRep);
+        // }
+        // //! fungsi add debet dan kredit dan SB
+        // final responseSBChromeRep = await http
+        //     .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getProduksiSB));
+        // if (responseSBChromeRep.statusCode == 200) {
+        //   print('get data beratAsal dan akhir SB');
+        //   List jsonResponseSBChromeRep = json.decode(responseSBChromeRep.body);
+        //   var allDataSBChromeRep = jsonResponseSBChromeRep
+        //       .map((data) => ProduksiSBModel.fromJson(data))
+        //       .toList();
+        //   //? filter by divisi
+        //   var filterByDivisiSBChromeRep = allDataSBChromeRep.where((element) =>
+        //       element.divisi.toString().toLowerCase() == 'chrome rep');
+        //   allDataSBChromeRep = filterByDivisiSBChromeRep.toList();
+        //   if (month.toString().toLowerCase() == "all") {
+        //     for (var i = 0; i < qtyNameChromeRep; i++) {
+        //       double apiBeratAsalSBChromeRep = 0;
+        //       double apiBeratAkirSBChromeRep = 0;
+        //       var filterByNameSBChromeRep = allDataSBChromeRep
+        //           .where((element) =>
+        //               element.nama.toString().toLowerCase() ==
+        //               artistChromeRep[i].toLowerCase())
+        //           .toList();
+        //       for (var j = 0; j < filterByNameSBChromeRep.length; j++) {
+        //         apiBeratAsalSBChromeRep +=
+        //             filterByNameSBChromeRep[j].debetKawat!;
+        //         apiBeratAkirSBChromeRep +=
+        //             filterByNameSBChromeRep[j].kreditKawat!;
+        //         apiBeratAkirSBChromeRep += filterByNameSBChromeRep[j].sb!;
+        //         apiBeratAkirSBChromeRep += filterByNameSBChromeRep[j].sprue!;
+        //       }
+        //       beratAsalSBChromeRep.add(apiBeratAsalSBChromeRep);
+        //       beratAkhirSBChromeRep.add(apiBeratAkirSBChromeRep);
+        //     }
+        //   } else {
+        //     for (var i = 0; i < qtyNameChromeRep; i++) {
+        //       double apiBeratAsalSBChromeRep = 0;
+        //       double apiBeratAkirSBChromeRep = 0;
+        //       //? filter by month
+        //       var filterBySiklusSBChromeRep = allDataSBChromeRep.where(
+        //           (element) =>
+        //               element.bulan.toString().toLowerCase() ==
+        //               month.toLowerCase());
+        //       allDataSBChromeRep = filterBySiklusSBChromeRep.toList();
+        //       var filterByNameSBChromeRep = allDataSBChromeRep
+        //           .where((element) =>
+        //               element.nama.toString().toLowerCase() ==
+        //               artistChromeRep[i].toLowerCase())
+        //           .toList();
+
+        //       for (var j = 0; j < filterByNameSBChromeRep.length; j++) {
+        //         apiBeratAsalSBChromeRep +=
+        //             filterByNameSBChromeRep[j].debetKawat!;
+        //         apiBeratAkirSBChromeRep +=
+        //             filterByNameSBChromeRep[j].kreditKawat!;
+        //         apiBeratAkirSBChromeRep += filterByNameSBChromeRep[j].sb!;
+        //         apiBeratAkirSBChromeRep += filterByNameSBChromeRep[j].sprue!;
+        //       }
+        //       beratAsalSBChromeRep.add(apiBeratAsalSBChromeRep);
+        //       beratAkhirSBChromeRep.add(apiBeratAkirSBChromeRep);
+        //     }
+        //   }
+        // } else {
+        //   throw Exception('Unexpected error occured!');
+        // }
+        // //? end fungsi add debet dan kredit dan sb
+
+        // //! fungsi penggabungan
+        // for (var i = 0; i < beratAsalChromeRep.length; i++) {
+        //   beratAsalChromeRep[i] += beratAsalSBChromeRep[i];
+        //   beratAkhirChromeRep[i] += beratAkhirSBChromeRep[i];
+        //   susutChromeRep.add(beratAsalChromeRep[i] - beratAkhirChromeRep[i]);
+        //   resultChromeRep.add(susutChromeRep[i] - jatahSusutChromeRep[i]);
+        // }
+        // //? end penggabungan
+        // //! end divisi ChromeRep
       }
 
       //* save result finishing dikdik dan deko
@@ -891,12 +3295,41 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
           resultFinishingDikdikMaulana = resultFinishing[i];
         }
         if (artistFinishing[i].toString().toLowerCase() == 'muhammad deeko') {
-          resultFinishingMumahhadDeeko = resultFinishing[i];
+          resultFinishingMuhammadDeeko = resultFinishing[i];
         }
       }
-      print(
-          'dikdik : $resultFinishingDikdikMaulana\n m deko : $resultFinishingMumahhadDeeko');
+      for (var i = 0; i < qtyNameStell2; i++) {
+        if (artistStell1[i].toString().toLowerCase() == 'dikdik maulana') {
+          if (resultStell2[i] < 0) {
+            bonusStell2DikdikMaulana = resultStell2[i] * -1;
+          } else {
+            susutStell2DikdikMaulana = resultStell2[i];
+          }
+          if (resultStell2Rep[i] < 0) {
+            bonusStell2RepDikdikMaulana = resultStell2Rep[i] * -1;
+          } else {
+            susutStell2RepDikdikMaulana = resultStell2Rep[i];
+          }
+        }
+        if (artistStell1[i].toString().toLowerCase() == 'muhammad deeko') {
+          if (resultStell2[i] < 0) {
+            bonusStell2MuhammadDeeko = resultStell2[i] * -1;
+          } else {
+            susutStell2MuhammadDeeko = resultStell2[i];
+          }
+          if (resultStell2Rep[i] < 0) {
+            bonusStell2RepMuhammadDeeko = resultStell2Rep[i] * -1;
+          } else {
+            susutStell2RepMuhammadDeeko = resultStell2Rep[i];
+          }
+        }
+      }
       //! end save dikdik dand eko
+      print(
+          'dikdik\n Fin : $resultFinishingDikdikMaulana, s2 bon : $bonusStell2DikdikMaulana, s2 sut : $susutStell2DikdikMaulana, s2 Rep bon : $bonusStell2RepDikdikMaulana, s2 Rep sut : $susutStell2RepDikdikMaulana');
+
+      print(
+          'm deeko\n Fin : $resultFinishingMuhammadDeeko, s2 bon : $bonusStell2MuhammadDeeko, s2 sut : $susutStell2MuhammadDeeko, s2 Rep bon : $bonusStell2RepMuhammadDeeko, s2 Rep sut : $susutStell2RepMuhammadDeeko');
 
       return allData;
     } else {
@@ -952,7 +3385,23 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
         columns: _createColumnsFinishing(),
         rows: divisi == 'finishing'
             ? _createRowsFinishing()
-            : _createRowsPoleshing1());
+            : divisi == 'poleshing 1'
+                ? _createRowsPoleshing1()
+                : divisi == 'poleshing 2'
+                    ? _createRowsPoleshing2()
+                    : divisi == 'poleshing 2 rep'
+                        ? _createRowsPoleshing2Rep()
+                        : divisi == 'stell 1'
+                            ? _createRowsStell1()
+                            : divisi == 'stell 2'
+                                ? _createRowsStell2()
+                                : divisi == 'stell 2 rep'
+                                    ? _createRowsStell2Rep()
+                                    : divisi == 'chrome'
+                                        ? _createRowsChrome()
+                                        : divisi == 'chrome rep'
+                                            ? _createRowsChromeRep()
+                                            : defaultRows());
   }
 
   List<DataColumn> _createColumnsFinishing() {
@@ -977,6 +3426,34 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
     ];
   }
 
+//? start row default
+  List<DataRow> defaultRows() {
+    return [
+      for (var i = 0; i < qtyNameFinishing; i++)
+        DataRow(cells: [
+          DataCell(Text('')),
+          DataCell(_verticalDivider),
+          DataCell(Text('')),
+          DataCell(_verticalDivider),
+          DataCell(Text('')),
+          DataCell(_verticalDivider),
+          DataCell(Text('')),
+          DataCell(_verticalDivider),
+          DataCell(Text('')),
+          DataCell(_verticalDivider),
+          DataCell(Text('')),
+          DataCell(_verticalDivider),
+          DataCell(Text('')),
+          DataCell(_verticalDivider),
+          DataCell(Text('')),
+          DataCell(_verticalDivider),
+          DataCell(Text('')),
+        ]),
+    ];
+  }
+  //! end data table finishing
+
+  //? start row Finishing
   List<DataRow> _createRowsFinishing() {
     return [
       for (var i = 0; i < qtyNameFinishing; i++)
@@ -985,7 +3462,7 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
           DataCell(_verticalDivider),
           DataCell(Text(spkFinishing[i])),
           DataCell(_verticalDivider),
-          DataCell(Text(pointFinishing[i])),
+          DataCell(Text(pointFinishing[i].toStringAsFixed(3))),
           DataCell(_verticalDivider),
           DataCell(Text(beratAsalFinishing[i].toStringAsFixed(2))),
           DataCell(_verticalDivider),
@@ -1000,7 +3477,13 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
           DataCell(_verticalDivider),
           DataCell(Text(jatahSusutFinishing[i].toStringAsFixed(2))),
           DataCell(_verticalDivider),
-          DataCell(Text((resultFinishing[i] * -1).toStringAsFixed(2))),
+          // DataCell(Text((resultFinishing[i] * -1).toStringAsFixed(2))),
+          DataCell((artistFinishing[i].toString().toLowerCase() ==
+                      'muhammad deeko' ||
+                  artistFinishing[i].toString().toLowerCase() ==
+                      'dikdik maulana')
+              ? Text('0')
+              : Text((resultFinishing[i] * -1).toStringAsFixed(2))),
           DataCell(_verticalDivider),
           DataCell(
             (resultFinishing[i] * -1) < 0
@@ -1018,8 +3501,8 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
         ]),
     ];
   }
-
   //! end data table finishing
+
   //? start row Poleshing1
   List<DataRow> _createRowsPoleshing1() {
     return [
@@ -1027,22 +3510,22 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
         DataRow(cells: [
           DataCell(Text(artistPoleshing1[i])),
           DataCell(_verticalDivider),
-          DataCell(Text(spkFinishing[i])),
+          DataCell(Text(spkPoleshing1[i])),
           DataCell(_verticalDivider),
-          DataCell(Text(pointFinishing[i])),
+          DataCell(Text(pointPoleshing1[i])),
           DataCell(_verticalDivider),
-          DataCell(Text(beratAsalFinishing[i].toStringAsFixed(2))),
+          DataCell(Text(beratAsalPoleshing1[i].toStringAsFixed(2))),
           DataCell(_verticalDivider),
-          DataCell(Text(beratAkhirFinishing[i].toStringAsFixed(2))),
+          DataCell(Text(beratAkhirPoleshing1[i].toStringAsFixed(2))),
           DataCell(_verticalDivider),
-          DataCell(Text(susutFinishing[i].toStringAsFixed(2))),
+          DataCell(Text(susutPoleshing1[i].toStringAsFixed(2))),
           DataCell(_verticalDivider),
-          DataCell(Text(jatahSusutFinishing[i].toStringAsFixed(2))),
+          DataCell(Text(jatahSusutPoleshing1[i].toStringAsFixed(2))),
           DataCell(_verticalDivider),
-          DataCell(Text(resultFinishing[i].toStringAsFixed(2))),
+          DataCell(Text((resultPoleshing1[i] * -1).toStringAsFixed(2))),
           DataCell(_verticalDivider),
           DataCell(
-            (resultFinishing[i] * -1) < 0
+            (resultPoleshing1[i] * -1) < 0
                 ? Text(
                     '(POTONGAN)',
                     style: TextStyle(
@@ -1059,6 +3542,84 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
   }
   //! end data table Poleshing1
 
+  //? start row Poleshing2
+  List<DataRow> _createRowsPoleshing2() {
+    return [
+      for (var i = 0; i < qtyNamePoleshing2; i++)
+        DataRow(cells: [
+          DataCell(Text(artistPoleshing2[i])),
+          DataCell(_verticalDivider),
+          DataCell(Text(spkPoleshing2[i])),
+          DataCell(_verticalDivider),
+          DataCell(Text(pointPoleshing2[i])),
+          DataCell(_verticalDivider),
+          DataCell(Text(beratAsalPoleshing2[i].toStringAsFixed(2))),
+          DataCell(_verticalDivider),
+          DataCell(Text(beratAkhirPoleshing2[i].toStringAsFixed(2))),
+          DataCell(_verticalDivider),
+          DataCell(Text(susutPoleshing2[i].toStringAsFixed(2))),
+          DataCell(_verticalDivider),
+          DataCell(Text(jatahSusutPoleshing2[i].toStringAsFixed(2))),
+          DataCell(_verticalDivider),
+          DataCell(Text((resultPoleshing2[i] * -1).toStringAsFixed(2))),
+          DataCell(_verticalDivider),
+          DataCell(
+            (resultPoleshing2[i] * -1) < 0
+                ? Text(
+                    '(POTONGAN)',
+                    style: TextStyle(
+                        color: Colors.red, fontWeight: FontWeight.bold),
+                  )
+                : Text(
+                    '(BONUS)',
+                    style: TextStyle(
+                        color: Colors.green, fontWeight: FontWeight.bold),
+                  ),
+          ),
+        ]),
+    ];
+  }
+  //! end data table Poleshing2
+
+  //? start row Poleshing2Rep
+  List<DataRow> _createRowsPoleshing2Rep() {
+    return [
+      for (var i = 0; i < qtyNamePoleshing2Rep; i++)
+        DataRow(cells: [
+          DataCell(Text(artistPoleshing2Rep[i])),
+          DataCell(_verticalDivider),
+          DataCell(Text(spkPoleshing2Rep[i])),
+          DataCell(_verticalDivider),
+          DataCell(Text(pointPoleshing2Rep[i])),
+          DataCell(_verticalDivider),
+          DataCell(Text(beratAsalPoleshing2Rep[i].toStringAsFixed(2))),
+          DataCell(_verticalDivider),
+          DataCell(Text(beratAkhirPoleshing2Rep[i].toStringAsFixed(2))),
+          DataCell(_verticalDivider),
+          DataCell(Text(susutPoleshing2Rep[i].toStringAsFixed(2))),
+          DataCell(_verticalDivider),
+          DataCell(Text(jatahSusutPoleshing2Rep[i].toStringAsFixed(2))),
+          DataCell(_verticalDivider),
+          DataCell(Text((resultPoleshing2Rep[i] * -1).toStringAsFixed(2))),
+          DataCell(_verticalDivider),
+          DataCell(
+            (resultPoleshing2Rep[i] * -1) < 0
+                ? Text(
+                    '(POTONGAN)',
+                    style: TextStyle(
+                        color: Colors.red, fontWeight: FontWeight.bold),
+                  )
+                : Text(
+                    '(BONUS)',
+                    style: TextStyle(
+                        color: Colors.green, fontWeight: FontWeight.bold),
+                  ),
+          ),
+        ]),
+    ];
+  }
+  //! end data table Poleshing2Rep
+
   //? start row Stell1
   List<DataRow> _createRowsStell1() {
     return [
@@ -1071,7 +3632,7 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
           DataCell(Text(pointStell1[i])),
           DataCell(_verticalDivider),
           DataCell(artistStell1[i].toString().toLowerCase() == 'muhammad deeko'
-              ? Text((beratAsalStell1[i] - (resultFinishingMumahhadDeeko! * -1))
+              ? Text((beratAsalStell1[i] - (resultFinishingMuhammadDeeko! * -1))
                   .toStringAsFixed(2))
               : Text((beratAsalStell1[i] - (resultFinishingDikdikMaulana! * -1))
                   .toStringAsFixed(2))),
@@ -1082,7 +3643,7 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
           DataCell(_verticalDivider),
           DataCell(Text(jatahSusutStell1[i].toStringAsFixed(2))),
           DataCell(_verticalDivider),
-          DataCell(Text(resultStell1[i].toStringAsFixed(2))),
+          DataCell(Text((resultStell1[i] * -1).toStringAsFixed(2))),
           DataCell(_verticalDivider),
           DataCell(
             (resultStell1[i] * -1) < 0
@@ -1100,7 +3661,139 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
         ]),
     ];
   }
-  //! end data table Poleshing1
+  //! end data table Stell1
+
+  //? start row Stell2
+  List<DataRow> _createRowsStell2() {
+    return [
+      for (var i = 0; i < qtyNameStell2; i++)
+        DataRow(cells: [
+          DataCell(Text(artistStell2[i])),
+          DataCell(_verticalDivider),
+          DataCell(Text(spkStell2[i])),
+          DataCell(_verticalDivider),
+          DataCell(Text(pointStell2[i])),
+          DataCell(_verticalDivider),
+          DataCell(Text((beratAsalStell2[i]).toStringAsFixed(2))),
+          DataCell(_verticalDivider),
+          DataCell(Text(beratAkhirStell2[i].toStringAsFixed(2))),
+          DataCell(_verticalDivider),
+          DataCell(Text(susutStell2[i].toStringAsFixed(2))),
+          DataCell(_verticalDivider),
+          DataCell(Text(jatahSusutStell2[i].toStringAsFixed(2))),
+          DataCell(_verticalDivider),
+          DataCell(Text((resultStell2[i] * -1).toStringAsFixed(2))),
+          DataCell(_verticalDivider),
+          DataCell(
+            (resultStell2[i] * -1) < 0
+                ? Text(
+                    '(POTONGAN)',
+                    style: TextStyle(
+                        color: Colors.red, fontWeight: FontWeight.bold),
+                  )
+                : Text(
+                    '(BONUS)',
+                    style: TextStyle(
+                        color: Colors.green, fontWeight: FontWeight.bold),
+                  ),
+          ),
+        ]),
+    ];
+  }
+  //! end data table Stell2
+
+  //? start row Stell2Rep
+  List<DataRow> _createRowsStell2Rep() {
+    return [
+      for (var i = 0; i < qtyNameStell2Rep; i++)
+        DataRow(cells: [
+          DataCell(Text(artistStell2Rep[i])),
+          DataCell(_verticalDivider),
+          DataCell(Text(spkStell2Rep[i])),
+          DataCell(_verticalDivider),
+          DataCell(Text(pointStell2Rep[i])),
+          DataCell(_verticalDivider),
+          DataCell(Text(beratAsalStell2Rep[i].toStringAsFixed(2))),
+          DataCell(_verticalDivider),
+          DataCell(Text(beratAkhirStell2Rep[i].toStringAsFixed(2))),
+          DataCell(_verticalDivider),
+          DataCell(Text(susutStell2Rep[i].toStringAsFixed(2))),
+          DataCell(_verticalDivider),
+          DataCell(Text(jatahSusutStell2Rep[i].toStringAsFixed(2))),
+          DataCell(_verticalDivider),
+          DataCell(Text((resultStell2Rep[i] * -1).toStringAsFixed(2))),
+          DataCell(_verticalDivider),
+          DataCell(
+            (resultStell2Rep[i] * -1) < 0
+                ? Text(
+                    '(POTONGAN)',
+                    style: TextStyle(
+                        color: Colors.red, fontWeight: FontWeight.bold),
+                  )
+                : Text(
+                    '(BONUS)',
+                    style: TextStyle(
+                        color: Colors.green, fontWeight: FontWeight.bold),
+                  ),
+          ),
+        ]),
+    ];
+  }
+  //! end data table Stell2Rep
+
+//? start row Chrome
+  List<DataRow> _createRowsChrome() {
+    return [
+      for (var i = 0; i < qtyNameChrome; i++)
+        DataRow(cells: [
+          DataCell(Text(artistChrome[i])),
+          DataCell(_verticalDivider),
+          DataCell(Text(spkChrome[i])),
+          DataCell(_verticalDivider),
+          DataCell(Text(pointChrome[i])),
+          DataCell(_verticalDivider),
+          DataCell(Text('')),
+          DataCell(_verticalDivider),
+          DataCell(Text('')),
+          DataCell(_verticalDivider),
+          DataCell(Text('')),
+          DataCell(_verticalDivider),
+          DataCell(Text('')),
+          DataCell(_verticalDivider),
+          DataCell(Text('')),
+          DataCell(_verticalDivider),
+          DataCell(Text('')),
+        ]),
+    ];
+  }
+  //! end data table Chrome
+
+  //? start row ChromeRep
+  List<DataRow> _createRowsChromeRep() {
+    return [
+      for (var i = 0; i < qtyNameChromeRep; i++)
+        DataRow(cells: [
+          DataCell(Text(artistChromeRep[i])),
+          DataCell(_verticalDivider),
+          DataCell(Text(spkChromeRep[i])),
+          DataCell(_verticalDivider),
+          DataCell(Text(pointChromeRep[i])),
+          DataCell(_verticalDivider),
+          DataCell(Text('')),
+          DataCell(_verticalDivider),
+          DataCell(Text('')),
+          DataCell(_verticalDivider),
+          DataCell(Text('')),
+          DataCell(_verticalDivider),
+          DataCell(Text('')),
+          DataCell(_verticalDivider),
+          DataCell(Text('')),
+          DataCell(_verticalDivider),
+          DataCell(Text('')),
+        ]),
+    ];
+  }
+  //! end data table ChromeRep
 
   @override
   Widget build(BuildContext context) {
@@ -1140,7 +3833,7 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
                   ],
                 ),
               ),
-              title: const Text(
+              title: Text(
                 "Home",
                 style: TextStyle(fontSize: 25, color: Colors.white),
               ),
@@ -1182,7 +3875,7 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
                 setState(() {
                   siklus.text = item!;
                   siklusDesigner = siklus.text.toString();
-                  _getDataFinishing(siklusDesigner);
+                  _getDataAll(siklusDesigner);
                 });
               },
               popupProps: const PopupPropsMultiSelection.modalBottomSheet(
@@ -1207,13 +3900,16 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
           ),
         ),
         isLoading == true
-            ? Center(
-                child: Container(
-                padding: const EdgeInsets.all(5),
-                width: 90,
-                height: 90,
-                child: Lottie.asset("loadingJSON/loadingV1.json"),
-              ))
+            ? Expanded(
+                child: Center(
+                  child: Container(
+                    padding: const EdgeInsets.all(5),
+                    width: 90,
+                    height: 90,
+                    child: Lottie.asset("loadingJSON/loadingV1.json"),
+                  ),
+                ),
+              )
             : Expanded(
                 child: SingleChildScrollView(
                   scrollDirection: Axis.vertical,
@@ -1259,7 +3955,7 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
                                               color: Colors.black,
                                               fontWeight: FontWeight.bold),
                                         ),
-                                        _dataTable('poleshing1'),
+                                        _dataTable('poleshing 1'),
                                       ],
                                     ))),
                             SizedBox(height: 20),
@@ -1270,7 +3966,7 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
                                 child: Container(
                                     color: Colors.grey.shade200,
                                     child: Column(
-                                      children: const [
+                                      children: [
                                         Text(
                                           'POLESHING 2',
                                           style: TextStyle(
@@ -1278,6 +3974,7 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
                                               color: Colors.black,
                                               fontWeight: FontWeight.bold),
                                         ),
+                                        _dataTable('poleshing 2'),
                                       ],
                                     ))),
                             SizedBox(height: 20),
@@ -1288,7 +3985,7 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
                                 child: Container(
                                     color: Colors.grey.shade200,
                                     child: Column(
-                                      children: const [
+                                      children: [
                                         Text(
                                           'POLESHING 2 REPARASI',
                                           style: TextStyle(
@@ -1296,6 +3993,7 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
                                               color: Colors.black,
                                               fontWeight: FontWeight.bold),
                                         ),
+                                        _dataTable('poleshing 2 rep'),
                                       ],
                                     ))),
                             SizedBox(height: 20),
@@ -1314,7 +4012,8 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
                                               color: Colors.black,
                                               fontWeight: FontWeight.bold),
                                         ),
-                                        _dataTableStell1(),
+                                        // _dataTableStell1(),
+                                        _dataTable('stell 1'),
                                       ],
                                     ))),
                             SizedBox(height: 20),
@@ -1325,7 +4024,7 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
                                 child: Container(
                                     color: Colors.grey.shade200,
                                     child: Column(
-                                      children: const [
+                                      children: [
                                         Text(
                                           'STELL 2',
                                           style: TextStyle(
@@ -1333,6 +4032,7 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
                                               color: Colors.black,
                                               fontWeight: FontWeight.bold),
                                         ),
+                                        _dataTable('stell 2'),
                                       ],
                                     ))),
                             SizedBox(height: 20),
@@ -1343,7 +4043,7 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
                                 child: Container(
                                     color: Colors.grey.shade200,
                                     child: Column(
-                                      children: const [
+                                      children: [
                                         Text(
                                           'STELL 2 REP',
                                           style: TextStyle(
@@ -1351,16 +4051,17 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
                                               color: Colors.black,
                                               fontWeight: FontWeight.bold),
                                         ),
+                                        _dataTable('stell 2 rep'),
                                       ],
                                     ))),
                             SizedBox(height: 20),
-                            // //? BARIS 8
+                            //? BARIS 8
                             SingleChildScrollView(
                                 scrollDirection: Axis.horizontal,
                                 child: Container(
                                     color: Colors.grey.shade200,
                                     child: Column(
-                                      children: const [
+                                      children: [
                                         Text(
                                           'CHROME',
                                           style: TextStyle(
@@ -1368,6 +4069,7 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
                                               color: Colors.black,
                                               fontWeight: FontWeight.bold),
                                         ),
+                                        _dataTable('chrome'),
                                       ],
                                     ))),
                             SizedBox(height: 20),
@@ -1377,7 +4079,7 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
                                 child: Container(
                                     color: Colors.grey.shade200,
                                     child: Column(
-                                      children: const [
+                                      children: [
                                         Text(
                                           'CHROME REPARASI',
                                           style: TextStyle(
@@ -1385,8 +4087,10 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
                                               color: Colors.black,
                                               fontWeight: FontWeight.bold),
                                         ),
+                                        _dataTable('chrome rep'),
                                       ],
                                     ))),
+                            SizedBox(height: 20),
                           ]),
                     ),
                   ),

@@ -4,6 +4,7 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:form_designer/api/api_constant.dart';
+import 'package:form_designer/global/currency_format.dart';
 import 'package:form_designer/global/global.dart';
 import 'dart:convert';
 import 'package:form_designer/model/form_designer_model.dart';
@@ -31,39 +32,20 @@ class _SummaryPasangBatuScreenState extends State<SummaryPasangBatuScreen> {
   TextEditingController siklus = TextEditingController();
   String? updateSiklus = '';
   TextEditingController addSiklus = TextEditingController();
-
-  int? spkAsrori = 0;
-  double beratAsalAsrori = 0;
-  double? susutAsrori = 0;
-  double? jatahSusutAsrori = 0;
-  double? sbAsrori = 0;
-  double? resultAsrori = 0;
-  double totalPointAsrori = 0.0;
-
-  int? spkCarkiyad = 0;
-  double beratAsalCarkiyad = 0;
-  double? susutCarkiyad = 0;
-  double? jatahSusutCarkiyad = 0;
-  double? sbCarkiyad = 0;
-  double? resultCarkiyad = 0;
-  double totalPointCarkiyad = 0;
-
-  int? spkEncupSupriatna = 0;
-  double beratAsalEncupSupriatna = 0;
-  double? susutEncupSupriatna = 0;
-  double? jatahSusutEncupSupriatna = 0;
-  double? sbEncupSupriatna = 0;
-  double? resultEncupSupriatna = 0;
-  double totalPointEncupSupriatna = 0;
-
-  int? spkMuhammadAbdulKodir = 0;
-  double beratAsalMuhammadAbdulKodir = 0;
-  double? susutMuhammadAbdulKodir = 0;
-  double? jatahSusutMuhammadAbdulKodir = 0;
-  double? sbMuhammadAbdulKodir = 0;
-  double? resultMuhammadAbdulKodir = 0;
-  double totalPointMuhammadAbdulKodir = 0;
-  String siklusDesigner = '';
+  List artistPasangBatu = [];
+  List spkPasangBatu = [];
+  List sumButir = [];
+  List sumCarat = [];
+  List sumPecahButir = [];
+  List sumPecahCarat = [];
+  List sumHilangButir = [];
+  List sumHilangCarat = [];
+  List sumTotalOngkosan = [];
+  List sumAsal = [];
+  List sumJadi = [];
+  List sumSusut = [];
+  List sumJatahSusut = [];
+  int qtyNamePasangBatu = 0;
 
   bool isSelected1 = false;
   TextEditingController controller = TextEditingController();
@@ -76,6 +58,7 @@ class _SummaryPasangBatuScreenState extends State<SummaryPasangBatuScreen> {
   bool isLoadingJenisBarang = false;
   var nowSiklus = '';
   String? namaJenisBarangView1 = '';
+  String siklusDesigner = '';
 
   @override
   initState() {
@@ -86,387 +69,257 @@ class _SummaryPasangBatuScreenState extends State<SummaryPasangBatuScreen> {
     siklusDesigner = month;
     // _getAllDataProduksi("all", sharedPreferences!.getString('nama')!);
     nowSiklus = sharedPreferences!.getString('siklus')!;
-    _getSpk("all", 'noname');
-    _getPoint("all", 'noname');
-    _getBeratAsal("all", 'noname');
+    _getDataAll('all');
   }
 
-  _getSpkByName(month, name) async {
-    var spk;
-    final response = await http
-        .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getProduksi));
-
-    if (response.statusCode == 200) {
-      print('get data produksi berhasil');
-      List jsonResponse = json.decode(response.body);
-
-      var allData =
-          jsonResponse.map((data) => ProduksiModel.fromJson(data)).toList();
-
-      if (month.toString().toLowerCase() == "all") {
-        var filterByName = allData.where((element) =>
-            element.nama.toString().toLowerCase() ==
-            name.toString().toLowerCase());
-        spk = filterByName.toList().length;
-      } else {
-        var filterBySiklus = allData.where((element) =>
-            element.bulan.toString().toLowerCase() ==
-            month.toString().toLowerCase());
-        var filterByName = filterBySiklus.where(
-            (element) => element.nama.toString().toLowerCase() == "asrori");
-        spk = filterByName.toList().length;
-      }
-
-      return spk;
-    } else {
-      print('get data produksi gagal');
-      throw Exception('Unexpected error occured!');
-    }
-  }
-
-  _getSpk(month, name) async {
+  void _getDataAll(month) async {
     setState(() {
       isLoading = true;
     });
+    await _getName(month);
+    await _getSpk(month);
+    await _getSum(month);
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+// fungsi remove duplicate object
+  List<ProduksiModel> removeDuplicates(List<ProduksiModel> items) {
+    List<ProduksiModel> uniqueItems = []; // uniqueList
+    var uniqueNames = items
+        .map((e) => e.nama)
+        .toSet(); //list if UniqueID to remove duplicates
+    for (var e in uniqueNames) {
+      uniqueItems.add(items.firstWhere((i) => i.nama == e));
+    } // populate uniqueItems with equivalent original Batch items
+    return uniqueItems; //send back the unique items list
+  }
+
+  _getName(month) async {
+    artistPasangBatu = [];
+
     final response = await http
         .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getProduksi));
-
     if (response.statusCode == 200) {
-      print('get data produksi berhasil');
+      print('get data nama');
       List jsonResponse = json.decode(response.body);
-
       var allData =
           jsonResponse.map((data) => ProduksiModel.fromJson(data)).toList();
 
       if (month.toString().toLowerCase() == "all") {
-        //? asrori
-        var filterByAsrori = allData.where((element) =>
-            element.nama.toString().toLowerCase() == 'asrori' &&
-            element.keterangan.toString().toLowerCase() != 'orul');
-        spkAsrori = filterByAsrori.toList().length;
-        //? carkiyad
-        var filterByCarkiyad = allData.where((element) =>
-            element.nama.toString().toLowerCase() == 'carkiyad' &&
-            element.keterangan.toString().toLowerCase() != 'orul');
-        spkCarkiyad = filterByCarkiyad.toList().length;
-        //? encup
-        var filterByEncupSupriatna = allData.where((element) =>
-            element.nama.toString().toLowerCase() == 'encup supriatna' &&
-            element.keterangan.toString().toLowerCase() != 'orul');
-        spkEncupSupriatna = filterByEncupSupriatna.toList().length;
-        //? m abdul kodir
-        var filterByMuhammadAbdulKodir = allData.where((element) =>
-            element.nama.toString().toLowerCase() == 'muhammad abdul kodir' &&
-            element.keterangan.toString().toLowerCase() != 'orul');
-        spkMuhammadAbdulKodir = filterByMuhammadAbdulKodir.toList().length;
+        //* function PasangBatu
+        //? filter by divisi PasangBatu
+        var filterByDivisiPasangBatu = allData.where((element) =>
+            element.divisi.toString().toLowerCase() == 'pasang batu');
+        var allDataPasangBatu = filterByDivisiPasangBatu.toList();
+        //! jika suklis tidak di pilih
+        allDataPasangBatu = removeDuplicates(allDataPasangBatu);
+        //? ambil data nama
+        for (var i = 0; i < allDataPasangBatu.length; i++) {
+          artistPasangBatu.add(allDataPasangBatu[i].nama);
+        }
+        artistPasangBatu.sort((a, b) => a.compareTo(b));
+        qtyNamePasangBatu = artistPasangBatu.length;
       } else {
+        //! jika siklus di pilih
         var filterBySiklus = allData.where((element) =>
-            element.bulan.toString().toLowerCase() ==
-            month.toString().toLowerCase());
-        //? asrori
-        var filterByAsrori = filterBySiklus.where((element) =>
-            element.nama.toString().toLowerCase() == 'asrori' &&
-            element.keterangan.toString().toLowerCase() != 'orul');
-        spkAsrori = filterByAsrori.toList().length;
-        //? carkiyad
-        var filterByCarkiyad = filterBySiklus.where((element) =>
-            element.nama.toString().toLowerCase() == 'carkiyad' &&
-            element.keterangan.toString().toLowerCase() != 'orul');
-        spkCarkiyad = filterByCarkiyad.toList().length;
-        //? encup
-        var filterByEncupSupriatna = filterBySiklus.where((element) =>
-            element.nama.toString().toLowerCase() == 'encup supriatna' &&
-            element.keterangan.toString().toLowerCase() != 'orul');
-        spkEncupSupriatna = filterByEncupSupriatna.toList().length;
-        //? m abdul kodir
-        var filterByMuhammadAbdulKodir = filterBySiklus.where((element) =>
-            element.nama.toString().toLowerCase() == 'muhammad abdul kodir' &&
-            element.keterangan.toString().toLowerCase() != 'orul');
-        spkMuhammadAbdulKodir = filterByMuhammadAbdulKodir.toList().length;
-      }
+            element.bulan.toString().toLowerCase() == month.toLowerCase());
 
+        //* function PasangBatu
+        //? filter by divisi PasangBatu
+        var filterByDivisiPasangBatu = filterBySiklus.where((element) =>
+            element.divisi.toString().toLowerCase() == 'pasang batu');
+        var allDataPasangBatu = filterByDivisiPasangBatu.toList();
+        //! jika suklis tidak di pilih
+        allDataPasangBatu = removeDuplicates(allDataPasangBatu);
+        //? ambil data nama
+        for (var i = 0; i < allDataPasangBatu.length; i++) {
+          artistPasangBatu.add(allDataPasangBatu[i].nama);
+        }
+        artistPasangBatu.sort((a, b) => a.compareTo(b));
+
+        qtyNamePasangBatu = artistPasangBatu.length;
+      }
       return allData;
     } else {
-      print('get data produksi gagal');
       throw Exception('Unexpected error occured!');
     }
   }
 
-  _getPoint(month, name) async {
+  _getSpk(month) async {
+    spkPasangBatu = [];
+
     final response = await http
         .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getProduksi));
-
     if (response.statusCode == 200) {
-      print('get data produksi berhasil');
+      print('get data nama');
       List jsonResponse = json.decode(response.body);
-
       var allData =
           jsonResponse.map((data) => ProduksiModel.fromJson(data)).toList();
 
       if (month.toString().toLowerCase() == "all") {
-        //? asrori
-        var filterByAsrori = allData
-            .where((element) =>
-                element.nama.toString().toLowerCase() == 'asrori' &&
-                element.keterangan.toString().toLowerCase() != 'orul')
-            .toList();
-        for (var i = 0; i < filterByAsrori.length; i++) {
-          if (filterByAsrori[i].point! > 0) {
-            totalPointAsrori += filterByAsrori[i].point!;
-          }
-        }
-        //? carkiyad
-        var filterByCarkiyad = allData
-            .where((element) =>
-                element.nama.toString().toLowerCase() == 'carkiyad' &&
-                element.keterangan.toString().toLowerCase() != 'orul')
-            .toList();
-        for (var i = 0; i < filterByCarkiyad.length; i++) {
-          if (filterByCarkiyad[i].point! > 0) {
-            totalPointCarkiyad += filterByCarkiyad[i].point!;
-          }
-        }
-        //? encup
-        var filterByEncupSupriatna = allData
-            .where((element) =>
-                element.nama.toString().toLowerCase() == 'encup supriatna' &&
-                element.keterangan.toString().toLowerCase() != 'orul')
-            .toList();
-        for (var i = 0; i < filterByEncupSupriatna.length; i++) {
-          if (filterByEncupSupriatna[i].point! > 0) {
-            totalPointEncupSupriatna += filterByEncupSupriatna[i].point!;
-          }
-        }
-        //? m abdul kodir
-        var filterByMuhammadAbdulKodir = allData
-            .where((element) =>
-                element.nama.toString().toLowerCase() ==
-                    'muhammad abdul kodir' &&
-                element.keterangan.toString().toLowerCase() != 'orul')
-            .toList();
-        for (var i = 0; i < filterByMuhammadAbdulKodir.length; i++) {
-          if (filterByMuhammadAbdulKodir[i].point! > 0) {
-            totalPointMuhammadAbdulKodir +=
-                filterByMuhammadAbdulKodir[i].point!;
-          }
+        //* function PasangBatu
+        //? filter by divisi PasangBatu
+        var filterByDivisiPasangBatu = allData.where((element) =>
+            element.divisi.toString().toLowerCase() == 'pasang batu' &&
+            element.keterangan!.toLowerCase() != 'orul');
+        var allDataPasangBatu = filterByDivisiPasangBatu.toList();
+
+        //? ambil data spk by nama
+        for (var i = 0; i < qtyNamePasangBatu; i++) {
+          var filterByNamePasangBatu = allDataPasangBatu.where((element) =>
+              element.nama.toString().toLowerCase() ==
+              artistPasangBatu[i].toLowerCase());
+          spkPasangBatu.add(filterByNamePasangBatu.length.toString());
         }
       } else {
+        //! jika siklus di pilih
         var filterBySiklus = allData.where((element) =>
-            element.bulan.toString().toLowerCase() ==
-            month.toString().toLowerCase());
-        //? asrori
-        var filterByAsrori = filterBySiklus
-            .where((element) =>
-                element.nama.toString().toLowerCase() == 'asrori' &&
-                element.keterangan.toString().toLowerCase() != 'orul')
-            .toList();
-        for (var i = 0; i < filterByAsrori.length; i++) {
-          if (filterByAsrori[i].point! > 0) {
-            totalPointAsrori += filterByAsrori[i].point!;
-          }
-        }
-        //? carkiyad
-        var filterByCarkiyad = filterBySiklus
-            .where((element) =>
-                element.nama.toString().toLowerCase() == 'carkiyad' &&
-                element.keterangan.toString().toLowerCase() != 'orul')
-            .toList();
-        for (var i = 0; i < filterByCarkiyad.length; i++) {
-          if (filterByCarkiyad[i].point! > 0) {
-            totalPointCarkiyad += filterByCarkiyad[i].point!;
-          }
-        }
-        //? encup
-        var filterByEncupSupriatna = filterBySiklus
-            .where((element) =>
-                element.nama.toString().toLowerCase() == 'encup supriatna' &&
-                element.keterangan.toString().toLowerCase() != 'orul')
-            .toList();
-        for (var i = 0; i < filterByEncupSupriatna.length; i++) {
-          if (filterByEncupSupriatna[i].point! > 0) {
-            totalPointEncupSupriatna += filterByEncupSupriatna[i].point!;
-          }
-        }
-        //? m abdul kodir
-        var filterByMuhammadAbdulKodir = filterBySiklus
-            .where((element) =>
-                element.nama.toString().toLowerCase() == 'encup supriatna' &&
-                element.keterangan.toString().toLowerCase() != 'orul')
-            .toList();
-        for (var i = 0; i < filterByMuhammadAbdulKodir.length; i++) {
-          if (filterByMuhammadAbdulKodir[i].point! > 0) {
-            totalPointMuhammadAbdulKodir +=
-                filterByMuhammadAbdulKodir[i].point!;
-          }
+            element.bulan.toString().toLowerCase() == month.toLowerCase());
+        //* function PasangBatu
+        //? filter by divisi PasangBatu
+        var filterByDivisiPasangBatu = filterBySiklus.where((element) =>
+            element.divisi.toString().toLowerCase() == 'pasang batu' &&
+            element.keterangan!.toLowerCase() != 'orul');
+        var allDataPasangBatu = filterByDivisiPasangBatu.toList();
+
+        //? ambil data spk by nama
+        for (var i = 0; i < qtyNamePasangBatu; i++) {
+          var filterByNamePasangBatu = allDataPasangBatu.where((element) =>
+              element.nama.toString().toLowerCase() ==
+              artistPasangBatu[i].toLowerCase());
+          spkPasangBatu.add(filterByNamePasangBatu.length.toString());
         }
       }
-
       return allData;
     } else {
-      print('get data produksi gagal');
       throw Exception('Unexpected error occured!');
     }
   }
 
-  _getBeratAsal(month, name) async {
+  _getSum(month) async {
+    sumButir = [];
+    sumCarat = [];
+    sumPecahButir = [];
+    sumPecahCarat = [];
+    sumHilangButir = [];
+    sumHilangCarat = [];
+    sumAsal = [];
+    sumJadi = [];
+    sumTotalOngkosan = [];
+
     final response = await http
         .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getProduksi));
-
     if (response.statusCode == 200) {
-      print('get data produksi berhasil');
+      print('get data nama');
       List jsonResponse = json.decode(response.body);
-
       var allData =
           jsonResponse.map((data) => ProduksiModel.fromJson(data)).toList();
 
       if (month.toString().toLowerCase() == "all") {
-        //? asrori
-        var filterByAsrori = allData
-            .where((element) =>
-                element.nama.toString().toLowerCase() == 'asrori' &&
-                element.keterangan.toString().toLowerCase() != 'orul')
-            .toList();
-        for (var i = 0; i < filterByAsrori.length; i++) {
-          if (filterByAsrori[i].debet! > 0) {
-            beratAsalAsrori += filterByAsrori[i].debet!;
+        //* function PasangBatu
+        //? filter by divisi PasangBatu
+        var filterByDivisiPasangBatu = allData.where((element) =>
+            element.divisi.toString().toLowerCase() == 'pasang batu' &&
+            element.keterangan!.toLowerCase() != 'orul');
+        var allDataPasangBatu = filterByDivisiPasangBatu.toList();
+
+        for (var i = 0; i < qtyNamePasangBatu; i++) {
+          int dumSumButir = 0;
+          double dumSumCarat = 0;
+          double dumSumAsal = 0;
+          double dumSumPecahButir = 0;
+          double dumSumPecahCarat = 0;
+          double dumSumHilangButir = 0;
+          double dumSumHilangCarat = 0;
+          double dumSumJadi = 0;
+          int dumSumTotalOngkosan = 0;
+          var filterByNamePasangBatu = allDataPasangBatu
+              .where((element) =>
+                  element.nama.toString().toLowerCase() ==
+                  artistPasangBatu[i].toLowerCase())
+              .toList();
+          for (var j = 0; j < filterByNamePasangBatu.length; j++) {
+            dumSumButir += filterByNamePasangBatu[j].butirDiamond!;
+            dumSumCarat += filterByNamePasangBatu[j].beratDiamond!;
+            dumSumAsal += filterByNamePasangBatu[j].debet!;
+            dumSumJadi += filterByNamePasangBatu[j].kredit!;
+            dumSumPecahButir += filterByNamePasangBatu[j].pecahButir!;
+            dumSumPecahCarat += filterByNamePasangBatu[j].pecahCarat!;
+            dumSumHilangButir += filterByNamePasangBatu[j].hilangButir!;
+            dumSumHilangCarat += filterByNamePasangBatu[j].hilangCarat!;
+            dumSumTotalOngkosan += filterByNamePasangBatu[j].totalOngkosan!;
           }
+          sumButir.add(dumSumButir.toString());
+          sumCarat.add(dumSumCarat);
+          sumAsal.add(dumSumAsal);
+          sumJadi.add(dumSumJadi);
+          sumSusut.add((dumSumCarat * 0.2) + dumSumAsal - dumSumJadi);
+          sumJatahSusut.add((sumSusut[i] * 0.25) + 0.075);
+          sumPecahButir.add(dumSumPecahButir);
+          sumPecahCarat.add(dumSumPecahCarat);
+          sumHilangButir.add(dumSumHilangButir);
+          sumHilangCarat.add(dumSumHilangCarat);
+          sumTotalOngkosan.add(dumSumTotalOngkosan);
         }
-        //? carkiyad
-        var filterByCarkiyad = allData
-            .where((element) =>
-                element.nama.toString().toLowerCase() == 'carkiyad' &&
-                element.keterangan.toString().toLowerCase() != 'orul')
-            .toList();
-        for (var i = 0; i < filterByCarkiyad.length; i++) {
-          if (filterByCarkiyad[i].debet! > 0) {
-            beratAsalCarkiyad += filterByCarkiyad[i].debet!;
-          }
-        }
-        //? encup
-        var filterByEncupSupriatna = allData
-            .where((element) =>
-                element.nama.toString().toLowerCase() == 'encup supriatna' &&
-                element.keterangan.toString().toLowerCase() != 'orul')
-            .toList();
-        for (var i = 0; i < filterByEncupSupriatna.length; i++) {
-          if (filterByEncupSupriatna[i].debet! > 0) {
-            beratAsalEncupSupriatna += filterByEncupSupriatna[i].debet!;
-          }
-        }
-        //? m abdul kodir
-        var filterByMuhammadAbdulKodir = allData
-            .where((element) =>
-                element.nama.toString().toLowerCase() ==
-                    'muhammad abdul kodir' &&
-                element.keterangan.toString().toLowerCase() != 'orul')
-            .toList();
-        for (var i = 0; i < filterByMuhammadAbdulKodir.length; i++) {
-          if (filterByMuhammadAbdulKodir[i].debet! > 0) {
-            beratAsalMuhammadAbdulKodir += filterByMuhammadAbdulKodir[i].debet!;
-          }
-        }
+        // final responseSB = await http
+        //     .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getProduksiSB));
+        // if (responseSB.statusCode == 200) {
+        //   List jsonResponseSB = json.decode(responseSB.body);
+        //   var allDataSB = jsonResponseSB
+        //       .map((data) => ProduksiSBModel.fromJson(data))
+        //       .toList();
+        //   var filterByDivisiSB = allDataSB.where((element) =>
+        //       element.divisi.toString().toLowerCase() == 'finishing');
+        //   if (month.toString().toLowerCase() == "all") {
+        //     for (var i = 0; i < qtyNamePasangBatu; i++) {
+        //       double apiBeratAsalSB = 0;
+        //       double apiBeratAkirSB = 0;
+        //     }
+        //   } else {
+
+        //   }
+        // } else {
+        //   throw Exception('Unexpected error occured!');
+        // }
       } else {
+        //! jika siklus di pilih
         var filterBySiklus = allData.where((element) =>
-            element.bulan.toString().toLowerCase() ==
-            month.toString().toLowerCase());
-        //? asrori
-        var filterByAsrori = filterBySiklus
-            .where((element) =>
-                element.nama.toString().toLowerCase() == 'asrori' &&
-                element.keterangan.toString().toLowerCase() != 'orul')
-            .toList();
-        for (var i = 0; i < filterByAsrori.length; i++) {
-          if (filterByAsrori[i].debet! > 0) {
-            beratAsalAsrori += filterByAsrori[i].debet!;
+            element.bulan.toString().toLowerCase() == month.toLowerCase());
+        //* function PasangBatu
+        //? filter by divisi PasangBatu
+        var filterByDivisiPasangBatu = filterBySiklus.where((element) =>
+            element.divisi.toString().toLowerCase() == 'pasang batu' &&
+            element.keterangan!.toLowerCase() != 'orul');
+        var allDataPasangBatu = filterByDivisiPasangBatu.toList();
+
+        for (var i = 0; i < qtyNamePasangBatu; i++) {
+          int dumSumButir = 0;
+          double dumSumCarat = 0;
+          double dumSumAsal = 0;
+          double dumSumJadi = 0;
+          var filterByNamePasangBatu = allDataPasangBatu
+              .where((element) =>
+                  element.nama.toString().toLowerCase() ==
+                  artistPasangBatu[i].toLowerCase())
+              .toList();
+          for (var j = 0; j < filterByNamePasangBatu.length; j++) {
+            dumSumButir += filterByNamePasangBatu[j].butirDiamond!;
+            dumSumCarat += filterByNamePasangBatu[j].beratDiamond!;
+            dumSumAsal += filterByNamePasangBatu[j].debet!;
+            dumSumJadi += filterByNamePasangBatu[j].kredit!;
           }
-        }
-        //? carkiyad
-        var filterByCarkiyad = filterBySiklus
-            .where((element) =>
-                element.nama.toString().toLowerCase() == 'carkiyad' &&
-                element.keterangan.toString().toLowerCase() != 'orul')
-            .toList();
-        for (var i = 0; i < filterByCarkiyad.length; i++) {
-          if (filterByCarkiyad[i].debet! > 0) {
-            beratAsalCarkiyad += filterByCarkiyad[i].debet!;
-          }
-        }
-        //? encup
-        var filterByEncupSupriatna = filterBySiklus
-            .where((element) =>
-                element.nama.toString().toLowerCase() == 'encup supriatna' &&
-                element.keterangan.toString().toLowerCase() != 'orul')
-            .toList();
-        for (var i = 0; i < filterByEncupSupriatna.length; i++) {
-          if (filterByEncupSupriatna[i].debet! > 0) {
-            beratAsalEncupSupriatna += filterByEncupSupriatna[i].debet!;
-          }
-        }
-        //? m abdul kodir
-        var filterByMuhammadAbdulKodir = filterBySiklus
-            .where((element) =>
-                element.nama.toString().toLowerCase() == 'encup supriatna' &&
-                element.keterangan.toString().toLowerCase() != 'orul')
-            .toList();
-        for (var i = 0; i < filterByMuhammadAbdulKodir.length; i++) {
-          if (filterByMuhammadAbdulKodir[i].debet! > 0) {
-            beratAsalMuhammadAbdulKodir += filterByMuhammadAbdulKodir[i].debet!;
-          }
+          sumButir.add(dumSumButir.toString());
+          sumCarat.add(dumSumCarat);
+          sumAsal.add(dumSumAsal);
+          sumJadi.add(dumSumJadi);
+          sumSusut.add((dumSumCarat * 0.2) + dumSumAsal - dumSumJadi);
+          sumJatahSusut.add((sumSusut[i] * 0.25) + 0.075);
         }
       }
-      setState(() {
-        isLoading = false;
-      });
       return allData;
     } else {
-      print('get data produksi gagal');
-      throw Exception('Unexpected error occured!');
-    }
-  }
-
-  _getBeratAsalByName(month, name) async {
-    double sumDebet = 0.0;
-
-    final response = await http
-        .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getProduksi));
-
-    if (response.statusCode == 200) {
-      print('get data produksi berhasil');
-      List jsonResponse = json.decode(response.body);
-
-      var allData =
-          jsonResponse.map((data) => ProduksiModel.fromJson(data)).toList();
-
-      if (month.toString().toLowerCase() == "all") {
-        var filterByName = allData
-            .where((element) =>
-                element.nama.toString().toLowerCase() ==
-                name.toString().toLowerCase())
-            .toList();
-        for (var i = 0; i < filterByName.length; i++) {
-          if (filterByName[i].debet! > 0) {
-            sumDebet += filterByName[i].debet!;
-          }
-        }
-        // beratAsal = filterByName.toList().length;
-      } else {
-        var filterBySiklus = allData.where((element) =>
-            element.bulan.toString().toLowerCase() ==
-            month.toString().toLowerCase());
-        var filterByName = filterBySiklus
-            .where((element) =>
-                element.nama.toString().toLowerCase() ==
-                name.toString().toLowerCase())
-            .toList();
-        for (var i = 0; i < filterByName.length; i++) {
-          if (filterByName[i].debet! > 0) {
-            sumDebet += filterByName[i].debet!;
-          }
-        }
-      }
-      return sumDebet.toStringAsFixed(2);
-    } else {
-      print('get data produksi gagal');
       throw Exception('Unexpected error occured!');
     }
   }
@@ -491,51 +344,53 @@ class _SummaryPasangBatuScreenState extends State<SummaryPasangBatuScreen> {
       DataColumn(label: _verticalDivider),
       DataColumn(label: Text('SPK')),
       DataColumn(label: _verticalDivider),
-      DataColumn(label: Text('TOTAL BUTIR')),
+      DataColumn(label: Text('TOTAL\nBUTIR')),
       DataColumn(label: _verticalDivider),
-      DataColumn(label: Text('TOTAL CARAT')),
+      DataColumn(label: Text('TOTAL\nCARAT')),
       DataColumn(label: _verticalDivider),
-      DataColumn(label: Text('BERAT ASAL')),
+      DataColumn(label: Text('BERAT\nASAL')),
       DataColumn(label: _verticalDivider),
-      DataColumn(label: Text('BERAT JADI')),
+      DataColumn(label: Text('BERAT\nJADI')),
       DataColumn(label: _verticalDivider),
       DataColumn(label: Text('SUSUT')),
       DataColumn(label: _verticalDivider),
-      DataColumn(label: Text('JATAH SUSUT')),
+      DataColumn(label: Text('JATAH\nSUSUT')),
       DataColumn(label: _verticalDivider),
       DataColumn(label: Text('RESULT')),
       DataColumn(label: _verticalDivider),
       DataColumn(label: Text('KETERANGAN')),
       DataColumn(label: _verticalDivider),
-      DataColumn(label: Text('PECAH BATU\nBUTIR')),
+      DataColumn(label: Text('PECAH\nBUTIR')),
       DataColumn(label: _verticalDivider),
-      DataColumn(label: Text('PECAH BATU\nCARAT')),
+      DataColumn(label: Text('PECAH\nCARAT')),
       DataColumn(label: _verticalDivider),
-      DataColumn(label: Text('HILANG BATU\nBUTIR')),
+      DataColumn(label: Text('HILANG\nBUTIR')),
       DataColumn(label: _verticalDivider),
-      DataColumn(label: Text('HILANG BATU\nCARAT')),
+      DataColumn(label: Text('HILANG\nCARAT')),
+      DataColumn(label: _verticalDivider),
+      DataColumn(label: Text('TOTAL\nPENDAPATAN')),
     ];
   }
 
   List<DataRow> _createRows() {
     return [
-      for (var i = 0; i < 4; i++)
+      for (var i = 0; i < qtyNamePasangBatu; i++)
         DataRow(cells: [
-          DataCell(Text('Artist $i')),
+          DataCell(Text(artistPasangBatu[i])),
           DataCell(_verticalDivider),
-          DataCell(Text('2')),
+          DataCell(Text(spkPasangBatu[i])),
           DataCell(_verticalDivider),
-          DataCell(Text('1.82')),
+          DataCell(Text(sumButir[i])),
           DataCell(_verticalDivider),
-          DataCell(Text('1.60')),
+          DataCell(Text(sumCarat[i].toStringAsFixed(3))),
           DataCell(_verticalDivider),
-          DataCell(Text('13.31')),
+          DataCell(Text(sumAsal[i].toStringAsFixed(2))),
           DataCell(_verticalDivider),
-          DataCell(Text('13.31')),
+          DataCell(Text(sumJadi[i].toStringAsFixed(2))),
           DataCell(_verticalDivider),
-          DataCell(Text('13.31')),
+          DataCell(Text(sumSusut[i].toStringAsFixed(2))),
           DataCell(_verticalDivider),
-          DataCell(Text('13.31')),
+          DataCell(Text(sumJatahSusut[i].toStringAsFixed(3))),
           DataCell(_verticalDivider),
           DataCell(Text('13.31')),
           DataCell(_verticalDivider),
@@ -546,13 +401,70 @@ class _SummaryPasangBatuScreenState extends State<SummaryPasangBatuScreen> {
             ),
           ),
           DataCell(_verticalDivider),
-          DataCell(Text('13.31')),
+          DataCell(Text(sumPecahButir[i].toStringAsFixed(0))),
           DataCell(_verticalDivider),
-          DataCell(Text('13.31')),
+          DataCell(Text(sumPecahCarat[i].toStringAsFixed(3))),
           DataCell(_verticalDivider),
-          DataCell(Text('13.31')),
+          DataCell(Text(sumHilangButir[i].toStringAsFixed(0))),
           DataCell(_verticalDivider),
-          DataCell(Text('13.31')),
+          DataCell(Text(sumHilangCarat[i].toStringAsFixed(3))),
+          DataCell(_verticalDivider),
+          DataCell(Text(CurrencyFormat.convertToIdr(sumTotalOngkosan[i], 0))),
+        ]),
+    ];
+  }
+
+  //! end data table
+
+  //! data table
+  DataTable _dataTablePecahHilang() {
+    return DataTable(
+        headingTextStyle:
+            TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+        headingRowColor:
+            MaterialStateProperty.resolveWith((states) => Colors.blue),
+        columnSpacing: 1,
+        headingRowHeight: 50,
+        dataRowMaxHeight: 50,
+        columns: _createColumnsPecahHilang(),
+        rows: _createRowsPecah());
+  }
+
+  List<DataColumn> _createColumnsPecahHilang() {
+    return [
+      DataColumn(label: Text('NAMA')),
+      DataColumn(label: _verticalDivider),
+      DataColumn(label: Text('PARCEL')),
+      DataColumn(label: _verticalDivider),
+      DataColumn(label: Text('UKURAN')),
+      DataColumn(label: _verticalDivider),
+      DataColumn(label: Text('BUTIR')),
+      DataColumn(label: _verticalDivider),
+      DataColumn(label: Text('CARAT')),
+      DataColumn(label: _verticalDivider),
+      DataColumn(label: Text('HARGA')),
+      DataColumn(label: _verticalDivider),
+      DataColumn(label: Text('KETERANGAN')),
+    ];
+  }
+
+  List<DataRow> _createRowsPecah() {
+    return [
+      for (var i = 0; i < qtyNamePasangBatu; i++)
+        DataRow(cells: [
+          DataCell(Text(artistPasangBatu[i])),
+          DataCell(_verticalDivider),
+          DataCell(Text(spkPasangBatu[i])),
+          DataCell(_verticalDivider),
+          DataCell(Text(sumButir[i])),
+          DataCell(_verticalDivider),
+          DataCell(Text(sumCarat[i].toStringAsFixed(3))),
+          DataCell(_verticalDivider),
+          DataCell(Text(sumAsal[i].toStringAsFixed(2))),
+          DataCell(_verticalDivider),
+          DataCell(Text(sumJadi[i].toStringAsFixed(2))),
+          DataCell(_verticalDivider),
+          DataCell(Text(sumSusut[i].toStringAsFixed(2))),
         ]),
     ];
   }
@@ -715,15 +627,15 @@ class _SummaryPasangBatuScreenState extends State<SummaryPasangBatuScreen> {
                                 child: Container(
                                     color: Colors.grey.shade200,
                                     child: Column(
-                                      children: const [
+                                      children: [
                                         Text(
-                                          'POLESHING 1',
+                                          'PECAH BATU',
                                           style: TextStyle(
                                               fontSize: 20,
                                               color: Colors.black,
                                               fontWeight: FontWeight.bold),
                                         ),
-                                        // _dataTableFinishing(),
+                                        _dataTablePecahHilang(),
                                       ],
                                     ))),
                             SizedBox(height: 20),
@@ -734,15 +646,15 @@ class _SummaryPasangBatuScreenState extends State<SummaryPasangBatuScreen> {
                                 child: Container(
                                     color: Colors.grey.shade200,
                                     child: Column(
-                                      children: const [
+                                      children: [
                                         Text(
-                                          'POLESHING 2',
+                                          'HILANG BATU',
                                           style: TextStyle(
                                               fontSize: 20,
                                               color: Colors.black,
                                               fontWeight: FontWeight.bold),
                                         ),
-                                        // _dataTableFinishing(),
+                                        _dataTablePecahHilang()
                                       ],
                                     ))),
                             SizedBox(height: 20),

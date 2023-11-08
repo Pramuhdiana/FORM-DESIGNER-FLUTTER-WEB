@@ -1,18 +1,19 @@
 // ignore_for_file: depend_on_referenced_packages, avoid_print, prefer_typing_uninitialized_variables, use_build_context_synchronously, prefer_final_fields, prefer_const_constructors, no_leading_underscores_for_local_identifiers, unused_element
 
+import 'dart:convert';
+
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:form_designer/api/api_constant.dart';
+import 'package:form_designer/global/currency_format.dart';
 import 'package:form_designer/global/global.dart';
-import 'dart:convert';
 import 'package:form_designer/model/form_designer_model.dart';
 import 'package:form_designer/produksi/modelProduksi/produksi_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:lottie/lottie.dart';
-import 'package:overlay_support/overlay_support.dart';
 
 class SummaryProduktivitasScreen extends StatefulWidget {
   const SummaryProduktivitasScreen({super.key});
@@ -33,38 +34,6 @@ class _SummaryProduktivitasScreenState
   TextEditingController siklus = TextEditingController();
   String? updateSiklus = '';
   TextEditingController addSiklus = TextEditingController();
-
-  int? spkAsrori = 0;
-  double beratAsalAsrori = 0;
-  double? susutAsrori = 0;
-  double? jatahSusutAsrori = 0;
-  double? sbAsrori = 0;
-  double? resultAsrori = 0;
-  double totalPointAsrori = 0.0;
-
-  int? spkCarkiyad = 0;
-  double beratAsalCarkiyad = 0;
-  double? susutCarkiyad = 0;
-  double? jatahSusutCarkiyad = 0;
-  double? sbCarkiyad = 0;
-  double? resultCarkiyad = 0;
-  double totalPointCarkiyad = 0;
-
-  int? spkEncupSupriatna = 0;
-  double beratAsalEncupSupriatna = 0;
-  double? susutEncupSupriatna = 0;
-  double? jatahSusutEncupSupriatna = 0;
-  double? sbEncupSupriatna = 0;
-  double? resultEncupSupriatna = 0;
-  double totalPointEncupSupriatna = 0;
-
-  int? spkMuhammadAbdulKodir = 0;
-  double beratAsalMuhammadAbdulKodir = 0;
-  double? susutMuhammadAbdulKodir = 0;
-  double? jatahSusutMuhammadAbdulKodir = 0;
-  double? sbMuhammadAbdulKodir = 0;
-  double? resultMuhammadAbdulKodir = 0;
-  double totalPointMuhammadAbdulKodir = 0;
   String siklusDesigner = '';
 
   bool isSelected1 = false;
@@ -78,6 +47,17 @@ class _SummaryProduktivitasScreenState
   bool isLoadingJenisBarang = false;
   var nowSiklus = '';
   String? namaJenisBarangView1 = '';
+  List artistProduktivitas = [];
+  List pointProduktivitasFinishing = [];
+  List pointProduktivitasPolishing1 = [];
+  List pointProduktivitasPolishing2 = [];
+  List pointProduktivitasPolishing2Rep = [];
+  List pointProduktivitasStell1 = [];
+  List pointProduktivitasStell2 = [];
+  List pointProduktivitasStell2Rep = [];
+  List sumProduktivitas = [];
+  int qtyArtist = 0;
+  var data;
 
   @override
   initState() {
@@ -88,393 +68,270 @@ class _SummaryProduktivitasScreenState
     siklusDesigner = month;
     // _getAllDataProduksi("all", sharedPreferences!.getString('nama')!);
     nowSiklus = sharedPreferences!.getString('siklus')!;
-    _getSpk("all", 'noname');
-    _getPoint("all", 'noname');
-    _getBeratAsal("all", 'noname');
+    _getDataAll('all');
   }
 
-  _getSpkByName(month, name) async {
-    var spk;
-    final response = await http
-        .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getProduksi));
+  Future<dynamic> fetchData() async {
+    final url = ApiConstants.baseUrl +
+        ApiConstants.getNilaiProduksi; // replace with your API endpoint
 
-    if (response.statusCode == 200) {
-      print('get data produksi berhasil');
-      List jsonResponse = json.decode(response.body);
-
-      var allData =
-          jsonResponse.map((data) => ProduksiModel.fromJson(data)).toList();
-
-      if (month.toString().toLowerCase() == "all") {
-        var filterByName = allData.where((element) =>
-            element.nama.toString().toLowerCase() ==
-            name.toString().toLowerCase());
-        spk = filterByName.toList().length;
-      } else {
-        var filterBySiklus = allData.where((element) =>
-            element.bulan.toString().toLowerCase() ==
-            month.toString().toLowerCase());
-        var filterByName = filterBySiklus.where(
-            (element) => element.nama.toString().toLowerCase() == "asrori");
-        spk = filterByName.toList().length;
-      }
-
-      return spk;
-    } else {
-      print('get data produksi gagal');
-      throw Exception('Unexpected error occured!');
+    try {
+      final response = await http.get(Uri.parse(url));
+      return jsonDecode(response.body);
+    } catch (e) {
+      print('Error: $e');
+      return null;
     }
   }
 
-  _getSpk(month, name) async {
+  void _getDataAll(month) async {
+    setState(() {
+      isLoading = true;
+    });
+    data = await fetchData();
+    await _getName(month);
+    await _getPoint(month);
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  _getName(month) async {
+    artistProduktivitas = [];
     final response = await http
         .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getProduksi));
-
     if (response.statusCode == 200) {
-      print('get data produksi berhasil');
+      print('get data nama');
       List jsonResponse = json.decode(response.body);
-
       var allData =
           jsonResponse.map((data) => ProduksiModel.fromJson(data)).toList();
 
       if (month.toString().toLowerCase() == "all") {
-        //? asrori
-        var filterByAsrori = allData.where((element) =>
-            element.nama.toString().toLowerCase() == 'asrori' &&
-            element.keterangan.toString().toLowerCase() != 'orul');
-        spkAsrori = filterByAsrori.toList().length;
-        //? carkiyad
-        var filterByCarkiyad = allData.where((element) =>
-            element.nama.toString().toLowerCase() == 'carkiyad' &&
-            element.keterangan.toString().toLowerCase() != 'orul');
-        spkCarkiyad = filterByCarkiyad.toList().length;
-        //? encup
-        var filterByEncupSupriatna = allData.where((element) =>
-            element.nama.toString().toLowerCase() == 'encup supriatna' &&
-            element.keterangan.toString().toLowerCase() != 'orul');
-        spkEncupSupriatna = filterByEncupSupriatna.toList().length;
-        //? m abdul kodir
-        var filterByMuhammadAbdulKodir = allData.where((element) =>
-            element.nama.toString().toLowerCase() == 'muhammad abdul kodir' &&
-            element.keterangan.toString().toLowerCase() != 'orul');
-        spkMuhammadAbdulKodir = filterByMuhammadAbdulKodir.toList().length;
+        var filterByDivisi = allData.where((element) =>
+            element.divisi.toString().toLowerCase() != 'pasang batu');
+        var allDataProduktivitas = filterByDivisi.toList();
+
+        //! jika suklis tidak di pilih
+        allData = removeDuplicates(allDataProduktivitas);
+        //? ambil data nama
+        for (var i = 0; i < allData.length; i++) {
+          artistProduktivitas.add(allData[i].nama);
+        }
+        artistProduktivitas.removeWhere((element) => element.toString() == '');
+        artistProduktivitas.sort((a, b) => a.compareTo(b));
+        artistProduktivitas.add('Total');
+
+        qtyArtist = artistProduktivitas.length;
       } else {
+        //! jika siklus di pilih
         var filterBySiklus = allData.where((element) =>
-            element.bulan.toString().toLowerCase() ==
-            month.toString().toLowerCase());
-        //? asrori
-        var filterByAsrori = filterBySiklus.where((element) =>
-            element.nama.toString().toLowerCase() == 'asrori' &&
-            element.keterangan.toString().toLowerCase() != 'orul');
-        spkAsrori = filterByAsrori.toList().length;
-        //? carkiyad
-        var filterByCarkiyad = filterBySiklus.where((element) =>
-            element.nama.toString().toLowerCase() == 'carkiyad' &&
-            element.keterangan.toString().toLowerCase() != 'orul');
-        spkCarkiyad = filterByCarkiyad.toList().length;
-        //? encup
-        var filterByEncupSupriatna = filterBySiklus.where((element) =>
-            element.nama.toString().toLowerCase() == 'encup supriatna' &&
-            element.keterangan.toString().toLowerCase() != 'orul');
-        spkEncupSupriatna = filterByEncupSupriatna.toList().length;
-        //? m abdul kodir
-        var filterByMuhammadAbdulKodir = filterBySiklus.where((element) =>
-            element.nama.toString().toLowerCase() == 'muhammad abdul kodir' &&
-            element.keterangan.toString().toLowerCase() != 'orul');
-        spkMuhammadAbdulKodir = filterByMuhammadAbdulKodir.toList().length;
+            element.bulan.toString().toLowerCase() == month.toLowerCase());
+        var filterByDivisi = filterBySiklus.where((element) =>
+            element.divisi.toString().toLowerCase() != 'pasang batu');
+        var allDataProduktivitas = filterByDivisi.toList();
+        //! jika suklis tidak di pilih
+        allData = removeDuplicates(allDataProduktivitas);
+        // allDataFinishing.removeWhere((element) => element == '');
+        //? ambil data nama
+        for (var i = 0; i < allData.length; i++) {
+          artistProduktivitas.add(allData[i].nama);
+        }
+        artistProduktivitas.removeWhere((element) => element.toString() == '');
+        artistProduktivitas.sort((a, b) => a.compareTo(b));
+        artistProduktivitas.add('Total');
+        qtyArtist = artistProduktivitas.length;
       }
-      setState(() {
-        print('refresh state get data produksi');
-        isLoading = true;
-      });
       return allData;
     } else {
-      print('get data produksi gagal');
       throw Exception('Unexpected error occured!');
     }
   }
 
-  _getPoint(month, name) async {
+  _getPoint(month) async {
+    pointProduktivitasFinishing = [];
+    pointProduktivitasPolishing1 = [];
+    pointProduktivitasPolishing2 = [];
+    pointProduktivitasPolishing2Rep = [];
+    pointProduktivitasStell1 = [];
+    pointProduktivitasStell2 = [];
+    pointProduktivitasStell2Rep = [];
     final response = await http
         .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getProduksi));
-
     if (response.statusCode == 200) {
-      print('get data produksi berhasil');
+      print('get data nama');
       List jsonResponse = json.decode(response.body);
-
       var allData =
           jsonResponse.map((data) => ProduksiModel.fromJson(data)).toList();
 
       if (month.toString().toLowerCase() == "all") {
-        //? asrori
-        var filterByAsrori = allData
-            .where((element) =>
-                element.nama.toString().toLowerCase() == 'asrori' &&
-                element.keterangan.toString().toLowerCase() != 'orul')
-            .toList();
-        for (var i = 0; i < filterByAsrori.length; i++) {
-          if (filterByAsrori[i].point! > 0) {
-            totalPointAsrori += filterByAsrori[i].point!;
+        var filterByDivisi = allData.where((element) =>
+            element.divisi.toString().toLowerCase() != 'pasang batu');
+        var allDataProduktivitas = filterByDivisi.toList();
+
+        //! jika suklis tidak di pilih
+        //? ambil data nama
+        for (var i = 0; i < artistProduktivitas.length; i++) {
+          double apiPointProduktivitasFinishing = 0;
+          double apiPointProduktivitasPolishing1 = 0;
+          double apiPointProduktivitasPolishing2 = 0;
+          double apiPointProduktivitasPolishing2Rep = 0;
+          double apiPointProduktivitasStell1 = 0;
+          double apiPointProduktivitasStell2 = 0;
+          double apiPointProduktivitasStell2Rep = 0;
+
+          //! finishing
+          var filterByNameFinishing = allDataProduktivitas
+              .where((element) =>
+                  element.nama.toString().toLowerCase() ==
+                      artistProduktivitas[i].toLowerCase() &&
+                  element.divisi.toString().toLowerCase() == 'finishing')
+              .toList();
+          for (var j = 0; j < filterByNameFinishing.length; j++) {
+            apiPointProduktivitasFinishing += filterByNameFinishing[j].point!;
           }
-        }
-        //? carkiyad
-        var filterByCarkiyad = allData
-            .where((element) =>
-                element.nama.toString().toLowerCase() == 'carkiyad' &&
-                element.keterangan.toString().toLowerCase() != 'orul')
-            .toList();
-        for (var i = 0; i < filterByCarkiyad.length; i++) {
-          if (filterByCarkiyad[i].point! > 0) {
-            totalPointCarkiyad += filterByCarkiyad[i].point!;
+          //? end finishing
+
+          //! Polishing1
+          var filterByNamePolishing1 = allDataProduktivitas
+              .where((element) =>
+                  element.nama.toString().toLowerCase() ==
+                      artistProduktivitas[i].toLowerCase() &&
+                  element.divisi.toString().toLowerCase() == 'poleshing 1')
+              .toList();
+          for (var j = 0; j < filterByNamePolishing1.length; j++) {
+            apiPointProduktivitasPolishing1 += filterByNamePolishing1[j].point!;
           }
-        }
-        //? encup
-        var filterByEncupSupriatna = allData
-            .where((element) =>
-                element.nama.toString().toLowerCase() == 'encup supriatna' &&
-                element.keterangan.toString().toLowerCase() != 'orul')
-            .toList();
-        for (var i = 0; i < filterByEncupSupriatna.length; i++) {
-          if (filterByEncupSupriatna[i].point! > 0) {
-            totalPointEncupSupriatna += filterByEncupSupriatna[i].point!;
+          //? end Polishing1
+
+          //! Polishing2
+          var filterByNamePolishing2 = allDataProduktivitas
+              .where((element) =>
+                  element.nama.toString().toLowerCase() ==
+                      artistProduktivitas[i].toLowerCase() &&
+                  element.divisi.toString().toLowerCase() == 'Polishing 2')
+              .toList();
+          for (var j = 0; j < filterByNamePolishing2.length; j++) {
+            apiPointProduktivitasPolishing2 += filterByNamePolishing2[j].point!;
           }
-        }
-        //? m abdul kodir
-        var filterByMuhammadAbdulKodir = allData
-            .where((element) =>
-                element.nama.toString().toLowerCase() ==
-                    'muhammad abdul kodir' &&
-                element.keterangan.toString().toLowerCase() != 'orul')
-            .toList();
-        for (var i = 0; i < filterByMuhammadAbdulKodir.length; i++) {
-          if (filterByMuhammadAbdulKodir[i].point! > 0) {
-            totalPointMuhammadAbdulKodir +=
-                filterByMuhammadAbdulKodir[i].point!;
+          //? end Polishing2
+
+          //! Polishing2Rep
+          var filterByNamePolishing2Rep = allDataProduktivitas
+              .where((element) =>
+                  element.nama.toString().toLowerCase() ==
+                      artistProduktivitas[i].toLowerCase() &&
+                  element.divisi.toString().toLowerCase() == 'poleshing 2 rep')
+              .toList();
+          for (var j = 0; j < filterByNamePolishing2Rep.length; j++) {
+            apiPointProduktivitasPolishing2Rep +=
+                filterByNamePolishing2Rep[j].point!;
           }
+          //? end Polishing2Rep
+
+          //! Stell1
+          var filterByNameStell1 = allDataProduktivitas
+              .where((element) =>
+                  element.nama.toString().toLowerCase() ==
+                      artistProduktivitas[i].toLowerCase() &&
+                  element.divisi.toString().toLowerCase() == 'poleshing 1')
+              .toList();
+          for (var j = 0; j < filterByNameStell1.length; j++) {
+            apiPointProduktivitasStell1 += filterByNameStell1[j].point!;
+          }
+          //? end Stell1
+
+          //! Stell2
+          var filterByNameStell2 = allDataProduktivitas
+              .where((element) =>
+                  element.nama.toString().toLowerCase() ==
+                      artistProduktivitas[i].toLowerCase() &&
+                  element.divisi.toString().toLowerCase() == 'Stell 2')
+              .toList();
+          for (var j = 0; j < filterByNameStell2.length; j++) {
+            apiPointProduktivitasStell2 += filterByNameStell2[j].point!;
+          }
+          //? end Stell2
+
+          //! Stell2Rep
+          var filterByNameStell2Rep = allDataProduktivitas
+              .where((element) =>
+                  element.nama.toString().toLowerCase() ==
+                      artistProduktivitas[i].toLowerCase() &&
+                  element.divisi.toString().toLowerCase() == 'Stell 2 rep')
+              .toList();
+          for (var j = 0; j < filterByNameStell2Rep.length; j++) {
+            apiPointProduktivitasStell2Rep += filterByNameStell2Rep[j].point!;
+          }
+          //? end Stell2Rep
+
+          pointProduktivitasFinishing.add(apiPointProduktivitasFinishing);
+          pointProduktivitasPolishing1.add(apiPointProduktivitasPolishing1);
+          pointProduktivitasPolishing2.add(apiPointProduktivitasPolishing2);
+          pointProduktivitasPolishing2Rep
+              .add(apiPointProduktivitasPolishing2Rep);
+          pointProduktivitasStell1.add(apiPointProduktivitasStell1);
+          pointProduktivitasStell2.add(apiPointProduktivitasStell2);
+          pointProduktivitasStell2Rep.add(apiPointProduktivitasStell2Rep);
         }
+        double sumFinishing =
+            pointProduktivitasFinishing.fold(0, (a, b) => a + b);
+        double sumPolishing1 =
+            pointProduktivitasPolishing1.fold(0, (a, b) => a + b);
+        double sumPolishing2 =
+            pointProduktivitasPolishing2.fold(0, (a, b) => a + b);
+        double sumPolishing2Rep =
+            pointProduktivitasPolishing2Rep.fold(0, (a, b) => a + b);
+        double sumStell1 = pointProduktivitasStell1.fold(0, (a, b) => a + b);
+        double sumStell2 = pointProduktivitasStell2.fold(0, (a, b) => a + b);
+        double sumStell2Rep =
+            pointProduktivitasStell2Rep.fold(0, (a, b) => a + b);
+        sumProduktivitas.add(sumFinishing);
+        double allSumPolishing =
+            sumPolishing1 + sumPolishing2 + sumPolishing2Rep;
+        sumProduktivitas.add(allSumPolishing);
+
+        double allSumStell = sumStell1 + sumStell2 + sumStell2Rep;
+        sumProduktivitas.add(allSumStell);
       } else {
+        //! jika siklus di pilih
         var filterBySiklus = allData.where((element) =>
-            element.bulan.toString().toLowerCase() ==
-            month.toString().toLowerCase());
-        //? asrori
-        var filterByAsrori = filterBySiklus
-            .where((element) =>
-                element.nama.toString().toLowerCase() == 'asrori' &&
-                element.keterangan.toString().toLowerCase() != 'orul')
-            .toList();
-        for (var i = 0; i < filterByAsrori.length; i++) {
-          if (filterByAsrori[i].point! > 0) {
-            totalPointAsrori += filterByAsrori[i].point!;
+            element.bulan.toString().toLowerCase() == month.toLowerCase());
+        var filterByDivisi = filterBySiklus.where((element) =>
+            element.divisi.toString().toLowerCase() != 'pasang batu');
+        var allDataProduktivitas = filterByDivisi.toList();
+
+        //! jika suklis tidak di pilih
+        //? ambil data nama
+        for (var i = 0; i < artistProduktivitas.length; i++) {
+          double apiPointProduktivitas = 0;
+          var filterByName = allDataProduktivitas
+              .where((element) =>
+                  element.nama.toString().toLowerCase() ==
+                      artistProduktivitas[i].toLowerCase() &&
+                  element.divisi.toString().toLowerCase() == 'finishing')
+              .toList();
+          for (var j = 0; j < filterByName.length; j++) {
+            apiPointProduktivitas += filterByName[j].point!;
           }
-        }
-        //? carkiyad
-        var filterByCarkiyad = filterBySiklus
-            .where((element) =>
-                element.nama.toString().toLowerCase() == 'carkiyad' &&
-                element.keterangan.toString().toLowerCase() != 'orul')
-            .toList();
-        for (var i = 0; i < filterByCarkiyad.length; i++) {
-          if (filterByCarkiyad[i].point! > 0) {
-            totalPointCarkiyad += filterByCarkiyad[i].point!;
-          }
-        }
-        //? encup
-        var filterByEncupSupriatna = filterBySiklus
-            .where((element) =>
-                element.nama.toString().toLowerCase() == 'encup supriatna' &&
-                element.keterangan.toString().toLowerCase() != 'orul')
-            .toList();
-        for (var i = 0; i < filterByEncupSupriatna.length; i++) {
-          if (filterByEncupSupriatna[i].point! > 0) {
-            totalPointEncupSupriatna += filterByEncupSupriatna[i].point!;
-          }
-        }
-        //? m abdul kodir
-        var filterByMuhammadAbdulKodir = filterBySiklus
-            .where((element) =>
-                element.nama.toString().toLowerCase() == 'encup supriatna' &&
-                element.keterangan.toString().toLowerCase() != 'orul')
-            .toList();
-        for (var i = 0; i < filterByMuhammadAbdulKodir.length; i++) {
-          if (filterByMuhammadAbdulKodir[i].point! > 0) {
-            totalPointMuhammadAbdulKodir +=
-                filterByMuhammadAbdulKodir[i].point!;
-          }
+          pointProduktivitasFinishing.add(apiPointProduktivitas);
         }
       }
-      setState(() {
-        print('refresh state get data produksi point');
-        isLoading = true;
-      });
       return allData;
     } else {
-      print('get data produksi gagal');
       throw Exception('Unexpected error occured!');
     }
   }
 
-  _getBeratAsal(month, name) async {
-    final response = await http
-        .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getProduksi));
-
-    if (response.statusCode == 200) {
-      print('get data produksi berhasil');
-      List jsonResponse = json.decode(response.body);
-
-      var allData =
-          jsonResponse.map((data) => ProduksiModel.fromJson(data)).toList();
-
-      if (month.toString().toLowerCase() == "all") {
-        //? asrori
-        var filterByAsrori = allData
-            .where((element) =>
-                element.nama.toString().toLowerCase() == 'asrori' &&
-                element.keterangan.toString().toLowerCase() != 'orul')
-            .toList();
-        for (var i = 0; i < filterByAsrori.length; i++) {
-          if (filterByAsrori[i].debet! > 0) {
-            beratAsalAsrori += filterByAsrori[i].debet!;
-          }
-        }
-        //? carkiyad
-        var filterByCarkiyad = allData
-            .where((element) =>
-                element.nama.toString().toLowerCase() == 'carkiyad' &&
-                element.keterangan.toString().toLowerCase() != 'orul')
-            .toList();
-        for (var i = 0; i < filterByCarkiyad.length; i++) {
-          if (filterByCarkiyad[i].debet! > 0) {
-            beratAsalCarkiyad += filterByCarkiyad[i].debet!;
-          }
-        }
-        //? encup
-        var filterByEncupSupriatna = allData
-            .where((element) =>
-                element.nama.toString().toLowerCase() == 'encup supriatna' &&
-                element.keterangan.toString().toLowerCase() != 'orul')
-            .toList();
-        for (var i = 0; i < filterByEncupSupriatna.length; i++) {
-          if (filterByEncupSupriatna[i].debet! > 0) {
-            beratAsalEncupSupriatna += filterByEncupSupriatna[i].debet!;
-          }
-        }
-        //? m abdul kodir
-        var filterByMuhammadAbdulKodir = allData
-            .where((element) =>
-                element.nama.toString().toLowerCase() ==
-                    'muhammad abdul kodir' &&
-                element.keterangan.toString().toLowerCase() != 'orul')
-            .toList();
-        for (var i = 0; i < filterByMuhammadAbdulKodir.length; i++) {
-          if (filterByMuhammadAbdulKodir[i].debet! > 0) {
-            beratAsalMuhammadAbdulKodir += filterByMuhammadAbdulKodir[i].debet!;
-          }
-        }
-      } else {
-        var filterBySiklus = allData.where((element) =>
-            element.bulan.toString().toLowerCase() ==
-            month.toString().toLowerCase());
-        //? asrori
-        var filterByAsrori = filterBySiklus
-            .where((element) =>
-                element.nama.toString().toLowerCase() == 'asrori' &&
-                element.keterangan.toString().toLowerCase() != 'orul')
-            .toList();
-        for (var i = 0; i < filterByAsrori.length; i++) {
-          if (filterByAsrori[i].debet! > 0) {
-            beratAsalAsrori += filterByAsrori[i].debet!;
-          }
-        }
-        //? carkiyad
-        var filterByCarkiyad = filterBySiklus
-            .where((element) =>
-                element.nama.toString().toLowerCase() == 'carkiyad' &&
-                element.keterangan.toString().toLowerCase() != 'orul')
-            .toList();
-        for (var i = 0; i < filterByCarkiyad.length; i++) {
-          if (filterByCarkiyad[i].debet! > 0) {
-            beratAsalCarkiyad += filterByCarkiyad[i].debet!;
-          }
-        }
-        //? encup
-        var filterByEncupSupriatna = filterBySiklus
-            .where((element) =>
-                element.nama.toString().toLowerCase() == 'encup supriatna' &&
-                element.keterangan.toString().toLowerCase() != 'orul')
-            .toList();
-        for (var i = 0; i < filterByEncupSupriatna.length; i++) {
-          if (filterByEncupSupriatna[i].debet! > 0) {
-            beratAsalEncupSupriatna += filterByEncupSupriatna[i].debet!;
-          }
-        }
-        //? m abdul kodir
-        var filterByMuhammadAbdulKodir = filterBySiklus
-            .where((element) =>
-                element.nama.toString().toLowerCase() == 'encup supriatna' &&
-                element.keterangan.toString().toLowerCase() != 'orul')
-            .toList();
-        for (var i = 0; i < filterByMuhammadAbdulKodir.length; i++) {
-          if (filterByMuhammadAbdulKodir[i].debet! > 0) {
-            beratAsalMuhammadAbdulKodir += filterByMuhammadAbdulKodir[i].debet!;
-          }
-        }
-      }
-      setState(() {
-        print('refresh state get data produksi point');
-        isLoading = true;
-      });
-      return allData;
-    } else {
-      print('get data produksi gagal');
-      throw Exception('Unexpected error occured!');
-    }
-  }
-
-  _getBeratAsalByName(month, name) async {
-    double sumDebet = 0.0;
-
-    final response = await http
-        .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getProduksi));
-
-    if (response.statusCode == 200) {
-      print('get data produksi berhasil');
-      List jsonResponse = json.decode(response.body);
-
-      var allData =
-          jsonResponse.map((data) => ProduksiModel.fromJson(data)).toList();
-
-      if (month.toString().toLowerCase() == "all") {
-        var filterByName = allData
-            .where((element) =>
-                element.nama.toString().toLowerCase() ==
-                name.toString().toLowerCase())
-            .toList();
-        for (var i = 0; i < filterByName.length; i++) {
-          if (filterByName[i].debet! > 0) {
-            sumDebet += filterByName[i].debet!;
-          }
-        }
-        // beratAsal = filterByName.toList().length;
-      } else {
-        var filterBySiklus = allData.where((element) =>
-            element.bulan.toString().toLowerCase() ==
-            month.toString().toLowerCase());
-        var filterByName = filterBySiklus
-            .where((element) =>
-                element.nama.toString().toLowerCase() ==
-                name.toString().toLowerCase())
-            .toList();
-        for (var i = 0; i < filterByName.length; i++) {
-          if (filterByName[i].debet! > 0) {
-            sumDebet += filterByName[i].debet!;
-          }
-        }
-      }
-      return sumDebet.toStringAsFixed(2);
-    } else {
-      print('get data produksi gagal');
-      throw Exception('Unexpected error occured!');
-    }
+  // fungsi remove duplicate object
+  List<ProduksiModel> removeDuplicates(List<ProduksiModel> items) {
+    List<ProduksiModel> uniqueItems = []; // uniqueList
+    var uniqueNames = items
+        .map((e) => e.nama)
+        .toSet(); //list if UniqueID to remove duplicates
+    for (var e in uniqueNames) {
+      uniqueItems.add(items.firstWhere((i) => i.nama == e));
+    } // populate uniqueItems with equivalent original Batch items
+    return uniqueItems; //send back the unique items list
   }
 
 //! data table
@@ -484,10 +341,11 @@ class _SummaryProduktivitasScreenState
             TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
         headingRowColor:
             MaterialStateProperty.resolveWith((states) => Colors.blue),
-        columnSpacing: 1,
+        columnSpacing: 0,
         headingRowHeight: 50,
         dataRowMaxHeight: 50,
         columns: _createColumns(),
+        // border: TableBorder.all(),
         rows: _createRows());
   }
 
@@ -497,27 +355,19 @@ class _SummaryProduktivitasScreenState
       DataColumn(label: _verticalDivider),
       DataColumn(label: Text('FINISHING')),
       DataColumn(label: _verticalDivider),
-      DataColumn(
-          label: GestureDetector(
-              onTap: () {
-                showSimpleNotification(
-                  Text('tap POLESHING'),
-                  background: Colors.green,
-                  duration: const Duration(seconds: 1),
-                );
-              },
-              child: Text('POLESHING'))),
+      DataColumn(label: Text('POLISHING 1')),
+      // DataColumn(
+      //     label: InkWell(
+      //         onTap: () {
+      //           showSimpleNotification(
+      //             Text('tap POLISHING'),
+      //             background: Colors.green,
+      //             duration: const Duration(seconds: 1),
+      //           );
+      //         },
+      //         child: Text('POLISHING'))),
       DataColumn(label: _verticalDivider),
-      DataColumn(
-          label: GestureDetector(
-              onTap: () {
-                showSimpleNotification(
-                  Text('tap STELL'),
-                  background: Colors.green,
-                  duration: const Duration(seconds: 1),
-                );
-              },
-              child: Text('STELL RANGKA'))),
+      DataColumn(label: Text('STELL RANGKA 1')),
       DataColumn(label: _verticalDivider),
       DataColumn(label: Text('TOTAL\n(produktivitas)')),
     ];
@@ -525,50 +375,78 @@ class _SummaryProduktivitasScreenState
 
   List<DataRow> _createRows() {
     return [
-      DataRow(cells: [
-        DataCell(Text('Asrori')),
-        DataCell(_verticalDivider),
-        DataCell(Text('5.000.000')),
-        DataCell(_verticalDivider),
-        DataCell(Text('0')),
-        DataCell(_verticalDivider),
-        DataCell(Text('0')),
-        DataCell(_verticalDivider),
-        DataCell(Text('12.000.000')),
-      ]),
-      DataRow(cells: [
-        DataCell(Text('Carkiyad')),
-        DataCell(_verticalDivider),
-        DataCell(Text('5.000.000')),
-        DataCell(_verticalDivider),
-        DataCell(Text('0')),
-        DataCell(_verticalDivider),
-        DataCell(Text('0')),
-        DataCell(_verticalDivider),
-        DataCell(Text('12.000.000')),
-      ]),
-      DataRow(cells: [
-        DataCell(Text('Encup Supriatna')),
-        DataCell(_verticalDivider),
-        DataCell(Text('5.000.000')),
-        DataCell(_verticalDivider),
-        DataCell(Text('0')),
-        DataCell(_verticalDivider),
-        DataCell(Text('0')),
-        DataCell(_verticalDivider),
-        DataCell(Text('12.000.000')),
-      ]),
-      DataRow(cells: [
-        DataCell(Text('Muhammad Abdul Kodir')),
-        DataCell(_verticalDivider),
-        DataCell(Text('5.000.000')),
-        DataCell(_verticalDivider),
-        DataCell(Text('0')),
-        DataCell(_verticalDivider),
-        DataCell(Text('0')),
-        DataCell(_verticalDivider),
-        DataCell(Text('12.000.000')),
-      ]),
+      for (var i = 0; i < qtyArtist; i++)
+        DataRow(cells: [
+          DataCell(artistProduktivitas[i].toString().toLowerCase() == 'total'
+              ? Text(
+                  artistProduktivitas[i],
+                  style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold),
+                )
+              : Text(artistProduktivitas[i])),
+          DataCell(_verticalDivider),
+          DataCell(artistProduktivitas[i].toString().toLowerCase() == 'total'
+              ? Text(
+                  CurrencyFormat.convertToIdr(
+                      (sumProduktivitas[0] * data[0]['finishing']), 0),
+                  style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold),
+                )
+              : Text(CurrencyFormat.convertToIdr(
+                  (pointProduktivitasFinishing[i] * data[0]['finishing']), 0))),
+          DataCell(_verticalDivider),
+          DataCell(artistProduktivitas[i].toString().toLowerCase() == 'total'
+              ? Text(
+                  CurrencyFormat.convertToIdr(
+                      (sumProduktivitas[1] * data[0]['polishing1']), 0),
+                  style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold),
+                )
+              : Text(CurrencyFormat.convertToIdr(
+                  ((pointProduktivitasPolishing1[i] +
+                          pointProduktivitasPolishing2[i] +
+                          pointProduktivitasPolishing2Rep[i]) *
+                      data[0]['polishing1']),
+                  0))),
+          DataCell(_verticalDivider),
+          DataCell(artistProduktivitas[i].toString().toLowerCase() == 'total'
+              ? Text(
+                  CurrencyFormat.convertToIdr(
+                      (sumProduktivitas[2] * data[0]['stell_rangka1']), 0),
+                  style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold),
+                )
+              : Text(CurrencyFormat.convertToIdr(
+                  ((pointProduktivitasStell1[i] +
+                          pointProduktivitasStell2[i] +
+                          pointProduktivitasStell2Rep[i]) *
+                      data[0]['stell_rangka1']),
+                  0))),
+          DataCell(_verticalDivider),
+          DataCell(Text(CurrencyFormat.convertToIdr(
+              (((
+                          //* total Stell
+                          pointProduktivitasStell1[i] +
+                              pointProduktivitasStell2[i] +
+                              pointProduktivitasStell2Rep[i]) *
+                      data[0]['polishing1']) +
+                  //* total poelshing
+                  ((pointProduktivitasPolishing1[i] +
+                          pointProduktivitasPolishing2[i] +
+                          pointProduktivitasPolishing2Rep[i]) *
+                      data[0]['polishing1']) +
+                  //* total finis
+                  (pointProduktivitasFinishing[i] * data[0]['finishing'])),
+              0))),
+        ]),
     ];
   }
 
@@ -624,15 +502,7 @@ class _SummaryProduktivitasScreenState
                 ),
               ],
             ),
-            body: isLoading == false
-                ? Center(
-                    child: Container(
-                    padding: const EdgeInsets.all(5),
-                    width: 90,
-                    height: 90,
-                    child: Lottie.asset("loadingJSON/loadingV1.json"),
-                  ))
-                : dashboardProduksi()));
+            body: dashboardProduksi()));
   }
 
   //! dashboard produksi
@@ -694,17 +564,21 @@ class _SummaryProduktivitasScreenState
           ),
         ),
         Expanded(
-          child: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Container(
-                padding: EdgeInsets.only(left: 5),
-                child: Column(
-                  children: [
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+          child: isLoading == true
+              ? Center(
+                  child: Container(
+                  padding: const EdgeInsets.all(5),
+                  width: 90,
+                  height: 90,
+                  child: Lottie.asset("loadingJSON/loadingV1.json"),
+                ))
+              : SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Container(
+                      padding: EdgeInsets.only(left: 5),
+                      child: Column(
                         children: [
                           SizedBox(height: 20),
                           //? BARIS 1
@@ -715,7 +589,7 @@ class _SummaryProduktivitasScreenState
                                   child: Column(
                                     children: [
                                       Text(
-                                        'FINISHING',
+                                        'PRODUKTIVITAS',
                                         style: TextStyle(
                                             fontSize: 20,
                                             color: Colors.black,
@@ -726,7 +600,7 @@ class _SummaryProduktivitasScreenState
                                   ))),
                           SizedBox(height: 20),
 
-                          // //? BARIS 2
+                          //? BARIS 2
                           SingleChildScrollView(
                               scrollDirection: Axis.horizontal,
                               child: Container(
@@ -734,7 +608,7 @@ class _SummaryProduktivitasScreenState
                                   child: Column(
                                     children: [
                                       Text(
-                                        'STELL 1',
+                                        'BONUS',
                                         style: TextStyle(
                                             fontSize: 20,
                                             color: Colors.black,
@@ -744,104 +618,29 @@ class _SummaryProduktivitasScreenState
                                     ],
                                   ))),
                           SizedBox(height: 20),
-                        ]),
-                    SizedBox(
-                      height: 25,
+                          //? BARIS 3
+                          SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Container(
+                                  color: Colors.grey.shade200,
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        'SUSUT',
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      _dataTablePendapatan(),
+                                    ],
+                                  ))),
+                          SizedBox(height: 20),
+                        ],
+                      ),
                     ),
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(height: 20),
-                          //? BARIS 1
-                          SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Container(
-                                  color: Colors.grey.shade200,
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        'STELL 2',
-                                        style: TextStyle(
-                                            fontSize: 20,
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      _dataTablePendapatan(),
-                                    ],
-                                  ))),
-                          SizedBox(height: 20),
-
-                          // //? BARIS 2
-                          SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Container(
-                                  color: Colors.grey.shade200,
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        'POLESHING',
-                                        style: TextStyle(
-                                            fontSize: 20,
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      _dataTablePendapatan(),
-                                    ],
-                                  ))),
-                          SizedBox(height: 20),
-                        ]),
-                    SizedBox(
-                      height: 25,
-                    ),
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(height: 20),
-                          //? BARIS 1
-                          SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Container(
-                                  color: Colors.grey.shade200,
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        'BRJ',
-                                        style: TextStyle(
-                                            fontSize: 20,
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      _dataTablePendapatan(),
-                                    ],
-                                  ))),
-                          SizedBox(height: 20),
-
-                          // //? BARIS 2
-                          SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Container(
-                                  color: Colors.grey.shade200,
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        'STEL REPARASI 2',
-                                        style: TextStyle(
-                                            fontSize: 20,
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      _dataTablePendapatan(),
-                                    ],
-                                  ))),
-                          SizedBox(height: 20),
-                        ]),
-                  ],
+                  ),
                 ),
-              ),
-            ),
-          ),
         ),
       ],
     );

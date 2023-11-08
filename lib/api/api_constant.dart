@@ -9,6 +9,7 @@ class ApiConstants {
   // static String baseUrlImage =
   //     'http://110.5.102.154:1212/Api_Flutter/spk/upload/';
   // static String baseUrl = 'http://110.5.102.154:1212/Api_Flutter/';
+  static String getNilaiProduksi = 'spk/get_nilai_produksi.php';
   static String getDataBatu = 'spk/batu.php';
   static String getDataBatuCalculator = 'spk/batu_calculator.php';
   static String getDataBatuByName = 'spk/get_batu_by_name.php';
@@ -47,6 +48,7 @@ class ApiConstants {
   static String updateFormDesigner = 'spk/update_form_designer.php';
   static String updateSiklusdesigner = 'spk/update_siklus_designer.php';
   static String updatePosisi = 'spk/add_posisi.php';
+  static String updateNilaiProduksi = 'spk/update_nilai_produksi.php';
 
   static String addModeller = 'spk/add_modeller.php';
   static String addPointModeller = 'spk/add_point_modeller.php';

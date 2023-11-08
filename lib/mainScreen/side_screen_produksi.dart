@@ -1,8 +1,8 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
-import 'package:form_designer/mainScreen/list_batu_screen.dart';
 import 'package:form_designer/mainScreen/list_mps.dart';
+import 'package:form_designer/produksi/mainScreen/finishing_screen.dart';
 import 'package:form_designer/produksi/mainScreen/home_screen_produksi.dart';
 import 'package:form_designer/produksi/mainScreen/summary_pasang_batu.dart';
 import 'package:form_designer/produksi/mainScreen/summary_produktivitas.dart';
@@ -26,7 +26,7 @@ class _MainViewProduksiState extends State<MainViewProduksi> {
     //? 0
     const HomeScreenProduksi(),
     //? 1
-    const ListBatuScreen(),
+    const FinishingScreen(),
     //? 2
     const ListMpsScreen(),
     //? 3
@@ -118,7 +118,7 @@ class _MainViewProduksiState extends State<MainViewProduksi> {
             ),
             SideNavigationBarItem(
               icon: Icons.list,
-              label: 'List stok batu',
+              label: 'Produksi',
             ),
             SideNavigationBarItem(
               icon: Icons.moving_outlined,
