@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:form_designer/mainScreen/list_mps.dart';
-import 'package:form_designer/produksi/mainScreen/finishing_screen.dart';
+import 'package:form_designer/produksi/mainScreen/produksi_new_screen.dart';
 import 'package:form_designer/produksi/mainScreen/home_screen_produksi.dart';
 import 'package:form_designer/produksi/mainScreen/summary_pasang_batu.dart';
 import 'package:form_designer/produksi/mainScreen/summary_produktivitas.dart';
@@ -26,7 +26,7 @@ class _MainViewProduksiState extends State<MainViewProduksi> {
     //? 0
     const HomeScreenProduksi(),
     //? 1
-    const FinishingScreen(),
+    const ProduksiNewScreen(),
     //? 2
     const ListMpsScreen(),
     //? 3

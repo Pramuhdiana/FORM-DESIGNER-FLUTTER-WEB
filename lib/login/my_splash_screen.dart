@@ -97,6 +97,7 @@ class _MySplashScreenState extends State<MySplashScreen> {
                 width: MediaQuery.of(context).size.width * 1,
                 padding: const EdgeInsets.all(12.0),
                 // child: Lottie.asset("loadingJSON/fixLogo.json"),
+                // child: Lottie.asset("loadingJSON/Logo.json"),
                 child: Lottie.asset("loadingJSON/animation_llvy7jo7.json"),
               ),
               const SizedBox(

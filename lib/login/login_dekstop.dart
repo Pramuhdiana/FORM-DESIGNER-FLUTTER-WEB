@@ -41,7 +41,8 @@ class _LoginDesktopState extends State<LoginDesktop> {
               height: MediaQuery.of(context).size.height * 0.8,
               width: MediaQuery.of(context).size.width * 1,
               padding: const EdgeInsets.all(12.0),
-              child: Lottie.asset("loadingJSON/logo275kb.json"),
+              child: Lottie.asset("loadingJSON/logoOri.json"),
+              // child: Lottie.asset("loadingJSON/logo275kb.json"),
             ),
           ),
           Expanded(

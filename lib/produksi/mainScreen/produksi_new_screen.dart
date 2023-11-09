@@ -4,6 +4,9 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:form_designer/mainScreen/home_screen.dart';
 import 'package:form_designer/mainScreen/list_mps.dart';
+import 'package:form_designer/produksi/mainScreen/CRUD/finishing.dart';
+import 'package:form_designer/produksi/mainScreen/CRUD/polishing1.dart';
+import 'package:form_designer/produksi/mainScreen/CRUD/stell1.dart';
 import 'package:overlay_support/overlay_support.dart';
 
 import 'package:file_picker/file_picker.dart';
@@ -14,14 +17,13 @@ import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
-class FinishingScreen extends StatefulWidget {
-  const FinishingScreen({super.key});
+class ProduksiNewScreen extends StatefulWidget {
+  const ProduksiNewScreen({super.key});
   @override
-  State<FinishingScreen> createState() => _FinishingScreenState();
+  State<ProduksiNewScreen> createState() => _ProduksiNewScreenState();
 }
 
-
-class _FinishingScreenState extends State<FinishingScreen>
+class _ProduksiNewScreenState extends State<ProduksiNewScreen>
     with TickerProviderStateMixin {
   TextEditingController controller = TextEditingController();
   bool isLoading = false;
@@ -32,6 +34,7 @@ class _FinishingScreenState extends State<FinishingScreen>
     super.initState();
     _tabController = TabController(length: 6, vsync: this);
     _tabController.animateTo(2);
+    nowSiklus = 'OKTOBER';
   }
 
   static const List<Tab> _tabs = [
@@ -68,13 +71,14 @@ class _FinishingScreenState extends State<FinishingScreen>
   ];
 
   final List<Widget> _views = [
-    const FinisScreen(),
-    const ListMpsScreen(),
-    const Center(child: Text('Content of Tab One')),
+    const FinishingScreen(),
+    const Poilishing1Screen(),
+    const Stell1Screen(),
     const Center(child: Text('Content of Tab Two')),
     const Center(child: Text('Content of Tab Three')),
     const Center(child: Text('Content of Tab Three')),
   ];
+  var nowSiklus = '';
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +89,34 @@ class _FinishingScreenState extends State<FinishingScreen>
           length: 6,
           child: Scaffold(
               appBar: AppBar(
-                title: const Center(child: Text('PRODUKSI')),
+                title: Row(
+                  // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          "Siklus Saat Ini : $nowSiklus",
+                          style: const TextStyle(
+                              fontSize: 20, color: Colors.white),
+                        ),
+                        InkWell(
+                          onTap: () {},
+                          child: SizedBox(
+                            width: 40,
+                            height: 40,
+                            child: Lottie.asset(
+                                "loadingJSON/icon_edit_black.json",
+                                fit: BoxFit.cover),
+                          ),
+                        )
+                      ],
+                    ),
+                    const SizedBox(
+                      width: 300,
+                    ),
+                    const Text('PRODUKSI'),
+                  ],
+                ),
                 elevation: 0,
                 automaticallyImplyLeading: false,
                 bottom: TabBar(
@@ -130,60 +161,6 @@ class _FinishingScreenState extends State<FinishingScreen>
                 physics: const BouncingScrollPhysics(),
                 children: _views,
               )),
-        ));
-  }
-}
-
-class FinisScreen extends StatefulWidget {
-  const FinisScreen({super.key});
-  @override
-  State<FinisScreen> createState() => _FinisScreenState();
-}
-
-class _FinisScreenState extends State<FinisScreen> {
-  @override
-  initState() {
-    super.initState();
-  }
-
-  DataTable _dataTablePendapatan() {
-    return DataTable(
-        headingTextStyle:
-            const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
-        headingRowColor:
-            MaterialStateProperty.resolveWith((states) => Colors.blue),
-        columnSpacing: 0,
-        headingRowHeight: 50,
-        dataRowMaxHeight: 50,
-        columns: _createColumns(),
-        border: TableBorder.all(),
-        rows: _createRows());
-  }
-
-  List<DataColumn> _createColumns() {
-    return [
-      const DataColumn(label: Text('NAMA')),
-      const DataColumn(label: Text('KODE  PRODUKSI')),
-    ];
-  }
-
-  List<DataRow> _createRows() {
-    return [
-      for (var i = 0; i < 2; i++)
-        DataRow(cells: [
-          DataCell(Text('nama $i')),
-          DataCell(Text('divisi $i')),
-        ]),
-    ];
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return WillPopScope(
-        // ignore: null_check_always_fails
-        onWillPop: () async => null!,
-        child: Scaffold(
-          body: _dataTablePendapatan(),
         ));
   }
 }
