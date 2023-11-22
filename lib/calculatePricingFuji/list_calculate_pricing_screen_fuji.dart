@@ -2,10 +2,9 @@
 
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:form_designer/calculatePricing/add_calculate_pricing.dart';
+import 'package:form_designer/calculatePricingFuji/add_calculate_pricing_fuji.dart';
 import 'package:form_designer/global/currency_format.dart';
 // ignore: unused_import
 import 'package:form_designer/mainScreen/form_screen_by_id.dart';
@@ -15,11 +14,11 @@ import 'package:lottie/lottie.dart';
 import '../api/api_constant.dart';
 import '../model/estimasi_pricing_model.dart';
 
-class ListCalculatePricingScreen extends StatefulWidget {
-  const ListCalculatePricingScreen({super.key});
+class ListCalculatePricingFujiScreen extends StatefulWidget {
+  const ListCalculatePricingFujiScreen({super.key});
   @override
-  State<ListCalculatePricingScreen> createState() =>
-      _ListCalculatePricingScreenState();
+  State<ListCalculatePricingFujiScreen> createState() =>
+      _ListCalculatePricingFujiScreenState();
 }
 
 @override
@@ -28,8 +27,8 @@ Widget _verticalDivider = const VerticalDivider(
   thickness: 1,
 );
 
-class _ListCalculatePricingScreenState
-    extends State<ListCalculatePricingScreen> {
+class _ListCalculatePricingFujiScreenState
+    extends State<ListCalculatePricingFujiScreen> {
   List<dynamic> filteredData = [];
   TextEditingController controller = TextEditingController();
   bool sort = true;
@@ -94,51 +93,20 @@ class _ListCalculatePricingScreenState
               // drawer: Drawer1(),
               appBar: AppBar(
                 automaticallyImplyLeading: false,
-                backgroundColor: Colors.white,
-                leadingWidth: 320,
-                // ignore: avoid_unnecessary_containers
-                title: Container(
-                  // width: MediaQuery.of(context).size.width * 0.3,
-                  child: CupertinoSearchTextField(
-                    placeholder: 'Search Anything...',
-                    borderRadius: const BorderRadius.all(Radius.circular(25)),
-                    itemColor: Colors.black,
-                    // autofocus: false,
-                    controller: controller,
-                    backgroundColor: Colors.black12,
-                    // keyboardType: TextInputType.number,
-                    // focusNode: numberFocusNode,
-                    keyboardType: TextInputType.text,
-                    onChanged: (value) {
-                      //fungsi search anyting
-                      myCrm = filterCrm!
-                          .where((element) =>
-                              element.id!
-                                  .toString()
-                                  .toLowerCase()
-                                  .contains(value.toLowerCase()) ||
-                              element.namaDesigner!
-                                  .toLowerCase()
-                                  .contains(value.toLowerCase()) ||
-                              element.brand!
-                                  .toLowerCase()
-                                  .contains(value.toLowerCase()) ||
-                              element.beratEmas!
-                                  .toString()
-                                  .toLowerCase()
-                                  .contains(value.toLowerCase()) ||
-                              element.jenisBarang!
-                                  .toLowerCase()
-                                  .contains(value.toLowerCase()) ||
-                              element.estimasiHarga!
-                                  .toString()
-                                  .contains(value.toLowerCase()))
-                          .toList();
-
-                      setState(() {});
-                    },
+                elevation: 0,
+                backgroundColor: Colors.blue,
+                flexibleSpace: Container(
+                  color: Colors.blue,
+                ),
+                title: const Text(
+                  "KALKULATOR CUSTOM",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25,
                   ),
                 ),
+                centerTitle: true,
                 actions: [
                   IconButton(
                     onPressed: () {
@@ -156,66 +124,55 @@ class _ListCalculatePricingScreenState
               body: Container(
                 padding: const EdgeInsets.only(top: 25),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Container(
-                      padding: const EdgeInsets.only(top: 26),
-                      child: const Text(
-                        'List Calculate Pricing',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 26),
+                      width: MediaQuery.of(context).size.width * 0.5,
+                      height: 45,
+                      padding: const EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.grey,
+                          ),
+                          borderRadius: BorderRadius.circular(12)),
+                      child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: TextField(
+                          textAlign: TextAlign.center,
+                          controller: controller,
+                          decoration: const InputDecoration(
+                              hintText: "Search Anything ..."),
+                          onChanged: (value) {
+                            //fungsi search anyting
+                            myCrm = filterCrm!
+                                .where((element) =>
+                                    element.id!
+                                        .toString()
+                                        .toLowerCase()
+                                        .contains(value.toLowerCase()) ||
+                                    element.namaDesigner!
+                                        .toLowerCase()
+                                        .contains(value.toLowerCase()) ||
+                                    element.brand!
+                                        .toLowerCase()
+                                        .contains(value.toLowerCase()) ||
+                                    element.beratEmas!
+                                        .toString()
+                                        .toLowerCase()
+                                        .contains(value.toLowerCase()) ||
+                                    element.jenisBarang!
+                                        .toLowerCase()
+                                        .contains(value.toLowerCase()) ||
+                                    element.estimasiHarga!
+                                        .toString()
+                                        .contains(value.toLowerCase()))
+                                .toList();
+
+                            setState(() {});
+                          },
+                        ),
                       ),
                     ),
-                    // Container(
-                    //   width: MediaQuery.of(context).size.width * 0.5,
-                    //   height: 45,
-                    //   padding: const EdgeInsets.all(5),
-                    //   decoration: BoxDecoration(
-                    //       border: Border.all(
-                    //         color: Colors.grey,
-                    //       ),
-                    //       borderRadius: BorderRadius.circular(12)),
-                    //   child: Align(
-                    //     alignment: Alignment.bottomCenter,
-                    //     child: TextField(
-                    //       textAlign: TextAlign.center,
-                    //       controller: controller,
-                    //       decoration: const InputDecoration(
-                    //           hintText: "Search Anything ..."),
-                    //       onChanged: (value) {
-                    //         //fungsi search anyting
-                    //         myCrm = filterCrm!
-                    //             .where((element) =>
-                    //                 element.id!
-                    //                     .toString()
-                    //                     .toLowerCase()
-                    //                     .contains(value.toLowerCase()) ||
-                    //                 element.namaDesigner!
-                    //                     .toLowerCase()
-                    //                     .contains(value.toLowerCase()) ||
-                    //                 element.brand!
-                    //                     .toLowerCase()
-                    //                     .contains(value.toLowerCase()) ||
-                    //                 element.beratEmas!
-                    //                     .toString()
-                    //                     .toLowerCase()
-                    //                     .contains(value.toLowerCase()) ||
-                    //                 element.jenisBarang!
-                    //                     .toLowerCase()
-                    //                     .contains(value.toLowerCase()) ||
-                    //                 element.estimasiHarga!
-                    //                     .toString()
-                    //                     .contains(value.toLowerCase()))
-                    //             .toList();
-
-                    //         setState(() {});
-                    //       },
-                    //     ),
-                    //   ),
-                    // ),
                     isLoading == false
                         ? Expanded(
                             child: Center(
@@ -463,7 +420,7 @@ class _ListCalculatePricingScreenState
                           context,
                           MaterialPageRoute(
                               builder: (c) =>
-                                  const AddCalculatePricingScreen()));
+                                  const AddCalculatePricingFujiScreen()));
                     },
                     label: const Text(
                       "Tambah Estimasi Harga",

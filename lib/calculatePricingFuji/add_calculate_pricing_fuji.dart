@@ -25,15 +25,16 @@ import '../global/currency_format.dart';
 import '../model/rantai_model.dart';
 import '../widgets/custom_loading.dart';
 
-class AddCalculatePricingScreen extends StatefulWidget {
-  const AddCalculatePricingScreen({super.key});
+class AddCalculatePricingFujiScreen extends StatefulWidget {
+  const AddCalculatePricingFujiScreen({super.key});
 
   @override
-  State<AddCalculatePricingScreen> createState() =>
-      _AddCalculatePricingScreenState();
+  State<AddCalculatePricingFujiScreen> createState() =>
+      _AddCalculatePricingFujiScreenState();
 }
 
-class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
+class _AddCalculatePricingFujiScreenState
+    extends State<AddCalculatePricingFujiScreen> {
   // ignore: unused_field, prefer_final_fields
   List pemakaianBatu = [];
 
@@ -253,75 +254,75 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
   TextEditingController color = TextEditingController();
   TextEditingController ringSize = TextEditingController();
   TextEditingController qtyBatu1 = TextEditingController();
-  TextEditingController stokBatu1 = TextEditingController();
+  TextEditingController totalCrtBatu1 = TextEditingController();
   TextEditingController qtyBatu2 = TextEditingController();
-  TextEditingController stokBatu2 = TextEditingController();
+  TextEditingController totalCrtBatu2 = TextEditingController();
   TextEditingController qtyBatu3 = TextEditingController();
-  TextEditingController stokBatu3 = TextEditingController();
+  TextEditingController totalCrtBatu3 = TextEditingController();
   TextEditingController qtyBatu4 = TextEditingController();
-  TextEditingController stokBatu4 = TextEditingController();
+  TextEditingController totalCrtBatu4 = TextEditingController();
   TextEditingController qtyBatu5 = TextEditingController();
-  TextEditingController stokBatu5 = TextEditingController();
+  TextEditingController totalCrtBatu5 = TextEditingController();
   TextEditingController qtyBatu6 = TextEditingController();
-  TextEditingController stokBatu6 = TextEditingController();
+  TextEditingController totalCrtBatu6 = TextEditingController();
   TextEditingController qtyBatu7 = TextEditingController();
-  TextEditingController stokBatu7 = TextEditingController();
+  TextEditingController totalCrtBatu7 = TextEditingController();
   TextEditingController qtyBatu8 = TextEditingController();
-  TextEditingController stokBatu8 = TextEditingController();
+  TextEditingController totalCrtBatu8 = TextEditingController();
   TextEditingController qtyBatu9 = TextEditingController();
-  TextEditingController stokBatu9 = TextEditingController();
+  TextEditingController totalCrtBatu9 = TextEditingController();
   TextEditingController qtyBatu10 = TextEditingController();
-  TextEditingController stokBatu10 = TextEditingController();
+  TextEditingController totalCrtBatu10 = TextEditingController();
   TextEditingController qtyBatu11 = TextEditingController();
-  TextEditingController stokBatu11 = TextEditingController();
+  TextEditingController totalCrtBatu11 = TextEditingController();
   TextEditingController qtyBatu12 = TextEditingController();
-  TextEditingController stokBatu12 = TextEditingController();
+  TextEditingController totalCrtBatu12 = TextEditingController();
   TextEditingController qtyBatu13 = TextEditingController();
-  TextEditingController stokBatu13 = TextEditingController();
+  TextEditingController totalCrtBatu13 = TextEditingController();
   TextEditingController qtyBatu14 = TextEditingController();
-  TextEditingController stokBatu14 = TextEditingController();
+  TextEditingController totalCrtBatu14 = TextEditingController();
   TextEditingController qtyBatu15 = TextEditingController();
-  TextEditingController stokBatu15 = TextEditingController();
+  TextEditingController totalCrtBatu15 = TextEditingController();
   TextEditingController qtyBatu16 = TextEditingController();
-  TextEditingController stokBatu16 = TextEditingController();
+  TextEditingController totalCrtBatu16 = TextEditingController();
   TextEditingController qtyBatu17 = TextEditingController();
-  TextEditingController stokBatu17 = TextEditingController();
+  TextEditingController totalCrtBatu17 = TextEditingController();
   TextEditingController qtyBatu18 = TextEditingController();
-  TextEditingController stokBatu18 = TextEditingController();
+  TextEditingController totalCrtBatu18 = TextEditingController();
   TextEditingController qtyBatu19 = TextEditingController();
-  TextEditingController stokBatu19 = TextEditingController();
+  TextEditingController totalCrtBatu19 = TextEditingController();
   TextEditingController qtyBatu20 = TextEditingController();
-  TextEditingController stokBatu20 = TextEditingController();
+  TextEditingController totalCrtBatu20 = TextEditingController();
   TextEditingController qtyBatu21 = TextEditingController();
-  TextEditingController stokBatu21 = TextEditingController();
+  TextEditingController totalCrtBatu21 = TextEditingController();
   TextEditingController qtyBatu22 = TextEditingController();
-  TextEditingController stokBatu22 = TextEditingController();
+  TextEditingController totalCrtBatu22 = TextEditingController();
   TextEditingController qtyBatu23 = TextEditingController();
-  TextEditingController stokBatu23 = TextEditingController();
+  TextEditingController totalCrtBatu23 = TextEditingController();
   TextEditingController qtyBatu24 = TextEditingController();
-  TextEditingController stokBatu24 = TextEditingController();
+  TextEditingController totalCrtBatu24 = TextEditingController();
   TextEditingController qtyBatu25 = TextEditingController();
-  TextEditingController stokBatu25 = TextEditingController();
+  TextEditingController totalCrtBatu25 = TextEditingController();
   TextEditingController qtyBatu26 = TextEditingController();
-  TextEditingController stokBatu26 = TextEditingController();
+  TextEditingController totalCrtBatu26 = TextEditingController();
   TextEditingController qtyBatu27 = TextEditingController();
-  TextEditingController stokBatu27 = TextEditingController();
+  TextEditingController totalCrtBatu27 = TextEditingController();
   TextEditingController qtyBatu28 = TextEditingController();
-  TextEditingController stokBatu28 = TextEditingController();
+  TextEditingController totalCrtBatu28 = TextEditingController();
   TextEditingController qtyBatu29 = TextEditingController();
-  TextEditingController stokBatu29 = TextEditingController();
+  TextEditingController totalCrtBatu29 = TextEditingController();
   TextEditingController qtyBatu30 = TextEditingController();
-  TextEditingController stokBatu30 = TextEditingController();
+  TextEditingController totalCrtBatu30 = TextEditingController();
   TextEditingController qtyBatu31 = TextEditingController();
-  TextEditingController stokBatu31 = TextEditingController();
+  TextEditingController totalCrtBatu31 = TextEditingController();
   TextEditingController qtyBatu32 = TextEditingController();
-  TextEditingController stokBatu32 = TextEditingController();
+  TextEditingController totalCrtBatu32 = TextEditingController();
   TextEditingController qtyBatu33 = TextEditingController();
-  TextEditingController stokBatu33 = TextEditingController();
+  TextEditingController totalCrtBatu33 = TextEditingController();
   TextEditingController qtyBatu34 = TextEditingController();
-  TextEditingController stokBatu34 = TextEditingController();
+  TextEditingController totalCrtBatu34 = TextEditingController();
   TextEditingController qtyBatu35 = TextEditingController();
-  TextEditingController stokBatu35 = TextEditingController();
+  TextEditingController totalCrtBatu35 = TextEditingController();
 
   TextEditingController ukuranBatu1 = TextEditingController();
   TextEditingController ukuranBatu2 = TextEditingController();
@@ -686,6 +687,41 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
   @override
   void initState() {
     super.initState();
+    totalCrtBatu1.text = '0';
+    totalCrtBatu2.text = '0';
+    totalCrtBatu3.text = '0';
+    totalCrtBatu4.text = '0';
+    totalCrtBatu5.text = '0';
+    totalCrtBatu6.text = '0';
+    totalCrtBatu7.text = '0';
+    totalCrtBatu8.text = '0';
+    totalCrtBatu9.text = '0';
+    totalCrtBatu10.text = '0';
+    totalCrtBatu11.text = '0';
+    totalCrtBatu12.text = '0';
+    totalCrtBatu13.text = '0';
+    totalCrtBatu14.text = '0';
+    totalCrtBatu15.text = '0';
+    totalCrtBatu16.text = '0';
+    totalCrtBatu17.text = '0';
+    totalCrtBatu18.text = '0';
+    totalCrtBatu19.text = '0';
+    totalCrtBatu20.text = '0';
+    totalCrtBatu21.text = '0';
+    totalCrtBatu22.text = '0';
+    totalCrtBatu23.text = '0';
+    totalCrtBatu24.text = '0';
+    totalCrtBatu25.text = '0';
+    totalCrtBatu26.text = '0';
+    totalCrtBatu27.text = '0';
+    totalCrtBatu28.text = '0';
+    totalCrtBatu29.text = '0';
+    totalCrtBatu30.text = '0';
+    totalCrtBatu31.text = '0';
+    totalCrtBatu32.text = '0';
+    totalCrtBatu33.text = '0';
+    totalCrtBatu34.text = '0';
+    totalCrtBatu35.text = '0';
   }
 
   //start image
@@ -718,114 +754,114 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
   }
 
   double get totalPriceParva {
-    var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
-        (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
-        (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
-        (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
-        (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
-        (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
-        (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
-        (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
-        (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
-        (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
-        (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
-        (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
-        (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
-        (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
-        (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
-        (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
-        (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
-        (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
-        (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
-        (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
-        (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
-        (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
-        (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
-        (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
-        (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
-        (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
-        (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
-        (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
-        (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
-        (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
-        (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
-        (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
-        (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
-        (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
-        (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
+    var totalDiamond = (hargaBatu1 * (double.parse(totalCrtBatu1.text))) +
+        (hargaBatu2 * (double.parse(totalCrtBatu2.text))) +
+        (hargaBatu3 * (double.parse(totalCrtBatu3.text))) +
+        (hargaBatu4 * (double.parse(totalCrtBatu4.text))) +
+        (hargaBatu5 * (double.parse(totalCrtBatu5.text))) +
+        (hargaBatu6 * (double.parse(totalCrtBatu6.text))) +
+        (hargaBatu7 * (double.parse(totalCrtBatu7.text))) +
+        (hargaBatu8 * (double.parse(totalCrtBatu8.text))) +
+        (hargaBatu9 * (double.parse(totalCrtBatu9.text))) +
+        (hargaBatu10 * (double.parse(totalCrtBatu10.text))) +
+        (hargaBatu11 * (double.parse(totalCrtBatu11.text))) +
+        (hargaBatu12 * (double.parse(totalCrtBatu12.text))) +
+        (hargaBatu13 * (double.parse(totalCrtBatu13.text))) +
+        (hargaBatu14 * (double.parse(totalCrtBatu14.text))) +
+        (hargaBatu15 * (double.parse(totalCrtBatu15.text))) +
+        (hargaBatu16 * (double.parse(totalCrtBatu16.text))) +
+        (hargaBatu17 * (double.parse(totalCrtBatu17.text))) +
+        (hargaBatu18 * (double.parse(totalCrtBatu18.text))) +
+        (hargaBatu19 * (double.parse(totalCrtBatu19.text))) +
+        (hargaBatu20 * (double.parse(totalCrtBatu20.text))) +
+        (hargaBatu21 * (double.parse(totalCrtBatu21.text))) +
+        (hargaBatu22 * (double.parse(totalCrtBatu22.text))) +
+        (hargaBatu23 * (double.parse(totalCrtBatu23.text))) +
+        (hargaBatu24 * (double.parse(totalCrtBatu24.text))) +
+        (hargaBatu25 * (double.parse(totalCrtBatu25.text))) +
+        (hargaBatu26 * (double.parse(totalCrtBatu26.text))) +
+        (hargaBatu27 * (double.parse(totalCrtBatu27.text))) +
+        (hargaBatu28 * (double.parse(totalCrtBatu28.text))) +
+        (hargaBatu29 * (double.parse(totalCrtBatu29.text))) +
+        (hargaBatu30 * (double.parse(totalCrtBatu30.text))) +
+        (hargaBatu31 * (double.parse(totalCrtBatu31.text))) +
+        (hargaBatu32 * (double.parse(totalCrtBatu32.text))) +
+        (hargaBatu33 * (double.parse(totalCrtBatu33.text))) +
+        (hargaBatu34 * (double.parse(totalCrtBatu34.text))) +
+        (hargaBatu35 * (double.parse(totalCrtBatu35.text)));
 
-    var totalDiamondTanpaUp =
-        ((hargaBatu1 / markUpBatu1) * (caratPcsBatu1 * qtyIntBatu1!)) +
-            ((hargaBatu2 / markUpBatu2) * (caratPcsBatu2 * qtyIntBatu2!)) +
-            ((hargaBatu3 / markUpBatu3) * (caratPcsBatu3 * qtyIntBatu3!)) +
-            ((hargaBatu4 / markUpBatu4) * (caratPcsBatu4 * qtyIntBatu4!)) +
-            ((hargaBatu5 / markUpBatu5) * (caratPcsBatu5 * qtyIntBatu5!)) +
-            ((hargaBatu6 / markUpBatu6) * (caratPcsBatu6 * qtyIntBatu6!)) +
-            ((hargaBatu7 / markUpBatu7) * (caratPcsBatu7 * qtyIntBatu7!)) +
-            ((hargaBatu8 / markUpBatu8) * (caratPcsBatu8 * qtyIntBatu8!)) +
-            ((hargaBatu9 / markUpBatu9) * (caratPcsBatu9 * qtyIntBatu9!)) +
-            ((hargaBatu10 / markUpBatu10) * (caratPcsBatu10 * qtyIntBatu10!)) +
-            ((hargaBatu11 / markUpBatu11) * (caratPcsBatu11 * qtyIntBatu11!)) +
-            ((hargaBatu12 / markUpBatu12) * (caratPcsBatu12 * qtyIntBatu12!)) +
-            ((hargaBatu13 / markUpBatu13) * (caratPcsBatu13 * qtyIntBatu13!)) +
-            ((hargaBatu14 / markUpBatu14) * (caratPcsBatu14 * qtyIntBatu14!)) +
-            ((hargaBatu15 / markUpBatu15) * (caratPcsBatu15 * qtyIntBatu15!)) +
-            ((hargaBatu16 / markUpBatu16) * (caratPcsBatu16 * qtyIntBatu16!)) +
-            ((hargaBatu17 / markUpBatu17) * (caratPcsBatu17 * qtyIntBatu17!)) +
-            ((hargaBatu18 / markUpBatu18) * (caratPcsBatu18 * qtyIntBatu18!)) +
-            ((hargaBatu19 / markUpBatu19) * (caratPcsBatu19 * qtyIntBatu19!)) +
-            ((hargaBatu20 / markUpBatu20) * (caratPcsBatu20 * qtyIntBatu20!)) +
-            ((hargaBatu21 / markUpBatu21) * (caratPcsBatu21 * qtyIntBatu21!)) +
-            ((hargaBatu22 / markUpBatu22) * (caratPcsBatu22 * qtyIntBatu22!)) +
-            ((hargaBatu23 / markUpBatu23) * (caratPcsBatu23 * qtyIntBatu23!)) +
-            ((hargaBatu24 / markUpBatu24) * (caratPcsBatu24 * qtyIntBatu24!)) +
-            ((hargaBatu25 / markUpBatu25) * (caratPcsBatu25 * qtyIntBatu25!)) +
-            ((hargaBatu26 / markUpBatu26) * (caratPcsBatu26 * qtyIntBatu26!)) +
-            ((hargaBatu27 / markUpBatu27) * (caratPcsBatu27 * qtyIntBatu27!)) +
-            ((hargaBatu28 / markUpBatu28) * (caratPcsBatu28 * qtyIntBatu28!)) +
-            ((hargaBatu29 / markUpBatu29) * (caratPcsBatu29 * qtyIntBatu29!)) +
-            ((hargaBatu30 / markUpBatu30) * (caratPcsBatu30 * qtyIntBatu30!)) +
-            ((hargaBatu31 / markUpBatu31) * (caratPcsBatu31 * qtyIntBatu31!)) +
-            ((hargaBatu32 / markUpBatu32) * (caratPcsBatu32 * qtyIntBatu32!)) +
-            ((hargaBatu33 / markUpBatu33) * (caratPcsBatu33 * qtyIntBatu33!)) +
-            ((hargaBatu34 / markUpBatu34) * (caratPcsBatu34 * qtyIntBatu34!)) +
-            ((hargaBatu35 / markUpBatu35) * (caratPcsBatu35 * qtyIntBatu35!));
+    var totalDiamondTanpaUp = ((hargaBatu1 / markUpBatu1) *
+            (double.parse(totalCrtBatu1.text))) +
+        ((hargaBatu2 / markUpBatu2) * (double.parse(totalCrtBatu2.text))) +
+        ((hargaBatu3 / markUpBatu3) * (double.parse(totalCrtBatu3.text))) +
+        ((hargaBatu4 / markUpBatu4) * (double.parse(totalCrtBatu4.text))) +
+        ((hargaBatu5 / markUpBatu5) * (double.parse(totalCrtBatu5.text))) +
+        ((hargaBatu6 / markUpBatu6) * (double.parse(totalCrtBatu6.text))) +
+        ((hargaBatu7 / markUpBatu7) * (double.parse(totalCrtBatu7.text))) +
+        ((hargaBatu8 / markUpBatu8) * (double.parse(totalCrtBatu8.text))) +
+        ((hargaBatu9 / markUpBatu9) * (double.parse(totalCrtBatu9.text))) +
+        ((hargaBatu10 / markUpBatu10) * (double.parse(totalCrtBatu10.text))) +
+        ((hargaBatu11 / markUpBatu11) * (double.parse(totalCrtBatu11.text))) +
+        ((hargaBatu12 / markUpBatu12) * (double.parse(totalCrtBatu12.text))) +
+        ((hargaBatu13 / markUpBatu13) * (double.parse(totalCrtBatu13.text))) +
+        ((hargaBatu14 / markUpBatu14) * (double.parse(totalCrtBatu14.text))) +
+        ((hargaBatu15 / markUpBatu15) * (double.parse(totalCrtBatu15.text))) +
+        ((hargaBatu16 / markUpBatu16) * (double.parse(totalCrtBatu16.text))) +
+        ((hargaBatu17 / markUpBatu17) * (double.parse(totalCrtBatu17.text))) +
+        ((hargaBatu18 / markUpBatu18) * (double.parse(totalCrtBatu18.text))) +
+        ((hargaBatu19 / markUpBatu19) * (double.parse(totalCrtBatu19.text))) +
+        ((hargaBatu20 / markUpBatu20) * (double.parse(totalCrtBatu20.text))) +
+        ((hargaBatu21 / markUpBatu21) * (double.parse(totalCrtBatu21.text))) +
+        ((hargaBatu22 / markUpBatu22) * (double.parse(totalCrtBatu22.text))) +
+        ((hargaBatu23 / markUpBatu23) * (double.parse(totalCrtBatu23.text))) +
+        ((hargaBatu24 / markUpBatu24) * (double.parse(totalCrtBatu24.text))) +
+        ((hargaBatu25 / markUpBatu25) * (double.parse(totalCrtBatu25.text))) +
+        ((hargaBatu26 / markUpBatu26) * (double.parse(totalCrtBatu26.text))) +
+        ((hargaBatu27 / markUpBatu27) * (double.parse(totalCrtBatu27.text))) +
+        ((hargaBatu28 / markUpBatu28) * (double.parse(totalCrtBatu28.text))) +
+        ((hargaBatu29 / markUpBatu29) * (double.parse(totalCrtBatu29.text))) +
+        ((hargaBatu30 / markUpBatu30) * (double.parse(totalCrtBatu30.text))) +
+        ((hargaBatu31 / markUpBatu31) * (double.parse(totalCrtBatu31.text))) +
+        ((hargaBatu32 / markUpBatu32) * (double.parse(totalCrtBatu32.text))) +
+        ((hargaBatu33 / markUpBatu33) * (double.parse(totalCrtBatu33.text))) +
+        ((hargaBatu34 / markUpBatu34) * (double.parse(totalCrtBatu34.text))) +
+        ((hargaBatu35 / markUpBatu35) * (double.parse(totalCrtBatu35.text)));
 
-    var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
-                (caratPcsBatu2 * qtyIntBatu2!) +
-                (caratPcsBatu3 * qtyIntBatu3!) +
-                (caratPcsBatu4 * qtyIntBatu4!) +
-                (caratPcsBatu5 * qtyIntBatu5!) +
-                (caratPcsBatu6 * qtyIntBatu6!) +
-                (caratPcsBatu7 * qtyIntBatu7!) +
-                (caratPcsBatu8 * qtyIntBatu8!) +
-                (caratPcsBatu9 * qtyIntBatu9!) +
-                (caratPcsBatu10 * qtyIntBatu10!) +
-                (caratPcsBatu11 * qtyIntBatu11!) +
-                (caratPcsBatu12 * qtyIntBatu12!) +
-                (caratPcsBatu13 * qtyIntBatu13!) +
-                (caratPcsBatu14 * qtyIntBatu14!) +
-                (caratPcsBatu15 * qtyIntBatu15!) +
-                (caratPcsBatu16 * qtyIntBatu16!) +
-                (caratPcsBatu17 * qtyIntBatu17!) +
-                (caratPcsBatu18 * qtyIntBatu18!) +
-                (caratPcsBatu19 * qtyIntBatu19!) +
-                (caratPcsBatu20 * qtyIntBatu20!) +
-                (caratPcsBatu21 * qtyIntBatu21!) +
-                (caratPcsBatu22 * qtyIntBatu22!) +
-                (caratPcsBatu23 * qtyIntBatu23!) +
-                (caratPcsBatu24 * qtyIntBatu24!) +
-                (caratPcsBatu25 * qtyIntBatu25!) +
-                (caratPcsBatu26 * qtyIntBatu26!) +
-                (caratPcsBatu27 * qtyIntBatu27!) +
-                (caratPcsBatu28 * qtyIntBatu28!) +
-                (caratPcsBatu29 * qtyIntBatu29!) +
-                (caratPcsBatu30 * qtyIntBatu30!) +
-                (caratPcsBatu31 * qtyIntBatu31!) +
-                (caratPcsBatu32 * qtyIntBatu32!) +
-                (caratPcsBatu33 * qtyIntBatu33!) +
-                (caratPcsBatu34 * qtyIntBatu34!) +
-                (caratPcsBatu35 * qtyIntBatu35!)) +
+    var totalQtyCrt = ((((double.parse(totalCrtBatu1.text)) +
+                (double.parse(totalCrtBatu2.text)) +
+                (double.parse(totalCrtBatu3.text)) +
+                (double.parse(totalCrtBatu4.text)) +
+                (double.parse(totalCrtBatu5.text)) +
+                (double.parse(totalCrtBatu6.text)) +
+                (double.parse(totalCrtBatu7.text)) +
+                (double.parse(totalCrtBatu8.text)) +
+                (double.parse(totalCrtBatu9.text)) +
+                (double.parse(totalCrtBatu10.text)) +
+                (double.parse(totalCrtBatu11.text)) +
+                (double.parse(totalCrtBatu12.text)) +
+                (double.parse(totalCrtBatu13.text)) +
+                (double.parse(totalCrtBatu14.text)) +
+                (double.parse(totalCrtBatu15.text)) +
+                (double.parse(totalCrtBatu16.text)) +
+                (double.parse(totalCrtBatu17.text)) +
+                (double.parse(totalCrtBatu18.text)) +
+                (double.parse(totalCrtBatu19.text)) +
+                (double.parse(totalCrtBatu20.text)) +
+                (double.parse(totalCrtBatu21.text)) +
+                (double.parse(totalCrtBatu22.text)) +
+                (double.parse(totalCrtBatu23.text)) +
+                (double.parse(totalCrtBatu24.text)) +
+                (double.parse(totalCrtBatu25.text)) +
+                (double.parse(totalCrtBatu26.text)) +
+                (double.parse(totalCrtBatu27.text)) +
+                (double.parse(totalCrtBatu28.text)) +
+                (double.parse(totalCrtBatu29.text)) +
+                (double.parse(totalCrtBatu30.text)) +
+                (double.parse(totalCrtBatu31.text)) +
+                (double.parse(totalCrtBatu32.text)) +
+                (double.parse(totalCrtBatu33.text)) +
+                (double.parse(totalCrtBatu34.text)) +
+                (double.parse(totalCrtBatu35.text))) +
             doubleBeratEmasDariCustomer) /
         5);
     double totalEmas;
@@ -840,114 +876,114 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
     if (total.toString() == 'NaN') {
       return 0;
     } else if (total < 1500) {
-      var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
-          (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
-          (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
-          (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
-          (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
-          (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
-          (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
-          (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
-          (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
-          (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
-          (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
-          (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
-          (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
-          (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
-          (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
-          (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
-          (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
-          (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
-          (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
-          (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
-          (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
-          (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
-          (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
-          (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
-          (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
-          (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
-          (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
-          (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
-          (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
-          (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
-          (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
-          (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
-          (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
-          (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
-          (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
+      var totalDiamond = (hargaBatu1 * (double.parse(totalCrtBatu1.text))) +
+          (hargaBatu2 * (double.parse(totalCrtBatu2.text))) +
+          (hargaBatu3 * (double.parse(totalCrtBatu3.text))) +
+          (hargaBatu4 * (double.parse(totalCrtBatu4.text))) +
+          (hargaBatu5 * (double.parse(totalCrtBatu5.text))) +
+          (hargaBatu6 * (double.parse(totalCrtBatu6.text))) +
+          (hargaBatu7 * (double.parse(totalCrtBatu7.text))) +
+          (hargaBatu8 * (double.parse(totalCrtBatu8.text))) +
+          (hargaBatu9 * (double.parse(totalCrtBatu9.text))) +
+          (hargaBatu10 * (double.parse(totalCrtBatu10.text))) +
+          (hargaBatu11 * (double.parse(totalCrtBatu11.text))) +
+          (hargaBatu12 * (double.parse(totalCrtBatu12.text))) +
+          (hargaBatu13 * (double.parse(totalCrtBatu13.text))) +
+          (hargaBatu14 * (double.parse(totalCrtBatu14.text))) +
+          (hargaBatu15 * (double.parse(totalCrtBatu15.text))) +
+          (hargaBatu16 * (double.parse(totalCrtBatu16.text))) +
+          (hargaBatu17 * (double.parse(totalCrtBatu17.text))) +
+          (hargaBatu18 * (double.parse(totalCrtBatu18.text))) +
+          (hargaBatu19 * (double.parse(totalCrtBatu19.text))) +
+          (hargaBatu20 * (double.parse(totalCrtBatu20.text))) +
+          (hargaBatu21 * (double.parse(totalCrtBatu21.text))) +
+          (hargaBatu22 * (double.parse(totalCrtBatu22.text))) +
+          (hargaBatu23 * (double.parse(totalCrtBatu23.text))) +
+          (hargaBatu24 * (double.parse(totalCrtBatu24.text))) +
+          (hargaBatu25 * (double.parse(totalCrtBatu25.text))) +
+          (hargaBatu26 * (double.parse(totalCrtBatu26.text))) +
+          (hargaBatu27 * (double.parse(totalCrtBatu27.text))) +
+          (hargaBatu28 * (double.parse(totalCrtBatu28.text))) +
+          (hargaBatu29 * (double.parse(totalCrtBatu29.text))) +
+          (hargaBatu30 * (double.parse(totalCrtBatu30.text))) +
+          (hargaBatu31 * (double.parse(totalCrtBatu31.text))) +
+          (hargaBatu32 * (double.parse(totalCrtBatu32.text))) +
+          (hargaBatu33 * (double.parse(totalCrtBatu33.text))) +
+          (hargaBatu34 * (double.parse(totalCrtBatu34.text))) +
+          (hargaBatu35 * (double.parse(totalCrtBatu35.text)));
 
       var totalDiamondTanpaUp = ((hargaBatu1 / markUpBatu1) *
-              (caratPcsBatu1 * qtyIntBatu1!)) +
-          ((hargaBatu2 / markUpBatu2) * (caratPcsBatu2 * qtyIntBatu2!)) +
-          ((hargaBatu3 / markUpBatu3) * (caratPcsBatu3 * qtyIntBatu3!)) +
-          ((hargaBatu4 / markUpBatu4) * (caratPcsBatu4 * qtyIntBatu4!)) +
-          ((hargaBatu5 / markUpBatu5) * (caratPcsBatu5 * qtyIntBatu5!)) +
-          ((hargaBatu6 / markUpBatu6) * (caratPcsBatu6 * qtyIntBatu6!)) +
-          ((hargaBatu7 / markUpBatu7) * (caratPcsBatu7 * qtyIntBatu7!)) +
-          ((hargaBatu8 / markUpBatu8) * (caratPcsBatu8 * qtyIntBatu8!)) +
-          ((hargaBatu9 / markUpBatu9) * (caratPcsBatu9 * qtyIntBatu9!)) +
-          ((hargaBatu10 / markUpBatu10) * (caratPcsBatu10 * qtyIntBatu10!)) +
-          ((hargaBatu11 / markUpBatu11) * (caratPcsBatu11 * qtyIntBatu11!)) +
-          ((hargaBatu12 / markUpBatu12) * (caratPcsBatu12 * qtyIntBatu12!)) +
-          ((hargaBatu13 / markUpBatu13) * (caratPcsBatu13 * qtyIntBatu13!)) +
-          ((hargaBatu14 / markUpBatu14) * (caratPcsBatu14 * qtyIntBatu14!)) +
-          ((hargaBatu15 / markUpBatu15) * (caratPcsBatu15 * qtyIntBatu15!)) +
-          ((hargaBatu16 / markUpBatu16) * (caratPcsBatu16 * qtyIntBatu16!)) +
-          ((hargaBatu17 / markUpBatu17) * (caratPcsBatu17 * qtyIntBatu17!)) +
-          ((hargaBatu18 / markUpBatu18) * (caratPcsBatu18 * qtyIntBatu18!)) +
-          ((hargaBatu19 / markUpBatu19) * (caratPcsBatu19 * qtyIntBatu19!)) +
-          ((hargaBatu20 / markUpBatu20) * (caratPcsBatu20 * qtyIntBatu20!)) +
-          ((hargaBatu21 / markUpBatu21) * (caratPcsBatu21 * qtyIntBatu21!)) +
-          ((hargaBatu22 / markUpBatu22) * (caratPcsBatu22 * qtyIntBatu22!)) +
-          ((hargaBatu23 / markUpBatu23) * (caratPcsBatu23 * qtyIntBatu23!)) +
-          ((hargaBatu24 / markUpBatu24) * (caratPcsBatu24 * qtyIntBatu24!)) +
-          ((hargaBatu25 / markUpBatu25) * (caratPcsBatu25 * qtyIntBatu25!)) +
-          ((hargaBatu26 / markUpBatu26) * (caratPcsBatu26 * qtyIntBatu26!)) +
-          ((hargaBatu27 / markUpBatu27) * (caratPcsBatu27 * qtyIntBatu27!)) +
-          ((hargaBatu28 / markUpBatu28) * (caratPcsBatu28 * qtyIntBatu28!)) +
-          ((hargaBatu29 / markUpBatu29) * (caratPcsBatu29 * qtyIntBatu29!)) +
-          ((hargaBatu30 / markUpBatu30) * (caratPcsBatu30 * qtyIntBatu30!)) +
-          ((hargaBatu31 / markUpBatu31) * (caratPcsBatu31 * qtyIntBatu31!)) +
-          ((hargaBatu32 / markUpBatu32) * (caratPcsBatu32 * qtyIntBatu32!)) +
-          ((hargaBatu33 / markUpBatu33) * (caratPcsBatu33 * qtyIntBatu33!)) +
-          ((hargaBatu34 / markUpBatu34) * (caratPcsBatu34 * qtyIntBatu34!)) +
-          ((hargaBatu35 / markUpBatu35) * (caratPcsBatu35 * qtyIntBatu35!));
+              (double.parse(totalCrtBatu1.text))) +
+          ((hargaBatu2 / markUpBatu2) * (double.parse(totalCrtBatu2.text))) +
+          ((hargaBatu3 / markUpBatu3) * (double.parse(totalCrtBatu3.text))) +
+          ((hargaBatu4 / markUpBatu4) * (double.parse(totalCrtBatu4.text))) +
+          ((hargaBatu5 / markUpBatu5) * (double.parse(totalCrtBatu5.text))) +
+          ((hargaBatu6 / markUpBatu6) * (double.parse(totalCrtBatu6.text))) +
+          ((hargaBatu7 / markUpBatu7) * (double.parse(totalCrtBatu7.text))) +
+          ((hargaBatu8 / markUpBatu8) * (double.parse(totalCrtBatu8.text))) +
+          ((hargaBatu9 / markUpBatu9) * (double.parse(totalCrtBatu9.text))) +
+          ((hargaBatu10 / markUpBatu10) * (double.parse(totalCrtBatu10.text))) +
+          ((hargaBatu11 / markUpBatu11) * (double.parse(totalCrtBatu11.text))) +
+          ((hargaBatu12 / markUpBatu12) * (double.parse(totalCrtBatu12.text))) +
+          ((hargaBatu13 / markUpBatu13) * (double.parse(totalCrtBatu13.text))) +
+          ((hargaBatu14 / markUpBatu14) * (double.parse(totalCrtBatu14.text))) +
+          ((hargaBatu15 / markUpBatu15) * (double.parse(totalCrtBatu15.text))) +
+          ((hargaBatu16 / markUpBatu16) * (double.parse(totalCrtBatu16.text))) +
+          ((hargaBatu17 / markUpBatu17) * (double.parse(totalCrtBatu17.text))) +
+          ((hargaBatu18 / markUpBatu18) * (double.parse(totalCrtBatu18.text))) +
+          ((hargaBatu19 / markUpBatu19) * (double.parse(totalCrtBatu19.text))) +
+          ((hargaBatu20 / markUpBatu20) * (double.parse(totalCrtBatu20.text))) +
+          ((hargaBatu21 / markUpBatu21) * (double.parse(totalCrtBatu21.text))) +
+          ((hargaBatu22 / markUpBatu22) * (double.parse(totalCrtBatu22.text))) +
+          ((hargaBatu23 / markUpBatu23) * (double.parse(totalCrtBatu23.text))) +
+          ((hargaBatu24 / markUpBatu24) * (double.parse(totalCrtBatu24.text))) +
+          ((hargaBatu25 / markUpBatu25) * (double.parse(totalCrtBatu25.text))) +
+          ((hargaBatu26 / markUpBatu26) * (double.parse(totalCrtBatu26.text))) +
+          ((hargaBatu27 / markUpBatu27) * (double.parse(totalCrtBatu27.text))) +
+          ((hargaBatu28 / markUpBatu28) * (double.parse(totalCrtBatu28.text))) +
+          ((hargaBatu29 / markUpBatu29) * (double.parse(totalCrtBatu29.text))) +
+          ((hargaBatu30 / markUpBatu30) * (double.parse(totalCrtBatu30.text))) +
+          ((hargaBatu31 / markUpBatu31) * (double.parse(totalCrtBatu31.text))) +
+          ((hargaBatu32 / markUpBatu32) * (double.parse(totalCrtBatu32.text))) +
+          ((hargaBatu33 / markUpBatu33) * (double.parse(totalCrtBatu33.text))) +
+          ((hargaBatu34 / markUpBatu34) * (double.parse(totalCrtBatu34.text))) +
+          ((hargaBatu35 / markUpBatu35) * (double.parse(totalCrtBatu35.text)));
 
-      var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
-                  (caratPcsBatu2 * qtyIntBatu2!) +
-                  (caratPcsBatu3 * qtyIntBatu3!) +
-                  (caratPcsBatu4 * qtyIntBatu4!) +
-                  (caratPcsBatu5 * qtyIntBatu5!) +
-                  (caratPcsBatu6 * qtyIntBatu6!) +
-                  (caratPcsBatu7 * qtyIntBatu7!) +
-                  (caratPcsBatu8 * qtyIntBatu8!) +
-                  (caratPcsBatu9 * qtyIntBatu9!) +
-                  (caratPcsBatu10 * qtyIntBatu10!) +
-                  (caratPcsBatu11 * qtyIntBatu11!) +
-                  (caratPcsBatu12 * qtyIntBatu12!) +
-                  (caratPcsBatu13 * qtyIntBatu13!) +
-                  (caratPcsBatu14 * qtyIntBatu14!) +
-                  (caratPcsBatu15 * qtyIntBatu15!) +
-                  (caratPcsBatu16 * qtyIntBatu16!) +
-                  (caratPcsBatu17 * qtyIntBatu17!) +
-                  (caratPcsBatu18 * qtyIntBatu18!) +
-                  (caratPcsBatu19 * qtyIntBatu19!) +
-                  (caratPcsBatu20 * qtyIntBatu20!) +
-                  (caratPcsBatu21 * qtyIntBatu21!) +
-                  (caratPcsBatu22 * qtyIntBatu22!) +
-                  (caratPcsBatu23 * qtyIntBatu23!) +
-                  (caratPcsBatu24 * qtyIntBatu24!) +
-                  (caratPcsBatu25 * qtyIntBatu25!) +
-                  (caratPcsBatu26 * qtyIntBatu26!) +
-                  (caratPcsBatu27 * qtyIntBatu27!) +
-                  (caratPcsBatu28 * qtyIntBatu28!) +
-                  (caratPcsBatu29 * qtyIntBatu29!) +
-                  (caratPcsBatu30 * qtyIntBatu30!) +
-                  (caratPcsBatu31 * qtyIntBatu31!) +
-                  (caratPcsBatu32 * qtyIntBatu32!) +
-                  (caratPcsBatu33 * qtyIntBatu33!) +
-                  (caratPcsBatu34 * qtyIntBatu34!) +
-                  (caratPcsBatu35 * qtyIntBatu35!)) +
+      var totalQtyCrt = ((((double.parse(totalCrtBatu1.text)) +
+                  (double.parse(totalCrtBatu2.text)) +
+                  (double.parse(totalCrtBatu3.text)) +
+                  (double.parse(totalCrtBatu4.text)) +
+                  (double.parse(totalCrtBatu5.text)) +
+                  (double.parse(totalCrtBatu6.text)) +
+                  (double.parse(totalCrtBatu7.text)) +
+                  (double.parse(totalCrtBatu8.text)) +
+                  (double.parse(totalCrtBatu9.text)) +
+                  (double.parse(totalCrtBatu10.text)) +
+                  (double.parse(totalCrtBatu11.text)) +
+                  (double.parse(totalCrtBatu12.text)) +
+                  (double.parse(totalCrtBatu13.text)) +
+                  (double.parse(totalCrtBatu14.text)) +
+                  (double.parse(totalCrtBatu15.text)) +
+                  (double.parse(totalCrtBatu16.text)) +
+                  (double.parse(totalCrtBatu17.text)) +
+                  (double.parse(totalCrtBatu18.text)) +
+                  (double.parse(totalCrtBatu19.text)) +
+                  (double.parse(totalCrtBatu20.text)) +
+                  (double.parse(totalCrtBatu21.text)) +
+                  (double.parse(totalCrtBatu22.text)) +
+                  (double.parse(totalCrtBatu23.text)) +
+                  (double.parse(totalCrtBatu24.text)) +
+                  (double.parse(totalCrtBatu25.text)) +
+                  (double.parse(totalCrtBatu26.text)) +
+                  (double.parse(totalCrtBatu27.text)) +
+                  (double.parse(totalCrtBatu28.text)) +
+                  (double.parse(totalCrtBatu29.text)) +
+                  (double.parse(totalCrtBatu30.text)) +
+                  (double.parse(totalCrtBatu31.text)) +
+                  (double.parse(totalCrtBatu32.text)) +
+                  (double.parse(totalCrtBatu33.text)) +
+                  (double.parse(totalCrtBatu34.text)) +
+                  (double.parse(totalCrtBatu35.text))) +
               doubleBeratEmasDariCustomer) /
           5);
       double totalEmas;
@@ -1010,113 +1046,113 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
         return total;
       }
     } else if (total <= 2251) {
-      var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
-          (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
-          (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
-          (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
-          (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
-          (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
-          (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
-          (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
-          (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
-          (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
-          (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
-          (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
-          (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
-          (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
-          (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
-          (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
-          (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
-          (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
-          (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
-          (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
-          (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
-          (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
-          (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
-          (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
-          (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
-          (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
-          (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
-          (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
-          (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
-          (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
-          (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
-          (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
-          (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
-          (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
-          (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
+      var totalDiamond = (hargaBatu1 * (double.parse(totalCrtBatu1.text))) +
+          (hargaBatu2 * (double.parse(totalCrtBatu2.text))) +
+          (hargaBatu3 * (double.parse(totalCrtBatu3.text))) +
+          (hargaBatu4 * (double.parse(totalCrtBatu4.text))) +
+          (hargaBatu5 * (double.parse(totalCrtBatu5.text))) +
+          (hargaBatu6 * (double.parse(totalCrtBatu6.text))) +
+          (hargaBatu7 * (double.parse(totalCrtBatu7.text))) +
+          (hargaBatu8 * (double.parse(totalCrtBatu8.text))) +
+          (hargaBatu9 * (double.parse(totalCrtBatu9.text))) +
+          (hargaBatu10 * (double.parse(totalCrtBatu10.text))) +
+          (hargaBatu11 * (double.parse(totalCrtBatu11.text))) +
+          (hargaBatu12 * (double.parse(totalCrtBatu12.text))) +
+          (hargaBatu13 * (double.parse(totalCrtBatu13.text))) +
+          (hargaBatu14 * (double.parse(totalCrtBatu14.text))) +
+          (hargaBatu15 * (double.parse(totalCrtBatu15.text))) +
+          (hargaBatu16 * (double.parse(totalCrtBatu16.text))) +
+          (hargaBatu17 * (double.parse(totalCrtBatu17.text))) +
+          (hargaBatu18 * (double.parse(totalCrtBatu18.text))) +
+          (hargaBatu19 * (double.parse(totalCrtBatu19.text))) +
+          (hargaBatu20 * (double.parse(totalCrtBatu20.text))) +
+          (hargaBatu21 * (double.parse(totalCrtBatu21.text))) +
+          (hargaBatu22 * (double.parse(totalCrtBatu22.text))) +
+          (hargaBatu23 * (double.parse(totalCrtBatu23.text))) +
+          (hargaBatu24 * (double.parse(totalCrtBatu24.text))) +
+          (hargaBatu25 * (double.parse(totalCrtBatu25.text))) +
+          (hargaBatu26 * (double.parse(totalCrtBatu26.text))) +
+          (hargaBatu27 * (double.parse(totalCrtBatu27.text))) +
+          (hargaBatu28 * (double.parse(totalCrtBatu28.text))) +
+          (hargaBatu29 * (double.parse(totalCrtBatu29.text))) +
+          (hargaBatu30 * (double.parse(totalCrtBatu30.text))) +
+          (hargaBatu31 * (double.parse(totalCrtBatu31.text))) +
+          (hargaBatu32 * (double.parse(totalCrtBatu32.text))) +
+          (hargaBatu33 * (double.parse(totalCrtBatu33.text))) +
+          (hargaBatu34 * (double.parse(totalCrtBatu34.text))) +
+          (hargaBatu35 * (double.parse(totalCrtBatu35.text)));
 
       var totalDiamondTanpaUp = ((hargaBatu1 / markUpBatu1) *
-              (caratPcsBatu1 * qtyIntBatu1!)) +
-          ((hargaBatu2 / markUpBatu2) * (caratPcsBatu2 * qtyIntBatu2!)) +
-          ((hargaBatu3 / markUpBatu3) * (caratPcsBatu3 * qtyIntBatu3!)) +
-          ((hargaBatu4 / markUpBatu4) * (caratPcsBatu4 * qtyIntBatu4!)) +
-          ((hargaBatu5 / markUpBatu5) * (caratPcsBatu5 * qtyIntBatu5!)) +
-          ((hargaBatu6 / markUpBatu6) * (caratPcsBatu6 * qtyIntBatu6!)) +
-          ((hargaBatu7 / markUpBatu7) * (caratPcsBatu7 * qtyIntBatu7!)) +
-          ((hargaBatu8 / markUpBatu8) * (caratPcsBatu8 * qtyIntBatu8!)) +
-          ((hargaBatu9 / markUpBatu9) * (caratPcsBatu9 * qtyIntBatu9!)) +
-          ((hargaBatu10 / markUpBatu10) * (caratPcsBatu10 * qtyIntBatu10!)) +
-          ((hargaBatu11 / markUpBatu11) * (caratPcsBatu11 * qtyIntBatu11!)) +
-          ((hargaBatu12 / markUpBatu12) * (caratPcsBatu12 * qtyIntBatu12!)) +
-          ((hargaBatu13 / markUpBatu13) * (caratPcsBatu13 * qtyIntBatu13!)) +
-          ((hargaBatu14 / markUpBatu14) * (caratPcsBatu14 * qtyIntBatu14!)) +
-          ((hargaBatu15 / markUpBatu15) * (caratPcsBatu15 * qtyIntBatu15!)) +
-          ((hargaBatu16 / markUpBatu16) * (caratPcsBatu16 * qtyIntBatu16!)) +
-          ((hargaBatu17 / markUpBatu17) * (caratPcsBatu17 * qtyIntBatu17!)) +
-          ((hargaBatu18 / markUpBatu18) * (caratPcsBatu18 * qtyIntBatu18!)) +
-          ((hargaBatu19 / markUpBatu19) * (caratPcsBatu19 * qtyIntBatu19!)) +
-          ((hargaBatu20 / markUpBatu20) * (caratPcsBatu20 * qtyIntBatu20!)) +
-          ((hargaBatu21 / markUpBatu21) * (caratPcsBatu21 * qtyIntBatu21!)) +
-          ((hargaBatu22 / markUpBatu22) * (caratPcsBatu22 * qtyIntBatu22!)) +
-          ((hargaBatu23 / markUpBatu23) * (caratPcsBatu23 * qtyIntBatu23!)) +
-          ((hargaBatu24 / markUpBatu24) * (caratPcsBatu24 * qtyIntBatu24!)) +
-          ((hargaBatu25 / markUpBatu25) * (caratPcsBatu25 * qtyIntBatu25!)) +
-          ((hargaBatu26 / markUpBatu26) * (caratPcsBatu26 * qtyIntBatu26!)) +
-          ((hargaBatu27 / markUpBatu27) * (caratPcsBatu27 * qtyIntBatu27!)) +
-          ((hargaBatu28 / markUpBatu28) * (caratPcsBatu28 * qtyIntBatu28!)) +
-          ((hargaBatu29 / markUpBatu29) * (caratPcsBatu29 * qtyIntBatu29!)) +
-          ((hargaBatu30 / markUpBatu30) * (caratPcsBatu30 * qtyIntBatu30!)) +
-          ((hargaBatu31 / markUpBatu31) * (caratPcsBatu31 * qtyIntBatu31!)) +
-          ((hargaBatu32 / markUpBatu32) * (caratPcsBatu32 * qtyIntBatu32!)) +
-          ((hargaBatu33 / markUpBatu33) * (caratPcsBatu33 * qtyIntBatu33!)) +
-          ((hargaBatu34 / markUpBatu34) * (caratPcsBatu34 * qtyIntBatu34!)) +
-          ((hargaBatu35 / markUpBatu35) * (caratPcsBatu35 * qtyIntBatu35!));
-      var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
-                  (caratPcsBatu2 * qtyIntBatu2!) +
-                  (caratPcsBatu3 * qtyIntBatu3!) +
-                  (caratPcsBatu4 * qtyIntBatu4!) +
-                  (caratPcsBatu5 * qtyIntBatu5!) +
-                  (caratPcsBatu6 * qtyIntBatu6!) +
-                  (caratPcsBatu7 * qtyIntBatu7!) +
-                  (caratPcsBatu8 * qtyIntBatu8!) +
-                  (caratPcsBatu9 * qtyIntBatu9!) +
-                  (caratPcsBatu10 * qtyIntBatu10!) +
-                  (caratPcsBatu11 * qtyIntBatu11!) +
-                  (caratPcsBatu12 * qtyIntBatu12!) +
-                  (caratPcsBatu13 * qtyIntBatu13!) +
-                  (caratPcsBatu14 * qtyIntBatu14!) +
-                  (caratPcsBatu15 * qtyIntBatu15!) +
-                  (caratPcsBatu16 * qtyIntBatu16!) +
-                  (caratPcsBatu17 * qtyIntBatu17!) +
-                  (caratPcsBatu18 * qtyIntBatu18!) +
-                  (caratPcsBatu19 * qtyIntBatu19!) +
-                  (caratPcsBatu20 * qtyIntBatu20!) +
-                  (caratPcsBatu21 * qtyIntBatu21!) +
-                  (caratPcsBatu22 * qtyIntBatu22!) +
-                  (caratPcsBatu23 * qtyIntBatu23!) +
-                  (caratPcsBatu24 * qtyIntBatu24!) +
-                  (caratPcsBatu25 * qtyIntBatu25!) +
-                  (caratPcsBatu26 * qtyIntBatu26!) +
-                  (caratPcsBatu27 * qtyIntBatu27!) +
-                  (caratPcsBatu28 * qtyIntBatu28!) +
-                  (caratPcsBatu29 * qtyIntBatu29!) +
-                  (caratPcsBatu30 * qtyIntBatu30!) +
-                  (caratPcsBatu31 * qtyIntBatu31!) +
-                  (caratPcsBatu32 * qtyIntBatu32!) +
-                  (caratPcsBatu33 * qtyIntBatu33!) +
-                  (caratPcsBatu34 * qtyIntBatu34!) +
-                  (caratPcsBatu35 * qtyIntBatu35!)) +
+              (double.parse(totalCrtBatu1.text))) +
+          ((hargaBatu2 / markUpBatu2) * (double.parse(totalCrtBatu2.text))) +
+          ((hargaBatu3 / markUpBatu3) * (double.parse(totalCrtBatu3.text))) +
+          ((hargaBatu4 / markUpBatu4) * (double.parse(totalCrtBatu4.text))) +
+          ((hargaBatu5 / markUpBatu5) * (double.parse(totalCrtBatu5.text))) +
+          ((hargaBatu6 / markUpBatu6) * (double.parse(totalCrtBatu6.text))) +
+          ((hargaBatu7 / markUpBatu7) * (double.parse(totalCrtBatu7.text))) +
+          ((hargaBatu8 / markUpBatu8) * (double.parse(totalCrtBatu8.text))) +
+          ((hargaBatu9 / markUpBatu9) * (double.parse(totalCrtBatu9.text))) +
+          ((hargaBatu10 / markUpBatu10) * (double.parse(totalCrtBatu10.text))) +
+          ((hargaBatu11 / markUpBatu11) * (double.parse(totalCrtBatu11.text))) +
+          ((hargaBatu12 / markUpBatu12) * (double.parse(totalCrtBatu12.text))) +
+          ((hargaBatu13 / markUpBatu13) * (double.parse(totalCrtBatu13.text))) +
+          ((hargaBatu14 / markUpBatu14) * (double.parse(totalCrtBatu14.text))) +
+          ((hargaBatu15 / markUpBatu15) * (double.parse(totalCrtBatu15.text))) +
+          ((hargaBatu16 / markUpBatu16) * (double.parse(totalCrtBatu16.text))) +
+          ((hargaBatu17 / markUpBatu17) * (double.parse(totalCrtBatu17.text))) +
+          ((hargaBatu18 / markUpBatu18) * (double.parse(totalCrtBatu18.text))) +
+          ((hargaBatu19 / markUpBatu19) * (double.parse(totalCrtBatu19.text))) +
+          ((hargaBatu20 / markUpBatu20) * (double.parse(totalCrtBatu20.text))) +
+          ((hargaBatu21 / markUpBatu21) * (double.parse(totalCrtBatu21.text))) +
+          ((hargaBatu22 / markUpBatu22) * (double.parse(totalCrtBatu22.text))) +
+          ((hargaBatu23 / markUpBatu23) * (double.parse(totalCrtBatu23.text))) +
+          ((hargaBatu24 / markUpBatu24) * (double.parse(totalCrtBatu24.text))) +
+          ((hargaBatu25 / markUpBatu25) * (double.parse(totalCrtBatu25.text))) +
+          ((hargaBatu26 / markUpBatu26) * (double.parse(totalCrtBatu26.text))) +
+          ((hargaBatu27 / markUpBatu27) * (double.parse(totalCrtBatu27.text))) +
+          ((hargaBatu28 / markUpBatu28) * (double.parse(totalCrtBatu28.text))) +
+          ((hargaBatu29 / markUpBatu29) * (double.parse(totalCrtBatu29.text))) +
+          ((hargaBatu30 / markUpBatu30) * (double.parse(totalCrtBatu30.text))) +
+          ((hargaBatu31 / markUpBatu31) * (double.parse(totalCrtBatu31.text))) +
+          ((hargaBatu32 / markUpBatu32) * (double.parse(totalCrtBatu32.text))) +
+          ((hargaBatu33 / markUpBatu33) * (double.parse(totalCrtBatu33.text))) +
+          ((hargaBatu34 / markUpBatu34) * (double.parse(totalCrtBatu34.text))) +
+          ((hargaBatu35 / markUpBatu35) * (double.parse(totalCrtBatu35.text)));
+      var totalQtyCrt = ((((double.parse(totalCrtBatu1.text)) +
+                  (double.parse(totalCrtBatu2.text)) +
+                  (double.parse(totalCrtBatu3.text)) +
+                  (double.parse(totalCrtBatu4.text)) +
+                  (double.parse(totalCrtBatu5.text)) +
+                  (double.parse(totalCrtBatu6.text)) +
+                  (double.parse(totalCrtBatu7.text)) +
+                  (double.parse(totalCrtBatu8.text)) +
+                  (double.parse(totalCrtBatu9.text)) +
+                  (double.parse(totalCrtBatu10.text)) +
+                  (double.parse(totalCrtBatu11.text)) +
+                  (double.parse(totalCrtBatu12.text)) +
+                  (double.parse(totalCrtBatu13.text)) +
+                  (double.parse(totalCrtBatu14.text)) +
+                  (double.parse(totalCrtBatu15.text)) +
+                  (double.parse(totalCrtBatu16.text)) +
+                  (double.parse(totalCrtBatu17.text)) +
+                  (double.parse(totalCrtBatu18.text)) +
+                  (double.parse(totalCrtBatu19.text)) +
+                  (double.parse(totalCrtBatu20.text)) +
+                  (double.parse(totalCrtBatu21.text)) +
+                  (double.parse(totalCrtBatu22.text)) +
+                  (double.parse(totalCrtBatu23.text)) +
+                  (double.parse(totalCrtBatu24.text)) +
+                  (double.parse(totalCrtBatu25.text)) +
+                  (double.parse(totalCrtBatu26.text)) +
+                  (double.parse(totalCrtBatu27.text)) +
+                  (double.parse(totalCrtBatu28.text)) +
+                  (double.parse(totalCrtBatu29.text)) +
+                  (double.parse(totalCrtBatu30.text)) +
+                  (double.parse(totalCrtBatu31.text)) +
+                  (double.parse(totalCrtBatu32.text)) +
+                  (double.parse(totalCrtBatu33.text)) +
+                  (double.parse(totalCrtBatu34.text)) +
+                  (double.parse(totalCrtBatu35.text))) +
               doubleBeratEmasDariCustomer) /
           5);
       double totalEmas;
@@ -1182,114 +1218,114 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
         return total;
       }
     } else if (total <= 4000) {
-      var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
-          (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
-          (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
-          (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
-          (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
-          (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
-          (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
-          (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
-          (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
-          (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
-          (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
-          (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
-          (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
-          (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
-          (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
-          (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
-          (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
-          (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
-          (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
-          (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
-          (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
-          (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
-          (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
-          (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
-          (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
-          (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
-          (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
-          (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
-          (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
-          (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
-          (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
-          (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
-          (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
-          (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
-          (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
+      var totalDiamond = (hargaBatu1 * (double.parse(totalCrtBatu1.text))) +
+          (hargaBatu2 * (double.parse(totalCrtBatu2.text))) +
+          (hargaBatu3 * (double.parse(totalCrtBatu3.text))) +
+          (hargaBatu4 * (double.parse(totalCrtBatu4.text))) +
+          (hargaBatu5 * (double.parse(totalCrtBatu5.text))) +
+          (hargaBatu6 * (double.parse(totalCrtBatu6.text))) +
+          (hargaBatu7 * (double.parse(totalCrtBatu7.text))) +
+          (hargaBatu8 * (double.parse(totalCrtBatu8.text))) +
+          (hargaBatu9 * (double.parse(totalCrtBatu9.text))) +
+          (hargaBatu10 * (double.parse(totalCrtBatu10.text))) +
+          (hargaBatu11 * (double.parse(totalCrtBatu11.text))) +
+          (hargaBatu12 * (double.parse(totalCrtBatu12.text))) +
+          (hargaBatu13 * (double.parse(totalCrtBatu13.text))) +
+          (hargaBatu14 * (double.parse(totalCrtBatu14.text))) +
+          (hargaBatu15 * (double.parse(totalCrtBatu15.text))) +
+          (hargaBatu16 * (double.parse(totalCrtBatu16.text))) +
+          (hargaBatu17 * (double.parse(totalCrtBatu17.text))) +
+          (hargaBatu18 * (double.parse(totalCrtBatu18.text))) +
+          (hargaBatu19 * (double.parse(totalCrtBatu19.text))) +
+          (hargaBatu20 * (double.parse(totalCrtBatu20.text))) +
+          (hargaBatu21 * (double.parse(totalCrtBatu21.text))) +
+          (hargaBatu22 * (double.parse(totalCrtBatu22.text))) +
+          (hargaBatu23 * (double.parse(totalCrtBatu23.text))) +
+          (hargaBatu24 * (double.parse(totalCrtBatu24.text))) +
+          (hargaBatu25 * (double.parse(totalCrtBatu25.text))) +
+          (hargaBatu26 * (double.parse(totalCrtBatu26.text))) +
+          (hargaBatu27 * (double.parse(totalCrtBatu27.text))) +
+          (hargaBatu28 * (double.parse(totalCrtBatu28.text))) +
+          (hargaBatu29 * (double.parse(totalCrtBatu29.text))) +
+          (hargaBatu30 * (double.parse(totalCrtBatu30.text))) +
+          (hargaBatu31 * (double.parse(totalCrtBatu31.text))) +
+          (hargaBatu32 * (double.parse(totalCrtBatu32.text))) +
+          (hargaBatu33 * (double.parse(totalCrtBatu33.text))) +
+          (hargaBatu34 * (double.parse(totalCrtBatu34.text))) +
+          (hargaBatu35 * (double.parse(totalCrtBatu35.text)));
 
       var totalDiamondTanpaUp = ((hargaBatu1 / markUpBatu1) *
-              (caratPcsBatu1 * qtyIntBatu1!)) +
-          ((hargaBatu2 / markUpBatu2) * (caratPcsBatu2 * qtyIntBatu2!)) +
-          ((hargaBatu3 / markUpBatu3) * (caratPcsBatu3 * qtyIntBatu3!)) +
-          ((hargaBatu4 / markUpBatu4) * (caratPcsBatu4 * qtyIntBatu4!)) +
-          ((hargaBatu5 / markUpBatu5) * (caratPcsBatu5 * qtyIntBatu5!)) +
-          ((hargaBatu6 / markUpBatu6) * (caratPcsBatu6 * qtyIntBatu6!)) +
-          ((hargaBatu7 / markUpBatu7) * (caratPcsBatu7 * qtyIntBatu7!)) +
-          ((hargaBatu8 / markUpBatu8) * (caratPcsBatu8 * qtyIntBatu8!)) +
-          ((hargaBatu9 / markUpBatu9) * (caratPcsBatu9 * qtyIntBatu9!)) +
-          ((hargaBatu10 / markUpBatu10) * (caratPcsBatu10 * qtyIntBatu10!)) +
-          ((hargaBatu11 / markUpBatu11) * (caratPcsBatu11 * qtyIntBatu11!)) +
-          ((hargaBatu12 / markUpBatu12) * (caratPcsBatu12 * qtyIntBatu12!)) +
-          ((hargaBatu13 / markUpBatu13) * (caratPcsBatu13 * qtyIntBatu13!)) +
-          ((hargaBatu14 / markUpBatu14) * (caratPcsBatu14 * qtyIntBatu14!)) +
-          ((hargaBatu15 / markUpBatu15) * (caratPcsBatu15 * qtyIntBatu15!)) +
-          ((hargaBatu16 / markUpBatu16) * (caratPcsBatu16 * qtyIntBatu16!)) +
-          ((hargaBatu17 / markUpBatu17) * (caratPcsBatu17 * qtyIntBatu17!)) +
-          ((hargaBatu18 / markUpBatu18) * (caratPcsBatu18 * qtyIntBatu18!)) +
-          ((hargaBatu19 / markUpBatu19) * (caratPcsBatu19 * qtyIntBatu19!)) +
-          ((hargaBatu20 / markUpBatu20) * (caratPcsBatu20 * qtyIntBatu20!)) +
-          ((hargaBatu21 / markUpBatu21) * (caratPcsBatu21 * qtyIntBatu21!)) +
-          ((hargaBatu22 / markUpBatu22) * (caratPcsBatu22 * qtyIntBatu22!)) +
-          ((hargaBatu23 / markUpBatu23) * (caratPcsBatu23 * qtyIntBatu23!)) +
-          ((hargaBatu24 / markUpBatu24) * (caratPcsBatu24 * qtyIntBatu24!)) +
-          ((hargaBatu25 / markUpBatu25) * (caratPcsBatu25 * qtyIntBatu25!)) +
-          ((hargaBatu26 / markUpBatu26) * (caratPcsBatu26 * qtyIntBatu26!)) +
-          ((hargaBatu27 / markUpBatu27) * (caratPcsBatu27 * qtyIntBatu27!)) +
-          ((hargaBatu28 / markUpBatu28) * (caratPcsBatu28 * qtyIntBatu28!)) +
-          ((hargaBatu29 / markUpBatu29) * (caratPcsBatu29 * qtyIntBatu29!)) +
-          ((hargaBatu30 / markUpBatu30) * (caratPcsBatu30 * qtyIntBatu30!)) +
-          ((hargaBatu31 / markUpBatu31) * (caratPcsBatu31 * qtyIntBatu31!)) +
-          ((hargaBatu32 / markUpBatu32) * (caratPcsBatu32 * qtyIntBatu32!)) +
-          ((hargaBatu33 / markUpBatu33) * (caratPcsBatu33 * qtyIntBatu33!)) +
-          ((hargaBatu34 / markUpBatu34) * (caratPcsBatu34 * qtyIntBatu34!)) +
-          ((hargaBatu35 / markUpBatu35) * (caratPcsBatu35 * qtyIntBatu35!));
+              (double.parse(totalCrtBatu1.text))) +
+          ((hargaBatu2 / markUpBatu2) * (double.parse(totalCrtBatu2.text))) +
+          ((hargaBatu3 / markUpBatu3) * (double.parse(totalCrtBatu3.text))) +
+          ((hargaBatu4 / markUpBatu4) * (double.parse(totalCrtBatu4.text))) +
+          ((hargaBatu5 / markUpBatu5) * (double.parse(totalCrtBatu5.text))) +
+          ((hargaBatu6 / markUpBatu6) * (double.parse(totalCrtBatu6.text))) +
+          ((hargaBatu7 / markUpBatu7) * (double.parse(totalCrtBatu7.text))) +
+          ((hargaBatu8 / markUpBatu8) * (double.parse(totalCrtBatu8.text))) +
+          ((hargaBatu9 / markUpBatu9) * (double.parse(totalCrtBatu9.text))) +
+          ((hargaBatu10 / markUpBatu10) * (double.parse(totalCrtBatu10.text))) +
+          ((hargaBatu11 / markUpBatu11) * (double.parse(totalCrtBatu11.text))) +
+          ((hargaBatu12 / markUpBatu12) * (double.parse(totalCrtBatu12.text))) +
+          ((hargaBatu13 / markUpBatu13) * (double.parse(totalCrtBatu13.text))) +
+          ((hargaBatu14 / markUpBatu14) * (double.parse(totalCrtBatu14.text))) +
+          ((hargaBatu15 / markUpBatu15) * (double.parse(totalCrtBatu15.text))) +
+          ((hargaBatu16 / markUpBatu16) * (double.parse(totalCrtBatu16.text))) +
+          ((hargaBatu17 / markUpBatu17) * (double.parse(totalCrtBatu17.text))) +
+          ((hargaBatu18 / markUpBatu18) * (double.parse(totalCrtBatu18.text))) +
+          ((hargaBatu19 / markUpBatu19) * (double.parse(totalCrtBatu19.text))) +
+          ((hargaBatu20 / markUpBatu20) * (double.parse(totalCrtBatu20.text))) +
+          ((hargaBatu21 / markUpBatu21) * (double.parse(totalCrtBatu21.text))) +
+          ((hargaBatu22 / markUpBatu22) * (double.parse(totalCrtBatu22.text))) +
+          ((hargaBatu23 / markUpBatu23) * (double.parse(totalCrtBatu23.text))) +
+          ((hargaBatu24 / markUpBatu24) * (double.parse(totalCrtBatu24.text))) +
+          ((hargaBatu25 / markUpBatu25) * (double.parse(totalCrtBatu25.text))) +
+          ((hargaBatu26 / markUpBatu26) * (double.parse(totalCrtBatu26.text))) +
+          ((hargaBatu27 / markUpBatu27) * (double.parse(totalCrtBatu27.text))) +
+          ((hargaBatu28 / markUpBatu28) * (double.parse(totalCrtBatu28.text))) +
+          ((hargaBatu29 / markUpBatu29) * (double.parse(totalCrtBatu29.text))) +
+          ((hargaBatu30 / markUpBatu30) * (double.parse(totalCrtBatu30.text))) +
+          ((hargaBatu31 / markUpBatu31) * (double.parse(totalCrtBatu31.text))) +
+          ((hargaBatu32 / markUpBatu32) * (double.parse(totalCrtBatu32.text))) +
+          ((hargaBatu33 / markUpBatu33) * (double.parse(totalCrtBatu33.text))) +
+          ((hargaBatu34 / markUpBatu34) * (double.parse(totalCrtBatu34.text))) +
+          ((hargaBatu35 / markUpBatu35) * (double.parse(totalCrtBatu35.text)));
 
-      var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
-                  (caratPcsBatu2 * qtyIntBatu2!) +
-                  (caratPcsBatu3 * qtyIntBatu3!) +
-                  (caratPcsBatu4 * qtyIntBatu4!) +
-                  (caratPcsBatu5 * qtyIntBatu5!) +
-                  (caratPcsBatu6 * qtyIntBatu6!) +
-                  (caratPcsBatu7 * qtyIntBatu7!) +
-                  (caratPcsBatu8 * qtyIntBatu8!) +
-                  (caratPcsBatu9 * qtyIntBatu9!) +
-                  (caratPcsBatu10 * qtyIntBatu10!) +
-                  (caratPcsBatu11 * qtyIntBatu11!) +
-                  (caratPcsBatu12 * qtyIntBatu12!) +
-                  (caratPcsBatu13 * qtyIntBatu13!) +
-                  (caratPcsBatu14 * qtyIntBatu14!) +
-                  (caratPcsBatu15 * qtyIntBatu15!) +
-                  (caratPcsBatu16 * qtyIntBatu16!) +
-                  (caratPcsBatu17 * qtyIntBatu17!) +
-                  (caratPcsBatu18 * qtyIntBatu18!) +
-                  (caratPcsBatu19 * qtyIntBatu19!) +
-                  (caratPcsBatu20 * qtyIntBatu20!) +
-                  (caratPcsBatu21 * qtyIntBatu21!) +
-                  (caratPcsBatu22 * qtyIntBatu22!) +
-                  (caratPcsBatu23 * qtyIntBatu23!) +
-                  (caratPcsBatu24 * qtyIntBatu24!) +
-                  (caratPcsBatu25 * qtyIntBatu25!) +
-                  (caratPcsBatu26 * qtyIntBatu26!) +
-                  (caratPcsBatu27 * qtyIntBatu27!) +
-                  (caratPcsBatu28 * qtyIntBatu28!) +
-                  (caratPcsBatu29 * qtyIntBatu29!) +
-                  (caratPcsBatu30 * qtyIntBatu30!) +
-                  (caratPcsBatu31 * qtyIntBatu31!) +
-                  (caratPcsBatu32 * qtyIntBatu32!) +
-                  (caratPcsBatu33 * qtyIntBatu33!) +
-                  (caratPcsBatu34 * qtyIntBatu34!) +
-                  (caratPcsBatu35 * qtyIntBatu35!)) +
+      var totalQtyCrt = ((((double.parse(totalCrtBatu1.text)) +
+                  (double.parse(totalCrtBatu2.text)) +
+                  (double.parse(totalCrtBatu3.text)) +
+                  (double.parse(totalCrtBatu4.text)) +
+                  (double.parse(totalCrtBatu5.text)) +
+                  (double.parse(totalCrtBatu6.text)) +
+                  (double.parse(totalCrtBatu7.text)) +
+                  (double.parse(totalCrtBatu8.text)) +
+                  (double.parse(totalCrtBatu9.text)) +
+                  (double.parse(totalCrtBatu10.text)) +
+                  (double.parse(totalCrtBatu11.text)) +
+                  (double.parse(totalCrtBatu12.text)) +
+                  (double.parse(totalCrtBatu13.text)) +
+                  (double.parse(totalCrtBatu14.text)) +
+                  (double.parse(totalCrtBatu15.text)) +
+                  (double.parse(totalCrtBatu16.text)) +
+                  (double.parse(totalCrtBatu17.text)) +
+                  (double.parse(totalCrtBatu18.text)) +
+                  (double.parse(totalCrtBatu19.text)) +
+                  (double.parse(totalCrtBatu20.text)) +
+                  (double.parse(totalCrtBatu21.text)) +
+                  (double.parse(totalCrtBatu22.text)) +
+                  (double.parse(totalCrtBatu23.text)) +
+                  (double.parse(totalCrtBatu24.text)) +
+                  (double.parse(totalCrtBatu25.text)) +
+                  (double.parse(totalCrtBatu26.text)) +
+                  (double.parse(totalCrtBatu27.text)) +
+                  (double.parse(totalCrtBatu28.text)) +
+                  (double.parse(totalCrtBatu29.text)) +
+                  (double.parse(totalCrtBatu30.text)) +
+                  (double.parse(totalCrtBatu31.text)) +
+                  (double.parse(totalCrtBatu32.text)) +
+                  (double.parse(totalCrtBatu33.text)) +
+                  (double.parse(totalCrtBatu34.text)) +
+                  (double.parse(totalCrtBatu35.text))) +
               doubleBeratEmasDariCustomer) /
           5);
       double totalEmas;
@@ -1353,114 +1389,114 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
         return total;
       }
     } else {
-      var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
-          (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
-          (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
-          (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
-          (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
-          (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
-          (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
-          (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
-          (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
-          (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
-          (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
-          (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
-          (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
-          (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
-          (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
-          (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
-          (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
-          (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
-          (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
-          (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
-          (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
-          (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
-          (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
-          (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
-          (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
-          (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
-          (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
-          (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
-          (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
-          (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
-          (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
-          (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
-          (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
-          (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
-          (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
+      var totalDiamond = (hargaBatu1 * (double.parse(totalCrtBatu1.text))) +
+          (hargaBatu2 * (double.parse(totalCrtBatu2.text))) +
+          (hargaBatu3 * (double.parse(totalCrtBatu3.text))) +
+          (hargaBatu4 * (double.parse(totalCrtBatu4.text))) +
+          (hargaBatu5 * (double.parse(totalCrtBatu5.text))) +
+          (hargaBatu6 * (double.parse(totalCrtBatu6.text))) +
+          (hargaBatu7 * (double.parse(totalCrtBatu7.text))) +
+          (hargaBatu8 * (double.parse(totalCrtBatu8.text))) +
+          (hargaBatu9 * (double.parse(totalCrtBatu9.text))) +
+          (hargaBatu10 * (double.parse(totalCrtBatu10.text))) +
+          (hargaBatu11 * (double.parse(totalCrtBatu11.text))) +
+          (hargaBatu12 * (double.parse(totalCrtBatu12.text))) +
+          (hargaBatu13 * (double.parse(totalCrtBatu13.text))) +
+          (hargaBatu14 * (double.parse(totalCrtBatu14.text))) +
+          (hargaBatu15 * (double.parse(totalCrtBatu15.text))) +
+          (hargaBatu16 * (double.parse(totalCrtBatu16.text))) +
+          (hargaBatu17 * (double.parse(totalCrtBatu17.text))) +
+          (hargaBatu18 * (double.parse(totalCrtBatu18.text))) +
+          (hargaBatu19 * (double.parse(totalCrtBatu19.text))) +
+          (hargaBatu20 * (double.parse(totalCrtBatu20.text))) +
+          (hargaBatu21 * (double.parse(totalCrtBatu21.text))) +
+          (hargaBatu22 * (double.parse(totalCrtBatu22.text))) +
+          (hargaBatu23 * (double.parse(totalCrtBatu23.text))) +
+          (hargaBatu24 * (double.parse(totalCrtBatu24.text))) +
+          (hargaBatu25 * (double.parse(totalCrtBatu25.text))) +
+          (hargaBatu26 * (double.parse(totalCrtBatu26.text))) +
+          (hargaBatu27 * (double.parse(totalCrtBatu27.text))) +
+          (hargaBatu28 * (double.parse(totalCrtBatu28.text))) +
+          (hargaBatu29 * (double.parse(totalCrtBatu29.text))) +
+          (hargaBatu30 * (double.parse(totalCrtBatu30.text))) +
+          (hargaBatu31 * (double.parse(totalCrtBatu31.text))) +
+          (hargaBatu32 * (double.parse(totalCrtBatu32.text))) +
+          (hargaBatu33 * (double.parse(totalCrtBatu33.text))) +
+          (hargaBatu34 * (double.parse(totalCrtBatu34.text))) +
+          (hargaBatu35 * (double.parse(totalCrtBatu35.text)));
 
       var totalDiamondTanpaUp = ((hargaBatu1 / markUpBatu1) *
-              (caratPcsBatu1 * qtyIntBatu1!)) +
-          ((hargaBatu2 / markUpBatu2) * (caratPcsBatu2 * qtyIntBatu2!)) +
-          ((hargaBatu3 / markUpBatu3) * (caratPcsBatu3 * qtyIntBatu3!)) +
-          ((hargaBatu4 / markUpBatu4) * (caratPcsBatu4 * qtyIntBatu4!)) +
-          ((hargaBatu5 / markUpBatu5) * (caratPcsBatu5 * qtyIntBatu5!)) +
-          ((hargaBatu6 / markUpBatu6) * (caratPcsBatu6 * qtyIntBatu6!)) +
-          ((hargaBatu7 / markUpBatu7) * (caratPcsBatu7 * qtyIntBatu7!)) +
-          ((hargaBatu8 / markUpBatu8) * (caratPcsBatu8 * qtyIntBatu8!)) +
-          ((hargaBatu9 / markUpBatu9) * (caratPcsBatu9 * qtyIntBatu9!)) +
-          ((hargaBatu10 / markUpBatu10) * (caratPcsBatu10 * qtyIntBatu10!)) +
-          ((hargaBatu11 / markUpBatu11) * (caratPcsBatu11 * qtyIntBatu11!)) +
-          ((hargaBatu12 / markUpBatu12) * (caratPcsBatu12 * qtyIntBatu12!)) +
-          ((hargaBatu13 / markUpBatu13) * (caratPcsBatu13 * qtyIntBatu13!)) +
-          ((hargaBatu14 / markUpBatu14) * (caratPcsBatu14 * qtyIntBatu14!)) +
-          ((hargaBatu15 / markUpBatu15) * (caratPcsBatu15 * qtyIntBatu15!)) +
-          ((hargaBatu16 / markUpBatu16) * (caratPcsBatu16 * qtyIntBatu16!)) +
-          ((hargaBatu17 / markUpBatu17) * (caratPcsBatu17 * qtyIntBatu17!)) +
-          ((hargaBatu18 / markUpBatu18) * (caratPcsBatu18 * qtyIntBatu18!)) +
-          ((hargaBatu19 / markUpBatu19) * (caratPcsBatu19 * qtyIntBatu19!)) +
-          ((hargaBatu20 / markUpBatu20) * (caratPcsBatu20 * qtyIntBatu20!)) +
-          ((hargaBatu21 / markUpBatu21) * (caratPcsBatu21 * qtyIntBatu21!)) +
-          ((hargaBatu22 / markUpBatu22) * (caratPcsBatu22 * qtyIntBatu22!)) +
-          ((hargaBatu23 / markUpBatu23) * (caratPcsBatu23 * qtyIntBatu23!)) +
-          ((hargaBatu24 / markUpBatu24) * (caratPcsBatu24 * qtyIntBatu24!)) +
-          ((hargaBatu25 / markUpBatu25) * (caratPcsBatu25 * qtyIntBatu25!)) +
-          ((hargaBatu26 / markUpBatu26) * (caratPcsBatu26 * qtyIntBatu26!)) +
-          ((hargaBatu27 / markUpBatu27) * (caratPcsBatu27 * qtyIntBatu27!)) +
-          ((hargaBatu28 / markUpBatu28) * (caratPcsBatu28 * qtyIntBatu28!)) +
-          ((hargaBatu29 / markUpBatu29) * (caratPcsBatu29 * qtyIntBatu29!)) +
-          ((hargaBatu30 / markUpBatu30) * (caratPcsBatu30 * qtyIntBatu30!)) +
-          ((hargaBatu31 / markUpBatu31) * (caratPcsBatu31 * qtyIntBatu31!)) +
-          ((hargaBatu32 / markUpBatu32) * (caratPcsBatu32 * qtyIntBatu32!)) +
-          ((hargaBatu33 / markUpBatu33) * (caratPcsBatu33 * qtyIntBatu33!)) +
-          ((hargaBatu34 / markUpBatu34) * (caratPcsBatu34 * qtyIntBatu34!)) +
-          ((hargaBatu35 / markUpBatu35) * (caratPcsBatu35 * qtyIntBatu35!));
+              (double.parse(totalCrtBatu1.text))) +
+          ((hargaBatu2 / markUpBatu2) * (double.parse(totalCrtBatu2.text))) +
+          ((hargaBatu3 / markUpBatu3) * (double.parse(totalCrtBatu3.text))) +
+          ((hargaBatu4 / markUpBatu4) * (double.parse(totalCrtBatu4.text))) +
+          ((hargaBatu5 / markUpBatu5) * (double.parse(totalCrtBatu5.text))) +
+          ((hargaBatu6 / markUpBatu6) * (double.parse(totalCrtBatu6.text))) +
+          ((hargaBatu7 / markUpBatu7) * (double.parse(totalCrtBatu7.text))) +
+          ((hargaBatu8 / markUpBatu8) * (double.parse(totalCrtBatu8.text))) +
+          ((hargaBatu9 / markUpBatu9) * (double.parse(totalCrtBatu9.text))) +
+          ((hargaBatu10 / markUpBatu10) * (double.parse(totalCrtBatu10.text))) +
+          ((hargaBatu11 / markUpBatu11) * (double.parse(totalCrtBatu11.text))) +
+          ((hargaBatu12 / markUpBatu12) * (double.parse(totalCrtBatu12.text))) +
+          ((hargaBatu13 / markUpBatu13) * (double.parse(totalCrtBatu13.text))) +
+          ((hargaBatu14 / markUpBatu14) * (double.parse(totalCrtBatu14.text))) +
+          ((hargaBatu15 / markUpBatu15) * (double.parse(totalCrtBatu15.text))) +
+          ((hargaBatu16 / markUpBatu16) * (double.parse(totalCrtBatu16.text))) +
+          ((hargaBatu17 / markUpBatu17) * (double.parse(totalCrtBatu17.text))) +
+          ((hargaBatu18 / markUpBatu18) * (double.parse(totalCrtBatu18.text))) +
+          ((hargaBatu19 / markUpBatu19) * (double.parse(totalCrtBatu19.text))) +
+          ((hargaBatu20 / markUpBatu20) * (double.parse(totalCrtBatu20.text))) +
+          ((hargaBatu21 / markUpBatu21) * (double.parse(totalCrtBatu21.text))) +
+          ((hargaBatu22 / markUpBatu22) * (double.parse(totalCrtBatu22.text))) +
+          ((hargaBatu23 / markUpBatu23) * (double.parse(totalCrtBatu23.text))) +
+          ((hargaBatu24 / markUpBatu24) * (double.parse(totalCrtBatu24.text))) +
+          ((hargaBatu25 / markUpBatu25) * (double.parse(totalCrtBatu25.text))) +
+          ((hargaBatu26 / markUpBatu26) * (double.parse(totalCrtBatu26.text))) +
+          ((hargaBatu27 / markUpBatu27) * (double.parse(totalCrtBatu27.text))) +
+          ((hargaBatu28 / markUpBatu28) * (double.parse(totalCrtBatu28.text))) +
+          ((hargaBatu29 / markUpBatu29) * (double.parse(totalCrtBatu29.text))) +
+          ((hargaBatu30 / markUpBatu30) * (double.parse(totalCrtBatu30.text))) +
+          ((hargaBatu31 / markUpBatu31) * (double.parse(totalCrtBatu31.text))) +
+          ((hargaBatu32 / markUpBatu32) * (double.parse(totalCrtBatu32.text))) +
+          ((hargaBatu33 / markUpBatu33) * (double.parse(totalCrtBatu33.text))) +
+          ((hargaBatu34 / markUpBatu34) * (double.parse(totalCrtBatu34.text))) +
+          ((hargaBatu35 / markUpBatu35) * (double.parse(totalCrtBatu35.text)));
 
-      var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
-                  (caratPcsBatu2 * qtyIntBatu2!) +
-                  (caratPcsBatu3 * qtyIntBatu3!) +
-                  (caratPcsBatu4 * qtyIntBatu4!) +
-                  (caratPcsBatu5 * qtyIntBatu5!) +
-                  (caratPcsBatu6 * qtyIntBatu6!) +
-                  (caratPcsBatu7 * qtyIntBatu7!) +
-                  (caratPcsBatu8 * qtyIntBatu8!) +
-                  (caratPcsBatu9 * qtyIntBatu9!) +
-                  (caratPcsBatu10 * qtyIntBatu10!) +
-                  (caratPcsBatu11 * qtyIntBatu11!) +
-                  (caratPcsBatu12 * qtyIntBatu12!) +
-                  (caratPcsBatu13 * qtyIntBatu13!) +
-                  (caratPcsBatu14 * qtyIntBatu14!) +
-                  (caratPcsBatu15 * qtyIntBatu15!) +
-                  (caratPcsBatu16 * qtyIntBatu16!) +
-                  (caratPcsBatu17 * qtyIntBatu17!) +
-                  (caratPcsBatu18 * qtyIntBatu18!) +
-                  (caratPcsBatu19 * qtyIntBatu19!) +
-                  (caratPcsBatu20 * qtyIntBatu20!) +
-                  (caratPcsBatu21 * qtyIntBatu21!) +
-                  (caratPcsBatu22 * qtyIntBatu22!) +
-                  (caratPcsBatu23 * qtyIntBatu23!) +
-                  (caratPcsBatu24 * qtyIntBatu24!) +
-                  (caratPcsBatu25 * qtyIntBatu25!) +
-                  (caratPcsBatu26 * qtyIntBatu26!) +
-                  (caratPcsBatu27 * qtyIntBatu27!) +
-                  (caratPcsBatu28 * qtyIntBatu28!) +
-                  (caratPcsBatu29 * qtyIntBatu29!) +
-                  (caratPcsBatu30 * qtyIntBatu30!) +
-                  (caratPcsBatu31 * qtyIntBatu31!) +
-                  (caratPcsBatu32 * qtyIntBatu32!) +
-                  (caratPcsBatu33 * qtyIntBatu33!) +
-                  (caratPcsBatu34 * qtyIntBatu34!) +
-                  (caratPcsBatu35 * qtyIntBatu35!)) +
+      var totalQtyCrt = ((((double.parse(totalCrtBatu1.text)) +
+                  (double.parse(totalCrtBatu2.text)) +
+                  (double.parse(totalCrtBatu3.text)) +
+                  (double.parse(totalCrtBatu4.text)) +
+                  (double.parse(totalCrtBatu5.text)) +
+                  (double.parse(totalCrtBatu6.text)) +
+                  (double.parse(totalCrtBatu7.text)) +
+                  (double.parse(totalCrtBatu8.text)) +
+                  (double.parse(totalCrtBatu9.text)) +
+                  (double.parse(totalCrtBatu10.text)) +
+                  (double.parse(totalCrtBatu11.text)) +
+                  (double.parse(totalCrtBatu12.text)) +
+                  (double.parse(totalCrtBatu13.text)) +
+                  (double.parse(totalCrtBatu14.text)) +
+                  (double.parse(totalCrtBatu15.text)) +
+                  (double.parse(totalCrtBatu16.text)) +
+                  (double.parse(totalCrtBatu17.text)) +
+                  (double.parse(totalCrtBatu18.text)) +
+                  (double.parse(totalCrtBatu19.text)) +
+                  (double.parse(totalCrtBatu20.text)) +
+                  (double.parse(totalCrtBatu21.text)) +
+                  (double.parse(totalCrtBatu22.text)) +
+                  (double.parse(totalCrtBatu23.text)) +
+                  (double.parse(totalCrtBatu24.text)) +
+                  (double.parse(totalCrtBatu25.text)) +
+                  (double.parse(totalCrtBatu26.text)) +
+                  (double.parse(totalCrtBatu27.text)) +
+                  (double.parse(totalCrtBatu28.text)) +
+                  (double.parse(totalCrtBatu29.text)) +
+                  (double.parse(totalCrtBatu30.text)) +
+                  (double.parse(totalCrtBatu31.text)) +
+                  (double.parse(totalCrtBatu32.text)) +
+                  (double.parse(totalCrtBatu33.text)) +
+                  (double.parse(totalCrtBatu34.text)) +
+                  (double.parse(totalCrtBatu35.text))) +
               doubleBeratEmasDariCustomer) /
           5);
       double totalEmas;
@@ -1526,114 +1562,114 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
   }
 
   double get totalPriceBeliBerlian {
-    var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
-        (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
-        (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
-        (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
-        (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
-        (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
-        (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
-        (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
-        (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
-        (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
-        (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
-        (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
-        (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
-        (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
-        (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
-        (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
-        (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
-        (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
-        (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
-        (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
-        (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
-        (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
-        (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
-        (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
-        (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
-        (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
-        (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
-        (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
-        (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
-        (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
-        (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
-        (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
-        (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
-        (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
-        (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
+    var totalDiamond = (hargaBatu1 * (double.parse(totalCrtBatu1.text))) +
+        (hargaBatu2 * (double.parse(totalCrtBatu2.text))) +
+        (hargaBatu3 * (double.parse(totalCrtBatu3.text))) +
+        (hargaBatu4 * (double.parse(totalCrtBatu4.text))) +
+        (hargaBatu5 * (double.parse(totalCrtBatu5.text))) +
+        (hargaBatu6 * (double.parse(totalCrtBatu6.text))) +
+        (hargaBatu7 * (double.parse(totalCrtBatu7.text))) +
+        (hargaBatu8 * (double.parse(totalCrtBatu8.text))) +
+        (hargaBatu9 * (double.parse(totalCrtBatu9.text))) +
+        (hargaBatu10 * (double.parse(totalCrtBatu10.text))) +
+        (hargaBatu11 * (double.parse(totalCrtBatu11.text))) +
+        (hargaBatu12 * (double.parse(totalCrtBatu12.text))) +
+        (hargaBatu13 * (double.parse(totalCrtBatu13.text))) +
+        (hargaBatu14 * (double.parse(totalCrtBatu14.text))) +
+        (hargaBatu15 * (double.parse(totalCrtBatu15.text))) +
+        (hargaBatu16 * (double.parse(totalCrtBatu16.text))) +
+        (hargaBatu17 * (double.parse(totalCrtBatu17.text))) +
+        (hargaBatu18 * (double.parse(totalCrtBatu18.text))) +
+        (hargaBatu19 * (double.parse(totalCrtBatu19.text))) +
+        (hargaBatu20 * (double.parse(totalCrtBatu20.text))) +
+        (hargaBatu21 * (double.parse(totalCrtBatu21.text))) +
+        (hargaBatu22 * (double.parse(totalCrtBatu22.text))) +
+        (hargaBatu23 * (double.parse(totalCrtBatu23.text))) +
+        (hargaBatu24 * (double.parse(totalCrtBatu24.text))) +
+        (hargaBatu25 * (double.parse(totalCrtBatu25.text))) +
+        (hargaBatu26 * (double.parse(totalCrtBatu26.text))) +
+        (hargaBatu27 * (double.parse(totalCrtBatu27.text))) +
+        (hargaBatu28 * (double.parse(totalCrtBatu28.text))) +
+        (hargaBatu29 * (double.parse(totalCrtBatu29.text))) +
+        (hargaBatu30 * (double.parse(totalCrtBatu30.text))) +
+        (hargaBatu31 * (double.parse(totalCrtBatu31.text))) +
+        (hargaBatu32 * (double.parse(totalCrtBatu32.text))) +
+        (hargaBatu33 * (double.parse(totalCrtBatu33.text))) +
+        (hargaBatu34 * (double.parse(totalCrtBatu34.text))) +
+        (hargaBatu35 * (double.parse(totalCrtBatu35.text)));
 
-    var totalDiamondTanpaUp =
-        ((hargaBatu1 / markUpBatu1) * (caratPcsBatu1 * qtyIntBatu1!)) +
-            ((hargaBatu2 / markUpBatu2) * (caratPcsBatu2 * qtyIntBatu2!)) +
-            ((hargaBatu3 / markUpBatu3) * (caratPcsBatu3 * qtyIntBatu3!)) +
-            ((hargaBatu4 / markUpBatu4) * (caratPcsBatu4 * qtyIntBatu4!)) +
-            ((hargaBatu5 / markUpBatu5) * (caratPcsBatu5 * qtyIntBatu5!)) +
-            ((hargaBatu6 / markUpBatu6) * (caratPcsBatu6 * qtyIntBatu6!)) +
-            ((hargaBatu7 / markUpBatu7) * (caratPcsBatu7 * qtyIntBatu7!)) +
-            ((hargaBatu8 / markUpBatu8) * (caratPcsBatu8 * qtyIntBatu8!)) +
-            ((hargaBatu9 / markUpBatu9) * (caratPcsBatu9 * qtyIntBatu9!)) +
-            ((hargaBatu10 / markUpBatu10) * (caratPcsBatu10 * qtyIntBatu10!)) +
-            ((hargaBatu11 / markUpBatu11) * (caratPcsBatu11 * qtyIntBatu11!)) +
-            ((hargaBatu12 / markUpBatu12) * (caratPcsBatu12 * qtyIntBatu12!)) +
-            ((hargaBatu13 / markUpBatu13) * (caratPcsBatu13 * qtyIntBatu13!)) +
-            ((hargaBatu14 / markUpBatu14) * (caratPcsBatu14 * qtyIntBatu14!)) +
-            ((hargaBatu15 / markUpBatu15) * (caratPcsBatu15 * qtyIntBatu15!)) +
-            ((hargaBatu16 / markUpBatu16) * (caratPcsBatu16 * qtyIntBatu16!)) +
-            ((hargaBatu17 / markUpBatu17) * (caratPcsBatu17 * qtyIntBatu17!)) +
-            ((hargaBatu18 / markUpBatu18) * (caratPcsBatu18 * qtyIntBatu18!)) +
-            ((hargaBatu19 / markUpBatu19) * (caratPcsBatu19 * qtyIntBatu19!)) +
-            ((hargaBatu20 / markUpBatu20) * (caratPcsBatu20 * qtyIntBatu20!)) +
-            ((hargaBatu21 / markUpBatu21) * (caratPcsBatu21 * qtyIntBatu21!)) +
-            ((hargaBatu22 / markUpBatu22) * (caratPcsBatu22 * qtyIntBatu22!)) +
-            ((hargaBatu23 / markUpBatu23) * (caratPcsBatu23 * qtyIntBatu23!)) +
-            ((hargaBatu24 / markUpBatu24) * (caratPcsBatu24 * qtyIntBatu24!)) +
-            ((hargaBatu25 / markUpBatu25) * (caratPcsBatu25 * qtyIntBatu25!)) +
-            ((hargaBatu26 / markUpBatu26) * (caratPcsBatu26 * qtyIntBatu26!)) +
-            ((hargaBatu27 / markUpBatu27) * (caratPcsBatu27 * qtyIntBatu27!)) +
-            ((hargaBatu28 / markUpBatu28) * (caratPcsBatu28 * qtyIntBatu28!)) +
-            ((hargaBatu29 / markUpBatu29) * (caratPcsBatu29 * qtyIntBatu29!)) +
-            ((hargaBatu30 / markUpBatu30) * (caratPcsBatu30 * qtyIntBatu30!)) +
-            ((hargaBatu31 / markUpBatu31) * (caratPcsBatu31 * qtyIntBatu31!)) +
-            ((hargaBatu32 / markUpBatu32) * (caratPcsBatu32 * qtyIntBatu32!)) +
-            ((hargaBatu33 / markUpBatu33) * (caratPcsBatu33 * qtyIntBatu33!)) +
-            ((hargaBatu34 / markUpBatu34) * (caratPcsBatu34 * qtyIntBatu34!)) +
-            ((hargaBatu35 / markUpBatu35) * (caratPcsBatu35 * qtyIntBatu35!));
+    var totalDiamondTanpaUp = ((hargaBatu1 / markUpBatu1) *
+            (double.parse(totalCrtBatu1.text))) +
+        ((hargaBatu2 / markUpBatu2) * (double.parse(totalCrtBatu2.text))) +
+        ((hargaBatu3 / markUpBatu3) * (double.parse(totalCrtBatu3.text))) +
+        ((hargaBatu4 / markUpBatu4) * (double.parse(totalCrtBatu4.text))) +
+        ((hargaBatu5 / markUpBatu5) * (double.parse(totalCrtBatu5.text))) +
+        ((hargaBatu6 / markUpBatu6) * (double.parse(totalCrtBatu6.text))) +
+        ((hargaBatu7 / markUpBatu7) * (double.parse(totalCrtBatu7.text))) +
+        ((hargaBatu8 / markUpBatu8) * (double.parse(totalCrtBatu8.text))) +
+        ((hargaBatu9 / markUpBatu9) * (double.parse(totalCrtBatu9.text))) +
+        ((hargaBatu10 / markUpBatu10) * (double.parse(totalCrtBatu10.text))) +
+        ((hargaBatu11 / markUpBatu11) * (double.parse(totalCrtBatu11.text))) +
+        ((hargaBatu12 / markUpBatu12) * (double.parse(totalCrtBatu12.text))) +
+        ((hargaBatu13 / markUpBatu13) * (double.parse(totalCrtBatu13.text))) +
+        ((hargaBatu14 / markUpBatu14) * (double.parse(totalCrtBatu14.text))) +
+        ((hargaBatu15 / markUpBatu15) * (double.parse(totalCrtBatu15.text))) +
+        ((hargaBatu16 / markUpBatu16) * (double.parse(totalCrtBatu16.text))) +
+        ((hargaBatu17 / markUpBatu17) * (double.parse(totalCrtBatu17.text))) +
+        ((hargaBatu18 / markUpBatu18) * (double.parse(totalCrtBatu18.text))) +
+        ((hargaBatu19 / markUpBatu19) * (double.parse(totalCrtBatu19.text))) +
+        ((hargaBatu20 / markUpBatu20) * (double.parse(totalCrtBatu20.text))) +
+        ((hargaBatu21 / markUpBatu21) * (double.parse(totalCrtBatu21.text))) +
+        ((hargaBatu22 / markUpBatu22) * (double.parse(totalCrtBatu22.text))) +
+        ((hargaBatu23 / markUpBatu23) * (double.parse(totalCrtBatu23.text))) +
+        ((hargaBatu24 / markUpBatu24) * (double.parse(totalCrtBatu24.text))) +
+        ((hargaBatu25 / markUpBatu25) * (double.parse(totalCrtBatu25.text))) +
+        ((hargaBatu26 / markUpBatu26) * (double.parse(totalCrtBatu26.text))) +
+        ((hargaBatu27 / markUpBatu27) * (double.parse(totalCrtBatu27.text))) +
+        ((hargaBatu28 / markUpBatu28) * (double.parse(totalCrtBatu28.text))) +
+        ((hargaBatu29 / markUpBatu29) * (double.parse(totalCrtBatu29.text))) +
+        ((hargaBatu30 / markUpBatu30) * (double.parse(totalCrtBatu30.text))) +
+        ((hargaBatu31 / markUpBatu31) * (double.parse(totalCrtBatu31.text))) +
+        ((hargaBatu32 / markUpBatu32) * (double.parse(totalCrtBatu32.text))) +
+        ((hargaBatu33 / markUpBatu33) * (double.parse(totalCrtBatu33.text))) +
+        ((hargaBatu34 / markUpBatu34) * (double.parse(totalCrtBatu34.text))) +
+        ((hargaBatu35 / markUpBatu35) * (double.parse(totalCrtBatu35.text)));
 
-    var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
-                (caratPcsBatu2 * qtyIntBatu2!) +
-                (caratPcsBatu3 * qtyIntBatu3!) +
-                (caratPcsBatu4 * qtyIntBatu4!) +
-                (caratPcsBatu5 * qtyIntBatu5!) +
-                (caratPcsBatu6 * qtyIntBatu6!) +
-                (caratPcsBatu7 * qtyIntBatu7!) +
-                (caratPcsBatu8 * qtyIntBatu8!) +
-                (caratPcsBatu9 * qtyIntBatu9!) +
-                (caratPcsBatu10 * qtyIntBatu10!) +
-                (caratPcsBatu11 * qtyIntBatu11!) +
-                (caratPcsBatu12 * qtyIntBatu12!) +
-                (caratPcsBatu13 * qtyIntBatu13!) +
-                (caratPcsBatu14 * qtyIntBatu14!) +
-                (caratPcsBatu15 * qtyIntBatu15!) +
-                (caratPcsBatu16 * qtyIntBatu16!) +
-                (caratPcsBatu17 * qtyIntBatu17!) +
-                (caratPcsBatu18 * qtyIntBatu18!) +
-                (caratPcsBatu19 * qtyIntBatu19!) +
-                (caratPcsBatu20 * qtyIntBatu20!) +
-                (caratPcsBatu21 * qtyIntBatu21!) +
-                (caratPcsBatu22 * qtyIntBatu22!) +
-                (caratPcsBatu23 * qtyIntBatu23!) +
-                (caratPcsBatu24 * qtyIntBatu24!) +
-                (caratPcsBatu25 * qtyIntBatu25!) +
-                (caratPcsBatu26 * qtyIntBatu26!) +
-                (caratPcsBatu27 * qtyIntBatu27!) +
-                (caratPcsBatu28 * qtyIntBatu28!) +
-                (caratPcsBatu29 * qtyIntBatu29!) +
-                (caratPcsBatu30 * qtyIntBatu30!) +
-                (caratPcsBatu31 * qtyIntBatu31!) +
-                (caratPcsBatu32 * qtyIntBatu32!) +
-                (caratPcsBatu33 * qtyIntBatu33!) +
-                (caratPcsBatu34 * qtyIntBatu34!) +
-                (caratPcsBatu35 * qtyIntBatu35!)) +
+    var totalQtyCrt = ((((double.parse(totalCrtBatu1.text)) +
+                (double.parse(totalCrtBatu2.text)) +
+                (double.parse(totalCrtBatu3.text)) +
+                (double.parse(totalCrtBatu4.text)) +
+                (double.parse(totalCrtBatu5.text)) +
+                (double.parse(totalCrtBatu6.text)) +
+                (double.parse(totalCrtBatu7.text)) +
+                (double.parse(totalCrtBatu8.text)) +
+                (double.parse(totalCrtBatu9.text)) +
+                (double.parse(totalCrtBatu10.text)) +
+                (double.parse(totalCrtBatu11.text)) +
+                (double.parse(totalCrtBatu12.text)) +
+                (double.parse(totalCrtBatu13.text)) +
+                (double.parse(totalCrtBatu14.text)) +
+                (double.parse(totalCrtBatu15.text)) +
+                (double.parse(totalCrtBatu16.text)) +
+                (double.parse(totalCrtBatu17.text)) +
+                (double.parse(totalCrtBatu18.text)) +
+                (double.parse(totalCrtBatu19.text)) +
+                (double.parse(totalCrtBatu20.text)) +
+                (double.parse(totalCrtBatu21.text)) +
+                (double.parse(totalCrtBatu22.text)) +
+                (double.parse(totalCrtBatu23.text)) +
+                (double.parse(totalCrtBatu24.text)) +
+                (double.parse(totalCrtBatu25.text)) +
+                (double.parse(totalCrtBatu26.text)) +
+                (double.parse(totalCrtBatu27.text)) +
+                (double.parse(totalCrtBatu28.text)) +
+                (double.parse(totalCrtBatu29.text)) +
+                (double.parse(totalCrtBatu30.text)) +
+                (double.parse(totalCrtBatu31.text)) +
+                (double.parse(totalCrtBatu32.text)) +
+                (double.parse(totalCrtBatu33.text)) +
+                (double.parse(totalCrtBatu34.text)) +
+                (double.parse(totalCrtBatu35.text))) +
             doubleBeratEmasDariCustomer) /
         5);
     double totalEmas;
@@ -1650,114 +1686,114 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
     if (total.toString() == 'NaN') {
       return 0;
     } else if (total < 1500) {
-      var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
-          (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
-          (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
-          (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
-          (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
-          (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
-          (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
-          (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
-          (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
-          (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
-          (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
-          (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
-          (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
-          (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
-          (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
-          (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
-          (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
-          (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
-          (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
-          (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
-          (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
-          (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
-          (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
-          (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
-          (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
-          (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
-          (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
-          (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
-          (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
-          (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
-          (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
-          (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
-          (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
-          (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
-          (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
+      var totalDiamond = (hargaBatu1 * (double.parse(totalCrtBatu1.text))) +
+          (hargaBatu2 * (double.parse(totalCrtBatu2.text))) +
+          (hargaBatu3 * (double.parse(totalCrtBatu3.text))) +
+          (hargaBatu4 * (double.parse(totalCrtBatu4.text))) +
+          (hargaBatu5 * (double.parse(totalCrtBatu5.text))) +
+          (hargaBatu6 * (double.parse(totalCrtBatu6.text))) +
+          (hargaBatu7 * (double.parse(totalCrtBatu7.text))) +
+          (hargaBatu8 * (double.parse(totalCrtBatu8.text))) +
+          (hargaBatu9 * (double.parse(totalCrtBatu9.text))) +
+          (hargaBatu10 * (double.parse(totalCrtBatu10.text))) +
+          (hargaBatu11 * (double.parse(totalCrtBatu11.text))) +
+          (hargaBatu12 * (double.parse(totalCrtBatu12.text))) +
+          (hargaBatu13 * (double.parse(totalCrtBatu13.text))) +
+          (hargaBatu14 * (double.parse(totalCrtBatu14.text))) +
+          (hargaBatu15 * (double.parse(totalCrtBatu15.text))) +
+          (hargaBatu16 * (double.parse(totalCrtBatu16.text))) +
+          (hargaBatu17 * (double.parse(totalCrtBatu17.text))) +
+          (hargaBatu18 * (double.parse(totalCrtBatu18.text))) +
+          (hargaBatu19 * (double.parse(totalCrtBatu19.text))) +
+          (hargaBatu20 * (double.parse(totalCrtBatu20.text))) +
+          (hargaBatu21 * (double.parse(totalCrtBatu21.text))) +
+          (hargaBatu22 * (double.parse(totalCrtBatu22.text))) +
+          (hargaBatu23 * (double.parse(totalCrtBatu23.text))) +
+          (hargaBatu24 * (double.parse(totalCrtBatu24.text))) +
+          (hargaBatu25 * (double.parse(totalCrtBatu25.text))) +
+          (hargaBatu26 * (double.parse(totalCrtBatu26.text))) +
+          (hargaBatu27 * (double.parse(totalCrtBatu27.text))) +
+          (hargaBatu28 * (double.parse(totalCrtBatu28.text))) +
+          (hargaBatu29 * (double.parse(totalCrtBatu29.text))) +
+          (hargaBatu30 * (double.parse(totalCrtBatu30.text))) +
+          (hargaBatu31 * (double.parse(totalCrtBatu31.text))) +
+          (hargaBatu32 * (double.parse(totalCrtBatu32.text))) +
+          (hargaBatu33 * (double.parse(totalCrtBatu33.text))) +
+          (hargaBatu34 * (double.parse(totalCrtBatu34.text))) +
+          (hargaBatu35 * (double.parse(totalCrtBatu35.text)));
 
       var totalDiamondTanpaUp = ((hargaBatu1 / markUpBatu1) *
-              (caratPcsBatu1 * qtyIntBatu1!)) +
-          ((hargaBatu2 / markUpBatu2) * (caratPcsBatu2 * qtyIntBatu2!)) +
-          ((hargaBatu3 / markUpBatu3) * (caratPcsBatu3 * qtyIntBatu3!)) +
-          ((hargaBatu4 / markUpBatu4) * (caratPcsBatu4 * qtyIntBatu4!)) +
-          ((hargaBatu5 / markUpBatu5) * (caratPcsBatu5 * qtyIntBatu5!)) +
-          ((hargaBatu6 / markUpBatu6) * (caratPcsBatu6 * qtyIntBatu6!)) +
-          ((hargaBatu7 / markUpBatu7) * (caratPcsBatu7 * qtyIntBatu7!)) +
-          ((hargaBatu8 / markUpBatu8) * (caratPcsBatu8 * qtyIntBatu8!)) +
-          ((hargaBatu9 / markUpBatu9) * (caratPcsBatu9 * qtyIntBatu9!)) +
-          ((hargaBatu10 / markUpBatu10) * (caratPcsBatu10 * qtyIntBatu10!)) +
-          ((hargaBatu11 / markUpBatu11) * (caratPcsBatu11 * qtyIntBatu11!)) +
-          ((hargaBatu12 / markUpBatu12) * (caratPcsBatu12 * qtyIntBatu12!)) +
-          ((hargaBatu13 / markUpBatu13) * (caratPcsBatu13 * qtyIntBatu13!)) +
-          ((hargaBatu14 / markUpBatu14) * (caratPcsBatu14 * qtyIntBatu14!)) +
-          ((hargaBatu15 / markUpBatu15) * (caratPcsBatu15 * qtyIntBatu15!)) +
-          ((hargaBatu16 / markUpBatu16) * (caratPcsBatu16 * qtyIntBatu16!)) +
-          ((hargaBatu17 / markUpBatu17) * (caratPcsBatu17 * qtyIntBatu17!)) +
-          ((hargaBatu18 / markUpBatu18) * (caratPcsBatu18 * qtyIntBatu18!)) +
-          ((hargaBatu19 / markUpBatu19) * (caratPcsBatu19 * qtyIntBatu19!)) +
-          ((hargaBatu20 / markUpBatu20) * (caratPcsBatu20 * qtyIntBatu20!)) +
-          ((hargaBatu21 / markUpBatu21) * (caratPcsBatu21 * qtyIntBatu21!)) +
-          ((hargaBatu22 / markUpBatu22) * (caratPcsBatu22 * qtyIntBatu22!)) +
-          ((hargaBatu23 / markUpBatu23) * (caratPcsBatu23 * qtyIntBatu23!)) +
-          ((hargaBatu24 / markUpBatu24) * (caratPcsBatu24 * qtyIntBatu24!)) +
-          ((hargaBatu25 / markUpBatu25) * (caratPcsBatu25 * qtyIntBatu25!)) +
-          ((hargaBatu26 / markUpBatu26) * (caratPcsBatu26 * qtyIntBatu26!)) +
-          ((hargaBatu27 / markUpBatu27) * (caratPcsBatu27 * qtyIntBatu27!)) +
-          ((hargaBatu28 / markUpBatu28) * (caratPcsBatu28 * qtyIntBatu28!)) +
-          ((hargaBatu29 / markUpBatu29) * (caratPcsBatu29 * qtyIntBatu29!)) +
-          ((hargaBatu30 / markUpBatu30) * (caratPcsBatu30 * qtyIntBatu30!)) +
-          ((hargaBatu31 / markUpBatu31) * (caratPcsBatu31 * qtyIntBatu31!)) +
-          ((hargaBatu32 / markUpBatu32) * (caratPcsBatu32 * qtyIntBatu32!)) +
-          ((hargaBatu33 / markUpBatu33) * (caratPcsBatu33 * qtyIntBatu33!)) +
-          ((hargaBatu34 / markUpBatu34) * (caratPcsBatu34 * qtyIntBatu34!)) +
-          ((hargaBatu35 / markUpBatu35) * (caratPcsBatu35 * qtyIntBatu35!));
+              (double.parse(totalCrtBatu1.text))) +
+          ((hargaBatu2 / markUpBatu2) * (double.parse(totalCrtBatu2.text))) +
+          ((hargaBatu3 / markUpBatu3) * (double.parse(totalCrtBatu3.text))) +
+          ((hargaBatu4 / markUpBatu4) * (double.parse(totalCrtBatu4.text))) +
+          ((hargaBatu5 / markUpBatu5) * (double.parse(totalCrtBatu5.text))) +
+          ((hargaBatu6 / markUpBatu6) * (double.parse(totalCrtBatu6.text))) +
+          ((hargaBatu7 / markUpBatu7) * (double.parse(totalCrtBatu7.text))) +
+          ((hargaBatu8 / markUpBatu8) * (double.parse(totalCrtBatu8.text))) +
+          ((hargaBatu9 / markUpBatu9) * (double.parse(totalCrtBatu9.text))) +
+          ((hargaBatu10 / markUpBatu10) * (double.parse(totalCrtBatu10.text))) +
+          ((hargaBatu11 / markUpBatu11) * (double.parse(totalCrtBatu11.text))) +
+          ((hargaBatu12 / markUpBatu12) * (double.parse(totalCrtBatu12.text))) +
+          ((hargaBatu13 / markUpBatu13) * (double.parse(totalCrtBatu13.text))) +
+          ((hargaBatu14 / markUpBatu14) * (double.parse(totalCrtBatu14.text))) +
+          ((hargaBatu15 / markUpBatu15) * (double.parse(totalCrtBatu15.text))) +
+          ((hargaBatu16 / markUpBatu16) * (double.parse(totalCrtBatu16.text))) +
+          ((hargaBatu17 / markUpBatu17) * (double.parse(totalCrtBatu17.text))) +
+          ((hargaBatu18 / markUpBatu18) * (double.parse(totalCrtBatu18.text))) +
+          ((hargaBatu19 / markUpBatu19) * (double.parse(totalCrtBatu19.text))) +
+          ((hargaBatu20 / markUpBatu20) * (double.parse(totalCrtBatu20.text))) +
+          ((hargaBatu21 / markUpBatu21) * (double.parse(totalCrtBatu21.text))) +
+          ((hargaBatu22 / markUpBatu22) * (double.parse(totalCrtBatu22.text))) +
+          ((hargaBatu23 / markUpBatu23) * (double.parse(totalCrtBatu23.text))) +
+          ((hargaBatu24 / markUpBatu24) * (double.parse(totalCrtBatu24.text))) +
+          ((hargaBatu25 / markUpBatu25) * (double.parse(totalCrtBatu25.text))) +
+          ((hargaBatu26 / markUpBatu26) * (double.parse(totalCrtBatu26.text))) +
+          ((hargaBatu27 / markUpBatu27) * (double.parse(totalCrtBatu27.text))) +
+          ((hargaBatu28 / markUpBatu28) * (double.parse(totalCrtBatu28.text))) +
+          ((hargaBatu29 / markUpBatu29) * (double.parse(totalCrtBatu29.text))) +
+          ((hargaBatu30 / markUpBatu30) * (double.parse(totalCrtBatu30.text))) +
+          ((hargaBatu31 / markUpBatu31) * (double.parse(totalCrtBatu31.text))) +
+          ((hargaBatu32 / markUpBatu32) * (double.parse(totalCrtBatu32.text))) +
+          ((hargaBatu33 / markUpBatu33) * (double.parse(totalCrtBatu33.text))) +
+          ((hargaBatu34 / markUpBatu34) * (double.parse(totalCrtBatu34.text))) +
+          ((hargaBatu35 / markUpBatu35) * (double.parse(totalCrtBatu35.text)));
 
-      var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
-                  (caratPcsBatu2 * qtyIntBatu2!) +
-                  (caratPcsBatu3 * qtyIntBatu3!) +
-                  (caratPcsBatu4 * qtyIntBatu4!) +
-                  (caratPcsBatu5 * qtyIntBatu5!) +
-                  (caratPcsBatu6 * qtyIntBatu6!) +
-                  (caratPcsBatu7 * qtyIntBatu7!) +
-                  (caratPcsBatu8 * qtyIntBatu8!) +
-                  (caratPcsBatu9 * qtyIntBatu9!) +
-                  (caratPcsBatu10 * qtyIntBatu10!) +
-                  (caratPcsBatu11 * qtyIntBatu11!) +
-                  (caratPcsBatu12 * qtyIntBatu12!) +
-                  (caratPcsBatu13 * qtyIntBatu13!) +
-                  (caratPcsBatu14 * qtyIntBatu14!) +
-                  (caratPcsBatu15 * qtyIntBatu15!) +
-                  (caratPcsBatu16 * qtyIntBatu16!) +
-                  (caratPcsBatu17 * qtyIntBatu17!) +
-                  (caratPcsBatu18 * qtyIntBatu18!) +
-                  (caratPcsBatu19 * qtyIntBatu19!) +
-                  (caratPcsBatu20 * qtyIntBatu20!) +
-                  (caratPcsBatu21 * qtyIntBatu21!) +
-                  (caratPcsBatu22 * qtyIntBatu22!) +
-                  (caratPcsBatu23 * qtyIntBatu23!) +
-                  (caratPcsBatu24 * qtyIntBatu24!) +
-                  (caratPcsBatu25 * qtyIntBatu25!) +
-                  (caratPcsBatu26 * qtyIntBatu26!) +
-                  (caratPcsBatu27 * qtyIntBatu27!) +
-                  (caratPcsBatu28 * qtyIntBatu28!) +
-                  (caratPcsBatu29 * qtyIntBatu29!) +
-                  (caratPcsBatu30 * qtyIntBatu30!) +
-                  (caratPcsBatu31 * qtyIntBatu31!) +
-                  (caratPcsBatu32 * qtyIntBatu32!) +
-                  (caratPcsBatu33 * qtyIntBatu33!) +
-                  (caratPcsBatu34 * qtyIntBatu34!) +
-                  (caratPcsBatu35 * qtyIntBatu35!)) +
+      var totalQtyCrt = ((((double.parse(totalCrtBatu1.text)) +
+                  (double.parse(totalCrtBatu2.text)) +
+                  (double.parse(totalCrtBatu3.text)) +
+                  (double.parse(totalCrtBatu4.text)) +
+                  (double.parse(totalCrtBatu5.text)) +
+                  (double.parse(totalCrtBatu6.text)) +
+                  (double.parse(totalCrtBatu7.text)) +
+                  (double.parse(totalCrtBatu8.text)) +
+                  (double.parse(totalCrtBatu9.text)) +
+                  (double.parse(totalCrtBatu10.text)) +
+                  (double.parse(totalCrtBatu11.text)) +
+                  (double.parse(totalCrtBatu12.text)) +
+                  (double.parse(totalCrtBatu13.text)) +
+                  (double.parse(totalCrtBatu14.text)) +
+                  (double.parse(totalCrtBatu15.text)) +
+                  (double.parse(totalCrtBatu16.text)) +
+                  (double.parse(totalCrtBatu17.text)) +
+                  (double.parse(totalCrtBatu18.text)) +
+                  (double.parse(totalCrtBatu19.text)) +
+                  (double.parse(totalCrtBatu20.text)) +
+                  (double.parse(totalCrtBatu21.text)) +
+                  (double.parse(totalCrtBatu22.text)) +
+                  (double.parse(totalCrtBatu23.text)) +
+                  (double.parse(totalCrtBatu24.text)) +
+                  (double.parse(totalCrtBatu25.text)) +
+                  (double.parse(totalCrtBatu26.text)) +
+                  (double.parse(totalCrtBatu27.text)) +
+                  (double.parse(totalCrtBatu28.text)) +
+                  (double.parse(totalCrtBatu29.text)) +
+                  (double.parse(totalCrtBatu30.text)) +
+                  (double.parse(totalCrtBatu31.text)) +
+                  (double.parse(totalCrtBatu32.text)) +
+                  (double.parse(totalCrtBatu33.text)) +
+                  (double.parse(totalCrtBatu34.text)) +
+                  (double.parse(totalCrtBatu35.text))) +
               doubleBeratEmasDariCustomer) /
           5);
       double totalEmas;
@@ -1806,76 +1842,76 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
         return total;
       }
     } else if (total <= 2251) {
-      var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
-          (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
-          (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
-          (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
-          (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
-          (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
-          (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
-          (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
-          (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
-          (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
-          (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
-          (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
-          (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
-          (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
-          (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
-          (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
-          (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
-          (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
-          (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
-          (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
-          (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
-          (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
-          (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
-          (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
-          (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
-          (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
-          (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
-          (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
-          (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
-          (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
-          (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
-          (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
-          (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
-          (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
+      var totalDiamond = (hargaBatu1 * (double.parse(totalCrtBatu1.text))) +
+          (hargaBatu2 * (double.parse(totalCrtBatu2.text))) +
+          (hargaBatu3 * (double.parse(totalCrtBatu3.text))) +
+          (hargaBatu4 * (double.parse(totalCrtBatu4.text))) +
+          (hargaBatu5 * (double.parse(totalCrtBatu5.text))) +
+          (hargaBatu6 * (double.parse(totalCrtBatu6.text))) +
+          (hargaBatu7 * (double.parse(totalCrtBatu7.text))) +
+          (hargaBatu8 * (double.parse(totalCrtBatu8.text))) +
+          (hargaBatu9 * (double.parse(totalCrtBatu9.text))) +
+          (hargaBatu10 * (double.parse(totalCrtBatu10.text))) +
+          (hargaBatu11 * (double.parse(totalCrtBatu11.text))) +
+          (hargaBatu12 * (double.parse(totalCrtBatu12.text))) +
+          (hargaBatu13 * (double.parse(totalCrtBatu13.text))) +
+          (hargaBatu14 * (double.parse(totalCrtBatu14.text))) +
+          (hargaBatu15 * (double.parse(totalCrtBatu15.text))) +
+          (hargaBatu16 * (double.parse(totalCrtBatu16.text))) +
+          (hargaBatu17 * (double.parse(totalCrtBatu17.text))) +
+          (hargaBatu18 * (double.parse(totalCrtBatu18.text))) +
+          (hargaBatu19 * (double.parse(totalCrtBatu19.text))) +
+          (hargaBatu20 * (double.parse(totalCrtBatu20.text))) +
+          (hargaBatu21 * (double.parse(totalCrtBatu21.text))) +
+          (hargaBatu22 * (double.parse(totalCrtBatu22.text))) +
+          (hargaBatu23 * (double.parse(totalCrtBatu23.text))) +
+          (hargaBatu24 * (double.parse(totalCrtBatu24.text))) +
+          (hargaBatu25 * (double.parse(totalCrtBatu25.text))) +
+          (hargaBatu26 * (double.parse(totalCrtBatu26.text))) +
+          (hargaBatu27 * (double.parse(totalCrtBatu27.text))) +
+          (hargaBatu28 * (double.parse(totalCrtBatu28.text))) +
+          (hargaBatu29 * (double.parse(totalCrtBatu29.text))) +
+          (hargaBatu31 * (double.parse(totalCrtBatu31.text))) +
+          (hargaBatu32 * (double.parse(totalCrtBatu32.text))) +
+          (hargaBatu33 * (double.parse(totalCrtBatu33.text))) +
+          (hargaBatu34 * (double.parse(totalCrtBatu34.text))) +
+          (hargaBatu35 * (double.parse(totalCrtBatu35.text)));
 
-      var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
-                  (caratPcsBatu2 * qtyIntBatu2!) +
-                  (caratPcsBatu3 * qtyIntBatu3!) +
-                  (caratPcsBatu4 * qtyIntBatu4!) +
-                  (caratPcsBatu5 * qtyIntBatu5!) +
-                  (caratPcsBatu6 * qtyIntBatu6!) +
-                  (caratPcsBatu7 * qtyIntBatu7!) +
-                  (caratPcsBatu8 * qtyIntBatu8!) +
-                  (caratPcsBatu9 * qtyIntBatu9!) +
-                  (caratPcsBatu10 * qtyIntBatu10!) +
-                  (caratPcsBatu11 * qtyIntBatu11!) +
-                  (caratPcsBatu12 * qtyIntBatu12!) +
-                  (caratPcsBatu13 * qtyIntBatu13!) +
-                  (caratPcsBatu14 * qtyIntBatu14!) +
-                  (caratPcsBatu15 * qtyIntBatu15!) +
-                  (caratPcsBatu16 * qtyIntBatu16!) +
-                  (caratPcsBatu17 * qtyIntBatu17!) +
-                  (caratPcsBatu18 * qtyIntBatu18!) +
-                  (caratPcsBatu19 * qtyIntBatu19!) +
-                  (caratPcsBatu20 * qtyIntBatu20!) +
-                  (caratPcsBatu21 * qtyIntBatu21!) +
-                  (caratPcsBatu22 * qtyIntBatu22!) +
-                  (caratPcsBatu23 * qtyIntBatu23!) +
-                  (caratPcsBatu24 * qtyIntBatu24!) +
-                  (caratPcsBatu25 * qtyIntBatu25!) +
-                  (caratPcsBatu26 * qtyIntBatu26!) +
-                  (caratPcsBatu27 * qtyIntBatu27!) +
-                  (caratPcsBatu28 * qtyIntBatu28!) +
-                  (caratPcsBatu29 * qtyIntBatu29!) +
-                  (caratPcsBatu30 * qtyIntBatu30!) +
-                  (caratPcsBatu31 * qtyIntBatu31!) +
-                  (caratPcsBatu32 * qtyIntBatu32!) +
-                  (caratPcsBatu33 * qtyIntBatu33!) +
-                  (caratPcsBatu34 * qtyIntBatu34!) +
-                  (caratPcsBatu35 * qtyIntBatu35!)) +
+      var totalQtyCrt = ((((double.parse(totalCrtBatu1.text)) +
+                  (double.parse(totalCrtBatu2.text)) +
+                  (double.parse(totalCrtBatu3.text)) +
+                  (double.parse(totalCrtBatu4.text)) +
+                  (double.parse(totalCrtBatu5.text)) +
+                  (double.parse(totalCrtBatu6.text)) +
+                  (double.parse(totalCrtBatu7.text)) +
+                  (double.parse(totalCrtBatu8.text)) +
+                  (double.parse(totalCrtBatu9.text)) +
+                  (double.parse(totalCrtBatu10.text)) +
+                  (double.parse(totalCrtBatu11.text)) +
+                  (double.parse(totalCrtBatu12.text)) +
+                  (double.parse(totalCrtBatu13.text)) +
+                  (double.parse(totalCrtBatu14.text)) +
+                  (double.parse(totalCrtBatu15.text)) +
+                  (double.parse(totalCrtBatu16.text)) +
+                  (double.parse(totalCrtBatu17.text)) +
+                  (double.parse(totalCrtBatu18.text)) +
+                  (double.parse(totalCrtBatu19.text)) +
+                  (double.parse(totalCrtBatu20.text)) +
+                  (double.parse(totalCrtBatu21.text)) +
+                  (double.parse(totalCrtBatu22.text)) +
+                  (double.parse(totalCrtBatu23.text)) +
+                  (double.parse(totalCrtBatu24.text)) +
+                  (double.parse(totalCrtBatu25.text)) +
+                  (double.parse(totalCrtBatu26.text)) +
+                  (double.parse(totalCrtBatu27.text)) +
+                  (double.parse(totalCrtBatu28.text)) +
+                  (double.parse(totalCrtBatu29.text)) +
+                  (double.parse(totalCrtBatu30.text)) +
+                  (double.parse(totalCrtBatu31.text)) +
+                  (double.parse(totalCrtBatu32.text)) +
+                  (double.parse(totalCrtBatu33.text)) +
+                  (double.parse(totalCrtBatu34.text)) +
+                  (double.parse(totalCrtBatu35.text))) +
               doubleBeratEmasDariCustomer) /
           5);
       double totalEmas;
@@ -1922,114 +1958,114 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
         return total;
       }
     } else if (total <= 4000) {
-      var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
-          (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
-          (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
-          (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
-          (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
-          (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
-          (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
-          (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
-          (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
-          (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
-          (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
-          (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
-          (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
-          (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
-          (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
-          (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
-          (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
-          (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
-          (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
-          (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
-          (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
-          (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
-          (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
-          (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
-          (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
-          (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
-          (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
-          (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
-          (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
-          (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
-          (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
-          (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
-          (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
-          (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
-          (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
+      var totalDiamond = (hargaBatu1 * (double.parse(totalCrtBatu1.text))) +
+          (hargaBatu2 * (double.parse(totalCrtBatu2.text))) +
+          (hargaBatu3 * (double.parse(totalCrtBatu3.text))) +
+          (hargaBatu4 * (double.parse(totalCrtBatu4.text))) +
+          (hargaBatu5 * (double.parse(totalCrtBatu5.text))) +
+          (hargaBatu6 * (double.parse(totalCrtBatu6.text))) +
+          (hargaBatu7 * (double.parse(totalCrtBatu7.text))) +
+          (hargaBatu8 * (double.parse(totalCrtBatu8.text))) +
+          (hargaBatu9 * (double.parse(totalCrtBatu9.text))) +
+          (hargaBatu10 * (double.parse(totalCrtBatu10.text))) +
+          (hargaBatu11 * (double.parse(totalCrtBatu11.text))) +
+          (hargaBatu12 * (double.parse(totalCrtBatu12.text))) +
+          (hargaBatu13 * (double.parse(totalCrtBatu13.text))) +
+          (hargaBatu14 * (double.parse(totalCrtBatu14.text))) +
+          (hargaBatu15 * (double.parse(totalCrtBatu15.text))) +
+          (hargaBatu16 * (double.parse(totalCrtBatu16.text))) +
+          (hargaBatu17 * (double.parse(totalCrtBatu17.text))) +
+          (hargaBatu18 * (double.parse(totalCrtBatu18.text))) +
+          (hargaBatu19 * (double.parse(totalCrtBatu19.text))) +
+          (hargaBatu20 * (double.parse(totalCrtBatu20.text))) +
+          (hargaBatu21 * (double.parse(totalCrtBatu21.text))) +
+          (hargaBatu22 * (double.parse(totalCrtBatu22.text))) +
+          (hargaBatu23 * (double.parse(totalCrtBatu23.text))) +
+          (hargaBatu24 * (double.parse(totalCrtBatu24.text))) +
+          (hargaBatu25 * (double.parse(totalCrtBatu25.text))) +
+          (hargaBatu26 * (double.parse(totalCrtBatu26.text))) +
+          (hargaBatu27 * (double.parse(totalCrtBatu27.text))) +
+          (hargaBatu28 * (double.parse(totalCrtBatu28.text))) +
+          (hargaBatu29 * (double.parse(totalCrtBatu29.text))) +
+          (hargaBatu30 * (double.parse(totalCrtBatu30.text))) +
+          (hargaBatu31 * (double.parse(totalCrtBatu31.text))) +
+          (hargaBatu32 * (double.parse(totalCrtBatu32.text))) +
+          (hargaBatu33 * (double.parse(totalCrtBatu33.text))) +
+          (hargaBatu34 * (double.parse(totalCrtBatu34.text))) +
+          (hargaBatu35 * (double.parse(totalCrtBatu35.text)));
 
       var totalDiamondTanpaUp = ((hargaBatu1 / markUpBatu1) *
-              (caratPcsBatu1 * qtyIntBatu1!)) +
-          ((hargaBatu2 / markUpBatu2) * (caratPcsBatu2 * qtyIntBatu2!)) +
-          ((hargaBatu3 / markUpBatu3) * (caratPcsBatu3 * qtyIntBatu3!)) +
-          ((hargaBatu4 / markUpBatu4) * (caratPcsBatu4 * qtyIntBatu4!)) +
-          ((hargaBatu5 / markUpBatu5) * (caratPcsBatu5 * qtyIntBatu5!)) +
-          ((hargaBatu6 / markUpBatu6) * (caratPcsBatu6 * qtyIntBatu6!)) +
-          ((hargaBatu7 / markUpBatu7) * (caratPcsBatu7 * qtyIntBatu7!)) +
-          ((hargaBatu8 / markUpBatu8) * (caratPcsBatu8 * qtyIntBatu8!)) +
-          ((hargaBatu9 / markUpBatu9) * (caratPcsBatu9 * qtyIntBatu9!)) +
-          ((hargaBatu10 / markUpBatu10) * (caratPcsBatu10 * qtyIntBatu10!)) +
-          ((hargaBatu11 / markUpBatu11) * (caratPcsBatu11 * qtyIntBatu11!)) +
-          ((hargaBatu12 / markUpBatu12) * (caratPcsBatu12 * qtyIntBatu12!)) +
-          ((hargaBatu13 / markUpBatu13) * (caratPcsBatu13 * qtyIntBatu13!)) +
-          ((hargaBatu14 / markUpBatu14) * (caratPcsBatu14 * qtyIntBatu14!)) +
-          ((hargaBatu15 / markUpBatu15) * (caratPcsBatu15 * qtyIntBatu15!)) +
-          ((hargaBatu16 / markUpBatu16) * (caratPcsBatu16 * qtyIntBatu16!)) +
-          ((hargaBatu17 / markUpBatu17) * (caratPcsBatu17 * qtyIntBatu17!)) +
-          ((hargaBatu18 / markUpBatu18) * (caratPcsBatu18 * qtyIntBatu18!)) +
-          ((hargaBatu19 / markUpBatu19) * (caratPcsBatu19 * qtyIntBatu19!)) +
-          ((hargaBatu20 / markUpBatu20) * (caratPcsBatu20 * qtyIntBatu20!)) +
-          ((hargaBatu21 / markUpBatu21) * (caratPcsBatu21 * qtyIntBatu21!)) +
-          ((hargaBatu22 / markUpBatu22) * (caratPcsBatu22 * qtyIntBatu22!)) +
-          ((hargaBatu23 / markUpBatu23) * (caratPcsBatu23 * qtyIntBatu23!)) +
-          ((hargaBatu24 / markUpBatu24) * (caratPcsBatu24 * qtyIntBatu24!)) +
-          ((hargaBatu25 / markUpBatu25) * (caratPcsBatu25 * qtyIntBatu25!)) +
-          ((hargaBatu26 / markUpBatu26) * (caratPcsBatu26 * qtyIntBatu26!)) +
-          ((hargaBatu27 / markUpBatu27) * (caratPcsBatu27 * qtyIntBatu27!)) +
-          ((hargaBatu28 / markUpBatu28) * (caratPcsBatu28 * qtyIntBatu28!)) +
-          ((hargaBatu29 / markUpBatu29) * (caratPcsBatu29 * qtyIntBatu29!)) +
-          ((hargaBatu30 / markUpBatu30) * (caratPcsBatu30 * qtyIntBatu30!)) +
-          ((hargaBatu31 / markUpBatu31) * (caratPcsBatu31 * qtyIntBatu31!)) +
-          ((hargaBatu32 / markUpBatu32) * (caratPcsBatu32 * qtyIntBatu32!)) +
-          ((hargaBatu33 / markUpBatu33) * (caratPcsBatu33 * qtyIntBatu33!)) +
-          ((hargaBatu34 / markUpBatu34) * (caratPcsBatu34 * qtyIntBatu34!)) +
-          ((hargaBatu35 / markUpBatu35) * (caratPcsBatu35 * qtyIntBatu35!));
+              (double.parse(totalCrtBatu1.text))) +
+          ((hargaBatu2 / markUpBatu2) * (double.parse(totalCrtBatu2.text))) +
+          ((hargaBatu3 / markUpBatu3) * (double.parse(totalCrtBatu3.text))) +
+          ((hargaBatu4 / markUpBatu4) * (double.parse(totalCrtBatu4.text))) +
+          ((hargaBatu5 / markUpBatu5) * (double.parse(totalCrtBatu5.text))) +
+          ((hargaBatu6 / markUpBatu6) * (double.parse(totalCrtBatu6.text))) +
+          ((hargaBatu7 / markUpBatu7) * (double.parse(totalCrtBatu7.text))) +
+          ((hargaBatu8 / markUpBatu8) * (double.parse(totalCrtBatu8.text))) +
+          ((hargaBatu9 / markUpBatu9) * (double.parse(totalCrtBatu9.text))) +
+          ((hargaBatu10 / markUpBatu10) * (double.parse(totalCrtBatu10.text))) +
+          ((hargaBatu11 / markUpBatu11) * (double.parse(totalCrtBatu11.text))) +
+          ((hargaBatu12 / markUpBatu12) * (double.parse(totalCrtBatu12.text))) +
+          ((hargaBatu13 / markUpBatu13) * (double.parse(totalCrtBatu13.text))) +
+          ((hargaBatu14 / markUpBatu14) * (double.parse(totalCrtBatu14.text))) +
+          ((hargaBatu15 / markUpBatu15) * (double.parse(totalCrtBatu15.text))) +
+          ((hargaBatu16 / markUpBatu16) * (double.parse(totalCrtBatu16.text))) +
+          ((hargaBatu17 / markUpBatu17) * (double.parse(totalCrtBatu17.text))) +
+          ((hargaBatu18 / markUpBatu18) * (double.parse(totalCrtBatu18.text))) +
+          ((hargaBatu19 / markUpBatu19) * (double.parse(totalCrtBatu19.text))) +
+          ((hargaBatu20 / markUpBatu20) * (double.parse(totalCrtBatu20.text))) +
+          ((hargaBatu21 / markUpBatu21) * (double.parse(totalCrtBatu21.text))) +
+          ((hargaBatu22 / markUpBatu22) * (double.parse(totalCrtBatu22.text))) +
+          ((hargaBatu23 / markUpBatu23) * (double.parse(totalCrtBatu23.text))) +
+          ((hargaBatu24 / markUpBatu24) * (double.parse(totalCrtBatu24.text))) +
+          ((hargaBatu25 / markUpBatu25) * (double.parse(totalCrtBatu25.text))) +
+          ((hargaBatu26 / markUpBatu26) * (double.parse(totalCrtBatu26.text))) +
+          ((hargaBatu27 / markUpBatu27) * (double.parse(totalCrtBatu27.text))) +
+          ((hargaBatu28 / markUpBatu28) * (double.parse(totalCrtBatu28.text))) +
+          ((hargaBatu29 / markUpBatu29) * (double.parse(totalCrtBatu29.text))) +
+          ((hargaBatu30 / markUpBatu30) * (double.parse(totalCrtBatu30.text))) +
+          ((hargaBatu31 / markUpBatu31) * (double.parse(totalCrtBatu31.text))) +
+          ((hargaBatu32 / markUpBatu32) * (double.parse(totalCrtBatu32.text))) +
+          ((hargaBatu33 / markUpBatu33) * (double.parse(totalCrtBatu33.text))) +
+          ((hargaBatu34 / markUpBatu34) * (double.parse(totalCrtBatu34.text))) +
+          ((hargaBatu35 / markUpBatu35) * (double.parse(totalCrtBatu35.text)));
 
-      var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
-                  (caratPcsBatu2 * qtyIntBatu2!) +
-                  (caratPcsBatu3 * qtyIntBatu3!) +
-                  (caratPcsBatu4 * qtyIntBatu4!) +
-                  (caratPcsBatu5 * qtyIntBatu5!) +
-                  (caratPcsBatu6 * qtyIntBatu6!) +
-                  (caratPcsBatu7 * qtyIntBatu7!) +
-                  (caratPcsBatu8 * qtyIntBatu8!) +
-                  (caratPcsBatu9 * qtyIntBatu9!) +
-                  (caratPcsBatu10 * qtyIntBatu10!) +
-                  (caratPcsBatu11 * qtyIntBatu11!) +
-                  (caratPcsBatu12 * qtyIntBatu12!) +
-                  (caratPcsBatu13 * qtyIntBatu13!) +
-                  (caratPcsBatu14 * qtyIntBatu14!) +
-                  (caratPcsBatu15 * qtyIntBatu15!) +
-                  (caratPcsBatu16 * qtyIntBatu16!) +
-                  (caratPcsBatu17 * qtyIntBatu17!) +
-                  (caratPcsBatu18 * qtyIntBatu18!) +
-                  (caratPcsBatu19 * qtyIntBatu19!) +
-                  (caratPcsBatu20 * qtyIntBatu20!) +
-                  (caratPcsBatu21 * qtyIntBatu21!) +
-                  (caratPcsBatu22 * qtyIntBatu22!) +
-                  (caratPcsBatu23 * qtyIntBatu23!) +
-                  (caratPcsBatu24 * qtyIntBatu24!) +
-                  (caratPcsBatu25 * qtyIntBatu25!) +
-                  (caratPcsBatu26 * qtyIntBatu26!) +
-                  (caratPcsBatu27 * qtyIntBatu27!) +
-                  (caratPcsBatu28 * qtyIntBatu28!) +
-                  (caratPcsBatu29 * qtyIntBatu29!) +
-                  (caratPcsBatu30 * qtyIntBatu30!) +
-                  (caratPcsBatu31 * qtyIntBatu31!) +
-                  (caratPcsBatu32 * qtyIntBatu32!) +
-                  (caratPcsBatu33 * qtyIntBatu33!) +
-                  (caratPcsBatu34 * qtyIntBatu34!) +
-                  (caratPcsBatu35 * qtyIntBatu35!)) +
+      var totalQtyCrt = ((((double.parse(totalCrtBatu1.text)) +
+                  (double.parse(totalCrtBatu2.text)) +
+                  (double.parse(totalCrtBatu3.text)) +
+                  (double.parse(totalCrtBatu4.text)) +
+                  (double.parse(totalCrtBatu5.text)) +
+                  (double.parse(totalCrtBatu6.text)) +
+                  (double.parse(totalCrtBatu7.text)) +
+                  (double.parse(totalCrtBatu8.text)) +
+                  (double.parse(totalCrtBatu9.text)) +
+                  (double.parse(totalCrtBatu10.text)) +
+                  (double.parse(totalCrtBatu11.text)) +
+                  (double.parse(totalCrtBatu12.text)) +
+                  (double.parse(totalCrtBatu13.text)) +
+                  (double.parse(totalCrtBatu14.text)) +
+                  (double.parse(totalCrtBatu15.text)) +
+                  (double.parse(totalCrtBatu16.text)) +
+                  (double.parse(totalCrtBatu17.text)) +
+                  (double.parse(totalCrtBatu18.text)) +
+                  (double.parse(totalCrtBatu19.text)) +
+                  (double.parse(totalCrtBatu20.text)) +
+                  (double.parse(totalCrtBatu21.text)) +
+                  (double.parse(totalCrtBatu22.text)) +
+                  (double.parse(totalCrtBatu23.text)) +
+                  (double.parse(totalCrtBatu24.text)) +
+                  (double.parse(totalCrtBatu25.text)) +
+                  (double.parse(totalCrtBatu26.text)) +
+                  (double.parse(totalCrtBatu27.text)) +
+                  (double.parse(totalCrtBatu28.text)) +
+                  (double.parse(totalCrtBatu29.text)) +
+                  (double.parse(totalCrtBatu30.text)) +
+                  (double.parse(totalCrtBatu31.text)) +
+                  (double.parse(totalCrtBatu32.text)) +
+                  (double.parse(totalCrtBatu33.text)) +
+                  (double.parse(totalCrtBatu34.text)) +
+                  (double.parse(totalCrtBatu35.text))) +
               doubleBeratEmasDariCustomer) /
           5);
       double totalEmas;
@@ -2077,114 +2113,114 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
         return total;
       }
     } else {
-      var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
-          (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
-          (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
-          (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
-          (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
-          (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
-          (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
-          (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
-          (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
-          (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
-          (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
-          (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
-          (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
-          (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
-          (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
-          (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
-          (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
-          (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
-          (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
-          (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
-          (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
-          (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
-          (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
-          (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
-          (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
-          (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
-          (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
-          (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
-          (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
-          (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
-          (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
-          (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
-          (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
-          (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
-          (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
+      var totalDiamond = (hargaBatu1 * (double.parse(totalCrtBatu1.text))) +
+          (hargaBatu2 * (double.parse(totalCrtBatu2.text))) +
+          (hargaBatu3 * (double.parse(totalCrtBatu3.text))) +
+          (hargaBatu4 * (double.parse(totalCrtBatu4.text))) +
+          (hargaBatu5 * (double.parse(totalCrtBatu5.text))) +
+          (hargaBatu6 * (double.parse(totalCrtBatu6.text))) +
+          (hargaBatu7 * (double.parse(totalCrtBatu7.text))) +
+          (hargaBatu8 * (double.parse(totalCrtBatu8.text))) +
+          (hargaBatu9 * (double.parse(totalCrtBatu9.text))) +
+          (hargaBatu10 * (double.parse(totalCrtBatu10.text))) +
+          (hargaBatu11 * (double.parse(totalCrtBatu11.text))) +
+          (hargaBatu12 * (double.parse(totalCrtBatu12.text))) +
+          (hargaBatu13 * (double.parse(totalCrtBatu13.text))) +
+          (hargaBatu14 * (double.parse(totalCrtBatu14.text))) +
+          (hargaBatu15 * (double.parse(totalCrtBatu15.text))) +
+          (hargaBatu16 * (double.parse(totalCrtBatu16.text))) +
+          (hargaBatu17 * (double.parse(totalCrtBatu17.text))) +
+          (hargaBatu18 * (double.parse(totalCrtBatu18.text))) +
+          (hargaBatu19 * (double.parse(totalCrtBatu19.text))) +
+          (hargaBatu20 * (double.parse(totalCrtBatu20.text))) +
+          (hargaBatu21 * (double.parse(totalCrtBatu21.text))) +
+          (hargaBatu22 * (double.parse(totalCrtBatu22.text))) +
+          (hargaBatu23 * (double.parse(totalCrtBatu23.text))) +
+          (hargaBatu24 * (double.parse(totalCrtBatu24.text))) +
+          (hargaBatu25 * (double.parse(totalCrtBatu25.text))) +
+          (hargaBatu26 * (double.parse(totalCrtBatu26.text))) +
+          (hargaBatu27 * (double.parse(totalCrtBatu27.text))) +
+          (hargaBatu28 * (double.parse(totalCrtBatu28.text))) +
+          (hargaBatu29 * (double.parse(totalCrtBatu29.text))) +
+          (hargaBatu30 * (double.parse(totalCrtBatu30.text))) +
+          (hargaBatu31 * (double.parse(totalCrtBatu31.text))) +
+          (hargaBatu32 * (double.parse(totalCrtBatu32.text))) +
+          (hargaBatu33 * (double.parse(totalCrtBatu33.text))) +
+          (hargaBatu34 * (double.parse(totalCrtBatu34.text))) +
+          (hargaBatu35 * (double.parse(totalCrtBatu35.text)));
 
       var totalDiamondTanpaUp = ((hargaBatu1 / markUpBatu1) *
-              (caratPcsBatu1 * qtyIntBatu1!)) +
-          ((hargaBatu2 / markUpBatu2) * (caratPcsBatu2 * qtyIntBatu2!)) +
-          ((hargaBatu3 / markUpBatu3) * (caratPcsBatu3 * qtyIntBatu3!)) +
-          ((hargaBatu4 / markUpBatu4) * (caratPcsBatu4 * qtyIntBatu4!)) +
-          ((hargaBatu5 / markUpBatu5) * (caratPcsBatu5 * qtyIntBatu5!)) +
-          ((hargaBatu6 / markUpBatu6) * (caratPcsBatu6 * qtyIntBatu6!)) +
-          ((hargaBatu7 / markUpBatu7) * (caratPcsBatu7 * qtyIntBatu7!)) +
-          ((hargaBatu8 / markUpBatu8) * (caratPcsBatu8 * qtyIntBatu8!)) +
-          ((hargaBatu9 / markUpBatu9) * (caratPcsBatu9 * qtyIntBatu9!)) +
-          ((hargaBatu10 / markUpBatu10) * (caratPcsBatu10 * qtyIntBatu10!)) +
-          ((hargaBatu11 / markUpBatu11) * (caratPcsBatu11 * qtyIntBatu11!)) +
-          ((hargaBatu12 / markUpBatu12) * (caratPcsBatu12 * qtyIntBatu12!)) +
-          ((hargaBatu13 / markUpBatu13) * (caratPcsBatu13 * qtyIntBatu13!)) +
-          ((hargaBatu14 / markUpBatu14) * (caratPcsBatu14 * qtyIntBatu14!)) +
-          ((hargaBatu15 / markUpBatu15) * (caratPcsBatu15 * qtyIntBatu15!)) +
-          ((hargaBatu16 / markUpBatu16) * (caratPcsBatu16 * qtyIntBatu16!)) +
-          ((hargaBatu17 / markUpBatu17) * (caratPcsBatu17 * qtyIntBatu17!)) +
-          ((hargaBatu18 / markUpBatu18) * (caratPcsBatu18 * qtyIntBatu18!)) +
-          ((hargaBatu19 / markUpBatu19) * (caratPcsBatu19 * qtyIntBatu19!)) +
-          ((hargaBatu20 / markUpBatu20) * (caratPcsBatu20 * qtyIntBatu20!)) +
-          ((hargaBatu21 / markUpBatu21) * (caratPcsBatu21 * qtyIntBatu21!)) +
-          ((hargaBatu22 / markUpBatu22) * (caratPcsBatu22 * qtyIntBatu22!)) +
-          ((hargaBatu23 / markUpBatu23) * (caratPcsBatu23 * qtyIntBatu23!)) +
-          ((hargaBatu24 / markUpBatu24) * (caratPcsBatu24 * qtyIntBatu24!)) +
-          ((hargaBatu25 / markUpBatu25) * (caratPcsBatu25 * qtyIntBatu25!)) +
-          ((hargaBatu26 / markUpBatu26) * (caratPcsBatu26 * qtyIntBatu26!)) +
-          ((hargaBatu27 / markUpBatu27) * (caratPcsBatu27 * qtyIntBatu27!)) +
-          ((hargaBatu28 / markUpBatu28) * (caratPcsBatu28 * qtyIntBatu28!)) +
-          ((hargaBatu29 / markUpBatu29) * (caratPcsBatu29 * qtyIntBatu29!)) +
-          ((hargaBatu30 / markUpBatu30) * (caratPcsBatu30 * qtyIntBatu30!)) +
-          ((hargaBatu31 / markUpBatu31) * (caratPcsBatu31 * qtyIntBatu31!)) +
-          ((hargaBatu32 / markUpBatu32) * (caratPcsBatu32 * qtyIntBatu32!)) +
-          ((hargaBatu33 / markUpBatu33) * (caratPcsBatu33 * qtyIntBatu33!)) +
-          ((hargaBatu34 / markUpBatu34) * (caratPcsBatu34 * qtyIntBatu34!)) +
-          ((hargaBatu35 / markUpBatu35) * (caratPcsBatu35 * qtyIntBatu35!));
+              (double.parse(totalCrtBatu1.text))) +
+          ((hargaBatu2 / markUpBatu2) * (double.parse(totalCrtBatu2.text))) +
+          ((hargaBatu3 / markUpBatu3) * (double.parse(totalCrtBatu3.text))) +
+          ((hargaBatu4 / markUpBatu4) * (double.parse(totalCrtBatu4.text))) +
+          ((hargaBatu5 / markUpBatu5) * (double.parse(totalCrtBatu5.text))) +
+          ((hargaBatu6 / markUpBatu6) * (double.parse(totalCrtBatu6.text))) +
+          ((hargaBatu7 / markUpBatu7) * (double.parse(totalCrtBatu7.text))) +
+          ((hargaBatu8 / markUpBatu8) * (double.parse(totalCrtBatu8.text))) +
+          ((hargaBatu9 / markUpBatu9) * (double.parse(totalCrtBatu9.text))) +
+          ((hargaBatu10 / markUpBatu10) * (double.parse(totalCrtBatu10.text))) +
+          ((hargaBatu11 / markUpBatu11) * (double.parse(totalCrtBatu11.text))) +
+          ((hargaBatu12 / markUpBatu12) * (double.parse(totalCrtBatu12.text))) +
+          ((hargaBatu13 / markUpBatu13) * (double.parse(totalCrtBatu13.text))) +
+          ((hargaBatu14 / markUpBatu14) * (double.parse(totalCrtBatu14.text))) +
+          ((hargaBatu15 / markUpBatu15) * (double.parse(totalCrtBatu15.text))) +
+          ((hargaBatu16 / markUpBatu16) * (double.parse(totalCrtBatu16.text))) +
+          ((hargaBatu17 / markUpBatu17) * (double.parse(totalCrtBatu17.text))) +
+          ((hargaBatu18 / markUpBatu18) * (double.parse(totalCrtBatu18.text))) +
+          ((hargaBatu19 / markUpBatu19) * (double.parse(totalCrtBatu19.text))) +
+          ((hargaBatu20 / markUpBatu20) * (double.parse(totalCrtBatu20.text))) +
+          ((hargaBatu21 / markUpBatu21) * (double.parse(totalCrtBatu21.text))) +
+          ((hargaBatu22 / markUpBatu22) * (double.parse(totalCrtBatu22.text))) +
+          ((hargaBatu23 / markUpBatu23) * (double.parse(totalCrtBatu23.text))) +
+          ((hargaBatu24 / markUpBatu24) * (double.parse(totalCrtBatu24.text))) +
+          ((hargaBatu25 / markUpBatu25) * (double.parse(totalCrtBatu25.text))) +
+          ((hargaBatu26 / markUpBatu26) * (double.parse(totalCrtBatu26.text))) +
+          ((hargaBatu27 / markUpBatu27) * (double.parse(totalCrtBatu27.text))) +
+          ((hargaBatu28 / markUpBatu28) * (double.parse(totalCrtBatu28.text))) +
+          ((hargaBatu29 / markUpBatu29) * (double.parse(totalCrtBatu29.text))) +
+          ((hargaBatu30 / markUpBatu30) * (double.parse(totalCrtBatu30.text))) +
+          ((hargaBatu31 / markUpBatu31) * (double.parse(totalCrtBatu31.text))) +
+          ((hargaBatu32 / markUpBatu32) * (double.parse(totalCrtBatu32.text))) +
+          ((hargaBatu33 / markUpBatu33) * (double.parse(totalCrtBatu33.text))) +
+          ((hargaBatu34 / markUpBatu34) * (double.parse(totalCrtBatu34.text))) +
+          ((hargaBatu35 / markUpBatu35) * (double.parse(totalCrtBatu35.text)));
 
-      var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
-                  (caratPcsBatu2 * qtyIntBatu2!) +
-                  (caratPcsBatu3 * qtyIntBatu3!) +
-                  (caratPcsBatu4 * qtyIntBatu4!) +
-                  (caratPcsBatu5 * qtyIntBatu5!) +
-                  (caratPcsBatu6 * qtyIntBatu6!) +
-                  (caratPcsBatu7 * qtyIntBatu7!) +
-                  (caratPcsBatu8 * qtyIntBatu8!) +
-                  (caratPcsBatu9 * qtyIntBatu9!) +
-                  (caratPcsBatu10 * qtyIntBatu10!) +
-                  (caratPcsBatu11 * qtyIntBatu11!) +
-                  (caratPcsBatu12 * qtyIntBatu12!) +
-                  (caratPcsBatu13 * qtyIntBatu13!) +
-                  (caratPcsBatu14 * qtyIntBatu14!) +
-                  (caratPcsBatu15 * qtyIntBatu15!) +
-                  (caratPcsBatu16 * qtyIntBatu16!) +
-                  (caratPcsBatu17 * qtyIntBatu17!) +
-                  (caratPcsBatu18 * qtyIntBatu18!) +
-                  (caratPcsBatu19 * qtyIntBatu19!) +
-                  (caratPcsBatu20 * qtyIntBatu20!) +
-                  (caratPcsBatu21 * qtyIntBatu21!) +
-                  (caratPcsBatu22 * qtyIntBatu22!) +
-                  (caratPcsBatu23 * qtyIntBatu23!) +
-                  (caratPcsBatu24 * qtyIntBatu24!) +
-                  (caratPcsBatu25 * qtyIntBatu25!) +
-                  (caratPcsBatu26 * qtyIntBatu26!) +
-                  (caratPcsBatu27 * qtyIntBatu27!) +
-                  (caratPcsBatu28 * qtyIntBatu28!) +
-                  (caratPcsBatu29 * qtyIntBatu29!) +
-                  (caratPcsBatu30 * qtyIntBatu30!) +
-                  (caratPcsBatu31 * qtyIntBatu31!) +
-                  (caratPcsBatu32 * qtyIntBatu32!) +
-                  (caratPcsBatu33 * qtyIntBatu33!) +
-                  (caratPcsBatu34 * qtyIntBatu34!) +
-                  (caratPcsBatu35 * qtyIntBatu35!)) +
+      var totalQtyCrt = ((((double.parse(totalCrtBatu1.text)) +
+                  (double.parse(totalCrtBatu2.text)) +
+                  (double.parse(totalCrtBatu3.text)) +
+                  (double.parse(totalCrtBatu4.text)) +
+                  (double.parse(totalCrtBatu5.text)) +
+                  (double.parse(totalCrtBatu6.text)) +
+                  (double.parse(totalCrtBatu7.text)) +
+                  (double.parse(totalCrtBatu8.text)) +
+                  (double.parse(totalCrtBatu9.text)) +
+                  (double.parse(totalCrtBatu10.text)) +
+                  (double.parse(totalCrtBatu11.text)) +
+                  (double.parse(totalCrtBatu12.text)) +
+                  (double.parse(totalCrtBatu13.text)) +
+                  (double.parse(totalCrtBatu14.text)) +
+                  (double.parse(totalCrtBatu15.text)) +
+                  (double.parse(totalCrtBatu16.text)) +
+                  (double.parse(totalCrtBatu17.text)) +
+                  (double.parse(totalCrtBatu18.text)) +
+                  (double.parse(totalCrtBatu19.text)) +
+                  (double.parse(totalCrtBatu20.text)) +
+                  (double.parse(totalCrtBatu21.text)) +
+                  (double.parse(totalCrtBatu22.text)) +
+                  (double.parse(totalCrtBatu23.text)) +
+                  (double.parse(totalCrtBatu24.text)) +
+                  (double.parse(totalCrtBatu25.text)) +
+                  (double.parse(totalCrtBatu26.text)) +
+                  (double.parse(totalCrtBatu27.text)) +
+                  (double.parse(totalCrtBatu28.text)) +
+                  (double.parse(totalCrtBatu29.text)) +
+                  (double.parse(totalCrtBatu30.text)) +
+                  (double.parse(totalCrtBatu31.text)) +
+                  (double.parse(totalCrtBatu32.text)) +
+                  (double.parse(totalCrtBatu33.text)) +
+                  (double.parse(totalCrtBatu34.text)) +
+                  (double.parse(totalCrtBatu35.text))) +
               doubleBeratEmasDariCustomer) /
           5);
       double totalEmas;
@@ -2235,114 +2271,114 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
   }
 
   double get totalPriceMetier {
-    var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
-        (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
-        (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
-        (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
-        (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
-        (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
-        (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
-        (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
-        (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
-        (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
-        (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
-        (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
-        (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
-        (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
-        (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
-        (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
-        (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
-        (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
-        (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
-        (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
-        (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
-        (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
-        (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
-        (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
-        (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
-        (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
-        (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
-        (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
-        (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
-        (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
-        (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
-        (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
-        (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
-        (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
-        (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
+    var totalDiamond = (hargaBatu1 * (double.parse(totalCrtBatu1.text))) +
+        (hargaBatu2 * (double.parse(totalCrtBatu2.text))) +
+        (hargaBatu3 * (double.parse(totalCrtBatu3.text))) +
+        (hargaBatu4 * (double.parse(totalCrtBatu4.text))) +
+        (hargaBatu5 * (double.parse(totalCrtBatu5.text))) +
+        (hargaBatu6 * (double.parse(totalCrtBatu6.text))) +
+        (hargaBatu7 * (double.parse(totalCrtBatu7.text))) +
+        (hargaBatu8 * (double.parse(totalCrtBatu8.text))) +
+        (hargaBatu9 * (double.parse(totalCrtBatu9.text))) +
+        (hargaBatu10 * (double.parse(totalCrtBatu10.text))) +
+        (hargaBatu11 * (double.parse(totalCrtBatu11.text))) +
+        (hargaBatu12 * (double.parse(totalCrtBatu12.text))) +
+        (hargaBatu13 * (double.parse(totalCrtBatu13.text))) +
+        (hargaBatu14 * (double.parse(totalCrtBatu14.text))) +
+        (hargaBatu15 * (double.parse(totalCrtBatu15.text))) +
+        (hargaBatu16 * (double.parse(totalCrtBatu16.text))) +
+        (hargaBatu17 * (double.parse(totalCrtBatu17.text))) +
+        (hargaBatu18 * (double.parse(totalCrtBatu18.text))) +
+        (hargaBatu19 * (double.parse(totalCrtBatu19.text))) +
+        (hargaBatu20 * (double.parse(totalCrtBatu20.text))) +
+        (hargaBatu21 * (double.parse(totalCrtBatu21.text))) +
+        (hargaBatu22 * (double.parse(totalCrtBatu22.text))) +
+        (hargaBatu23 * (double.parse(totalCrtBatu23.text))) +
+        (hargaBatu24 * (double.parse(totalCrtBatu24.text))) +
+        (hargaBatu25 * (double.parse(totalCrtBatu25.text))) +
+        (hargaBatu26 * (double.parse(totalCrtBatu26.text))) +
+        (hargaBatu27 * (double.parse(totalCrtBatu27.text))) +
+        (hargaBatu28 * (double.parse(totalCrtBatu28.text))) +
+        (hargaBatu29 * (double.parse(totalCrtBatu29.text))) +
+        (hargaBatu30 * (double.parse(totalCrtBatu30.text))) +
+        (hargaBatu31 * (double.parse(totalCrtBatu31.text))) +
+        (hargaBatu32 * (double.parse(totalCrtBatu32.text))) +
+        (hargaBatu33 * (double.parse(totalCrtBatu33.text))) +
+        (hargaBatu34 * (double.parse(totalCrtBatu34.text))) +
+        (hargaBatu35 * (double.parse(totalCrtBatu35.text)));
 
-    var totalDiamondTanpaUp =
-        ((hargaBatu1 / markUpBatu1) * (caratPcsBatu1 * qtyIntBatu1!)) +
-            ((hargaBatu2 / markUpBatu2) * (caratPcsBatu2 * qtyIntBatu2!)) +
-            ((hargaBatu3 / markUpBatu3) * (caratPcsBatu3 * qtyIntBatu3!)) +
-            ((hargaBatu4 / markUpBatu4) * (caratPcsBatu4 * qtyIntBatu4!)) +
-            ((hargaBatu5 / markUpBatu5) * (caratPcsBatu5 * qtyIntBatu5!)) +
-            ((hargaBatu6 / markUpBatu6) * (caratPcsBatu6 * qtyIntBatu6!)) +
-            ((hargaBatu7 / markUpBatu7) * (caratPcsBatu7 * qtyIntBatu7!)) +
-            ((hargaBatu8 / markUpBatu8) * (caratPcsBatu8 * qtyIntBatu8!)) +
-            ((hargaBatu9 / markUpBatu9) * (caratPcsBatu9 * qtyIntBatu9!)) +
-            ((hargaBatu10 / markUpBatu10) * (caratPcsBatu10 * qtyIntBatu10!)) +
-            ((hargaBatu11 / markUpBatu11) * (caratPcsBatu11 * qtyIntBatu11!)) +
-            ((hargaBatu12 / markUpBatu12) * (caratPcsBatu12 * qtyIntBatu12!)) +
-            ((hargaBatu13 / markUpBatu13) * (caratPcsBatu13 * qtyIntBatu13!)) +
-            ((hargaBatu14 / markUpBatu14) * (caratPcsBatu14 * qtyIntBatu14!)) +
-            ((hargaBatu15 / markUpBatu15) * (caratPcsBatu15 * qtyIntBatu15!)) +
-            ((hargaBatu16 / markUpBatu16) * (caratPcsBatu16 * qtyIntBatu16!)) +
-            ((hargaBatu17 / markUpBatu17) * (caratPcsBatu17 * qtyIntBatu17!)) +
-            ((hargaBatu18 / markUpBatu18) * (caratPcsBatu18 * qtyIntBatu18!)) +
-            ((hargaBatu19 / markUpBatu19) * (caratPcsBatu19 * qtyIntBatu19!)) +
-            ((hargaBatu20 / markUpBatu20) * (caratPcsBatu20 * qtyIntBatu20!)) +
-            ((hargaBatu21 / markUpBatu21) * (caratPcsBatu21 * qtyIntBatu21!)) +
-            ((hargaBatu22 / markUpBatu22) * (caratPcsBatu22 * qtyIntBatu22!)) +
-            ((hargaBatu23 / markUpBatu23) * (caratPcsBatu23 * qtyIntBatu23!)) +
-            ((hargaBatu24 / markUpBatu24) * (caratPcsBatu24 * qtyIntBatu24!)) +
-            ((hargaBatu25 / markUpBatu25) * (caratPcsBatu25 * qtyIntBatu25!)) +
-            ((hargaBatu26 / markUpBatu26) * (caratPcsBatu26 * qtyIntBatu26!)) +
-            ((hargaBatu27 / markUpBatu27) * (caratPcsBatu27 * qtyIntBatu27!)) +
-            ((hargaBatu28 / markUpBatu28) * (caratPcsBatu28 * qtyIntBatu28!)) +
-            ((hargaBatu29 / markUpBatu29) * (caratPcsBatu29 * qtyIntBatu29!)) +
-            ((hargaBatu30 / markUpBatu30) * (caratPcsBatu30 * qtyIntBatu30!)) +
-            ((hargaBatu31 / markUpBatu31) * (caratPcsBatu31 * qtyIntBatu31!)) +
-            ((hargaBatu32 / markUpBatu32) * (caratPcsBatu32 * qtyIntBatu32!)) +
-            ((hargaBatu33 / markUpBatu33) * (caratPcsBatu33 * qtyIntBatu33!)) +
-            ((hargaBatu34 / markUpBatu34) * (caratPcsBatu34 * qtyIntBatu34!)) +
-            ((hargaBatu35 / markUpBatu35) * (caratPcsBatu35 * qtyIntBatu35!));
+    var totalDiamondTanpaUp = ((hargaBatu1 / markUpBatu1) *
+            (double.parse(totalCrtBatu1.text))) +
+        ((hargaBatu2 / markUpBatu2) * (double.parse(totalCrtBatu2.text))) +
+        ((hargaBatu3 / markUpBatu3) * (double.parse(totalCrtBatu3.text))) +
+        ((hargaBatu4 / markUpBatu4) * (double.parse(totalCrtBatu4.text))) +
+        ((hargaBatu5 / markUpBatu5) * (double.parse(totalCrtBatu5.text))) +
+        ((hargaBatu6 / markUpBatu6) * (double.parse(totalCrtBatu6.text))) +
+        ((hargaBatu7 / markUpBatu7) * (double.parse(totalCrtBatu7.text))) +
+        ((hargaBatu8 / markUpBatu8) * (double.parse(totalCrtBatu8.text))) +
+        ((hargaBatu9 / markUpBatu9) * (double.parse(totalCrtBatu9.text))) +
+        ((hargaBatu10 / markUpBatu10) * (double.parse(totalCrtBatu10.text))) +
+        ((hargaBatu11 / markUpBatu11) * (double.parse(totalCrtBatu11.text))) +
+        ((hargaBatu12 / markUpBatu12) * (double.parse(totalCrtBatu12.text))) +
+        ((hargaBatu13 / markUpBatu13) * (double.parse(totalCrtBatu13.text))) +
+        ((hargaBatu14 / markUpBatu14) * (double.parse(totalCrtBatu14.text))) +
+        ((hargaBatu15 / markUpBatu15) * (double.parse(totalCrtBatu15.text))) +
+        ((hargaBatu16 / markUpBatu16) * (double.parse(totalCrtBatu16.text))) +
+        ((hargaBatu17 / markUpBatu17) * (double.parse(totalCrtBatu17.text))) +
+        ((hargaBatu18 / markUpBatu18) * (double.parse(totalCrtBatu18.text))) +
+        ((hargaBatu19 / markUpBatu19) * (double.parse(totalCrtBatu19.text))) +
+        ((hargaBatu20 / markUpBatu20) * (double.parse(totalCrtBatu20.text))) +
+        ((hargaBatu21 / markUpBatu21) * (double.parse(totalCrtBatu21.text))) +
+        ((hargaBatu22 / markUpBatu22) * (double.parse(totalCrtBatu22.text))) +
+        ((hargaBatu23 / markUpBatu23) * (double.parse(totalCrtBatu23.text))) +
+        ((hargaBatu24 / markUpBatu24) * (double.parse(totalCrtBatu24.text))) +
+        ((hargaBatu25 / markUpBatu25) * (double.parse(totalCrtBatu25.text))) +
+        ((hargaBatu26 / markUpBatu26) * (double.parse(totalCrtBatu26.text))) +
+        ((hargaBatu27 / markUpBatu27) * (double.parse(totalCrtBatu27.text))) +
+        ((hargaBatu28 / markUpBatu28) * (double.parse(totalCrtBatu28.text))) +
+        ((hargaBatu29 / markUpBatu29) * (double.parse(totalCrtBatu29.text))) +
+        ((hargaBatu30 / markUpBatu30) * (double.parse(totalCrtBatu30.text))) +
+        ((hargaBatu31 / markUpBatu31) * (double.parse(totalCrtBatu31.text))) +
+        ((hargaBatu32 / markUpBatu32) * (double.parse(totalCrtBatu32.text))) +
+        ((hargaBatu33 / markUpBatu33) * (double.parse(totalCrtBatu33.text))) +
+        ((hargaBatu34 / markUpBatu34) * (double.parse(totalCrtBatu34.text))) +
+        ((hargaBatu35 / markUpBatu35) * (double.parse(totalCrtBatu35.text)));
 
-    var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
-                (caratPcsBatu2 * qtyIntBatu2!) +
-                (caratPcsBatu3 * qtyIntBatu3!) +
-                (caratPcsBatu4 * qtyIntBatu4!) +
-                (caratPcsBatu5 * qtyIntBatu5!) +
-                (caratPcsBatu6 * qtyIntBatu6!) +
-                (caratPcsBatu7 * qtyIntBatu7!) +
-                (caratPcsBatu8 * qtyIntBatu8!) +
-                (caratPcsBatu9 * qtyIntBatu9!) +
-                (caratPcsBatu10 * qtyIntBatu10!) +
-                (caratPcsBatu11 * qtyIntBatu11!) +
-                (caratPcsBatu12 * qtyIntBatu12!) +
-                (caratPcsBatu13 * qtyIntBatu13!) +
-                (caratPcsBatu14 * qtyIntBatu14!) +
-                (caratPcsBatu15 * qtyIntBatu15!) +
-                (caratPcsBatu16 * qtyIntBatu16!) +
-                (caratPcsBatu17 * qtyIntBatu17!) +
-                (caratPcsBatu18 * qtyIntBatu18!) +
-                (caratPcsBatu19 * qtyIntBatu19!) +
-                (caratPcsBatu20 * qtyIntBatu20!) +
-                (caratPcsBatu21 * qtyIntBatu21!) +
-                (caratPcsBatu22 * qtyIntBatu22!) +
-                (caratPcsBatu23 * qtyIntBatu23!) +
-                (caratPcsBatu24 * qtyIntBatu24!) +
-                (caratPcsBatu25 * qtyIntBatu25!) +
-                (caratPcsBatu26 * qtyIntBatu26!) +
-                (caratPcsBatu27 * qtyIntBatu27!) +
-                (caratPcsBatu28 * qtyIntBatu28!) +
-                (caratPcsBatu29 * qtyIntBatu29!) +
-                (caratPcsBatu30 * qtyIntBatu30!) +
-                (caratPcsBatu31 * qtyIntBatu31!) +
-                (caratPcsBatu32 * qtyIntBatu32!) +
-                (caratPcsBatu33 * qtyIntBatu33!) +
-                (caratPcsBatu34 * qtyIntBatu34!) +
-                (caratPcsBatu35 * qtyIntBatu35!)) +
+    var totalQtyCrt = ((((double.parse(totalCrtBatu1.text)) +
+                (double.parse(totalCrtBatu2.text)) +
+                (double.parse(totalCrtBatu3.text)) +
+                (double.parse(totalCrtBatu4.text)) +
+                (double.parse(totalCrtBatu5.text)) +
+                (double.parse(totalCrtBatu6.text)) +
+                (double.parse(totalCrtBatu7.text)) +
+                (double.parse(totalCrtBatu8.text)) +
+                (double.parse(totalCrtBatu9.text)) +
+                (double.parse(totalCrtBatu10.text)) +
+                (double.parse(totalCrtBatu11.text)) +
+                (double.parse(totalCrtBatu12.text)) +
+                (double.parse(totalCrtBatu13.text)) +
+                (double.parse(totalCrtBatu14.text)) +
+                (double.parse(totalCrtBatu15.text)) +
+                (double.parse(totalCrtBatu16.text)) +
+                (double.parse(totalCrtBatu17.text)) +
+                (double.parse(totalCrtBatu18.text)) +
+                (double.parse(totalCrtBatu19.text)) +
+                (double.parse(totalCrtBatu20.text)) +
+                (double.parse(totalCrtBatu21.text)) +
+                (double.parse(totalCrtBatu22.text)) +
+                (double.parse(totalCrtBatu23.text)) +
+                (double.parse(totalCrtBatu24.text)) +
+                (double.parse(totalCrtBatu25.text)) +
+                (double.parse(totalCrtBatu26.text)) +
+                (double.parse(totalCrtBatu27.text)) +
+                (double.parse(totalCrtBatu28.text)) +
+                (double.parse(totalCrtBatu29.text)) +
+                (double.parse(totalCrtBatu30.text)) +
+                (double.parse(totalCrtBatu31.text)) +
+                (double.parse(totalCrtBatu32.text)) +
+                (double.parse(totalCrtBatu33.text)) +
+                (double.parse(totalCrtBatu34.text)) +
+                (double.parse(totalCrtBatu35.text))) +
             doubleBeratEmasDariCustomer) /
         5);
 
@@ -2360,114 +2396,114 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
     if (total.toString() == 'NaN') {
       return 0;
     } else if (total < 1500) {
-      var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
-          (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
-          (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
-          (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
-          (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
-          (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
-          (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
-          (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
-          (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
-          (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
-          (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
-          (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
-          (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
-          (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
-          (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
-          (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
-          (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
-          (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
-          (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
-          (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
-          (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
-          (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
-          (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
-          (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
-          (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
-          (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
-          (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
-          (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
-          (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
-          (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
-          (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
-          (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
-          (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
-          (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
-          (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
+      var totalDiamond = (hargaBatu1 * (double.parse(totalCrtBatu1.text))) +
+          (hargaBatu2 * (double.parse(totalCrtBatu2.text))) +
+          (hargaBatu3 * (double.parse(totalCrtBatu3.text))) +
+          (hargaBatu4 * (double.parse(totalCrtBatu4.text))) +
+          (hargaBatu5 * (double.parse(totalCrtBatu5.text))) +
+          (hargaBatu6 * (double.parse(totalCrtBatu6.text))) +
+          (hargaBatu7 * (double.parse(totalCrtBatu7.text))) +
+          (hargaBatu8 * (double.parse(totalCrtBatu8.text))) +
+          (hargaBatu9 * (double.parse(totalCrtBatu9.text))) +
+          (hargaBatu10 * (double.parse(totalCrtBatu10.text))) +
+          (hargaBatu11 * (double.parse(totalCrtBatu11.text))) +
+          (hargaBatu12 * (double.parse(totalCrtBatu12.text))) +
+          (hargaBatu13 * (double.parse(totalCrtBatu13.text))) +
+          (hargaBatu14 * (double.parse(totalCrtBatu14.text))) +
+          (hargaBatu15 * (double.parse(totalCrtBatu15.text))) +
+          (hargaBatu16 * (double.parse(totalCrtBatu16.text))) +
+          (hargaBatu17 * (double.parse(totalCrtBatu17.text))) +
+          (hargaBatu18 * (double.parse(totalCrtBatu18.text))) +
+          (hargaBatu19 * (double.parse(totalCrtBatu19.text))) +
+          (hargaBatu20 * (double.parse(totalCrtBatu20.text))) +
+          (hargaBatu21 * (double.parse(totalCrtBatu21.text))) +
+          (hargaBatu22 * (double.parse(totalCrtBatu22.text))) +
+          (hargaBatu23 * (double.parse(totalCrtBatu23.text))) +
+          (hargaBatu24 * (double.parse(totalCrtBatu24.text))) +
+          (hargaBatu25 * (double.parse(totalCrtBatu25.text))) +
+          (hargaBatu26 * (double.parse(totalCrtBatu26.text))) +
+          (hargaBatu27 * (double.parse(totalCrtBatu27.text))) +
+          (hargaBatu28 * (double.parse(totalCrtBatu28.text))) +
+          (hargaBatu29 * (double.parse(totalCrtBatu29.text))) +
+          (hargaBatu30 * (double.parse(totalCrtBatu30.text))) +
+          (hargaBatu31 * (double.parse(totalCrtBatu31.text))) +
+          (hargaBatu32 * (double.parse(totalCrtBatu32.text))) +
+          (hargaBatu33 * (double.parse(totalCrtBatu33.text))) +
+          (hargaBatu34 * (double.parse(totalCrtBatu34.text))) +
+          (hargaBatu35 * (double.parse(totalCrtBatu35.text)));
 
       var totalDiamondTanpaUp = ((hargaBatu1 / markUpBatu1) *
-              (caratPcsBatu1 * qtyIntBatu1!)) +
-          ((hargaBatu2 / markUpBatu2) * (caratPcsBatu2 * qtyIntBatu2!)) +
-          ((hargaBatu3 / markUpBatu3) * (caratPcsBatu3 * qtyIntBatu3!)) +
-          ((hargaBatu4 / markUpBatu4) * (caratPcsBatu4 * qtyIntBatu4!)) +
-          ((hargaBatu5 / markUpBatu5) * (caratPcsBatu5 * qtyIntBatu5!)) +
-          ((hargaBatu6 / markUpBatu6) * (caratPcsBatu6 * qtyIntBatu6!)) +
-          ((hargaBatu7 / markUpBatu7) * (caratPcsBatu7 * qtyIntBatu7!)) +
-          ((hargaBatu8 / markUpBatu8) * (caratPcsBatu8 * qtyIntBatu8!)) +
-          ((hargaBatu9 / markUpBatu9) * (caratPcsBatu9 * qtyIntBatu9!)) +
-          ((hargaBatu10 / markUpBatu10) * (caratPcsBatu10 * qtyIntBatu10!)) +
-          ((hargaBatu11 / markUpBatu11) * (caratPcsBatu11 * qtyIntBatu11!)) +
-          ((hargaBatu12 / markUpBatu12) * (caratPcsBatu12 * qtyIntBatu12!)) +
-          ((hargaBatu13 / markUpBatu13) * (caratPcsBatu13 * qtyIntBatu13!)) +
-          ((hargaBatu14 / markUpBatu14) * (caratPcsBatu14 * qtyIntBatu14!)) +
-          ((hargaBatu15 / markUpBatu15) * (caratPcsBatu15 * qtyIntBatu15!)) +
-          ((hargaBatu16 / markUpBatu16) * (caratPcsBatu16 * qtyIntBatu16!)) +
-          ((hargaBatu17 / markUpBatu17) * (caratPcsBatu17 * qtyIntBatu17!)) +
-          ((hargaBatu18 / markUpBatu18) * (caratPcsBatu18 * qtyIntBatu18!)) +
-          ((hargaBatu19 / markUpBatu19) * (caratPcsBatu19 * qtyIntBatu19!)) +
-          ((hargaBatu20 / markUpBatu20) * (caratPcsBatu20 * qtyIntBatu20!)) +
-          ((hargaBatu21 / markUpBatu21) * (caratPcsBatu21 * qtyIntBatu21!)) +
-          ((hargaBatu22 / markUpBatu22) * (caratPcsBatu22 * qtyIntBatu22!)) +
-          ((hargaBatu23 / markUpBatu23) * (caratPcsBatu23 * qtyIntBatu23!)) +
-          ((hargaBatu24 / markUpBatu24) * (caratPcsBatu24 * qtyIntBatu24!)) +
-          ((hargaBatu25 / markUpBatu25) * (caratPcsBatu25 * qtyIntBatu25!)) +
-          ((hargaBatu26 / markUpBatu26) * (caratPcsBatu26 * qtyIntBatu26!)) +
-          ((hargaBatu27 / markUpBatu27) * (caratPcsBatu27 * qtyIntBatu27!)) +
-          ((hargaBatu28 / markUpBatu28) * (caratPcsBatu28 * qtyIntBatu28!)) +
-          ((hargaBatu29 / markUpBatu29) * (caratPcsBatu29 * qtyIntBatu29!)) +
-          ((hargaBatu30 / markUpBatu30) * (caratPcsBatu30 * qtyIntBatu30!)) +
-          ((hargaBatu31 / markUpBatu31) * (caratPcsBatu31 * qtyIntBatu31!)) +
-          ((hargaBatu32 / markUpBatu32) * (caratPcsBatu32 * qtyIntBatu32!)) +
-          ((hargaBatu33 / markUpBatu33) * (caratPcsBatu33 * qtyIntBatu33!)) +
-          ((hargaBatu34 / markUpBatu34) * (caratPcsBatu34 * qtyIntBatu34!)) +
-          ((hargaBatu35 / markUpBatu35) * (caratPcsBatu35 * qtyIntBatu35!));
+              (double.parse(totalCrtBatu1.text))) +
+          ((hargaBatu2 / markUpBatu2) * (double.parse(totalCrtBatu2.text))) +
+          ((hargaBatu3 / markUpBatu3) * (double.parse(totalCrtBatu3.text))) +
+          ((hargaBatu4 / markUpBatu4) * (double.parse(totalCrtBatu4.text))) +
+          ((hargaBatu5 / markUpBatu5) * (double.parse(totalCrtBatu5.text))) +
+          ((hargaBatu6 / markUpBatu6) * (double.parse(totalCrtBatu6.text))) +
+          ((hargaBatu7 / markUpBatu7) * (double.parse(totalCrtBatu7.text))) +
+          ((hargaBatu8 / markUpBatu8) * (double.parse(totalCrtBatu8.text))) +
+          ((hargaBatu9 / markUpBatu9) * (double.parse(totalCrtBatu9.text))) +
+          ((hargaBatu10 / markUpBatu10) * (double.parse(totalCrtBatu10.text))) +
+          ((hargaBatu11 / markUpBatu11) * (double.parse(totalCrtBatu11.text))) +
+          ((hargaBatu12 / markUpBatu12) * (double.parse(totalCrtBatu12.text))) +
+          ((hargaBatu13 / markUpBatu13) * (double.parse(totalCrtBatu13.text))) +
+          ((hargaBatu14 / markUpBatu14) * (double.parse(totalCrtBatu14.text))) +
+          ((hargaBatu15 / markUpBatu15) * (double.parse(totalCrtBatu15.text))) +
+          ((hargaBatu16 / markUpBatu16) * (double.parse(totalCrtBatu16.text))) +
+          ((hargaBatu17 / markUpBatu17) * (double.parse(totalCrtBatu17.text))) +
+          ((hargaBatu18 / markUpBatu18) * (double.parse(totalCrtBatu18.text))) +
+          ((hargaBatu19 / markUpBatu19) * (double.parse(totalCrtBatu19.text))) +
+          ((hargaBatu20 / markUpBatu20) * (double.parse(totalCrtBatu20.text))) +
+          ((hargaBatu21 / markUpBatu21) * (double.parse(totalCrtBatu21.text))) +
+          ((hargaBatu22 / markUpBatu22) * (double.parse(totalCrtBatu22.text))) +
+          ((hargaBatu23 / markUpBatu23) * (double.parse(totalCrtBatu23.text))) +
+          ((hargaBatu24 / markUpBatu24) * (double.parse(totalCrtBatu24.text))) +
+          ((hargaBatu25 / markUpBatu25) * (double.parse(totalCrtBatu25.text))) +
+          ((hargaBatu26 / markUpBatu26) * (double.parse(totalCrtBatu26.text))) +
+          ((hargaBatu27 / markUpBatu27) * (double.parse(totalCrtBatu27.text))) +
+          ((hargaBatu28 / markUpBatu28) * (double.parse(totalCrtBatu28.text))) +
+          ((hargaBatu29 / markUpBatu29) * (double.parse(totalCrtBatu29.text))) +
+          ((hargaBatu30 / markUpBatu30) * (double.parse(totalCrtBatu30.text))) +
+          ((hargaBatu31 / markUpBatu31) * (double.parse(totalCrtBatu31.text))) +
+          ((hargaBatu32 / markUpBatu32) * (double.parse(totalCrtBatu32.text))) +
+          ((hargaBatu33 / markUpBatu33) * (double.parse(totalCrtBatu33.text))) +
+          ((hargaBatu34 / markUpBatu34) * (double.parse(totalCrtBatu34.text))) +
+          ((hargaBatu35 / markUpBatu35) * (double.parse(totalCrtBatu35.text)));
 
-      var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
-                  (caratPcsBatu2 * qtyIntBatu2!) +
-                  (caratPcsBatu3 * qtyIntBatu3!) +
-                  (caratPcsBatu4 * qtyIntBatu4!) +
-                  (caratPcsBatu5 * qtyIntBatu5!) +
-                  (caratPcsBatu6 * qtyIntBatu6!) +
-                  (caratPcsBatu7 * qtyIntBatu7!) +
-                  (caratPcsBatu8 * qtyIntBatu8!) +
-                  (caratPcsBatu9 * qtyIntBatu9!) +
-                  (caratPcsBatu10 * qtyIntBatu10!) +
-                  (caratPcsBatu11 * qtyIntBatu11!) +
-                  (caratPcsBatu12 * qtyIntBatu12!) +
-                  (caratPcsBatu13 * qtyIntBatu13!) +
-                  (caratPcsBatu14 * qtyIntBatu14!) +
-                  (caratPcsBatu15 * qtyIntBatu15!) +
-                  (caratPcsBatu16 * qtyIntBatu16!) +
-                  (caratPcsBatu17 * qtyIntBatu17!) +
-                  (caratPcsBatu18 * qtyIntBatu18!) +
-                  (caratPcsBatu19 * qtyIntBatu19!) +
-                  (caratPcsBatu20 * qtyIntBatu20!) +
-                  (caratPcsBatu21 * qtyIntBatu21!) +
-                  (caratPcsBatu22 * qtyIntBatu22!) +
-                  (caratPcsBatu23 * qtyIntBatu23!) +
-                  (caratPcsBatu24 * qtyIntBatu24!) +
-                  (caratPcsBatu25 * qtyIntBatu25!) +
-                  (caratPcsBatu26 * qtyIntBatu26!) +
-                  (caratPcsBatu27 * qtyIntBatu27!) +
-                  (caratPcsBatu28 * qtyIntBatu28!) +
-                  (caratPcsBatu29 * qtyIntBatu29!) +
-                  (caratPcsBatu30 * qtyIntBatu30!) +
-                  (caratPcsBatu31 * qtyIntBatu31!) +
-                  (caratPcsBatu32 * qtyIntBatu32!) +
-                  (caratPcsBatu33 * qtyIntBatu33!) +
-                  (caratPcsBatu34 * qtyIntBatu34!) +
-                  (caratPcsBatu35 * qtyIntBatu35!)) +
+      var totalQtyCrt = ((((double.parse(totalCrtBatu1.text)) +
+                  (double.parse(totalCrtBatu2.text)) +
+                  (double.parse(totalCrtBatu3.text)) +
+                  (double.parse(totalCrtBatu4.text)) +
+                  (double.parse(totalCrtBatu5.text)) +
+                  (double.parse(totalCrtBatu6.text)) +
+                  (double.parse(totalCrtBatu7.text)) +
+                  (double.parse(totalCrtBatu8.text)) +
+                  (double.parse(totalCrtBatu9.text)) +
+                  (double.parse(totalCrtBatu10.text)) +
+                  (double.parse(totalCrtBatu11.text)) +
+                  (double.parse(totalCrtBatu12.text)) +
+                  (double.parse(totalCrtBatu13.text)) +
+                  (double.parse(totalCrtBatu14.text)) +
+                  (double.parse(totalCrtBatu15.text)) +
+                  (double.parse(totalCrtBatu16.text)) +
+                  (double.parse(totalCrtBatu17.text)) +
+                  (double.parse(totalCrtBatu18.text)) +
+                  (double.parse(totalCrtBatu19.text)) +
+                  (double.parse(totalCrtBatu20.text)) +
+                  (double.parse(totalCrtBatu21.text)) +
+                  (double.parse(totalCrtBatu22.text)) +
+                  (double.parse(totalCrtBatu23.text)) +
+                  (double.parse(totalCrtBatu24.text)) +
+                  (double.parse(totalCrtBatu25.text)) +
+                  (double.parse(totalCrtBatu26.text)) +
+                  (double.parse(totalCrtBatu27.text)) +
+                  (double.parse(totalCrtBatu28.text)) +
+                  (double.parse(totalCrtBatu29.text)) +
+                  (double.parse(totalCrtBatu30.text)) +
+                  (double.parse(totalCrtBatu31.text)) +
+                  (double.parse(totalCrtBatu32.text)) +
+                  (double.parse(totalCrtBatu33.text)) +
+                  (double.parse(totalCrtBatu34.text)) +
+                  (double.parse(totalCrtBatu35.text))) +
               doubleBeratEmasDariCustomer) /
           5);
       double totalEmas;
@@ -2522,114 +2558,114 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
         return total;
       }
     } else if (total <= 2251) {
-      var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
-          (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
-          (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
-          (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
-          (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
-          (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
-          (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
-          (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
-          (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
-          (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
-          (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
-          (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
-          (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
-          (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
-          (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
-          (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
-          (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
-          (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
-          (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
-          (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
-          (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
-          (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
-          (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
-          (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
-          (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
-          (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
-          (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
-          (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
-          (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
-          (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
-          (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
-          (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
-          (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
-          (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
-          (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
+      var totalDiamond = (hargaBatu1 * (double.parse(totalCrtBatu1.text))) +
+          (hargaBatu2 * (double.parse(totalCrtBatu2.text))) +
+          (hargaBatu3 * (double.parse(totalCrtBatu3.text))) +
+          (hargaBatu4 * (double.parse(totalCrtBatu4.text))) +
+          (hargaBatu5 * (double.parse(totalCrtBatu5.text))) +
+          (hargaBatu6 * (double.parse(totalCrtBatu6.text))) +
+          (hargaBatu7 * (double.parse(totalCrtBatu7.text))) +
+          (hargaBatu8 * (double.parse(totalCrtBatu8.text))) +
+          (hargaBatu9 * (double.parse(totalCrtBatu9.text))) +
+          (hargaBatu10 * (double.parse(totalCrtBatu10.text))) +
+          (hargaBatu11 * (double.parse(totalCrtBatu11.text))) +
+          (hargaBatu12 * (double.parse(totalCrtBatu12.text))) +
+          (hargaBatu13 * (double.parse(totalCrtBatu13.text))) +
+          (hargaBatu14 * (double.parse(totalCrtBatu14.text))) +
+          (hargaBatu15 * (double.parse(totalCrtBatu15.text))) +
+          (hargaBatu16 * (double.parse(totalCrtBatu16.text))) +
+          (hargaBatu17 * (double.parse(totalCrtBatu17.text))) +
+          (hargaBatu18 * (double.parse(totalCrtBatu18.text))) +
+          (hargaBatu19 * (double.parse(totalCrtBatu19.text))) +
+          (hargaBatu20 * (double.parse(totalCrtBatu20.text))) +
+          (hargaBatu21 * (double.parse(totalCrtBatu21.text))) +
+          (hargaBatu22 * (double.parse(totalCrtBatu22.text))) +
+          (hargaBatu23 * (double.parse(totalCrtBatu23.text))) +
+          (hargaBatu24 * (double.parse(totalCrtBatu24.text))) +
+          (hargaBatu25 * (double.parse(totalCrtBatu25.text))) +
+          (hargaBatu26 * (double.parse(totalCrtBatu26.text))) +
+          (hargaBatu27 * (double.parse(totalCrtBatu27.text))) +
+          (hargaBatu28 * (double.parse(totalCrtBatu28.text))) +
+          (hargaBatu29 * (double.parse(totalCrtBatu29.text))) +
+          (hargaBatu30 * (double.parse(totalCrtBatu30.text))) +
+          (hargaBatu31 * (double.parse(totalCrtBatu31.text))) +
+          (hargaBatu32 * (double.parse(totalCrtBatu32.text))) +
+          (hargaBatu33 * (double.parse(totalCrtBatu33.text))) +
+          (hargaBatu34 * (double.parse(totalCrtBatu34.text))) +
+          (hargaBatu35 * (double.parse(totalCrtBatu35.text)));
 
       var totalDiamondTanpaUp = ((hargaBatu1 / markUpBatu1) *
-              (caratPcsBatu1 * qtyIntBatu1!)) +
-          ((hargaBatu2 / markUpBatu2) * (caratPcsBatu2 * qtyIntBatu2!)) +
-          ((hargaBatu3 / markUpBatu3) * (caratPcsBatu3 * qtyIntBatu3!)) +
-          ((hargaBatu4 / markUpBatu4) * (caratPcsBatu4 * qtyIntBatu4!)) +
-          ((hargaBatu5 / markUpBatu5) * (caratPcsBatu5 * qtyIntBatu5!)) +
-          ((hargaBatu6 / markUpBatu6) * (caratPcsBatu6 * qtyIntBatu6!)) +
-          ((hargaBatu7 / markUpBatu7) * (caratPcsBatu7 * qtyIntBatu7!)) +
-          ((hargaBatu8 / markUpBatu8) * (caratPcsBatu8 * qtyIntBatu8!)) +
-          ((hargaBatu9 / markUpBatu9) * (caratPcsBatu9 * qtyIntBatu9!)) +
-          ((hargaBatu10 / markUpBatu10) * (caratPcsBatu10 * qtyIntBatu10!)) +
-          ((hargaBatu11 / markUpBatu11) * (caratPcsBatu11 * qtyIntBatu11!)) +
-          ((hargaBatu12 / markUpBatu12) * (caratPcsBatu12 * qtyIntBatu12!)) +
-          ((hargaBatu13 / markUpBatu13) * (caratPcsBatu13 * qtyIntBatu13!)) +
-          ((hargaBatu14 / markUpBatu14) * (caratPcsBatu14 * qtyIntBatu14!)) +
-          ((hargaBatu15 / markUpBatu15) * (caratPcsBatu15 * qtyIntBatu15!)) +
-          ((hargaBatu16 / markUpBatu16) * (caratPcsBatu16 * qtyIntBatu16!)) +
-          ((hargaBatu17 / markUpBatu17) * (caratPcsBatu17 * qtyIntBatu17!)) +
-          ((hargaBatu18 / markUpBatu18) * (caratPcsBatu18 * qtyIntBatu18!)) +
-          ((hargaBatu19 / markUpBatu19) * (caratPcsBatu19 * qtyIntBatu19!)) +
-          ((hargaBatu20 / markUpBatu20) * (caratPcsBatu20 * qtyIntBatu20!)) +
-          ((hargaBatu21 / markUpBatu21) * (caratPcsBatu21 * qtyIntBatu21!)) +
-          ((hargaBatu22 / markUpBatu22) * (caratPcsBatu22 * qtyIntBatu22!)) +
-          ((hargaBatu23 / markUpBatu23) * (caratPcsBatu23 * qtyIntBatu23!)) +
-          ((hargaBatu24 / markUpBatu24) * (caratPcsBatu24 * qtyIntBatu24!)) +
-          ((hargaBatu25 / markUpBatu25) * (caratPcsBatu25 * qtyIntBatu25!)) +
-          ((hargaBatu26 / markUpBatu26) * (caratPcsBatu26 * qtyIntBatu26!)) +
-          ((hargaBatu27 / markUpBatu27) * (caratPcsBatu27 * qtyIntBatu27!)) +
-          ((hargaBatu28 / markUpBatu28) * (caratPcsBatu28 * qtyIntBatu28!)) +
-          ((hargaBatu29 / markUpBatu29) * (caratPcsBatu29 * qtyIntBatu29!)) +
-          ((hargaBatu30 / markUpBatu30) * (caratPcsBatu30 * qtyIntBatu30!)) +
-          ((hargaBatu31 / markUpBatu31) * (caratPcsBatu31 * qtyIntBatu31!)) +
-          ((hargaBatu32 / markUpBatu32) * (caratPcsBatu32 * qtyIntBatu32!)) +
-          ((hargaBatu33 / markUpBatu33) * (caratPcsBatu33 * qtyIntBatu33!)) +
-          ((hargaBatu34 / markUpBatu34) * (caratPcsBatu34 * qtyIntBatu34!)) +
-          ((hargaBatu35 / markUpBatu35) * (caratPcsBatu35 * qtyIntBatu35!));
+              (double.parse(totalCrtBatu1.text))) +
+          ((hargaBatu2 / markUpBatu2) * (double.parse(totalCrtBatu2.text))) +
+          ((hargaBatu3 / markUpBatu3) * (double.parse(totalCrtBatu3.text))) +
+          ((hargaBatu4 / markUpBatu4) * (double.parse(totalCrtBatu4.text))) +
+          ((hargaBatu5 / markUpBatu5) * (double.parse(totalCrtBatu5.text))) +
+          ((hargaBatu6 / markUpBatu6) * (double.parse(totalCrtBatu6.text))) +
+          ((hargaBatu7 / markUpBatu7) * (double.parse(totalCrtBatu7.text))) +
+          ((hargaBatu8 / markUpBatu8) * (double.parse(totalCrtBatu8.text))) +
+          ((hargaBatu9 / markUpBatu9) * (double.parse(totalCrtBatu9.text))) +
+          ((hargaBatu10 / markUpBatu10) * (double.parse(totalCrtBatu10.text))) +
+          ((hargaBatu11 / markUpBatu11) * (double.parse(totalCrtBatu11.text))) +
+          ((hargaBatu12 / markUpBatu12) * (double.parse(totalCrtBatu12.text))) +
+          ((hargaBatu13 / markUpBatu13) * (double.parse(totalCrtBatu13.text))) +
+          ((hargaBatu14 / markUpBatu14) * (double.parse(totalCrtBatu14.text))) +
+          ((hargaBatu15 / markUpBatu15) * (double.parse(totalCrtBatu15.text))) +
+          ((hargaBatu16 / markUpBatu16) * (double.parse(totalCrtBatu16.text))) +
+          ((hargaBatu17 / markUpBatu17) * (double.parse(totalCrtBatu17.text))) +
+          ((hargaBatu18 / markUpBatu18) * (double.parse(totalCrtBatu18.text))) +
+          ((hargaBatu19 / markUpBatu19) * (double.parse(totalCrtBatu19.text))) +
+          ((hargaBatu20 / markUpBatu20) * (double.parse(totalCrtBatu20.text))) +
+          ((hargaBatu21 / markUpBatu21) * (double.parse(totalCrtBatu21.text))) +
+          ((hargaBatu22 / markUpBatu22) * (double.parse(totalCrtBatu22.text))) +
+          ((hargaBatu23 / markUpBatu23) * (double.parse(totalCrtBatu23.text))) +
+          ((hargaBatu24 / markUpBatu24) * (double.parse(totalCrtBatu24.text))) +
+          ((hargaBatu25 / markUpBatu25) * (double.parse(totalCrtBatu25.text))) +
+          ((hargaBatu26 / markUpBatu26) * (double.parse(totalCrtBatu26.text))) +
+          ((hargaBatu27 / markUpBatu27) * (double.parse(totalCrtBatu27.text))) +
+          ((hargaBatu28 / markUpBatu28) * (double.parse(totalCrtBatu28.text))) +
+          ((hargaBatu29 / markUpBatu29) * (double.parse(totalCrtBatu29.text))) +
+          ((hargaBatu30 / markUpBatu30) * (double.parse(totalCrtBatu30.text))) +
+          ((hargaBatu31 / markUpBatu31) * (double.parse(totalCrtBatu31.text))) +
+          ((hargaBatu32 / markUpBatu32) * (double.parse(totalCrtBatu32.text))) +
+          ((hargaBatu33 / markUpBatu33) * (double.parse(totalCrtBatu33.text))) +
+          ((hargaBatu34 / markUpBatu34) * (double.parse(totalCrtBatu34.text))) +
+          ((hargaBatu35 / markUpBatu35) * (double.parse(totalCrtBatu35.text)));
 
-      var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
-                  (caratPcsBatu2 * qtyIntBatu2!) +
-                  (caratPcsBatu3 * qtyIntBatu3!) +
-                  (caratPcsBatu4 * qtyIntBatu4!) +
-                  (caratPcsBatu5 * qtyIntBatu5!) +
-                  (caratPcsBatu6 * qtyIntBatu6!) +
-                  (caratPcsBatu7 * qtyIntBatu7!) +
-                  (caratPcsBatu8 * qtyIntBatu8!) +
-                  (caratPcsBatu9 * qtyIntBatu9!) +
-                  (caratPcsBatu10 * qtyIntBatu10!) +
-                  (caratPcsBatu11 * qtyIntBatu11!) +
-                  (caratPcsBatu12 * qtyIntBatu12!) +
-                  (caratPcsBatu13 * qtyIntBatu13!) +
-                  (caratPcsBatu14 * qtyIntBatu14!) +
-                  (caratPcsBatu15 * qtyIntBatu15!) +
-                  (caratPcsBatu16 * qtyIntBatu16!) +
-                  (caratPcsBatu17 * qtyIntBatu17!) +
-                  (caratPcsBatu18 * qtyIntBatu18!) +
-                  (caratPcsBatu19 * qtyIntBatu19!) +
-                  (caratPcsBatu20 * qtyIntBatu20!) +
-                  (caratPcsBatu21 * qtyIntBatu21!) +
-                  (caratPcsBatu22 * qtyIntBatu22!) +
-                  (caratPcsBatu23 * qtyIntBatu23!) +
-                  (caratPcsBatu24 * qtyIntBatu24!) +
-                  (caratPcsBatu25 * qtyIntBatu25!) +
-                  (caratPcsBatu26 * qtyIntBatu26!) +
-                  (caratPcsBatu27 * qtyIntBatu27!) +
-                  (caratPcsBatu28 * qtyIntBatu28!) +
-                  (caratPcsBatu29 * qtyIntBatu29!) +
-                  (caratPcsBatu30 * qtyIntBatu30!) +
-                  (caratPcsBatu31 * qtyIntBatu31!) +
-                  (caratPcsBatu32 * qtyIntBatu32!) +
-                  (caratPcsBatu33 * qtyIntBatu33!) +
-                  (caratPcsBatu34 * qtyIntBatu34!) +
-                  (caratPcsBatu35 * qtyIntBatu35!)) +
+      var totalQtyCrt = ((((double.parse(totalCrtBatu1.text)) +
+                  (double.parse(totalCrtBatu2.text)) +
+                  (double.parse(totalCrtBatu3.text)) +
+                  (double.parse(totalCrtBatu4.text)) +
+                  (double.parse(totalCrtBatu5.text)) +
+                  (double.parse(totalCrtBatu6.text)) +
+                  (double.parse(totalCrtBatu7.text)) +
+                  (double.parse(totalCrtBatu8.text)) +
+                  (double.parse(totalCrtBatu9.text)) +
+                  (double.parse(totalCrtBatu10.text)) +
+                  (double.parse(totalCrtBatu11.text)) +
+                  (double.parse(totalCrtBatu12.text)) +
+                  (double.parse(totalCrtBatu13.text)) +
+                  (double.parse(totalCrtBatu14.text)) +
+                  (double.parse(totalCrtBatu15.text)) +
+                  (double.parse(totalCrtBatu16.text)) +
+                  (double.parse(totalCrtBatu17.text)) +
+                  (double.parse(totalCrtBatu18.text)) +
+                  (double.parse(totalCrtBatu19.text)) +
+                  (double.parse(totalCrtBatu20.text)) +
+                  (double.parse(totalCrtBatu21.text)) +
+                  (double.parse(totalCrtBatu22.text)) +
+                  (double.parse(totalCrtBatu23.text)) +
+                  (double.parse(totalCrtBatu24.text)) +
+                  (double.parse(totalCrtBatu25.text)) +
+                  (double.parse(totalCrtBatu26.text)) +
+                  (double.parse(totalCrtBatu27.text)) +
+                  (double.parse(totalCrtBatu28.text)) +
+                  (double.parse(totalCrtBatu29.text)) +
+                  (double.parse(totalCrtBatu30.text)) +
+                  (double.parse(totalCrtBatu31.text)) +
+                  (double.parse(totalCrtBatu32.text)) +
+                  (double.parse(totalCrtBatu33.text)) +
+                  (double.parse(totalCrtBatu34.text)) +
+                  (double.parse(totalCrtBatu35.text))) +
               doubleBeratEmasDariCustomer) /
           5);
       double totalEmas;
@@ -2682,114 +2718,114 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
         return total;
       }
     } else if (total <= 4000) {
-      var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
-          (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
-          (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
-          (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
-          (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
-          (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
-          (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
-          (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
-          (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
-          (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
-          (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
-          (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
-          (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
-          (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
-          (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
-          (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
-          (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
-          (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
-          (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
-          (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
-          (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
-          (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
-          (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
-          (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
-          (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
-          (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
-          (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
-          (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
-          (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
-          (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
-          (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
-          (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
-          (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
-          (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
-          (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
+      var totalDiamond = (hargaBatu1 * (double.parse(totalCrtBatu1.text))) +
+          (hargaBatu2 * (double.parse(totalCrtBatu2.text))) +
+          (hargaBatu3 * (double.parse(totalCrtBatu3.text))) +
+          (hargaBatu4 * (double.parse(totalCrtBatu4.text))) +
+          (hargaBatu5 * (double.parse(totalCrtBatu5.text))) +
+          (hargaBatu6 * (double.parse(totalCrtBatu6.text))) +
+          (hargaBatu7 * (double.parse(totalCrtBatu7.text))) +
+          (hargaBatu8 * (double.parse(totalCrtBatu8.text))) +
+          (hargaBatu9 * (double.parse(totalCrtBatu9.text))) +
+          (hargaBatu10 * (double.parse(totalCrtBatu10.text))) +
+          (hargaBatu11 * (double.parse(totalCrtBatu11.text))) +
+          (hargaBatu12 * (double.parse(totalCrtBatu12.text))) +
+          (hargaBatu13 * (double.parse(totalCrtBatu13.text))) +
+          (hargaBatu14 * (double.parse(totalCrtBatu14.text))) +
+          (hargaBatu15 * (double.parse(totalCrtBatu15.text))) +
+          (hargaBatu16 * (double.parse(totalCrtBatu16.text))) +
+          (hargaBatu17 * (double.parse(totalCrtBatu17.text))) +
+          (hargaBatu18 * (double.parse(totalCrtBatu18.text))) +
+          (hargaBatu19 * (double.parse(totalCrtBatu19.text))) +
+          (hargaBatu20 * (double.parse(totalCrtBatu20.text))) +
+          (hargaBatu21 * (double.parse(totalCrtBatu21.text))) +
+          (hargaBatu22 * (double.parse(totalCrtBatu22.text))) +
+          (hargaBatu23 * (double.parse(totalCrtBatu23.text))) +
+          (hargaBatu24 * (double.parse(totalCrtBatu24.text))) +
+          (hargaBatu25 * (double.parse(totalCrtBatu25.text))) +
+          (hargaBatu26 * (double.parse(totalCrtBatu26.text))) +
+          (hargaBatu27 * (double.parse(totalCrtBatu27.text))) +
+          (hargaBatu28 * (double.parse(totalCrtBatu28.text))) +
+          (hargaBatu29 * (double.parse(totalCrtBatu29.text))) +
+          (hargaBatu30 * (double.parse(totalCrtBatu30.text))) +
+          (hargaBatu31 * (double.parse(totalCrtBatu31.text))) +
+          (hargaBatu32 * (double.parse(totalCrtBatu32.text))) +
+          (hargaBatu33 * (double.parse(totalCrtBatu33.text))) +
+          (hargaBatu34 * (double.parse(totalCrtBatu34.text))) +
+          (hargaBatu35 * (double.parse(totalCrtBatu35.text)));
 
       var totalDiamondTanpaUp = ((hargaBatu1 / markUpBatu1) *
-              (caratPcsBatu1 * qtyIntBatu1!)) +
-          ((hargaBatu2 / markUpBatu2) * (caratPcsBatu2 * qtyIntBatu2!)) +
-          ((hargaBatu3 / markUpBatu3) * (caratPcsBatu3 * qtyIntBatu3!)) +
-          ((hargaBatu4 / markUpBatu4) * (caratPcsBatu4 * qtyIntBatu4!)) +
-          ((hargaBatu5 / markUpBatu5) * (caratPcsBatu5 * qtyIntBatu5!)) +
-          ((hargaBatu6 / markUpBatu6) * (caratPcsBatu6 * qtyIntBatu6!)) +
-          ((hargaBatu7 / markUpBatu7) * (caratPcsBatu7 * qtyIntBatu7!)) +
-          ((hargaBatu8 / markUpBatu8) * (caratPcsBatu8 * qtyIntBatu8!)) +
-          ((hargaBatu9 / markUpBatu9) * (caratPcsBatu9 * qtyIntBatu9!)) +
-          ((hargaBatu10 / markUpBatu10) * (caratPcsBatu10 * qtyIntBatu10!)) +
-          ((hargaBatu11 / markUpBatu11) * (caratPcsBatu11 * qtyIntBatu11!)) +
-          ((hargaBatu12 / markUpBatu12) * (caratPcsBatu12 * qtyIntBatu12!)) +
-          ((hargaBatu13 / markUpBatu13) * (caratPcsBatu13 * qtyIntBatu13!)) +
-          ((hargaBatu14 / markUpBatu14) * (caratPcsBatu14 * qtyIntBatu14!)) +
-          ((hargaBatu15 / markUpBatu15) * (caratPcsBatu15 * qtyIntBatu15!)) +
-          ((hargaBatu16 / markUpBatu16) * (caratPcsBatu16 * qtyIntBatu16!)) +
-          ((hargaBatu17 / markUpBatu17) * (caratPcsBatu17 * qtyIntBatu17!)) +
-          ((hargaBatu18 / markUpBatu18) * (caratPcsBatu18 * qtyIntBatu18!)) +
-          ((hargaBatu19 / markUpBatu19) * (caratPcsBatu19 * qtyIntBatu19!)) +
-          ((hargaBatu20 / markUpBatu20) * (caratPcsBatu20 * qtyIntBatu20!)) +
-          ((hargaBatu21 / markUpBatu21) * (caratPcsBatu21 * qtyIntBatu21!)) +
-          ((hargaBatu22 / markUpBatu22) * (caratPcsBatu22 * qtyIntBatu22!)) +
-          ((hargaBatu23 / markUpBatu23) * (caratPcsBatu23 * qtyIntBatu23!)) +
-          ((hargaBatu24 / markUpBatu24) * (caratPcsBatu24 * qtyIntBatu24!)) +
-          ((hargaBatu25 / markUpBatu25) * (caratPcsBatu25 * qtyIntBatu25!)) +
-          ((hargaBatu26 / markUpBatu26) * (caratPcsBatu26 * qtyIntBatu26!)) +
-          ((hargaBatu27 / markUpBatu27) * (caratPcsBatu27 * qtyIntBatu27!)) +
-          ((hargaBatu28 / markUpBatu28) * (caratPcsBatu28 * qtyIntBatu28!)) +
-          ((hargaBatu29 / markUpBatu29) * (caratPcsBatu29 * qtyIntBatu29!)) +
-          ((hargaBatu30 / markUpBatu30) * (caratPcsBatu30 * qtyIntBatu30!)) +
-          ((hargaBatu31 / markUpBatu31) * (caratPcsBatu31 * qtyIntBatu31!)) +
-          ((hargaBatu32 / markUpBatu32) * (caratPcsBatu32 * qtyIntBatu32!)) +
-          ((hargaBatu33 / markUpBatu33) * (caratPcsBatu33 * qtyIntBatu33!)) +
-          ((hargaBatu34 / markUpBatu34) * (caratPcsBatu34 * qtyIntBatu34!)) +
-          ((hargaBatu35 / markUpBatu35) * (caratPcsBatu35 * qtyIntBatu35!));
+              (double.parse(totalCrtBatu1.text))) +
+          ((hargaBatu2 / markUpBatu2) * (double.parse(totalCrtBatu2.text))) +
+          ((hargaBatu3 / markUpBatu3) * (double.parse(totalCrtBatu3.text))) +
+          ((hargaBatu4 / markUpBatu4) * (double.parse(totalCrtBatu4.text))) +
+          ((hargaBatu5 / markUpBatu5) * (double.parse(totalCrtBatu5.text))) +
+          ((hargaBatu6 / markUpBatu6) * (double.parse(totalCrtBatu6.text))) +
+          ((hargaBatu7 / markUpBatu7) * (double.parse(totalCrtBatu7.text))) +
+          ((hargaBatu8 / markUpBatu8) * (double.parse(totalCrtBatu8.text))) +
+          ((hargaBatu9 / markUpBatu9) * (double.parse(totalCrtBatu9.text))) +
+          ((hargaBatu10 / markUpBatu10) * (double.parse(totalCrtBatu10.text))) +
+          ((hargaBatu11 / markUpBatu11) * (double.parse(totalCrtBatu11.text))) +
+          ((hargaBatu12 / markUpBatu12) * (double.parse(totalCrtBatu12.text))) +
+          ((hargaBatu13 / markUpBatu13) * (double.parse(totalCrtBatu13.text))) +
+          ((hargaBatu14 / markUpBatu14) * (double.parse(totalCrtBatu14.text))) +
+          ((hargaBatu15 / markUpBatu15) * (double.parse(totalCrtBatu15.text))) +
+          ((hargaBatu16 / markUpBatu16) * (double.parse(totalCrtBatu16.text))) +
+          ((hargaBatu17 / markUpBatu17) * (double.parse(totalCrtBatu17.text))) +
+          ((hargaBatu18 / markUpBatu18) * (double.parse(totalCrtBatu18.text))) +
+          ((hargaBatu19 / markUpBatu19) * (double.parse(totalCrtBatu19.text))) +
+          ((hargaBatu20 / markUpBatu20) * (double.parse(totalCrtBatu20.text))) +
+          ((hargaBatu21 / markUpBatu21) * (double.parse(totalCrtBatu21.text))) +
+          ((hargaBatu22 / markUpBatu22) * (double.parse(totalCrtBatu22.text))) +
+          ((hargaBatu23 / markUpBatu23) * (double.parse(totalCrtBatu23.text))) +
+          ((hargaBatu24 / markUpBatu24) * (double.parse(totalCrtBatu24.text))) +
+          ((hargaBatu25 / markUpBatu25) * (double.parse(totalCrtBatu25.text))) +
+          ((hargaBatu26 / markUpBatu26) * (double.parse(totalCrtBatu26.text))) +
+          ((hargaBatu27 / markUpBatu27) * (double.parse(totalCrtBatu27.text))) +
+          ((hargaBatu28 / markUpBatu28) * (double.parse(totalCrtBatu28.text))) +
+          ((hargaBatu29 / markUpBatu29) * (double.parse(totalCrtBatu29.text))) +
+          ((hargaBatu30 / markUpBatu30) * (double.parse(totalCrtBatu30.text))) +
+          ((hargaBatu31 / markUpBatu31) * (double.parse(totalCrtBatu31.text))) +
+          ((hargaBatu32 / markUpBatu32) * (double.parse(totalCrtBatu32.text))) +
+          ((hargaBatu33 / markUpBatu33) * (double.parse(totalCrtBatu33.text))) +
+          ((hargaBatu34 / markUpBatu34) * (double.parse(totalCrtBatu34.text))) +
+          ((hargaBatu35 / markUpBatu35) * (double.parse(totalCrtBatu35.text)));
 
-      var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
-                  (caratPcsBatu2 * qtyIntBatu2!) +
-                  (caratPcsBatu3 * qtyIntBatu3!) +
-                  (caratPcsBatu4 * qtyIntBatu4!) +
-                  (caratPcsBatu5 * qtyIntBatu5!) +
-                  (caratPcsBatu6 * qtyIntBatu6!) +
-                  (caratPcsBatu7 * qtyIntBatu7!) +
-                  (caratPcsBatu8 * qtyIntBatu8!) +
-                  (caratPcsBatu9 * qtyIntBatu9!) +
-                  (caratPcsBatu10 * qtyIntBatu10!) +
-                  (caratPcsBatu11 * qtyIntBatu11!) +
-                  (caratPcsBatu12 * qtyIntBatu12!) +
-                  (caratPcsBatu13 * qtyIntBatu13!) +
-                  (caratPcsBatu14 * qtyIntBatu14!) +
-                  (caratPcsBatu15 * qtyIntBatu15!) +
-                  (caratPcsBatu16 * qtyIntBatu16!) +
-                  (caratPcsBatu17 * qtyIntBatu17!) +
-                  (caratPcsBatu18 * qtyIntBatu18!) +
-                  (caratPcsBatu19 * qtyIntBatu19!) +
-                  (caratPcsBatu20 * qtyIntBatu20!) +
-                  (caratPcsBatu21 * qtyIntBatu21!) +
-                  (caratPcsBatu22 * qtyIntBatu22!) +
-                  (caratPcsBatu23 * qtyIntBatu23!) +
-                  (caratPcsBatu24 * qtyIntBatu24!) +
-                  (caratPcsBatu25 * qtyIntBatu25!) +
-                  (caratPcsBatu26 * qtyIntBatu26!) +
-                  (caratPcsBatu27 * qtyIntBatu27!) +
-                  (caratPcsBatu28 * qtyIntBatu28!) +
-                  (caratPcsBatu29 * qtyIntBatu29!) +
-                  (caratPcsBatu30 * qtyIntBatu30!) +
-                  (caratPcsBatu31 * qtyIntBatu31!) +
-                  (caratPcsBatu32 * qtyIntBatu32!) +
-                  (caratPcsBatu33 * qtyIntBatu33!) +
-                  (caratPcsBatu34 * qtyIntBatu34!) +
-                  (caratPcsBatu35 * qtyIntBatu35!)) +
+      var totalQtyCrt = ((((double.parse(totalCrtBatu1.text)) +
+                  (double.parse(totalCrtBatu2.text)) +
+                  (double.parse(totalCrtBatu3.text)) +
+                  (double.parse(totalCrtBatu4.text)) +
+                  (double.parse(totalCrtBatu5.text)) +
+                  (double.parse(totalCrtBatu6.text)) +
+                  (double.parse(totalCrtBatu7.text)) +
+                  (double.parse(totalCrtBatu8.text)) +
+                  (double.parse(totalCrtBatu9.text)) +
+                  (double.parse(totalCrtBatu10.text)) +
+                  (double.parse(totalCrtBatu11.text)) +
+                  (double.parse(totalCrtBatu12.text)) +
+                  (double.parse(totalCrtBatu13.text)) +
+                  (double.parse(totalCrtBatu14.text)) +
+                  (double.parse(totalCrtBatu15.text)) +
+                  (double.parse(totalCrtBatu16.text)) +
+                  (double.parse(totalCrtBatu17.text)) +
+                  (double.parse(totalCrtBatu18.text)) +
+                  (double.parse(totalCrtBatu19.text)) +
+                  (double.parse(totalCrtBatu20.text)) +
+                  (double.parse(totalCrtBatu21.text)) +
+                  (double.parse(totalCrtBatu22.text)) +
+                  (double.parse(totalCrtBatu23.text)) +
+                  (double.parse(totalCrtBatu24.text)) +
+                  (double.parse(totalCrtBatu25.text)) +
+                  (double.parse(totalCrtBatu26.text)) +
+                  (double.parse(totalCrtBatu27.text)) +
+                  (double.parse(totalCrtBatu28.text)) +
+                  (double.parse(totalCrtBatu29.text)) +
+                  (double.parse(totalCrtBatu30.text)) +
+                  (double.parse(totalCrtBatu31.text)) +
+                  (double.parse(totalCrtBatu32.text)) +
+                  (double.parse(totalCrtBatu33.text)) +
+                  (double.parse(totalCrtBatu34.text)) +
+                  (double.parse(totalCrtBatu35.text))) +
               doubleBeratEmasDariCustomer) /
           5);
       double totalEmas;
@@ -2845,114 +2881,114 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
         return total;
       }
     } else {
-      var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
-          (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
-          (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
-          (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
-          (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
-          (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
-          (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
-          (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
-          (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
-          (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
-          (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
-          (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
-          (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
-          (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
-          (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
-          (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
-          (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
-          (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
-          (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
-          (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
-          (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
-          (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
-          (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
-          (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
-          (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
-          (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
-          (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
-          (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
-          (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
-          (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
-          (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
-          (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
-          (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
-          (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
-          (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
+      var totalDiamond = (hargaBatu1 * (double.parse(totalCrtBatu1.text))) +
+          (hargaBatu2 * (double.parse(totalCrtBatu2.text))) +
+          (hargaBatu3 * (double.parse(totalCrtBatu3.text))) +
+          (hargaBatu4 * (double.parse(totalCrtBatu4.text))) +
+          (hargaBatu5 * (double.parse(totalCrtBatu5.text))) +
+          (hargaBatu6 * (double.parse(totalCrtBatu6.text))) +
+          (hargaBatu7 * (double.parse(totalCrtBatu7.text))) +
+          (hargaBatu8 * (double.parse(totalCrtBatu8.text))) +
+          (hargaBatu9 * (double.parse(totalCrtBatu9.text))) +
+          (hargaBatu10 * (double.parse(totalCrtBatu10.text))) +
+          (hargaBatu11 * (double.parse(totalCrtBatu11.text))) +
+          (hargaBatu12 * (double.parse(totalCrtBatu12.text))) +
+          (hargaBatu13 * (double.parse(totalCrtBatu13.text))) +
+          (hargaBatu14 * (double.parse(totalCrtBatu14.text))) +
+          (hargaBatu15 * (double.parse(totalCrtBatu15.text))) +
+          (hargaBatu16 * (double.parse(totalCrtBatu16.text))) +
+          (hargaBatu17 * (double.parse(totalCrtBatu17.text))) +
+          (hargaBatu18 * (double.parse(totalCrtBatu18.text))) +
+          (hargaBatu19 * (double.parse(totalCrtBatu19.text))) +
+          (hargaBatu20 * (double.parse(totalCrtBatu20.text))) +
+          (hargaBatu21 * (double.parse(totalCrtBatu21.text))) +
+          (hargaBatu22 * (double.parse(totalCrtBatu22.text))) +
+          (hargaBatu23 * (double.parse(totalCrtBatu23.text))) +
+          (hargaBatu24 * (double.parse(totalCrtBatu24.text))) +
+          (hargaBatu25 * (double.parse(totalCrtBatu25.text))) +
+          (hargaBatu26 * (double.parse(totalCrtBatu26.text))) +
+          (hargaBatu27 * (double.parse(totalCrtBatu27.text))) +
+          (hargaBatu28 * (double.parse(totalCrtBatu28.text))) +
+          (hargaBatu29 * (double.parse(totalCrtBatu29.text))) +
+          (hargaBatu30 * (double.parse(totalCrtBatu30.text))) +
+          (hargaBatu31 * (double.parse(totalCrtBatu31.text))) +
+          (hargaBatu32 * (double.parse(totalCrtBatu32.text))) +
+          (hargaBatu33 * (double.parse(totalCrtBatu33.text))) +
+          (hargaBatu34 * (double.parse(totalCrtBatu34.text))) +
+          (hargaBatu35 * (double.parse(totalCrtBatu35.text)));
 
       var totalDiamondTanpaUp = ((hargaBatu1 / markUpBatu1) *
-              (caratPcsBatu1 * qtyIntBatu1!)) +
-          ((hargaBatu2 / markUpBatu2) * (caratPcsBatu2 * qtyIntBatu2!)) +
-          ((hargaBatu3 / markUpBatu3) * (caratPcsBatu3 * qtyIntBatu3!)) +
-          ((hargaBatu4 / markUpBatu4) * (caratPcsBatu4 * qtyIntBatu4!)) +
-          ((hargaBatu5 / markUpBatu5) * (caratPcsBatu5 * qtyIntBatu5!)) +
-          ((hargaBatu6 / markUpBatu6) * (caratPcsBatu6 * qtyIntBatu6!)) +
-          ((hargaBatu7 / markUpBatu7) * (caratPcsBatu7 * qtyIntBatu7!)) +
-          ((hargaBatu8 / markUpBatu8) * (caratPcsBatu8 * qtyIntBatu8!)) +
-          ((hargaBatu9 / markUpBatu9) * (caratPcsBatu9 * qtyIntBatu9!)) +
-          ((hargaBatu10 / markUpBatu10) * (caratPcsBatu10 * qtyIntBatu10!)) +
-          ((hargaBatu11 / markUpBatu11) * (caratPcsBatu11 * qtyIntBatu11!)) +
-          ((hargaBatu12 / markUpBatu12) * (caratPcsBatu12 * qtyIntBatu12!)) +
-          ((hargaBatu13 / markUpBatu13) * (caratPcsBatu13 * qtyIntBatu13!)) +
-          ((hargaBatu14 / markUpBatu14) * (caratPcsBatu14 * qtyIntBatu14!)) +
-          ((hargaBatu15 / markUpBatu15) * (caratPcsBatu15 * qtyIntBatu15!)) +
-          ((hargaBatu16 / markUpBatu16) * (caratPcsBatu16 * qtyIntBatu16!)) +
-          ((hargaBatu17 / markUpBatu17) * (caratPcsBatu17 * qtyIntBatu17!)) +
-          ((hargaBatu18 / markUpBatu18) * (caratPcsBatu18 * qtyIntBatu18!)) +
-          ((hargaBatu19 / markUpBatu19) * (caratPcsBatu19 * qtyIntBatu19!)) +
-          ((hargaBatu20 / markUpBatu20) * (caratPcsBatu20 * qtyIntBatu20!)) +
-          ((hargaBatu21 / markUpBatu21) * (caratPcsBatu21 * qtyIntBatu21!)) +
-          ((hargaBatu22 / markUpBatu22) * (caratPcsBatu22 * qtyIntBatu22!)) +
-          ((hargaBatu23 / markUpBatu23) * (caratPcsBatu23 * qtyIntBatu23!)) +
-          ((hargaBatu24 / markUpBatu24) * (caratPcsBatu24 * qtyIntBatu24!)) +
-          ((hargaBatu25 / markUpBatu25) * (caratPcsBatu25 * qtyIntBatu25!)) +
-          ((hargaBatu26 / markUpBatu26) * (caratPcsBatu26 * qtyIntBatu26!)) +
-          ((hargaBatu27 / markUpBatu27) * (caratPcsBatu27 * qtyIntBatu27!)) +
-          ((hargaBatu28 / markUpBatu28) * (caratPcsBatu28 * qtyIntBatu28!)) +
-          ((hargaBatu29 / markUpBatu29) * (caratPcsBatu29 * qtyIntBatu29!)) +
-          ((hargaBatu30 / markUpBatu30) * (caratPcsBatu30 * qtyIntBatu30!)) +
-          ((hargaBatu31 / markUpBatu31) * (caratPcsBatu31 * qtyIntBatu31!)) +
-          ((hargaBatu32 / markUpBatu32) * (caratPcsBatu32 * qtyIntBatu32!)) +
-          ((hargaBatu33 / markUpBatu33) * (caratPcsBatu33 * qtyIntBatu33!)) +
-          ((hargaBatu34 / markUpBatu34) * (caratPcsBatu34 * qtyIntBatu34!)) +
-          ((hargaBatu35 / markUpBatu35) * (caratPcsBatu35 * qtyIntBatu35!));
+              (double.parse(totalCrtBatu1.text))) +
+          ((hargaBatu2 / markUpBatu2) * (double.parse(totalCrtBatu2.text))) +
+          ((hargaBatu3 / markUpBatu3) * (double.parse(totalCrtBatu3.text))) +
+          ((hargaBatu4 / markUpBatu4) * (double.parse(totalCrtBatu4.text))) +
+          ((hargaBatu5 / markUpBatu5) * (double.parse(totalCrtBatu5.text))) +
+          ((hargaBatu6 / markUpBatu6) * (double.parse(totalCrtBatu6.text))) +
+          ((hargaBatu7 / markUpBatu7) * (double.parse(totalCrtBatu7.text))) +
+          ((hargaBatu8 / markUpBatu8) * (double.parse(totalCrtBatu8.text))) +
+          ((hargaBatu9 / markUpBatu9) * (double.parse(totalCrtBatu9.text))) +
+          ((hargaBatu10 / markUpBatu10) * (double.parse(totalCrtBatu10.text))) +
+          ((hargaBatu11 / markUpBatu11) * (double.parse(totalCrtBatu11.text))) +
+          ((hargaBatu12 / markUpBatu12) * (double.parse(totalCrtBatu12.text))) +
+          ((hargaBatu13 / markUpBatu13) * (double.parse(totalCrtBatu13.text))) +
+          ((hargaBatu14 / markUpBatu14) * (double.parse(totalCrtBatu14.text))) +
+          ((hargaBatu15 / markUpBatu15) * (double.parse(totalCrtBatu15.text))) +
+          ((hargaBatu16 / markUpBatu16) * (double.parse(totalCrtBatu16.text))) +
+          ((hargaBatu17 / markUpBatu17) * (double.parse(totalCrtBatu17.text))) +
+          ((hargaBatu18 / markUpBatu18) * (double.parse(totalCrtBatu18.text))) +
+          ((hargaBatu19 / markUpBatu19) * (double.parse(totalCrtBatu19.text))) +
+          ((hargaBatu20 / markUpBatu20) * (double.parse(totalCrtBatu20.text))) +
+          ((hargaBatu21 / markUpBatu21) * (double.parse(totalCrtBatu21.text))) +
+          ((hargaBatu22 / markUpBatu22) * (double.parse(totalCrtBatu22.text))) +
+          ((hargaBatu23 / markUpBatu23) * (double.parse(totalCrtBatu23.text))) +
+          ((hargaBatu24 / markUpBatu24) * (double.parse(totalCrtBatu24.text))) +
+          ((hargaBatu25 / markUpBatu25) * (double.parse(totalCrtBatu25.text))) +
+          ((hargaBatu26 / markUpBatu26) * (double.parse(totalCrtBatu26.text))) +
+          ((hargaBatu27 / markUpBatu27) * (double.parse(totalCrtBatu27.text))) +
+          ((hargaBatu28 / markUpBatu28) * (double.parse(totalCrtBatu28.text))) +
+          ((hargaBatu29 / markUpBatu29) * (double.parse(totalCrtBatu29.text))) +
+          ((hargaBatu30 / markUpBatu30) * (double.parse(totalCrtBatu30.text))) +
+          ((hargaBatu31 / markUpBatu31) * (double.parse(totalCrtBatu31.text))) +
+          ((hargaBatu32 / markUpBatu32) * (double.parse(totalCrtBatu32.text))) +
+          ((hargaBatu33 / markUpBatu33) * (double.parse(totalCrtBatu33.text))) +
+          ((hargaBatu34 / markUpBatu34) * (double.parse(totalCrtBatu34.text))) +
+          ((hargaBatu35 / markUpBatu35) * (double.parse(totalCrtBatu35.text)));
 
-      var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
-                  (caratPcsBatu2 * qtyIntBatu2!) +
-                  (caratPcsBatu3 * qtyIntBatu3!) +
-                  (caratPcsBatu4 * qtyIntBatu4!) +
-                  (caratPcsBatu5 * qtyIntBatu5!) +
-                  (caratPcsBatu6 * qtyIntBatu6!) +
-                  (caratPcsBatu7 * qtyIntBatu7!) +
-                  (caratPcsBatu8 * qtyIntBatu8!) +
-                  (caratPcsBatu9 * qtyIntBatu9!) +
-                  (caratPcsBatu10 * qtyIntBatu10!) +
-                  (caratPcsBatu11 * qtyIntBatu11!) +
-                  (caratPcsBatu12 * qtyIntBatu12!) +
-                  (caratPcsBatu13 * qtyIntBatu13!) +
-                  (caratPcsBatu14 * qtyIntBatu14!) +
-                  (caratPcsBatu15 * qtyIntBatu15!) +
-                  (caratPcsBatu16 * qtyIntBatu16!) +
-                  (caratPcsBatu17 * qtyIntBatu17!) +
-                  (caratPcsBatu18 * qtyIntBatu18!) +
-                  (caratPcsBatu19 * qtyIntBatu19!) +
-                  (caratPcsBatu20 * qtyIntBatu20!) +
-                  (caratPcsBatu21 * qtyIntBatu21!) +
-                  (caratPcsBatu22 * qtyIntBatu22!) +
-                  (caratPcsBatu23 * qtyIntBatu23!) +
-                  (caratPcsBatu24 * qtyIntBatu24!) +
-                  (caratPcsBatu25 * qtyIntBatu25!) +
-                  (caratPcsBatu26 * qtyIntBatu26!) +
-                  (caratPcsBatu27 * qtyIntBatu27!) +
-                  (caratPcsBatu28 * qtyIntBatu28!) +
-                  (caratPcsBatu29 * qtyIntBatu29!) +
-                  (caratPcsBatu30 * qtyIntBatu30!) +
-                  (caratPcsBatu31 * qtyIntBatu31!) +
-                  (caratPcsBatu32 * qtyIntBatu32!) +
-                  (caratPcsBatu33 * qtyIntBatu33!) +
-                  (caratPcsBatu34 * qtyIntBatu34!) +
-                  (caratPcsBatu35 * qtyIntBatu35!)) +
+      var totalQtyCrt = ((((double.parse(totalCrtBatu1.text)) +
+                  (double.parse(totalCrtBatu2.text)) +
+                  (double.parse(totalCrtBatu3.text)) +
+                  (double.parse(totalCrtBatu4.text)) +
+                  (double.parse(totalCrtBatu5.text)) +
+                  (double.parse(totalCrtBatu6.text)) +
+                  (double.parse(totalCrtBatu7.text)) +
+                  (double.parse(totalCrtBatu8.text)) +
+                  (double.parse(totalCrtBatu9.text)) +
+                  (double.parse(totalCrtBatu10.text)) +
+                  (double.parse(totalCrtBatu11.text)) +
+                  (double.parse(totalCrtBatu12.text)) +
+                  (double.parse(totalCrtBatu13.text)) +
+                  (double.parse(totalCrtBatu14.text)) +
+                  (double.parse(totalCrtBatu15.text)) +
+                  (double.parse(totalCrtBatu16.text)) +
+                  (double.parse(totalCrtBatu17.text)) +
+                  (double.parse(totalCrtBatu18.text)) +
+                  (double.parse(totalCrtBatu19.text)) +
+                  (double.parse(totalCrtBatu20.text)) +
+                  (double.parse(totalCrtBatu21.text)) +
+                  (double.parse(totalCrtBatu22.text)) +
+                  (double.parse(totalCrtBatu23.text)) +
+                  (double.parse(totalCrtBatu24.text)) +
+                  (double.parse(totalCrtBatu25.text)) +
+                  (double.parse(totalCrtBatu26.text)) +
+                  (double.parse(totalCrtBatu27.text)) +
+                  (double.parse(totalCrtBatu28.text)) +
+                  (double.parse(totalCrtBatu29.text)) +
+                  (double.parse(totalCrtBatu30.text)) +
+                  (double.parse(totalCrtBatu31.text)) +
+                  (double.parse(totalCrtBatu32.text)) +
+                  (double.parse(totalCrtBatu33.text)) +
+                  (double.parse(totalCrtBatu34.text)) +
+                  (double.parse(totalCrtBatu35.text))) +
               doubleBeratEmasDariCustomer) /
           5);
       double totalEmas;
@@ -3210,7 +3246,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                           setState(() {
                             _getData();
                             jenisBarang.text = item!.nama;
-                            labour = item.harga;
+                            // labour = item.harga;
                           });
                         },
                         dropdownDecoratorProps: const DropDownDecoratorProps(
@@ -3342,112 +3378,6 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Container(
-            //   width: 300,
-            //   padding: const EdgeInsets.only(right: 5),
-            //   child: Column(
-            //     children: [
-            //       //noGIA
-            //       Container(
-            //         padding: const EdgeInsets.only(right: 5),
-            //         height: 70,
-            //         width: 250,
-            //         child: TextFormField(
-            //           style: const TextStyle(
-            //               fontSize: 14,
-            //               color: Colors.black,
-            //               fontWeight: FontWeight.bold),
-            //           textInputAction: TextInputAction.next,
-            //           controller: noGIA,
-            //           onChanged: (value) {},
-            //           decoration: InputDecoration(
-            //             labelText: "No GIA",
-            //             border: OutlineInputBorder(
-            //                 borderRadius: BorderRadius.circular(5.0)),
-            //           ),
-            //         ),
-            //       ),
-            //       //jenisGIA
-            //       Container(
-            //         padding: const EdgeInsets.only(right: 5),
-            //         height: 70,
-            //         width: 250,
-            //         child: TextFormField(
-            //           style: const TextStyle(
-            //               fontSize: 14,
-            //               color: Colors.black,
-            //               fontWeight: FontWeight.bold),
-            //           textInputAction: TextInputAction.next,
-            //           controller: jenisGIA,
-            //           onChanged: (value) {},
-            //           decoration: InputDecoration(
-            //             labelText: "Jenis GIA",
-            //             border: OutlineInputBorder(
-            //                 borderRadius: BorderRadius.circular(5.0)),
-            //           ),
-            //         ),
-            //       ),
-            //       //caratPcsGIA
-            //       Container(
-            //         padding: const EdgeInsets.only(right: 5),
-            //         height: 70,
-            //         width: 250,
-            //         child: TextFormField(
-            //           style: const TextStyle(
-            //               fontSize: 14,
-            //               color: Colors.black,
-            //               fontWeight: FontWeight.bold),
-            //           textInputAction: TextInputAction.next,
-            //           controller: caratPcsGIA,
-            //           onChanged: (value) {},
-            //           decoration: InputDecoration(
-            //             labelText: "Carat/Pcs GIA",
-            //             border: OutlineInputBorder(
-            //                 borderRadius: BorderRadius.circular(5.0)),
-            //           ),
-            //         ),
-            //       ),
-            //       //hargaGIA
-            //       Container(
-            //         padding: const EdgeInsets.only(right: 5),
-            //         height: 70,
-            //         width: 250,
-            //         child: TextFormField(
-            //           style: const TextStyle(
-            //               fontSize: 14,
-            //               color: Colors.black,
-            //               fontWeight: FontWeight.bold),
-            //           textInputAction: TextInputAction.next,
-            //           controller: hargaGIA,
-            //           onChanged: (value) {},
-            //           decoration: InputDecoration(
-            //             labelText: "Harga GIA",
-            //             border: OutlineInputBorder(
-            //                 borderRadius: BorderRadius.circular(5.0)),
-            //           ),
-            //         ),
-            //       ),
-            //       Container(
-            //         padding: const EdgeInsets.only(right: 5),
-            //         width: 250,
-            //         child: TextField(
-            //           // textInputAction: TextInputAction.next,
-            //           keyboardType: TextInputType.multiline,
-            //           onChanged: (reportinput) {},
-            //           maxLines: 5, //or null
-            //           decoration: InputDecoration(
-            //               border: OutlineInputBorder(
-            //                 borderRadius: BorderRadius.circular(10.0),
-            //               ),
-            //               labelText: "Keterangan",
-            //               hintText: "Keterangan"),
-
-            //           controller: keterangan,
-            //         ),
-            //       ),
-            //     ],
-            //   ),
-            // ),
             Container(
               width: 300,
               padding: const EdgeInsets.only(right: 5),
@@ -3465,90 +3395,16 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                           fontWeight: FontWeight.bold),
                       textInputAction: TextInputAction.next,
                       controller: noGIA,
-                      onChanged: (value) {},
+                      onChanged: (value) {
+                        setState(() {
+                          labour = int.parse(value);
+                        });
+                      },
                       decoration: InputDecoration(
-                        labelText: "No GIA",
+                        labelText: "Harga Labour",
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5.0)),
                       ),
-                    ),
-                  ),
-                  //jenisGIA
-                  Container(
-                    padding: const EdgeInsets.only(right: 5),
-                    height: 70,
-                    width: 250,
-                    child: TextFormField(
-                      style: const TextStyle(
-                          fontSize: 14,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold),
-                      textInputAction: TextInputAction.next,
-                      controller: jenisGIA,
-                      onChanged: (value) {},
-                      decoration: InputDecoration(
-                        labelText: "Jenis GIA",
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5.0)),
-                      ),
-                    ),
-                  ),
-                  //caratPcsGIA
-                  Container(
-                    padding: const EdgeInsets.only(right: 5),
-                    height: 70,
-                    width: 250,
-                    child: TextFormField(
-                      style: const TextStyle(
-                          fontSize: 14,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold),
-                      textInputAction: TextInputAction.next,
-                      controller: caratPcsGIA,
-                      onChanged: (value) {},
-                      decoration: InputDecoration(
-                        labelText: "Carat/Pcs GIA",
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5.0)),
-                      ),
-                    ),
-                  ),
-                  //hargaGIA
-                  Container(
-                    padding: const EdgeInsets.only(right: 5),
-                    height: 70,
-                    width: 250,
-                    child: TextFormField(
-                      style: const TextStyle(
-                          fontSize: 14,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold),
-                      textInputAction: TextInputAction.next,
-                      controller: hargaGIA,
-                      onChanged: (value) {},
-                      decoration: InputDecoration(
-                        labelText: "Harga GIA",
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5.0)),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.only(right: 5),
-                    width: 250,
-                    child: TextField(
-                      // textInputAction: TextInputAction.next,
-                      keyboardType: TextInputType.multiline,
-                      onChanged: (reportinput) {},
-                      maxLines: 5, //or null
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          labelText: "Keterangan",
-                          hintText: "Keterangan"),
-
-                      controller: keterangan,
                     ),
                   ),
                 ],
@@ -3622,8 +3478,6 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                 caratPcsBatu1 =
                                                     data[0]['caratPcs'];
                                                 batu1 = item.keyWord.toString();
-                                                stokBatu1.text =
-                                                    item.qty.toString();
                                               });
                                             }
                                           } catch (e) {
@@ -4310,19 +4164,18 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                 ),
                                               ),
 
-                                    //stok batu1
+                                    //total carat batu1
                                     Container(
-                                      width: 80,
+                                      width: 120,
                                       height: 50,
                                       padding: const EdgeInsets.only(
                                           top: 10, left: 15),
                                       child: TextFormField(
-                                        enabled: false,
                                         textInputAction: TextInputAction.next,
-                                        controller: stokBatu1,
+                                        controller: totalCrtBatu1,
                                         decoration: InputDecoration(
                                           label: const Text(
-                                            'Stok',
+                                            'Total Carat',
                                             style: TextStyle(
                                                 color: Colors.black,
                                                 fontWeight: FontWeight.bold),
@@ -4331,6 +4184,16 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                               borderRadius:
                                                   BorderRadius.circular(5.0)),
                                         ),
+                                        onChanged: (value) {
+                                          var doub = double.parse(value);
+                                          setState(() {
+                                            try {
+                                              doub <= 1 ? value = '0' : value;
+                                            } catch (c) {
+                                              value = '0';
+                                            }
+                                          });
+                                        },
                                       ),
                                     ),
                                     //clear
@@ -4343,9 +4206,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                 onPressed: () {
                                                   setState(() {
                                                     qtyBatu1.text = '0';
-                                                    stokBatu1.text = '';
                                                     ukuranBatu1.text = '';
-                                                    stokBatu1.text = '';
+                                                    totalCrtBatu1.text = '0';
                                                     batu1 = '';
                                                     hargaBatu1 = 0;
                                                     caratPcsBatu1 = 0;
@@ -4412,8 +4274,6 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           data[0]['caratPcs'];
                                                       batu2 = item.keyWord
                                                           .toString();
-                                                      stokBatu2.text =
-                                                          item.qty.toString();
                                                     });
                                                   }
                                                 } catch (e) {
@@ -5188,20 +5048,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       ),
                                                     ),
 
-                                          //stok batu2
+                                          //totalCrt batu2
                                           Container(
-                                            width: 80,
+                                            width: 120,
                                             height: 50,
                                             padding: const EdgeInsets.only(
                                                 top: 10, left: 15),
                                             child: TextFormField(
-                                              enabled: false,
                                               textInputAction:
                                                   TextInputAction.next,
-                                              controller: stokBatu2,
+                                              controller: totalCrtBatu2,
                                               decoration: InputDecoration(
                                                 label: const Text(
-                                                  'Stok',
+                                                  'Total Carat',
                                                   style: TextStyle(
                                                       color: Colors.black,
                                                       fontWeight:
@@ -5212,6 +5071,18 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                         BorderRadius.circular(
                                                             5.0)),
                                               ),
+                                              onChanged: (value) {
+                                                var doub = double.parse(value);
+                                                setState(() {
+                                                  try {
+                                                    doub <= 1
+                                                        ? value = '0'
+                                                        : value;
+                                                  } catch (c) {
+                                                    value = '0';
+                                                  }
+                                                });
+                                              },
                                             ),
                                           ),
                                           //clear
@@ -5225,9 +5096,9 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       onPressed: () {
                                                         setState(() {
                                                           qtyBatu2.text = '0';
-                                                          stokBatu2.text = '';
                                                           ukuranBatu2.text = '';
-                                                          stokBatu2.text = '';
+                                                          totalCrtBatu2.text =
+                                                              '0';
                                                           batu2 = '';
                                                           hargaBatu2 = 0;
                                                           caratPcsBatu2 = 0;
@@ -5296,8 +5167,6 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           data[0]['caratPcs'];
                                                       batu3 = item.keyWord
                                                           .toString();
-                                                      stokBatu3.text =
-                                                          item.qty.toString();
                                                     });
                                                   }
                                                 } catch (e) {
@@ -6072,20 +5941,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       ),
                                                     ),
 
-                                          //stok batu3
+                                          //Total Carat batu3
                                           Container(
-                                            width: 80,
+                                            width: 120,
                                             height: 50,
                                             padding: const EdgeInsets.only(
                                                 top: 10, left: 15),
                                             child: TextFormField(
-                                              enabled: false,
                                               textInputAction:
                                                   TextInputAction.next,
-                                              controller: stokBatu3,
+                                              controller: totalCrtBatu3,
                                               decoration: InputDecoration(
                                                 label: const Text(
-                                                  'Stok',
+                                                  'Total Carat',
                                                   style: TextStyle(
                                                       color: Colors.black,
                                                       fontWeight:
@@ -6096,6 +5964,18 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                         BorderRadius.circular(
                                                             5.0)),
                                               ),
+                                              onChanged: (value) {
+                                                var doub = double.parse(value);
+                                                setState(() {
+                                                  try {
+                                                    doub <= 1
+                                                        ? value = '0'
+                                                        : value;
+                                                  } catch (c) {
+                                                    value = '0';
+                                                  }
+                                                });
+                                              },
                                             ),
                                           ),
                                           //clear
@@ -6109,9 +5989,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       onPressed: () {
                                                         setState(() {
                                                           qtyBatu3.text = '0';
-                                                          stokBatu3.text = '';
-                                                          ukuranBatu3.text = '';
-                                                          stokBatu3.text = '';
+                                                          ukuranBatu3.text =
+                                                              '0';
+                                                          totalCrtBatu3.text =
+                                                              '';
                                                           batu3 = '';
                                                           hargaBatu3 = 0;
                                                           caratPcsBatu3 = 0;
@@ -6180,8 +6061,6 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           data[0]['caratPcs'];
                                                       batu4 = item.keyWord
                                                           .toString();
-                                                      stokBatu4.text =
-                                                          item.qty.toString();
                                                     });
                                                   }
                                                 } catch (e) {
@@ -6956,20 +6835,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       ),
                                                     ),
 
-                                          //stok batu4
+                                          //Total Carat batu4
                                           Container(
-                                            width: 80,
+                                            width: 120,
                                             height: 50,
                                             padding: const EdgeInsets.only(
                                                 top: 10, left: 15),
                                             child: TextFormField(
-                                              enabled: false,
                                               textInputAction:
                                                   TextInputAction.next,
-                                              controller: stokBatu4,
+                                              controller: totalCrtBatu4,
                                               decoration: InputDecoration(
                                                 label: const Text(
-                                                  'Stok',
+                                                  'Total Carat',
                                                   style: TextStyle(
                                                       color: Colors.black,
                                                       fontWeight:
@@ -6980,6 +6858,18 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                         BorderRadius.circular(
                                                             5.0)),
                                               ),
+                                              onChanged: (value) {
+                                                var doub = double.parse(value);
+                                                setState(() {
+                                                  try {
+                                                    doub <= 1
+                                                        ? value = '0'
+                                                        : value;
+                                                  } catch (c) {
+                                                    value = '0';
+                                                  }
+                                                });
+                                              },
                                             ),
                                           ),
                                           //clear
@@ -6993,9 +6883,9 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       onPressed: () {
                                                         setState(() {
                                                           qtyBatu4.text = '0';
-                                                          stokBatu4.text = '';
                                                           ukuranBatu4.text = '';
-                                                          stokBatu4.text = '';
+                                                          totalCrtBatu4.text =
+                                                              '0';
                                                           batu4 = '';
                                                           hargaBatu4 = 0;
                                                           caratPcsBatu4 = 0;
@@ -7064,8 +6954,6 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           data[0]['caratPcs'];
                                                       batu5 = item.keyWord
                                                           .toString();
-                                                      stokBatu5.text =
-                                                          item.qty.toString();
                                                     });
                                                   }
                                                 } catch (e) {
@@ -7840,20 +7728,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       ),
                                                     ),
 
-                                          //stok batu5
+                                          //Total Carat batu5
                                           Container(
-                                            width: 80,
+                                            width: 120,
                                             height: 50,
                                             padding: const EdgeInsets.only(
                                                 top: 10, left: 15),
                                             child: TextFormField(
-                                              enabled: false,
                                               textInputAction:
                                                   TextInputAction.next,
-                                              controller: stokBatu5,
+                                              controller: totalCrtBatu5,
                                               decoration: InputDecoration(
                                                 label: const Text(
-                                                  'Stok',
+                                                  'Total Carat',
                                                   style: TextStyle(
                                                       color: Colors.black,
                                                       fontWeight:
@@ -7864,6 +7751,18 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                         BorderRadius.circular(
                                                             5.0)),
                                               ),
+                                              onChanged: (value) {
+                                                var doub = double.parse(value);
+                                                setState(() {
+                                                  try {
+                                                    doub <= 1
+                                                        ? value = '0'
+                                                        : value;
+                                                  } catch (c) {
+                                                    value = '0';
+                                                  }
+                                                });
+                                              },
                                             ),
                                           ),
                                           //clear
@@ -7877,9 +7776,9 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       onPressed: () {
                                                         setState(() {
                                                           qtyBatu5.text = '0';
-                                                          stokBatu5.text = '';
                                                           ukuranBatu5.text = '';
-                                                          stokBatu5.text = '';
+                                                          totalCrtBatu5.text =
+                                                              '0';
                                                           batu5 = '';
                                                           hargaBatu5 = 0;
                                                           caratPcsBatu5 = 0;
@@ -7948,8 +7847,6 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           data[0]['caratPcs'];
                                                       batu6 = item.keyWord
                                                           .toString();
-                                                      stokBatu6.text =
-                                                          item.qty.toString();
                                                     });
                                                   }
                                                 } catch (e) {
@@ -8724,20 +8621,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       ),
                                                     ),
 
-                                          //stok batu6
+                                          //Total Carat batu6
                                           Container(
-                                            width: 80,
+                                            width: 120,
                                             height: 50,
                                             padding: const EdgeInsets.only(
                                                 top: 10, left: 15),
                                             child: TextFormField(
-                                              enabled: false,
                                               textInputAction:
                                                   TextInputAction.next,
-                                              controller: stokBatu6,
+                                              controller: totalCrtBatu6,
                                               decoration: InputDecoration(
                                                 label: const Text(
-                                                  'Stok',
+                                                  'Total Carat',
                                                   style: TextStyle(
                                                       color: Colors.black,
                                                       fontWeight:
@@ -8748,6 +8644,18 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                         BorderRadius.circular(
                                                             5.0)),
                                               ),
+                                              onChanged: (value) {
+                                                var doub = double.parse(value);
+                                                setState(() {
+                                                  try {
+                                                    doub <= 1
+                                                        ? value = '0'
+                                                        : value;
+                                                  } catch (c) {
+                                                    value = '0';
+                                                  }
+                                                });
+                                              },
                                             ),
                                           ),
                                           //clear
@@ -8761,9 +8669,9 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       onPressed: () {
                                                         setState(() {
                                                           qtyBatu6.text = '0';
-                                                          stokBatu6.text = '';
                                                           ukuranBatu6.text = '';
-                                                          stokBatu6.text = '';
+                                                          totalCrtBatu6.text =
+                                                              '0';
                                                           batu6 = '';
                                                           hargaBatu6 = 0;
                                                           caratPcsBatu6 = 0;
@@ -8832,8 +8740,6 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           data[0]['caratPcs'];
                                                       batu7 = item.keyWord
                                                           .toString();
-                                                      stokBatu7.text =
-                                                          item.qty.toString();
                                                     });
                                                   }
                                                 } catch (e) {
@@ -9608,20 +9514,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       ),
                                                     ),
 
-                                          //stok batu7
+                                          //Total Carat batu7
                                           Container(
-                                            width: 80,
+                                            width: 120,
                                             height: 50,
                                             padding: const EdgeInsets.only(
                                                 top: 10, left: 15),
                                             child: TextFormField(
-                                              enabled: false,
                                               textInputAction:
                                                   TextInputAction.next,
-                                              controller: stokBatu7,
+                                              controller: totalCrtBatu7,
                                               decoration: InputDecoration(
                                                 label: const Text(
-                                                  'Stok',
+                                                  'Total Carat',
                                                   style: TextStyle(
                                                       color: Colors.black,
                                                       fontWeight:
@@ -9632,6 +9537,18 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                         BorderRadius.circular(
                                                             5.0)),
                                               ),
+                                              onChanged: (value) {
+                                                var doub = double.parse(value);
+                                                setState(() {
+                                                  try {
+                                                    doub <= 1
+                                                        ? value = '0'
+                                                        : value;
+                                                  } catch (c) {
+                                                    value = '0';
+                                                  }
+                                                });
+                                              },
                                             ),
                                           ),
                                           //clear
@@ -9645,9 +9562,9 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       onPressed: () {
                                                         setState(() {
                                                           qtyBatu7.text = '0';
-                                                          stokBatu7.text = '';
                                                           ukuranBatu7.text = '';
-                                                          stokBatu7.text = '';
+                                                          totalCrtBatu7.text =
+                                                              '0';
                                                           batu7 = '';
                                                           hargaBatu7 = 0;
                                                           caratPcsBatu7 = 0;
@@ -9716,8 +9633,6 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           data[0]['caratPcs'];
                                                       batu8 = item.keyWord
                                                           .toString();
-                                                      stokBatu8.text =
-                                                          item.qty.toString();
                                                     });
                                                   }
                                                 } catch (e) {
@@ -10492,20 +10407,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       ),
                                                     ),
 
-                                          //stok batu8
+                                          //Total Carat batu8
                                           Container(
-                                            width: 80,
+                                            width: 120,
                                             height: 50,
                                             padding: const EdgeInsets.only(
                                                 top: 10, left: 15),
                                             child: TextFormField(
-                                              enabled: false,
                                               textInputAction:
                                                   TextInputAction.next,
-                                              controller: stokBatu8,
+                                              controller: totalCrtBatu8,
                                               decoration: InputDecoration(
                                                 label: const Text(
-                                                  'Stok',
+                                                  'Total Carat',
                                                   style: TextStyle(
                                                       color: Colors.black,
                                                       fontWeight:
@@ -10516,6 +10430,18 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                         BorderRadius.circular(
                                                             5.0)),
                                               ),
+                                              onChanged: (value) {
+                                                var doub = double.parse(value);
+                                                setState(() {
+                                                  try {
+                                                    doub <= 1
+                                                        ? value = '0'
+                                                        : value;
+                                                  } catch (c) {
+                                                    value = '0';
+                                                  }
+                                                });
+                                              },
                                             ),
                                           ),
                                           //clear
@@ -10529,9 +10455,9 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       onPressed: () {
                                                         setState(() {
                                                           qtyBatu8.text = '0';
-                                                          stokBatu8.text = '';
                                                           ukuranBatu8.text = '';
-                                                          stokBatu8.text = '';
+                                                          totalCrtBatu8.text =
+                                                              '0';
                                                           batu8 = '';
                                                           hargaBatu8 = 0;
                                                           caratPcsBatu8 = 0;
@@ -10600,8 +10526,6 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           data[0]['caratPcs'];
                                                       batu9 = item.keyWord
                                                           .toString();
-                                                      stokBatu9.text =
-                                                          item.qty.toString();
                                                     });
                                                   }
                                                 } catch (e) {
@@ -11376,20 +11300,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       ),
                                                     ),
 
-                                          //stok batu9
+                                          //Total Carat batu9
                                           Container(
-                                            width: 80,
+                                            width: 120,
                                             height: 50,
                                             padding: const EdgeInsets.only(
                                                 top: 10, left: 15),
                                             child: TextFormField(
-                                              enabled: false,
                                               textInputAction:
                                                   TextInputAction.next,
-                                              controller: stokBatu9,
+                                              controller: totalCrtBatu9,
                                               decoration: InputDecoration(
                                                 label: const Text(
-                                                  'Stok',
+                                                  'Total Carat',
                                                   style: TextStyle(
                                                       color: Colors.black,
                                                       fontWeight:
@@ -11400,6 +11323,18 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                         BorderRadius.circular(
                                                             5.0)),
                                               ),
+                                              onChanged: (value) {
+                                                var doub = double.parse(value);
+                                                setState(() {
+                                                  try {
+                                                    doub <= 1
+                                                        ? value = '0'
+                                                        : value;
+                                                  } catch (c) {
+                                                    value = '0';
+                                                  }
+                                                });
+                                              },
                                             ),
                                           ),
                                           //clear
@@ -11413,9 +11348,9 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       onPressed: () {
                                                         setState(() {
                                                           qtyBatu9.text = '0';
-                                                          stokBatu9.text = '';
                                                           ukuranBatu9.text = '';
-                                                          stokBatu9.text = '';
+                                                          totalCrtBatu9.text =
+                                                              '0';
                                                           batu9 = '';
                                                           hargaBatu9 = 0;
                                                           caratPcsBatu9 = 0;
@@ -11484,8 +11419,6 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           data[0]['caratPcs'];
                                                       batu10 = item.keyWord
                                                           .toString();
-                                                      stokBatu10.text =
-                                                          item.qty.toString();
                                                     });
                                                   }
                                                 } catch (e) {
@@ -12261,20 +12194,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       ),
                                                     ),
 
-                                          //stok batu10
+                                          //Total Carat batu10
                                           Container(
-                                            width: 80,
+                                            width: 120,
                                             height: 50,
                                             padding: const EdgeInsets.only(
                                                 top: 10, left: 15),
                                             child: TextFormField(
-                                              enabled: false,
                                               textInputAction:
                                                   TextInputAction.next,
-                                              controller: stokBatu10,
+                                              controller: totalCrtBatu10,
                                               decoration: InputDecoration(
                                                 label: const Text(
-                                                  'Stok',
+                                                  'Total Carat',
                                                   style: TextStyle(
                                                       color: Colors.black,
                                                       fontWeight:
@@ -12285,6 +12217,18 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                         BorderRadius.circular(
                                                             5.0)),
                                               ),
+                                              onChanged: (value) {
+                                                var doub = double.parse(value);
+                                                setState(() {
+                                                  try {
+                                                    doub <= 1
+                                                        ? value = '0'
+                                                        : value;
+                                                  } catch (c) {
+                                                    value = '0';
+                                                  }
+                                                });
+                                              },
                                             ),
                                           ),
                                           //clear
@@ -12298,10 +12242,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       onPressed: () {
                                                         setState(() {
                                                           qtyBatu10.text = '0';
-                                                          stokBatu10.text = '';
                                                           ukuranBatu10.text =
                                                               '';
-                                                          stokBatu10.text = '';
+                                                          totalCrtBatu10.text =
+                                                              '0';
                                                           batu10 = '';
                                                           hargaBatu10 = 0;
                                                           caratPcsBatu10 = 0;
@@ -12370,8 +12314,6 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           data[0]['caratPcs'];
                                                       batu11 = item.keyWord
                                                           .toString();
-                                                      stokBatu11.text =
-                                                          item.qty.toString();
                                                     });
                                                   }
                                                 } catch (e) {
@@ -13147,20 +13089,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       ),
                                                     ),
 
-                                          //stok batu11
+                                          //Total Carat batu11
                                           Container(
-                                            width: 80,
+                                            width: 120,
                                             height: 50,
                                             padding: const EdgeInsets.only(
                                                 top: 10, left: 15),
                                             child: TextFormField(
-                                              enabled: false,
                                               textInputAction:
                                                   TextInputAction.next,
-                                              controller: stokBatu11,
+                                              controller: totalCrtBatu11,
                                               decoration: InputDecoration(
                                                 label: const Text(
-                                                  'Stok',
+                                                  'totalCrt',
                                                   style: TextStyle(
                                                       color: Colors.black,
                                                       fontWeight:
@@ -13171,6 +13112,18 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                         BorderRadius.circular(
                                                             5.0)),
                                               ),
+                                              onChanged: (value) {
+                                                var doub = double.parse(value);
+                                                setState(() {
+                                                  try {
+                                                    doub <= 1
+                                                        ? value = '0'
+                                                        : value;
+                                                  } catch (c) {
+                                                    value = '0';
+                                                  }
+                                                });
+                                              },
                                             ),
                                           ),
                                           //clear
@@ -13184,10 +13137,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       onPressed: () {
                                                         setState(() {
                                                           qtyBatu11.text = '0';
-                                                          stokBatu11.text = '';
                                                           ukuranBatu11.text =
                                                               '';
-                                                          stokBatu11.text = '';
+                                                          totalCrtBatu11.text =
+                                                              '0';
                                                           batu11 = '';
                                                           hargaBatu11 = 0;
                                                           caratPcsBatu11 = 0;
@@ -13256,8 +13209,6 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           data[0]['caratPcs'];
                                                       batu12 = item.keyWord
                                                           .toString();
-                                                      stokBatu12.text =
-                                                          item.qty.toString();
                                                     });
                                                   }
                                                 } catch (e) {
@@ -14033,20 +13984,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       ),
                                                     ),
 
-                                          //stok batu12
+                                          //Total Carat batu12
                                           Container(
-                                            width: 80,
+                                            width: 120,
                                             height: 50,
                                             padding: const EdgeInsets.only(
                                                 top: 10, left: 15),
                                             child: TextFormField(
-                                              enabled: false,
                                               textInputAction:
                                                   TextInputAction.next,
-                                              controller: stokBatu12,
+                                              controller: totalCrtBatu12,
                                               decoration: InputDecoration(
                                                 label: const Text(
-                                                  'Stok',
+                                                  'Total Carat',
                                                   style: TextStyle(
                                                       color: Colors.black,
                                                       fontWeight:
@@ -14057,6 +14007,18 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                         BorderRadius.circular(
                                                             5.0)),
                                               ),
+                                              onChanged: (value) {
+                                                var doub = double.parse(value);
+                                                setState(() {
+                                                  try {
+                                                    doub <= 1
+                                                        ? value = '0'
+                                                        : value;
+                                                  } catch (c) {
+                                                    value = '0';
+                                                  }
+                                                });
+                                              },
                                             ),
                                           ),
                                           //clear
@@ -14070,10 +14032,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       onPressed: () {
                                                         setState(() {
                                                           qtyBatu12.text = '0';
-                                                          stokBatu12.text = '';
                                                           ukuranBatu12.text =
                                                               '';
-                                                          stokBatu12.text = '';
+                                                          totalCrtBatu12.text =
+                                                              '0';
                                                           batu12 = '';
                                                           hargaBatu12 = 0;
                                                           caratPcsBatu12 = 0;
@@ -14142,8 +14104,6 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           data[0]['caratPcs'];
                                                       batu13 = item.keyWord
                                                           .toString();
-                                                      stokBatu13.text =
-                                                          item.qty.toString();
                                                     });
                                                   }
                                                 } catch (e) {
@@ -14919,20 +14879,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       ),
                                                     ),
 
-                                          //stok batu13
+                                          //Total Carat batu13
                                           Container(
-                                            width: 80,
+                                            width: 120,
                                             height: 50,
                                             padding: const EdgeInsets.only(
                                                 top: 10, left: 15),
                                             child: TextFormField(
-                                              enabled: false,
                                               textInputAction:
                                                   TextInputAction.next,
-                                              controller: stokBatu13,
+                                              controller: totalCrtBatu13,
                                               decoration: InputDecoration(
                                                 label: const Text(
-                                                  'Stok',
+                                                  'Total Carat',
                                                   style: TextStyle(
                                                       color: Colors.black,
                                                       fontWeight:
@@ -14943,6 +14902,18 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                         BorderRadius.circular(
                                                             5.0)),
                                               ),
+                                              onChanged: (value) {
+                                                var doub = double.parse(value);
+                                                setState(() {
+                                                  try {
+                                                    doub <= 1
+                                                        ? value = '0'
+                                                        : value;
+                                                  } catch (c) {
+                                                    value = '0';
+                                                  }
+                                                });
+                                              },
                                             ),
                                           ),
                                           //clear
@@ -14956,10 +14927,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       onPressed: () {
                                                         setState(() {
                                                           qtyBatu13.text = '0';
-                                                          stokBatu13.text = '';
                                                           ukuranBatu13.text =
                                                               '';
-                                                          stokBatu13.text = '';
+                                                          totalCrtBatu13.text =
+                                                              '0';
                                                           batu13 = '';
                                                           hargaBatu13 = 0;
                                                           caratPcsBatu13 = 0;
@@ -15028,8 +14999,6 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           data[0]['caratPcs'];
                                                       batu14 = item.keyWord
                                                           .toString();
-                                                      stokBatu14.text =
-                                                          item.qty.toString();
                                                     });
                                                   }
                                                 } catch (e) {
@@ -15805,20 +15774,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       ),
                                                     ),
 
-                                          //stok batu14
+                                          //Total Carat batu14
                                           Container(
-                                            width: 80,
+                                            width: 120,
                                             height: 50,
                                             padding: const EdgeInsets.only(
                                                 top: 10, left: 15),
                                             child: TextFormField(
-                                              enabled: false,
                                               textInputAction:
                                                   TextInputAction.next,
-                                              controller: stokBatu14,
+                                              controller: totalCrtBatu14,
                                               decoration: InputDecoration(
                                                 label: const Text(
-                                                  'Stok',
+                                                  'Total Carat',
                                                   style: TextStyle(
                                                       color: Colors.black,
                                                       fontWeight:
@@ -15829,6 +15797,18 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                         BorderRadius.circular(
                                                             5.0)),
                                               ),
+                                              onChanged: (value) {
+                                                var doub = double.parse(value);
+                                                setState(() {
+                                                  try {
+                                                    doub <= 1
+                                                        ? value = '0'
+                                                        : value;
+                                                  } catch (c) {
+                                                    value = '0';
+                                                  }
+                                                });
+                                              },
                                             ),
                                           ),
                                           //clear
@@ -15842,10 +15822,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       onPressed: () {
                                                         setState(() {
                                                           qtyBatu14.text = '0';
-                                                          stokBatu14.text = '';
                                                           ukuranBatu14.text =
                                                               '';
-                                                          stokBatu14.text = '';
+                                                          totalCrtBatu14.text =
+                                                              '0';
                                                           batu14 = '';
                                                           hargaBatu14 = 0;
                                                           caratPcsBatu14 = 0;
@@ -15914,8 +15894,6 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           data[0]['caratPcs'];
                                                       batu15 = item.keyWord
                                                           .toString();
-                                                      stokBatu15.text =
-                                                          item.qty.toString();
                                                     });
                                                   }
                                                 } catch (e) {
@@ -16691,20 +16669,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       ),
                                                     ),
 
-                                          //stok batu15
+                                          //Total Carat batu15
                                           Container(
-                                            width: 80,
+                                            width: 120,
                                             height: 50,
                                             padding: const EdgeInsets.only(
                                                 top: 10, left: 15),
                                             child: TextFormField(
-                                              enabled: false,
                                               textInputAction:
                                                   TextInputAction.next,
-                                              controller: stokBatu15,
+                                              controller: totalCrtBatu15,
                                               decoration: InputDecoration(
                                                 label: const Text(
-                                                  'Stok',
+                                                  'Total Carat',
                                                   style: TextStyle(
                                                       color: Colors.black,
                                                       fontWeight:
@@ -16715,6 +16692,18 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                         BorderRadius.circular(
                                                             5.0)),
                                               ),
+                                              onChanged: (value) {
+                                                var doub = double.parse(value);
+                                                setState(() {
+                                                  try {
+                                                    doub <= 1
+                                                        ? value = '0'
+                                                        : value;
+                                                  } catch (c) {
+                                                    value = '0';
+                                                  }
+                                                });
+                                              },
                                             ),
                                           ),
                                           //clear
@@ -16728,10 +16717,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       onPressed: () {
                                                         setState(() {
                                                           qtyBatu15.text = '0';
-                                                          stokBatu15.text = '';
                                                           ukuranBatu15.text =
                                                               '';
-                                                          stokBatu15.text = '';
+                                                          totalCrtBatu15.text =
+                                                              '0';
                                                           batu15 = '';
                                                           hargaBatu15 = 0;
                                                           caratPcsBatu15 = 0;
@@ -16800,8 +16789,6 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           data[0]['caratPcs'];
                                                       batu16 = item.keyWord
                                                           .toString();
-                                                      stokBatu16.text =
-                                                          item.qty.toString();
                                                     });
                                                   }
                                                 } catch (e) {
@@ -17577,20 +17564,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       ),
                                                     ),
 
-                                          //stok batu16
+                                          //Total Carat batu16
                                           Container(
-                                            width: 80,
+                                            width: 120,
                                             height: 50,
                                             padding: const EdgeInsets.only(
                                                 top: 10, left: 15),
                                             child: TextFormField(
-                                              enabled: false,
                                               textInputAction:
                                                   TextInputAction.next,
-                                              controller: stokBatu16,
+                                              controller: totalCrtBatu16,
                                               decoration: InputDecoration(
                                                 label: const Text(
-                                                  'Stok',
+                                                  'Total Carat',
                                                   style: TextStyle(
                                                       color: Colors.black,
                                                       fontWeight:
@@ -17601,6 +17587,18 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                         BorderRadius.circular(
                                                             5.0)),
                                               ),
+                                              onChanged: (value) {
+                                                var doub = double.parse(value);
+                                                setState(() {
+                                                  try {
+                                                    doub <= 1
+                                                        ? value = '0'
+                                                        : value;
+                                                  } catch (c) {
+                                                    value = '0';
+                                                  }
+                                                });
+                                              },
                                             ),
                                           ),
                                           //clear
@@ -17614,10 +17612,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       onPressed: () {
                                                         setState(() {
                                                           qtyBatu16.text = '0';
-                                                          stokBatu16.text = '';
+                                                          totalCrtBatu16.text =
+                                                              '0';
                                                           ukuranBatu16.text =
                                                               '';
-                                                          stokBatu16.text = '';
                                                           batu16 = '';
                                                           hargaBatu16 = 0;
                                                           caratPcsBatu16 = 0;
@@ -17686,8 +17684,6 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           data[0]['caratPcs'];
                                                       batu17 = item.keyWord
                                                           .toString();
-                                                      stokBatu17.text =
-                                                          item.qty.toString();
                                                     });
                                                   }
                                                 } catch (e) {
@@ -18463,20 +18459,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       ),
                                                     ),
 
-                                          //stok batu17
+                                          //Total Carat batu17
                                           Container(
-                                            width: 80,
+                                            width: 120,
                                             height: 50,
                                             padding: const EdgeInsets.only(
                                                 top: 10, left: 15),
                                             child: TextFormField(
-                                              enabled: false,
                                               textInputAction:
                                                   TextInputAction.next,
-                                              controller: stokBatu17,
+                                              controller: totalCrtBatu17,
                                               decoration: InputDecoration(
                                                 label: const Text(
-                                                  'Stok',
+                                                  'Total Carat',
                                                   style: TextStyle(
                                                       color: Colors.black,
                                                       fontWeight:
@@ -18487,6 +18482,18 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                         BorderRadius.circular(
                                                             5.0)),
                                               ),
+                                              onChanged: (value) {
+                                                var doub = double.parse(value);
+                                                setState(() {
+                                                  try {
+                                                    doub <= 1
+                                                        ? value = '0'
+                                                        : value;
+                                                  } catch (c) {
+                                                    value = '0';
+                                                  }
+                                                });
+                                              },
                                             ),
                                           ),
                                           //clear
@@ -18500,10 +18507,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       onPressed: () {
                                                         setState(() {
                                                           qtyBatu17.text = '0';
-                                                          stokBatu17.text = '';
+                                                          totalCrtBatu17.text =
+                                                              '0';
                                                           ukuranBatu17.text =
                                                               '';
-                                                          stokBatu17.text = '';
                                                           batu17 = '';
                                                           hargaBatu17 = 0;
                                                           caratPcsBatu17 = 0;
@@ -18572,8 +18579,6 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           data[0]['caratPcs'];
                                                       batu18 = item.keyWord
                                                           .toString();
-                                                      stokBatu18.text =
-                                                          item.qty.toString();
                                                     });
                                                   }
                                                 } catch (e) {
@@ -19349,20 +19354,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       ),
                                                     ),
 
-                                          //stok batu18
+                                          //Total Carat batu18
                                           Container(
-                                            width: 80,
+                                            width: 120,
                                             height: 50,
                                             padding: const EdgeInsets.only(
                                                 top: 10, left: 15),
                                             child: TextFormField(
-                                              enabled: false,
                                               textInputAction:
                                                   TextInputAction.next,
-                                              controller: stokBatu18,
+                                              controller: totalCrtBatu18,
                                               decoration: InputDecoration(
                                                 label: const Text(
-                                                  'Stok',
+                                                  'Total Carat',
                                                   style: TextStyle(
                                                       color: Colors.black,
                                                       fontWeight:
@@ -19373,6 +19377,18 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                         BorderRadius.circular(
                                                             5.0)),
                                               ),
+                                              onChanged: (value) {
+                                                var doub = double.parse(value);
+                                                setState(() {
+                                                  try {
+                                                    doub <= 1
+                                                        ? value = '0'
+                                                        : value;
+                                                  } catch (c) {
+                                                    value = '0';
+                                                  }
+                                                });
+                                              },
                                             ),
                                           ),
                                           //clear
@@ -19386,10 +19402,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       onPressed: () {
                                                         setState(() {
                                                           qtyBatu18.text = '0';
-                                                          stokBatu18.text = '';
+                                                          totalCrtBatu18.text =
+                                                              '0';
                                                           ukuranBatu18.text =
                                                               '';
-                                                          stokBatu18.text = '';
                                                           batu18 = '';
                                                           hargaBatu18 = 0;
                                                           caratPcsBatu18 = 0;
@@ -19458,8 +19474,6 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           data[0]['caratPcs'];
                                                       batu19 = item.keyWord
                                                           .toString();
-                                                      stokBatu19.text =
-                                                          item.qty.toString();
                                                     });
                                                   }
                                                 } catch (e) {
@@ -20235,20 +20249,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       ),
                                                     ),
 
-                                          //stok batu19
+                                          //Total Carat batu19
                                           Container(
-                                            width: 80,
+                                            width: 120,
                                             height: 50,
                                             padding: const EdgeInsets.only(
                                                 top: 10, left: 15),
                                             child: TextFormField(
-                                              enabled: false,
                                               textInputAction:
                                                   TextInputAction.next,
-                                              controller: stokBatu19,
+                                              controller: totalCrtBatu19,
                                               decoration: InputDecoration(
                                                 label: const Text(
-                                                  'Stok',
+                                                  'Total Carat',
                                                   style: TextStyle(
                                                       color: Colors.black,
                                                       fontWeight:
@@ -20259,6 +20272,18 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                         BorderRadius.circular(
                                                             5.0)),
                                               ),
+                                              onChanged: (value) {
+                                                var doub = double.parse(value);
+                                                setState(() {
+                                                  try {
+                                                    doub <= 1
+                                                        ? value = '0'
+                                                        : value;
+                                                  } catch (c) {
+                                                    value = '0';
+                                                  }
+                                                });
+                                              },
                                             ),
                                           ),
                                           //clear
@@ -20272,10 +20297,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       onPressed: () {
                                                         setState(() {
                                                           qtyBatu19.text = '0';
-                                                          stokBatu19.text = '';
+                                                          totalCrtBatu19.text =
+                                                              '0';
                                                           ukuranBatu19.text =
                                                               '';
-                                                          stokBatu19.text = '';
                                                           batu19 = '';
                                                           hargaBatu19 = 0;
                                                           caratPcsBatu19 = 0;
@@ -20344,8 +20369,6 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           data[0]['caratPcs'];
                                                       batu20 = item.keyWord
                                                           .toString();
-                                                      stokBatu20.text =
-                                                          item.qty.toString();
                                                     });
                                                   }
                                                 } catch (e) {
@@ -21121,20 +21144,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       ),
                                                     ),
 
-                                          //stok batu20
+                                          //Total Carat batu20
                                           Container(
-                                            width: 80,
+                                            width: 120,
                                             height: 50,
                                             padding: const EdgeInsets.only(
                                                 top: 10, left: 15),
                                             child: TextFormField(
-                                              enabled: false,
                                               textInputAction:
                                                   TextInputAction.next,
-                                              controller: stokBatu20,
+                                              controller: totalCrtBatu20,
                                               decoration: InputDecoration(
                                                 label: const Text(
-                                                  'Stok',
+                                                  'Total Carat',
                                                   style: TextStyle(
                                                       color: Colors.black,
                                                       fontWeight:
@@ -21145,6 +21167,18 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                         BorderRadius.circular(
                                                             5.0)),
                                               ),
+                                              onChanged: (value) {
+                                                var doub = double.parse(value);
+                                                setState(() {
+                                                  try {
+                                                    doub <= 1
+                                                        ? value = '0'
+                                                        : value;
+                                                  } catch (c) {
+                                                    value = '0';
+                                                  }
+                                                });
+                                              },
                                             ),
                                           ),
                                           //clear
@@ -21158,10 +21192,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       onPressed: () {
                                                         setState(() {
                                                           qtyBatu20.text = '0';
-                                                          stokBatu20.text = '';
+                                                          totalCrtBatu20.text =
+                                                              '0';
                                                           ukuranBatu20.text =
                                                               '';
-                                                          stokBatu20.text = '';
                                                           batu20 = '';
                                                           hargaBatu20 = 0;
                                                           caratPcsBatu20 = 0;
@@ -21230,8 +21264,6 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           data[0]['caratPcs'];
                                                       batu21 = item.keyWord
                                                           .toString();
-                                                      stokBatu21.text =
-                                                          item.qty.toString();
                                                     });
                                                   }
                                                 } catch (e) {
@@ -22007,20 +22039,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       ),
                                                     ),
 
-                                          //stok batu21
+                                          //Total Carat batu21
                                           Container(
-                                            width: 80,
+                                            width: 120,
                                             height: 50,
                                             padding: const EdgeInsets.only(
                                                 top: 10, left: 15),
                                             child: TextFormField(
-                                              enabled: false,
                                               textInputAction:
                                                   TextInputAction.next,
-                                              controller: stokBatu21,
+                                              controller: totalCrtBatu21,
                                               decoration: InputDecoration(
                                                 label: const Text(
-                                                  'Stok',
+                                                  'Total Carat',
                                                   style: TextStyle(
                                                       color: Colors.black,
                                                       fontWeight:
@@ -22031,6 +22062,18 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                         BorderRadius.circular(
                                                             5.0)),
                                               ),
+                                              onChanged: (value) {
+                                                var doub = double.parse(value);
+                                                setState(() {
+                                                  try {
+                                                    doub <= 1
+                                                        ? value = '0'
+                                                        : value;
+                                                  } catch (c) {
+                                                    value = '0';
+                                                  }
+                                                });
+                                              },
                                             ),
                                           ),
                                           //clear
@@ -22044,10 +22087,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       onPressed: () {
                                                         setState(() {
                                                           qtyBatu21.text = '0';
-                                                          stokBatu21.text = '';
+                                                          totalCrtBatu21.text =
+                                                              '0';
                                                           ukuranBatu21.text =
                                                               '';
-                                                          stokBatu21.text = '';
                                                           batu21 = '';
                                                           hargaBatu21 = 0;
                                                           caratPcsBatu21 = 0;
@@ -22116,8 +22159,6 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           data[0]['caratPcs'];
                                                       batu22 = item.keyWord
                                                           .toString();
-                                                      stokBatu22.text =
-                                                          item.qty.toString();
                                                     });
                                                   }
                                                 } catch (e) {
@@ -22893,20 +22934,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       ),
                                                     ),
 
-                                          //stok batu22
+                                          //Total Carat batu22
                                           Container(
-                                            width: 80,
+                                            width: 120,
                                             height: 50,
                                             padding: const EdgeInsets.only(
                                                 top: 10, left: 15),
                                             child: TextFormField(
-                                              enabled: false,
                                               textInputAction:
                                                   TextInputAction.next,
-                                              controller: stokBatu22,
+                                              controller: totalCrtBatu22,
                                               decoration: InputDecoration(
                                                 label: const Text(
-                                                  'Stok',
+                                                  'Total Carat',
                                                   style: TextStyle(
                                                       color: Colors.black,
                                                       fontWeight:
@@ -22917,6 +22957,18 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                         BorderRadius.circular(
                                                             5.0)),
                                               ),
+                                              onChanged: (value) {
+                                                var doub = double.parse(value);
+                                                setState(() {
+                                                  try {
+                                                    doub <= 1
+                                                        ? value = '0'
+                                                        : value;
+                                                  } catch (c) {
+                                                    value = '0';
+                                                  }
+                                                });
+                                              },
                                             ),
                                           ),
                                           //clear
@@ -22930,10 +22982,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       onPressed: () {
                                                         setState(() {
                                                           qtyBatu22.text = '0';
-                                                          stokBatu22.text = '';
+                                                          totalCrtBatu22.text =
+                                                              '0';
                                                           ukuranBatu22.text =
                                                               '';
-                                                          stokBatu22.text = '';
                                                           batu22 = '';
                                                           hargaBatu22 = 0;
                                                           caratPcsBatu22 = 0;
@@ -23002,8 +23054,6 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           data[0]['caratPcs'];
                                                       batu23 = item.keyWord
                                                           .toString();
-                                                      stokBatu23.text =
-                                                          item.qty.toString();
                                                     });
                                                   }
                                                 } catch (e) {
@@ -23779,20 +23829,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       ),
                                                     ),
 
-                                          //stok batu23
+                                          //Total Carat batu23
                                           Container(
-                                            width: 80,
+                                            width: 120,
                                             height: 50,
                                             padding: const EdgeInsets.only(
                                                 top: 10, left: 15),
                                             child: TextFormField(
-                                              enabled: false,
                                               textInputAction:
                                                   TextInputAction.next,
-                                              controller: stokBatu23,
+                                              controller: totalCrtBatu23,
                                               decoration: InputDecoration(
                                                 label: const Text(
-                                                  'Stok',
+                                                  'Total Carat',
                                                   style: TextStyle(
                                                       color: Colors.black,
                                                       fontWeight:
@@ -23803,6 +23852,18 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                         BorderRadius.circular(
                                                             5.0)),
                                               ),
+                                              onChanged: (value) {
+                                                var doub = double.parse(value);
+                                                setState(() {
+                                                  try {
+                                                    doub <= 1
+                                                        ? value = '0'
+                                                        : value;
+                                                  } catch (c) {
+                                                    value = '0';
+                                                  }
+                                                });
+                                              },
                                             ),
                                           ),
                                           //clear
@@ -23816,10 +23877,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       onPressed: () {
                                                         setState(() {
                                                           qtyBatu23.text = '0';
-                                                          stokBatu23.text = '';
+                                                          totalCrtBatu23.text =
+                                                              '0';
                                                           ukuranBatu23.text =
                                                               '';
-                                                          stokBatu23.text = '';
                                                           batu23 = '';
                                                           hargaBatu23 = 0;
                                                           caratPcsBatu23 = 0;
@@ -23888,8 +23949,6 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           data[0]['caratPcs'];
                                                       batu24 = item.keyWord
                                                           .toString();
-                                                      stokBatu24.text =
-                                                          item.qty.toString();
                                                     });
                                                   }
                                                 } catch (e) {
@@ -24665,20 +24724,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       ),
                                                     ),
 
-                                          //stok batu24
+                                          //Total Carat batu24
                                           Container(
-                                            width: 80,
+                                            width: 120,
                                             height: 50,
                                             padding: const EdgeInsets.only(
                                                 top: 10, left: 15),
                                             child: TextFormField(
-                                              enabled: false,
                                               textInputAction:
                                                   TextInputAction.next,
-                                              controller: stokBatu24,
+                                              controller: totalCrtBatu24,
                                               decoration: InputDecoration(
                                                 label: const Text(
-                                                  'Stok',
+                                                  'Total Carat',
                                                   style: TextStyle(
                                                       color: Colors.black,
                                                       fontWeight:
@@ -24689,6 +24747,18 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                         BorderRadius.circular(
                                                             5.0)),
                                               ),
+                                              onChanged: (value) {
+                                                var doub = double.parse(value);
+                                                setState(() {
+                                                  try {
+                                                    doub <= 1
+                                                        ? value = '0'
+                                                        : value;
+                                                  } catch (c) {
+                                                    value = '0';
+                                                  }
+                                                });
+                                              },
                                             ),
                                           ),
                                           //clear
@@ -24702,10 +24772,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       onPressed: () {
                                                         setState(() {
                                                           qtyBatu24.text = '0';
-                                                          stokBatu24.text = '';
+                                                          totalCrtBatu24.text =
+                                                              '0';
                                                           ukuranBatu24.text =
                                                               '';
-                                                          stokBatu24.text = '';
                                                           batu24 = '';
                                                           hargaBatu24 = 0;
                                                           caratPcsBatu24 = 0;
@@ -24774,8 +24844,6 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           data[0]['caratPcs'];
                                                       batu25 = item.keyWord
                                                           .toString();
-                                                      stokBatu25.text =
-                                                          item.qty.toString();
                                                     });
                                                   }
                                                 } catch (e) {
@@ -25551,20 +25619,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       ),
                                                     ),
 
-                                          //stok batu25
+                                          //Total Carat batu25
                                           Container(
-                                            width: 80,
+                                            width: 120,
                                             height: 50,
                                             padding: const EdgeInsets.only(
                                                 top: 10, left: 15),
                                             child: TextFormField(
-                                              enabled: false,
                                               textInputAction:
                                                   TextInputAction.next,
-                                              controller: stokBatu25,
+                                              controller: totalCrtBatu25,
                                               decoration: InputDecoration(
                                                 label: const Text(
-                                                  'Stok',
+                                                  'Total Carat',
                                                   style: TextStyle(
                                                       color: Colors.black,
                                                       fontWeight:
@@ -25575,6 +25642,18 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                         BorderRadius.circular(
                                                             5.0)),
                                               ),
+                                              onChanged: (value) {
+                                                var doub = double.parse(value);
+                                                setState(() {
+                                                  try {
+                                                    doub <= 1
+                                                        ? value = '0'
+                                                        : value;
+                                                  } catch (c) {
+                                                    value = '0';
+                                                  }
+                                                });
+                                              },
                                             ),
                                           ),
                                           //clear
@@ -25588,10 +25667,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       onPressed: () {
                                                         setState(() {
                                                           qtyBatu25.text = '0';
-                                                          stokBatu25.text = '';
+                                                          totalCrtBatu25.text =
+                                                              '0';
                                                           ukuranBatu25.text =
                                                               '';
-                                                          stokBatu25.text = '';
                                                           batu25 = '';
                                                           hargaBatu25 = 0;
                                                           caratPcsBatu25 = 0;
@@ -25660,8 +25739,6 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           data[0]['caratPcs'];
                                                       batu26 = item.keyWord
                                                           .toString();
-                                                      stokBatu26.text =
-                                                          item.qty.toString();
                                                     });
                                                   }
                                                 } catch (e) {
@@ -26437,20 +26514,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       ),
                                                     ),
 
-                                          //stok batu26
+                                          //Total Carat batu26
                                           Container(
-                                            width: 80,
+                                            width: 120,
                                             height: 50,
                                             padding: const EdgeInsets.only(
                                                 top: 10, left: 15),
                                             child: TextFormField(
-                                              enabled: false,
                                               textInputAction:
                                                   TextInputAction.next,
-                                              controller: stokBatu26,
+                                              controller: totalCrtBatu26,
                                               decoration: InputDecoration(
                                                 label: const Text(
-                                                  'Stok',
+                                                  'Total Carat',
                                                   style: TextStyle(
                                                       color: Colors.black,
                                                       fontWeight:
@@ -26461,6 +26537,18 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                         BorderRadius.circular(
                                                             5.0)),
                                               ),
+                                              onChanged: (value) {
+                                                var doub = double.parse(value);
+                                                setState(() {
+                                                  try {
+                                                    doub <= 1
+                                                        ? value = '0'
+                                                        : value;
+                                                  } catch (c) {
+                                                    value = '0';
+                                                  }
+                                                });
+                                              },
                                             ),
                                           ),
                                           //clear
@@ -26474,10 +26562,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       onPressed: () {
                                                         setState(() {
                                                           qtyBatu26.text = '0';
-                                                          stokBatu26.text = '';
+                                                          totalCrtBatu26.text =
+                                                              '0';
                                                           ukuranBatu26.text =
                                                               '';
-                                                          stokBatu26.text = '';
                                                           batu26 = '';
                                                           hargaBatu26 = 0;
                                                           caratPcsBatu26 = 0;
@@ -26546,8 +26634,6 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           data[0]['caratPcs'];
                                                       batu27 = item.keyWord
                                                           .toString();
-                                                      stokBatu27.text =
-                                                          item.qty.toString();
                                                     });
                                                   }
                                                 } catch (e) {
@@ -27323,20 +27409,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       ),
                                                     ),
 
-                                          //stok batu27
+                                          //Total Carat batu27
                                           Container(
-                                            width: 80,
+                                            width: 120,
                                             height: 50,
                                             padding: const EdgeInsets.only(
                                                 top: 10, left: 15),
                                             child: TextFormField(
-                                              enabled: false,
                                               textInputAction:
                                                   TextInputAction.next,
-                                              controller: stokBatu27,
+                                              controller: totalCrtBatu27,
                                               decoration: InputDecoration(
                                                 label: const Text(
-                                                  'Stok',
+                                                  'Total Carat',
                                                   style: TextStyle(
                                                       color: Colors.black,
                                                       fontWeight:
@@ -27347,6 +27432,18 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                         BorderRadius.circular(
                                                             5.0)),
                                               ),
+                                              onChanged: (value) {
+                                                var doub = double.parse(value);
+                                                setState(() {
+                                                  try {
+                                                    doub <= 1
+                                                        ? value = '0'
+                                                        : value;
+                                                  } catch (c) {
+                                                    value = '0';
+                                                  }
+                                                });
+                                              },
                                             ),
                                           ),
                                           //clear
@@ -27360,10 +27457,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       onPressed: () {
                                                         setState(() {
                                                           qtyBatu27.text = '0';
-                                                          stokBatu27.text = '';
+                                                          totalCrtBatu27.text =
+                                                              '0';
                                                           ukuranBatu27.text =
                                                               '';
-                                                          stokBatu27.text = '';
                                                           batu27 = '';
                                                           hargaBatu27 = 0;
                                                           caratPcsBatu27 = 0;
@@ -27432,8 +27529,6 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           data[0]['caratPcs'];
                                                       batu28 = item.keyWord
                                                           .toString();
-                                                      stokBatu28.text =
-                                                          item.qty.toString();
                                                     });
                                                   }
                                                 } catch (e) {
@@ -28209,20 +28304,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       ),
                                                     ),
 
-                                          //stok batu28
+                                          //Total Carat batu28
                                           Container(
-                                            width: 80,
+                                            width: 120,
                                             height: 50,
                                             padding: const EdgeInsets.only(
                                                 top: 10, left: 15),
                                             child: TextFormField(
-                                              enabled: false,
                                               textInputAction:
                                                   TextInputAction.next,
-                                              controller: stokBatu28,
+                                              controller: totalCrtBatu28,
                                               decoration: InputDecoration(
                                                 label: const Text(
-                                                  'Stok',
+                                                  'Total Carat',
                                                   style: TextStyle(
                                                       color: Colors.black,
                                                       fontWeight:
@@ -28233,6 +28327,18 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                         BorderRadius.circular(
                                                             5.0)),
                                               ),
+                                              onChanged: (value) {
+                                                var doub = double.parse(value);
+                                                setState(() {
+                                                  try {
+                                                    doub <= 1
+                                                        ? value = '0'
+                                                        : value;
+                                                  } catch (c) {
+                                                    value = '0';
+                                                  }
+                                                });
+                                              },
                                             ),
                                           ),
                                           //clear
@@ -28246,10 +28352,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       onPressed: () {
                                                         setState(() {
                                                           qtyBatu28.text = '0';
-                                                          stokBatu28.text = '';
+                                                          totalCrtBatu28.text =
+                                                              '0';
                                                           ukuranBatu28.text =
                                                               '';
-                                                          stokBatu28.text = '';
                                                           batu28 = '';
                                                           hargaBatu28 = 0;
                                                           caratPcsBatu28 = 0;
@@ -28318,8 +28424,6 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           data[0]['caratPcs'];
                                                       batu29 = item.keyWord
                                                           .toString();
-                                                      stokBatu29.text =
-                                                          item.qty.toString();
                                                     });
                                                   }
                                                 } catch (e) {
@@ -29095,20 +29199,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       ),
                                                     ),
 
-                                          //stok batu29
+                                          //Total Carat batu29
                                           Container(
-                                            width: 80,
+                                            width: 120,
                                             height: 50,
                                             padding: const EdgeInsets.only(
                                                 top: 10, left: 15),
                                             child: TextFormField(
-                                              enabled: false,
                                               textInputAction:
                                                   TextInputAction.next,
-                                              controller: stokBatu29,
+                                              controller: totalCrtBatu29,
                                               decoration: InputDecoration(
                                                 label: const Text(
-                                                  'Stok',
+                                                  'Total Carat',
                                                   style: TextStyle(
                                                       color: Colors.black,
                                                       fontWeight:
@@ -29119,6 +29222,18 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                         BorderRadius.circular(
                                                             5.0)),
                                               ),
+                                              onChanged: (value) {
+                                                var doub = double.parse(value);
+                                                setState(() {
+                                                  try {
+                                                    doub <= 1
+                                                        ? value = '0'
+                                                        : value;
+                                                  } catch (c) {
+                                                    value = '0';
+                                                  }
+                                                });
+                                              },
                                             ),
                                           ),
                                           //clear
@@ -29132,10 +29247,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       onPressed: () {
                                                         setState(() {
                                                           qtyBatu29.text = '0';
-                                                          stokBatu29.text = '';
+                                                          totalCrtBatu29.text =
+                                                              '0';
                                                           ukuranBatu29.text =
                                                               '';
-                                                          stokBatu29.text = '';
                                                           batu29 = '';
                                                           hargaBatu29 = 0;
                                                           caratPcsBatu29 = 0;
@@ -29204,8 +29319,6 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           data[0]['caratPcs'];
                                                       batu30 = item.keyWord
                                                           .toString();
-                                                      stokBatu30.text =
-                                                          item.qty.toString();
                                                     });
                                                   }
                                                 } catch (e) {
@@ -29981,20 +30094,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       ),
                                                     ),
 
-                                          //stok batu30
+                                          //Total Carat batu30
                                           Container(
-                                            width: 80,
+                                            width: 120,
                                             height: 50,
                                             padding: const EdgeInsets.only(
                                                 top: 10, left: 15),
                                             child: TextFormField(
-                                              enabled: false,
                                               textInputAction:
                                                   TextInputAction.next,
-                                              controller: stokBatu30,
+                                              controller: totalCrtBatu30,
                                               decoration: InputDecoration(
                                                 label: const Text(
-                                                  'Stok',
+                                                  'Total Carat',
                                                   style: TextStyle(
                                                       color: Colors.black,
                                                       fontWeight:
@@ -30005,6 +30117,18 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                         BorderRadius.circular(
                                                             5.0)),
                                               ),
+                                              onChanged: (value) {
+                                                var doub = double.parse(value);
+                                                setState(() {
+                                                  try {
+                                                    doub <= 1
+                                                        ? value = '0'
+                                                        : value;
+                                                  } catch (c) {
+                                                    value = '0';
+                                                  }
+                                                });
+                                              },
                                             ),
                                           ),
                                           //clear
@@ -30018,10 +30142,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       onPressed: () {
                                                         setState(() {
                                                           qtyBatu30.text = '0';
-                                                          stokBatu30.text = '';
+                                                          totalCrtBatu30.text =
+                                                              '0';
                                                           ukuranBatu30.text =
                                                               '';
-                                                          stokBatu30.text = '';
                                                           batu30 = '';
                                                           hargaBatu30 = 0;
                                                           caratPcsBatu30 = 0;
@@ -30090,8 +30214,6 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           data[0]['caratPcs'];
                                                       batu31 = item.keyWord
                                                           .toString();
-                                                      stokBatu31.text =
-                                                          item.qty.toString();
                                                     });
                                                   }
                                                 } catch (e) {
@@ -30867,20 +30989,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       ),
                                                     ),
 
-                                          //stok batu31
+                                          //Total Carat batu31
                                           Container(
-                                            width: 80,
+                                            width: 120,
                                             height: 50,
                                             padding: const EdgeInsets.only(
                                                 top: 10, left: 15),
                                             child: TextFormField(
-                                              enabled: false,
                                               textInputAction:
                                                   TextInputAction.next,
-                                              controller: stokBatu31,
+                                              controller: totalCrtBatu31,
                                               decoration: InputDecoration(
                                                 label: const Text(
-                                                  'Stok',
+                                                  'Total Carat',
                                                   style: TextStyle(
                                                       color: Colors.black,
                                                       fontWeight:
@@ -30891,6 +31012,18 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                         BorderRadius.circular(
                                                             5.0)),
                                               ),
+                                              onChanged: (value) {
+                                                var doub = double.parse(value);
+                                                setState(() {
+                                                  try {
+                                                    doub <= 1
+                                                        ? value = '0'
+                                                        : value;
+                                                  } catch (c) {
+                                                    value = '0';
+                                                  }
+                                                });
+                                              },
                                             ),
                                           ),
                                           //clear
@@ -30904,10 +31037,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       onPressed: () {
                                                         setState(() {
                                                           qtyBatu31.text = '0';
-                                                          stokBatu31.text = '';
+                                                          totalCrtBatu31.text =
+                                                              '0';
                                                           ukuranBatu31.text =
                                                               '';
-                                                          stokBatu31.text = '';
                                                           batu31 = '';
                                                           hargaBatu31 = 0;
                                                           caratPcsBatu31 = 0;
@@ -30976,8 +31109,6 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           data[0]['caratPcs'];
                                                       batu32 = item.keyWord
                                                           .toString();
-                                                      stokBatu32.text =
-                                                          item.qty.toString();
                                                     });
                                                   }
                                                 } catch (e) {
@@ -31753,20 +31884,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       ),
                                                     ),
 
-                                          //stok batu32
+                                          //Total Carat batu32
                                           Container(
-                                            width: 80,
+                                            width: 120,
                                             height: 50,
                                             padding: const EdgeInsets.only(
                                                 top: 10, left: 15),
                                             child: TextFormField(
-                                              enabled: false,
                                               textInputAction:
                                                   TextInputAction.next,
-                                              controller: stokBatu32,
+                                              controller: totalCrtBatu32,
                                               decoration: InputDecoration(
                                                 label: const Text(
-                                                  'Stok',
+                                                  'Total Carat',
                                                   style: TextStyle(
                                                       color: Colors.black,
                                                       fontWeight:
@@ -31777,6 +31907,18 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                         BorderRadius.circular(
                                                             5.0)),
                                               ),
+                                              onChanged: (value) {
+                                                var doub = double.parse(value);
+                                                setState(() {
+                                                  try {
+                                                    doub <= 1
+                                                        ? value = '0'
+                                                        : value;
+                                                  } catch (c) {
+                                                    value = '0';
+                                                  }
+                                                });
+                                              },
                                             ),
                                           ),
                                           //clear
@@ -31790,10 +31932,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       onPressed: () {
                                                         setState(() {
                                                           qtyBatu32.text = '0';
-                                                          stokBatu32.text = '';
+                                                          totalCrtBatu32.text =
+                                                              '0';
                                                           ukuranBatu32.text =
                                                               '';
-                                                          stokBatu32.text = '';
                                                           batu32 = '';
                                                           hargaBatu32 = 0;
                                                           caratPcsBatu32 = 0;
@@ -31862,8 +32004,6 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           data[0]['caratPcs'];
                                                       batu33 = item.keyWord
                                                           .toString();
-                                                      stokBatu33.text =
-                                                          item.qty.toString();
                                                     });
                                                   }
                                                 } catch (e) {
@@ -32639,20 +32779,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       ),
                                                     ),
 
-                                          //stok batu33
+                                          //Total Carat batu33
                                           Container(
-                                            width: 80,
+                                            width: 120,
                                             height: 50,
                                             padding: const EdgeInsets.only(
                                                 top: 10, left: 15),
                                             child: TextFormField(
-                                              enabled: false,
                                               textInputAction:
                                                   TextInputAction.next,
-                                              controller: stokBatu33,
+                                              controller: totalCrtBatu33,
                                               decoration: InputDecoration(
                                                 label: const Text(
-                                                  'Stok',
+                                                  'Total Carat',
                                                   style: TextStyle(
                                                       color: Colors.black,
                                                       fontWeight:
@@ -32663,6 +32802,18 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                         BorderRadius.circular(
                                                             5.0)),
                                               ),
+                                              onChanged: (value) {
+                                                var doub = double.parse(value);
+                                                setState(() {
+                                                  try {
+                                                    doub <= 1
+                                                        ? value = '0'
+                                                        : value;
+                                                  } catch (c) {
+                                                    value = '0';
+                                                  }
+                                                });
+                                              },
                                             ),
                                           ),
                                           //clear
@@ -32676,10 +32827,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       onPressed: () {
                                                         setState(() {
                                                           qtyBatu33.text = '0';
-                                                          stokBatu33.text = '';
+                                                          totalCrtBatu33.text =
+                                                              '0';
                                                           ukuranBatu33.text =
                                                               '';
-                                                          stokBatu33.text = '';
                                                           batu33 = '';
                                                           hargaBatu33 = 0;
                                                           caratPcsBatu33 = 0;
@@ -32748,8 +32899,6 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           data[0]['caratPcs'];
                                                       batu34 = item.keyWord
                                                           .toString();
-                                                      stokBatu34.text =
-                                                          item.qty.toString();
                                                     });
                                                   }
                                                 } catch (e) {
@@ -33525,20 +33674,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       ),
                                                     ),
 
-                                          //stok batu34
+                                          //Total Carat batu34
                                           Container(
-                                            width: 80,
+                                            width: 120,
                                             height: 50,
                                             padding: const EdgeInsets.only(
                                                 top: 10, left: 15),
                                             child: TextFormField(
-                                              enabled: false,
                                               textInputAction:
                                                   TextInputAction.next,
-                                              controller: stokBatu34,
+                                              controller: totalCrtBatu34,
                                               decoration: InputDecoration(
                                                 label: const Text(
-                                                  'Stok',
+                                                  'Total Carat',
                                                   style: TextStyle(
                                                       color: Colors.black,
                                                       fontWeight:
@@ -33549,6 +33697,18 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                         BorderRadius.circular(
                                                             5.0)),
                                               ),
+                                              onChanged: (value) {
+                                                var doub = double.parse(value);
+                                                setState(() {
+                                                  try {
+                                                    doub <= 1
+                                                        ? value = '0'
+                                                        : value;
+                                                  } catch (c) {
+                                                    value = '0';
+                                                  }
+                                                });
+                                              },
                                             ),
                                           ),
                                           //clear
@@ -33562,10 +33722,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       onPressed: () {
                                                         setState(() {
                                                           qtyBatu34.text = '0';
-                                                          stokBatu34.text = '';
+                                                          totalCrtBatu34.text =
+                                                              '0';
                                                           ukuranBatu34.text =
                                                               '';
-                                                          stokBatu34.text = '';
                                                           batu34 = '';
                                                           hargaBatu34 = 0;
                                                           caratPcsBatu34 = 0;
@@ -33634,8 +33794,6 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           data[0]['caratPcs'];
                                                       batu35 = item.keyWord
                                                           .toString();
-                                                      stokBatu35.text =
-                                                          item.qty.toString();
                                                     });
                                                   }
                                                 } catch (e) {
@@ -34411,20 +34569,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       ),
                                                     ),
 
-                                          //stok batu35
+                                          //Total Carat batu35
                                           Container(
-                                            width: 80,
+                                            width: 120,
                                             height: 50,
                                             padding: const EdgeInsets.only(
                                                 top: 10, left: 15),
                                             child: TextFormField(
-                                              enabled: false,
                                               textInputAction:
                                                   TextInputAction.next,
-                                              controller: stokBatu35,
+                                              controller: totalCrtBatu35,
                                               decoration: InputDecoration(
                                                 label: const Text(
-                                                  'Stok',
+                                                  'Total Carat',
                                                   style: TextStyle(
                                                       color: Colors.black,
                                                       fontWeight:
@@ -34435,6 +34592,18 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                         BorderRadius.circular(
                                                             5.0)),
                                               ),
+                                              onChanged: (value) {
+                                                var doub = double.parse(value);
+                                                setState(() {
+                                                  try {
+                                                    doub <= 1
+                                                        ? value = '0'
+                                                        : value;
+                                                  } catch (c) {
+                                                    value = '0';
+                                                  }
+                                                });
+                                              },
                                             ),
                                           ),
                                           //clear
@@ -34448,10 +34617,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       onPressed: () {
                                                         setState(() {
                                                           qtyBatu35.text = '0';
-                                                          stokBatu35.text = '';
+                                                          totalCrtBatu35.text =
+                                                              '0';
                                                           ukuranBatu35.text =
                                                               '';
-                                                          stokBatu35.text = '';
                                                           batu35 = '';
                                                           hargaBatu35 = 0;
                                                           caratPcsBatu35 = 0;
@@ -34574,41 +34743,41 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
     batu35 = '';
     qtyBatu35.text = '';
     // _imageFile = null;
-    stokBatu1.text = '';
-    stokBatu2.text = '';
-    stokBatu3.text = '';
-    stokBatu4.text = '';
-    stokBatu5.text = '';
-    stokBatu6.text = '';
-    stokBatu7.text = '';
-    stokBatu8.text = '';
-    stokBatu9.text = '';
-    stokBatu10.text = '';
-    stokBatu11.text = '';
-    stokBatu12.text = '';
-    stokBatu13.text = '';
-    stokBatu14.text = '';
-    stokBatu15.text = '';
-    stokBatu16.text = '';
-    stokBatu17.text = '';
-    stokBatu18.text = '';
-    stokBatu19.text = '';
-    stokBatu20.text = '';
-    stokBatu21.text = '';
-    stokBatu22.text = '';
-    stokBatu23.text = '';
-    stokBatu24.text = '';
-    stokBatu25.text = '';
-    stokBatu26.text = '';
-    stokBatu27.text = '';
-    stokBatu28.text = '';
-    stokBatu29.text = '';
-    stokBatu30.text = '';
-    stokBatu31.text = '';
-    stokBatu32.text = '';
-    stokBatu33.text = '';
-    stokBatu34.text = '';
-    stokBatu35.text = '';
+    totalCrtBatu1.text = '0';
+    totalCrtBatu2.text = '0';
+    totalCrtBatu3.text = '0';
+    totalCrtBatu4.text = '0';
+    totalCrtBatu5.text = '0';
+    totalCrtBatu6.text = '0';
+    totalCrtBatu7.text = '0';
+    totalCrtBatu8.text = '0';
+    totalCrtBatu9.text = '0';
+    totalCrtBatu10.text = '0';
+    totalCrtBatu11.text = '0';
+    totalCrtBatu12.text = '0';
+    totalCrtBatu13.text = '0';
+    totalCrtBatu14.text = '0';
+    totalCrtBatu15.text = '0';
+    totalCrtBatu16.text = '0';
+    totalCrtBatu17.text = '0';
+    totalCrtBatu18.text = '0';
+    totalCrtBatu19.text = '0';
+    totalCrtBatu20.text = '0';
+    totalCrtBatu21.text = '0';
+    totalCrtBatu22.text = '0';
+    totalCrtBatu23.text = '0';
+    totalCrtBatu24.text = '0';
+    totalCrtBatu25.text = '0';
+    totalCrtBatu26.text = '0';
+    totalCrtBatu27.text = '0';
+    totalCrtBatu28.text = '0';
+    totalCrtBatu29.text = '0';
+    totalCrtBatu30.text = '0';
+    totalCrtBatu31.text = '0';
+    totalCrtBatu32.text = '0';
+    totalCrtBatu33.text = '0';
+    totalCrtBatu34.text = '0';
+    totalCrtBatu35.text = '0';
   }
 
   postAPI() async {
@@ -34790,41 +34959,41 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
             ? batu35 = '$batu35 ${panjangBatu35.text}x${lebarBatu35.text}'
             : batu35 = batu35;
 
-    var beratDiamond = ((caratPcsBatu1 * qtyIntBatu1!) +
-        (caratPcsBatu2 * qtyIntBatu2!) +
-        (caratPcsBatu3 * qtyIntBatu3!) +
-        (caratPcsBatu4 * qtyIntBatu4!) +
-        (caratPcsBatu5 * qtyIntBatu5!) +
-        (caratPcsBatu6 * qtyIntBatu6!) +
-        (caratPcsBatu7 * qtyIntBatu7!) +
-        (caratPcsBatu8 * qtyIntBatu8!) +
-        (caratPcsBatu9 * qtyIntBatu9!) +
-        (caratPcsBatu10 * qtyIntBatu10!) +
-        (caratPcsBatu11 * qtyIntBatu11!) +
-        (caratPcsBatu12 * qtyIntBatu12!) +
-        (caratPcsBatu13 * qtyIntBatu13!) +
-        (caratPcsBatu14 * qtyIntBatu14!) +
-        (caratPcsBatu15 * qtyIntBatu15!) +
-        (caratPcsBatu16 * qtyIntBatu16!) +
-        (caratPcsBatu17 * qtyIntBatu17!) +
-        (caratPcsBatu18 * qtyIntBatu18!) +
-        (caratPcsBatu19 * qtyIntBatu19!) +
-        (caratPcsBatu20 * qtyIntBatu20!) +
-        (caratPcsBatu21 * qtyIntBatu21!) +
-        (caratPcsBatu22 * qtyIntBatu22!) +
-        (caratPcsBatu23 * qtyIntBatu23!) +
-        (caratPcsBatu24 * qtyIntBatu24!) +
-        (caratPcsBatu25 * qtyIntBatu25!) +
-        (caratPcsBatu26 * qtyIntBatu26!) +
-        (caratPcsBatu27 * qtyIntBatu27!) +
-        (caratPcsBatu28 * qtyIntBatu28!) +
-        (caratPcsBatu29 * qtyIntBatu29!) +
-        (caratPcsBatu30 * qtyIntBatu30!) +
-        (caratPcsBatu31 * qtyIntBatu31!) +
-        (caratPcsBatu32 * qtyIntBatu32!) +
-        (caratPcsBatu33 * qtyIntBatu33!) +
-        (caratPcsBatu34 * qtyIntBatu34!) +
-        (caratPcsBatu35 * qtyIntBatu35!));
+    var beratDiamond = (double.parse(totalCrtBatu1.text) +
+        double.parse(totalCrtBatu2.text) +
+        double.parse(totalCrtBatu3.text) +
+        double.parse(totalCrtBatu4.text) +
+        double.parse(totalCrtBatu5.text) +
+        double.parse(totalCrtBatu6.text) +
+        double.parse(totalCrtBatu7.text) +
+        double.parse(totalCrtBatu8.text) +
+        double.parse(totalCrtBatu9.text) +
+        double.parse(totalCrtBatu10.text) +
+        double.parse(totalCrtBatu11.text) +
+        double.parse(totalCrtBatu12.text) +
+        double.parse(totalCrtBatu13.text) +
+        double.parse(totalCrtBatu14.text) +
+        double.parse(totalCrtBatu15.text) +
+        double.parse(totalCrtBatu16.text) +
+        double.parse(totalCrtBatu17.text) +
+        double.parse(totalCrtBatu18.text) +
+        double.parse(totalCrtBatu19.text) +
+        double.parse(totalCrtBatu20.text) +
+        double.parse(totalCrtBatu21.text) +
+        double.parse(totalCrtBatu22.text) +
+        double.parse(totalCrtBatu23.text) +
+        double.parse(totalCrtBatu24.text) +
+        double.parse(totalCrtBatu25.text) +
+        double.parse(totalCrtBatu26.text) +
+        double.parse(totalCrtBatu27.text) +
+        double.parse(totalCrtBatu28.text) +
+        double.parse(totalCrtBatu29.text) +
+        double.parse(totalCrtBatu30.text) +
+        double.parse(totalCrtBatu31.text) +
+        double.parse(totalCrtBatu32.text) +
+        double.parse(totalCrtBatu33.text) +
+        double.parse(totalCrtBatu34.text) +
+        double.parse(totalCrtBatu35.text));
     // ignore: prefer_typing_uninitialized_variables
     var pricePerCarat;
     // ignore: prefer_typing_uninitialized_variables
@@ -34973,468 +35142,6 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
         Uri.parse(ApiConstants.baseUrl + ApiConstants.postFormEstimasiPricing),
         body: body);
     print(response.statusCode);
-  }
-
-  postApiQtyBatu1() async {
-    var resultBatu1 =
-        (int.parse(stokBatu1.text) - int.parse(qtyBatu1.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu1.toString(),
-      'qty': resultBatu1,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu2() async {
-    var resultBatu2 =
-        (int.parse(stokBatu2.text) - int.parse(qtyBatu2.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu2.toString(),
-      'qty': resultBatu2,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu3() async {
-    var resultBatu3 =
-        (int.parse(stokBatu3.text) - int.parse(qtyBatu3.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu3.toString(),
-      'qty': resultBatu3,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu4() async {
-    var resultBatu4 =
-        (int.parse(stokBatu4.text) - int.parse(qtyBatu4.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu4.toString(),
-      'qty': resultBatu4,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu5() async {
-    var resultBatu5 =
-        (int.parse(stokBatu5.text) - int.parse(qtyBatu5.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu5.toString(),
-      'qty': resultBatu5,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu6() async {
-    var resultBatu6 =
-        (int.parse(stokBatu6.text) - int.parse(qtyBatu6.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu6.toString(),
-      'qty': resultBatu6,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu7() async {
-    var resultBatu7 =
-        (int.parse(stokBatu7.text) - int.parse(qtyBatu7.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu7.toString(),
-      'qty': resultBatu7,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu8() async {
-    var resultBatu8 =
-        (int.parse(stokBatu8.text) - int.parse(qtyBatu8.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu8.toString(),
-      'qty': resultBatu8,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu9() async {
-    var resultBatu9 =
-        (int.parse(stokBatu9.text) - int.parse(qtyBatu9.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu9.toString(),
-      'qty': resultBatu9,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu10() async {
-    var resultBatu10 =
-        (int.parse(stokBatu10.text) - int.parse(qtyBatu10.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu10.toString(),
-      'qty': resultBatu10,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu11() async {
-    var resultBatu11 =
-        (int.parse(stokBatu11.text) - int.parse(qtyBatu11.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu11.toString(),
-      'qty': resultBatu11,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu12() async {
-    var resultBatu12 =
-        (int.parse(stokBatu12.text) - int.parse(qtyBatu12.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu12.toString(),
-      'qty': resultBatu12,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu13() async {
-    var resultBatu13 =
-        (int.parse(stokBatu13.text) - int.parse(qtyBatu13.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu13.toString(),
-      'qty': resultBatu13,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu14() async {
-    var resultBatu14 =
-        (int.parse(stokBatu14.text) - int.parse(qtyBatu14.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu14.toString(),
-      'qty': resultBatu14,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu15() async {
-    var resultBatu15 =
-        (int.parse(stokBatu15.text) - int.parse(qtyBatu15.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu15.toString(),
-      'qty': resultBatu15,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu16() async {
-    var resultBatu16 =
-        (int.parse(stokBatu16.text) - int.parse(qtyBatu16.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu16.toString(),
-      'qty': resultBatu16,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu17() async {
-    var resultBatu17 =
-        (int.parse(stokBatu17.text) - int.parse(qtyBatu17.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu17.toString(),
-      'qty': resultBatu17,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu18() async {
-    var resultBatu18 =
-        (int.parse(stokBatu18.text) - int.parse(qtyBatu18.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu18.toString(),
-      'qty': resultBatu18,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu19() async {
-    var resultBatu19 =
-        (int.parse(stokBatu19.text) - int.parse(qtyBatu19.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu19.toString(),
-      'qty': resultBatu19,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu20() async {
-    var resultBatu20 =
-        (int.parse(stokBatu20.text) - int.parse(qtyBatu20.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu20.toString(),
-      'qty': resultBatu20,
-    };
-
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu21() async {
-    var resultBatu21 =
-        (int.parse(stokBatu21.text) - int.parse(qtyBatu21.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu21.toString(),
-      'qty': resultBatu21,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu22() async {
-    var resultBatu22 =
-        (int.parse(stokBatu22.text) - int.parse(qtyBatu22.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu22.toString(),
-      'qty': resultBatu22,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu23() async {
-    var resultBatu23 =
-        (int.parse(stokBatu23.text) - int.parse(qtyBatu23.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu23.toString(),
-      'qty': resultBatu23,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu24() async {
-    var resultBatu24 =
-        (int.parse(stokBatu24.text) - int.parse(qtyBatu24.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu24.toString(),
-      'qty': resultBatu24,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu25() async {
-    var resultBatu25 =
-        (int.parse(stokBatu25.text) - int.parse(qtyBatu25.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu25.toString(),
-      'qty': resultBatu25,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu26() async {
-    var resultBatu26 =
-        (int.parse(stokBatu26.text) - int.parse(qtyBatu26.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu26.toString(),
-      'qty': resultBatu26,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu27() async {
-    var resultBatu27 =
-        (int.parse(stokBatu27.text) - int.parse(qtyBatu27.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu27.toString(),
-      'qty': resultBatu27,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu28() async {
-    var resultBatu28 =
-        (int.parse(stokBatu28.text) - int.parse(qtyBatu28.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu28.toString(),
-      'qty': resultBatu28,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu29() async {
-    var resultBatu29 =
-        (int.parse(stokBatu29.text) - int.parse(qtyBatu29.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu29.toString(),
-      'qty': resultBatu29,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu30() async {
-    var resultBatu30 =
-        (int.parse(stokBatu30.text) - int.parse(qtyBatu30.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu30.toString(),
-      'qty': resultBatu30,
-    };
-
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu31() async {
-    var resultBatu31 =
-        (int.parse(stokBatu31.text) - int.parse(qtyBatu31.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu31.toString(),
-      'qty': resultBatu31,
-    };
-
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu32() async {
-    var resultBatu32 =
-        (int.parse(stokBatu32.text) - int.parse(qtyBatu32.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu32.toString(),
-      'qty': resultBatu32,
-    };
-
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu33() async {
-    var resultBatu33 =
-        (int.parse(stokBatu33.text) - int.parse(qtyBatu33.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu33.toString(),
-      'qty': resultBatu33,
-    };
-
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu34() async {
-    var resultBatu34 =
-        (int.parse(stokBatu34.text) - int.parse(qtyBatu34.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu34.toString(),
-      'qty': resultBatu34,
-    };
-
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu35() async {
-    var resultBatu35 =
-        (int.parse(stokBatu35.text) - int.parse(qtyBatu35.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu35.toString(),
-      'qty': resultBatu35,
-    };
-
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
   }
 
   Future<List<BatuModel>> getData(filter) async {

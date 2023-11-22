@@ -476,31 +476,21 @@ class _SummaryProduktivitasScreenState
             // drawer: Drawer1(),
             appBar: AppBar(
               automaticallyImplyLeading: false,
-              backgroundColor: Colors.blue,
+              backgroundColor: Colors.white,
               leadingWidth: 320,
               //change siklus
-              leading: Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: Row(
-                  children: [
-                    Text(
+              leading: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
                       "Siklus Saat Ini : $nowSiklus",
-                      style: const TextStyle(fontSize: 20, color: Colors.white),
+                      style: const TextStyle(fontSize: 20, color: Colors.black),
                     ),
-                  ],
-                ),
-              ),
-              title: const Text(
-                "Home",
-                style: TextStyle(fontSize: 25, color: Colors.white),
+                  ),
+                ],
               ),
               centerTitle: true,
-              actions: [
-                Text(
-                  version,
-                  style: const TextStyle(fontSize: 14, color: Colors.white),
-                ),
-              ],
             ),
             body: dashboardProduksi()));
   }
@@ -508,58 +498,66 @@ class _SummaryProduktivitasScreenState
   //! dashboard produksi
   dashboardProduksi() {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Center(
-          child: Container(
-            padding: const EdgeInsets.only(top: 5),
-            width: MediaQuery.of(context).size.width * 0.3,
-            child: DropdownSearch<String>(
-              items: const [
-                "JANUARI",
-                "FEBRUARI",
-                "MARET",
-                "APRIL",
-                "MEI",
-                "JUNI",
-                "JULI",
-                "AGUSTUS",
-                "SEPTEMBER",
-                "OKTOBER",
-                "NOVEMBER",
-                "DESEMBER"
-              ],
-              onChanged: (item) {
+        Container(
+          padding: const EdgeInsets.only(top: 26),
+          child: const Text(
+            'Summary Produktivitas',
+            style: TextStyle(
+                color: Colors.black, fontWeight: FontWeight.bold, fontSize: 26),
+          ),
+        ),
+        Container(
+          width: 350,
+          padding: const EdgeInsets.all(10.0),
+          child: DropdownSearch<String>(
+            items: const [
+              "JANUARI",
+              "FEBRUARI",
+              "MARET",
+              "APRIL",
+              "MEI",
+              "JUNI",
+              "JULI",
+              "AGUSTUS",
+              "SEPTEMBER",
+              "OKTOBER",
+              "NOVEMBER",
+              "DESEMBER"
+            ],
+            onChanged: (item) {
+              setState(() {
+                isLoadingJenisBarang = false;
+                siklus.text = item!;
+                siklusDesigner = siklus.text.toString();
+                // _getAllDataProduksi(
+                //     siklusDesigner, sharedPreferences!.getString('nama')!);
+              });
+              Future.delayed(const Duration(milliseconds: 500)).then((value) {
                 setState(() {
-                  isLoadingJenisBarang = false;
-                  siklus.text = item!;
-                  siklusDesigner = siklus.text.toString();
-                  // _getAllDataProduksi(
-                  //     siklusDesigner, sharedPreferences!.getString('nama')!);
+                  isLoadingJenisBarang = true;
                 });
-                Future.delayed(const Duration(milliseconds: 500)).then((value) {
-                  setState(() {
-                    isLoadingJenisBarang = true;
-                  });
-                });
-              },
-              popupProps: const PopupPropsMultiSelection.modalBottomSheet(
-                showSelectedItems: true,
-                showSearchBox: true,
-              ),
-              dropdownDecoratorProps: DropDownDecoratorProps(
-                textAlign: TextAlign.center,
-                baseStyle: const TextStyle(
-                    fontSize: 20,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold),
-                dropdownSearchDecoration: InputDecoration(
-                    labelText: "Pilih Siklus",
-                    floatingLabelAlignment: FloatingLabelAlignment.center,
-                    filled: true,
-                    fillColor: Colors.grey.shade200,
-                    border: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(50)))),
-              ),
+              });
+            },
+            popupProps: const PopupPropsMultiSelection.modalBottomSheet(
+              showSelectedItems: true,
+              showSearchBox: true,
+            ),
+            dropdownDecoratorProps: const DropDownDecoratorProps(
+              textAlign: TextAlign.center,
+              baseStyle: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold),
+              dropdownSearchDecoration: InputDecoration(
+                  labelText: "Pilih Siklus",
+                  floatingLabelAlignment: FloatingLabelAlignment.center,
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(12)))),
             ),
           ),
         ),

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:form_designer/mainScreen/home_screen.dart';
 import 'package:form_designer/mainScreen/list_batu_screen.dart';
 import 'package:form_designer/mainScreen/login.dart';
-import 'package:form_designer/mainScreen/side_screen.dart';
+import 'package:form_designer/mainScreen/sideScreen/side_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../calculatePricing/list_calculate_pricing_screen.dart';
 import '../mainScreen/list_designer_screen.dart';

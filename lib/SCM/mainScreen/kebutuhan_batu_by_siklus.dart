@@ -3,11 +3,12 @@
 import 'dart:convert';
 
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:form_designer/SCM/model/kebutuhan_batu_model.dart';
 import 'package:form_designer/api/api_constant.dart';
 import 'package:form_designer/global/global.dart';
-import 'package:form_designer/mainScreen/side_screen_kebutuhan_batu.dart';
+import 'package:form_designer/mainScreen/sideScreen/side_screen_scm.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -44,12 +45,15 @@ class _ListKebutuhanBatuScreenState extends State<ListKebutuhanBatuScreen> {
   int? limit;
   int _currentSortColumn = 0;
   String siklusDesigner = '';
+  var nowSiklus = '';
   @override
   initState() {
     super.initState();
     initializeDateFormatting();
     var now = DateTime.now();
     String month = DateFormat('MMMM', 'id').format(now);
+    nowSiklus = sharedPreferences!.getString('siklus')!;
+
     print(month);
     _getData("all");
   }
@@ -546,16 +550,10 @@ class _ListKebutuhanBatuScreenState extends State<ListKebutuhanBatuScreen> {
       for (final value in values) {
         listUniqQtyBatu.add(value);
       }
-
-      // print(listUniqBatu);
-      // print(listUniqQtyBatu);
       var g = jsonResponse
           .map((data) => KebutuhanBatuModel.fromJson(data))
           .toList();
       filterListBatu = g;
-      // setState(() {
-      //   isLoading = true;
-      // });
       return g;
     } else {
       throw Exception('Unexpected error occured!');
@@ -583,29 +581,55 @@ class _ListKebutuhanBatuScreenState extends State<ListKebutuhanBatuScreen> {
         // drawer: Drawer1(),
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          elevation: 0,
-          backgroundColor: Colors.blue,
-          flexibleSpace: Container(
-            color: Colors.blue,
-          ),
-          title: const Text(
-            "LIST KEBUTUHAN BATU",
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 25,
+          backgroundColor: Colors.white,
+          leadingWidth: 320,
+          //change siklus
+          leading: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 30),
+              child: Row(
+                children: [
+                  Text(
+                    "Siklus Saat Ini : $nowSiklus",
+                    style: TextStyle(fontSize: 20, color: Colors.grey.shade700),
+                  ),
+                ],
+              ),
             ),
+          ),
+
+          title: CupertinoSearchTextField(
+            placeholder: 'Search Anything...',
+            borderRadius: const BorderRadius.all(Radius.circular(25)),
+            itemColor: Colors.black,
+            controller: controller,
+            backgroundColor: Colors.black12,
+            keyboardType: TextInputType.text,
+            onChanged: (value) {},
           ),
           centerTitle: true,
         ),
         body: Container(
-          padding: const EdgeInsets.only(top: 25),
+          width: MediaQuery.of(context).size.width * 1,
+          color: colorBG,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 1),
-                width: MediaQuery.of(context).size.width * 0.5,
+                padding: const EdgeInsets.only(top: 26, left: 15),
+                child: const Text(
+                  'Kebutuhan Batu',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 26),
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.only(left: 40),
+                width: 350,
                 child: DropdownSearch<String>(
                   items: const [
                     "JANUARI",
@@ -642,11 +666,19 @@ class _ListKebutuhanBatuScreenState extends State<ListKebutuhanBatuScreen> {
                     showSearchBox: true,
                   ),
                   dropdownDecoratorProps: const DropDownDecoratorProps(
+                    textAlign: TextAlign.center,
+                    baseStyle: TextStyle(
+                        fontSize: 16,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold),
                     dropdownSearchDecoration: InputDecoration(
-                      labelText: "Pilih Siklus",
-                      filled: true,
-                      fillColor: Colors.white,
-                    ),
+                        labelText: "Pilih Siklus",
+                        floatingLabelAlignment: FloatingLabelAlignment.center,
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(12)))),
                   ),
                 ),
               ),
@@ -1110,7 +1142,7 @@ class RowSource extends DataTableSource {
                                                                     MaterialPageRoute(
                                                                         builder:
                                                                             (c) =>
-                                                                                const MainViewKebutuhanBatu()));
+                                                                                MainViewScm(col: 5)));
                                                                 showDialog<
                                                                         String>(
                                                                     context:
@@ -1347,7 +1379,7 @@ class RowSource extends DataTableSource {
                                                                     MaterialPageRoute(
                                                                         builder:
                                                                             (c) =>
-                                                                                const MainViewKebutuhanBatu()));
+                                                                                MainViewScm(col: 5)));
                                                                 showDialog<
                                                                         String>(
                                                                     context:

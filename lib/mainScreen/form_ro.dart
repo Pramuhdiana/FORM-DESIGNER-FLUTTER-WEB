@@ -2246,40 +2246,40 @@ class _FormROScreenState extends State<FormROScreen> {
       return 0;
     } else if (total < 1500) {
       var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
-        (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
-        (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
-        (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
-        (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
-        (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
-        (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
-        (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
-        (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
-        (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
-        (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
-        (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
-        (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
-        (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
-        (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
-        (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
-        (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
-        (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
-        (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
-        (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
-        (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
-        (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
-        (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
-        (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
-        (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
-        (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
-        (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
-        (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
-        (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
-        (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
-        (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
-        (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
-        (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
-        (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
-        (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
+          (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
+          (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
+          (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
+          (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
+          (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
+          (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
+          (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
+          (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
+          (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
+          (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
+          (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
+          (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
+          (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
+          (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
+          (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
+          (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
+          (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
+          (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
+          (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
+          (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
+          (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
+          (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
+          (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
+          (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
+          (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
+          (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
+          (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
+          (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
+          (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
+          (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
+          (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
+          (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
+          (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
+          (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
       print(totalDiamond);
 
       var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
@@ -2354,41 +2354,41 @@ class _FormROScreenState extends State<FormROScreen> {
         return total;
       }
     } else if (total <= 2251) {
-     var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
-        (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
-        (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
-        (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
-        (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
-        (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
-        (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
-        (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
-        (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
-        (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
-        (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
-        (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
-        (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
-        (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
-        (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
-        (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
-        (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
-        (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
-        (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
-        (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
-        (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
-        (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
-        (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
-        (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
-        (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
-        (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
-        (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
-        (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
-        (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
-        (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
-        (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
-        (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
-        (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
-        (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
-        (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
+      var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
+          (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
+          (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
+          (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
+          (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
+          (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
+          (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
+          (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
+          (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
+          (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
+          (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
+          (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
+          (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
+          (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
+          (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
+          (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
+          (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
+          (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
+          (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
+          (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
+          (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
+          (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
+          (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
+          (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
+          (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
+          (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
+          (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
+          (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
+          (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
+          (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
+          (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
+          (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
+          (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
+          (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
+          (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
       print(totalDiamond);
 
       var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
@@ -2467,41 +2467,41 @@ class _FormROScreenState extends State<FormROScreen> {
         return total;
       }
     } else if (total <= 4000) {
-     var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
-        (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
-        (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
-        (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
-        (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
-        (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
-        (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
-        (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
-        (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
-        (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
-        (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
-        (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
-        (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
-        (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
-        (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
-        (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
-        (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
-        (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
-        (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
-        (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
-        (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
-        (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
-        (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
-        (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
-        (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
-        (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
-        (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
-        (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
-        (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
-        (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
-        (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
-        (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
-        (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
-        (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
-        (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
+      var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
+          (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
+          (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
+          (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
+          (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
+          (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
+          (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
+          (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
+          (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
+          (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
+          (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
+          (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
+          (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
+          (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
+          (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
+          (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
+          (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
+          (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
+          (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
+          (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
+          (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
+          (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
+          (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
+          (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
+          (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
+          (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
+          (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
+          (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
+          (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
+          (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
+          (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
+          (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
+          (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
+          (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
+          (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
       print(totalDiamond);
 
       var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
@@ -2576,40 +2576,40 @@ class _FormROScreenState extends State<FormROScreen> {
       }
     } else {
       var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
-        (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
-        (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
-        (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
-        (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
-        (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
-        (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
-        (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
-        (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
-        (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
-        (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
-        (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
-        (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
-        (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
-        (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
-        (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
-        (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
-        (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
-        (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
-        (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
-        (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
-        (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
-        (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
-        (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
-        (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
-        (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
-        (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
-        (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
-        (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
-        (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
-        (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
-        (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
-        (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
-        (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
-        (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
+          (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
+          (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
+          (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
+          (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
+          (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
+          (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
+          (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
+          (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
+          (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
+          (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
+          (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
+          (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
+          (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
+          (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
+          (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
+          (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
+          (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
+          (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
+          (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
+          (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
+          (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
+          (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
+          (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
+          (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
+          (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
+          (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
+          (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
+          (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
+          (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
+          (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
+          (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
+          (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
+          (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
+          (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
 
       var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
                   (caratPcsBatu2 * qtyIntBatu2!) +
@@ -2684,7 +2684,7 @@ class _FormROScreenState extends State<FormROScreen> {
   }
 
   double get totalPriceBeliBerlian {
-     var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
+    var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
         (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
         (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
         (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
@@ -2769,40 +2769,40 @@ class _FormROScreenState extends State<FormROScreen> {
       return 0;
     } else if (total < 1500) {
       var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
-        (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
-        (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
-        (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
-        (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
-        (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
-        (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
-        (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
-        (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
-        (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
-        (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
-        (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
-        (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
-        (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
-        (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
-        (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
-        (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
-        (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
-        (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
-        (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
-        (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
-        (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
-        (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
-        (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
-        (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
-        (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
-        (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
-        (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
-        (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
-        (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
-        (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
-        (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
-        (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
-        (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
-        (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
+          (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
+          (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
+          (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
+          (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
+          (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
+          (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
+          (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
+          (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
+          (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
+          (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
+          (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
+          (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
+          (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
+          (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
+          (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
+          (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
+          (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
+          (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
+          (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
+          (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
+          (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
+          (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
+          (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
+          (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
+          (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
+          (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
+          (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
+          (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
+          (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
+          (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
+          (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
+          (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
+          (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
+          (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
 
       var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
                   (caratPcsBatu2 * qtyIntBatu2!) +
@@ -2876,40 +2876,40 @@ class _FormROScreenState extends State<FormROScreen> {
       }
     } else if (total <= 2251) {
       var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
-        (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
-        (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
-        (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
-        (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
-        (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
-        (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
-        (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
-        (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
-        (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
-        (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
-        (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
-        (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
-        (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
-        (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
-        (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
-        (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
-        (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
-        (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
-        (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
-        (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
-        (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
-        (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
-        (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
-        (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
-        (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
-        (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
-        (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
-        (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
-        (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
-        (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
-        (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
-        (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
-        (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
-        (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
+          (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
+          (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
+          (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
+          (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
+          (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
+          (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
+          (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
+          (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
+          (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
+          (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
+          (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
+          (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
+          (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
+          (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
+          (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
+          (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
+          (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
+          (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
+          (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
+          (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
+          (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
+          (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
+          (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
+          (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
+          (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
+          (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
+          (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
+          (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
+          (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
+          (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
+          (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
+          (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
+          (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
+          (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
 
       var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
                   (caratPcsBatu2 * qtyIntBatu2!) +
@@ -2981,40 +2981,40 @@ class _FormROScreenState extends State<FormROScreen> {
       }
     } else if (total <= 4000) {
       var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
-        (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
-        (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
-        (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
-        (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
-        (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
-        (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
-        (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
-        (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
-        (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
-        (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
-        (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
-        (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
-        (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
-        (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
-        (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
-        (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
-        (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
-        (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
-        (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
-        (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
-        (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
-        (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
-        (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
-        (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
-        (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
-        (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
-        (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
-        (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
-        (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
-        (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
-        (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
-        (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
-        (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
-        (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
+          (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
+          (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
+          (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
+          (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
+          (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
+          (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
+          (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
+          (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
+          (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
+          (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
+          (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
+          (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
+          (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
+          (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
+          (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
+          (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
+          (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
+          (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
+          (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
+          (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
+          (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
+          (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
+          (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
+          (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
+          (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
+          (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
+          (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
+          (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
+          (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
+          (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
+          (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
+          (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
+          (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
+          (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
 
       var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
                   (caratPcsBatu2 * qtyIntBatu2!) +
@@ -3086,41 +3086,41 @@ class _FormROScreenState extends State<FormROScreen> {
         return total;
       }
     } else {
-       var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
-        (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
-        (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
-        (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
-        (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
-        (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
-        (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
-        (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
-        (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
-        (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
-        (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
-        (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
-        (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
-        (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
-        (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
-        (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
-        (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
-        (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
-        (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
-        (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
-        (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
-        (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
-        (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
-        (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
-        (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
-        (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
-        (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
-        (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
-        (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
-        (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
-        (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
-        (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
-        (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
-        (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
-        (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
+      var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
+          (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
+          (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
+          (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
+          (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
+          (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
+          (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
+          (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
+          (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
+          (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
+          (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
+          (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
+          (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
+          (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
+          (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
+          (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
+          (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
+          (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
+          (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
+          (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
+          (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
+          (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
+          (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
+          (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
+          (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
+          (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
+          (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
+          (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
+          (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
+          (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
+          (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
+          (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
+          (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
+          (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
+          (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
 
       var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
                   (caratPcsBatu2 * qtyIntBatu2!) +
@@ -3281,40 +3281,40 @@ class _FormROScreenState extends State<FormROScreen> {
       return 0;
     } else if (total < 1500) {
       var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
-        (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
-        (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
-        (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
-        (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
-        (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
-        (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
-        (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
-        (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
-        (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
-        (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
-        (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
-        (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
-        (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
-        (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
-        (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
-        (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
-        (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
-        (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
-        (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
-        (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
-        (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
-        (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
-        (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
-        (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
-        (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
-        (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
-        (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
-        (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
-        (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
-        (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
-        (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
-        (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
-        (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
-        (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
+          (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
+          (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
+          (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
+          (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
+          (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
+          (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
+          (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
+          (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
+          (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
+          (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
+          (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
+          (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
+          (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
+          (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
+          (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
+          (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
+          (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
+          (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
+          (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
+          (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
+          (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
+          (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
+          (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
+          (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
+          (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
+          (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
+          (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
+          (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
+          (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
+          (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
+          (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
+          (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
+          (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
+          (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
 
       var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
                   (caratPcsBatu2 * qtyIntBatu2!) +
@@ -3398,40 +3398,40 @@ class _FormROScreenState extends State<FormROScreen> {
       }
     } else if (total <= 2251) {
       var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
-        (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
-        (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
-        (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
-        (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
-        (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
-        (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
-        (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
-        (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
-        (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
-        (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
-        (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
-        (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
-        (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
-        (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
-        (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
-        (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
-        (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
-        (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
-        (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
-        (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
-        (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
-        (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
-        (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
-        (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
-        (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
-        (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
-        (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
-        (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
-        (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
-        (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
-        (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
-        (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
-        (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
-        (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
+          (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
+          (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
+          (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
+          (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
+          (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
+          (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
+          (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
+          (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
+          (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
+          (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
+          (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
+          (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
+          (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
+          (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
+          (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
+          (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
+          (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
+          (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
+          (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
+          (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
+          (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
+          (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
+          (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
+          (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
+          (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
+          (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
+          (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
+          (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
+          (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
+          (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
+          (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
+          (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
+          (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
+          (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
 
       var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
                   (caratPcsBatu2 * qtyIntBatu2!) +
@@ -3512,41 +3512,41 @@ class _FormROScreenState extends State<FormROScreen> {
         return total;
       }
     } else if (total <= 4000) {
-       var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
-        (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
-        (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
-        (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
-        (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
-        (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
-        (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
-        (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
-        (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
-        (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
-        (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
-        (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
-        (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
-        (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
-        (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
-        (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
-        (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
-        (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
-        (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
-        (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
-        (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
-        (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
-        (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
-        (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
-        (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
-        (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
-        (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
-        (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
-        (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
-        (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
-        (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
-        (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
-        (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
-        (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
-        (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
+      var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
+          (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
+          (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
+          (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
+          (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
+          (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
+          (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
+          (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
+          (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
+          (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
+          (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
+          (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
+          (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
+          (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
+          (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
+          (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
+          (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
+          (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
+          (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
+          (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
+          (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
+          (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
+          (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
+          (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
+          (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
+          (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
+          (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
+          (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
+          (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
+          (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
+          (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
+          (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
+          (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
+          (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
+          (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
 
       var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
                   (caratPcsBatu2 * qtyIntBatu2!) +
@@ -3630,40 +3630,40 @@ class _FormROScreenState extends State<FormROScreen> {
       }
     } else {
       var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
-        (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
-        (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
-        (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
-        (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
-        (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
-        (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
-        (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
-        (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
-        (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
-        (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
-        (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
-        (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
-        (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
-        (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
-        (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
-        (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
-        (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
-        (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
-        (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
-        (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
-        (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
-        (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
-        (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
-        (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
-        (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
-        (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
-        (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
-        (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
-        (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
-        (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
-        (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
-        (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
-        (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
-        (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
+          (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
+          (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
+          (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
+          (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
+          (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
+          (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
+          (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
+          (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
+          (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
+          (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
+          (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
+          (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
+          (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
+          (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
+          (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
+          (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
+          (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
+          (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
+          (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
+          (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
+          (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
+          (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
+          (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
+          (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
+          (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
+          (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
+          (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
+          (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
+          (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
+          (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
+          (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
+          (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
+          (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
+          (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
 
       var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
               (caratPcsBatu2 * qtyIntBatu2!) +

@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:form_designer/mainScreen/view_photo_screen.dart';
@@ -56,9 +57,12 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
     }
   }
 
+  var nowSiklus = '';
+
   @override
   void initState() {
     super.initState();
+    nowSiklus = sharedPreferences!.getString('siklus')!;
 
     // _getData();
   }
@@ -161,17 +165,63 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
             // drawer: Drawer1(),
             appBar: AppBar(
               automaticallyImplyLeading: false,
-              elevation: 0,
-              backgroundColor: Colors.blue,
-              flexibleSpace: Container(
-                color: Colors.blue,
+              backgroundColor: Colors.white,
+              leadingWidth: 320,
+              leading: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "Siklus Saat Ini : $nowSiklus",
+                      style:
+                          TextStyle(fontSize: 20, color: Colors.grey.shade700),
+                    ),
+                  ),
+                ],
               ),
-              title: const Text(
-                "MONITORING PER SIKLUS",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 25,
+              elevation: 0,
+              // ignore: avoid_unnecessary_containers
+              title: Container(
+                // width: MediaQuery.of(context).size.width * 0.3,
+                child: CupertinoSearchTextField(
+                  placeholder: 'Search Anything...',
+                  borderRadius: const BorderRadius.all(Radius.circular(25)),
+                  itemColor: Colors.black,
+                  // autofocus: false,
+                  controller: controller,
+                  backgroundColor: Colors.black12,
+                  // keyboardType: TextInputType.number,
+                  // focusNode: numberFocusNode,
+                  keyboardType: TextInputType.text,
+                  onChanged: (value) {
+                    //fungsi search anyting
+                    myCrm = filterCrm!
+                        .where((element) =>
+                            element.kodeDesignMdbc!
+                                .toLowerCase()
+                                .contains(value.toLowerCase()) ||
+                            element.namaDesigner!
+                                .toLowerCase()
+                                .contains(value.toLowerCase()) ||
+                            element.kodeDesign!
+                                .toLowerCase()
+                                .contains(value.toLowerCase()) ||
+                            element.kodeMarketing!
+                                .toLowerCase()
+                                .contains(value.toLowerCase()) ||
+                            element.tema!
+                                .toLowerCase()
+                                .contains(value.toLowerCase()) ||
+                            element.jenisBarang!
+                                .toLowerCase()
+                                .contains(value.toLowerCase()) ||
+                            element.estimasiHarga!
+                                .toString()
+                                .contains(value.toLowerCase()))
+                        .toList();
+
+                    setState(() {});
+                  },
                 ),
               ),
               centerTitle: true,
@@ -180,7 +230,10 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
                     onPressed: () {
                       refresh();
                     },
-                    icon: const Icon(Icons.refresh))
+                    icon: const Icon(
+                      Icons.refresh,
+                      color: Colors.black,
+                    ))
               ],
             ),
             body: sharedPreferences!.getString('level') == '4'
@@ -219,102 +272,108 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
 
   mpsSCM() {
     return Container(
-      padding: const EdgeInsets.only(top: 25),
+      padding: const EdgeInsets.only(top: 5),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Container(
-            padding: const EdgeInsets.only(bottom: 20),
-            width: MediaQuery.of(context).size.width * 0.5,
-            child: DropdownSearch<String>(
-              items: const [
-                "JANUARI",
-                "FEBRUARI",
-                "MARET",
-                "APRIL",
-                "MEI",
-                "JUNI",
-                "JULI",
-                "AGUSTUS",
-                "SEPTEMBER",
-                "OKTOBER",
-                "NOVEMBER",
-                "DESEMBER"
-              ],
-              onChanged: (item) {
-                setState(() {
-                  isLoading = false;
-                });
-                siklus.text = item!;
-                siklusDesigner = siklus.text.toString();
-                _getDataBySiklus(siklus.text);
-                //? tunggu 2 detik
-                Future.delayed(const Duration(seconds: 2)).then((value) {
-                  //! lalu eksekusi fungsi ini
-                  setState(() {
-                    isLoading = true;
-                  });
-                });
-              },
-              popupProps: const PopupPropsMultiSelection.modalBottomSheet(
-                showSelectedItems: true,
-                showSearchBox: true,
-              ),
-              dropdownDecoratorProps: const DropDownDecoratorProps(
-                dropdownSearchDecoration: InputDecoration(
-                  labelText: "Pilih Siklus",
-                  filled: true,
-                  fillColor: Colors.white,
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.2,
+                  child: DropdownSearch<String>(
+                    items: const [
+                      "JANUARI",
+                      "FEBRUARI",
+                      "MARET",
+                      "APRIL",
+                      "MEI",
+                      "JUNI",
+                      "JULI",
+                      "AGUSTUS",
+                      "SEPTEMBER",
+                      "OKTOBER",
+                      "NOVEMBER",
+                      "DESEMBER"
+                    ],
+                    onChanged: (item) {
+                      setState(() {
+                        isLoading = false;
+                      });
+                      siklus.text = item!;
+                      siklusDesigner = siklus.text.toString();
+                      _getDataBySiklus(siklus.text);
+                      //? tunggu 2 detik
+                      Future.delayed(const Duration(seconds: 2)).then((value) {
+                        //! lalu eksekusi fungsi ini
+                        setState(() {
+                          isLoading = true;
+                        });
+                      });
+                    },
+                    popupProps: const PopupPropsMultiSelection.modalBottomSheet(
+                      showSelectedItems: true,
+                      showSearchBox: true,
+                    ),
+                    dropdownDecoratorProps: const DropDownDecoratorProps(
+                      dropdownSearchDecoration: InputDecoration(
+                        labelText: "Pilih Siklus",
+                        filled: true,
+                        fillColor: Colors.white,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          ),
-          Container(
-            width: MediaQuery.of(context).size.width * 0.5,
-            height: 45,
-            padding: const EdgeInsets.all(5),
-            decoration: BoxDecoration(
-                border: Border.all(
-                  color: Colors.grey,
-                ),
-                borderRadius: BorderRadius.circular(12)),
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: TextField(
-                textAlign: TextAlign.center,
-                controller: controller,
-                decoration:
-                    const InputDecoration(hintText: "Search Anything ..."),
-                onChanged: (value) {
-                  //fungsi search anyting
-                  myCrm = filterCrm!
-                      .where((element) =>
-                          element.kodeDesignMdbc!
-                              .toLowerCase()
-                              .contains(value.toLowerCase()) ||
-                          element.namaDesigner!
-                              .toLowerCase()
-                              .contains(value.toLowerCase()) ||
-                          element.kodeMarketing!
-                              .toLowerCase()
-                              .contains(value.toLowerCase()) ||
-                          element.kodeDesign!
-                              .toLowerCase()
-                              .contains(value.toLowerCase()) ||
-                          element.tema!
-                              .toLowerCase()
-                              .contains(value.toLowerCase()) ||
-                          element.jenisBarang!
-                              .toLowerCase()
-                              .contains(value.toLowerCase()) ||
-                          element.estimasiHarga!
-                              .toString()
-                              .contains(value.toLowerCase()))
-                      .toList();
+                // Container(
+                //   width: MediaQuery.of(context).size.width * 0.2,
+                //   padding: const EdgeInsets.all(0),
+                //   decoration: BoxDecoration(
+                //       border: Border.all(
+                //         color: Colors.grey,
+                //       ),
+                //       borderRadius: BorderRadius.circular(12)),
+                //   child: Align(
+                //     alignment: Alignment.bottomCenter,
+                //     child: TextField(
+                //       textAlign: TextAlign.center,
+                //       controller: controller,
+                //       decoration: const InputDecoration(
+                //           hintText: "Search Anything ..."),
+                //       onChanged: (value) {
+                //         //fungsi search anyting
+                //         myCrm = filterCrm!
+                //             .where((element) =>
+                //                 element.kodeDesignMdbc!
+                //                     .toLowerCase()
+                //                     .contains(value.toLowerCase()) ||
+                //                 element.namaDesigner!
+                //                     .toLowerCase()
+                //                     .contains(value.toLowerCase()) ||
+                //                 element.kodeMarketing!
+                //                     .toLowerCase()
+                //                     .contains(value.toLowerCase()) ||
+                //                 element.kodeDesign!
+                //                     .toLowerCase()
+                //                     .contains(value.toLowerCase()) ||
+                //                 element.tema!
+                //                     .toLowerCase()
+                //                     .contains(value.toLowerCase()) ||
+                //                 element.jenisBarang!
+                //                     .toLowerCase()
+                //                     .contains(value.toLowerCase()) ||
+                //                 element.estimasiHarga!
+                //                     .toString()
+                //                     .contains(value.toLowerCase()))
+                //             .toList();
 
-                  setState(() {});
-                },
-              ),
+                //         setState(() {});
+                //       },
+                //     ),
+                //   ),
+                // ),
+              ],
             ),
           ),
           siklusDesigner.isEmpty
@@ -782,14 +841,22 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
   }
 
   mpsProduksi() {
-    return Container(
-      padding: const EdgeInsets.only(top: 25),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Container(
-            padding: const EdgeInsets.only(bottom: 20),
-            width: MediaQuery.of(context).size.width * 0.5,
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          padding: const EdgeInsets.only(top: 26),
+          child: const Text(
+            'Master Planning Siklus',
+            style: TextStyle(
+                color: Colors.black, fontWeight: FontWeight.bold, fontSize: 26),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: SizedBox(
+            width: 350,
             child: DropdownSearch<String>(
               items: const [
                 "JANUARI",
@@ -825,447 +892,404 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
                 showSearchBox: true,
               ),
               dropdownDecoratorProps: const DropDownDecoratorProps(
-                dropdownSearchDecoration: InputDecoration(
-                  labelText: "Pilih Siklus",
-                  filled: true,
-                  fillColor: Colors.white,
-                ),
-              ),
-            ),
-          ),
-          Container(
-            width: MediaQuery.of(context).size.width * 0.5,
-            height: 45,
-            padding: const EdgeInsets.all(5),
-            decoration: BoxDecoration(
-                border: Border.all(
-                  color: Colors.grey,
-                ),
-                borderRadius: BorderRadius.circular(12)),
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: TextField(
                 textAlign: TextAlign.center,
-                controller: controller,
-                decoration:
-                    const InputDecoration(hintText: "Search Anything ..."),
-                onChanged: (value) {
-                  //fungsi search anyting
-                  myCrm = filterCrm!
-                      .where((element) =>
-                          element.kodeDesignMdbc!
-                              .toLowerCase()
-                              .contains(value.toLowerCase()) ||
-                          element.namaDesigner!
-                              .toLowerCase()
-                              .contains(value.toLowerCase()) ||
-                          element.kodeMarketing!
-                              .toLowerCase()
-                              .contains(value.toLowerCase()) ||
-                          element.kodeDesign!
-                              .toLowerCase()
-                              .contains(value.toLowerCase()) ||
-                          element.tema!
-                              .toLowerCase()
-                              .contains(value.toLowerCase()) ||
-                          element.jenisBarang!
-                              .toLowerCase()
-                              .contains(value.toLowerCase()) ||
-                          element.estimasiHarga!
-                              .toString()
-                              .contains(value.toLowerCase()))
-                      .toList();
-
-                  setState(() {});
-                },
+                baseStyle: TextStyle(
+                    fontSize: 16,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold),
+                dropdownSearchDecoration: InputDecoration(
+                    labelText: "Pilih Siklus",
+                    floatingLabelAlignment: FloatingLabelAlignment.center,
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(12)))),
               ),
             ),
           ),
-          siklusDesigner.isEmpty
-              ? Center(
-                  child: Column(
-                  children: [
-                    SizedBox(
-                      width: 250,
-                      height: 210,
-                      child: Lottie.asset("loadingJSON/selectDate.json"),
-                    ),
-                    const Text(
-                      'Pilih siklus terlebih dahulu',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontSize: 26,
-                          color: Colors.blueGrey,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Acne',
-                          letterSpacing: 1.5),
-                    ),
-                  ],
-                ))
-              : isLoading == false
-                  ? Expanded(
-                      child: Center(
-                          child: Container(
-                      padding: const EdgeInsets.all(5),
-                      width: 90,
-                      height: 90,
-                      child: Lottie.asset("loadingJSON/loadingV1.json"),
-                    )))
-                  : Expanded(
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.vertical,
+        ),
+        siklusDesigner.isEmpty
+            ? Center(
+                child: Column(
+                children: [
+                  SizedBox(
+                    width: 250,
+                    height: 210,
+                    child: Lottie.asset("loadingJSON/selectDate.json"),
+                  ),
+                  const Text(
+                    'Pilih siklus terlebih dahulu',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontSize: 26,
+                        color: Colors.blueGrey,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Acne',
+                        letterSpacing: 1.5),
+                  ),
+                ],
+              ))
+            : isLoading == false
+                ? Expanded(
+                    child: Center(
                         child: Container(
-                          padding: const EdgeInsets.all(15),
-                          width: MediaQuery.of(context).size.width * 1,
-                          child: SizedBox(
-                            width: double.infinity,
-                            child: Theme(
-                              data: ThemeData.light().copyWith(
-                                  // cardColor: Theme.of(context).canvasColor),
-                                  cardColor: Colors.white,
-                                  hoverColor: Colors.grey.shade400,
-                                  dividerColor: Colors.grey),
-                              child: PaginatedDataTable(
-                                  // ignore: deprecated_member_use
-                                  dataRowHeight: 200,
-                                  sortColumnIndex: _currentSortColumn,
-                                  sortAscending: sort,
-                                  rowsPerPage: 10,
-                                  columnSpacing: 0,
-                                  columns: [
-                                    // no
-                                    const DataColumn(
-                                      label: SizedBox(
-                                          width: 25,
-                                          child: Text(
-                                            "No",
-                                            style: TextStyle(
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.bold),
-                                          )),
-                                    ),
-                                    DataColumn(label: _verticalDivider),
-                                    //gambar
-                                    DataColumn(
-                                      label: Container(
-                                          padding:
-                                              const EdgeInsets.only(left: 30),
-                                          width: 150,
-                                          child: const Text(
-                                            "Gambar",
-                                            style: TextStyle(
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.bold),
-                                          )),
-                                    ),
-                                    DataColumn(label: _verticalDivider),
+                    padding: const EdgeInsets.all(5),
+                    width: 90,
+                    height: 90,
+                    child: Lottie.asset("loadingJSON/loadingV1.json"),
+                  )))
+                : Expanded(
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      child: Container(
+                        padding: const EdgeInsets.all(15),
+                        width: MediaQuery.of(context).size.width * 1,
+                        child: SizedBox(
+                          width: double.infinity,
+                          child: Theme(
+                            data: ThemeData.light().copyWith(
+                                // cardColor: Theme.of(context).canvasColor),
+                                cardColor: Colors.white,
+                                hoverColor: Colors.grey.shade400,
+                                dividerColor: Colors.grey),
+                            child: PaginatedDataTable(
+                                // ignore: deprecated_member_use
+                                dataRowHeight: 200,
+                                sortColumnIndex: _currentSortColumn,
+                                sortAscending: sort,
+                                rowsPerPage: 10,
+                                columnSpacing: 0,
+                                columns: [
+                                  // no
+                                  const DataColumn(
+                                    label: SizedBox(
+                                        width: 25,
+                                        child: Text(
+                                          "No",
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold),
+                                        )),
+                                  ),
+                                  DataColumn(label: _verticalDivider),
+                                  //gambar
+                                  DataColumn(
+                                    label: Container(
+                                        padding:
+                                            const EdgeInsets.only(left: 30),
+                                        width: 150,
+                                        child: const Text(
+                                          "Gambar",
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold),
+                                        )),
+                                  ),
+                                  DataColumn(label: _verticalDivider),
 
-                                    // kode mdbc
-                                    DataColumn(
-                                        label: const SizedBox(
-                                            width: 120,
-                                            child: Text(
-                                              "      Kode MDBC",
-                                              style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold),
-                                            )),
-                                        onSort: (columnIndex, _) {
-                                          setState(() {
-                                            _currentSortColumn = columnIndex;
-                                            if (sort == true) {
-                                              sort = false;
-                                              filterCrm!.sort((a, b) => a
-                                                  .kodeDesignMdbc!
-                                                  .toLowerCase()
-                                                  .compareTo(b.kodeDesignMdbc!
-                                                      .toLowerCase()));
-                                            } else {
-                                              sort = true;
-                                              filterCrm!.sort((a, b) => b
-                                                  .kodeDesignMdbc!
-                                                  .toLowerCase()
-                                                  .compareTo(a.kodeDesignMdbc!
-                                                      .toLowerCase()));
-                                            }
-                                          });
-                                        }),
-                                    DataColumn(label: _verticalDivider),
-                                    //kode marketing
-                                    DataColumn(
-                                        label: const SizedBox(
-                                            width: 120,
-                                            child: Text(
-                                              "Kode Marketing",
-                                              style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold),
-                                            )),
-                                        onSort: (columnIndex, _) {
-                                          setState(() {
-                                            _currentSortColumn = columnIndex;
-
-                                            if (sort == true) {
-                                              sort = false;
-                                              filterCrm!.sort((a, b) => a
-                                                  .kodeMarketing!
-                                                  .toLowerCase()
-                                                  .compareTo(b.kodeMarketing!
-                                                      .toLowerCase()));
-                                            } else {
-                                              sort = true;
-                                              filterCrm!.sort((a, b) => b
-                                                  .kodeMarketing!
-                                                  .toLowerCase()
-                                                  .compareTo(a.kodeMarketing!
-                                                      .toLowerCase()));
-                                            }
-                                          });
-                                        }),
-                                    DataColumn(label: _verticalDivider),
-                                    //posisi
-                                    DataColumn(
-                                        label: const SizedBox(
-                                            width: 50,
-                                            child: Text(
-                                              "Posisi",
-                                              maxLines: 2,
-                                              style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold),
-                                            )),
-                                        onSort: (columnIndex, _) {
-                                          setState(() {
-                                            _currentSortColumn = columnIndex;
-                                            if (sort == true) {
-                                              sort = false;
-                                              filterCrm!.sort((a, b) => a
-                                                  .photoShoot!
-                                                  .compareTo(b.photoShoot!));
-                                            } else {
-                                              sort = true;
-                                              filterCrm!.sort((a, b) => b
-                                                  .photoShoot!
-                                                  .compareTo(a.photoShoot!));
-                                            }
-                                          });
-                                        }),
-                                    DataColumn(label: _verticalDivider),
-
-                                    //status batu
-                                    DataColumn(
-                                        label: const SizedBox(
-                                            width: 120,
-                                            child: Text(
-                                              "Status Batu",
-                                              style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold),
-                                            )),
-                                        onSort: (columnIndex, _) {
-                                          setState(() {
-                                            _currentSortColumn = columnIndex;
-
-                                            if (sort == true) {
-                                              sort = false;
-                                              filterCrm!.sort((a, b) => a
-                                                  .keteranganStatusBatu!
-                                                  .toLowerCase()
-                                                  .compareTo(b
-                                                      .keteranganStatusBatu!
-                                                      .toLowerCase()));
-                                            } else {
-                                              sort = true;
-                                              filterCrm!.sort((a, b) => b
-                                                  .keteranganStatusBatu!
-                                                  .toLowerCase()
-                                                  .compareTo(a
-                                                      .keteranganStatusBatu!
-                                                      .toLowerCase()));
-                                            }
-                                          });
-                                        }),
-                                    DataColumn(label: _verticalDivider),
-                                    //ketrangan batu
-                                    const DataColumn(
-                                      label: SizedBox(
+                                  // kode mdbc
+                                  DataColumn(
+                                      label: const SizedBox(
                                           width: 120,
                                           child: Text(
-                                            "Keterangan Batu",
+                                            "      Kode MDBC",
                                             style: TextStyle(
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.bold),
                                           )),
-                                      // onSort: (columnIndex, _) {
-                                      //   setState(() {
-                                      //     _currentSortColumn = columnIndex;
+                                      onSort: (columnIndex, _) {
+                                        setState(() {
+                                          _currentSortColumn = columnIndex;
+                                          if (sort == true) {
+                                            sort = false;
+                                            filterCrm!.sort((a, b) => a
+                                                .kodeDesignMdbc!
+                                                .toLowerCase()
+                                                .compareTo(b.kodeDesignMdbc!
+                                                    .toLowerCase()));
+                                          } else {
+                                            sort = true;
+                                            filterCrm!.sort((a, b) => b
+                                                .kodeDesignMdbc!
+                                                .toLowerCase()
+                                                .compareTo(a.kodeDesignMdbc!
+                                                    .toLowerCase()));
+                                          }
+                                        });
+                                      }),
+                                  DataColumn(label: _verticalDivider),
+                                  //kode marketing
+                                  DataColumn(
+                                      label: const SizedBox(
+                                          width: 120,
+                                          child: Text(
+                                            "Kode Marketing",
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold),
+                                          )),
+                                      onSort: (columnIndex, _) {
+                                        setState(() {
+                                          _currentSortColumn = columnIndex;
 
-                                      //     if (sort == true) {
-                                      //       sort = false;
-                                      //       filterCrm!.sort((a, b) => a
-                                      //           .keteranganStatusBatu!
-                                      //           .toLowerCase()
-                                      //           .compareTo(b
-                                      //               .keteranganStatusBatu!
-                                      //               .toLowerCase()));
-                                      //     } else {
-                                      //       sort = true;
-                                      //       filterCrm!.sort((a, b) => b
-                                      //           .keteranganStatusBatu!
-                                      //           .toLowerCase()
-                                      //           .compareTo(a
-                                      //               .keteranganStatusBatu!
-                                      //               .toLowerCase()));
-                                      //     }
-                                      //   });
-                                      // }
-                                    ),
-                                    DataColumn(label: _verticalDivider),
-                                    //tema
-                                    DataColumn(
-                                        label: const SizedBox(
-                                            width: 120,
-                                            child: Text(
-                                              "Tema",
-                                              style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold),
-                                            )),
-                                        onSort: (columnIndex, _) {
-                                          setState(() {
-                                            _currentSortColumn = columnIndex;
-                                            if (sort == true) {
-                                              sort = false;
-                                              filterCrm!.sort((a, b) => a.tema!
-                                                  .toLowerCase()
-                                                  .compareTo(
-                                                      b.tema!.toLowerCase()));
-                                            } else {
-                                              sort = true;
-                                              filterCrm!.sort((a, b) => b.tema!
-                                                  .toLowerCase()
-                                                  .compareTo(
-                                                      a.tema!.toLowerCase()));
-                                            }
-                                          });
-                                        }),
-                                    DataColumn(label: _verticalDivider),
-                                    //jenis barang
-                                    DataColumn(
-                                        label: const SizedBox(
-                                            width: 120,
-                                            child: Text(
-                                              "Jenis Barang",
-                                              style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold),
-                                            )),
-                                        onSort: (columnIndex, _) {
-                                          setState(() {
-                                            _currentSortColumn = columnIndex;
-                                            if (sort == true) {
-                                              sort = false;
-                                              filterCrm!.sort((a, b) => a
-                                                  .jenisBarang!
-                                                  .toLowerCase()
-                                                  .compareTo(b.jenisBarang!
-                                                      .toLowerCase()));
-                                            } else {
-                                              sort = true;
-                                              filterCrm!.sort((a, b) => b
-                                                  .jenisBarang!
-                                                  .toLowerCase()
-                                                  .compareTo(a.jenisBarang!
-                                                      .toLowerCase()));
-                                            }
-                                          });
-                                        }),
-                                    DataColumn(label: _verticalDivider),
-                                    //brand
-                                    DataColumn(
-                                        label: const SizedBox(
-                                            width: 50,
-                                            child: Text(
-                                              "Brand",
-                                              maxLines: 2,
-                                              style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold),
-                                            )),
-                                        onSort: (columnIndex, _) {
-                                          setState(() {
-                                            _currentSortColumn = columnIndex;
-                                            if (sort == true) {
-                                              // myCrm.sort((a, b) => a['estimasiHarga'].)
-                                              sort = false;
-                                              filterCrm!.sort((a, b) =>
-                                                  a.brand!.compareTo(b.brand!));
-                                              // onsortColum(columnIndex, ascending);
-                                            } else {
-                                              sort = true;
-                                              filterCrm!.sort((a, b) =>
-                                                  b.brand!.compareTo(a.brand!));
-                                            }
-                                          });
-                                        }),
-                                    DataColumn(label: _verticalDivider),
-                                    //kelas harga
-                                    const DataColumn(
-                                      label: SizedBox(
+                                          if (sort == true) {
+                                            sort = false;
+                                            filterCrm!.sort((a, b) => a
+                                                .kodeMarketing!
+                                                .toLowerCase()
+                                                .compareTo(b.kodeMarketing!
+                                                    .toLowerCase()));
+                                          } else {
+                                            sort = true;
+                                            filterCrm!.sort((a, b) => b
+                                                .kodeMarketing!
+                                                .toLowerCase()
+                                                .compareTo(a.kodeMarketing!
+                                                    .toLowerCase()));
+                                          }
+                                        });
+                                      }),
+                                  DataColumn(label: _verticalDivider),
+                                  //posisi
+                                  DataColumn(
+                                      label: const SizedBox(
                                           width: 50,
                                           child: Text(
-                                            "Kelas\nHarga",
+                                            "Posisi",
                                             maxLines: 2,
                                             style: TextStyle(
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.bold),
                                           )),
-                                    ),
-                                    DataColumn(label: _verticalDivider),
-                                    //tanggal in produksi
-                                    DataColumn(
-                                        label: const SizedBox(
-                                            width: 120,
-                                            child: Text(
-                                              "Tanggal In\nProduksi",
-                                              style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold),
-                                            )),
-                                        onSort: (columnIndex, _) {
-                                          setState(() {
-                                            _currentSortColumn = columnIndex;
-                                            if (sort == true) {
-                                              sort = false;
-                                              filterCrm!.sort((a, b) => a
-                                                  .tanggalInProduksi!
-                                                  .toLowerCase()
-                                                  .compareTo(b
-                                                      .tanggalInProduksi!
-                                                      .toLowerCase()));
-                                            } else {
-                                              sort = true;
-                                              filterCrm!.sort((a, b) => b
-                                                  .tanggalInProduksi!
-                                                  .toLowerCase()
-                                                  .compareTo(a
-                                                      .tanggalInProduksi!
-                                                      .toLowerCase()));
-                                            }
-                                          });
-                                        }),
-                                  ],
-                                  source: RowSourceProduksi(
-                                      myData: myDataProduksi,
-                                      count: myDataProduksi!.length,
-                                      siklus: siklusDesigner)),
-                            ),
+                                      onSort: (columnIndex, _) {
+                                        setState(() {
+                                          _currentSortColumn = columnIndex;
+                                          if (sort == true) {
+                                            sort = false;
+                                            filterCrm!.sort((a, b) => a
+                                                .photoShoot!
+                                                .compareTo(b.photoShoot!));
+                                          } else {
+                                            sort = true;
+                                            filterCrm!.sort((a, b) => b
+                                                .photoShoot!
+                                                .compareTo(a.photoShoot!));
+                                          }
+                                        });
+                                      }),
+                                  DataColumn(label: _verticalDivider),
+
+                                  //status batu
+                                  DataColumn(
+                                      label: const SizedBox(
+                                          width: 120,
+                                          child: Text(
+                                            "Status Batu",
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold),
+                                          )),
+                                      onSort: (columnIndex, _) {
+                                        setState(() {
+                                          _currentSortColumn = columnIndex;
+
+                                          if (sort == true) {
+                                            sort = false;
+                                            filterCrm!.sort((a, b) => a
+                                                .keteranganStatusBatu!
+                                                .toLowerCase()
+                                                .compareTo(b
+                                                    .keteranganStatusBatu!
+                                                    .toLowerCase()));
+                                          } else {
+                                            sort = true;
+                                            filterCrm!.sort((a, b) => b
+                                                .keteranganStatusBatu!
+                                                .toLowerCase()
+                                                .compareTo(a
+                                                    .keteranganStatusBatu!
+                                                    .toLowerCase()));
+                                          }
+                                        });
+                                      }),
+                                  DataColumn(label: _verticalDivider),
+                                  //ketrangan batu
+                                  const DataColumn(
+                                    label: SizedBox(
+                                        width: 120,
+                                        child: Text(
+                                          "Keterangan Batu",
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold),
+                                        )),
+                                    // onSort: (columnIndex, _) {
+                                    //   setState(() {
+                                    //     _currentSortColumn = columnIndex;
+
+                                    //     if (sort == true) {
+                                    //       sort = false;
+                                    //       filterCrm!.sort((a, b) => a
+                                    //           .keteranganStatusBatu!
+                                    //           .toLowerCase()
+                                    //           .compareTo(b
+                                    //               .keteranganStatusBatu!
+                                    //               .toLowerCase()));
+                                    //     } else {
+                                    //       sort = true;
+                                    //       filterCrm!.sort((a, b) => b
+                                    //           .keteranganStatusBatu!
+                                    //           .toLowerCase()
+                                    //           .compareTo(a
+                                    //               .keteranganStatusBatu!
+                                    //               .toLowerCase()));
+                                    //     }
+                                    //   });
+                                    // }
+                                  ),
+                                  DataColumn(label: _verticalDivider),
+                                  //tema
+                                  DataColumn(
+                                      label: const SizedBox(
+                                          width: 120,
+                                          child: Text(
+                                            "Tema",
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold),
+                                          )),
+                                      onSort: (columnIndex, _) {
+                                        setState(() {
+                                          _currentSortColumn = columnIndex;
+                                          if (sort == true) {
+                                            sort = false;
+                                            filterCrm!.sort((a, b) => a.tema!
+                                                .toLowerCase()
+                                                .compareTo(
+                                                    b.tema!.toLowerCase()));
+                                          } else {
+                                            sort = true;
+                                            filterCrm!.sort((a, b) => b.tema!
+                                                .toLowerCase()
+                                                .compareTo(
+                                                    a.tema!.toLowerCase()));
+                                          }
+                                        });
+                                      }),
+                                  DataColumn(label: _verticalDivider),
+                                  //jenis barang
+                                  DataColumn(
+                                      label: const SizedBox(
+                                          width: 120,
+                                          child: Text(
+                                            "Jenis Barang",
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold),
+                                          )),
+                                      onSort: (columnIndex, _) {
+                                        setState(() {
+                                          _currentSortColumn = columnIndex;
+                                          if (sort == true) {
+                                            sort = false;
+                                            filterCrm!.sort((a, b) => a
+                                                .jenisBarang!
+                                                .toLowerCase()
+                                                .compareTo(b.jenisBarang!
+                                                    .toLowerCase()));
+                                          } else {
+                                            sort = true;
+                                            filterCrm!.sort((a, b) => b
+                                                .jenisBarang!
+                                                .toLowerCase()
+                                                .compareTo(a.jenisBarang!
+                                                    .toLowerCase()));
+                                          }
+                                        });
+                                      }),
+                                  DataColumn(label: _verticalDivider),
+                                  //brand
+                                  DataColumn(
+                                      label: const SizedBox(
+                                          width: 50,
+                                          child: Text(
+                                            "Brand",
+                                            maxLines: 2,
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold),
+                                          )),
+                                      onSort: (columnIndex, _) {
+                                        setState(() {
+                                          _currentSortColumn = columnIndex;
+                                          if (sort == true) {
+                                            // myCrm.sort((a, b) => a['estimasiHarga'].)
+                                            sort = false;
+                                            filterCrm!.sort((a, b) =>
+                                                a.brand!.compareTo(b.brand!));
+                                            // onsortColum(columnIndex, ascending);
+                                          } else {
+                                            sort = true;
+                                            filterCrm!.sort((a, b) =>
+                                                b.brand!.compareTo(a.brand!));
+                                          }
+                                        });
+                                      }),
+                                  DataColumn(label: _verticalDivider),
+                                  //kelas harga
+                                  const DataColumn(
+                                    label: SizedBox(
+                                        width: 50,
+                                        child: Text(
+                                          "Kelas\nHarga",
+                                          maxLines: 2,
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold),
+                                        )),
+                                  ),
+                                  DataColumn(label: _verticalDivider),
+                                  //tanggal in produksi
+                                  DataColumn(
+                                      label: const SizedBox(
+                                          width: 120,
+                                          child: Text(
+                                            "Tanggal In\nProduksi",
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold),
+                                          )),
+                                      onSort: (columnIndex, _) {
+                                        setState(() {
+                                          _currentSortColumn = columnIndex;
+                                          if (sort == true) {
+                                            sort = false;
+                                            filterCrm!.sort((a, b) => a
+                                                .tanggalInProduksi!
+                                                .toLowerCase()
+                                                .compareTo(b.tanggalInProduksi!
+                                                    .toLowerCase()));
+                                          } else {
+                                            sort = true;
+                                            filterCrm!.sort((a, b) => b
+                                                .tanggalInProduksi!
+                                                .toLowerCase()
+                                                .compareTo(a.tanggalInProduksi!
+                                                    .toLowerCase()));
+                                          }
+                                        });
+                                      }),
+                                ],
+                                source: RowSourceProduksi(
+                                    myData: myDataProduksi,
+                                    count: myDataProduksi!.length,
+                                    siklus: siklusDesigner)),
                           ),
                         ),
                       ),
-                    )
-        ],
-      ),
+                    ),
+                  )
+      ],
     );
   }
 }

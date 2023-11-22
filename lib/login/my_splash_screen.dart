@@ -7,8 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:form_designer/api/api_constant.dart';
 import 'package:form_designer/mainScreen/login.dart';
-import 'package:form_designer/mainScreen/side_screen.dart';
-import 'package:form_designer/mainScreen/side_screen_produksi.dart';
+import 'package:form_designer/mainScreen/sideScreen/side_screen.dart';
+import 'package:form_designer/mainScreen/sideScreen/side_screen_produksi.dart';
+import 'package:form_designer/mainScreen/sideScreen/side_screen_scm.dart';
 import 'package:form_designer/model/siklus_model.dart';
 import '../global/global.dart';
 import 'package:http/http.dart' as http;
@@ -49,6 +50,9 @@ class _MySplashScreenState extends State<MySplashScreen> {
             print('masuk area produksi');
             Navigator.push(context,
                 MaterialPageRoute(builder: (c) => const MainViewProduksi()));
+          } else if (sharedPreferences!.getString('divisi') == 'scm') {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (c) => MainViewScm(col: 0)));
           } else {
             Navigator.push(
                 context, MaterialPageRoute(builder: (c) => const MainView()));
@@ -97,8 +101,8 @@ class _MySplashScreenState extends State<MySplashScreen> {
                 width: MediaQuery.of(context).size.width * 1,
                 padding: const EdgeInsets.all(12.0),
                 // child: Lottie.asset("loadingJSON/fixLogo.json"),
-                // child: Lottie.asset("loadingJSON/Logo.json"),
-                child: Lottie.asset("loadingJSON/animation_llvy7jo7.json"),
+                child: Lottie.asset("loadingJSON/loadingScreen.json"),
+                // child: Lottie.asset("loadingJSON/animation_llvy7jo7.json"),
               ),
               const SizedBox(
                 height: 10,

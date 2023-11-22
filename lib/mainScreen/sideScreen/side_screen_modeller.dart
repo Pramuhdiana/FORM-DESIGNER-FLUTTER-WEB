@@ -2,64 +2,59 @@
 
 import 'package:flutter/material.dart';
 import 'package:form_designer/SCM/mainScreen/kebutuhan_batu_by_siklus.dart';
+import 'package:form_designer/calculatePricing/list_calculate_pricing_screen.dart';
+import 'package:form_designer/global/global.dart';
 import 'package:form_designer/mainScreen/home_screen.dart';
 import 'package:form_designer/mainScreen/list_batu_screen.dart';
 import 'package:form_designer/mainScreen/list_designer_screen.dart';
 import 'package:form_designer/mainScreen/list_mps.dart';
 import 'package:form_designer/mainScreen/list_status_approval.dart';
+import 'package:form_designer/mainScreen/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:side_navigation/side_navigation.dart';
 
-import '../calculatePricing/list_calculate_pricing_screen.dart';
-import '../global/global.dart';
-import 'login.dart';
-
-class MainViewBatu extends StatefulWidget {
-  const MainViewBatu({Key? key}) : super(key: key);
+// ignore: must_be_immutable
+class MainViewModeller extends StatefulWidget {
+  //fungsi untuk menerima data
+  int col = 0;
+  //init data
+  MainViewModeller({super.key, required this.col});
 
   @override
   // ignore: library_private_types_in_public_api
-  _MainViewBatuState createState() => _MainViewBatuState();
+  _MainViewModellerState createState() => _MainViewModellerState();
 }
 
-class _MainViewBatuState extends State<MainViewBatu> {
+class _MainViewModellerState extends State<MainViewModeller> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   List<Widget> views = [
     //? 0
     const HomeScreen(),
     //? 1
-    sharedPreferences!.getString('level') == '4'
-        ? const ListBatuScreen() //* produksi
-        : sharedPreferences!.getString('level') == '3'
-            ? const ListBatuScreen() //* modeller
-            : const ListDesignerScreen(),
+    // sharedPreferences!.getString('level') == '4'
+    const ListDesignerScreen(),
     //? 2
-    sharedPreferences!.getString('level') == '4'
-        ? const ListMpsScreen() //* produksi
-        : const ListBatuScreen(),
+    const ListBatuScreen(),
     //? 3
-    sharedPreferences!.getString('level') == '4'
-        ? const ListMpsScreen() //* produksi
-        : const ListCalculatePricingScreen(),
-    //? 4
     const ListKebutuhanBatuScreen(),
-    //? 5
+    //? 4
     const ListStatusApprovalScreen(),
-    //? 6
+    //? 5
     const ListMpsScreen(),
-    //! keluar untuk scm dan admin
+    //? 6
+    const ListCalculatePricingScreen(),
+    //! 7 keluar untuk scm
     const HomeScreen()
   ];
 
   final _formKey = GlobalKey<FormState>();
 
-  int selectedIndex = 2;
   bool isKodeAkses = false;
   TextEditingController kodeAkses = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -121,7 +116,7 @@ class _MainViewBatuState extends State<MainViewBatu> {
                 Text('© Copyright PT Cahaya Sani Vokasi. All Rights Reserved'),
           )),
           initiallyExpanded: true,
-          selectedIndex: selectedIndex,
+          selectedIndex: widget.col,
           items: [
             const SideNavigationBarItem(
               icon: Icons.home,
@@ -432,7 +427,7 @@ class _MainViewBatuState extends State<MainViewBatu> {
                                         if (_formKey.currentState!.validate()) {
                                           _formKey.currentState!.save();
                                           setState(() {
-                                            selectedIndex = index;
+                                            widget.col = index;
                                             Navigator.of(context).pop();
                                           });
                                         } else {}
@@ -512,7 +507,7 @@ class _MainViewBatuState extends State<MainViewBatu> {
                   });
             } else {
               setState(() {
-                selectedIndex = index;
+                widget.col = index;
               });
             }
           },
@@ -542,7 +537,7 @@ class _MainViewBatuState extends State<MainViewBatu> {
           ),
         ),
         Expanded(
-          child: views.elementAt(selectedIndex),
+          child: views.elementAt(widget.col),
         )
       ],
     );
@@ -592,7 +587,7 @@ class _MainViewBatuState extends State<MainViewBatu> {
                 Text('© Copyright PT Cahaya Sani Vokasi. All Rights Reserved'),
           )),
           initiallyExpanded: false,
-          selectedIndex: selectedIndex,
+          selectedIndex: widget.col,
           items: [
             const SideNavigationBarItem(
               icon: Icons.home,
@@ -903,7 +898,7 @@ class _MainViewBatuState extends State<MainViewBatu> {
                                         if (_formKey.currentState!.validate()) {
                                           _formKey.currentState!.save();
                                           setState(() {
-                                            selectedIndex = index;
+                                            widget.col = index;
                                             Navigator.of(context).pop();
                                           });
                                         } else {}
@@ -941,35 +936,62 @@ class _MainViewBatuState extends State<MainViewBatu> {
                             ),
                           ),
                           SizedBox(
+                            height: 190,
                             child: Form(
+                              key: _formKey,
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 children: <Widget>[
                                   const Padding(
                                     padding:
                                         EdgeInsets.only(top: 5, bottom: 10),
-                                    child: Text('Yakin ingin keluar ?'),
+                                    child: Text('Masukan Kode Akses'),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: TextFormField(
+                                      autofocus: true,
+                                      obscureText: true,
+                                      style: const TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold),
+                                      textInputAction: TextInputAction.next,
+                                      controller: kodeAkses,
+                                      validator: (value) {
+                                        if (value! != aksesKode) {
+                                          return 'Kode akses salah';
+                                        }
+                                        return null;
+                                      },
+                                      onChanged: (value) {
+                                        isKodeAkses = true;
+                                        kodeAkses.text == aksesKode
+                                            ? isKodeAkses = true
+                                            : isKodeAkses = false;
+                                      },
+                                      decoration: InputDecoration(
+                                        labelText: "Kode Akses",
+                                        border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(5.0)),
+                                      ),
+                                    ),
                                   ),
                                   Container(
                                     width: 200,
                                     height: 50,
                                     padding: const EdgeInsets.only(top: 10),
                                     child: ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.red),
-                                      child: const Text("Keluar"),
-                                      onPressed: () async {
-                                        SharedPreferences prefs =
-                                            await SharedPreferences
-                                                .getInstance();
-                                        prefs.clear();
-                                        prefs.setString('token', 'null');
-                                        // ignore: use_build_context_synchronously
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (c) =>
-                                                    const LoginScreen()));
+                                      child: const Text("Submit"),
+                                      onPressed: () {
+                                        if (_formKey.currentState!.validate()) {
+                                          _formKey.currentState!.save();
+                                          setState(() {
+                                            widget.col = index;
+                                            Navigator.of(context).pop();
+                                          });
+                                        } else {}
                                       },
                                     ),
                                   )
@@ -983,7 +1005,7 @@ class _MainViewBatuState extends State<MainViewBatu> {
                   });
             } else {
               setState(() {
-                selectedIndex = index;
+                widget.col = index;
               });
             }
           },
@@ -1013,7 +1035,7 @@ class _MainViewBatuState extends State<MainViewBatu> {
           ),
         ),
         Expanded(
-          child: views.elementAt(selectedIndex),
+          child: views.elementAt(widget.col),
         )
       ],
     );

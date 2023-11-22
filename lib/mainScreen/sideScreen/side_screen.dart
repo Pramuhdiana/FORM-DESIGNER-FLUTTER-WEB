@@ -2,27 +2,27 @@
 
 import 'package:flutter/material.dart';
 import 'package:form_designer/SCM/mainScreen/kebutuhan_batu_by_siklus.dart';
+import 'package:form_designer/api/api_constant.dart';
+import 'package:form_designer/calculatePricing/list_calculate_pricing_screen.dart';
+import 'package:form_designer/global/global.dart';
 import 'package:form_designer/mainScreen/home_screen.dart';
 import 'package:form_designer/mainScreen/list_batu_screen.dart';
 import 'package:form_designer/mainScreen/list_designer_screen.dart';
 import 'package:form_designer/mainScreen/list_mps.dart';
 import 'package:form_designer/mainScreen/list_status_approval.dart';
+import 'package:form_designer/mainScreen/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:side_navigation/side_navigation.dart';
 
-import '../calculatePricing/list_calculate_pricing_screen.dart';
-import '../global/global.dart';
-import 'login.dart';
-
-class MainViewKebutuhanBatu extends StatefulWidget {
-  const MainViewKebutuhanBatu({Key? key}) : super(key: key);
+class MainView extends StatefulWidget {
+  const MainView({Key? key}) : super(key: key);
 
   @override
   // ignore: library_private_types_in_public_api
-  _MainViewKebutuhanBatuState createState() => _MainViewKebutuhanBatuState();
+  _MainViewState createState() => _MainViewState();
 }
 
-class _MainViewKebutuhanBatuState extends State<MainViewKebutuhanBatu> {
+class _MainViewState extends State<MainView> {
   List<Widget> views = [
     //? 0
     const HomeScreen(),
@@ -52,7 +52,7 @@ class _MainViewKebutuhanBatuState extends State<MainViewKebutuhanBatu> {
 
   final _formKey = GlobalKey<FormState>();
 
-  int selectedIndex = 4;
+  int selectedIndex = 0;
   bool isKodeAkses = false;
   TextEditingController kodeAkses = TextEditingController();
 
@@ -97,8 +97,12 @@ class _MainViewKebutuhanBatuState extends State<MainViewKebutuhanBatu> {
       children: [
         SideNavigationBar(
           header: SideNavigationBarHeader(
-              image: const CircleAvatar(
-                child: Icon(Icons.person_2_outlined),
+              image: CircleAvatar(
+                child: Image.network(
+                  '${ApiConstants.baseUrlImage}icon.png',
+                  fit: BoxFit.scaleDown,
+                  // scale: 2,
+                ),
               ),
               title: Text(
                 'Selamat ${greeting()}',
@@ -117,8 +121,10 @@ class _MainViewKebutuhanBatuState extends State<MainViewKebutuhanBatu> {
           footer: const SideNavigationBarFooter(
               label: Padding(
             padding: EdgeInsets.symmetric(horizontal: 25),
-            child:
-                Text('© Copyright PT Cahaya Sani Vokasi. All Rights Reserved'),
+            child: Text(
+              '© Copyright PT Cahaya Sani Vokasi. All Rights Reserved',
+              style: TextStyle(color: Colors.white),
+            ),
           )),
           initiallyExpanded: true,
           selectedIndex: selectedIndex,
@@ -526,16 +532,13 @@ class _MainViewKebutuhanBatuState extends State<MainViewKebutuhanBatu> {
           // Change the background color and disabled header/footer dividers
           // Make use of standard() constructor for other themes
           theme: SideNavigationBarTheme(
-            backgroundColor: Colors.blue,
+            backgroundColor: colorDasar,
             itemTheme: SideNavigationBarItemTheme(
-                unselectedItemColor: Colors.white,
-                selectedItemColor: Colors.black,
+                unselectedItemColor: const Color.fromRGBO(147, 155, 163, 1),
+                selectedItemColor: Colors.white,
                 iconSize: 32.5,
-                labelTextStyle: const TextStyle(
-                    fontSize: 15,
-                    // !! Won't work !! Custom text style colors gets overridden
-                    // by unselectedItemColor and selectedItemColor
-                    color: Colors.black)),
+                labelTextStyle:
+                    const TextStyle(fontSize: 15, color: Colors.red)),
             togglerTheme: const SideNavigationBarTogglerTheme(
                 shrinkIconColor: Colors.white),
             dividerTheme: SideNavigationBarDividerTheme.standard(),
@@ -568,8 +571,12 @@ class _MainViewKebutuhanBatuState extends State<MainViewKebutuhanBatu> {
       children: [
         SideNavigationBar(
           header: SideNavigationBarHeader(
-              image: const CircleAvatar(
-                child: Icon(Icons.person_2_outlined),
+              image: CircleAvatar(
+                child: Image.network(
+                  '${ApiConstants.baseUrlImage}icon.png',
+                  fit: BoxFit.scaleDown,
+                  // scale: 2,
+                ),
               ),
               title: Text(
                 'Selamat ${greeting()}',
@@ -588,8 +595,10 @@ class _MainViewKebutuhanBatuState extends State<MainViewKebutuhanBatu> {
           footer: const SideNavigationBarFooter(
               label: Padding(
             padding: EdgeInsets.symmetric(horizontal: 25),
-            child:
-                Text('© Copyright PT Cahaya Sani Vokasi. All Rights Reserved'),
+            child: Text(
+              '© Copyright PT Cahaya Sani Vokasi. All Rights Reserved',
+              style: TextStyle(color: Colors.white),
+            ),
           )),
           initiallyExpanded: false,
           selectedIndex: selectedIndex,

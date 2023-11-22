@@ -2,13 +2,14 @@
 
 import 'dart:convert';
 import 'dart:io';
+import 'package:dropdown_search/dropdown_search.dart';
+import 'package:form_designer/mainScreen/sideScreen/side_screen_scm.dart';
 import 'package:overlay_support/overlay_support.dart';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:form_designer/mainScreen/form_screen_by_id.dart';
-import 'package:form_designer/mainScreen/side_screen_batu.dart';
 import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
@@ -43,11 +44,15 @@ class _ListBatuScreenState extends State<ListBatuScreen> {
   int _currentSortColumn = 0;
   bool _switchValue = false;
 
+  var nowSiklus = '';
+  TextEditingController addSiklus = TextEditingController();
+
   @override
   initState() {
     super.initState();
     page = 0;
     limit = 20;
+    nowSiklus = sharedPreferences!.getString('siklus')!;
     // _getDataByPagenLimit();
     _getData();
     _getDataMode2();
@@ -131,6 +136,16 @@ class _ListBatuScreenState extends State<ListBatuScreen> {
   }
 
 //! end fungsi send file api
+  postSiklus() async {
+    Map<String, String> body = {
+      'id': '1',
+      'siklus': addSiklus.text,
+    };
+    final response = await http.post(
+        Uri.parse('${ApiConstants.baseUrl}${ApiConstants.addSiklus}'),
+        body: body);
+    print(response.body);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -142,20 +157,196 @@ class _ListBatuScreenState extends State<ListBatuScreen> {
         appBar: _switchValue != true
             ? AppBar(
                 automaticallyImplyLeading: false,
-                elevation: 0,
-                backgroundColor: Colors.blue,
-                flexibleSpace: Container(
-                  color: Colors.blue,
-                ),
-                title: const Text(
-                  "LIST BATU",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 25,
+                backgroundColor: Colors.white,
+                leadingWidth: 320,
+                //change siklus
+                leading: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 30),
+                    child: Row(
+                      children: [
+                        Text(
+                          "Siklus Saat Ini : $nowSiklus",
+                          style: TextStyle(
+                              fontSize: 20, color: Colors.grey.shade700),
+                        ),
+                        sharedPreferences!.getString('level') != '1'
+                            ? const SizedBox()
+                            : IconButton(
+                                color: Colors.grey.shade700,
+                                onPressed: () {
+                                  final dropdownFormKey =
+                                      GlobalKey<FormState>();
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(8)),
+                                          // title: const Text('Pilih Siklus'),
+                                          content: SizedBox(
+                                            height: 150,
+                                            child: Column(
+                                              children: [
+                                                Form(
+                                                    key: dropdownFormKey,
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        DropdownSearch<String>(
+                                                          items: const [
+                                                            "JANUARI",
+                                                            "FEBRUARI",
+                                                            "MARET",
+                                                            "APRIL",
+                                                            "MEI",
+                                                            "JUNI",
+                                                            "JULI",
+                                                            "AGUSTUS",
+                                                            "SEPTEMBER",
+                                                            "OKTOBER",
+                                                            "NOVEMBER",
+                                                            "DESEMBER"
+                                                          ],
+                                                          dropdownDecoratorProps:
+                                                              DropDownDecoratorProps(
+                                                            dropdownSearchDecoration:
+                                                                InputDecoration(
+                                                              hintText:
+                                                                  'Pilih Siklus',
+                                                              filled: true,
+                                                              fillColor:
+                                                                  Colors.white,
+                                                              enabledBorder:
+                                                                  OutlineInputBorder(
+                                                                borderSide:
+                                                                    const BorderSide(
+                                                                        color: Colors
+                                                                            .black,
+                                                                        width:
+                                                                            2),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            20),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          validator: (value) =>
+                                                              value == null
+                                                                  ? "Siklus tidak boleh kosong"
+                                                                  : null,
+                                                          onChanged: (String?
+                                                              newValue) {
+                                                            addSiklus.text =
+                                                                newValue!;
+                                                          },
+                                                        ),
+                                                        Container(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .only(
+                                                                  top: 20),
+                                                          child: ElevatedButton(
+                                                              onPressed:
+                                                                  () async {
+                                                                if (dropdownFormKey
+                                                                    .currentState!
+                                                                    .validate()) {
+                                                                  //? method untuk mengganti siklus
+                                                                  await postSiklus();
+                                                                  Navigator.push(
+                                                                      context,
+                                                                      MaterialPageRoute(
+                                                                          builder: (c) =>
+                                                                              MainViewScm(col: 0)));
+
+                                                                  showDialog<
+                                                                          String>(
+                                                                      context:
+                                                                          context,
+                                                                      builder: (BuildContext
+                                                                              context) =>
+                                                                          const AlertDialog(
+                                                                            title:
+                                                                                Text(
+                                                                              'Siklus Berhasil Diterapkan',
+                                                                            ),
+                                                                          ));
+                                                                  setState(() {
+                                                                    nowSiklus =
+                                                                        addSiklus
+                                                                            .text;
+                                                                    sharedPreferences!.setString(
+                                                                        'siklus',
+                                                                        addSiklus
+                                                                            .text);
+                                                                  });
+                                                                }
+                                                              },
+                                                              child: const Text(
+                                                                "Submit",
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize: 24,
+                                                                ),
+                                                              )),
+                                                        )
+                                                      ],
+                                                    ))
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      });
+                                },
+                                icon: const Icon(
+                                  Icons.change_circle,
+                                ))
+                      ],
+                    ),
                   ),
                 ),
-                centerTitle: true,
+                // ignore: avoid_unnecessary_containers
+                title: Container(
+                  // width: MediaQuery.of(context).size.width * 0.3,
+                  child: CupertinoSearchTextField(
+                    placeholder: 'Search Anything...',
+                    borderRadius: const BorderRadius.all(Radius.circular(25)),
+                    itemColor: Colors.black,
+                    // autofocus: false,
+                    controller: controller,
+                    backgroundColor: Colors.black12,
+                    // keyboardType: TextInputType.number,
+                    // focusNode: numberFocusNode,
+                    keyboardType: TextInputType.text,
+                    onChanged: (value) {
+                      //fungsi search anyting
+                      _listBatu = filterListBatu!
+                          .where((element) =>
+                              element.lot!
+                                  .toLowerCase()
+                                  .contains(value.toLowerCase()) ||
+                              element.size
+                                  .toLowerCase()
+                                  .contains(value.toLowerCase()) ||
+                              element.parcel!
+                                  .toLowerCase()
+                                  .contains(value.toLowerCase()) ||
+                              element.qty!
+                                  .toString()
+                                  .contains(value.toLowerCase()))
+                          .toList();
+
+                      setState(() {});
+                    },
+                  ),
+                ),
+
                 actions: sharedPreferences!.getString('level') != '1'
                     ? null
                     : [
@@ -179,20 +370,196 @@ class _ListBatuScreenState extends State<ListBatuScreen> {
               )
             : AppBar(
                 automaticallyImplyLeading: false,
-                elevation: 0,
-                backgroundColor: Colors.black38,
-                flexibleSpace: Container(
-                  color: Colors.black38,
-                ),
-                title: const Text(
-                  "LIST BATU YANG HARUS DI BELI",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 25,
+                backgroundColor: Colors.white,
+                leadingWidth: 320,
+                //change siklus
+                leading: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 30),
+                    child: Row(
+                      children: [
+                        Text(
+                          "Siklus Saat Ini : $nowSiklus",
+                          style: TextStyle(
+                              fontSize: 20, color: Colors.grey.shade700),
+                        ),
+                        sharedPreferences!.getString('level') != '1'
+                            ? const SizedBox()
+                            : IconButton(
+                                color: Colors.grey.shade700,
+                                onPressed: () {
+                                  final dropdownFormKey =
+                                      GlobalKey<FormState>();
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(8)),
+                                          // title: const Text('Pilih Siklus'),
+                                          content: SizedBox(
+                                            height: 150,
+                                            child: Column(
+                                              children: [
+                                                Form(
+                                                    key: dropdownFormKey,
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        DropdownSearch<String>(
+                                                          items: const [
+                                                            "JANUARI",
+                                                            "FEBRUARI",
+                                                            "MARET",
+                                                            "APRIL",
+                                                            "MEI",
+                                                            "JUNI",
+                                                            "JULI",
+                                                            "AGUSTUS",
+                                                            "SEPTEMBER",
+                                                            "OKTOBER",
+                                                            "NOVEMBER",
+                                                            "DESEMBER"
+                                                          ],
+                                                          dropdownDecoratorProps:
+                                                              DropDownDecoratorProps(
+                                                            dropdownSearchDecoration:
+                                                                InputDecoration(
+                                                              hintText:
+                                                                  'Pilih Siklus',
+                                                              filled: true,
+                                                              fillColor:
+                                                                  Colors.white,
+                                                              enabledBorder:
+                                                                  OutlineInputBorder(
+                                                                borderSide:
+                                                                    const BorderSide(
+                                                                        color: Colors
+                                                                            .black,
+                                                                        width:
+                                                                            2),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            20),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          validator: (value) =>
+                                                              value == null
+                                                                  ? "Siklus tidak boleh kosong"
+                                                                  : null,
+                                                          onChanged: (String?
+                                                              newValue) {
+                                                            addSiklus.text =
+                                                                newValue!;
+                                                          },
+                                                        ),
+                                                        Container(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .only(
+                                                                  top: 20),
+                                                          child: ElevatedButton(
+                                                              onPressed:
+                                                                  () async {
+                                                                if (dropdownFormKey
+                                                                    .currentState!
+                                                                    .validate()) {
+                                                                  //? method untuk mengganti siklus
+                                                                  await postSiklus();
+                                                                  Navigator.push(
+                                                                      context,
+                                                                      MaterialPageRoute(
+                                                                          builder: (c) =>
+                                                                              MainViewScm(col: 0)));
+
+                                                                  showDialog<
+                                                                          String>(
+                                                                      context:
+                                                                          context,
+                                                                      builder: (BuildContext
+                                                                              context) =>
+                                                                          const AlertDialog(
+                                                                            title:
+                                                                                Text(
+                                                                              'Siklus Berhasil Diterapkan',
+                                                                            ),
+                                                                          ));
+                                                                  setState(() {
+                                                                    nowSiklus =
+                                                                        addSiklus
+                                                                            .text;
+                                                                    sharedPreferences!.setString(
+                                                                        'siklus',
+                                                                        addSiklus
+                                                                            .text);
+                                                                  });
+                                                                }
+                                                              },
+                                                              child: const Text(
+                                                                "Submit",
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize: 24,
+                                                                ),
+                                                              )),
+                                                        )
+                                                      ],
+                                                    ))
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      });
+                                },
+                                icon: const Icon(
+                                  Icons.change_circle,
+                                ))
+                      ],
+                    ),
                   ),
                 ),
-                centerTitle: true,
+                // ignore: avoid_unnecessary_containers
+                title: Container(
+                  // width: MediaQuery.of(context).size.width * 0.3,
+                  child: CupertinoSearchTextField(
+                    placeholder: 'Search Anything...',
+                    borderRadius: const BorderRadius.all(Radius.circular(25)),
+                    itemColor: Colors.black,
+                    // autofocus: false,
+                    controller: controller,
+                    backgroundColor: Colors.black12,
+                    // keyboardType: TextInputType.number,
+                    // focusNode: numberFocusNode,
+                    keyboardType: TextInputType.text,
+                    onChanged: (value) {
+                      //fungsi search anyting
+                      _listBatuMode2 = filterListBatuMode2!
+                          .where((element) =>
+                              element.lot!
+                                  .toLowerCase()
+                                  .contains(value.toLowerCase()) ||
+                              element.size
+                                  .toLowerCase()
+                                  .contains(value.toLowerCase()) ||
+                              element.parcel!
+                                  .toLowerCase()
+                                  .contains(value.toLowerCase()) ||
+                              element.qty!
+                                  .toString()
+                                  .contains(value.toLowerCase()))
+                          .toList();
+
+                      setState(() {});
+                    },
+                  ),
+                ),
+
                 actions: [
                   CupertinoSwitch(
                     value: _switchValue,
@@ -209,91 +576,63 @@ class _ListBatuScreenState extends State<ListBatuScreen> {
                 padding: const EdgeInsets.only(top: 25),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.5,
-                      height: 45,
-                      padding: const EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.grey,
-                          ),
-                          borderRadius: BorderRadius.circular(12)),
-                      child: Align(
-                        alignment: Alignment.bottomCenter,
-                        child: TextField(
-                          textAlign: TextAlign.center,
-                          controller: controller,
-                          decoration: const InputDecoration(
-                              hintText: "Search Anything ..."),
-                          onChanged: (value) {
-                            //fungsi search anyting
-                            _listBatu = filterListBatu!
-                                .where((element) =>
-                                    element.lot!
-                                        .toLowerCase()
-                                        .contains(value.toLowerCase()) ||
-                                    element.size
-                                        .toLowerCase()
-                                        .contains(value.toLowerCase()) ||
-                                    element.parcel!
-                                        .toLowerCase()
-                                        .contains(value.toLowerCase()) ||
-                                    element.qty!
-                                        .toString()
-                                        .contains(value.toLowerCase()))
-                                .toList();
+                    // Container(
+                    //     padding: const EdgeInsets.only(top: 10),
+                    //     child: ElevatedButton(
+                    //         style: ElevatedButton.styleFrom(
+                    //             backgroundColor: Colors.green.shade600),
+                    //         onPressed: () async {
+                    //           // FilePickerResult? result =
+                    //           //     await FilePicker.platform.pickFiles();
 
-                            setState(() {});
-                          },
-                        ),
+                    //           // if (result != null) {
+                    //           //   PlatformFile file = result.files.first;
+                    //           //   print(file.name);
+                    //           //   print(file.size);
+                    //           //   print(file.extension);
+                    //           //   // print(file.path);
+                    //           //   showSimpleNotification(
+                    //           //     const Center(
+                    //           //         child: Text(
+                    //           //       'Import Data Berhasil',
+                    //           //       style: TextStyle(
+                    //           //           fontSize: 25,
+                    //           //           color: Colors.white,
+                    //           //           fontWeight: FontWeight.bold),
+                    //           //     )),
+                    //           //     subtitle: const Center(
+                    //           //         child: Text('Mohon segera refresh data')),
+                    //           //     background: Colors.green,
+                    //           //     duration: const Duration(seconds: 5),
+                    //           //   );
+                    //           //   // Fluttertoast.showToast(
+                    //           //   //     msg: "Import Data Berhasil");
+                    //           // } else {
+                    //           //   // User canceled the picker
+                    //           //   print('cancel pick');
+                    //           // }
+
+                    //           // // try {
+                    //           // //   await sendFileToApi(
+                    //           // //       result as File, ApiConstants.addSiklus);
+                    //           // //   print('File sent successfully.');
+                    //           // // } catch (e) {
+                    //           // //   print('Error sending file: $e');
+                    //           // // }
+                    //         },
+                    //         child: const Text('Import to excel'))),
+                    Container(
+                      padding: const EdgeInsets.only(top: 26),
+                      child: const Text(
+                        'List Stok Batu',
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 26),
                       ),
                     ),
-                    Container(
-                        padding: const EdgeInsets.only(top: 10),
-                        child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.green.shade600),
-                            onPressed: () async {
-                              // FilePickerResult? result =
-                              //     await FilePicker.platform.pickFiles();
-
-                              // if (result != null) {
-                              //   PlatformFile file = result.files.first;
-                              //   print(file.name);
-                              //   print(file.size);
-                              //   print(file.extension);
-                              //   // print(file.path);
-                              //   showSimpleNotification(
-                              //     const Center(
-                              //         child: Text(
-                              //       'Import Data Berhasil',
-                              //       style: TextStyle(
-                              //           fontSize: 25,
-                              //           color: Colors.white,
-                              //           fontWeight: FontWeight.bold),
-                              //     )),
-                              //     subtitle: const Center(
-                              //         child: Text('Mohon segera refresh data')),
-                              //     background: Colors.green,
-                              //     duration: const Duration(seconds: 5),
-                              //   );
-                              //   // Fluttertoast.showToast(
-                              //   //     msg: "Import Data Berhasil");
-                              // } else {
-                              //   // User canceled the picker
-                              //   print('cancel pick');
-                              // }
-
-                              // // try {
-                              // //   await sendFileToApi(
-                              // //       result as File, ApiConstants.addSiklus);
-                              // //   print('File sent successfully.');
-                              // // } catch (e) {
-                              // //   print('Error sending file: $e');
-                              // // }
-                            },
-                            child: const Text('Import to excel'))),
                     isLoading == false
                         ? Expanded(
                             child: Center(
@@ -538,45 +877,6 @@ class _ListBatuScreenState extends State<ListBatuScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.5,
-                      height: 45,
-                      padding: const EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.grey,
-                          ),
-                          borderRadius: BorderRadius.circular(12)),
-                      child: Align(
-                        alignment: Alignment.bottomCenter,
-                        child: TextField(
-                          textAlign: TextAlign.center,
-                          controller: controller,
-                          decoration: const InputDecoration(
-                              hintText: "Search Anything ..."),
-                          onChanged: (value) {
-                            //fungsi search anyting
-                            _listBatuMode2 = filterListBatuMode2!
-                                .where((element) =>
-                                    element.lot!
-                                        .toLowerCase()
-                                        .contains(value.toLowerCase()) ||
-                                    element.size
-                                        .toLowerCase()
-                                        .contains(value.toLowerCase()) ||
-                                    element.parcel!
-                                        .toLowerCase()
-                                        .contains(value.toLowerCase()) ||
-                                    element.qty!
-                                        .toString()
-                                        .contains(value.toLowerCase()))
-                                .toList();
-
-                            setState(() {});
-                          },
-                        ),
-                      ),
-                    ),
                     isLoading == false
                         ? Expanded(
                             child: Center(
@@ -1037,7 +1337,9 @@ class _ListBatuScreenState extends State<ListBatuScreen> {
                                                               context,
                                                               MaterialPageRoute(
                                                                   builder: (c) =>
-                                                                      const MainViewBatu()));
+                                                                      MainViewScm(
+                                                                          col:
+                                                                              3)));
                                                         });
                                                       } else {
                                                         btnController.error();
@@ -1180,7 +1482,7 @@ class RowSource extends DataTableSource {
                                           context,
                                           MaterialPageRoute(
                                               builder: (c) =>
-                                                  const MainViewBatu()));
+                                                  MainViewScm(col: 3)));
                                       showDialog<String>(
                                           context: context,
                                           builder: (BuildContext context) =>
@@ -1443,9 +1745,9 @@ class RowSource extends DataTableSource {
                                                               Navigator.push(
                                                                   context,
                                                                   MaterialPageRoute(
-                                                                      builder:
-                                                                          (c) =>
-                                                                              const MainViewBatu()));
+                                                                      builder: (c) =>
+                                                                          MainViewScm(
+                                                                              col: 3)));
                                                             });
                                                           } else {
                                                             btnController
@@ -1584,7 +1886,7 @@ class RowSourceMode2 extends DataTableSource {
       //                             Navigator.push(
       //                                 context,
       //                                 MaterialPageRoute(
-      //                                     builder: (c) => const MainViewBatu()));
+      //                                     builder: (c) => MainViewScm(col:3)));
       //                             showDialog<String>(
       //                                 context: context,
       //                                 builder: (BuildContext context) =>
@@ -1814,7 +2116,7 @@ class RowSourceMode2 extends DataTableSource {
       //                                                         context,
       //                                                         MaterialPageRoute(
       //                                                             builder: (c) =>
-      //                                                                 const MainViewBatu()));
+      //                                                                 MainViewScm(col:3)));
       //                                                   });
       //                                                 } else {
       //                                                   btnController.error();

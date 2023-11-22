@@ -8,7 +8,7 @@ import 'package:form_designer/api/api_constant.dart';
 import 'package:form_designer/global/global.dart';
 // ignore: unused_import
 import 'package:form_designer/mainScreen/form_screen_by_id.dart';
-import 'package:form_designer/mainScreen/side_screen_batu.dart';
+import 'package:form_designer/mainScreen/sideScreen/side_screen_batu.dart';
 import 'package:form_designer/widgets/custom_loading.dart';
 import 'package:http/http.dart' as http;
 import 'package:rounded_loading_button/rounded_loading_button.dart';

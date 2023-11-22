@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:form_designer/login/my_splash_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
+import 'package:lottie/lottie.dart';
 
 import '../api/api_constant.dart';
 import '../global/global.dart';
@@ -18,19 +19,37 @@ class LoginTablet extends StatefulWidget {
 }
 
 class _LoginTabletState extends State<LoginTablet> {
-  final _formKey = GlobalKey<FormState>();
-  bool _isChecked = false;
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  bool _isChecked = false;
+  bool isLogo = false;
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(30),
-          child: Center(
-            child: SizedBox(
-              width: 300,
+    return Container(
+      color: Colors.white,
+      child: Row(
+        children: [
+          Expanded(
+            //<-- Expanded widget
+            child: Container(
+              height: MediaQuery.of(context).size.height * 0.8,
+              width: MediaQuery.of(context).size.width * 1,
+              padding: const EdgeInsets.all(12.0),
+              // child: Lottie.asset("loadingJSON/logoOri.json"),
+              child: Lottie.asset("loadingJSON/logo275kb.json"),
+            ),
+          ),
+          Expanded(
+            //<-- Expanded widget
+            child: Container(
+              constraints: const BoxConstraints(maxWidth: 21),
+              padding: const EdgeInsets.symmetric(horizontal: 50),
               child: Form(
                 key: _formKey,
                 child: Column(
@@ -111,6 +130,7 @@ class _LoginTabletState extends State<LoginTablet> {
                                         })
                                       : setState(() {
                                           _isChecked = true;
+
                                           sharedPreferences!.clear();
                                           sharedPreferences!
                                               .setString('token', 'ingat saya');
@@ -156,14 +176,18 @@ class _LoginTabletState extends State<LoginTablet> {
                             final data = jsonDecode(response.body);
                             print(data);
                             int value = data['value'];
-                            String id = data['id'];
-                            String emailAPI = data['email'];
-                            String namaAPI = data['nama'];
-                            String levelAPI = data['level'];
-                            String statusAPI = data['status'];
-                            String divisiAPI = data['divisi'];
+                            print(response.statusCode);
                             if (value == 1) {
+                              String id = data['id'];
+                              String emailAPI = data['email'];
+                              String namaAPI = data['nama'];
+                              String levelAPI = data['level'];
+                              String statusAPI = data['status'];
+                              String divisiAPI = data['divisi'];
+                              String roleAPI = data['role'];
                               setState(() {
+                                sharedPreferences!
+                                    .setString('token', 'ingat saya');
                                 sharedPreferences!.setString('id', id);
                                 sharedPreferences!.setString('nama', namaAPI);
                                 sharedPreferences!.setString('email', emailAPI);
@@ -172,6 +196,7 @@ class _LoginTabletState extends State<LoginTablet> {
                                     .setString('status', statusAPI);
                                 sharedPreferences!
                                     .setString('divisi', divisiAPI);
+                                sharedPreferences!.setString('role', roleAPI);
                                 sharedPreferences!.setBool('isLogin', true);
                                 // savePref(
                                 //     id, emailAPI, namaAPI, levelAPI, statusAPI);
@@ -181,7 +206,7 @@ class _LoginTabletState extends State<LoginTablet> {
                                         builder: (c) =>
                                             const MySplashScreen()));
                               });
-                            } else {
+                            } else if (value == 0) {
                               showDialog<String>(
                                   context: context,
                                   builder: (BuildContext context) =>
@@ -212,8 +237,26 @@ class _LoginTabletState extends State<LoginTablet> {
               ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }
+
+  // savePref(
+  //   String id,
+  //   String email,
+  //   String nama,
+  //   String level,
+  //   String status,
+  // ) async {
+  //   SharedPreferences preferences = await SharedPreferences.getInstance();
+  //   setState(() {
+  //     preferences.setString("id", id);
+  //     preferences.setString("email", email);
+  //     preferences.setString("nama", nama);
+  //     preferences.setString("level", level);
+  //     preferences.setString("status", status);
+  //     preferences.setString("isLogin", 'true');
+  //   });
+  // }
 }

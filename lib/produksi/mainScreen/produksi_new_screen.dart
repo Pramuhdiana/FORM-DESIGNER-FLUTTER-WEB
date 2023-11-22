@@ -2,17 +2,22 @@
 
 import 'dart:convert';
 import 'dart:io';
+import 'package:dropdown_search/dropdown_search.dart';
+import 'package:form_designer/api/api_constant.dart';
+import 'package:form_designer/global/global.dart';
 import 'package:form_designer/mainScreen/home_screen.dart';
 import 'package:form_designer/mainScreen/list_mps.dart';
 import 'package:form_designer/produksi/mainScreen/CRUD/finishing.dart';
 import 'package:form_designer/produksi/mainScreen/CRUD/polishing1.dart';
 import 'package:form_designer/produksi/mainScreen/CRUD/stell1.dart';
+import 'package:form_designer/produksi/modelProduksi/produksi_model.dart';
 import 'package:overlay_support/overlay_support.dart';
+// ignore: depend_on_referenced_packages
+import 'package:intl/intl.dart';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:form_designer/mainScreen/form_screen_by_id.dart';
-import 'package:form_designer/mainScreen/side_screen_batu.dart';
 import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
@@ -26,15 +31,19 @@ class ProduksiNewScreen extends StatefulWidget {
 class _ProduksiNewScreenState extends State<ProduksiNewScreen>
     with TickerProviderStateMixin {
   TextEditingController controller = TextEditingController();
+  TextEditingController addSiklus = TextEditingController();
   bool isLoading = false;
   late TabController _tabController;
-
+  String divisi = 'finishing';
+  String inputSearch = '';
   @override
   initState() {
     super.initState();
     _tabController = TabController(length: 6, vsync: this);
     _tabController.animateTo(2);
-    nowSiklus = 'OKTOBER';
+    var now = DateTime.now();
+    String month = DateFormat('MMMM', 'id').format(now);
+    nowSiklus = month;
   }
 
   static const List<Tab> _tabs = [
@@ -71,8 +80,8 @@ class _ProduksiNewScreenState extends State<ProduksiNewScreen>
   ];
 
   final List<Widget> _views = [
-    const FinishingScreen(),
-    const Poilishing1Screen(),
+    FinishingScreen(input: 'inputSearch'),
+    const Poleshing1Screen(),
     const Stell1Screen(),
     const Center(child: Text('Content of Tab Two')),
     const Center(child: Text('Content of Tab Three')),
@@ -89,36 +98,145 @@ class _ProduksiNewScreenState extends State<ProduksiNewScreen>
           length: 6,
           child: Scaffold(
               appBar: AppBar(
-                title: Row(
-                  // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                automaticallyImplyLeading: false,
+                backgroundColor: Colors.white,
+                leadingWidth: 320,
+                leading: Row(
                   children: [
-                    Row(
-                      children: [
-                        Text(
-                          "Siklus Saat Ini : $nowSiklus",
-                          style: const TextStyle(
-                              fontSize: 20, color: Colors.white),
-                        ),
-                        InkWell(
-                          onTap: () {},
-                          child: SizedBox(
-                            width: 40,
-                            height: 40,
-                            child: Lottie.asset(
-                                "loadingJSON/icon_edit_black.json",
-                                fit: BoxFit.cover),
-                          ),
-                        )
-                      ],
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "Siklus Saat Ini : $nowSiklus",
+                        style:
+                            const TextStyle(fontSize: 20, color: Colors.black),
+                      ),
                     ),
-                    const SizedBox(
-                      width: 300,
-                    ),
-                    const Text('PRODUKSI'),
+                    InkWell(
+                      onTap: () {
+                        final dropdownFormKey = GlobalKey<FormState>();
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8)),
+                                // title: const Text('Pilih Siklus'),
+                                content: SizedBox(
+                                  height: 150,
+                                  child: Column(
+                                    children: [
+                                      Form(
+                                          key: dropdownFormKey,
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              DropdownSearch<String>(
+                                                items: const [
+                                                  "JANUARI",
+                                                  "FEBRUARI",
+                                                  "MARET",
+                                                  "APRIL",
+                                                  "MEI",
+                                                  "JUNI",
+                                                  "JULI",
+                                                  "AGUSTUS",
+                                                  "SEPTEMBER",
+                                                  "OKTOBER",
+                                                  "NOVEMBER",
+                                                  "DESEMBER"
+                                                ],
+                                                dropdownDecoratorProps:
+                                                    DropDownDecoratorProps(
+                                                  dropdownSearchDecoration:
+                                                      InputDecoration(
+                                                    hintText: 'Pilih Siklus',
+                                                    filled: true,
+                                                    fillColor: Colors.black,
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                              color:
+                                                                  Colors.black,
+                                                              width: 2),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              20),
+                                                    ),
+                                                  ),
+                                                ),
+                                                validator: (value) => value ==
+                                                        null
+                                                    ? "Siklus tidak boleh kosong"
+                                                    : null,
+                                                onChanged: (String? newValue) {
+                                                  addSiklus.text = newValue!;
+                                                },
+                                              ),
+                                              Container(
+                                                padding: const EdgeInsets.only(
+                                                    top: 20),
+                                                child: ElevatedButton(
+                                                    onPressed: () async {
+                                                      if (dropdownFormKey
+                                                          .currentState!
+                                                          .validate()) {
+                                                        //? method untuk mengganti siklus
+                                                        // await postSiklus();
+                                                        Navigator.pop(context);
+                                                        // Navigator.push(
+                                                        //     context,
+                                                        //     MaterialPageRoute(
+                                                        //         builder:
+                                                        //             (c) =>
+                                                        //                 const MainView()));
+
+                                                        showDialog<String>(
+                                                            context: context,
+                                                            builder: (BuildContext
+                                                                    context) =>
+                                                                const AlertDialog(
+                                                                  title: Text(
+                                                                    'Siklus Berhasil Diterapkan',
+                                                                  ),
+                                                                ));
+                                                        setState(() {
+                                                          nowSiklus =
+                                                              addSiklus.text;
+                                                          sharedPreferences!
+                                                              .setString(
+                                                                  'siklusProduksi',
+                                                                  addSiklus
+                                                                      .text);
+                                                        });
+                                                      }
+                                                    },
+                                                    child: const Text(
+                                                      "Submit",
+                                                      style: TextStyle(
+                                                        fontSize: 24,
+                                                      ),
+                                                    )),
+                                              )
+                                            ],
+                                          ))
+                                    ],
+                                  ),
+                                ),
+                              );
+                            });
+                      },
+                      child: SizedBox(
+                        width: 40,
+                        height: 40,
+                        child: Lottie.asset("loadingJSON/icon_edit_black.json",
+                            fit: BoxFit.cover),
+                      ),
+                    )
                   ],
                 ),
                 elevation: 0,
-                automaticallyImplyLeading: false,
                 bottom: TabBar(
                   labelColor: Colors.white,
                   unselectedLabelColor: Colors.black,
@@ -155,7 +273,6 @@ class _ProduksiNewScreenState extends State<ProduksiNewScreen>
                   enableFeedback: true,
                   tabs: _tabs,
                 ),
-                backgroundColor: Colors.blue,
               ),
               body: TabBarView(
                 physics: const BouncingScrollPhysics(),

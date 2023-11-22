@@ -47,20 +47,8 @@ class _ViewPhotoScreen extends State<ViewPhotoScreen> {
           '${widget.model!.kodeDesignMdbc}',
           style: const TextStyle(color: Colors.black),
         ),
-        backgroundColor: Colors.blue,
-        flexibleSpace: Container(
-          decoration: const BoxDecoration(
-              gradient: LinearGradient(
-            colors: [
-              Colors.blue,
-              Colors.blue,
-            ],
-            begin: FractionalOffset(0.0, 0.0),
-            end: FractionalOffset(1.0, 0.0),
-            stops: [0.0, 1.0],
-            tileMode: TileMode.clamp,
-          )),
-        ),
+        backgroundColor: Colors.white,
+
         // leading: IconButton(
         //   icon: Image.asset(
         //     "assets/arrow.png",

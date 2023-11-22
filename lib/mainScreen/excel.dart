@@ -9,8 +9,19 @@ import 'package:http/http.dart' as http;
 
 class ExcelScreen {
   List<FormDesignerModel>? myData;
+  List<String> listAllBatu = [];
+  List<int> listAllQtyBatu = [];
+  List<int> listUniqQtyBatu = [];
+  List<String> listUniqBatu = [];
+  Map<String, int> mylist = {};
 
   Future<void> exportExcel(siklus) async {
+    listAllBatu.clear();
+    listAllQtyBatu.clear();
+    listUniqQtyBatu.clear();
+    listUniqBatu.clear();
+    mylist.clear();
+
 //get data
     // ignore: avoid_print
     print(siklus);
@@ -24,6 +35,452 @@ class ExcelScreen {
         var filterBySiklus = allData.where((element) =>
             element.siklus!.toLowerCase() == siklus.toString().toLowerCase());
         allData = filterBySiklus.toList();
+        final data = allData;
+
+        //funtion batu
+        //! remove batu1
+        List<String> listBatu1 = [];
+        List<int> listQtyBatu1 = [];
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].qtyBatu1.toString() != '0') {
+            listQtyBatu1.add(data[i].qtyBatu1!);
+            listBatu1.add(data[i].batu1!);
+          }
+        }
+
+        //! remove batu2
+        List<String> listBatu2 = [];
+        List<int> listQtyBatu2 = [];
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].qtyBatu2!.toString() != '0') {
+            listQtyBatu2.add(data[i].qtyBatu2!);
+            listBatu2.add(data[i].batu2!);
+          }
+        }
+
+        //! remove batu3
+        List<String> listBatu3 = [];
+        List<int> listQtyBatu3 = [];
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].qtyBatu3!.toString() != '0') {
+            listQtyBatu3.add(data[i].qtyBatu3!);
+            listBatu3.add(data[i].batu3!);
+          }
+        }
+        //! remove batu4
+        List<String> listBatu4 = [];
+        List<int> listQtyBatu4 = [];
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].qtyBatu4!.toString() != '0') {
+            listQtyBatu4.add(data[i].qtyBatu4!);
+            listBatu4.add(data[i].batu4!);
+          }
+        }
+
+        //! remove batu5
+        List<String> listBatu5 = [];
+        List<int> listQtyBatu5 = [];
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].qtyBatu5!.toString() != '0') {
+            listQtyBatu5.add(data[i].qtyBatu5!);
+            listBatu5.add(data[i].batu5!);
+          }
+        }
+
+        //! remove batu6
+        List<String> listBatu6 = [];
+        List<int> listQtyBatu6 = [];
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].qtyBatu6!.toString() != '0') {
+            listQtyBatu6.add(data[i].qtyBatu6!);
+            listBatu6.add(data[i].batu6!);
+          }
+        }
+
+        //! remove batu7
+        List<String> listBatu7 = [];
+        List<int> listQtyBatu7 = [];
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].qtyBatu7!.toString() != '0') {
+            listQtyBatu7.add(data[i].qtyBatu7!);
+            listBatu7.add(data[i].batu7!);
+          }
+        }
+
+        //! remove batu8
+        List<String> listBatu8 = [];
+        List<int> listQtyBatu8 = [];
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].qtyBatu8!.toString() != '0') {
+            listQtyBatu8.add(data[i].qtyBatu8!);
+            listBatu8.add(data[i].batu8!);
+          }
+        }
+
+        //! remove batu9
+        List<String> listBatu9 = [];
+        List<int> listQtyBatu9 = [];
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].qtyBatu9!.toString() != '0') {
+            listQtyBatu9.add(data[i].qtyBatu9!);
+            listBatu9.add(data[i].batu9!);
+          }
+        }
+
+        //! remove batu10
+        List<String> listBatu10 = [];
+        List<int> listQtyBatu10 = [];
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].qtyBatu10!.toString() != '0') {
+            listQtyBatu10.add(data[i].qtyBatu10!);
+            listBatu10.add(data[i].batu10!);
+          }
+        }
+
+        //! remove batu11
+        List<String> listBatu11 = [];
+        List<int> listQtyBatu11 = [];
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].qtyBatu11!.toString() != '0') {
+            listBatu11.add(data[i].batu11!);
+            listQtyBatu11.add(data[i].qtyBatu11!);
+          }
+        }
+
+        //! remove batu12
+        List<String> listBatu12 = [];
+        List<int> listQtyBatu12 = [];
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].qtyBatu12!.toString() != '0') {
+            listBatu12.add(data[i].batu12!);
+            listQtyBatu12.add(data[i].qtyBatu12!);
+          }
+        }
+
+        //! remove batu13
+        List<String> listBatu13 = [];
+        List<int> listQtyBatu13 = [];
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].qtyBatu13!.toString() != '0') {
+            listBatu13.add(data[i].batu13!);
+            listQtyBatu13.add(data[i].qtyBatu13!);
+          }
+        }
+
+        //! remove batu14
+        List<String> listBatu14 = [];
+        List<int> listQtyBatu14 = [];
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].qtyBatu14!.toString() != '0') {
+            listBatu14.add(data[i].batu14!);
+            listQtyBatu14.add(data[i].qtyBatu14!);
+          }
+        }
+
+        //! remove batu15
+        List<String> listBatu15 = [];
+        List<int> listQtyBatu15 = [];
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].qtyBatu15!.toString() != '0') {
+            listBatu15.add(data[i].batu15!);
+            listQtyBatu15.add(data[i].qtyBatu15!);
+          }
+        }
+
+        //! remove batu16
+        List<String> listBatu16 = [];
+        List<int> listQtyBatu16 = [];
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].qtyBatu16!.toString() != '0') {
+            listQtyBatu16.add(data[i].qtyBatu16!);
+            listBatu16.add(data[i].batu16!);
+          }
+        }
+
+        //! remove batu17
+        List<String> listBatu17 = [];
+        List<int> listQtyBatu17 = [];
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].qtyBatu17!.toString() != '0') {
+            listQtyBatu17.add(data[i].qtyBatu17!);
+            listBatu17.add(data[i].batu17!);
+          }
+        }
+
+        //! remove batu18
+        List<String> listBatu18 = [];
+        List<int> listQtyBatu18 = [];
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].qtyBatu18!.toString() != '0') {
+            listQtyBatu18.add(data[i].qtyBatu18!);
+            listBatu18.add(data[i].batu18!);
+          }
+        }
+
+        //! remove batu19
+        List<String> listBatu19 = [];
+        List<int> listQtyBatu19 = [];
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].qtyBatu19!.toString() != '0') {
+            listQtyBatu19.add(data[i].qtyBatu19!);
+            listBatu19.add(data[i].batu19!);
+          }
+        }
+
+        //! remove batu20
+        List<String> listBatu20 = [];
+        List<int> listQtyBatu20 = [];
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].qtyBatu20!.toString() != '0') {
+            listQtyBatu20.add(data[i].qtyBatu20!);
+            listBatu20.add(data[i].batu20!);
+          }
+        }
+
+        //! remove batu21
+        List<String> listBatu21 = [];
+        List<int> listQtyBatu21 = [];
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].qtyBatu21!.toString() != '0') {
+            listQtyBatu21.add(data[i].qtyBatu21!);
+            listBatu21.add(data[i].batu21!);
+          }
+        }
+
+        //! remove batu22
+        List<String> listBatu22 = [];
+        List<int> listQtyBatu22 = [];
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].qtyBatu22!.toString() != '0') {
+            listQtyBatu22.add(data[i].qtyBatu22!);
+            listBatu22.add(data[i].batu22!);
+          }
+        }
+
+        //! remove batu23
+        List<String> listBatu23 = [];
+        List<int> listQtyBatu23 = [];
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].qtyBatu23!.toString() != '0') {
+            listQtyBatu23.add(data[i].qtyBatu23!);
+            listBatu23.add(data[i].batu23!);
+          }
+        }
+
+        //! remove batu24
+        List<String> listBatu24 = [];
+        List<int> listQtyBatu24 = [];
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].qtyBatu24!.toString() != '0') {
+            listQtyBatu24.add(data[i].qtyBatu24!);
+            listBatu24.add(data[i].batu24!);
+          }
+        }
+
+        //! remove batu25
+        List<String> listBatu25 = [];
+        List<int> listQtyBatu25 = [];
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].qtyBatu25!.toString() != '0') {
+            listQtyBatu25.add(data[i].qtyBatu25!);
+            listBatu25.add(data[i].batu25!);
+          }
+        }
+
+        //! remove batu26
+        List<String> listBatu26 = [];
+        List<int> listQtyBatu26 = [];
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].qtyBatu26!.toString() != '0') {
+            listQtyBatu26.add(data[i].qtyBatu26!);
+            listBatu26.add(data[i].batu26!);
+          }
+        }
+
+        //! remove batu27
+        List<String> listBatu27 = [];
+        List<int> listQtyBatu27 = [];
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].qtyBatu27!.toString() != '0') {
+            listQtyBatu27.add(data[i].qtyBatu27!);
+            listBatu27.add(data[i].batu27!);
+          }
+        }
+
+        //! remove batu28
+        List<String> listBatu28 = [];
+        List<int> listQtyBatu28 = [];
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].qtyBatu28!.toString() != '0') {
+            listQtyBatu28.add(data[i].qtyBatu28!);
+            listBatu28.add(data[i].batu28!);
+          }
+        }
+
+        //! remove batu29
+        List<String> listBatu29 = [];
+        List<int> listQtyBatu29 = [];
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].qtyBatu29!.toString() != '0') {
+            listQtyBatu29.add(data[i].qtyBatu29!);
+            listBatu29.add(data[i].batu29!);
+          }
+        }
+
+        //! remove batu30
+        List<String> listBatu30 = [];
+        List<int> listQtyBatu30 = [];
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].qtyBatu30!.toString() != '0') {
+            listQtyBatu30.add(data[i].qtyBatu30!);
+            listBatu30.add(data[i].batu30!);
+          }
+        }
+
+        //! remove batu31
+        List<String> listBatu31 = [];
+        List<int> listQtyBatu31 = [];
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].qtyBatu31!.toString() != '0') {
+            listQtyBatu31.add(data[i].qtyBatu31!);
+            listBatu31.add(data[i].batu31!);
+          }
+        }
+
+        //! remove batu32
+        List<String> listBatu32 = [];
+        List<int> listQtyBatu32 = [];
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].qtyBatu32!.toString() != '0') {
+            listQtyBatu32.add(data[i].qtyBatu32!);
+            listBatu32.add(data[i].batu32!);
+          }
+        }
+
+        //! remove batu33
+        List<String> listBatu33 = [];
+        List<int> listQtyBatu33 = [];
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].qtyBatu33!.toString() != '0') {
+            listQtyBatu33.add(data[i].qtyBatu33!);
+            listBatu33.add(data[i].batu33!);
+          }
+        }
+
+        //! remove batu34
+        List<String> listBatu34 = [];
+        List<int> listQtyBatu34 = [];
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].qtyBatu34!.toString() != '0') {
+            listQtyBatu34.add(data[i].qtyBatu34!);
+            listBatu34.add(data[i].batu34!);
+          }
+        }
+
+        //! remove batu35
+        List<String> listBatu35 = [];
+        List<int> listQtyBatu35 = [];
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].qtyBatu35!.toString() != '0') {
+            listQtyBatu35.add(data[i].qtyBatu35!);
+            listBatu35.add(data[i].batu35!);
+          }
+        }
+        listAllBatu.addAll(listBatu1);
+        listAllBatu.addAll(listBatu2);
+        listAllBatu.addAll(listBatu3);
+        listAllBatu.addAll(listBatu4);
+        listAllBatu.addAll(listBatu5);
+        listAllBatu.addAll(listBatu6);
+        listAllBatu.addAll(listBatu7);
+        listAllBatu.addAll(listBatu8);
+        listAllBatu.addAll(listBatu9);
+        listAllBatu.addAll(listBatu10);
+        listAllBatu.addAll(listBatu11);
+        listAllBatu.addAll(listBatu12);
+        listAllBatu.addAll(listBatu13);
+        listAllBatu.addAll(listBatu14);
+        listAllBatu.addAll(listBatu15);
+        listAllBatu.addAll(listBatu16);
+        listAllBatu.addAll(listBatu17);
+        listAllBatu.addAll(listBatu18);
+        listAllBatu.addAll(listBatu19);
+        listAllBatu.addAll(listBatu20);
+        listAllBatu.addAll(listBatu21);
+        listAllBatu.addAll(listBatu22);
+        listAllBatu.addAll(listBatu23);
+        listAllBatu.addAll(listBatu24);
+        listAllBatu.addAll(listBatu25);
+        listAllBatu.addAll(listBatu26);
+        listAllBatu.addAll(listBatu27);
+        listAllBatu.addAll(listBatu28);
+        listAllBatu.addAll(listBatu29);
+        listAllBatu.addAll(listBatu30);
+        listAllBatu.addAll(listBatu31);
+        listAllBatu.addAll(listBatu32);
+        listAllBatu.addAll(listBatu33);
+        listAllBatu.addAll(listBatu34);
+        listAllBatu.addAll(listBatu35);
+        listAllBatu.removeWhere((value) => value == '');
+        listAllQtyBatu.addAll(listQtyBatu1);
+        listAllQtyBatu.addAll(listQtyBatu2);
+        listAllQtyBatu.addAll(listQtyBatu3);
+        listAllQtyBatu.addAll(listQtyBatu4);
+        listAllQtyBatu.addAll(listQtyBatu5);
+        listAllQtyBatu.addAll(listQtyBatu6);
+        listAllQtyBatu.addAll(listQtyBatu7);
+        listAllQtyBatu.addAll(listQtyBatu8);
+        listAllQtyBatu.addAll(listQtyBatu9);
+        listAllQtyBatu.addAll(listQtyBatu10);
+        listAllQtyBatu.addAll(listQtyBatu11);
+        listAllQtyBatu.addAll(listQtyBatu12);
+        listAllQtyBatu.addAll(listQtyBatu13);
+        listAllQtyBatu.addAll(listQtyBatu14);
+        listAllQtyBatu.addAll(listQtyBatu15);
+        listAllQtyBatu.addAll(listQtyBatu16);
+        listAllQtyBatu.addAll(listQtyBatu17);
+        listAllQtyBatu.addAll(listQtyBatu18);
+        listAllQtyBatu.addAll(listQtyBatu19);
+        listAllQtyBatu.addAll(listQtyBatu20);
+        listAllQtyBatu.addAll(listQtyBatu21);
+        listAllQtyBatu.addAll(listQtyBatu22);
+        listAllQtyBatu.addAll(listQtyBatu23);
+        listAllQtyBatu.addAll(listQtyBatu24);
+        listAllQtyBatu.addAll(listQtyBatu25);
+        listAllQtyBatu.addAll(listQtyBatu26);
+        listAllQtyBatu.addAll(listQtyBatu27);
+        listAllQtyBatu.addAll(listQtyBatu28);
+        listAllQtyBatu.addAll(listQtyBatu29);
+        listAllQtyBatu.addAll(listQtyBatu30);
+        listAllQtyBatu.addAll(listQtyBatu31);
+        listAllQtyBatu.addAll(listQtyBatu32);
+        listAllQtyBatu.addAll(listQtyBatu33);
+        listAllQtyBatu.addAll(listQtyBatu34);
+        listAllQtyBatu.addAll(listQtyBatu35);
+        listAllQtyBatu.removeWhere((value) => value == 0);
+        listUniqBatu = listAllBatu.toSet().toList();
+        var sum = 0;
+        //looping menyatukan size dan qty
+        // listUniqBatu.length
+        for (var i = 0; i < listUniqBatu.length; i++) {
+          sum = 0;
+
+          for (var j = 0; j < listAllBatu.length; j++) {
+            mylist[listUniqBatu[i]] = sum;
+            if (mylist[listUniqBatu[i]].toString() ==
+                    mylist[listAllBatu[j]].toString() &&
+                mylist[listAllBatu[j]] == mylist[listUniqBatu[i]]) {
+              sum = sum + listAllQtyBatu[j];
+              // print('${listUniqBatu[i]} : $sum index:$i repeat ke:$j');
+              mylist.update(listUniqBatu[i], (value) => sum);
+            } else {}
+          }
+        }
+
+        Iterable<int> values = mylist.values;
+        for (final value in values) {
+          listUniqQtyBatu.add(value);
+        }
       } else {
         allData = allData;
       }
@@ -38,6 +495,7 @@ class ExcelScreen {
       textWrapping: TextWrapping.WrapText,
       rotation: 0,
     );
+
     var sheet = excel['mySheet'];
     var no = sheet.cell(CellIndex.indexByString("A1"));
     no.value = "No";
@@ -656,6 +1114,34 @@ class ExcelScreen {
     }
 
     excel.rename("mySheet", "result");
+
+    //! sheet 2
+    var sheet2 = excel['kebutuhan batu'];
+    var noSheet2 = sheet2.cell(CellIndex.indexByString("A1"));
+    noSheet2.value = "No";
+    noSheet2.cellStyle = headStyle;
+    var head1Sheet2 = sheet2.cell(CellIndex.indexByString("B1"));
+    head1Sheet2.value = "Ukuran";
+    head1Sheet2.cellStyle = headStyle;
+    var head2Sheet2 = sheet2.cell(CellIndex.indexByString("C1"));
+    head2Sheet2.value = "Kebutuhan";
+    head2Sheet2.cellStyle = headStyle;
+
+    for (int row = 0; row < listUniqBatu.length; row++) {
+      // var dataSheet2 = myData![row];
+      //? no
+      var listNoSheet2 = sheet2
+          .cell(CellIndex.indexByColumnRow(columnIndex: 0, rowIndex: row + 1));
+      listNoSheet2.value = (row + 1);
+      //? list head1
+      var listHead1Sheet2 = sheet2
+          .cell(CellIndex.indexByColumnRow(columnIndex: 1, rowIndex: row + 1));
+      listHead1Sheet2.value = listUniqBatu[row];
+      //? list head1
+      var listHead2Sheet2 = sheet2
+          .cell(CellIndex.indexByColumnRow(columnIndex: 2, rowIndex: row + 1));
+      listHead2Sheet2.value = listUniqQtyBatu[row];
+    }
     excel.delete('Sheet1');
 
     /// appending rows and checking the time complexity of it

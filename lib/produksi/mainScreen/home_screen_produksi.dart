@@ -1,17 +1,13 @@
-// ignore_for_file: depend_on_referenced_packages, avoid_print, prefer_typing_uninitialized_variables, use_build_context_synchronously, prefer_final_fields, prefer_const_constructors, no_leading_underscores_for_local_identifiers, unused_element
+// ignore_for_file: depend_on_referenced_packages, avoid_print, prefer_typing_uninitialized_variables, use_build_context_synchronously, prefer_final_fields, prefer_const_constructors, no_leading_underscores_for_local_identifiers, unused_element, avoid_unnecessary_containers
 
-import 'package:dropdown_search/dropdown_search.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:form_designer/api/api_constant.dart';
 import 'package:form_designer/global/global.dart';
-import 'dart:convert';
 import 'package:form_designer/model/form_designer_model.dart';
-import 'package:form_designer/produksi/modelProduksi/produksi_model.dart';
 import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:lottie/lottie.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 class HomeScreenProduksi extends StatefulWidget {
   const HomeScreenProduksi({super.key});
@@ -31,39 +27,6 @@ class _HomeScreenProduksiState extends State<HomeScreenProduksi> {
   String? updateSiklus = '';
   TextEditingController addSiklus = TextEditingController();
 
-  int? spkAsrori = 0;
-  double beratAsalAsrori = 0;
-  double? susutAsrori = 0;
-  double? jatahSusutAsrori = 0;
-  double? sbAsrori = 0;
-  double? resultAsrori = 0;
-  double totalPointAsrori = 0.0;
-
-  int? spkCarkiyad = 0;
-  double beratAsalCarkiyad = 0;
-  double? susutCarkiyad = 0;
-  double? jatahSusutCarkiyad = 0;
-  double? sbCarkiyad = 0;
-  double? resultCarkiyad = 0;
-  double totalPointCarkiyad = 0;
-
-  int? spkEncupSupriatna = 0;
-  double beratAsalEncupSupriatna = 0;
-  double? susutEncupSupriatna = 0;
-  double? jatahSusutEncupSupriatna = 0;
-  double? sbEncupSupriatna = 0;
-  double? resultEncupSupriatna = 0;
-  double totalPointEncupSupriatna = 0;
-
-  int? spkMuhammadAbdulKodir = 0;
-  double beratAsalMuhammadAbdulKodir = 0;
-  double? susutMuhammadAbdulKodir = 0;
-  double? jatahSusutMuhammadAbdulKodir = 0;
-  double? sbMuhammadAbdulKodir = 0;
-  double? resultMuhammadAbdulKodir = 0;
-  double totalPointMuhammadAbdulKodir = 0;
-  String siklusDesigner = '';
-
   bool isSelected1 = false;
   TextEditingController controller = TextEditingController();
   bool sort = true;
@@ -75,660 +38,155 @@ class _HomeScreenProduksiState extends State<HomeScreenProduksi> {
   bool isLoadingJenisBarang = false;
   var nowSiklus = '';
   String? namaJenisBarangView1 = '';
+  TooltipBehavior? _tooltipBehavior;
+  List<ChartData>? chartData;
+  List<ChartData>? chartDataLevel2;
+  List<ChartData>? chartDataLevel3;
+  int indexLevel = 1;
+  String titleLevel2 = '';
+  int janRelease = 0;
+  int febRelease = 0;
+  int marRelease = 0;
+  int aprRelease = 0;
+  int mayRelease = 0;
+  int junRelease = 0;
+  int julRelease = 0;
+  int augRelease = 0;
+  int sepRelease = 0;
+  int octRelease = 0;
+  int novRelease = 0;
+  int decRelease = 0;
+  int janBrj = 0;
+  int febBrj = 0;
+  int marBrj = 0;
+  int aprBrj = 0;
+  int mayBrj = 0;
+  int junBrj = 0;
+  int julBrj = 0;
+  int augBrj = 0;
+  int sepBrj = 0;
+  int octBrj = 0;
+  int novBrj = 0;
+  int decBrj = 0;
 
   @override
   initState() {
     super.initState();
     initializeDateFormatting();
-    var now = DateTime.now();
-    String month = DateFormat('MMMM', 'id').format(now);
-    siklusDesigner = month;
-    // _getAllDataProduksi("all", sharedPreferences!.getString('nama')!);
+    _tooltipBehavior = TooltipBehavior(
+        enable: true,
+        format: 'Total: point.y',
+        canShowMarker: true,
+        header: '');
+    // var now = DateTime.now();
     nowSiklus = sharedPreferences!.getString('siklus')!;
-    // _getSpk("all", 'noname');
-    // _getPoint("all", 'noname');
-    // _getBeratAsal("all", 'noname');
-  }
+    janRelease = 150;
+    febRelease = 160;
+    marRelease = 170;
+    aprRelease = 250;
+    mayRelease = 130;
+    junRelease = 190;
+    julRelease = 200;
+    augRelease = 160;
+    sepRelease = 215;
+    octRelease = 189;
+    novRelease = 185;
+    decRelease = 250;
+    janBrj = 142;
+    febBrj = 160;
+    marBrj = 130;
+    aprBrj = 200;
+    mayBrj = 130;
+    junBrj = 180;
+    julBrj = 150;
+    augBrj = 160;
+    sepBrj = 200;
+    octBrj = 189;
+    novBrj = 185;
+    decBrj = 200;
 
-  _getSpkByName(month, name) async {
-    var spk;
-    final response = await http
-        .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getProduksi));
+    chartData = <ChartData>[
+      ChartData(
+          xValue:
+              'JANUARI\n${((janBrj / janRelease) * 100).toStringAsFixed(2)}%',
+          yValue: janBrj,
+          secondSeriesYValue: janRelease),
+      ChartData(
+          xValue:
+              'FEBRUARI\n${((febBrj / febRelease) * 100).toStringAsFixed(2)}%',
+          yValue: febBrj,
+          secondSeriesYValue: febRelease),
+      ChartData(
+          xValue: 'MARET\n${((marBrj / marRelease) * 100).toStringAsFixed(2)}%',
+          yValue: marBrj,
+          secondSeriesYValue: marRelease),
+      ChartData(
+          xValue: 'APRIL\n${((aprBrj / aprRelease) * 100).toStringAsFixed(2)}%',
+          yValue: aprBrj,
+          secondSeriesYValue: aprRelease),
+      ChartData(
+          xValue: 'MEI\n${((mayBrj / mayRelease) * 100).toStringAsFixed(2)}%',
+          yValue: mayBrj,
+          secondSeriesYValue: mayRelease),
+      ChartData(
+          xValue: 'JUNI\n${((junBrj / junRelease) * 100).toStringAsFixed(2)}%',
+          yValue: junBrj,
+          secondSeriesYValue: junRelease),
+      ChartData(
+          xValue: 'JULI\n${((julBrj / julRelease) * 100).toStringAsFixed(2)}%',
+          yValue: julBrj,
+          secondSeriesYValue: julRelease),
+      ChartData(
+          xValue:
+              'AGUSTUS\n${((augBrj / augRelease) * 100).toStringAsFixed(2)}%',
+          yValue: augBrj,
+          secondSeriesYValue: augRelease),
+      ChartData(
+          xValue:
+              'SEPTEMBER\n${((sepBrj / sepRelease) * 100).toStringAsFixed(2)}%',
+          yValue: sepBrj,
+          secondSeriesYValue: sepRelease),
+      ChartData(
+          xValue:
+              'OKTOBER\n${((octBrj / octRelease) * 100).toStringAsFixed(2)}%',
+          yValue: octBrj,
+          secondSeriesYValue: octRelease),
+      ChartData(
+          xValue:
+              'NOVEMBER\n${((novBrj / novRelease) * 100).toStringAsFixed(2)}%',
+          yValue: novBrj,
+          secondSeriesYValue: novRelease),
+      ChartData(
+          xValue:
+              'DESEMBER\n${((decBrj / decRelease) * 100).toStringAsFixed(2)}%',
+          yValue: decBrj,
+          secondSeriesYValue: decRelease)
+    ];
 
-    if (response.statusCode == 200) {
-      print('get data produksi berhasil');
-      List jsonResponse = json.decode(response.body);
+    chartDataLevel2 = <ChartData>[
+      ChartData(xValue: 'Bangle', yValue: 5, secondSeriesYValue: 7),
+      ChartData(xValue: 'Bracelet', yValue: 7, secondSeriesYValue: 7),
+      ChartData(xValue: 'Brooch', yValue: 1, secondSeriesYValue: 1),
+      ChartData(xValue: 'Earings', yValue: 50, secondSeriesYValue: 77),
+      ChartData(xValue: 'Men Ring', yValue: 1, secondSeriesYValue: 1),
+      ChartData(xValue: 'Necklace', yValue: 18, secondSeriesYValue: 22),
+      ChartData(xValue: 'Pendant', yValue: 47, secondSeriesYValue: 47),
+      ChartData(xValue: 'Ring', yValue: 150, secondSeriesYValue: 169),
+      ChartData(xValue: 'SET', yValue: 3, secondSeriesYValue: 3),
+      ChartData(xValue: 'Wedding Ring', yValue: 3, secondSeriesYValue: 3),
+    ];
 
-      var allData =
-          jsonResponse.map((data) => ProduksiModel.fromJson(data)).toList();
-
-      if (month.toString().toLowerCase() == "all") {
-        var filterByName = allData.where((element) =>
-            element.nama.toString().toLowerCase() ==
-            name.toString().toLowerCase());
-        spk = filterByName.toList().length;
-      } else {
-        var filterBySiklus = allData.where((element) =>
-            element.bulan.toString().toLowerCase() ==
-            month.toString().toLowerCase());
-        var filterByName = filterBySiklus.where(
-            (element) => element.nama.toString().toLowerCase() == "asrori");
-        spk = filterByName.toList().length;
-      }
-
-      return spk;
-    } else {
-      print('get data produksi gagal');
-      throw Exception('Unexpected error occured!');
-    }
-  }
-
-  _getSpk(month, name) async {
-    final response = await http
-        .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getProduksi));
-
-    if (response.statusCode == 200) {
-      print('get data produksi berhasil');
-      List jsonResponse = json.decode(response.body);
-
-      var allData =
-          jsonResponse.map((data) => ProduksiModel.fromJson(data)).toList();
-
-      if (month.toString().toLowerCase() == "all") {
-        //? asrori
-        var filterByAsrori = allData.where((element) =>
-            element.nama.toString().toLowerCase() == 'asrori' &&
-            element.keterangan.toString().toLowerCase() != 'orul');
-        spkAsrori = filterByAsrori.toList().length;
-        //? carkiyad
-        var filterByCarkiyad = allData.where((element) =>
-            element.nama.toString().toLowerCase() == 'carkiyad' &&
-            element.keterangan.toString().toLowerCase() != 'orul');
-        spkCarkiyad = filterByCarkiyad.toList().length;
-        //? encup
-        var filterByEncupSupriatna = allData.where((element) =>
-            element.nama.toString().toLowerCase() == 'encup supriatna' &&
-            element.keterangan.toString().toLowerCase() != 'orul');
-        spkEncupSupriatna = filterByEncupSupriatna.toList().length;
-        //? m abdul kodir
-        var filterByMuhammadAbdulKodir = allData.where((element) =>
-            element.nama.toString().toLowerCase() == 'muhammad abdul kodir' &&
-            element.keterangan.toString().toLowerCase() != 'orul');
-        spkMuhammadAbdulKodir = filterByMuhammadAbdulKodir.toList().length;
-      } else {
-        var filterBySiklus = allData.where((element) =>
-            element.bulan.toString().toLowerCase() ==
-            month.toString().toLowerCase());
-        //? asrori
-        var filterByAsrori = filterBySiklus.where((element) =>
-            element.nama.toString().toLowerCase() == 'asrori' &&
-            element.keterangan.toString().toLowerCase() != 'orul');
-        spkAsrori = filterByAsrori.toList().length;
-        //? carkiyad
-        var filterByCarkiyad = filterBySiklus.where((element) =>
-            element.nama.toString().toLowerCase() == 'carkiyad' &&
-            element.keterangan.toString().toLowerCase() != 'orul');
-        spkCarkiyad = filterByCarkiyad.toList().length;
-        //? encup
-        var filterByEncupSupriatna = filterBySiklus.where((element) =>
-            element.nama.toString().toLowerCase() == 'encup supriatna' &&
-            element.keterangan.toString().toLowerCase() != 'orul');
-        spkEncupSupriatna = filterByEncupSupriatna.toList().length;
-        //? m abdul kodir
-        var filterByMuhammadAbdulKodir = filterBySiklus.where((element) =>
-            element.nama.toString().toLowerCase() == 'muhammad abdul kodir' &&
-            element.keterangan.toString().toLowerCase() != 'orul');
-        spkMuhammadAbdulKodir = filterByMuhammadAbdulKodir.toList().length;
-      }
-      setState(() {
-        print('refresh state get data produksi');
-        isLoading = true;
-      });
-      return allData;
-    } else {
-      print('get data produksi gagal');
-      throw Exception('Unexpected error occured!');
-    }
-  }
-
-  _getPoint(month, name) async {
-    final response = await http
-        .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getProduksi));
-
-    if (response.statusCode == 200) {
-      print('get data produksi berhasil');
-      List jsonResponse = json.decode(response.body);
-
-      var allData =
-          jsonResponse.map((data) => ProduksiModel.fromJson(data)).toList();
-
-      if (month.toString().toLowerCase() == "all") {
-        //? asrori
-        var filterByAsrori = allData
-            .where((element) =>
-                element.nama.toString().toLowerCase() == 'asrori' &&
-                element.keterangan.toString().toLowerCase() != 'orul')
-            .toList();
-        for (var i = 0; i < filterByAsrori.length; i++) {
-          if (filterByAsrori[i].point! > 0) {
-            totalPointAsrori += filterByAsrori[i].point!;
-          }
-        }
-        //? carkiyad
-        var filterByCarkiyad = allData
-            .where((element) =>
-                element.nama.toString().toLowerCase() == 'carkiyad' &&
-                element.keterangan.toString().toLowerCase() != 'orul')
-            .toList();
-        for (var i = 0; i < filterByCarkiyad.length; i++) {
-          if (filterByCarkiyad[i].point! > 0) {
-            totalPointCarkiyad += filterByCarkiyad[i].point!;
-          }
-        }
-        //? encup
-        var filterByEncupSupriatna = allData
-            .where((element) =>
-                element.nama.toString().toLowerCase() == 'encup supriatna' &&
-                element.keterangan.toString().toLowerCase() != 'orul')
-            .toList();
-        for (var i = 0; i < filterByEncupSupriatna.length; i++) {
-          if (filterByEncupSupriatna[i].point! > 0) {
-            totalPointEncupSupriatna += filterByEncupSupriatna[i].point!;
-          }
-        }
-        //? m abdul kodir
-        var filterByMuhammadAbdulKodir = allData
-            .where((element) =>
-                element.nama.toString().toLowerCase() ==
-                    'muhammad abdul kodir' &&
-                element.keterangan.toString().toLowerCase() != 'orul')
-            .toList();
-        for (var i = 0; i < filterByMuhammadAbdulKodir.length; i++) {
-          if (filterByMuhammadAbdulKodir[i].point! > 0) {
-            totalPointMuhammadAbdulKodir +=
-                filterByMuhammadAbdulKodir[i].point!;
-          }
-        }
-      } else {
-        var filterBySiklus = allData.where((element) =>
-            element.bulan.toString().toLowerCase() ==
-            month.toString().toLowerCase());
-        //? asrori
-        var filterByAsrori = filterBySiklus
-            .where((element) =>
-                element.nama.toString().toLowerCase() == 'asrori' &&
-                element.keterangan.toString().toLowerCase() != 'orul')
-            .toList();
-        for (var i = 0; i < filterByAsrori.length; i++) {
-          if (filterByAsrori[i].point! > 0) {
-            totalPointAsrori += filterByAsrori[i].point!;
-          }
-        }
-        //? carkiyad
-        var filterByCarkiyad = filterBySiklus
-            .where((element) =>
-                element.nama.toString().toLowerCase() == 'carkiyad' &&
-                element.keterangan.toString().toLowerCase() != 'orul')
-            .toList();
-        for (var i = 0; i < filterByCarkiyad.length; i++) {
-          if (filterByCarkiyad[i].point! > 0) {
-            totalPointCarkiyad += filterByCarkiyad[i].point!;
-          }
-        }
-        //? encup
-        var filterByEncupSupriatna = filterBySiklus
-            .where((element) =>
-                element.nama.toString().toLowerCase() == 'encup supriatna' &&
-                element.keterangan.toString().toLowerCase() != 'orul')
-            .toList();
-        for (var i = 0; i < filterByEncupSupriatna.length; i++) {
-          if (filterByEncupSupriatna[i].point! > 0) {
-            totalPointEncupSupriatna += filterByEncupSupriatna[i].point!;
-          }
-        }
-        //? m abdul kodir
-        var filterByMuhammadAbdulKodir = filterBySiklus
-            .where((element) =>
-                element.nama.toString().toLowerCase() == 'encup supriatna' &&
-                element.keterangan.toString().toLowerCase() != 'orul')
-            .toList();
-        for (var i = 0; i < filterByMuhammadAbdulKodir.length; i++) {
-          if (filterByMuhammadAbdulKodir[i].point! > 0) {
-            totalPointMuhammadAbdulKodir +=
-                filterByMuhammadAbdulKodir[i].point!;
-          }
-        }
-      }
-      setState(() {
-        print('refresh state get data produksi point');
-        isLoading = true;
-      });
-      return allData;
-    } else {
-      print('get data produksi gagal');
-      throw Exception('Unexpected error occured!');
-    }
-  }
-
-  _getBeratAsal(month, name) async {
-    final response = await http
-        .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getProduksi));
-
-    if (response.statusCode == 200) {
-      print('get data produksi berhasil');
-      List jsonResponse = json.decode(response.body);
-
-      var allData =
-          jsonResponse.map((data) => ProduksiModel.fromJson(data)).toList();
-
-      if (month.toString().toLowerCase() == "all") {
-        //? asrori
-        var filterByAsrori = allData
-            .where((element) =>
-                element.nama.toString().toLowerCase() == 'asrori' &&
-                element.keterangan.toString().toLowerCase() != 'orul')
-            .toList();
-        for (var i = 0; i < filterByAsrori.length; i++) {
-          if (filterByAsrori[i].debet! > 0) {
-            beratAsalAsrori += filterByAsrori[i].debet!;
-          }
-        }
-        //? carkiyad
-        var filterByCarkiyad = allData
-            .where((element) =>
-                element.nama.toString().toLowerCase() == 'carkiyad' &&
-                element.keterangan.toString().toLowerCase() != 'orul')
-            .toList();
-        for (var i = 0; i < filterByCarkiyad.length; i++) {
-          if (filterByCarkiyad[i].debet! > 0) {
-            beratAsalCarkiyad += filterByCarkiyad[i].debet!;
-          }
-        }
-        //? encup
-        var filterByEncupSupriatna = allData
-            .where((element) =>
-                element.nama.toString().toLowerCase() == 'encup supriatna' &&
-                element.keterangan.toString().toLowerCase() != 'orul')
-            .toList();
-        for (var i = 0; i < filterByEncupSupriatna.length; i++) {
-          if (filterByEncupSupriatna[i].debet! > 0) {
-            beratAsalEncupSupriatna += filterByEncupSupriatna[i].debet!;
-          }
-        }
-        //? m abdul kodir
-        var filterByMuhammadAbdulKodir = allData
-            .where((element) =>
-                element.nama.toString().toLowerCase() ==
-                    'muhammad abdul kodir' &&
-                element.keterangan.toString().toLowerCase() != 'orul')
-            .toList();
-        for (var i = 0; i < filterByMuhammadAbdulKodir.length; i++) {
-          if (filterByMuhammadAbdulKodir[i].debet! > 0) {
-            beratAsalMuhammadAbdulKodir += filterByMuhammadAbdulKodir[i].debet!;
-          }
-        }
-      } else {
-        var filterBySiklus = allData.where((element) =>
-            element.bulan.toString().toLowerCase() ==
-            month.toString().toLowerCase());
-        //? asrori
-        var filterByAsrori = filterBySiklus
-            .where((element) =>
-                element.nama.toString().toLowerCase() == 'asrori' &&
-                element.keterangan.toString().toLowerCase() != 'orul')
-            .toList();
-        for (var i = 0; i < filterByAsrori.length; i++) {
-          if (filterByAsrori[i].debet! > 0) {
-            beratAsalAsrori += filterByAsrori[i].debet!;
-          }
-        }
-        //? carkiyad
-        var filterByCarkiyad = filterBySiklus
-            .where((element) =>
-                element.nama.toString().toLowerCase() == 'carkiyad' &&
-                element.keterangan.toString().toLowerCase() != 'orul')
-            .toList();
-        for (var i = 0; i < filterByCarkiyad.length; i++) {
-          if (filterByCarkiyad[i].debet! > 0) {
-            beratAsalCarkiyad += filterByCarkiyad[i].debet!;
-          }
-        }
-        //? encup
-        var filterByEncupSupriatna = filterBySiklus
-            .where((element) =>
-                element.nama.toString().toLowerCase() == 'encup supriatna' &&
-                element.keterangan.toString().toLowerCase() != 'orul')
-            .toList();
-        for (var i = 0; i < filterByEncupSupriatna.length; i++) {
-          if (filterByEncupSupriatna[i].debet! > 0) {
-            beratAsalEncupSupriatna += filterByEncupSupriatna[i].debet!;
-          }
-        }
-        //? m abdul kodir
-        var filterByMuhammadAbdulKodir = filterBySiklus
-            .where((element) =>
-                element.nama.toString().toLowerCase() == 'encup supriatna' &&
-                element.keterangan.toString().toLowerCase() != 'orul')
-            .toList();
-        for (var i = 0; i < filterByMuhammadAbdulKodir.length; i++) {
-          if (filterByMuhammadAbdulKodir[i].debet! > 0) {
-            beratAsalMuhammadAbdulKodir += filterByMuhammadAbdulKodir[i].debet!;
-          }
-        }
-      }
-      setState(() {
-        print('refresh state get data produksi point');
-        isLoading = true;
-      });
-      return allData;
-    } else {
-      print('get data produksi gagal');
-      throw Exception('Unexpected error occured!');
-    }
-  }
-
-  _getBeratAsalByName(month, name) async {
-    double sumDebet = 0.0;
-
-    final response = await http
-        .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getProduksi));
-
-    if (response.statusCode == 200) {
-      print('get data produksi berhasil');
-      List jsonResponse = json.decode(response.body);
-
-      var allData =
-          jsonResponse.map((data) => ProduksiModel.fromJson(data)).toList();
-
-      if (month.toString().toLowerCase() == "all") {
-        var filterByName = allData
-            .where((element) =>
-                element.nama.toString().toLowerCase() ==
-                name.toString().toLowerCase())
-            .toList();
-        for (var i = 0; i < filterByName.length; i++) {
-          if (filterByName[i].debet! > 0) {
-            sumDebet += filterByName[i].debet!;
-          }
-        }
-        // beratAsal = filterByName.toList().length;
-      } else {
-        var filterBySiklus = allData.where((element) =>
-            element.bulan.toString().toLowerCase() ==
-            month.toString().toLowerCase());
-        var filterByName = filterBySiklus
-            .where((element) =>
-                element.nama.toString().toLowerCase() ==
-                name.toString().toLowerCase())
-            .toList();
-        for (var i = 0; i < filterByName.length; i++) {
-          if (filterByName[i].debet! > 0) {
-            sumDebet += filterByName[i].debet!;
-          }
-        }
-      }
-      return sumDebet.toStringAsFixed(2);
-    } else {
-      print('get data produksi gagal');
-      throw Exception('Unexpected error occured!');
-    }
-  }
-
-//! data table
-  DataTable _dataTableFinishing() {
-    return DataTable(
-        headingTextStyle:
-            TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
-        headingRowColor:
-            MaterialStateProperty.resolveWith((states) => Colors.blue),
-        columnSpacing: 1,
-        headingRowHeight: 50,
-        dataRowMaxHeight: 50,
-        columns: _createColumns(),
-        rows: _createRows());
-  }
-
-  List<DataColumn> _createColumns() {
-    return [
-      DataColumn(label: Text('NAMA')),
-      DataColumn(label: _verticalDivider),
-      DataColumn(label: Text('SPK')),
-      DataColumn(label: _verticalDivider),
-      DataColumn(label: Text('TOTAL POINT')),
-      DataColumn(label: _verticalDivider),
-      DataColumn(label: Text('BERAT ASAL')),
-      DataColumn(label: _verticalDivider),
-      DataColumn(label: Text('SUSUT')),
-      DataColumn(label: _verticalDivider),
-      DataColumn(label: Text('JATAH SUSUT')),
-      DataColumn(label: _verticalDivider),
-      DataColumn(label: Text('STOR SB ARTIS')),
-      DataColumn(label: _verticalDivider),
-      DataColumn(label: Text('RESULT')),
-      DataColumn(label: _verticalDivider),
-      DataColumn(label: Text('KETERANGAN')),
+    chartDataLevel3 = <ChartData>[
+      // ChartData(xValue: 'Week 1', yValue: 5, secondSeriesYValue: 7),
+      // ChartData(xValue: 'Week 2', yValue: 7, secondSeriesYValue: 7),
+      // ChartData(xValue: 'Week 3', yValue: 1, secondSeriesYValue: 1),
+      // ChartData(xValue: 'Week 4', yValue: 50, secondSeriesYValue: 77),
+      ChartData(x: 'Week 1', y: 7, secondSeriesYValue: 7),
+      ChartData(x: 'Week 2', y: 10, secondSeriesYValue: 15),
+      ChartData(x: 'Week 3', y: 4, secondSeriesYValue: 4),
+      ChartData(x: 'Week 4', y: 70, secondSeriesYValue: 80),
     ];
   }
-
-  List<DataRow> _createRows() {
-    return [
-      DataRow(cells: [
-        DataCell(Text('Asrori')),
-        DataCell(_verticalDivider),
-        //! versi get dahulu lalu simpan
-        DataCell(Text('$spkAsrori')),
-        //!versi langsung get
-        // DataCell(FutureBuilder(
-        //     future: _getSpkByName("all", "Asrori"),
-        //     builder: (context, snapshot) {
-        //       if (snapshot.hasError) {
-        //         return const Text('Database Off');
-        //       }
-        //       if (snapshot.hasData) {
-        //         return Text(snapshot.data!.toString());
-        //       } else {
-        //         return const CircularProgressIndicator();
-        //       }
-        //     })),
-        DataCell(_verticalDivider),
-        DataCell(Text(totalPointAsrori.toStringAsFixed(2))),
-        DataCell(_verticalDivider),
-        DataCell(Text(beratAsalAsrori.toStringAsFixed(2))),
-        //! versi langsung get
-        // DataCell(FutureBuilder(
-        //     future: _getBeratAsalByName("all", "Asrori"),
-        //     builder: (context, snapshot) {
-        //       if (snapshot.hasError) {
-        //         return const Text('Database Off');
-        //       }
-        //       if (snapshot.hasData) {
-        //         return Text(snapshot.data!.toString());
-        //       } else {
-        //         return const CircularProgressIndicator();
-        //       }
-        //     })),
-        DataCell(_verticalDivider),
-        DataCell(Text('1.82')),
-        DataCell(_verticalDivider),
-        DataCell(Text('1.60')),
-        DataCell(_verticalDivider),
-        DataCell(Text('13.31')),
-        DataCell(_verticalDivider),
-        DataCell(
-          Text('-0.22'),
-        ),
-        DataCell(_verticalDivider),
-        DataCell(
-          Text(
-            '(POTONGAN)',
-            style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
-          ),
-        ),
-      ]),
-      DataRow(cells: [
-        DataCell(Text('Carkiyad')),
-        DataCell(_verticalDivider),
-        //! versi get dahulu lalu simpan
-        DataCell(Text('$spkCarkiyad')),
-        //!versi langsung get
-        // DataCell(FutureBuilder(
-        //     future: _getSpkByName("all", "Carkiyad"),
-        //     builder: (context, snapshot) {
-        //       if (snapshot.hasError) {
-        //         return const Text('Database Off');
-        //       }
-        //       if (snapshot.hasData) {
-        //         return Text(snapshot.data!.toString());
-        //       } else {
-        //         return const CircularProgressIndicator();
-        //       }
-        //     })),
-        DataCell(_verticalDivider),
-        DataCell(Text(totalPointCarkiyad.toStringAsFixed(2))),
-        DataCell(_verticalDivider),
-        DataCell(Text(beratAsalCarkiyad.toStringAsFixed(2))),
-        //! versi langsung get
-        // DataCell(FutureBuilder(
-        //     future: _getBeratAsalByName("all", "Carkiyad"),
-        //     builder: (context, snapshot) {
-        //       if (snapshot.hasError) {
-        //         return const Text('Database Off');
-        //       }
-        //       if (snapshot.hasData) {
-        //         return Text(snapshot.data!.toString());
-        //       } else {
-        //         return const CircularProgressIndicator();
-        //       }
-        //     })),
-        DataCell(_verticalDivider),
-        DataCell(Text('1.82')),
-        DataCell(_verticalDivider),
-        DataCell(Text('1.60')),
-        DataCell(_verticalDivider),
-        DataCell(Text('13.31')),
-        DataCell(_verticalDivider),
-        DataCell(
-          Text('-0.22'),
-        ),
-        DataCell(_verticalDivider),
-        DataCell(
-          Text(
-            '(POTONGAN)',
-            style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
-          ),
-        ),
-      ]),
-      DataRow(cells: [
-        DataCell(Text('Encup Supriatna')),
-        DataCell(_verticalDivider),
-        //! versi get dahulu lalu simpan
-        DataCell(Text('$spkEncupSupriatna')),
-        //!versi langsung get
-        // DataCell(FutureBuilder(
-        //     future: _getSpkByName("all", "encup supriatna"),
-        //     builder: (context, snapshot) {
-        //       if (snapshot.hasError) {
-        //         return const Text('Database Off');
-        //       }
-        //       if (snapshot.hasData) {
-        //         return Text(snapshot.data!.toString());
-        //       } else {
-        //         return const CircularProgressIndicator();
-        //       }
-        //     })),
-        DataCell(_verticalDivider),
-        DataCell(Text(totalPointEncupSupriatna.toStringAsFixed(2))),
-        DataCell(_verticalDivider),
-        DataCell(Text(beratAsalEncupSupriatna.toStringAsFixed(2))),
-        //! versi langsung get
-        // DataCell(FutureBuilder(
-        //     future: _getBeratAsalByName("all", "encup supriatna"),
-        //     builder: (context, snapshot) {
-        //       if (snapshot.hasError) {
-        //         return const Text('Database Off');
-        //       }
-        //       if (snapshot.hasData) {
-        //         return Text(snapshot.data!.toString());
-        //       } else {
-        //         return const CircularProgressIndicator();
-        //       }
-        //     })),
-        DataCell(_verticalDivider),
-        DataCell(Text('1.82')),
-        DataCell(_verticalDivider),
-        DataCell(Text('1.60')),
-        DataCell(_verticalDivider),
-        DataCell(Text('13.31')),
-        DataCell(_verticalDivider),
-        DataCell(
-          Text('1.22'),
-        ),
-        DataCell(_verticalDivider),
-        DataCell(
-          Text(
-            '(BONUS)',
-            style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
-          ),
-        ),
-      ]),
-      DataRow(cells: [
-        DataCell(Text('Muhammad Abdul Kodir')),
-        DataCell(_verticalDivider),
-        //! versi get dahulu lalu simpan
-        DataCell(Text('$spkMuhammadAbdulKodir')),
-        //!versi langsung get
-        // DataCell(FutureBuilder(
-        //     future: _getSpkByName("all", "Muhammad Abdul Kodir"),
-        //     builder: (context, snapshot) {
-        //       if (snapshot.hasError) {
-        //         return const Text('Database Off');
-        //       }
-        //       if (snapshot.hasData) {
-        //         return Text(snapshot.data!.toString());
-        //       } else {
-        //         return const CircularProgressIndicator();
-        //       }
-        //     })),
-        DataCell(_verticalDivider),
-        DataCell(Text(totalPointMuhammadAbdulKodir.toStringAsFixed(2))),
-        DataCell(_verticalDivider),
-        DataCell(Text(beratAsalMuhammadAbdulKodir.toStringAsFixed(2))),
-        //! versi langsung get
-        // DataCell(FutureBuilder(
-        //     future: _getBeratAsalByName("all", "Muhammad Abdul Kodir"),
-        //     builder: (context, snapshot) {
-        //       if (snapshot.hasError) {
-        //         return const Text('Database Off');
-        //       }
-        //       if (snapshot.hasData) {
-        //         return Text(snapshot.data!.toString());
-        //       } else {
-        //         return const CircularProgressIndicator();
-        //       }
-        //     })),
-
-        DataCell(_verticalDivider),
-        DataCell(Text('1.82')),
-        DataCell(_verticalDivider),
-        DataCell(Text('1.60')),
-        DataCell(_verticalDivider),
-        DataCell(Text('13.31')),
-        DataCell(_verticalDivider),
-        DataCell(
-          Text('5.22'),
-        ),
-        DataCell(_verticalDivider),
-        DataCell(
-          Text(
-            '(BONUS)',
-            style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
-          ),
-        ),
-      ]),
-    ];
-  }
-
-  //! end data table
 
   @override
   Widget build(BuildContext context) {
@@ -750,294 +208,330 @@ class _HomeScreenProduksiState extends State<HomeScreenProduksi> {
         // ignore: null_check_always_fails
         onWillPop: () async => null!,
         child: Scaffold(
-
+            backgroundColor: colorBG,
             // drawer: Drawer1(),
             appBar: AppBar(
               automaticallyImplyLeading: false,
-              backgroundColor: Colors.blue,
+              backgroundColor: Colors.white,
               leadingWidth: 320,
-              //change siklus
-              leading: Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: Row(
-                  children: [
-                    Text(
-                      "Siklus Saat Ini : $nowSiklus",
-                      style: const TextStyle(fontSize: 20, color: Colors.white),
-                    ),
-                  ],
-                ),
-              ),
-              title: const Text(
-                "Home",
-                style: TextStyle(fontSize: 25, color: Colors.white),
-              ),
-              centerTitle: true,
-              actions: [
-                Text(
-                  version,
-                  style: const TextStyle(fontSize: 14, color: Colors.white),
-                ),
-              ],
+              // leading: Row(
+              //   children: [
+              //     Padding(
+              //       padding: const EdgeInsets.all(8.0),
+              //       child: Text(
+              //         "Siklus Saat Ini : $nowSiklus",
+              //         style: const TextStyle(fontSize: 20, color: Colors.black),
+              //       ),
+              //     ),
+              //     InkWell(
+              //       onTap: () {
+              //         final dropdownFormKey = GlobalKey<FormState>();
+              //         showDialog(
+              //             context: context,
+              //             builder: (BuildContext context) {
+              //               return AlertDialog(
+              //                 shape: RoundedRectangleBorder(
+              //                     borderRadius: BorderRadius.circular(8)),
+              //                 // title: const Text('Pilih Siklus'),
+              //                 content: SizedBox(
+              //                   height: 150,
+              //                   child: Column(
+              //                     children: [
+              //                       Form(
+              //                           key: dropdownFormKey,
+              //                           child: Column(
+              //                             mainAxisAlignment:
+              //                                 MainAxisAlignment.center,
+              //                             children: [
+              //                               DropdownSearch<String>(
+              //                                 items: const [
+              //                                   "JANUARI",
+              //                                   "FEBRUARI",
+              //                                   "MARET",
+              //                                   "APRIL",
+              //                                   "MEI",
+              //                                   "JUNI",
+              //                                   "JULI",
+              //                                   "AGUSTUS",
+              //                                   "SEPTEMBER",
+              //                                   "OKTOBER",
+              //                                   "NOVEMBER",
+              //                                   "DESEMBER"
+              //                                 ],
+              //                                 dropdownDecoratorProps:
+              //                                     DropDownDecoratorProps(
+              //                                   dropdownSearchDecoration:
+              //                                       InputDecoration(
+              //                                     hintText: 'Pilih Siklus',
+              //                                     filled: true,
+              //                                     fillColor: Colors.black,
+              //                                     enabledBorder:
+              //                                         OutlineInputBorder(
+              //                                       borderSide:
+              //                                           const BorderSide(
+              //                                               color: Colors.black,
+              //                                               width: 2),
+              //                                       borderRadius:
+              //                                           BorderRadius.circular(
+              //                                               20),
+              //                                     ),
+              //                                   ),
+              //                                 ),
+              //                                 validator: (value) => value ==
+              //                                         null
+              //                                     ? "Siklus tidak boleh kosong"
+              //                                     : null,
+              //                                 onChanged: (String? newValue) {
+              //                                   addSiklus.text = newValue!;
+              //                                 },
+              //                               ),
+              //                               Container(
+              //                                 padding: const EdgeInsets.only(
+              //                                     top: 20),
+              //                                 child: ElevatedButton(
+              //                                     onPressed: () async {
+              //                                       if (dropdownFormKey
+              //                                           .currentState!
+              //                                           .validate()) {
+              //                                         //? method untuk mengganti siklus
+              //                                         // await postSiklus();
+              //                                         Navigator.pop(context);
+              //                                         // Navigator.push(
+              //                                         //     context,
+              //                                         //     MaterialPageRoute(
+              //                                         //         builder:
+              //                                         //             (c) =>
+              //                                         //                 const MainView()));
+
+              //                                         showDialog<String>(
+              //                                             context: context,
+              //                                             builder: (BuildContext
+              //                                                     context) =>
+              //                                                 const AlertDialog(
+              //                                                   title: Text(
+              //                                                     'Siklus Berhasil Diterapkan',
+              //                                                   ),
+              //                                                 ));
+              //                                         setState(() {
+              //                                           nowSiklus =
+              //                                               addSiklus.text;
+              //                                           sharedPreferences!
+              //                                               .setString(
+              //                                                   'siklusProduksi',
+              //                                                   addSiklus.text);
+              //                                         });
+              //                                       }
+              //                                     },
+              //                                     child: const Text(
+              //                                       "Submit",
+              //                                       style: TextStyle(
+              //                                         fontSize: 24,
+              //                                       ),
+              //                                     )),
+              //                               )
+              //                             ],
+              //                           ))
+              //                     ],
+              //                   ),
+              //                 ),
+              //               );
+              //             });
+              //       },
+              //       child: SizedBox(
+              //         width: 40,
+              //         height: 40,
+              //         child: Lottie.asset("loadingJSON/icon_edit_black.json",
+              //             fit: BoxFit.cover),
+              //       ),
+              //     )
+              //   ],
+              // ),
+              elevation: 0,
             ),
-            body: isLoading == false
-                ? Center(
-                    child: Transform.scale(
-                    scale: 2,
-                    child: Container(
-                      padding: const EdgeInsets.all(5),
-                      width: MediaQuery.of(context).size.width * 1,
-                      height: MediaQuery.of(context).size.height * 1,
-                      child: Lottie.asset("loadingJSON/dashboardBuild.json"),
-                    ),
-                  ))
-                : dashboardProduksi()));
+            body:
+                //  isLoading == false
+                //     ? Center(
+                //         child: Transform.scale(
+                //         scale: 2,
+                //         child: Container(
+                //           padding: const EdgeInsets.all(5),
+                //           width: MediaQuery.of(context).size.width * 1,
+                //           height: MediaQuery.of(context).size.height * 1,
+                //           child: Lottie.asset("loadingJSON/dashboardBuild.json"),
+                //         ),
+                //       ))
+                //     :
+                Container(
+                    width: MediaQuery.of(context).size.width * 1,
+                    color: colorBG,
+                    padding: EdgeInsets.all(10),
+                    child: SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.only(top: 26),
+                                child: const Text(
+                                  'Dashboard',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 26),
+                                ),
+                              ),
+                              dashboardProduksi(),
+                            ])))));
   }
 
   //! dashboard produksi
   dashboardProduksi() {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        Center(
-          child: Container(
-            padding: const EdgeInsets.only(top: 5),
-            width: MediaQuery.of(context).size.width * 0.3,
-            child: DropdownSearch<String>(
-              items: const [
-                "JANUARI",
-                "FEBRUARI",
-                "MARET",
-                "APRIL",
-                "MEI",
-                "JUNI",
-                "JULI",
-                "AGUSTUS",
-                "SEPTEMBER",
-                "OKTOBER",
-                "NOVEMBER",
-                "DESEMBER"
-              ],
-              onChanged: (item) {
-                setState(() {
-                  isLoadingJenisBarang = false;
-                  siklus.text = item!;
-                  siklusDesigner = siklus.text.toString();
-                  // _getAllDataProduksi(
-                  //     siklusDesigner, sharedPreferences!.getString('nama')!);
-                });
-                Future.delayed(const Duration(milliseconds: 500)).then((value) {
-                  setState(() {
-                    isLoadingJenisBarang = true;
-                  });
-                });
-              },
-              popupProps: const PopupPropsMultiSelection.modalBottomSheet(
-                showSelectedItems: true,
-                showSearchBox: true,
-              ),
-              dropdownDecoratorProps: DropDownDecoratorProps(
-                textAlign: TextAlign.center,
-                baseStyle: const TextStyle(
-                    fontSize: 20,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold),
-                dropdownSearchDecoration: InputDecoration(
-                    labelText: "Pilih Siklus",
-                    floatingLabelAlignment: FloatingLabelAlignment.center,
-                    filled: true,
-                    fillColor: Colors.grey.shade200,
-                    border: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(50)))),
-              ),
+        Container(
+            height: 550,
+            padding: const EdgeInsets.all(5),
+            decoration: BoxDecoration(
+              border: Border.all(width: 5, color: colorDasar),
             ),
-          ),
-        ),
-        // Expanded(
-        //   child: SingleChildScrollView(
-        //     scrollDirection: Axis.vertical,
-        //     child: Align(
-        //       alignment: Alignment.centerLeft,
-        //       child: Container(
-        //         padding: EdgeInsets.only(left: 5),
-        //         child: Column(
-        //             mainAxisAlignment: MainAxisAlignment.start,
-        //             crossAxisAlignment: CrossAxisAlignment.start,
-        //             children: [
-        //               SizedBox(height: 20),
-        //               //? BARIS 1
-        //               SingleChildScrollView(
-        //                   scrollDirection: Axis.horizontal,
-        //                   child: Container(
-        //                       color: Colors.grey.shade200,
-        //                       child: Column(
-        //                         children: [
-        //                           Text(
-        //                             'FINISHING',
-        //                             style: TextStyle(
-        //                                 fontSize: 20,
-        //                                 color: Colors.black,
-        //                                 fontWeight: FontWeight.bold),
-        //                           ),
-        //                           _dataTableFinishing(),
-        //                         ],
-        //                       ))),
-        //               SizedBox(height: 20),
-
-        //               // //? BARIS 2
-        //               SingleChildScrollView(
-        //                   scrollDirection: Axis.horizontal,
-        //                   child: Container(
-        //                       color: Colors.grey.shade200,
-        //                       child: Column(
-        //                         children: [
-        //                           Text(
-        //                             'POLESHING 1',
-        //                             style: TextStyle(
-        //                                 fontSize: 20,
-        //                                 color: Colors.black,
-        //                                 fontWeight: FontWeight.bold),
-        //                           ),
-        //                           _dataTableFinishing(),
-        //                         ],
-        //                       ))),
-        //               SizedBox(height: 20),
-
-        //               // //? BARIS 3
-        //               SingleChildScrollView(
-        //                   scrollDirection: Axis.horizontal,
-        //                   child: Container(
-        //                       color: Colors.grey.shade200,
-        //                       child: Column(
-        //                         children: [
-        //                           Text(
-        //                             'POLESHING 2',
-        //                             style: TextStyle(
-        //                                 fontSize: 20,
-        //                                 color: Colors.black,
-        //                                 fontWeight: FontWeight.bold),
-        //                           ),
-        //                           _dataTableFinishing(),
-        //                         ],
-        //                       ))),
-        //               SizedBox(height: 20),
-
-        //               // //? BARIS 4
-        //               SingleChildScrollView(
-        //                   scrollDirection: Axis.horizontal,
-        //                   child: Container(
-        //                       color: Colors.grey.shade200,
-        //                       child: Column(
-        //                         children: [
-        //                           Text(
-        //                             'POLESHING 2 REPARASI',
-        //                             style: TextStyle(
-        //                                 fontSize: 20,
-        //                                 color: Colors.black,
-        //                                 fontWeight: FontWeight.bold),
-        //                           ),
-        //                           _dataTableFinishing(),
-        //                         ],
-        //                       ))),
-        //               SizedBox(height: 20),
-
-        //               // //? BARIS 5
-        //               SingleChildScrollView(
-        //                   scrollDirection: Axis.horizontal,
-        //                   child: Container(
-        //                       color: Colors.grey.shade200,
-        //                       child: Column(
-        //                         children: [
-        //                           Text(
-        //                             'STELL 1',
-        //                             style: TextStyle(
-        //                                 fontSize: 20,
-        //                                 color: Colors.black,
-        //                                 fontWeight: FontWeight.bold),
-        //                           ),
-        //                           _dataTableFinishing(),
-        //                         ],
-        //                       ))),
-        //               SizedBox(height: 20),
-
-        //               // //? BARIS 6
-        //               SingleChildScrollView(
-        //                   scrollDirection: Axis.horizontal,
-        //                   child: Container(
-        //                       color: Colors.grey.shade200,
-        //                       child: Column(
-        //                         children: [
-        //                           Text(
-        //                             'STELL 2',
-        //                             style: TextStyle(
-        //                                 fontSize: 20,
-        //                                 color: Colors.black,
-        //                                 fontWeight: FontWeight.bold),
-        //                           ),
-        //                           _dataTableFinishing(),
-        //                         ],
-        //                       ))),
-        //               SizedBox(height: 20),
-
-        //               // //? BARIS 7
-        //               SingleChildScrollView(
-        //                   scrollDirection: Axis.horizontal,
-        //                   child: Container(
-        //                       color: Colors.grey.shade200,
-        //                       child: Column(
-        //                         children: [
-        //                           Text(
-        //                             'STELL 2 REP',
-        //                             style: TextStyle(
-        //                                 fontSize: 20,
-        //                                 color: Colors.black,
-        //                                 fontWeight: FontWeight.bold),
-        //                           ),
-        //                           _dataTableFinishing(),
-        //                         ],
-        //                       ))),
-        //               SizedBox(height: 20),
-        //               // //? BARIS 8
-        //               SingleChildScrollView(
-        //                   scrollDirection: Axis.horizontal,
-        //                   child: Container(
-        //                       color: Colors.grey.shade200,
-        //                       child: Column(
-        //                         children: [
-        //                           Text(
-        //                             'CHROME',
-        //                             style: TextStyle(
-        //                                 fontSize: 20,
-        //                                 color: Colors.black,
-        //                                 fontWeight: FontWeight.bold),
-        //                           ),
-        //                           _dataTableFinishing(),
-        //                         ],
-        //                       ))),
-        //               SizedBox(height: 20),
-        //               // //? BARIS 29
-        //               SingleChildScrollView(
-        //                   scrollDirection: Axis.horizontal,
-        //                   child: Container(
-        //                       color: Colors.grey.shade200,
-        //                       child: Column(
-        //                         children: [
-        //                           Text(
-        //                             'CHROME REPARASI',
-        //                             style: TextStyle(
-        //                                 fontSize: 20,
-        //                                 color: Colors.black,
-        //                                 fontWeight: FontWeight.bold),
-        //                           ),
-        //                           _dataTableFinishing(),
-        //                         ],
-        //                       ))),
-        //             ]),
-        //       ),
-        //     ),
-        //   ),
-        // ),
+            child: indexLevel == 3
+                ? chartLevel3()
+                : indexLevel == 2
+                    ? chartLevel2()
+                    : chartLevel1()),
+        SizedBox(height: 10),
       ],
     );
+  }
+
+  chartLevel1() {
+    return Container(
+        child: SfCartesianChart(
+      title: ChartTitle(text: 'SPK RELEASE vs SPK BRJ - 2024'),
+      plotAreaBorderWidth: 0,
+      legend: Legend(isVisible: true, position: LegendPosition.top),
+
+      //! X axis as numeric axis placed here. BAWAH
+      primaryXAxis: CategoryAxis(
+          axisLine: const AxisLine(width: 0),
+          title: AxisTitle(text: 'Bulan'),
+          majorGridLines: const MajorGridLines(width: 0),
+          majorTickLines: const MajorTickLines(size: 0)),
+
+      //? Y axis as numeric axis placed here. ATAS
+      primaryYAxis: NumericAxis(
+          labelFormat: '{value}',
+          title: AxisTitle(text: 'Total'),
+          axisLine: const AxisLine(width: 0),
+          majorTickLines: const MajorTickLines(size: 0)),
+      series: getDataLevel1(),
+      tooltipBehavior: _tooltipBehavior,
+    ));
+  }
+
+  chartLevel2() {
+    return Stack(clipBehavior: Clip.none, children: [
+      Container(
+          child: Center(
+              child: Container(
+                  child: SfCartesianChart(
+        //! X axis as numeric axis placed here. BAWAH
+        primaryXAxis: CategoryAxis(
+            axisLine: const AxisLine(width: 0),
+            title: AxisTitle(text: 'Jenis Barang'),
+            majorGridLines: const MajorGridLines(width: 0),
+            majorTickLines: const MajorTickLines(size: 0)),
+        //? Y axis as numeric axis placed here. ATAS
+        primaryYAxis: NumericAxis(
+            labelFormat: '{value}',
+            title: AxisTitle(text: 'Qty'),
+            axisLine: const AxisLine(width: 0),
+            majorTickLines: const MajorTickLines(size: 0)),
+        // Chart title
+        title: ChartTitle(text: 'SPK RELEASE vs SPK BRJ - $titleLevel2'),
+        // Enable legend
+        legend: Legend(isVisible: true, position: LegendPosition.top),
+        // Enable tooltip
+        tooltipBehavior: _tooltipBehavior,
+        series: getDataLevel2(),
+      )))),
+      Positioned(
+        left: 2.0,
+        top: -2.0,
+        child: InkResponse(
+          onTap: () {
+            _onTapLevelBack('');
+          },
+          child: Transform.scale(
+            scale: 1.5,
+            child:
+                Lottie.asset("loadingJSON/backbutton.json", fit: BoxFit.cover),
+          ),
+        ),
+      ),
+    ]);
+  }
+
+  chartLevel3() {
+    return Stack(clipBehavior: Clip.none, children: [
+      Container(
+          child: Center(
+              child: Container(
+                  child: SfCartesianChart(
+        // axes: <ChartAxis>[
+        //   NumericAxis(
+        //       opposedPosition: true,
+        //       name: 'yAxis1',
+        //       majorGridLines: const MajorGridLines(width: 0),
+        //       labelFormat: '{value}°F',
+        //       minimum: 40,
+        //       maximum: 100,
+        //       interval: 10)
+        // ],
+        primaryXAxis:
+            CategoryAxis(majorGridLines: const MajorGridLines(width: 0)),
+        primaryYAxis: NumericAxis(
+          majorGridLines: const MajorGridLines(width: 0),
+          opposedPosition: false,
+          labelFormat: '{value}',
+        ),
+        // Chart title
+        title: ChartTitle(text: 'SPK RELEASE vs SPK BRJ - $titleLevel2'),
+        // Enable legend
+        legend: Legend(isVisible: true),
+        // Enable tooltip
+        tooltipBehavior: _tooltipBehavior,
+        series: getDataLevel3(),
+        //           series: <LineSeries<SalesData, String>>[
+        // LineSeries<SalesData, String>(
+        //     dataSource: <SalesData>[
+        //       SalesData('Week 1', 50),
+        //       SalesData('Week 2', 38),
+        //       SalesData('Week 3', 70),
+        //       SalesData('Week 4', 20),
+        //     ],
+        //     xValueMapper: (SalesData sales, _) => sales.year,
+        //     yValueMapper: (SalesData sales, _) => sales.sales,
+        //     // Enable data label
+        //     dataLabelSettings: DataLabelSettings(isVisible: true))
+        // ]
+      )))),
+      Positioned(
+        left: 2.0,
+        top: -2.0,
+        child: InkResponse(
+          onTap: () {
+            _onTapLevelBack('');
+          },
+          child: Transform.scale(
+            scale: 1.5,
+            child:
+                Lottie.asset("loadingJSON/backbutton.json", fit: BoxFit.cover),
+          ),
+        ),
+      ),
+    ]);
   }
 
   postSiklus() async {
@@ -1050,452 +544,302 @@ class _HomeScreenProduksiState extends State<HomeScreenProduksi> {
         body: body);
     print(response.body);
   }
+
+  // void _onTapLevel2(siklus) {
+  //   titleLevel2 = siklus.toString();
+  //   setState(() {
+  //     indexLevel = 2;
+  //   });
+  // }
+  void _onTapLevelGo(siklus) {
+    titleLevel2 = siklus.toString();
+    setState(() {
+      indexLevel += 1;
+    });
+  }
+
+  void _onTapLevelBack(siklus) {
+    titleLevel2 = siklus.toString();
+    setState(() {
+      indexLevel -= 1;
+    });
+  }
+
+  List<ColumnSeries<ChartData, dynamic>> getDataLevel1() {
+    return <ColumnSeries<ChartData, dynamic>>[
+      //! first series named "RELEASE".
+      ColumnSeries<ChartData, dynamic>(
+        dataLabelSettings: const DataLabelSettings(
+            isVisible: true,
+            labelAlignment: ChartDataLabelAlignment
+                .middle), //? ini untuk label di dalam diagram
+        dataSource: chartData!,
+        color: const Color.fromRGBO(237, 221, 76, 1),
+        name: 'RELEASE',
+        xValueMapper: (ChartData sales, _) => sales.xValue,
+        yValueMapper: (ChartData sales, _) => sales.secondSeriesYValue,
+        onPointTap: (event) {
+          var i = event.dataPoints![event.pointIndex!].x;
+          _onTapLevelGo(i);
+          // showSimpleNotification(
+          //   Text('tap RELEASE oke $i & $isLevel2'),
+          //   background: Colors.yellow,
+          //   duration: const Duration(seconds: 1),
+          // );
+        },
+        width: 0.8,
+        //? custom diagram batang
+        onCreateRenderer: (ChartSeries<ChartData, dynamic> series) {
+          return _CustomColumnSeriesRenderer();
+        },
+      ),
+
+      ///? second series named "BRJ".
+      ColumnSeries<ChartData, dynamic>(
+        dataLabelSettings: const DataLabelSettings(
+            isVisible: true,
+            labelAlignment: ChartDataLabelAlignment
+                .middle), //? ini untuk label di dalam diagram
+        dataSource: chartData!,
+        color: const Color.fromRGBO(2, 109, 213, 1),
+        xValueMapper: (ChartData sales, _) => sales.xValue,
+        yValueMapper: (ChartData sales, _) => sales.yValue,
+        name: 'BRJ',
+        onPointTap: (event) {
+          var i = event.dataPoints![event.pointIndex!].x;
+          _onTapLevelGo(i);
+          // showSimpleNotification(
+          //   Text('tap BRJ oke $i'),
+          //   background: Colors.green,
+          //   duration: const Duration(seconds: 1),
+          // );
+        },
+        width: 0.8,
+        //? custom diagram batang
+        onCreateRenderer: (ChartSeries<ChartData, dynamic> series) {
+          return _CustomColumnSeriesRenderer();
+        },
+      ),
+    ];
+  }
+
+  List<ColumnSeries<ChartData, dynamic>> getDataLevel2() {
+    return <ColumnSeries<ChartData, dynamic>>[
+      //! first series named "RELEASE".
+      ColumnSeries<ChartData, String>(
+        dataLabelSettings: const DataLabelSettings(
+            isVisible: true,
+            labelAlignment: ChartDataLabelAlignment
+                .middle), //? ini untuk label di dalam diagram
+        dataSource: chartDataLevel2!,
+        color: const Color.fromRGBO(237, 221, 76, 1),
+        name: 'RELEASE',
+        width: 0.8,
+        xValueMapper: (ChartData sales, _) => sales.xValue,
+        yValueMapper: (ChartData sales, _) => sales.secondSeriesYValue,
+        pointColorMapper: (ChartData sales, _) => sales.pointColor,
+        onPointTap: (event) {
+          var i = event.dataPoints![event.pointIndex!].x;
+          _onTapLevelGo(i);
+        },
+        //? custom diagram batang
+        onCreateRenderer: (ChartSeries<ChartData, dynamic> series) {
+          return _CustomColumnSeriesRenderer();
+        },
+      ),
+
+      ///? second series named "BRJ".
+
+      ColumnSeries<ChartData, String>(
+        dataLabelSettings: const DataLabelSettings(
+            isVisible: true,
+            labelAlignment: ChartDataLabelAlignment
+                .middle), //? ini untuk label di dalam diagram
+        dataSource: chartDataLevel2!,
+        color: const Color.fromRGBO(2, 109, 213, 1),
+        name: 'BRJ',
+        width: 0.8,
+        xValueMapper: (ChartData sales, _) => sales.xValue,
+        yValueMapper: (ChartData sales, _) => sales.yValue,
+        pointColorMapper: (ChartData sales, _) => sales.pointColor,
+        onPointTap: (event) {
+          var i = event.dataPoints![event.pointIndex!].x;
+          _onTapLevelGo(i);
+        },
+        //? custom diagram batang
+        onCreateRenderer: (ChartSeries<ChartData, dynamic> series) {
+          return _CustomColumnSeriesRenderer();
+        },
+      ),
+    ];
+  }
+
+  List<ChartSeries<ChartData, String>> getDataLevel3() {
+    return <ChartSeries<ChartData, String>>[
+      //! first series named "RELEASE".
+      LineSeries<ChartData, String>(
+        dataSource: chartDataLevel3!,
+        yAxisName: 'yAxis1',
+        color: const Color.fromRGBO(237, 221, 76, 1),
+        name: 'RELEASE',
+        xValueMapper: (ChartData sales, _) => sales.x as String,
+        yValueMapper: (ChartData sales, _) => sales.secondSeriesYValue,
+        // onPointTap: (event) {
+        //   var i = event.dataPoints![event.pointIndex!].x;
+        //   _onTapLevelGo(i);
+        // },
+      ),
+
+      ///? second series named "BRJ".
+
+      ColumnSeries<ChartData, String>(
+        // dataLabelSettings: const DataLabelSettings(
+        //     isVisible: true,
+        //     labelAlignment: ChartDataLabelAlignment
+        //         .middle), //? ini untuk label di dalam diagram
+        dataSource: chartDataLevel3!,
+        color: const Color.fromRGBO(2, 109, 213, 1),
+        name: 'BRJ',
+        xValueMapper: (ChartData sales, _) => sales.x as String,
+        yValueMapper: (ChartData sales, _) => sales.y,
+
+        // onPointTap: (event) {
+        //   var i = event.dataPoints![event.pointIndex!].x;
+        //   _onTapLevelGo(i);
+        // },
+        // //? custom diagram batang
+        // onCreateRenderer: (ChartSeries<ChartData, dynamic> series) {
+        //   return _CustomColumnSeriesRenderer();
+        // },
+      ),
+    ];
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 }
 
-class RowSource extends DataTableSource {
-  var myData;
-  final count;
-  RowSource({
-    required this.myData,
-    required this.count,
-  });
-
-  @override
-  DataRow? getRow(int index) {
-    if (index < rowCount) {
-      return recentFileDataRow(myData![index]);
-    } else {
-      return null;
-    }
-  }
-
-  DataRow recentFileDataRow(var data) {
-    return DataRow(cells: [
-      //nama
-      DataCell(
-        Padding(padding: const EdgeInsets.all(0), child: Text(data.nama)),
-      ),
-      DataCell(_verticalDivider),
-      //tanggal in
-      DataCell(
-        Padding(
-            padding: const EdgeInsets.all(0),
-            child: Text(DateFormat('dd/MMMM/yyyy hh:mm:ss')
-                .format(DateTime.parse(data.tanggalIn.toString())))),
-      ),
-      DataCell(_verticalDivider),
-      //tanggal out
-      DataCell(
-        Padding(padding: const EdgeInsets.all(0), child: Text(data.tanggalOut)),
-      ),
-      DataCell(_verticalDivider),
-      //kode produksi
-      DataCell(
-        Padding(
-            padding: const EdgeInsets.all(0), child: Text(data.kodeProduksi)),
-      ),
-      DataCell(_verticalDivider),
-      //debet
-      DataCell(
-        Padding(
-            padding: const EdgeInsets.all(0),
-            child: Text(data.debet.toString())),
-      ),
-      DataCell(_verticalDivider),
-
-      //kredit
-      DataCell(
-        Padding(
-            padding: const EdgeInsets.all(0),
-            child: Text(data.kredit.toString())),
-      ),
-      // sharedPreferences!.getString('level') != '1'
-      //     ? const DataCell(SizedBox())
-      //     : DataCell(_verticalDivider),
-      // sharedPreferences!.getString('level') != '1'
-      //     ? const DataCell(SizedBox())
-      //     :
-      //     //Aksi
-      //     DataCell(Builder(builder: (context) {
-      //         return sharedPreferences!.getString('level') != '1'
-      //             ? const Row()
-      //             : Row(
-      //                 children: [
-      //                   IconButton(
-      //                     onPressed: () {
-      //                       showDialog<String>(
-      //                         context: context,
-      //                         builder: (BuildContext context) => AlertDialog(
-      //                           title: const Text(
-      //                             'Perhatian',
-      //                             textAlign: TextAlign.center,
-      //                             style: TextStyle(
-      //                                 color: Colors.black,
-      //                                 fontWeight: FontWeight.bold),
-      //                           ),
-      //                           content: Row(
-      //                             children: [
-      //                               const Text(
-      //                                 'Apakah anda yakin ingin menghapus data batu ',
-      //                               ),
-      //                               Text(
-      //                                 '${data.size}  ?',
-      //                                 style: const TextStyle(
-      //                                     fontWeight: FontWeight.bold,
-      //                                     color: Colors.black),
-      //                               ),
-      //                             ],
-      //                           ),
-      //                           actions: <Widget>[
-      //                             TextButton(
-      //                               onPressed: () => Navigator.pop(
-      //                                 context,
-      //                                 'Batal',
-      //                               ),
-      //                               child: const Text('Batal'),
-      //                             ),
-      //                             TextButton(
-      //                               onPressed: () async {
-      //                                 var id = data.id.toString();
-      //                                 Map<String, String> body = {'id': id};
-      //                                 final response = await http.post(
-      //                                     Uri.parse(ApiConstants.baseUrl +
-      //                                         ApiConstants.postDeleteBatuById),
-      //                                     body: body);
-      //                                 print(response.body);
-
-      //                                 Navigator.push(
-      //                                     context,
-      //                                     MaterialPageRoute(
-      //                                         builder: (c) =>
-      //                                             const MainViewBatu()));
-      //                                 showDialog<String>(
-      //                                     context: context,
-      //                                     builder: (BuildContext context) =>
-      //                                         const AlertDialog(
-      //                                           title: Text(
-      //                                             'Hapus Batu Berhasil',
-      //                                           ),
-      //                                         ));
-      //                               },
-      //                               child: const Text(
-      //                                 'Hapus',
-      //                                 style: TextStyle(color: Colors.red),
-      //                               ),
-      //                             ),
-      //                           ],
-      //                         ),
-      //                       );
-      //                     },
-      //                     icon: const Icon(
-      //                       Icons.delete,
-      //                       color: Colors.red,
-      //                     ),
-      //                   ),
-      //                   Padding(
-      //                     padding: const EdgeInsets.only(left: 25),
-      //                     child: IconButton(
-      //                       onPressed: () {
-      //                         showDialog(
-      //                             context: context,
-      //                             builder: (BuildContext context) {
-      //                               final _formKey = GlobalKey<FormState>();
-      //                               TextEditingController lot =
-      //                                   TextEditingController();
-      //                               TextEditingController size =
-      //                                   TextEditingController();
-      //                               TextEditingController parcel =
-      //                                   TextEditingController();
-      //                               TextEditingController qty =
-      //                                   TextEditingController();
-      //                               String id;
-
-      //                               id = data.id.toString();
-      //                               lot.text = data.lot;
-      //                               size.text = data.size;
-      //                               parcel.text = data.parcel;
-      //                               qty.text = data.qty.toString();
-      //                               RoundedLoadingButtonController
-      //                                   btnController =
-      //                                   RoundedLoadingButtonController();
-      //                               return AlertDialog(
-      //                                 content: Stack(
-      //                                   clipBehavior: Clip.none,
-      //                                   children: <Widget>[
-      //                                     Positioned(
-      //                                       right: -47.0,
-      //                                       top: -47.0,
-      //                                       child: InkResponse(
-      //                                         onTap: () {
-      //                                           Navigator.of(context).pop();
-      //                                         },
-      //                                         child: const CircleAvatar(
-      //                                           backgroundColor: Colors.red,
-      //                                           child: Icon(Icons.close),
-      //                                         ),
-      //                                       ),
-      //                                     ),
-      //                                     Form(
-      //                                       key: _formKey,
-      //                                       child: Column(
-      //                                         mainAxisSize: MainAxisSize.min,
-      //                                         children: <Widget>[
-      //                                           //lot
-      //                                           Padding(
-      //                                             padding:
-      //                                                 const EdgeInsets.all(8.0),
-      //                                             child: TextFormField(
-      //                                               style: const TextStyle(
-      //                                                   fontSize: 14,
-      //                                                   color: Colors.black,
-      //                                                   fontWeight:
-      //                                                       FontWeight.bold),
-      //                                               textInputAction:
-      //                                                   TextInputAction.next,
-      //                                               controller: lot,
-      //                                               decoration: InputDecoration(
-      //                                                 // hintText: "example: Cahaya Sanivokasi",
-      //                                                 labelText: "Lot",
-      //                                                 border:
-      //                                                     OutlineInputBorder(
-      //                                                         borderRadius:
-      //                                                             BorderRadius
-      //                                                                 .circular(
-      //                                                                     5.0)),
-      //                                               ),
-      //                                               validator: (value) {
-      //                                                 if (value!.isEmpty) {
-      //                                                   return 'Wajib diisi *';
-      //                                                 }
-      //                                                 return null;
-      //                                               },
-      //                                             ),
-      //                                           ),
-      //                                           //size
-      //                                           Padding(
-      //                                             padding:
-      //                                                 const EdgeInsets.all(8.0),
-      //                                             child: TextFormField(
-      //                                               style: const TextStyle(
-      //                                                   fontSize: 14,
-      //                                                   color: Colors.black,
-      //                                                   fontWeight:
-      //                                                       FontWeight.bold),
-      //                                               textInputAction:
-      //                                                   TextInputAction.next,
-      //                                               controller: size,
-      //                                               decoration: InputDecoration(
-      //                                                 // hintText: "example: Cahaya Sanivokasi",
-      //                                                 labelText: "Ukuran",
-      //                                                 border:
-      //                                                     OutlineInputBorder(
-      //                                                         borderRadius:
-      //                                                             BorderRadius
-      //                                                                 .circular(
-      //                                                                     5.0)),
-      //                                               ),
-      //                                               validator: (value) {
-      //                                                 if (value!.isEmpty) {
-      //                                                   return 'Wajib diisi *';
-      //                                                 }
-      //                                                 return null;
-      //                                               },
-      //                                             ),
-      //                                           ),
-      //                                           Padding(
-      //                                             padding:
-      //                                                 const EdgeInsets.all(8.0),
-      //                                             child: TextFormField(
-      //                                               style: const TextStyle(
-      //                                                   fontSize: 14,
-      //                                                   color: Colors.black,
-      //                                                   fontWeight:
-      //                                                       FontWeight.bold),
-      //                                               textInputAction:
-      //                                                   TextInputAction.next,
-      //                                               controller: parcel,
-      //                                               decoration: InputDecoration(
-      //                                                 // hintText: "example: Cahaya Sanivokasi",
-      //                                                 labelText: "Parcel",
-      //                                                 border:
-      //                                                     OutlineInputBorder(
-      //                                                         borderRadius:
-      //                                                             BorderRadius
-      //                                                                 .circular(
-      //                                                                     5.0)),
-      //                                               ),
-      //                                               validator: (value) {
-      //                                                 if (value!.isEmpty) {
-      //                                                   return 'Wajib diisi *';
-      //                                                 }
-      //                                                 return null;
-      //                                               },
-      //                                             ),
-      //                                           ),
-      //                                           Padding(
-      //                                             padding:
-      //                                                 const EdgeInsets.all(8.0),
-      //                                             child: TextFormField(
-      //                                               style: const TextStyle(
-      //                                                   fontSize: 14,
-      //                                                   color: Colors.black,
-      //                                                   fontWeight:
-      //                                                       FontWeight.bold),
-      //                                               textInputAction:
-      //                                                   TextInputAction.next,
-      //                                               controller: qty,
-      //                                               decoration: InputDecoration(
-      //                                                 // hintText: "example: Cahaya Sanivokasi",
-      //                                                 labelText: "Qty",
-      //                                                 border:
-      //                                                     OutlineInputBorder(
-      //                                                         borderRadius:
-      //                                                             BorderRadius
-      //                                                                 .circular(
-      //                                                                     5.0)),
-      //                                               ),
-      //                                               validator: (value) {
-      //                                                 if (value!.isEmpty) {
-      //                                                   return 'Wajib diisi *';
-      //                                                 }
-
-      //                                                 return null;
-      //                                               },
-      //                                             ),
-      //                                           ),
-      //                                           Padding(
-      //                                             padding:
-      //                                                 const EdgeInsets.all(8.0),
-      //                                             child: SizedBox(
-      //                                               width: 250,
-      //                                               child: CustomLoadingButton(
-      //                                                   controller:
-      //                                                       btnController,
-      //                                                   child: const Text(
-      //                                                       "Update"),
-      //                                                   onPressed: () async {
-      //                                                     if (_formKey
-      //                                                         .currentState!
-      //                                                         .validate()) {
-      //                                                       _formKey
-      //                                                           .currentState!
-      //                                                           .save();
-      //                                                       Future.delayed(
-      //                                                               const Duration(
-      //                                                                   seconds:
-      //                                                                       2))
-      //                                                           .then(
-      //                                                               (value) async {
-      //                                                         btnController
-      //                                                             .success();
-      //                                                         Map<String,
-      //                                                                 dynamic>
-      //                                                             body = {
-      //                                                           'id': id,
-      //                                                           'lot': lot.text,
-      //                                                           'size':
-      //                                                               size.text,
-      //                                                           'parcel':
-      //                                                               parcel.text,
-      //                                                           'qty': qty.text,
-      //                                                         };
-      //                                                         final response = await http.post(
-      //                                                             Uri.parse(ApiConstants
-      //                                                                     .baseUrl +
-      //                                                                 ApiConstants
-      //                                                                     .postUpdateListDataBatu),
-      //                                                             body: body);
-      //                                                         print(response
-      //                                                             .body);
-      //                                                         Future.delayed(
-      //                                                                 const Duration(
-      //                                                                     seconds:
-      //                                                                         1))
-      //                                                             .then(
-      //                                                                 (value) {
-      //                                                           btnController
-      //                                                               .reset(); //reset
-      //                                                           showDialog<
-      //                                                                   String>(
-      //                                                               context:
-      //                                                                   context,
-      //                                                               builder: (BuildContext
-      //                                                                       context) =>
-      //                                                                   const AlertDialog(
-      //                                                                     title:
-      //                                                                         Text(
-      //                                                                       'Update Berhasil',
-      //                                                                     ),
-      //                                                                   ));
-      //                                                         });
-      //                                                         Navigator.push(
-      //                                                             context,
-      //                                                             MaterialPageRoute(
-      //                                                                 builder:
-      //                                                                     (c) =>
-      //                                                                         const MainViewBatu()));
-      //                                                       });
-      //                                                     } else {
-      //                                                       btnController
-      //                                                           .error();
-      //                                                       Future.delayed(
-      //                                                               const Duration(
-      //                                                                   seconds:
-      //                                                                       1))
-      //                                                           .then((value) {
-      //                                                         btnController
-      //                                                             .reset(); //reset
-      //                                                       });
-      //                                                     }
-      //                                                   }),
-      //                                             ),
-      //                                           )
-      //                                         ],
-      //                                       ),
-      //                                     ),
-      //                                   ],
-      //                                 ),
-      //                               );
-      //                             });
-      //                       },
-      //                       icon: const Icon(
-      //                         Icons.edit,
-      //                         color: Colors.green,
-      //                       ),
-      //                     ),
-      //                   ),
-      //                 ],
-      //               );
-      //       }))
-    ]);
-  }
-
-  updateSiklusDesigner(id, siklus) async {
-    Map<String, String> body = {
-      'id': id.toString(),
-      'siklus': siklus.toString(),
-    };
-    final response = await http.post(
-        Uri.parse(
-            '${ApiConstants.baseUrl}${ApiConstants.updateSiklusdesigner}'),
-        body: body);
-    print(response.body);
-  }
-
-  @override
-  bool get isRowCountApproximate => false;
-
-  @override
-  int get rowCount => count;
-
-  @override
-  int get selectedRowCount => 0;
+class SalesData {
+  SalesData(this.year, this.sales);
+  final String year;
+  final double sales;
 }
 
-class CustomScrollBehavior extends MaterialScrollBehavior {
+/// Chart Sales Data
+class BrjData {
+  /// Holds the datapoint values like x, y, etc.,
+  BrjData(this.x, this.y, [this.date, this.color]);
+
+  /// X value of the data point
+  final dynamic x;
+
+  /// y value of the data point
+  final dynamic y;
+
+  /// color value of the data point
+  final Color? color;
+
+  /// Date time value of the data point
+  final DateTime? date;
+}
+
+///Chart sample data
+class ChartData {
+  /// Holds the datapoint values like x, y, etc.,
+  ChartData(
+      {this.x,
+      this.y,
+      this.xValue,
+      this.yValue,
+      this.secondSeriesYValue,
+      this.thirdSeriesYValue,
+      this.pointColor,
+      this.size,
+      this.text,
+      this.open,
+      this.close,
+      this.low,
+      this.high,
+      this.volume});
+
+  /// Holds x value of the datapoint
+  final dynamic x;
+
+  /// Holds y value of the datapoint
+  final num? y;
+
+  /// Holds x value of the datapoint
+  final dynamic xValue;
+
+  /// Holds y value of the datapoint
+  final num? yValue;
+
+  /// Holds y value of the datapoint(for 2nd series)
+  final num? secondSeriesYValue;
+
+  /// Holds y value of the datapoint(for 3nd series)
+  final num? thirdSeriesYValue;
+
+  /// Holds point color of the datapoint
+  final Color? pointColor;
+
+  /// Holds size of the datapoint
+  final num? size;
+
+  /// Holds datalabel/text value mapper of the datapoint
+  final String? text;
+
+  /// Holds open value of the datapoint
+  final num? open;
+
+  /// Holds close value of the datapoint
+  final num? close;
+
+  /// Holds low value of the datapoint
+  final num? low;
+
+  /// Holds high value of the datapoint
+  final num? high;
+
+  /// Holds open value of the datapoint
+  final num? volume;
+}
+
+//! function untuk customm diagram batang
+class _CustomColumnSeriesRenderer extends ColumnSeriesRenderer {
+  _CustomColumnSeriesRenderer();
+
   @override
-  Set<PointerDeviceKind> get dragDevices => {
-        PointerDeviceKind.touch,
-        PointerDeviceKind.mouse,
-      };
+  ChartSegment createSegment() {
+    return _ColumnCustomPainter();
+  }
+}
+
+class _ColumnCustomPainter extends ColumnSegment {
+  @override
+  int get currentSegmentIndex => super.currentSegmentIndex!;
+
+  @override
+  void onPaint(Canvas canvas) {
+    double x, y;
+    x = segmentRect.center.dx;
+    y = segmentRect.top;
+    double width = 0;
+    const double height = 20;
+    width = segmentRect.width;
+    final Paint paint = Paint();
+    paint.color = getFillPaint().color;
+    paint.style = PaintingStyle.fill;
+    final Path path = Path();
+    final double factor = segmentRect.height * (1 - animationFactor);
+    path.moveTo(x - width / 2, y + factor + height);
+    path.lineTo(x, (segmentRect.top + factor + height) - height);
+    path.lineTo(x + width / 2, y + factor + height);
+    path.lineTo(x + width / 2, segmentRect.bottom + factor);
+    path.lineTo(x - width / 2, segmentRect.bottom + factor);
+    path.close();
+    canvas.drawPath(path, paint);
+  }
 }

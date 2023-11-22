@@ -2,27 +2,26 @@
 
 import 'package:flutter/material.dart';
 import 'package:form_designer/SCM/mainScreen/kebutuhan_batu_by_siklus.dart';
+import 'package:form_designer/calculatePricing/list_calculate_pricing_screen.dart';
+import 'package:form_designer/global/global.dart';
 import 'package:form_designer/mainScreen/home_screen.dart';
 import 'package:form_designer/mainScreen/list_batu_screen.dart';
 import 'package:form_designer/mainScreen/list_designer_screen.dart';
 import 'package:form_designer/mainScreen/list_mps.dart';
 import 'package:form_designer/mainScreen/list_status_approval.dart';
+import 'package:form_designer/mainScreen/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:side_navigation/side_navigation.dart';
 
-import '../calculatePricing/list_calculate_pricing_screen.dart';
-import '../global/global.dart';
-import 'login.dart';
-
-class MainViewPricing extends StatefulWidget {
-  const MainViewPricing({Key? key}) : super(key: key);
+class MainViewMps extends StatefulWidget {
+  const MainViewMps({Key? key}) : super(key: key);
 
   @override
   // ignore: library_private_types_in_public_api
-  _MainViewPricingState createState() => _MainViewPricingState();
+  _MainViewMpsState createState() => _MainViewMpsState();
 }
 
-class _MainViewPricingState extends State<MainViewPricing> {
+class _MainViewMpsState extends State<MainViewMps> {
   List<Widget> views = [
     //? 0
     const HomeScreen(),
@@ -52,7 +51,7 @@ class _MainViewPricingState extends State<MainViewPricing> {
 
   final _formKey = GlobalKey<FormState>();
 
-  int selectedIndex = 3;
+  int selectedIndex = 2;
   bool isKodeAkses = false;
   TextEditingController kodeAkses = TextEditingController();
 

@@ -6,7 +6,6 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:form_designer/api/api_constant.dart';
-import 'package:form_designer/global/global.dart';
 import 'package:form_designer/model/form_designer_model.dart';
 import 'package:form_designer/produksi/modelProduksi/produksi_model.dart';
 import 'package:form_designer/produksi/modelProduksi/produksi_model_sb.dart';
@@ -193,7 +192,7 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
     var now = DateTime.now();
     String month = DateFormat('MMMM', 'id').format(now);
     siklusDesigner = month;
-    nowSiklus = sharedPreferences!.getString('siklus')!;
+    nowSiklus = siklusDesigner;
     _getDataAll('all');
   }
 
@@ -3819,31 +3818,21 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
             // drawer: Drawer1(),
             appBar: AppBar(
               automaticallyImplyLeading: false,
-              backgroundColor: Colors.blue,
+              backgroundColor: Colors.white,
               leadingWidth: 320,
               //change siklus
-              leading: Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: Row(
-                  children: [
-                    Text(
+              leading: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
                       "Siklus Saat Ini : $nowSiklus",
-                      style: const TextStyle(fontSize: 20, color: Colors.white),
+                      style: const TextStyle(fontSize: 20, color: Colors.black),
                     ),
-                  ],
-                ),
-              ),
-              title: Text(
-                "Home",
-                style: TextStyle(fontSize: 25, color: Colors.white),
+                  ),
+                ],
               ),
               centerTitle: true,
-              actions: [
-                Text(
-                  version,
-                  style: const TextStyle(fontSize: 14, color: Colors.white),
-                ),
-              ],
             ),
             body: dashboardProduksi()));
   }
@@ -3851,51 +3840,59 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
   //! dashboard produksi
   dashboardProduksi() {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Center(
-          child: Container(
-            padding: const EdgeInsets.only(top: 5),
-            width: MediaQuery.of(context).size.width * 0.3,
-            child: DropdownSearch<String>(
-              items: const [
-                "JANUARI",
-                "FEBRUARI",
-                "MARET",
-                "APRIL",
-                "MEI",
-                "JUNI",
-                "JULI",
-                "AGUSTUS",
-                "SEPTEMBER",
-                "OKTOBER",
-                "NOVEMBER",
-                "DESEMBER"
-              ],
-              onChanged: (item) {
-                setState(() {
-                  siklus.text = item!;
-                  siklusDesigner = siklus.text.toString();
-                  _getDataAll(siklusDesigner);
-                });
-              },
-              popupProps: const PopupPropsMultiSelection.modalBottomSheet(
-                showSelectedItems: true,
-                showSearchBox: true,
-              ),
-              dropdownDecoratorProps: DropDownDecoratorProps(
-                textAlign: TextAlign.center,
-                baseStyle: const TextStyle(
-                    fontSize: 20,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold),
-                dropdownSearchDecoration: InputDecoration(
-                    labelText: "Pilih Siklus",
-                    floatingLabelAlignment: FloatingLabelAlignment.center,
-                    filled: true,
-                    fillColor: Colors.grey.shade200,
-                    border: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(50)))),
-              ),
+        Container(
+          padding: const EdgeInsets.only(top: 26),
+          child: const Text(
+            'Summary Susut',
+            style: TextStyle(
+                color: Colors.black, fontWeight: FontWeight.bold, fontSize: 26),
+          ),
+        ),
+        Container(
+          padding: const EdgeInsets.all(10.0),
+          width: 350,
+          child: DropdownSearch<String>(
+            items: const [
+              "JANUARI",
+              "FEBRUARI",
+              "MARET",
+              "APRIL",
+              "MEI",
+              "JUNI",
+              "JULI",
+              "AGUSTUS",
+              "SEPTEMBER",
+              "OKTOBER",
+              "NOVEMBER",
+              "DESEMBER"
+            ],
+            onChanged: (item) {
+              setState(() {
+                siklus.text = item!;
+                siklusDesigner = siklus.text.toString();
+                _getDataAll(siklusDesigner);
+              });
+            },
+            popupProps: const PopupPropsMultiSelection.modalBottomSheet(
+              showSelectedItems: true,
+              showSearchBox: true,
+            ),
+            dropdownDecoratorProps: const DropDownDecoratorProps(
+              textAlign: TextAlign.center,
+              baseStyle: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold),
+              dropdownSearchDecoration: InputDecoration(
+                  labelText: "Pilih Siklus",
+                  floatingLabelAlignment: FloatingLabelAlignment.center,
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(12)))),
             ),
           ),
         ),
@@ -3916,6 +3913,7 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Container(
+                      // width: MediaQuery.of(context).size.width * 1,
                       padding: EdgeInsets.only(left: 5),
                       child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,

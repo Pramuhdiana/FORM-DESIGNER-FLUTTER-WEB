@@ -8,7 +8,7 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:form_designer/global/global.dart';
-import 'package:form_designer/mainScreen/side_screen.dart';
+import 'package:form_designer/mainScreen/sideScreen/side_screen.dart';
 import 'package:form_designer/model/batu_model.dart';
 import 'package:form_designer/model/earnut_model.dart';
 import 'package:form_designer/model/form_designer_model.dart';
@@ -193,6 +193,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
   int? idBatu34 = 0;
   int? idBatu35 = 0;
 
+  TextEditingController jo = TextEditingController();
   TextEditingController tanggalInModeller = TextEditingController();
   TextEditingController tanggalOutModeller = TextEditingController();
   TextEditingController tanggalInProduksi = TextEditingController();
@@ -2343,10 +2344,10 @@ class _FormViewScreenState extends State<FormViewScreen> {
                       ),
                     ]),
                 sharedPreferences!.getString('level') != '2'
-                    ? const SizedBox()
+                    ? const SizedBox(width: 60)
                     : (sharedPreferences!.getString('level') == '2' &&
                             tanggalOutModeller.text.isNotEmpty)
-                        ? const SizedBox()
+                        ? const SizedBox(width: 60)
                         : IconButton(
                             color: Colors.green,
                             onPressed: () {
@@ -2367,6 +2368,30 @@ class _FormViewScreenState extends State<FormViewScreen> {
                             },
                             icon: const Icon(Icons.done_outline_sharp),
                           ),
+                //JO
+                Container(
+                  padding: const EdgeInsets.only(top: 18, bottom: 10),
+                  height: tinggiTextfield,
+                  width: 200,
+                  child: TextFormField(
+                    enabled: sharedPreferences!.getString('level') == '1'
+                        ? true
+                        : false,
+                    style: const TextStyle(
+                        fontSize: 14,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold),
+                    textInputAction: TextInputAction.next,
+                    controller: jo,
+                    onChanged: (value) {},
+                    decoration: InputDecoration(
+                      // hintText: "example: Cahaya Sanivokasi",
+                      labelText: "Job Order (JO)",
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5.0)),
+                    ),
+                  ),
+                ),
               ],
             ),
             imageUrl != null
@@ -6256,6 +6281,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
       'namaModeller': namaModeller.text,
       'kodeMarketing': kodeMarketing.text,
       'keteranganStatusBatu': keteranganStatusBatu.text,
+      'jo': jo.text,
     };
     final response = await http.post(
         Uri.parse('${ApiConstants.baseUrl}${ApiConstants.addModeller}'),

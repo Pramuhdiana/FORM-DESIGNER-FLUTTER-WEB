@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 SharedPreferences? sharedPreferences;
@@ -7,6 +9,9 @@ int revisiKecil =
     3; //perubahan kecil                                    (MINOR)
 int rilisPerbaikanbug =
     0; //perbaikan bug                                      (PATCH)
+
+Color colorDasar = const Color.fromRGBO(38, 54, 72, 1);
+Color colorBG = const Color.fromRGBO(245, 245, 249, 1);
 
 String version = 'v$revisiBesar.$revisiKecil.$rilisPerbaikanbug';
 String aksesKode = "S@niv0kasi";

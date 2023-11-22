@@ -1,8 +1,9 @@
-// ignore_for_file: prefer_typing_uninitialized_variables, avoid_print
+// ignore_for_file: prefer_typing_uninitialized_variables, avoid_print, use_build_context_synchronously
 
 import 'dart:convert';
 
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:form_designer/global/currency_format.dart';
@@ -10,7 +11,8 @@ import 'package:form_designer/mainScreen/form_screen.dart';
 // ignore: unused_import
 import 'package:form_designer/mainScreen/form_screen_by_id.dart';
 import 'package:form_designer/mainScreen/form_view_screen.dart';
-import 'package:form_designer/mainScreen/side_screen_design.dart';
+import 'package:form_designer/mainScreen/sideScreen/side_screen_designer.dart';
+import 'package:form_designer/mainScreen/sideScreen/side_screen_scm.dart';
 import 'package:form_designer/model/form_designer_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';
@@ -60,9 +62,13 @@ class _ListDesignerScreenState extends State<ListDesignerScreen> {
     }
   }
 
+  var nowSiklus = '';
+  TextEditingController addSiklus = TextEditingController();
+
   @override
   void initState() {
     super.initState();
+    nowSiklus = sharedPreferences!.getString('siklus')!;
 
     _getData();
   }
@@ -134,6 +140,17 @@ class _ListDesignerScreenState extends State<ListDesignerScreen> {
     }
   }
 
+  postSiklus() async {
+    Map<String, String> body = {
+      'id': '1',
+      'siklus': addSiklus.text,
+    };
+    final response = await http.post(
+        Uri.parse('${ApiConstants.baseUrl}${ApiConstants.addSiklus}'),
+        body: body);
+    print(response.body);
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -143,443 +160,626 @@ class _ListDesignerScreenState extends State<ListDesignerScreen> {
           scrollBehavior: CustomScrollBehavior(),
           debugShowCheckedModeBanner: false,
           home: Scaffold(
-              // drawer: Drawer1(),
-              appBar: AppBar(
-                automaticallyImplyLeading: false,
-                elevation: 0,
-                backgroundColor: Colors.blue,
-                flexibleSpace: Container(
-                  color: Colors.blue,
-                ),
-                title: const Text(
-                  "LIST FORM DESIGNER",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 25,
+            // drawer: Drawer1(),
+            appBar: AppBar(
+              automaticallyImplyLeading: false,
+              backgroundColor: Colors.white,
+              leadingWidth: 320,
+              //change siklus
+              leading: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 30),
+                  child: Row(
+                    children: [
+                      Text(
+                        "Siklus Saat Ini : $nowSiklus",
+                        style: TextStyle(
+                            fontSize: 20, color: Colors.grey.shade700),
+                      ),
+                      sharedPreferences!.getString('level') != '1'
+                          ? const SizedBox()
+                          : IconButton(
+                              color: Colors.grey.shade700,
+                              onPressed: () {
+                                final dropdownFormKey = GlobalKey<FormState>();
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(8)),
+                                        // title: const Text('Pilih Siklus'),
+                                        content: SizedBox(
+                                          height: 150,
+                                          child: Column(
+                                            children: [
+                                              Form(
+                                                  key: dropdownFormKey,
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      DropdownSearch<String>(
+                                                        items: const [
+                                                          "JANUARI",
+                                                          "FEBRUARI",
+                                                          "MARET",
+                                                          "APRIL",
+                                                          "MEI",
+                                                          "JUNI",
+                                                          "JULI",
+                                                          "AGUSTUS",
+                                                          "SEPTEMBER",
+                                                          "OKTOBER",
+                                                          "NOVEMBER",
+                                                          "DESEMBER"
+                                                        ],
+                                                        dropdownDecoratorProps:
+                                                            DropDownDecoratorProps(
+                                                          dropdownSearchDecoration:
+                                                              InputDecoration(
+                                                            hintText:
+                                                                'Pilih Siklus',
+                                                            filled: true,
+                                                            fillColor:
+                                                                Colors.white,
+                                                            enabledBorder:
+                                                                OutlineInputBorder(
+                                                              borderSide:
+                                                                  const BorderSide(
+                                                                      color: Colors
+                                                                          .black,
+                                                                      width: 2),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          20),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        validator: (value) =>
+                                                            value == null
+                                                                ? "Siklus tidak boleh kosong"
+                                                                : null,
+                                                        onChanged:
+                                                            (String? newValue) {
+                                                          addSiklus.text =
+                                                              newValue!;
+                                                        },
+                                                      ),
+                                                      Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(top: 20),
+                                                        child: ElevatedButton(
+                                                            onPressed:
+                                                                () async {
+                                                              if (dropdownFormKey
+                                                                  .currentState!
+                                                                  .validate()) {
+                                                                //? method untuk mengganti siklus
+                                                                await postSiklus();
+                                                                Navigator.push(
+                                                                    context,
+                                                                    MaterialPageRoute(
+                                                                        builder:
+                                                                            (c) =>
+                                                                                MainViewScm(col: 2)));
+
+                                                                showDialog<
+                                                                        String>(
+                                                                    context:
+                                                                        context,
+                                                                    builder: (BuildContext
+                                                                            context) =>
+                                                                        const AlertDialog(
+                                                                          title:
+                                                                              Text(
+                                                                            'Siklus Berhasil Diterapkan',
+                                                                          ),
+                                                                        ));
+                                                                setState(() {
+                                                                  nowSiklus =
+                                                                      addSiklus
+                                                                          .text;
+                                                                  sharedPreferences!.setString(
+                                                                      'siklus',
+                                                                      addSiklus
+                                                                          .text);
+                                                                });
+                                                              }
+                                                            },
+                                                            child: const Text(
+                                                              "Submit",
+                                                              style: TextStyle(
+                                                                fontSize: 24,
+                                                              ),
+                                                            )),
+                                                      )
+                                                    ],
+                                                  ))
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                                    });
+                              },
+                              icon: const Icon(
+                                Icons.change_circle,
+                              ))
+                    ],
                   ),
                 ),
-                centerTitle: true,
               ),
-              body: Container(
-                padding: const EdgeInsets.only(top: 25),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.only(bottom: 20),
-                      width: MediaQuery.of(context).size.width * 0.5,
-                      child: DropdownSearch<String>(
-                        items: const [
-                          "JANUARI",
-                          "FEBRUARI",
-                          "MARET",
-                          "APRIL",
-                          "MEI",
-                          "JUNI",
-                          "JULI",
-                          "AGUSTUS",
-                          "SEPTEMBER",
-                          "OKTOBER",
-                          "NOVEMBER",
-                          "DESEMBER"
-                        ],
-                        onChanged: (item) {
-                          setState(() {
-                            siklus.text = item!;
-                            siklusDesigner = siklus.text.toString();
-                            _getDataBySiklus(siklus.text);
-                          });
-                        },
-                        popupProps:
-                            const PopupPropsMultiSelection.modalBottomSheet(
-                          showSelectedItems: true,
-                          showSearchBox: true,
-                        ),
-                        dropdownDecoratorProps: const DropDownDecoratorProps(
-                          dropdownSearchDecoration: InputDecoration(
-                            labelText: "Pilih Siklus",
-                            filled: true,
-                            fillColor: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.5,
-                      height: 45,
-                      padding: const EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.grey,
-                          ),
-                          borderRadius: BorderRadius.circular(12)),
-                      child: Align(
-                        alignment: Alignment.bottomCenter,
-                        child: TextField(
-                          textAlign: TextAlign.center,
-                          controller: controller,
-                          decoration: const InputDecoration(
-                              hintText: "Search Anything ..."),
-                          onChanged: (value) {
-                            //fungsi search anyting
-                            myCrm = filterCrm!
-                                .where((element) =>
-                                    element.kodeDesignMdbc!
-                                        .toLowerCase()
-                                        .contains(value.toLowerCase()) ||
-                                    element.namaDesigner!
-                                        .toLowerCase()
-                                        .contains(value.toLowerCase()) ||
-                                    element.kodeMarketing!
-                                        .toLowerCase()
-                                        .contains(value.toLowerCase()) ||
-                                    element.kodeDesign!
-                                        .toLowerCase()
-                                        .contains(value.toLowerCase()) ||
-                                    element.tema!
-                                        .toLowerCase()
-                                        .contains(value.toLowerCase()) ||
-                                    element.jenisBarang!
-                                        .toLowerCase()
-                                        .contains(value.toLowerCase()) ||
-                                    element.estimasiHarga!
-                                        .toString()
-                                        .contains(value.toLowerCase()))
-                                .toList();
+              // ignore: avoid_unnecessary_containers
+              title: Container(
+                // width: MediaQuery.of(context).size.width * 0.3,
+                child: CupertinoSearchTextField(
+                  placeholder: 'Search Anything...',
+                  borderRadius: const BorderRadius.all(Radius.circular(25)),
+                  itemColor: Colors.black,
+                  // autofocus: false,
+                  controller: controller,
+                  backgroundColor: Colors.black12,
+                  // keyboardType: TextInputType.number,
+                  // focusNode: numberFocusNode,
+                  keyboardType: TextInputType.text,
+                  onChanged: (value) {
+                    //fungsi search anyting
+                    myCrm = filterCrm!
+                        .where((element) =>
+                            element.kodeDesignMdbc!
+                                .toLowerCase()
+                                .contains(value.toLowerCase()) ||
+                            element.namaDesigner!
+                                .toLowerCase()
+                                .contains(value.toLowerCase()) ||
+                            element.kodeMarketing!
+                                .toLowerCase()
+                                .contains(value.toLowerCase()) ||
+                            element.kodeDesign!
+                                .toLowerCase()
+                                .contains(value.toLowerCase()) ||
+                            element.tema!
+                                .toLowerCase()
+                                .contains(value.toLowerCase()) ||
+                            element.jenisBarang!
+                                .toLowerCase()
+                                .contains(value.toLowerCase()) ||
+                            element.estimasiHarga!
+                                .toString()
+                                .contains(value.toLowerCase()))
+                        .toList();
 
-                            setState(() {});
-                          },
-                        ),
-                      ),
+                    setState(() {});
+                  },
+                ),
+              ),
+            ),
+            body: Container(
+              padding: const EdgeInsets.only(top: 5),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.only(top: 26, left: 5),
+                    child: const Text(
+                      'List Designer',
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 26),
                     ),
-                    isLoading == false
-                        ? Expanded(
-                            child: Center(
-                                child: Container(
-                            padding: const EdgeInsets.all(5),
-                            width: 90,
-                            height: 90,
-                            child: Lottie.asset("loadingJSON/loadingV1.json"),
-                          )))
-                        : Expanded(
-                            child: SingleChildScrollView(
-                              scrollDirection: Axis.vertical,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.only(),
+                          width: 350,
+                          child: DropdownSearch<String>(
+                            items: const [
+                              "JANUARI",
+                              "FEBRUARI",
+                              "MARET",
+                              "APRIL",
+                              "MEI",
+                              "JUNI",
+                              "JULI",
+                              "AGUSTUS",
+                              "SEPTEMBER",
+                              "OKTOBER",
+                              "NOVEMBER",
+                              "DESEMBER"
+                            ],
+                            onChanged: (item) {
+                              setState(() {
+                                siklus.text = item!;
+                                siklusDesigner = siklus.text.toString();
+                                _getDataBySiklus(siklus.text);
+                              });
+                            },
+                            popupProps:
+                                const PopupPropsMultiSelection.modalBottomSheet(
+                              showSelectedItems: true,
+                              showSearchBox: true,
+                            ),
+                            dropdownDecoratorProps:
+                                const DropDownDecoratorProps(
+                              textAlign: TextAlign.center,
+                              baseStyle: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
+                              dropdownSearchDecoration: InputDecoration(
+                                  labelText: "Pilih Siklus",
+                                  floatingLabelAlignment:
+                                      FloatingLabelAlignment.center,
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(12)))),
+                            ),
+                          ),
+                        ),
+                        sharedPreferences!.getString('level') == '3'
+                            ? const SizedBox()
+                            : Container(
+                                padding: const EdgeInsets.only(left: 20),
+                                child: FloatingActionButton.extended(
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (c) =>
+                                                const FormScreen()));
+                                  },
+                                  label: const Text(
+                                    "Tambah Form Designer",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  icon: const Icon(
+                                    Icons.add_circle_outline_sharp,
+                                    color: Colors.white,
+                                  ),
+                                  backgroundColor: Colors.blue,
+                                ),
+                              )
+                      ],
+                    ),
+                  ),
+                  isLoading == false
+                      ? Expanded(
+                          child: Center(
                               child: Container(
-                                padding: const EdgeInsets.all(15),
-                                width: MediaQuery.of(context).size.width * 1,
-                                child: SizedBox(
-                                  width: double.infinity,
-                                  child: Theme(
-                                    data: ThemeData.light().copyWith(
-                                        // cardColor: Theme.of(context).canvasColor),
-                                        cardColor: Colors.white,
-                                        hoverColor: Colors.grey.shade400,
-                                        dividerColor: Colors.grey),
-                                    child: PaginatedDataTable(
-                                        sortColumnIndex: _currentSortColumn,
-                                        sortAscending: sort,
-                                        rowsPerPage: 10,
-                                        columnSpacing: 0,
-                                        columns: [
-                                          DataColumn(
-                                              label: const SizedBox(
-                                                  width: 120,
-                                                  child: Text(
-                                                    "      Kode MDBC",
-                                                    style: TextStyle(
-                                                        fontSize: 15,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  )),
-                                              onSort: (columnIndex, _) {
-                                                setState(() {
-                                                  _currentSortColumn =
-                                                      columnIndex;
-                                                  if (sort == true) {
-                                                    sort = false;
-                                                    filterCrm!.sort((a, b) => a
-                                                        .kodeDesignMdbc!
-                                                        .toLowerCase()
-                                                        .compareTo(b
-                                                            .kodeDesignMdbc!
-                                                            .toLowerCase()));
-                                                  } else {
-                                                    sort = true;
-                                                    filterCrm!.sort((a, b) => b
-                                                        .kodeDesignMdbc!
-                                                        .toLowerCase()
-                                                        .compareTo(a
-                                                            .kodeDesignMdbc!
-                                                            .toLowerCase()));
-                                                  }
-                                                });
-                                              }),
-                                          DataColumn(label: _verticalDivider),
-                                          DataColumn(
-                                              label: SizedBox(
-                                                  width: 120,
-                                                  child: sharedPreferences!
-                                                              .getString(
-                                                                  'level') !=
-                                                          '1'
-                                                      ? const Text(
-                                                          "Kode Marketing",
-                                                          style: TextStyle(
-                                                              fontSize: 15,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
-                                                        )
-                                                      : const Text(
-                                                          "Nama Designer",
-                                                          style: TextStyle(
-                                                              fontSize: 15,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
-                                                        )),
-                                              onSort: (columnIndex, _) {
-                                                setState(() {
-                                                  _currentSortColumn =
-                                                      columnIndex;
-                                                  if (sharedPreferences!
-                                                          .getString('level') ==
-                                                      '1') {
-                                                    if (sort == true) {
-                                                      sort = false;
-                                                      filterCrm!.sort((a, b) => a
-                                                          .namaDesigner!
-                                                          .toLowerCase()
-                                                          .compareTo(b
-                                                              .namaDesigner!
-                                                              .toLowerCase()));
-                                                    } else {
-                                                      sort = true;
-                                                      filterCrm!.sort((a, b) => b
-                                                          .namaDesigner!
-                                                          .toLowerCase()
-                                                          .compareTo(a
-                                                              .namaDesigner!
-                                                              .toLowerCase()));
-                                                    }
-                                                  } else {
-                                                    if (sort == true) {
-                                                      sort = false;
-                                                      filterCrm!.sort((a, b) => a
-                                                          .kodeMarketing!
-                                                          .toLowerCase()
-                                                          .compareTo(b
-                                                              .kodeMarketing!
-                                                              .toLowerCase()));
-                                                    } else {
-                                                      sort = true;
-                                                      filterCrm!.sort((a, b) => b
-                                                          .kodeMarketing!
-                                                          .toLowerCase()
-                                                          .compareTo(a
-                                                              .kodeMarketing!
-                                                              .toLowerCase()));
-                                                    }
-                                                  }
-                                                });
-                                              }),
-                                          DataColumn(label: _verticalDivider),
-                                          // DataColumn(
-                                          //     label: const SizedBox(
-                                          //         width: 120,
-                                          //         child: Text(
-                                          //           "Kode Design",
-                                          //           style: TextStyle(
-                                          //               fontSize: 15,
-                                          //               fontWeight:
-                                          //                   FontWeight.bold),
-                                          //         )),
-                                          //     onSort: (columnIndex, _) {
-                                          //       setState(() {
-                                          //         _currentSortColumn =
-                                          //             columnIndex;
-                                          //         if (sort == true) {
-                                          //           sort = false;
-                                          //           filterCrm!.sort((a, b) => a
-                                          //               .kodeDesign!
-                                          //               .toLowerCase()
-                                          //               .compareTo(b.kodeDesign!
-                                          //                   .toLowerCase()));
-                                          //         } else {
-                                          //           sort = true;
-                                          //           filterCrm!.sort((a, b) => b
-                                          //               .kodeDesign!
-                                          //               .toLowerCase()
-                                          //               .compareTo(a.kodeDesign!
-                                          //                   .toLowerCase()));
-                                          //         }
-                                          //       });
-                                          //     }),
-                                          // DataColumn(label: _verticalDivider),
-                                          DataColumn(
-                                              label: const SizedBox(
-                                                  width: 120,
-                                                  child: Text(
-                                                    "Tema",
-                                                    style: TextStyle(
-                                                        fontSize: 15,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  )),
-                                              onSort: (columnIndex, _) {
-                                                setState(() {
-                                                  _currentSortColumn =
-                                                      columnIndex;
-                                                  if (sort == true) {
-                                                    sort = false;
-                                                    filterCrm!.sort((a, b) => a
-                                                        .tema!
-                                                        .toLowerCase()
-                                                        .compareTo(b.tema!
-                                                            .toLowerCase()));
-                                                  } else {
-                                                    sort = true;
-                                                    filterCrm!.sort((a, b) => b
-                                                        .tema!
-                                                        .toLowerCase()
-                                                        .compareTo(a.tema!
-                                                            .toLowerCase()));
-                                                  }
-                                                });
-                                              }),
-                                          DataColumn(label: _verticalDivider),
-                                          DataColumn(
-                                              label: const SizedBox(
-                                                  width: 120,
-                                                  child: Text(
-                                                    "Jenis Barang",
-                                                    style: TextStyle(
-                                                        fontSize: 15,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  )),
-                                              onSort: (columnIndex, _) {
-                                                setState(() {
-                                                  _currentSortColumn =
-                                                      columnIndex;
-                                                  if (sort == true) {
-                                                    sort = false;
-                                                    filterCrm!.sort((a, b) => a
-                                                        .jenisBarang!
-                                                        .toLowerCase()
-                                                        .compareTo(b
-                                                            .jenisBarang!
-                                                            .toLowerCase()));
-                                                  } else {
-                                                    sort = true;
-                                                    filterCrm!.sort((a, b) => b
-                                                        .jenisBarang!
-                                                        .toLowerCase()
-                                                        .compareTo(a
-                                                            .jenisBarang!
-                                                            .toLowerCase()));
-                                                  }
-                                                });
-                                              }),
-                                          DataColumn(label: _verticalDivider),
-                                          DataColumn(
-                                              label: const SizedBox(
-                                                  width: 50,
-                                                  child: Text(
-                                                    "Harga",
-                                                    maxLines: 2,
-                                                    style: TextStyle(
-                                                        fontSize: 15,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  )),
-                                              onSort: (columnIndex, _) {
-                                                setState(() {
-                                                  _currentSortColumn =
-                                                      columnIndex;
-                                                  if (sort == true) {
-                                                    // myCrm.sort((a, b) => a['estimasiHarga'].)
-                                                    sort = false;
-                                                    filterCrm!.sort((a, b) => a
-                                                        .estimasiHarga!
-                                                        .compareTo(
-                                                            b.estimasiHarga!));
-                                                    // onsortColum(columnIndex, ascending);
-                                                  } else {
-                                                    sort = true;
-                                                    filterCrm!.sort((a, b) => b
-                                                        .estimasiHarga!
-                                                        .compareTo(
-                                                            a.estimasiHarga!));
-                                                  }
-                                                });
-                                              }),
-                                          DataColumn(label: _verticalDivider),
-                                          const DataColumn(
-                                            label: SizedBox(
+                          padding: const EdgeInsets.all(5),
+                          width: 90,
+                          height: 90,
+                          child: Lottie.asset("loadingJSON/loadingV1.json"),
+                        )))
+                      : Expanded(
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.vertical,
+                            child: Container(
+                              padding: const EdgeInsets.all(15),
+                              width: MediaQuery.of(context).size.width * 1,
+                              child: SizedBox(
+                                width: double.infinity,
+                                child: Theme(
+                                  data: ThemeData.light().copyWith(
+                                      // cardColor: Theme.of(context).canvasColor),
+                                      cardColor: Colors.white,
+                                      hoverColor: Colors.grey.shade400,
+                                      dividerColor: Colors.grey),
+                                  child: PaginatedDataTable(
+                                      sortColumnIndex: _currentSortColumn,
+                                      sortAscending: sort,
+                                      rowsPerPage: 10,
+                                      columnSpacing: 0,
+                                      columns: [
+                                        DataColumn(
+                                            label: const SizedBox(
                                                 width: 120,
                                                 child: Text(
-                                                  "Kelas Harga",
+                                                  "      Kode MDBC",
                                                   style: TextStyle(
                                                       fontSize: 15,
                                                       fontWeight:
                                                           FontWeight.bold),
                                                 )),
-                                          ),
-                                          DataColumn(label: _verticalDivider),
-                                          DataColumn(
-                                            label: Container(
-                                                padding: const EdgeInsets.only(
-                                                    left: 30),
+                                            onSort: (columnIndex, _) {
+                                              setState(() {
+                                                _currentSortColumn =
+                                                    columnIndex;
+                                                if (sort == true) {
+                                                  sort = false;
+                                                  filterCrm!.sort((a, b) => a
+                                                      .kodeDesignMdbc!
+                                                      .toLowerCase()
+                                                      .compareTo(b
+                                                          .kodeDesignMdbc!
+                                                          .toLowerCase()));
+                                                } else {
+                                                  sort = true;
+                                                  filterCrm!.sort((a, b) => b
+                                                      .kodeDesignMdbc!
+                                                      .toLowerCase()
+                                                      .compareTo(a
+                                                          .kodeDesignMdbc!
+                                                          .toLowerCase()));
+                                                }
+                                              });
+                                            }),
+                                        DataColumn(label: _verticalDivider),
+                                        DataColumn(
+                                            label: SizedBox(
                                                 width: 120,
-                                                child: const Text(
-                                                  "Aksi",
+                                                child: sharedPreferences!
+                                                            .getString(
+                                                                'level') !=
+                                                        '1'
+                                                    ? const Text(
+                                                        "Kode Marketing",
+                                                        style: TextStyle(
+                                                            fontSize: 15,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      )
+                                                    : const Text(
+                                                        "Nama Designer",
+                                                        style: TextStyle(
+                                                            fontSize: 15,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      )),
+                                            onSort: (columnIndex, _) {
+                                              setState(() {
+                                                _currentSortColumn =
+                                                    columnIndex;
+                                                if (sharedPreferences!
+                                                        .getString('level') ==
+                                                    '1') {
+                                                  if (sort == true) {
+                                                    sort = false;
+                                                    filterCrm!.sort((a, b) => a
+                                                        .namaDesigner!
+                                                        .toLowerCase()
+                                                        .compareTo(b
+                                                            .namaDesigner!
+                                                            .toLowerCase()));
+                                                  } else {
+                                                    sort = true;
+                                                    filterCrm!.sort((a, b) => b
+                                                        .namaDesigner!
+                                                        .toLowerCase()
+                                                        .compareTo(a
+                                                            .namaDesigner!
+                                                            .toLowerCase()));
+                                                  }
+                                                } else {
+                                                  if (sort == true) {
+                                                    sort = false;
+                                                    filterCrm!.sort((a, b) => a
+                                                        .kodeMarketing!
+                                                        .toLowerCase()
+                                                        .compareTo(b
+                                                            .kodeMarketing!
+                                                            .toLowerCase()));
+                                                  } else {
+                                                    sort = true;
+                                                    filterCrm!.sort((a, b) => b
+                                                        .kodeMarketing!
+                                                        .toLowerCase()
+                                                        .compareTo(a
+                                                            .kodeMarketing!
+                                                            .toLowerCase()));
+                                                  }
+                                                }
+                                              });
+                                            }),
+                                        DataColumn(label: _verticalDivider),
+                                        // DataColumn(
+                                        //     label: const SizedBox(
+                                        //         width: 120,
+                                        //         child: Text(
+                                        //           "Kode Design",
+                                        //           style: TextStyle(
+                                        //               fontSize: 15,
+                                        //               fontWeight:
+                                        //                   FontWeight.bold),
+                                        //         )),
+                                        //     onSort: (columnIndex, _) {
+                                        //       setState(() {
+                                        //         _currentSortColumn =
+                                        //             columnIndex;
+                                        //         if (sort == true) {
+                                        //           sort = false;
+                                        //           filterCrm!.sort((a, b) => a
+                                        //               .kodeDesign!
+                                        //               .toLowerCase()
+                                        //               .compareTo(b.kodeDesign!
+                                        //                   .toLowerCase()));
+                                        //         } else {
+                                        //           sort = true;
+                                        //           filterCrm!.sort((a, b) => b
+                                        //               .kodeDesign!
+                                        //               .toLowerCase()
+                                        //               .compareTo(a.kodeDesign!
+                                        //                   .toLowerCase()));
+                                        //         }
+                                        //       });
+                                        //     }),
+                                        // DataColumn(label: _verticalDivider),
+                                        DataColumn(
+                                            label: const SizedBox(
+                                                width: 120,
+                                                child: Text(
+                                                  "Tema",
                                                   style: TextStyle(
                                                       fontSize: 15,
                                                       fontWeight:
                                                           FontWeight.bold),
                                                 )),
-                                          ),
-                                        ],
-                                        source:
-                                            // UserDataTableSource(userData: filterCrm!)),
-                                            RowSource(
-                                                myData: myCrm,
-                                                count: myCrm!.length)),
-                                  ),
+                                            onSort: (columnIndex, _) {
+                                              setState(() {
+                                                _currentSortColumn =
+                                                    columnIndex;
+                                                if (sort == true) {
+                                                  sort = false;
+                                                  filterCrm!.sort((a, b) => a
+                                                      .tema!
+                                                      .toLowerCase()
+                                                      .compareTo(b.tema!
+                                                          .toLowerCase()));
+                                                } else {
+                                                  sort = true;
+                                                  filterCrm!.sort((a, b) => b
+                                                      .tema!
+                                                      .toLowerCase()
+                                                      .compareTo(a.tema!
+                                                          .toLowerCase()));
+                                                }
+                                              });
+                                            }),
+                                        DataColumn(label: _verticalDivider),
+                                        DataColumn(
+                                            label: const SizedBox(
+                                                width: 120,
+                                                child: Text(
+                                                  "Jenis Barang",
+                                                  style: TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                )),
+                                            onSort: (columnIndex, _) {
+                                              setState(() {
+                                                _currentSortColumn =
+                                                    columnIndex;
+                                                if (sort == true) {
+                                                  sort = false;
+                                                  filterCrm!.sort((a, b) => a
+                                                      .jenisBarang!
+                                                      .toLowerCase()
+                                                      .compareTo(b.jenisBarang!
+                                                          .toLowerCase()));
+                                                } else {
+                                                  sort = true;
+                                                  filterCrm!.sort((a, b) => b
+                                                      .jenisBarang!
+                                                      .toLowerCase()
+                                                      .compareTo(a.jenisBarang!
+                                                          .toLowerCase()));
+                                                }
+                                              });
+                                            }),
+                                        DataColumn(label: _verticalDivider),
+                                        DataColumn(
+                                            label: const SizedBox(
+                                                width: 50,
+                                                child: Text(
+                                                  "Harga",
+                                                  maxLines: 2,
+                                                  style: TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                )),
+                                            onSort: (columnIndex, _) {
+                                              setState(() {
+                                                _currentSortColumn =
+                                                    columnIndex;
+                                                if (sort == true) {
+                                                  // myCrm.sort((a, b) => a['estimasiHarga'].)
+                                                  sort = false;
+                                                  filterCrm!.sort((a, b) => a
+                                                      .estimasiHarga!
+                                                      .compareTo(
+                                                          b.estimasiHarga!));
+                                                  // onsortColum(columnIndex, ascending);
+                                                } else {
+                                                  sort = true;
+                                                  filterCrm!.sort((a, b) => b
+                                                      .estimasiHarga!
+                                                      .compareTo(
+                                                          a.estimasiHarga!));
+                                                }
+                                              });
+                                            }),
+                                        DataColumn(label: _verticalDivider),
+                                        const DataColumn(
+                                          label: SizedBox(
+                                              width: 120,
+                                              child: Text(
+                                                "Kelas Harga",
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              )),
+                                        ),
+                                        DataColumn(label: _verticalDivider),
+                                        DataColumn(
+                                          label: Container(
+                                              padding: const EdgeInsets.only(
+                                                  left: 30),
+                                              width: 120,
+                                              child: const Text(
+                                                "Aksi",
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              )),
+                                        ),
+                                      ],
+                                      source:
+                                          // UserDataTableSource(userData: filterCrm!)),
+                                          RowSource(
+                                              myData: myCrm,
+                                              count: myCrm!.length)),
                                 ),
                               ),
                             ),
-                          )
-                  ],
-                ),
+                          ),
+                        )
+                ],
               ),
-              floatingActionButton: sharedPreferences!.getString('level') == '3'
-                  ? null
-                  : Stack(children: [
-                      Positioned(
-                        left: 40,
-                        bottom: 5,
-                        child: FloatingActionButton.extended(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (c) => const FormScreen()));
-                          },
-                          label: const Text(
-                            "Tambah Form Designer",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          icon: const Icon(
-                            Icons.add_circle_outline_sharp,
-                            color: Colors.white,
-                          ),
-                          backgroundColor: Colors.blue,
-                        ),
-                      )
-                    ]))),
+            ),
+            // floatingActionButton: sharedPreferences!.getString('level') == '3'
+            //     ? null
+            //     : Stack(children: [
+            //         Positioned(
+            //           left: 40,
+            //           bottom: 5,
+            //           child: FloatingActionButton.extended(
+            //             onPressed: () {
+            //               Navigator.push(
+            //                   context,
+            //                   MaterialPageRoute(
+            //                       builder: (c) => const FormScreen()));
+            //             },
+            //             label: const Text(
+            //               "Tambah Form Designer",
+            //               style: TextStyle(color: Colors.white),
+            //             ),
+            //             icon: const Icon(
+            //               Icons.add_circle_outline_sharp,
+            //               color: Colors.white,
+            //             ),
+            //             backgroundColor: Colors.blue,
+            //           ),
+            //         )
+            //       ])
+          )),
     );
   }
 }
@@ -1046,7 +1246,7 @@ class RowSource extends DataTableSource {
                                             .postDeleteFormDesignerById),
                                     body: body);
                                 print(response.body);
-                                // ignore: use_build_context_synchronously
+
                                 showDialog<String>(
                                     context: context,
                                     builder: (BuildContext context) =>
@@ -1056,12 +1256,18 @@ class RowSource extends DataTableSource {
                                           ),
                                         ));
 
-                                // ignore: use_build_context_synchronously
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (c) =>
-                                            const MainViewFormDesign()));
+                                sharedPreferences!.getString('divisi') ==
+                                        'designer'
+                                    ? Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (c) =>
+                                                MainViewDesigner(col: 1)))
+                                    : Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (c) =>
+                                                MainViewScm(col: 2)));
                               },
                               child: const Text(
                                 'Hapus',
@@ -1275,7 +1481,7 @@ class RowSource extends DataTableSource {
                                           ApiConstants.keyById),
                                       body: body);
                                   print(response.body);
-                                  // ignore: use_build_context_synchronously
+
                                   showDialog<String>(
                                       context: context,
                                       builder: (BuildContext context) =>
@@ -1289,12 +1495,18 @@ class RowSource extends DataTableSource {
                                                   ),
                                           ));
 
-                                  // ignore: use_build_context_synchronously
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (c) =>
-                                              const MainViewFormDesign()));
+                                  sharedPreferences!.getString('divisi') ==
+                                          'designer'
+                                      ? Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (c) =>
+                                                  MainViewDesigner(col: 1)))
+                                      : Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (c) =>
+                                                  MainViewScm(col: 2)));
                                 },
                                 child: data.edit! == 0
                                     ? const Text('Buka kunci',

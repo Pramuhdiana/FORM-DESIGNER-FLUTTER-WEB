@@ -34,12 +34,14 @@ class ApiConstants {
   static String getProduksiSB = 'spk/get_produksi_SB.php';
   static String getProduksiByDivisi =
       'spk/get_produksi_by_divisi.php'; // bisa filter juga dengan bulan
+  static String getListArtist = 'spk/list_artist_produksi.php';
 
   static String postDataBatu = 'spk/create_batu.php';
   static String postLogin = 'spk/login.php';
   static String postFormDesigner = 'spk/create_form_designer.php';
   static String postFormEstimasiPricing = 'spk/create_estimasi_pricing.php';
   static String postBatuPenyesuaian = 'spk/create_batu_penyesuaian.php';
+  static String postDataProduksi = 'spk/create_produksi.php';
 
   static String postDeleteFormDesignerById =
       'spk/delete_form_designer_by_id.php';

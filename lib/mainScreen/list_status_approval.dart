@@ -2,9 +2,11 @@
 
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:form_designer/global/currency_format.dart';
+import 'package:form_designer/global/global.dart';
 // ignore: unused_import
 import 'package:form_designer/mainScreen/form_screen_by_id.dart';
 import 'package:http/http.dart' as http;
@@ -49,11 +51,12 @@ class _ListStatusApprovalScreenState extends State<ListStatusApprovalScreen> {
   //     }
   //   }
   // }
+  var nowSiklus = '';
 
   @override
   void initState() {
     super.initState();
-
+    nowSiklus = sharedPreferences!.getString('siklus')!;
     _getData();
   }
 
@@ -104,18 +107,58 @@ class _ListStatusApprovalScreenState extends State<ListStatusApprovalScreen> {
             // drawer: Drawer1(),
             appBar: AppBar(
               automaticallyImplyLeading: false,
-              elevation: 0,
-              backgroundColor: Colors.blue,
-              flexibleSpace: Container(
-                color: Colors.blue,
-              ),
-              title: const Text(
-                "LIST STATUS APPROVAL",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 25,
+              backgroundColor: Colors.white,
+              leadingWidth: 320,
+              leading: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 30),
+                  child: Row(
+                    children: [
+                      Text(
+                        "Siklus Saat Ini : $nowSiklus",
+                        style: TextStyle(
+                            fontSize: 20, color: Colors.grey.shade700),
+                      ),
+                    ],
+                  ),
                 ),
+              ),
+              title: CupertinoSearchTextField(
+                placeholder: 'Search Anything...',
+                borderRadius: const BorderRadius.all(Radius.circular(25)),
+                itemColor: Colors.black,
+                controller: controller,
+                backgroundColor: Colors.black12,
+                keyboardType: TextInputType.text,
+                onChanged: (value) {
+                  //fungsi search anyting
+                  myCrm = filterCrm!
+                      .where((element) =>
+                          element.diambilId!
+                              .toString()
+                              .toLowerCase()
+                              .contains(value.toLowerCase()) ||
+                          element.namaSales!
+                              .toLowerCase()
+                              .contains(value.toLowerCase()) ||
+                          element.brand!
+                              .toLowerCase()
+                              .contains(value.toLowerCase()) ||
+                          element.beratEmas!
+                              .toString()
+                              .toLowerCase()
+                              .contains(value.toLowerCase()) ||
+                          element.jenisBarang!
+                              .toLowerCase()
+                              .contains(value.toLowerCase()) ||
+                          element.estimasiHarga!
+                              .toString()
+                              .contains(value.toLowerCase()))
+                      .toList();
+
+                  setState(() {});
+                },
               ),
               centerTitle: true,
               actions: [
@@ -127,61 +170,25 @@ class _ListStatusApprovalScreenState extends State<ListStatusApprovalScreen> {
                   },
                   icon: const Icon(
                     Icons.refresh,
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                 )
               ],
             ),
             body: Container(
-              padding: const EdgeInsets.only(top: 25),
+              width: MediaQuery.of(context).size.width * 1,
+              color: colorBG,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Container(
-                    width: MediaQuery.of(context).size.width * 0.5,
-                    height: 45,
-                    padding: const EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.grey,
-                        ),
-                        borderRadius: BorderRadius.circular(12)),
-                    child: Align(
-                      alignment: Alignment.bottomCenter,
-                      child: TextField(
-                        textAlign: TextAlign.center,
-                        controller: controller,
-                        decoration: const InputDecoration(
-                            hintText: "Search Anything ..."),
-                        onChanged: (value) {
-                          //fungsi search anyting
-                          myCrm = filterCrm!
-                              .where((element) =>
-                                  element.diambilId!
-                                      .toString()
-                                      .toLowerCase()
-                                      .contains(value.toLowerCase()) ||
-                                  element.namaSales!
-                                      .toLowerCase()
-                                      .contains(value.toLowerCase()) ||
-                                  element.brand!
-                                      .toLowerCase()
-                                      .contains(value.toLowerCase()) ||
-                                  element.beratEmas!
-                                      .toString()
-                                      .toLowerCase()
-                                      .contains(value.toLowerCase()) ||
-                                  element.jenisBarang!
-                                      .toLowerCase()
-                                      .contains(value.toLowerCase()) ||
-                                  element.estimasiHarga!
-                                      .toString()
-                                      .contains(value.toLowerCase()))
-                              .toList();
-
-                          setState(() {});
-                        },
-                      ),
+                    padding: const EdgeInsets.only(top: 26),
+                    child: const Text(
+                      'Status Approval',
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 26),
                     ),
                   ),
                   isLoading == false
@@ -215,14 +222,12 @@ class _ListStatusApprovalScreenState extends State<ListStatusApprovalScreen> {
                                       columns: [
                                         DataColumn(
                                             label: const SizedBox(
-                                                width: 80,
                                                 child: Text(
-                                                  "ID",
-                                                  style: TextStyle(
-                                                      fontSize: 15,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                )),
+                                              "ID",
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold),
+                                            )),
                                             onSort: (columnIndex, _) {
                                               setState(() {
                                                 _currentSortColumn =
@@ -243,14 +248,12 @@ class _ListStatusApprovalScreenState extends State<ListStatusApprovalScreen> {
                                         DataColumn(label: _verticalDivider),
                                         DataColumn(
                                             label: const SizedBox(
-                                                width: 150,
                                                 child: Text(
-                                                  "NAMA PEMOHON",
-                                                  style: TextStyle(
-                                                      fontSize: 15,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                )),
+                                              "NAMA PEMOHON",
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold),
+                                            )),
                                             onSort: (columnIndex, _) {
                                               setState(() {
                                                 _currentSortColumn =
@@ -275,14 +278,12 @@ class _ListStatusApprovalScreenState extends State<ListStatusApprovalScreen> {
                                         DataColumn(label: _verticalDivider),
                                         DataColumn(
                                             label: const SizedBox(
-                                                width: 120,
                                                 child: Text(
-                                                  "BRAND",
-                                                  style: TextStyle(
-                                                      fontSize: 15,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                )),
+                                              "BRAND",
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold),
+                                            )),
                                             onSort: (columnIndex, _) {
                                               setState(() {
                                                 _currentSortColumn =
@@ -307,14 +308,12 @@ class _ListStatusApprovalScreenState extends State<ListStatusApprovalScreen> {
                                         DataColumn(label: _verticalDivider),
                                         DataColumn(
                                             label: const SizedBox(
-                                                width: 120,
                                                 child: Text(
-                                                  "STATUS",
-                                                  style: TextStyle(
-                                                      fontSize: 15,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                )),
+                                              "STATUS",
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold),
+                                            )),
                                             onSort: (columnIndex, _) {
                                               setState(() {
                                                 _currentSortColumn =
@@ -337,14 +336,12 @@ class _ListStatusApprovalScreenState extends State<ListStatusApprovalScreen> {
                                         DataColumn(label: _verticalDivider),
                                         DataColumn(
                                             label: const SizedBox(
-                                                width: 120,
                                                 child: Text(
-                                                  "JENIS BARANG",
-                                                  style: TextStyle(
-                                                      fontSize: 15,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                )),
+                                              "JENIS BARANG",
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold),
+                                            )),
                                             onSort: (columnIndex, _) {
                                               setState(() {
                                                 _currentSortColumn =
@@ -369,14 +366,12 @@ class _ListStatusApprovalScreenState extends State<ListStatusApprovalScreen> {
                                         DataColumn(label: _verticalDivider),
                                         DataColumn(
                                             label: const SizedBox(
-                                                width: 130,
                                                 child: Text(
-                                                  "ESTIMASI HARGA",
-                                                  style: TextStyle(
-                                                      fontSize: 15,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                )),
+                                              "ESTIMASI HARGA",
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold),
+                                            )),
                                             onSort: (columnIndex, _) {
                                               setState(() {
                                                 _currentSortColumn =
@@ -402,27 +397,23 @@ class _ListStatusApprovalScreenState extends State<ListStatusApprovalScreen> {
                                         DataColumn(label: _verticalDivider),
                                         const DataColumn(
                                           label: SizedBox(
-                                              width: 130,
                                               child: Text(
-                                                "HARGA APPROVE",
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              )),
+                                            "HARGA APPROVE",
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold),
+                                          )),
                                         ),
                                         //note approve
                                         DataColumn(label: _verticalDivider),
                                         const DataColumn(
                                           label: SizedBox(
-                                              width: 130,
                                               child: Text(
-                                                "NOTE APPROVE",
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              )),
+                                            "NOTE APPROVE",
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold),
+                                          )),
                                         ),
                                       ],
                                       source:

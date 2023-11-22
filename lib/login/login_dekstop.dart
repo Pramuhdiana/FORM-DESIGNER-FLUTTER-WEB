@@ -32,7 +32,7 @@ class _LoginDesktopState extends State<LoginDesktop> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
+      color: colorBG,
       child: Row(
         children: [
           Expanded(
@@ -41,8 +41,8 @@ class _LoginDesktopState extends State<LoginDesktop> {
               height: MediaQuery.of(context).size.height * 0.8,
               width: MediaQuery.of(context).size.width * 1,
               padding: const EdgeInsets.all(12.0),
-              child: Lottie.asset("loadingJSON/logoOri.json"),
-              // child: Lottie.asset("loadingJSON/logo275kb.json"),
+              // child: Lottie.asset("loadingJSON/logoOri.json"),
+              child: Lottie.asset("loadingJSON/logo275kb.json"),
             ),
           ),
           Expanded(
@@ -184,6 +184,7 @@ class _LoginDesktopState extends State<LoginDesktop> {
                               String levelAPI = data['level'];
                               String statusAPI = data['status'];
                               String divisiAPI = data['divisi'];
+                              String roleAPI = data['role'];
                               setState(() {
                                 sharedPreferences!
                                     .setString('token', 'ingat saya');
@@ -195,6 +196,7 @@ class _LoginDesktopState extends State<LoginDesktop> {
                                     .setString('status', statusAPI);
                                 sharedPreferences!
                                     .setString('divisi', divisiAPI);
+                                sharedPreferences!.setString('role', roleAPI);
                                 sharedPreferences!.setBool('isLogin', true);
                                 // savePref(
                                 //     id, emailAPI, namaAPI, levelAPI, statusAPI);

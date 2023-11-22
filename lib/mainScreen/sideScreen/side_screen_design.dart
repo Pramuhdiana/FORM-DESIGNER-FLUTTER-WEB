@@ -2,27 +2,26 @@
 
 import 'package:flutter/material.dart';
 import 'package:form_designer/SCM/mainScreen/kebutuhan_batu_by_siklus.dart';
+import 'package:form_designer/calculatePricing/list_calculate_pricing_screen.dart';
+import 'package:form_designer/global/global.dart';
 import 'package:form_designer/mainScreen/home_screen.dart';
 import 'package:form_designer/mainScreen/list_batu_screen.dart';
 import 'package:form_designer/mainScreen/list_designer_screen.dart';
 import 'package:form_designer/mainScreen/list_mps.dart';
 import 'package:form_designer/mainScreen/list_status_approval.dart';
+import 'package:form_designer/mainScreen/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:side_navigation/side_navigation.dart';
 
-import '../calculatePricing/list_calculate_pricing_screen.dart';
-import '../global/global.dart';
-import 'login.dart';
-
-class MainView extends StatefulWidget {
-  const MainView({Key? key}) : super(key: key);
+class MainViewFormDesign extends StatefulWidget {
+  const MainViewFormDesign({Key? key}) : super(key: key);
 
   @override
   // ignore: library_private_types_in_public_api
-  _MainViewState createState() => _MainViewState();
+  _MainViewFormDesignState createState() => _MainViewFormDesignState();
 }
 
-class _MainViewState extends State<MainView> {
+class _MainViewFormDesignState extends State<MainViewFormDesign> {
   List<Widget> views = [
     //? 0
     const HomeScreen(),
@@ -52,7 +51,7 @@ class _MainViewState extends State<MainView> {
 
   final _formKey = GlobalKey<FormState>();
 
-  int selectedIndex = 0;
+  int selectedIndex = 1;
   bool isKodeAkses = false;
   TextEditingController kodeAkses = TextEditingController();
 
@@ -941,62 +940,35 @@ class _MainViewState extends State<MainView> {
                             ),
                           ),
                           SizedBox(
-                            height: 190,
                             child: Form(
-                              key: _formKey,
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 children: <Widget>[
                                   const Padding(
                                     padding:
                                         EdgeInsets.only(top: 5, bottom: 10),
-                                    child: Text('Masukan Kode Akses'),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: TextFormField(
-                                      autofocus: true,
-                                      obscureText: true,
-                                      style: const TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold),
-                                      textInputAction: TextInputAction.next,
-                                      controller: kodeAkses,
-                                      validator: (value) {
-                                        if (value! != aksesKode) {
-                                          return 'Kode akses salah';
-                                        }
-                                        return null;
-                                      },
-                                      onChanged: (value) {
-                                        isKodeAkses = true;
-                                        kodeAkses.text == aksesKode
-                                            ? isKodeAkses = true
-                                            : isKodeAkses = false;
-                                      },
-                                      decoration: InputDecoration(
-                                        labelText: "Kode Akses",
-                                        border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(5.0)),
-                                      ),
-                                    ),
+                                    child: Text('Yakin ingin keluar ?'),
                                   ),
                                   Container(
                                     width: 200,
                                     height: 50,
                                     padding: const EdgeInsets.only(top: 10),
                                     child: ElevatedButton(
-                                      child: const Text("Submit"),
-                                      onPressed: () {
-                                        if (_formKey.currentState!.validate()) {
-                                          _formKey.currentState!.save();
-                                          setState(() {
-                                            selectedIndex = index;
-                                            Navigator.of(context).pop();
-                                          });
-                                        } else {}
+                                      style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.red),
+                                      child: const Text("Keluar"),
+                                      onPressed: () async {
+                                        SharedPreferences prefs =
+                                            await SharedPreferences
+                                                .getInstance();
+                                        prefs.clear();
+                                        prefs.setString('token', 'null');
+                                        // ignore: use_build_context_synchronously
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (c) =>
+                                                    const LoginScreen()));
                                       },
                                     ),
                                   )
