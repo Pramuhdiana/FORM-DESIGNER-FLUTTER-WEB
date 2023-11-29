@@ -34,20 +34,20 @@ class ModellerModel {
 
   ModellerModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    kodeDesign = json['kodeDesign'];
-    jenisBatu = json['jenisBatu'];
-    bulan = json['bulan'];
-    kodeBulan = json['kodeBulan'];
-    noUrutBulan = json['noUrutBulan'];
-    kodeMarketing = json['kodeMarketing'];
-    status = json['status'];
-    tema = json['tema'];
-    marketing = json['marketing'];
-    brand = json['brand'];
-    designer = json['designer'];
-    modeller = json['modeller'];
-    keterangan = json['keterangan'];
-    createdAt = json['createdAt'];
+    kodeDesign = json['kodeDesign'] ?? '';
+    jenisBatu = json['jenisBatu'] ?? '';
+    bulan = json['bulan'] ?? '';
+    kodeBulan = json['kodeBulan'] ?? '';
+    noUrutBulan = json['noUrutBulan'] ?? 0;
+    kodeMarketing = json['kodeMarketing'] ?? '';
+    status = json['status'] ?? '';
+    tema = json['tema'] ?? '';
+    marketing = json['marketing'] ?? '';
+    brand = json['brand'] ?? '';
+    designer = json['designer'] ?? '';
+    modeller = json['modeller'] ?? '';
+    keterangan = json['keterangan'] ?? '';
+    createdAt = json['createdAt'] ?? '';
   }
 
   Map<String, dynamic> toJson() {
