@@ -35,6 +35,7 @@ class ApiConstants {
   static String getProduksiByDivisi =
       'spk/get_produksi_by_divisi.php'; // bisa filter juga dengan bulan
   static String getListArtist = 'spk/list_artist_produksi.php';
+  static String getDataModeller = 'spk/get_data_modeller.php';
 
   static String postDataBatu = 'spk/create_batu.php';
   static String postLogin = 'spk/login.php';

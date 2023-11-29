@@ -467,11 +467,11 @@ class ExcelScreen {
 
           for (var j = 0; j < listAllBatu.length; j++) {
             mylist[listUniqBatu[i]] = sum;
-            if (mylist[listUniqBatu[i]].toString() ==
-                    mylist[listAllBatu[j]].toString() &&
-                mylist[listAllBatu[j]] == mylist[listUniqBatu[i]]) {
+
+            if (listUniqBatu[i] == listAllBatu[j]) {
               sum = sum + listAllQtyBatu[j];
-              // print('${listUniqBatu[i]} : $sum index:$i repeat ke:$j');
+              // ignore: avoid_print
+              print('true ${listUniqBatu[i]} == ${listAllBatu[j]}');
               mylist.update(listUniqBatu[i], (value) => sum);
             } else {}
           }

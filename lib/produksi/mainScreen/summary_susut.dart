@@ -191,9 +191,9 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
     initializeDateFormatting();
     var now = DateTime.now();
     String month = DateFormat('MMMM', 'id').format(now);
-    siklusDesigner = month;
-    nowSiklus = siklusDesigner;
-    _getDataAll('all');
+
+    nowSiklus = month;
+    // _getDataAll('all');
   }
 
 // fungsi remove duplicate object
@@ -251,253 +251,254 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
       List jsonResponse = json.decode(response.body);
       var allData =
           jsonResponse.map((data) => ProduksiModel.fromJson(data)).toList();
-      if (month.toString().toLowerCase() == "all") {
-        //* function Finishing
-        //? filter by divisi Finishing
-        var filterByDivisiFinishing = allData.where((element) =>
-            element.divisi.toString().toLowerCase() == 'finishing');
-        var allDataFinishing = filterByDivisiFinishing.toList();
-        //! jika suklis tidak di pilih
-        allDataFinishing = removeDuplicates(allDataFinishing);
-        //? ambil data nama
-        for (var i = 0; i < allDataFinishing.length; i++) {
-          artistFinishing.add(allDataFinishing[i].nama);
-        }
-        artistFinishing.sort((a, b) => a.compareTo(b));
+      // if (month.toString().toLowerCase() == "all") {
 
-        qtyNameFinishing = artistFinishing.length;
+      //   //* function Finishing
+      //   //? filter by divisi Finishing
+      //   var filterByDivisiFinishing = allData.where((element) =>
+      //       element.divisi.toString().toLowerCase() == 'finishing');
+      //   var allDataFinishing = filterByDivisiFinishing.toList();
+      //   //! jika suklis tidak di pilih
+      //   allDataFinishing = removeDuplicates(allDataFinishing);
+      //   //? ambil data nama
+      //   for (var i = 0; i < allDataFinishing.length; i++) {
+      //     artistFinishing.add(allDataFinishing[i].nama);
+      //   }
+      //   artistFinishing.sort((a, b) => a.compareTo(b));
 
-        //* function Poleshing1
-        //? filter by divisi Poleshing1
-        var filterByDivisiPoleshing1 = allData.where((element) =>
-            element.divisi.toString().toLowerCase() == 'poleshing 1');
-        var allDataPoleshing1 = filterByDivisiPoleshing1.toList();
-        allDataPoleshing1 = removeDuplicates(allDataPoleshing1);
-        //? ambil data nama
-        for (var i = 0; i < allDataPoleshing1.length; i++) {
-          artistPoleshing1.add(allDataPoleshing1[i].nama);
-        }
-        qtyNamePoleshing1 = artistPoleshing1.length;
-        //! end function Poleshing1
+      //   qtyNameFinishing = artistFinishing.length;
 
-        //* function Poleshing2
-        //? filter by divisi Poleshing2
-        var filterByDivisiPoleshing2 = allData.where((element) =>
-            element.divisi.toString().toLowerCase() == 'poleshing 2');
-        var allDataPoleshing2 = filterByDivisiPoleshing2.toList();
-        allDataPoleshing2 = removeDuplicates(allDataPoleshing2);
-        //? ambil data nama
-        for (var i = 0; i < allDataPoleshing2.length; i++) {
-          artistPoleshing2.add(allDataPoleshing2[i].nama);
-        }
-        qtyNamePoleshing2 = artistPoleshing2.length;
-        //! end function Poleshing2
+      //   //* function Poleshing1
+      //   //? filter by divisi Poleshing1
+      //   var filterByDivisiPoleshing1 = allData.where((element) =>
+      //       element.divisi.toString().toLowerCase() == 'poleshing 1');
+      //   var allDataPoleshing1 = filterByDivisiPoleshing1.toList();
+      //   allDataPoleshing1 = removeDuplicates(allDataPoleshing1);
+      //   //? ambil data nama
+      //   for (var i = 0; i < allDataPoleshing1.length; i++) {
+      //     artistPoleshing1.add(allDataPoleshing1[i].nama);
+      //   }
+      //   qtyNamePoleshing1 = artistPoleshing1.length;
+      //   //! end function Poleshing1
 
-        //* function Poleshing2Rep
-        //? filter by divisi Poleshing2Rep
-        var filterByDivisiPoleshing2Rep = allData.where((element) =>
-            element.divisi.toString().toLowerCase() == 'poleshing 2 rep');
-        var allDataPoleshing2Rep = filterByDivisiPoleshing2Rep.toList();
-        allDataPoleshing2Rep = removeDuplicates(allDataPoleshing2Rep);
-        //? ambil data nama
-        for (var i = 0; i < allDataPoleshing2Rep.length; i++) {
-          artistPoleshing2Rep.add(allDataPoleshing2Rep[i].nama);
-        }
-        qtyNamePoleshing2Rep = artistPoleshing2Rep.length;
-        //! end function Poleshing2Rep
+      //   //* function Poleshing2
+      //   //? filter by divisi Poleshing2
+      //   var filterByDivisiPoleshing2 = allData.where((element) =>
+      //       element.divisi.toString().toLowerCase() == 'poleshing 2');
+      //   var allDataPoleshing2 = filterByDivisiPoleshing2.toList();
+      //   allDataPoleshing2 = removeDuplicates(allDataPoleshing2);
+      //   //? ambil data nama
+      //   for (var i = 0; i < allDataPoleshing2.length; i++) {
+      //     artistPoleshing2.add(allDataPoleshing2[i].nama);
+      //   }
+      //   qtyNamePoleshing2 = artistPoleshing2.length;
+      //   //! end function Poleshing2
 
-        //* function Stell1
-        //? filter by divisi Stell1
-        var filterByDivisiStell1 = allData.where((element) =>
-            element.divisi.toString().toLowerCase() == 'stell rangka 1');
-        var allDataStell1 = filterByDivisiStell1.toList();
-        allDataStell1 = removeDuplicates(allDataStell1);
-        //? ambil data nama
-        for (var i = 0; i < allDataStell1.length; i++) {
-          artistStell1.add(allDataStell1[i].nama);
-        }
-        qtyNameStell1 = artistStell1.length;
-        //! end function Stell1
+      //   //* function Poleshing2Rep
+      //   //? filter by divisi Poleshing2Rep
+      //   var filterByDivisiPoleshing2Rep = allData.where((element) =>
+      //       element.divisi.toString().toLowerCase() == 'poleshing 2 rep');
+      //   var allDataPoleshing2Rep = filterByDivisiPoleshing2Rep.toList();
+      //   allDataPoleshing2Rep = removeDuplicates(allDataPoleshing2Rep);
+      //   //? ambil data nama
+      //   for (var i = 0; i < allDataPoleshing2Rep.length; i++) {
+      //     artistPoleshing2Rep.add(allDataPoleshing2Rep[i].nama);
+      //   }
+      //   qtyNamePoleshing2Rep = artistPoleshing2Rep.length;
+      //   //! end function Poleshing2Rep
 
-        //* function Stell2
-        //? filter by divisi Stell2
-        var filterByDivisiStell2 = allData.where((element) =>
-            element.divisi.toString().toLowerCase() == 'stell rangka 2');
-        var allDataStell2 = filterByDivisiStell2.toList();
-        allDataStell2 = removeDuplicates(allDataStell2);
-        //? ambil data nama
-        for (var i = 0; i < allDataStell2.length; i++) {
-          artistStell2.add(allDataStell2[i].nama);
-        }
-        qtyNameStell2 = artistStell2.length;
-        //! end function Stell2
+      //   //* function Stell1
+      //   //? filter by divisi Stell1
+      //   var filterByDivisiStell1 = allData.where((element) =>
+      //       element.divisi.toString().toLowerCase() == 'stell rangka 1');
+      //   var allDataStell1 = filterByDivisiStell1.toList();
+      //   allDataStell1 = removeDuplicates(allDataStell1);
+      //   //? ambil data nama
+      //   for (var i = 0; i < allDataStell1.length; i++) {
+      //     artistStell1.add(allDataStell1[i].nama);
+      //   }
+      //   qtyNameStell1 = artistStell1.length;
+      //   //! end function Stell1
 
-        //* function Stell2Rep
-        //? filter by divisi Stell2Rep
-        var filterByDivisiStell2Rep = allData.where((element) =>
-            element.divisi.toString().toLowerCase() == 'stell rangka 2 rep');
-        var allDataStell2Rep = filterByDivisiStell2Rep.toList();
-        allDataStell2Rep = removeDuplicates(allDataStell2Rep);
-        //? ambil data nama
-        for (var i = 0; i < allDataStell2Rep.length; i++) {
-          artistStell2Rep.add(allDataStell2Rep[i].nama);
-        }
-        qtyNameStell2Rep = artistStell2Rep.length;
-        //! end function Stell2Rep
+      //   //* function Stell2
+      //   //? filter by divisi Stell2
+      //   var filterByDivisiStell2 = allData.where((element) =>
+      //       element.divisi.toString().toLowerCase() == 'stell rangka 2');
+      //   var allDataStell2 = filterByDivisiStell2.toList();
+      //   allDataStell2 = removeDuplicates(allDataStell2);
+      //   //? ambil data nama
+      //   for (var i = 0; i < allDataStell2.length; i++) {
+      //     artistStell2.add(allDataStell2[i].nama);
+      //   }
+      //   qtyNameStell2 = artistStell2.length;
+      //   //! end function Stell2
 
-        //* function Chrome
-        //? filter by divisi Chrome
-        var filterByDivisiChrome = allData.where(
-            (element) => element.divisi.toString().toLowerCase() == 'chrome');
-        var allDataChrome = filterByDivisiChrome.toList();
-        allDataChrome = removeDuplicates(allDataChrome);
-        //? ambil data nama
-        for (var i = 0; i < allDataChrome.length; i++) {
-          artistChrome.add(allDataChrome[i].nama);
-        }
-        artistChrome.removeWhere((element) => element == '');
-        qtyNameChrome = artistChrome.length;
-        print(artistChrome);
-        //! end function Chrome
+      //   //* function Stell2Rep
+      //   //? filter by divisi Stell2Rep
+      //   var filterByDivisiStell2Rep = allData.where((element) =>
+      //       element.divisi.toString().toLowerCase() == 'stell rangka 2 rep');
+      //   var allDataStell2Rep = filterByDivisiStell2Rep.toList();
+      //   allDataStell2Rep = removeDuplicates(allDataStell2Rep);
+      //   //? ambil data nama
+      //   for (var i = 0; i < allDataStell2Rep.length; i++) {
+      //     artistStell2Rep.add(allDataStell2Rep[i].nama);
+      //   }
+      //   qtyNameStell2Rep = artistStell2Rep.length;
+      //   //! end function Stell2Rep
 
-        //* function ChromeRep
-        //? filter by divisi ChromeRep
-        var filterByDivisiChromeRep = allData.where((element) =>
-            element.divisi.toString().toLowerCase() == 'chrome rep');
-        var allDataChromeRep = filterByDivisiChromeRep.toList();
-        allDataChromeRep = removeDuplicates(allDataChromeRep);
-        //? ambil data nama
-        for (var i = 0; i < allDataChromeRep.length; i++) {
-          artistChromeRep.add(allDataChromeRep[i].nama);
-        }
-        artistChromeRep.removeWhere((element) => element == '');
-        qtyNameChromeRep = artistChromeRep.length;
-        //! end function ChromeRep
-      } else {
-        //! jika siklus di pilih
-        var filterBySiklus = allData.where((element) =>
-            element.bulan.toString().toLowerCase() == month.toLowerCase());
+      //   //* function Chrome
+      //   //? filter by divisi Chrome
+      //   var filterByDivisiChrome = allData.where(
+      //       (element) => element.divisi.toString().toLowerCase() == 'chrome');
+      //   var allDataChrome = filterByDivisiChrome.toList();
+      //   allDataChrome = removeDuplicates(allDataChrome);
+      //   //? ambil data nama
+      //   for (var i = 0; i < allDataChrome.length; i++) {
+      //     artistChrome.add(allDataChrome[i].nama);
+      //   }
+      //   artistChrome.removeWhere((element) => element == '');
+      //   qtyNameChrome = artistChrome.length;
+      //   //! end function Chrome
 
-        //* function Finishing
-        //? filter by divisi Finishing
-        var filterByDivisiFinishing = filterBySiklus.where((element) =>
-            element.divisi.toString().toLowerCase() == 'finishing');
-        var allDataFinishing = filterByDivisiFinishing.toList();
-        //! jika suklis tidak di pilih
-        allDataFinishing = removeDuplicates(allDataFinishing);
-        //? ambil data nama
-        for (var i = 0; i < allDataFinishing.length; i++) {
-          artistFinishing.add(allDataFinishing[i].nama);
-        }
-        artistFinishing.sort((a, b) => a.compareTo(b));
-        qtyNameFinishing = artistFinishing.length;
+      //   //* function ChromeRep
+      //   //? filter by divisi ChromeRep
+      //   var filterByDivisiChromeRep = allData.where((element) =>
+      //       element.divisi.toString().toLowerCase() == 'chrome rep');
+      //   var allDataChromeRep = filterByDivisiChromeRep.toList();
+      //   allDataChromeRep = removeDuplicates(allDataChromeRep);
+      //   //? ambil data nama
+      //   for (var i = 0; i < allDataChromeRep.length; i++) {
+      //     artistChromeRep.add(allDataChromeRep[i].nama);
+      //   }
+      //   artistChromeRep.removeWhere((element) => element == '');
+      //   qtyNameChromeRep = artistChromeRep.length;
+      //   //! end function ChromeRep
+      // } else {
 
-        //* function Poleshing1
-        //? filter by divisi Poleshing1
-        var filterByDivisiPoleshing1 = filterBySiklus.where((element) =>
-            element.divisi.toString().toLowerCase() == 'poleshing 1');
-        var allDataPoleshing1 = filterByDivisiPoleshing1.toList();
-        allDataPoleshing1 = removeDuplicates(allDataPoleshing1);
-        //? ambil data nama
-        for (var i = 0; i < allDataPoleshing1.length; i++) {
-          artistPoleshing1.add(allDataPoleshing1[i].nama);
-        }
-        qtyNamePoleshing1 = artistPoleshing1.length;
-        //! end function Poleshing1
+      //! jika siklus di pilih
+      var filterBySiklus = allData.where((element) =>
+          element.bulan.toString().toLowerCase() == month.toLowerCase());
 
-        //* function Poleshing2
-        //? filter by divisi Poleshing2
-        var filterByDivisiPoleshing2 = filterBySiklus.where((element) =>
-            element.divisi.toString().toLowerCase() == 'poleshing 2');
-        var allDataPoleshing2 = filterByDivisiPoleshing2.toList();
-        allDataPoleshing2 = removeDuplicates(allDataPoleshing2);
-        //? ambil data nama
-        for (var i = 0; i < allDataPoleshing2.length; i++) {
-          artistPoleshing2.add(allDataPoleshing2[i].nama);
-        }
-        qtyNamePoleshing2 = artistPoleshing2.length;
-        //! end function Poleshing2
-
-        //* function Poleshing2Rep
-        //? filter by divisi Poleshing2Rep
-        var filterByDivisiPoleshing2Rep = filterBySiklus.where((element) =>
-            element.divisi.toString().toLowerCase() == 'poleshing 2 rep');
-        var allDataPoleshing2Rep = filterByDivisiPoleshing2Rep.toList();
-        allDataPoleshing2Rep = removeDuplicates(allDataPoleshing2Rep);
-        //? ambil data nama
-        for (var i = 0; i < allDataPoleshing2Rep.length; i++) {
-          artistPoleshing2Rep.add(allDataPoleshing2Rep[i].nama);
-        }
-        qtyNamePoleshing2Rep = artistPoleshing2Rep.length;
-        //! end function Poleshing2Rep
-
-        //* function Stell1
-        //? filter by divisi Stell1
-        var filterByDivisiStell1 = filterBySiklus.where((element) =>
-            element.divisi.toString().toLowerCase() == 'stell rangka 1');
-        var allDataStell1 = filterByDivisiStell1.toList();
-        allDataStell1 = removeDuplicates(allDataStell1);
-        //? ambil data nama
-        for (var i = 0; i < allDataStell1.length; i++) {
-          artistStell1.add(allDataStell1[i].nama);
-        }
-        qtyNameStell1 = artistStell1.length;
-        //! end function Stell1
-
-        //* function Stell2
-        //? filter by divisi Stell2
-        var filterByDivisiStell2 = filterBySiklus.where((element) =>
-            element.divisi.toString().toLowerCase() == 'stell rangka 2');
-        var allDataStell2 = filterByDivisiStell2.toList();
-        allDataStell2 = removeDuplicates(allDataStell2);
-        //? ambil data nama
-        for (var i = 0; i < allDataStell2.length; i++) {
-          artistStell2.add(allDataStell2[i].nama);
-        }
-        qtyNameStell2 = artistStell2.length;
-        //! end function Stell2
-
-        //* function Stell2Rep
-        //? filter by divisi Stell2Rep
-        var filterByDivisiStell2Rep = filterBySiklus.where((element) =>
-            element.divisi.toString().toLowerCase() == 'stell rangka 2 rep');
-        var allDataStell2Rep = filterByDivisiStell2Rep.toList();
-        allDataStell2Rep = removeDuplicates(allDataStell2Rep);
-        //? ambil data nama
-        for (var i = 0; i < allDataStell2Rep.length; i++) {
-          artistStell2Rep.add(allDataStell2Rep[i].nama);
-        }
-        qtyNameStell2Rep = artistStell2Rep.length;
-        //! end function Stell2Rep
-
-        //* function Chrome
-        //? filter by divisi Chrome
-        var filterByDivisiChrome = filterBySiklus.where(
-            (element) => element.divisi.toString().toLowerCase() == 'chrome');
-        var allDataChrome = filterByDivisiChrome.toList();
-        allDataChrome = removeDuplicates(allDataChrome);
-        //? ambil data nama
-        for (var i = 0; i < allDataChrome.length; i++) {
-          artistChrome.add(allDataChrome[i].nama);
-        }
-        artistChrome.removeWhere((element) => element == '');
-        qtyNameChrome = artistChrome.length;
-        //! end function Chrome
-
-        //* function ChromeRep
-        //? filter by divisi ChromeRep
-        var filterByDivisiChromeRep = filterBySiklus.where((element) =>
-            element.divisi.toString().toLowerCase() == 'chrome rep');
-        var allDataChromeRep = filterByDivisiChromeRep.toList();
-        allDataChromeRep = removeDuplicates(allDataChromeRep);
-        //? ambil data nama
-        for (var i = 0; i < allDataChromeRep.length; i++) {
-          artistChromeRep.add(allDataChromeRep[i].nama);
-        }
-        artistChromeRep.removeWhere((element) => element == '');
-        qtyNameChromeRep = artistChromeRep.length;
-        //! end function ChromeRep
+      //* function Finishing
+      //? filter by divisi Finishing
+      var filterByDivisiFinishing = filterBySiklus.where(
+          (element) => element.divisi.toString().toLowerCase() == 'finishing');
+      var allDataFinishing = filterByDivisiFinishing.toList();
+      //! jika suklis tidak di pilih
+      allDataFinishing = removeDuplicates(allDataFinishing);
+      //? ambil data nama
+      for (var i = 0; i < allDataFinishing.length; i++) {
+        artistFinishing.add(allDataFinishing[i].nama);
       }
+      artistFinishing.sort((a, b) => a.compareTo(b));
+      qtyNameFinishing = artistFinishing.length;
+
+      //* function Poleshing1
+      //? filter by divisi Poleshing1
+      var filterByDivisiPoleshing1 = filterBySiklus.where((element) =>
+          element.divisi.toString().toLowerCase() == 'poleshing 1');
+      var allDataPoleshing1 = filterByDivisiPoleshing1.toList();
+      allDataPoleshing1 = removeDuplicates(allDataPoleshing1);
+      //? ambil data nama
+      for (var i = 0; i < allDataPoleshing1.length; i++) {
+        artistPoleshing1.add(allDataPoleshing1[i].nama);
+      }
+      qtyNamePoleshing1 = artistPoleshing1.length;
+      //! end function Poleshing1
+
+      //* function Poleshing2
+      //? filter by divisi Poleshing2
+      var filterByDivisiPoleshing2 = filterBySiklus.where((element) =>
+          element.divisi.toString().toLowerCase() == 'poleshing 2');
+      var allDataPoleshing2 = filterByDivisiPoleshing2.toList();
+      allDataPoleshing2 = removeDuplicates(allDataPoleshing2);
+      //? ambil data nama
+      for (var i = 0; i < allDataPoleshing2.length; i++) {
+        artistPoleshing2.add(allDataPoleshing2[i].nama);
+      }
+      qtyNamePoleshing2 = artistPoleshing2.length;
+      //! end function Poleshing2
+
+      //* function Poleshing2Rep
+      //? filter by divisi Poleshing2Rep
+      var filterByDivisiPoleshing2Rep = filterBySiklus.where((element) =>
+          element.divisi.toString().toLowerCase() == 'poleshing 2 rep');
+      var allDataPoleshing2Rep = filterByDivisiPoleshing2Rep.toList();
+      allDataPoleshing2Rep = removeDuplicates(allDataPoleshing2Rep);
+      //? ambil data nama
+      for (var i = 0; i < allDataPoleshing2Rep.length; i++) {
+        artistPoleshing2Rep.add(allDataPoleshing2Rep[i].nama);
+      }
+      qtyNamePoleshing2Rep = artistPoleshing2Rep.length;
+      //! end function Poleshing2Rep
+
+      //* function Stell1
+      //? filter by divisi Stell1
+      var filterByDivisiStell1 = filterBySiklus.where((element) =>
+          element.divisi.toString().toLowerCase() == 'stell rangka 1');
+      var allDataStell1 = filterByDivisiStell1.toList();
+      allDataStell1 = removeDuplicates(allDataStell1);
+      //? ambil data nama
+      for (var i = 0; i < allDataStell1.length; i++) {
+        artistStell1.add(allDataStell1[i].nama);
+      }
+      qtyNameStell1 = artistStell1.length;
+      //! end function Stell1
+
+      //* function Stell2
+      //? filter by divisi Stell2
+      var filterByDivisiStell2 = filterBySiklus.where((element) =>
+          element.divisi.toString().toLowerCase() == 'stell rangka 2');
+      var allDataStell2 = filterByDivisiStell2.toList();
+      allDataStell2 = removeDuplicates(allDataStell2);
+      //? ambil data nama
+      for (var i = 0; i < allDataStell2.length; i++) {
+        artistStell2.add(allDataStell2[i].nama);
+      }
+      qtyNameStell2 = artistStell2.length;
+      //! end function Stell2
+
+      //* function Stell2Rep
+      //? filter by divisi Stell2Rep
+      var filterByDivisiStell2Rep = filterBySiklus.where((element) =>
+          element.divisi.toString().toLowerCase() == 'stell rangka 2 rep');
+      var allDataStell2Rep = filterByDivisiStell2Rep.toList();
+      allDataStell2Rep = removeDuplicates(allDataStell2Rep);
+      //? ambil data nama
+      for (var i = 0; i < allDataStell2Rep.length; i++) {
+        artistStell2Rep.add(allDataStell2Rep[i].nama);
+      }
+      qtyNameStell2Rep = artistStell2Rep.length;
+      //! end function Stell2Rep
+
+      //* function Chrome
+      //? filter by divisi Chrome
+      var filterByDivisiChrome = filterBySiklus.where(
+          (element) => element.divisi.toString().toLowerCase() == 'chrome');
+      var allDataChrome = filterByDivisiChrome.toList();
+      allDataChrome = removeDuplicates(allDataChrome);
+      //? ambil data nama
+      for (var i = 0; i < allDataChrome.length; i++) {
+        artistChrome.add(allDataChrome[i].nama);
+      }
+      artistChrome.removeWhere((element) => element == '');
+      qtyNameChrome = artistChrome.length;
+      //! end function Chrome
+
+      //* function ChromeRep
+      //? filter by divisi ChromeRep
+      var filterByDivisiChromeRep = filterBySiklus.where(
+          (element) => element.divisi.toString().toLowerCase() == 'chrome rep');
+      var allDataChromeRep = filterByDivisiChromeRep.toList();
+      allDataChromeRep = removeDuplicates(allDataChromeRep);
+      //? ambil data nama
+      for (var i = 0; i < allDataChromeRep.length; i++) {
+        artistChromeRep.add(allDataChromeRep[i].nama);
+      }
+      artistChromeRep.removeWhere((element) => element == '');
+      qtyNameChromeRep = artistChromeRep.length;
+      //! end function ChromeRep
+      // }
       return allData;
     } else {
       throw Exception('Unexpected error occured!');
@@ -1601,7 +1602,6 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
         final responseSBFinishing = await http
             .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getProduksiSB));
         if (responseSBFinishing.statusCode == 200) {
-          print('get data beratAsal dan akhir SB');
           List jsonResponseSBFinishing = json.decode(responseSBFinishing.body);
           var allDataSBFinishing = jsonResponseSBFinishing
               .map((data) => ProduksiSBModel.fromJson(data))
@@ -1696,7 +1696,6 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
         final responseSBPoleshing1 = await http
             .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getProduksiSB));
         if (responseSBPoleshing1.statusCode == 200) {
-          print('get data beratAsal dan akhir SB');
           List jsonResponseSBPoleshing1 =
               json.decode(responseSBPoleshing1.body);
           var allDataSBPoleshing1 = jsonResponseSBPoleshing1
@@ -1793,7 +1792,6 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
         final responseSBPoleshing2 = await http
             .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getProduksiSB));
         if (responseSBPoleshing2.statusCode == 200) {
-          print('get data beratAsal dan akhir SB');
           List jsonResponseSBPoleshing2 =
               json.decode(responseSBPoleshing2.body);
           var allDataSBPoleshing2 = jsonResponseSBPoleshing2
@@ -1890,7 +1888,6 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
         final responseSBPoleshing2Rep = await http
             .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getProduksiSB));
         if (responseSBPoleshing2Rep.statusCode == 200) {
-          print('get data beratAsal dan akhir SB');
           List jsonResponseSBPoleshing2Rep =
               json.decode(responseSBPoleshing2Rep.body);
           var allDataSBPoleshing2Rep = jsonResponseSBPoleshing2Rep
@@ -1993,7 +1990,6 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
         final responseSBStell1 = await http
             .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getProduksiSB));
         if (responseSBStell1.statusCode == 200) {
-          print('get data beratAsal dan akhir SB');
           List jsonResponseSBStell1 = json.decode(responseSBStell1.body);
           var allDataSBStell1 = jsonResponseSBStell1
               .map((data) => ProduksiSBModel.fromJson(data))
@@ -2083,7 +2079,6 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
         final responseSBStell2 = await http
             .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getProduksiSB));
         if (responseSBStell2.statusCode == 200) {
-          print('get data beratAsal dan akhir SB');
           List jsonResponseSBStell2 = json.decode(responseSBStell2.body);
           var allDataSBStell2 = jsonResponseSBStell2
               .map((data) => ProduksiSBModel.fromJson(data))
@@ -2173,7 +2168,6 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
         final responseSBStell2Rep = await http
             .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getProduksiSB));
         if (responseSBStell2Rep.statusCode == 200) {
-          print('get data beratAsal dan akhir SB');
           List jsonResponseSBStell2Rep = json.decode(responseSBStell2Rep.body);
           var allDataSBStell2Rep = jsonResponseSBStell2Rep
               .map((data) => ProduksiSBModel.fromJson(data))
@@ -2458,7 +2452,6 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
         final responseSBFinishing = await http
             .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getProduksiSB));
         if (responseSBFinishing.statusCode == 200) {
-          print('get data beratAsal dan akhir SB');
           List jsonResponseSBFinishing = json.decode(responseSBFinishing.body);
           var allDataSBFinishing = jsonResponseSBFinishing
               .map((data) => ProduksiSBModel.fromJson(data))
@@ -2553,7 +2546,6 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
         final responseSBPoleshing1 = await http
             .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getProduksiSB));
         if (responseSBPoleshing1.statusCode == 200) {
-          print('get data beratAsal dan akhir SB');
           List jsonResponseSBPoleshing1 =
               json.decode(responseSBPoleshing1.body);
           var allDataSBPoleshing1 = jsonResponseSBPoleshing1
@@ -2650,7 +2642,6 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
         final responseSBPoleshing2 = await http
             .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getProduksiSB));
         if (responseSBPoleshing2.statusCode == 200) {
-          print('get data beratAsal dan akhir SB');
           List jsonResponseSBPoleshing2 =
               json.decode(responseSBPoleshing2.body);
           var allDataSBPoleshing2 = jsonResponseSBPoleshing2
@@ -2747,7 +2738,6 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
         final responseSBPoleshing2Rep = await http
             .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getProduksiSB));
         if (responseSBPoleshing2Rep.statusCode == 200) {
-          print('get data beratAsal dan akhir SB');
           List jsonResponseSBPoleshing2Rep =
               json.decode(responseSBPoleshing2Rep.body);
           var allDataSBPoleshing2Rep = jsonResponseSBPoleshing2Rep
@@ -2850,7 +2840,6 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
         final responseSBStell1 = await http
             .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getProduksiSB));
         if (responseSBStell1.statusCode == 200) {
-          print('get data beratAsal dan akhir SB');
           List jsonResponseSBStell1 = json.decode(responseSBStell1.body);
           var allDataSBStell1 = jsonResponseSBStell1
               .map((data) => ProduksiSBModel.fromJson(data))
@@ -2940,7 +2929,6 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
         final responseSBStell2 = await http
             .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getProduksiSB));
         if (responseSBStell2.statusCode == 200) {
-          print('get data beratAsal dan akhir SB');
           List jsonResponseSBStell2 = json.decode(responseSBStell2.body);
           var allDataSBStell2 = jsonResponseSBStell2
               .map((data) => ProduksiSBModel.fromJson(data))
@@ -3030,7 +3018,6 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
         final responseSBStell2Rep = await http
             .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getProduksiSB));
         if (responseSBStell2Rep.statusCode == 200) {
-          print('get data beratAsal dan akhir SB');
           List jsonResponseSBStell2Rep = json.decode(responseSBStell2Rep.body);
           var allDataSBStell2Rep = jsonResponseSBStell2Rep
               .map((data) => ProduksiSBModel.fromJson(data))
@@ -3324,11 +3311,11 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
         }
       }
       //! end save dikdik dand eko
-      print(
-          'dikdik\n Fin : $resultFinishingDikdikMaulana, s2 bon : $bonusStell2DikdikMaulana, s2 sut : $susutStell2DikdikMaulana, s2 Rep bon : $bonusStell2RepDikdikMaulana, s2 Rep sut : $susutStell2RepDikdikMaulana');
+      // print(
+      //     'dikdik\n Fin : $resultFinishingDikdikMaulana, s2 bon : $bonusStell2DikdikMaulana, s2 sut : $susutStell2DikdikMaulana, s2 Rep bon : $bonusStell2RepDikdikMaulana, s2 Rep sut : $susutStell2RepDikdikMaulana');
 
-      print(
-          'm deeko\n Fin : $resultFinishingMuhammadDeeko, s2 bon : $bonusStell2MuhammadDeeko, s2 sut : $susutStell2MuhammadDeeko, s2 Rep bon : $bonusStell2RepMuhammadDeeko, s2 Rep sut : $susutStell2RepMuhammadDeeko');
+      // print(
+      //     'm deeko\n Fin : $resultFinishingMuhammadDeeko, s2 bon : $bonusStell2MuhammadDeeko, s2 sut : $susutStell2MuhammadDeeko, s2 Rep bon : $bonusStell2RepMuhammadDeeko, s2 Rep sut : $susutStell2RepMuhammadDeeko');
 
       return allData;
     } else {
@@ -3896,204 +3883,225 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
             ),
           ),
         ),
-        isLoading == true
-            ? Expanded(
-                child: Center(
-                  child: Container(
-                    padding: const EdgeInsets.all(5),
-                    width: 90,
-                    height: 90,
-                    child: Lottie.asset("loadingJSON/loadingV1.json"),
+        siklusDesigner.isEmpty
+            ? Center(
+                child: Column(
+                children: [
+                  SizedBox(
+                    width: 250,
+                    height: 210,
+                    child: Lottie.asset("loadingJSON/selectDate.json"),
                   ),
-                ),
-              )
-            : Expanded(
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Container(
-                      // width: MediaQuery.of(context).size.width * 1,
-                      padding: EdgeInsets.only(left: 5),
-                      child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(height: 20),
-                            //? BARIS 1
-                            SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Container(
-                                    color: Colors.grey.shade200,
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          'FINISHING',
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        _dataTable('finishing'),
-                                      ],
-                                    ))),
-                            SizedBox(height: 20),
+                  const Text(
+                    'Pilih siklus terlebih dahulu',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontSize: 26,
+                        color: Colors.blueGrey,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Acne',
+                        letterSpacing: 1.5),
+                  ),
+                ],
+              ))
+            : isLoading == true
+                ? Expanded(
+                    child: Center(
+                      child: Container(
+                        padding: const EdgeInsets.all(5),
+                        width: 90,
+                        height: 90,
+                        child: Lottie.asset("loadingJSON/loadingV1.json"),
+                      ),
+                    ),
+                  )
+                : Expanded(
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Container(
+                          // width: MediaQuery.of(context).size.width * 1,
+                          padding: EdgeInsets.only(left: 5),
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(height: 20),
+                                //? BARIS 1
+                                SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: Container(
+                                        color: Colors.grey.shade200,
+                                        child: Column(
+                                          children: [
+                                            Text(
+                                              'FINISHING',
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            _dataTable('finishing'),
+                                          ],
+                                        ))),
+                                SizedBox(height: 20),
 
-                            // //? BARIS 2
-                            SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Container(
-                                    color: Colors.grey.shade200,
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          'POLESHING 1',
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        _dataTable('poleshing 1'),
-                                      ],
-                                    ))),
-                            SizedBox(height: 20),
+                                // //? BARIS 2
+                                SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: Container(
+                                        color: Colors.grey.shade200,
+                                        child: Column(
+                                          children: [
+                                            Text(
+                                              'POLESHING 1',
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            _dataTable('poleshing 1'),
+                                          ],
+                                        ))),
+                                SizedBox(height: 20),
 
-                            //? BARIS 3
-                            SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Container(
-                                    color: Colors.grey.shade200,
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          'POLESHING 2',
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        _dataTable('poleshing 2'),
-                                      ],
-                                    ))),
-                            SizedBox(height: 20),
+                                //? BARIS 3
+                                SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: Container(
+                                        color: Colors.grey.shade200,
+                                        child: Column(
+                                          children: [
+                                            Text(
+                                              'POLESHING 2',
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            _dataTable('poleshing 2'),
+                                          ],
+                                        ))),
+                                SizedBox(height: 20),
 
-                            // //? BARIS 4
-                            SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Container(
-                                    color: Colors.grey.shade200,
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          'POLESHING 2 REPARASI',
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        _dataTable('poleshing 2 rep'),
-                                      ],
-                                    ))),
-                            SizedBox(height: 20),
+                                // //? BARIS 4
+                                SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: Container(
+                                        color: Colors.grey.shade200,
+                                        child: Column(
+                                          children: [
+                                            Text(
+                                              'POLESHING 2 REPARASI',
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            _dataTable('poleshing 2 rep'),
+                                          ],
+                                        ))),
+                                SizedBox(height: 20),
 
-                            // //? BARIS 5
-                            SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Container(
-                                    color: Colors.grey.shade200,
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          'STELL RANGKA 1',
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        // _dataTableStell1(),
-                                        _dataTable('stell 1'),
-                                      ],
-                                    ))),
-                            SizedBox(height: 20),
+                                // //? BARIS 5
+                                SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: Container(
+                                        color: Colors.grey.shade200,
+                                        child: Column(
+                                          children: [
+                                            Text(
+                                              'STELL RANGKA 1',
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            // _dataTableStell1(),
+                                            _dataTable('stell 1'),
+                                          ],
+                                        ))),
+                                SizedBox(height: 20),
 
-                            // //? BARIS 6
-                            SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Container(
-                                    color: Colors.grey.shade200,
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          'STELL 2',
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        _dataTable('stell 2'),
-                                      ],
-                                    ))),
-                            SizedBox(height: 20),
+                                // //? BARIS 6
+                                SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: Container(
+                                        color: Colors.grey.shade200,
+                                        child: Column(
+                                          children: [
+                                            Text(
+                                              'STELL 2',
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            _dataTable('stell 2'),
+                                          ],
+                                        ))),
+                                SizedBox(height: 20),
 
-                            // //? BARIS 7
-                            SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Container(
-                                    color: Colors.grey.shade200,
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          'STELL 2 REP',
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        _dataTable('stell 2 rep'),
-                                      ],
-                                    ))),
-                            SizedBox(height: 20),
-                            //? BARIS 8
-                            SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Container(
-                                    color: Colors.grey.shade200,
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          'CHROME',
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        _dataTable('chrome'),
-                                      ],
-                                    ))),
-                            SizedBox(height: 20),
-                            // //? BARIS 9
-                            SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Container(
-                                    color: Colors.grey.shade200,
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          'CHROME REPARASI',
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        _dataTable('chrome rep'),
-                                      ],
-                                    ))),
-                            SizedBox(height: 20),
-                          ]),
+                                // //? BARIS 7
+                                SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: Container(
+                                        color: Colors.grey.shade200,
+                                        child: Column(
+                                          children: [
+                                            Text(
+                                              'STELL 2 REP',
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            _dataTable('stell 2 rep'),
+                                          ],
+                                        ))),
+                                SizedBox(height: 20),
+                                //? BARIS 8
+                                SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: Container(
+                                        color: Colors.grey.shade200,
+                                        child: Column(
+                                          children: [
+                                            Text(
+                                              'CHROME',
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            _dataTable('chrome'),
+                                          ],
+                                        ))),
+                                SizedBox(height: 20),
+                                // //? BARIS 9
+                                SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: Container(
+                                        color: Colors.grey.shade200,
+                                        child: Column(
+                                          children: [
+                                            Text(
+                                              'CHROME REPARASI',
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            _dataTable('chrome rep'),
+                                          ],
+                                        ))),
+                                SizedBox(height: 20),
+                              ]),
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              ),
       ],
     );
   }
@@ -4107,6 +4115,11 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
         Uri.parse('${ApiConstants.baseUrl}${ApiConstants.addSiklus}'),
         body: body);
     print(response.body);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }
 

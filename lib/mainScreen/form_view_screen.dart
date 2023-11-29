@@ -14,6 +14,7 @@ import 'package:form_designer/model/earnut_model.dart';
 import 'package:form_designer/model/form_designer_model.dart';
 import 'package:form_designer/model/jenis_barang_model.dart';
 import 'package:form_designer/model/lain2_model.dart';
+import 'package:form_designer/model/modeller_model.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
@@ -46,6 +47,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
   List<XFile>? imagefiles;
   // ignore: unused_field
   PlatformFile? _imageFile;
+  String? noUrutBulan;
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   int beforeStokBatu1 = 0;
@@ -302,6 +304,8 @@ class _FormViewScreenState extends State<FormViewScreen> {
   TextEditingController qtyBatu35 = TextEditingController();
   TextEditingController stokBatu35 = TextEditingController();
   TextEditingController keteranganStatusBatu = TextEditingController();
+  String? bulanDesigner;
+  String? valueBulanDesigner;
 
   String? batu1 = '';
   String? batu2 = '';
@@ -462,6 +466,8 @@ class _FormViewScreenState extends State<FormViewScreen> {
   String? imageUrl = '';
   RoundedLoadingButtonController btnController =
       RoundedLoadingButtonController();
+  RoundedLoadingButtonController btnGenerateKodeMarketing =
+      RoundedLoadingButtonController();
   int count = 0;
   List<PlatformFile>? _paths;
 
@@ -583,6 +589,11 @@ class _FormViewScreenState extends State<FormViewScreen> {
         ? ''
         : DateFormat('dd/MMMM/yyyy').format(DateTime.parse(
             widget.modelDesigner!.tanggalInProduksi!.toString()));
+
+    bulanDesigner = DateFormat('MMMM')
+        .format(DateTime.parse(widget.modelDesigner!.created_at!.toString()));
+    valueBulanDesigner = DateFormat('MMyy')
+        .format(DateTime.parse(widget.modelDesigner!.created_at!.toString()));
     _getData();
     _getDataBatu();
   }
@@ -606,7 +617,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
         print("No image is selected.");
       }
     } catch (e) {
-      print("error while picking file.");
+      print("error while picking file. $e");
     }
   }
 
@@ -654,7 +665,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
         });
       }
     } catch (e) {
-      print(e);
+      return e;
     }
 
     //batu2
@@ -673,7 +684,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
         });
       }
     } catch (e) {
-      print(e);
+      return e;
     }
 
 //batu3
@@ -692,7 +703,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
         });
       }
     } catch (e) {
-      print(e);
+      return e;
     }
 //batu4
     try {
@@ -710,7 +721,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
         });
       }
     } catch (e) {
-      print(e);
+      return e;
     }
 //batu5
     try {
@@ -728,7 +739,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
         });
       }
     } catch (e) {
-      print(e);
+      return e;
     }
 //batu6
     try {
@@ -746,7 +757,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
         });
       }
     } catch (e) {
-      print(e);
+      return e;
     }
 //batu7
     try {
@@ -764,7 +775,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
         });
       }
     } catch (e) {
-      print(e);
+      return e;
     }
 //batu8
     try {
@@ -782,7 +793,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
         });
       }
     } catch (e) {
-      print(e);
+      return e;
     }
 //batu9
     try {
@@ -800,7 +811,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
         });
       }
     } catch (e) {
-      print(e);
+      return e;
     }
 //batu10
     try {
@@ -818,7 +829,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
         });
       }
     } catch (e) {
-      print(e);
+      return e;
     }
 //batu11
     try {
@@ -836,7 +847,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
         });
       }
     } catch (e) {
-      print(e);
+      return e;
     }
 //batu12
     try {
@@ -854,7 +865,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
         });
       }
     } catch (e) {
-      print(e);
+      return e;
     }
 //batu13
     try {
@@ -872,7 +883,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
         });
       }
     } catch (e) {
-      print(e);
+      return e;
     }
 //batu14
     try {
@@ -890,7 +901,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
         });
       }
     } catch (e) {
-      print(e);
+      return e;
     }
 //batu15
     try {
@@ -908,7 +919,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
         });
       }
     } catch (e) {
-      print(e);
+      return e;
     }
 //batu16
     try {
@@ -926,7 +937,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
         });
       }
     } catch (e) {
-      print(e);
+      return e;
     }
 //batu17
     try {
@@ -944,7 +955,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
         });
       }
     } catch (e) {
-      print(e);
+      return e;
     }
 //batu18
     try {
@@ -962,7 +973,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
         });
       }
     } catch (e) {
-      print(e);
+      return e;
     }
 //batu19
     try {
@@ -980,7 +991,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
         });
       }
     } catch (e) {
-      print(e);
+      return e;
     }
 //batu20
     try {
@@ -998,7 +1009,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
         });
       }
     } catch (e) {
-      print(e);
+      return e;
     }
 //batu21
     try {
@@ -1016,7 +1027,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
         });
       }
     } catch (e) {
-      print(e);
+      return e;
     }
 //batu22
     try {
@@ -1034,7 +1045,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
         });
       }
     } catch (e) {
-      print(e);
+      return e;
     }
 //batu23
     try {
@@ -1052,7 +1063,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
         });
       }
     } catch (e) {
-      print(e);
+      return e;
     }
 //batu24
     try {
@@ -1070,7 +1081,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
         });
       }
     } catch (e) {
-      print(e);
+      return e;
     }
 //batu25
     try {
@@ -1088,7 +1099,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
         });
       }
     } catch (e) {
-      print(e);
+      return e;
     }
 //batu26
     try {
@@ -1106,7 +1117,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
         });
       }
     } catch (e) {
-      print(e);
+      return e;
     }
 //batu27
     try {
@@ -1124,7 +1135,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
         });
       }
     } catch (e) {
-      print(e);
+      return e;
     }
 //batu28
     try {
@@ -1142,7 +1153,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
         });
       }
     } catch (e) {
-      print(e);
+      return e;
     }
 //batu29
     try {
@@ -1160,7 +1171,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
         });
       }
     } catch (e) {
-      print(e);
+      return e;
     }
 //batu30
     try {
@@ -1178,7 +1189,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
         });
       }
     } catch (e) {
-      print(e);
+      return e;
     }
 //batu31
     try {
@@ -1196,7 +1207,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
         });
       }
     } catch (e) {
-      print(e);
+      return e;
     }
 //batu32
     try {
@@ -1214,7 +1225,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
         });
       }
     } catch (e) {
-      print(e);
+      return e;
     }
 //batu33
     try {
@@ -1232,7 +1243,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
         });
       }
     } catch (e) {
-      print(e);
+      return e;
     }
 //batu34
     try {
@@ -1250,7 +1261,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
         });
       }
     } catch (e) {
-      print(e);
+      return e;
     }
 //batu35
     try {
@@ -1268,7 +1279,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
         });
       }
     } catch (e) {
-      print(e);
+      return e;
     }
   }
 
@@ -1294,7 +1305,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
         });
       }
     } catch (e) {
-      print(e);
+      return e;
     }
   }
 
@@ -2067,26 +2078,75 @@ class _FormViewScreenState extends State<FormViewScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   //kode marketing
-                  SizedBox(
-                    height: tinggiTextfield,
-                    width: 200,
-                    child: TextFormField(
-                      readOnly: sharedPreferences!.getString('level') != '1'
-                          ? true
-                          : false,
-                      style: const TextStyle(
-                          fontSize: 14,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold),
-                      textInputAction: TextInputAction.next,
-                      controller: kodeMarketing,
-                      decoration: InputDecoration(
-                        labelText: "Kode Marketing",
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5.0)),
-                      ),
-                    ),
-                  ),
+                  kodeMarketing.text.isEmpty
+                      ? Container(
+                          height: tinggiTextfield,
+                          width: 200,
+                          child: Container(
+                            padding: const EdgeInsets.only(bottom: 25),
+                            child: CustomLoadingButton(
+                              controller: btnGenerateKodeMarketing,
+                              onPressed: () async {
+                                try {
+                                  final response = await http.get(Uri.parse(
+                                      ApiConstants.baseUrl +
+                                          ApiConstants.getDataModeller));
+
+                                  // if response successful
+                                  if (response.statusCode == 200) {
+                                    List jsonResponse =
+                                        jsonDecode(response.body);
+                                    var allData = jsonResponse
+                                        .map((data) =>
+                                            ModellerModel.fromJson(data))
+                                        .toList();
+
+                                    var filterByMonth = allData.where(
+                                        (element) =>
+                                            element.bulan
+                                                .toString()
+                                                .toLowerCase() ==
+                                            bulanDesigner!.toLowerCase());
+                                    noUrutBulan = filterByMonth.length
+                                        .toString()
+                                        .padLeft(3, '0');
+                                    print(noUrutBulan);
+                                    print(filterByMonth.last.id);
+                                  } else {}
+                                } catch (c) {
+                                  print('err get data modeller : $c');
+                                }
+                                Future.delayed(const Duration(seconds: 2))
+                                    .then((value) async {
+                                  btnGenerateKodeMarketing.success();
+                                });
+
+                                setState(() {
+                                  kodeMarketing.text =
+                                      'RG0$valueBulanDesigner${noUrutBulan}0A01E';
+                                });
+                              },
+                              child: const Text('Generate\nKode Marketing'),
+                            ),
+                          ))
+                      : SizedBox(
+                          height: tinggiTextfield,
+                          width: 200,
+                          child: TextFormField(
+                            readOnly: true,
+                            style: const TextStyle(
+                                fontSize: 14,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
+                            textInputAction: TextInputAction.next,
+                            controller: kodeMarketing,
+                            decoration: InputDecoration(
+                              labelText: "Kode Marketing",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5.0)),
+                            ),
+                          ),
+                        ),
 
                   //Siklus
                   Container(

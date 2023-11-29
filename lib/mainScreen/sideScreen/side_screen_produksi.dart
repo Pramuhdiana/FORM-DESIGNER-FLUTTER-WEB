@@ -123,7 +123,7 @@ class _MainViewProduksiState extends State<MainViewProduksi> {
               label: 'Dashboard',
             ),
             SideNavigationBarItem(
-              icon: Icons.list,
+              icon: Icons.format_align_right_outlined,
               label: 'Produksi',
             ),
             SideNavigationBarItem(
@@ -131,15 +131,15 @@ class _MainViewProduksiState extends State<MainViewProduksi> {
               label: 'MPS',
             ),
             SideNavigationBarItem(
-              icon: Icons.summarize_outlined,
+              icon: Icons.list_alt_outlined,
               label: 'Summary Susut',
             ),
             SideNavigationBarItem(
-              icon: Icons.summarize_outlined,
+              icon: Icons.sticky_note_2_rounded,
               label: 'Summary Pasang Batu',
             ),
             SideNavigationBarItem(
-              icon: Icons.summarize_outlined,
+              icon: Icons.format_align_center,
               label: 'Summary Produktivitas',
             ),
             SideNavigationBarItem(
@@ -227,16 +227,18 @@ class _MainViewProduksiState extends State<MainViewProduksi> {
           // Change the background color and disabled header/footer dividers
           // Make use of standard() constructor for other themes
           theme: SideNavigationBarTheme(
-            backgroundColor: colorDasar,
             itemTheme: SideNavigationBarItemTheme(
                 unselectedItemColor: const Color.fromRGBO(147, 155, 163, 1),
                 selectedItemColor: Colors.white,
+                unselectedBackgroundColor: colorBG,
+                selectedBackgroundColor: colorBG,
                 iconSize: 32.5,
                 labelTextStyle:
                     const TextStyle(fontSize: 15, color: Colors.red)),
             togglerTheme: const SideNavigationBarTogglerTheme(
                 shrinkIconColor: Colors.white),
             dividerTheme: SideNavigationBarDividerTheme.standard(),
+            backgroundColor: colorDasar,
           ),
         ),
         Expanded(

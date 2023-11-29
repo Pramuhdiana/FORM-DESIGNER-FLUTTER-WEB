@@ -153,7 +153,7 @@ class _SummaryPasangBatuScreenState extends State<SummaryPasangBatuScreen> {
     final response = await http
         .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getProduksi));
     if (response.statusCode == 200) {
-      print('get data nama');
+      print('get data spk');
       List jsonResponse = json.decode(response.body);
       var allData =
           jsonResponse.map((data) => ProduksiModel.fromJson(data)).toList();
@@ -212,7 +212,7 @@ class _SummaryPasangBatuScreenState extends State<SummaryPasangBatuScreen> {
     final response = await http
         .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getProduksi));
     if (response.statusCode == 200) {
-      print('get data nama');
+      print('get data summary');
       List jsonResponse = json.decode(response.body);
       var allData =
           jsonResponse.map((data) => ProduksiModel.fromJson(data)).toList();
@@ -580,87 +580,111 @@ class _SummaryPasangBatuScreenState extends State<SummaryPasangBatuScreen> {
             ),
           ),
         ),
-        Expanded(
-          child: isLoading == true
-              ? Center(
-                  child: Container(
-                  padding: const EdgeInsets.all(5),
-                  width: 90,
-                  height: 90,
-                  child: Lottie.asset("loadingJSON/loadingV1.json"),
-                ))
-              : SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Container(
-                      padding: EdgeInsets.only(left: 5),
-                      child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(height: 20),
-                            //? BARIS 1
-                            SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Container(
-                                    color: Colors.grey.shade200,
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          'SUMMARY SUSUT ARTIS PASANG BATU',
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        _dataTable(),
-                                      ],
-                                    ))),
-                            SizedBox(height: 20),
+        siklusDesigner.isEmpty
+            ? Center(
+                child: Column(
+                children: [
+                  SizedBox(
+                    width: 250,
+                    height: 210,
+                    child: Lottie.asset("loadingJSON/selectDate.json"),
+                  ),
+                  const Text(
+                    'Pilih siklus terlebih dahulu',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontSize: 26,
+                        color: Colors.blueGrey,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Acne',
+                        letterSpacing: 1.5),
+                  ),
+                ],
+              ))
+            : isLoading == true
+                ? Expanded(
+                    child: Center(
+                      child: Container(
+                        padding: const EdgeInsets.all(5),
+                        width: 90,
+                        height: 90,
+                        child: Lottie.asset("loadingJSON/loadingV1.json"),
+                      ),
+                    ),
+                  )
+                : Expanded(
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Container(
+                          padding: EdgeInsets.only(left: 5),
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(height: 20),
+                                //? BARIS 1
+                                SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: Container(
+                                        color: Colors.grey.shade200,
+                                        child: Column(
+                                          children: [
+                                            Text(
+                                              'SUMMARY SUSUT ARTIS PASANG BATU',
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            _dataTable(),
+                                          ],
+                                        ))),
+                                SizedBox(height: 20),
 
-                            // //? BARIS 2
-                            SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Container(
-                                    color: Colors.grey.shade200,
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          'PECAH BATU',
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        _dataTablePecahHilang(),
-                                      ],
-                                    ))),
-                            SizedBox(height: 20),
+                                // //? BARIS 2
+                                SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: Container(
+                                        color: Colors.grey.shade200,
+                                        child: Column(
+                                          children: [
+                                            Text(
+                                              'PECAH BATU',
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            _dataTablePecahHilang(),
+                                          ],
+                                        ))),
+                                SizedBox(height: 20),
 
-                            //? BARIS 3
-                            SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Container(
-                                    color: Colors.grey.shade200,
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          'HILANG BATU',
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        _dataTablePecahHilang()
-                                      ],
-                                    ))),
-                            SizedBox(height: 20),
-                          ]),
+                                //? BARIS 3
+                                SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: Container(
+                                        color: Colors.grey.shade200,
+                                        child: Column(
+                                          children: [
+                                            Text(
+                                              'HILANG BATU',
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            _dataTablePecahHilang()
+                                          ],
+                                        ))),
+                                SizedBox(height: 20),
+                              ]),
+                        ),
+                      ),
                     ),
                   ),
-                ),
-        ),
       ],
     );
   }

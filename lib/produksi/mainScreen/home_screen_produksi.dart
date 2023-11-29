@@ -41,7 +41,32 @@ class _HomeScreenProduksiState extends State<HomeScreenProduksi> {
   TooltipBehavior? _tooltipBehavior;
   List<ChartData>? chartData;
   List<ChartData>? chartDataLevel2;
+  List<ChartData>? chartDataLevel2SeeMore;
   List<ChartData>? chartDataLevel3;
+  List<ChartData>? chartDataLevel4;
+  List<ChartData>? chartDataLevel5;
+  //!jalur double tap
+  List<ChartData>? chartDataLevel3B;
+
+  List<String> artist = [
+    'Asrori',
+    'Budi Lesmana',
+    'Carkiyad',
+    'Dikdik Maulana',
+    'Encup Supriatna',
+    'Fachri Santosa',
+    'Khoerul Anwar',
+    'Muhammad Abdul Kodir',
+    'Muhammad Deeko',
+  ];
+  List<String> divisi = [
+    'Finishing',
+    'Polishing',
+    'Stell Rangka',
+    'Pasang Batu',
+    'Brj',
+  ];
+
   int indexLevel = 1;
   String titleLevel2 = '';
   int janRelease = 0;
@@ -99,9 +124,9 @@ class _HomeScreenProduksiState extends State<HomeScreenProduksi> {
     mayBrj = 130;
     junBrj = 180;
     julBrj = 150;
-    augBrj = 160;
+    augBrj = 100;
     sepBrj = 200;
-    octBrj = 189;
+    octBrj = 109;
     novBrj = 185;
     decBrj = 200;
 
@@ -164,27 +189,67 @@ class _HomeScreenProduksiState extends State<HomeScreenProduksi> {
     ];
 
     chartDataLevel2 = <ChartData>[
-      ChartData(xValue: 'Bangle', yValue: 5, secondSeriesYValue: 7),
-      ChartData(xValue: 'Bracelet', yValue: 7, secondSeriesYValue: 7),
-      ChartData(xValue: 'Brooch', yValue: 1, secondSeriesYValue: 1),
-      ChartData(xValue: 'Earings', yValue: 50, secondSeriesYValue: 77),
-      ChartData(xValue: 'Men Ring', yValue: 1, secondSeriesYValue: 1),
-      ChartData(xValue: 'Necklace', yValue: 18, secondSeriesYValue: 22),
-      ChartData(xValue: 'Pendant', yValue: 47, secondSeriesYValue: 47),
-      ChartData(xValue: 'Ring', yValue: 150, secondSeriesYValue: 169),
-      ChartData(xValue: 'SET', yValue: 3, secondSeriesYValue: 3),
-      ChartData(xValue: 'Wedding Ring', yValue: 3, secondSeriesYValue: 3),
+      ChartData(xValue: 'Week 1', yValue: 50, secondSeriesYValue: 50),
+      ChartData(xValue: 'Week 2', yValue: 80, secondSeriesYValue: 90),
+      ChartData(xValue: 'Week 3', yValue: 0, secondSeriesYValue: 70),
+      ChartData(xValue: 'Week 4', yValue: 0, secondSeriesYValue: 40),
     ];
 
     chartDataLevel3 = <ChartData>[
-      // ChartData(xValue: 'Week 1', yValue: 5, secondSeriesYValue: 7),
-      // ChartData(xValue: 'Week 2', yValue: 7, secondSeriesYValue: 7),
-      // ChartData(xValue: 'Week 3', yValue: 1, secondSeriesYValue: 1),
-      // ChartData(xValue: 'Week 4', yValue: 50, secondSeriesYValue: 77),
-      ChartData(x: 'Week 1', y: 7, secondSeriesYValue: 7),
-      ChartData(x: 'Week 2', y: 10, secondSeriesYValue: 15),
-      ChartData(x: 'Week 3', y: 4, secondSeriesYValue: 4),
-      ChartData(x: 'Week 4', y: 70, secondSeriesYValue: 80),
+      ChartData(xValue: divisi[0], yValue: 80),
+      ChartData(xValue: divisi[1], yValue: 0),
+      ChartData(xValue: divisi[2], yValue: 0),
+      ChartData(xValue: divisi[3], yValue: 0),
+      ChartData(xValue: divisi[4], yValue: 0),
+    ];
+
+    chartDataLevel4 = <ChartData>[
+      // for (var i = 0; i < artist.length; i++)
+      ChartData(xValue: artist[0], yValue: 10),
+      ChartData(xValue: artist[1], yValue: 15),
+      ChartData(xValue: artist[2], yValue: 5),
+      ChartData(xValue: artist[3], yValue: 15),
+      ChartData(xValue: artist[4], yValue: 10),
+      ChartData(xValue: artist[5], yValue: 20),
+      ChartData(xValue: artist[6], yValue: 5),
+      ChartData(xValue: artist[7], yValue: 10),
+      ChartData(xValue: artist[8], yValue: 20),
+    ];
+
+    chartDataLevel5 = <ChartData>[
+      ChartData(xValue: 'Bangle', yValue: 1),
+      ChartData(xValue: 'Bracelet', yValue: 5),
+      ChartData(xValue: 'Brooch', yValue: 2),
+      ChartData(xValue: 'Earings', yValue: 2),
+      ChartData(xValue: 'Men Ring', yValue: 1),
+      ChartData(xValue: 'Necklace', yValue: 10),
+      ChartData(xValue: 'Pendant', yValue: 3),
+      ChartData(xValue: 'Ring', yValue: 7),
+      ChartData(xValue: 'SET', yValue: 2),
+      ChartData(xValue: 'Wedding Ring', yValue: 8),
+    ];
+
+    chartDataLevel3B = <ChartData>[
+      ChartData(xValue: 'Bangle', yValue: 10, secondSeriesYValue: 20),
+      ChartData(xValue: 'Bracelet', yValue: 15, secondSeriesYValue: 15),
+      ChartData(xValue: 'Brooch', yValue: 24, secondSeriesYValue: 24),
+      ChartData(xValue: 'Earings', yValue: 15, secondSeriesYValue: 20),
+      ChartData(xValue: 'Men Ring', yValue: 18, secondSeriesYValue: 25),
+      ChartData(xValue: 'Necklace', yValue: 10, secondSeriesYValue: 16),
+      ChartData(xValue: 'Pendant', yValue: 13, secondSeriesYValue: 13),
+      ChartData(xValue: 'Ring', yValue: 17, secondSeriesYValue: 20),
+      ChartData(xValue: 'SET', yValue: 21, secondSeriesYValue: 21),
+      ChartData(xValue: 'Wedding Ring', yValue: 18, secondSeriesYValue: 20),
+    ];
+
+    //! jalur see More
+    chartDataLevel2SeeMore = <ChartData>[
+      ChartData(xValue: 'Bulan Lalu', yValue: 25, secondSeriesYValue: 50),
+      ChartData(xValue: 'Bulan Ini', yValue: 47, secondSeriesYValue: 47),
+      ChartData(
+          xValue: 'Bulan Yang Akan Datang',
+          yValue: 100,
+          secondSeriesYValue: 100),
     ];
   }
 
@@ -214,138 +279,6 @@ class _HomeScreenProduksiState extends State<HomeScreenProduksi> {
               automaticallyImplyLeading: false,
               backgroundColor: Colors.white,
               leadingWidth: 320,
-              // leading: Row(
-              //   children: [
-              //     Padding(
-              //       padding: const EdgeInsets.all(8.0),
-              //       child: Text(
-              //         "Siklus Saat Ini : $nowSiklus",
-              //         style: const TextStyle(fontSize: 20, color: Colors.black),
-              //       ),
-              //     ),
-              //     InkWell(
-              //       onTap: () {
-              //         final dropdownFormKey = GlobalKey<FormState>();
-              //         showDialog(
-              //             context: context,
-              //             builder: (BuildContext context) {
-              //               return AlertDialog(
-              //                 shape: RoundedRectangleBorder(
-              //                     borderRadius: BorderRadius.circular(8)),
-              //                 // title: const Text('Pilih Siklus'),
-              //                 content: SizedBox(
-              //                   height: 150,
-              //                   child: Column(
-              //                     children: [
-              //                       Form(
-              //                           key: dropdownFormKey,
-              //                           child: Column(
-              //                             mainAxisAlignment:
-              //                                 MainAxisAlignment.center,
-              //                             children: [
-              //                               DropdownSearch<String>(
-              //                                 items: const [
-              //                                   "JANUARI",
-              //                                   "FEBRUARI",
-              //                                   "MARET",
-              //                                   "APRIL",
-              //                                   "MEI",
-              //                                   "JUNI",
-              //                                   "JULI",
-              //                                   "AGUSTUS",
-              //                                   "SEPTEMBER",
-              //                                   "OKTOBER",
-              //                                   "NOVEMBER",
-              //                                   "DESEMBER"
-              //                                 ],
-              //                                 dropdownDecoratorProps:
-              //                                     DropDownDecoratorProps(
-              //                                   dropdownSearchDecoration:
-              //                                       InputDecoration(
-              //                                     hintText: 'Pilih Siklus',
-              //                                     filled: true,
-              //                                     fillColor: Colors.black,
-              //                                     enabledBorder:
-              //                                         OutlineInputBorder(
-              //                                       borderSide:
-              //                                           const BorderSide(
-              //                                               color: Colors.black,
-              //                                               width: 2),
-              //                                       borderRadius:
-              //                                           BorderRadius.circular(
-              //                                               20),
-              //                                     ),
-              //                                   ),
-              //                                 ),
-              //                                 validator: (value) => value ==
-              //                                         null
-              //                                     ? "Siklus tidak boleh kosong"
-              //                                     : null,
-              //                                 onChanged: (String? newValue) {
-              //                                   addSiklus.text = newValue!;
-              //                                 },
-              //                               ),
-              //                               Container(
-              //                                 padding: const EdgeInsets.only(
-              //                                     top: 20),
-              //                                 child: ElevatedButton(
-              //                                     onPressed: () async {
-              //                                       if (dropdownFormKey
-              //                                           .currentState!
-              //                                           .validate()) {
-              //                                         //? method untuk mengganti siklus
-              //                                         // await postSiklus();
-              //                                         Navigator.pop(context);
-              //                                         // Navigator.push(
-              //                                         //     context,
-              //                                         //     MaterialPageRoute(
-              //                                         //         builder:
-              //                                         //             (c) =>
-              //                                         //                 const MainView()));
-
-              //                                         showDialog<String>(
-              //                                             context: context,
-              //                                             builder: (BuildContext
-              //                                                     context) =>
-              //                                                 const AlertDialog(
-              //                                                   title: Text(
-              //                                                     'Siklus Berhasil Diterapkan',
-              //                                                   ),
-              //                                                 ));
-              //                                         setState(() {
-              //                                           nowSiklus =
-              //                                               addSiklus.text;
-              //                                           sharedPreferences!
-              //                                               .setString(
-              //                                                   'siklusProduksi',
-              //                                                   addSiklus.text);
-              //                                         });
-              //                                       }
-              //                                     },
-              //                                     child: const Text(
-              //                                       "Submit",
-              //                                       style: TextStyle(
-              //                                         fontSize: 24,
-              //                                       ),
-              //                                     )),
-              //                               )
-              //                             ],
-              //                           ))
-              //                     ],
-              //                   ),
-              //                 ),
-              //               );
-              //             });
-              //       },
-              //       child: SizedBox(
-              //         width: 40,
-              //         height: 40,
-              //         child: Lottie.asset("loadingJSON/icon_edit_black.json",
-              //             fit: BoxFit.cover),
-              //       ),
-              //     )
-              //   ],
-              // ),
               elevation: 0,
             ),
             body:
@@ -395,39 +328,75 @@ class _HomeScreenProduksiState extends State<HomeScreenProduksi> {
             decoration: BoxDecoration(
               border: Border.all(width: 5, color: colorDasar),
             ),
-            child: indexLevel == 3
-                ? chartLevel3()
-                : indexLevel == 2
-                    ? chartLevel2()
-                    : chartLevel1()),
+            child: indexLevel == 13
+                ? chartLevel3B()
+                : indexLevel == 203
+                    ? chartLevel3()
+                    : indexLevel == 102
+                        ? chartLevel2SeeMore()
+                        : indexLevel == 5
+                            ? chartLevel5()
+                            : indexLevel == 4
+                                ? chartLevel4()
+                                : indexLevel == 3
+                                    ? chartLevel3()
+                                    : indexLevel == 2
+                                        ? chartLevel2()
+                                        : chartLevel1()),
         SizedBox(height: 10),
+        // Container(
+        //     padding: const EdgeInsets.all(5),
+        //     decoration: BoxDecoration(
+        //       border: Border.all(width: 5, color: colorDasar),
+        //     ),
+        //     child: chartLevel2())
       ],
     );
   }
 
   chartLevel1() {
-    return Container(
-        child: SfCartesianChart(
-      title: ChartTitle(text: 'SPK RELEASE vs SPK BRJ - 2024'),
-      plotAreaBorderWidth: 0,
-      legend: Legend(isVisible: true, position: LegendPosition.top),
+    return Stack(clipBehavior: Clip.none, children: [
+      Container(
+          child: Center(
+              child: Container(
+                  child: SfCartesianChart(
+        title: ChartTitle(text: 'SPK RELEASE vs SPK BRJ - 2024'),
+        plotAreaBorderWidth: 0,
+        legend: Legend(isVisible: true, position: LegendPosition.top),
 
-      //! X axis as numeric axis placed here. BAWAH
-      primaryXAxis: CategoryAxis(
-          axisLine: const AxisLine(width: 0),
-          title: AxisTitle(text: 'Bulan'),
-          majorGridLines: const MajorGridLines(width: 0),
-          majorTickLines: const MajorTickLines(size: 0)),
+        //! X axis as numeric axis placed here. BAWAH
+        primaryXAxis: CategoryAxis(
+            labelStyle:
+                TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+            axisLine: const AxisLine(width: 0),
+            // title: AxisTitle(text: 'Bulan'),
+            majorGridLines: const MajorGridLines(width: 0),
+            majorTickLines: const MajorTickLines(size: 0)),
 
-      //? Y axis as numeric axis placed here. ATAS
-      primaryYAxis: NumericAxis(
-          labelFormat: '{value}',
-          title: AxisTitle(text: 'Total'),
-          axisLine: const AxisLine(width: 0),
-          majorTickLines: const MajorTickLines(size: 0)),
-      series: getDataLevel1(),
-      tooltipBehavior: _tooltipBehavior,
-    ));
+        //? Y axis as numeric axis placed here. ATAS
+        primaryYAxis: NumericAxis(
+            labelFormat: '{value}',
+            title: AxisTitle(text: 'Total'),
+            axisLine: const AxisLine(width: 0),
+            majorTickLines: const MajorTickLines(size: 0)),
+        series: getDataLevel1(),
+        tooltipBehavior: _tooltipBehavior,
+      )))),
+      Positioned(
+        right: 2.0,
+        top: -40.0,
+        child: InkWell(
+          onTap: () {
+            _onTapLevelGoSeeMore('see more');
+          },
+          child: SizedBox(
+            width: 130,
+            height: 130,
+            child: Lottie.asset("loadingJSON/seeMore.json", fit: BoxFit.cover),
+          ),
+        ),
+      ),
+    ]);
   }
 
   chartLevel2() {
@@ -436,25 +405,27 @@ class _HomeScreenProduksiState extends State<HomeScreenProduksi> {
           child: Center(
               child: Container(
                   child: SfCartesianChart(
+        title: ChartTitle(text: 'PLANNING vs ACTUAL - $titleLevel2'),
+        plotAreaBorderWidth: 0,
+        legend: Legend(isVisible: true, position: LegendPosition.top),
+
         //! X axis as numeric axis placed here. BAWAH
         primaryXAxis: CategoryAxis(
+            labelStyle:
+                TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
             axisLine: const AxisLine(width: 0),
-            title: AxisTitle(text: 'Jenis Barang'),
+            // title: AxisTitle(text: 'Minggu'),
             majorGridLines: const MajorGridLines(width: 0),
             majorTickLines: const MajorTickLines(size: 0)),
+
         //? Y axis as numeric axis placed here. ATAS
         primaryYAxis: NumericAxis(
             labelFormat: '{value}',
-            title: AxisTitle(text: 'Qty'),
+            title: AxisTitle(text: 'Total'),
             axisLine: const AxisLine(width: 0),
             majorTickLines: const MajorTickLines(size: 0)),
-        // Chart title
-        title: ChartTitle(text: 'SPK RELEASE vs SPK BRJ - $titleLevel2'),
-        // Enable legend
-        legend: Legend(isVisible: true, position: LegendPosition.top),
-        // Enable tooltip
-        tooltipBehavior: _tooltipBehavior,
         series: getDataLevel2(),
+        tooltipBehavior: _tooltipBehavior,
       )))),
       Positioned(
         left: 2.0,
@@ -479,43 +450,26 @@ class _HomeScreenProduksiState extends State<HomeScreenProduksi> {
           child: Center(
               child: Container(
                   child: SfCartesianChart(
-        // axes: <ChartAxis>[
-        //   NumericAxis(
-        //       opposedPosition: true,
-        //       name: 'yAxis1',
-        //       majorGridLines: const MajorGridLines(width: 0),
-        //       labelFormat: '{value}°F',
-        //       minimum: 40,
-        //       maximum: 100,
-        //       interval: 10)
-        // ],
-        primaryXAxis:
-            CategoryAxis(majorGridLines: const MajorGridLines(width: 0)),
+        title: ChartTitle(text: 'DIVISI - $titleLevel2'),
+        plotAreaBorderWidth: 0,
+        legend: Legend(isVisible: true, position: LegendPosition.top),
+
+        //! X axis as numeric axis placed here. BAWAH
+        primaryXAxis: CategoryAxis(
+            labelStyle:
+                TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+            axisLine: const AxisLine(width: 0),
+            majorGridLines: const MajorGridLines(width: 0),
+            majorTickLines: const MajorTickLines(size: 0)),
+
+        //? Y axis as numeric axis placed here. ATAS
         primaryYAxis: NumericAxis(
-          majorGridLines: const MajorGridLines(width: 0),
-          opposedPosition: false,
-          labelFormat: '{value}',
-        ),
-        // Chart title
-        title: ChartTitle(text: 'SPK RELEASE vs SPK BRJ - $titleLevel2'),
-        // Enable legend
-        legend: Legend(isVisible: true),
-        // Enable tooltip
-        tooltipBehavior: _tooltipBehavior,
+            labelFormat: '{value}',
+            title: AxisTitle(text: 'Total'),
+            axisLine: const AxisLine(width: 0),
+            majorTickLines: const MajorTickLines(size: 0)),
         series: getDataLevel3(),
-        //           series: <LineSeries<SalesData, String>>[
-        // LineSeries<SalesData, String>(
-        //     dataSource: <SalesData>[
-        //       SalesData('Week 1', 50),
-        //       SalesData('Week 2', 38),
-        //       SalesData('Week 3', 70),
-        //       SalesData('Week 4', 20),
-        //     ],
-        //     xValueMapper: (SalesData sales, _) => sales.year,
-        //     yValueMapper: (SalesData sales, _) => sales.sales,
-        //     // Enable data label
-        //     dataLabelSettings: DataLabelSettings(isVisible: true))
-        // ]
+        tooltipBehavior: _tooltipBehavior,
       )))),
       Positioned(
         left: 2.0,
@@ -523,6 +477,244 @@ class _HomeScreenProduksiState extends State<HomeScreenProduksi> {
         child: InkResponse(
           onTap: () {
             _onTapLevelBack('');
+          },
+          child: Transform.scale(
+            scale: 1.5,
+            child:
+                Lottie.asset("loadingJSON/backbutton.json", fit: BoxFit.cover),
+          ),
+        ),
+      ),
+    ]);
+  }
+
+  chartLevel4() {
+    return Stack(clipBehavior: Clip.none, children: [
+      Container(
+          child: Center(
+              child: Container(
+                  child: SfCartesianChart(
+        title: ChartTitle(text: 'Artist - $titleLevel2'),
+        plotAreaBorderWidth: 0,
+        legend: Legend(isVisible: true, position: LegendPosition.top),
+
+        //! X axis as numeric axis placed here. BAWAH
+        primaryXAxis: CategoryAxis(
+            labelStyle:
+                TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+            axisLine: const AxisLine(width: 0),
+            majorGridLines: const MajorGridLines(width: 0),
+            majorTickLines: const MajorTickLines(size: 0)),
+
+        //? Y axis as numeric axis placed here. ATAS
+        primaryYAxis: NumericAxis(
+            labelFormat: '{value}',
+            title: AxisTitle(text: 'Total'),
+            axisLine: const AxisLine(width: 0),
+            majorTickLines: const MajorTickLines(size: 0)),
+        series: getDataLevel4(),
+        tooltipBehavior: _tooltipBehavior,
+      )))),
+      Positioned(
+        left: 2.0,
+        top: -2.0,
+        child: InkResponse(
+          onTap: () {
+            _onTapLevelBack('');
+          },
+          child: Transform.scale(
+            scale: 1.5,
+            child:
+                Lottie.asset("loadingJSON/backbutton.json", fit: BoxFit.cover),
+          ),
+        ),
+      ),
+    ]);
+  }
+
+  chartLevel5() {
+    return Stack(clipBehavior: Clip.none, children: [
+      Container(
+          child: Center(
+              child: Container(
+                  child: SfCartesianChart(
+        title: ChartTitle(text: 'Jenis Barang - $titleLevel2'),
+        plotAreaBorderWidth: 0,
+        legend: Legend(isVisible: true, position: LegendPosition.top),
+
+        //! X axis as numeric axis placed here. BAWAH
+        primaryXAxis: CategoryAxis(
+            labelStyle:
+                TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+            axisLine: const AxisLine(width: 0),
+            majorGridLines: const MajorGridLines(width: 0),
+            majorTickLines: const MajorTickLines(size: 0)),
+
+        //? Y axis as numeric axis placed here. ATAS
+        primaryYAxis: NumericAxis(
+            labelFormat: '{value}',
+            title: AxisTitle(text: 'Total'),
+            axisLine: const AxisLine(width: 0),
+            majorTickLines: const MajorTickLines(size: 0)),
+        series: getDataLevel5(),
+        tooltipBehavior: _tooltipBehavior,
+      )))),
+      Positioned(
+        left: 2.0,
+        top: -2.0,
+        child: InkResponse(
+          onTap: () {
+            _onTapLevelBack('');
+          },
+          child: Transform.scale(
+            scale: 1.5,
+            child:
+                Lottie.asset("loadingJSON/backbutton.json", fit: BoxFit.cover),
+          ),
+        ),
+      ),
+    ]);
+  }
+
+  //! jalur double klik
+  chartLevel3B() {
+    return Stack(clipBehavior: Clip.none, children: [
+      Container(
+          child: Center(
+              child: Container(
+                  child: SfCartesianChart(
+        title: ChartTitle(text: 'Jenis Barang - $titleLevel2'),
+        plotAreaBorderWidth: 0,
+        legend: Legend(isVisible: true, position: LegendPosition.top),
+
+        //! X axis as numeric axis placed here. BAWAH
+        primaryXAxis: CategoryAxis(
+            labelStyle:
+                TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+            axisLine: const AxisLine(width: 0),
+            majorGridLines: const MajorGridLines(width: 0),
+            majorTickLines: const MajorTickLines(size: 0)),
+
+        //? Y axis as numeric axis placed here. ATAS
+        primaryYAxis: NumericAxis(
+            labelFormat: '{value}',
+            title: AxisTitle(text: 'Total'),
+            axisLine: const AxisLine(width: 0),
+            majorTickLines: const MajorTickLines(size: 0)),
+        series: getDataLevel3B(),
+        tooltipBehavior: _tooltipBehavior,
+      )))),
+      Positioned(
+        left: 2.0,
+        top: -2.0,
+        child: InkResponse(
+          onTap: () {
+            _onDoubleTapLevelBack('');
+          },
+          child: Transform.scale(
+            scale: 1.5,
+            child:
+                Lottie.asset("loadingJSON/backbutton.json", fit: BoxFit.cover),
+          ),
+        ),
+      ),
+    ]);
+  }
+
+  // chartLevel3() {
+  //   return Stack(clipBehavior: Clip.none, children: [
+  //     Container(
+  //         child: Center(
+  //             child: Container(
+  //                 child: SfCartesianChart(
+  //       // axes: <ChartAxis>[
+  //       //   NumericAxis(
+  //       //       opposedPosition: true,
+  //       //       name: 'yAxis1',
+  //       //       majorGridLines: const MajorGridLines(width: 0),
+  //       //       labelFormat: '{value}°F',
+  //       //       minimum: 40,
+  //       //       maximum: 100,
+  //       //       interval: 10)
+  //       // ],
+  //       primaryXAxis:
+  //           CategoryAxis(majorGridLines: const MajorGridLines(width: 0)),
+  //       primaryYAxis: NumericAxis(
+  //         majorGridLines: const MajorGridLines(width: 0),
+  //         opposedPosition: false,
+  //         labelFormat: '{value}',
+  //       ),
+  //       // Chart title
+  //       title: ChartTitle(text: 'SPK RELEASE vs SPK BRJ - $titleLevel2'),
+  //       // Enable legend
+  //       legend: Legend(isVisible: true),
+  //       // Enable tooltip
+  //       tooltipBehavior: _tooltipBehavior,
+  //       series: getDataLevel3(),
+  //       //           series: <LineSeries<SalesData, String>>[
+  //       // LineSeries<SalesData, String>(
+  //       //     dataSource: <SalesData>[
+  //       //       SalesData('Week 1', 50),
+  //       //       SalesData('Week 2', 38),
+  //       //       SalesData('Week 3', 70),
+  //       //       SalesData('Week 4', 20),
+  //       //     ],
+  //       //     xValueMapper: (SalesData sales, _) => sales.year,
+  //       //     yValueMapper: (SalesData sales, _) => sales.sales,
+  //       //     // Enable data label
+  //       //     dataLabelSettings: DataLabelSettings(isVisible: true))
+  //       // ]
+  //     )))),
+  //     Positioned(
+  //       left: 2.0,
+  //       top: -2.0,
+  //       child: InkResponse(
+  //         onTap: () {
+  //           _onTapLevelBack('');
+  //         },
+  //         child: Transform.scale(
+  //           scale: 1.5,
+  //           child:
+  //               Lottie.asset("loadingJSON/backbutton.json", fit: BoxFit.cover),
+  //         ),
+  //       ),
+  //     ),
+  //   ]);
+  // }
+
+  //! jalur See More
+  chartLevel2SeeMore() {
+    return Stack(clipBehavior: Clip.none, children: [
+      Container(
+          child: Center(
+              child: Container(
+                  child: SfCartesianChart(
+        //! X axis as numeric axis placed here. BAWAH
+        primaryXAxis: CategoryAxis(
+            axisLine: const AxisLine(width: 0),
+            title: AxisTitle(text: 'Bulan'),
+            majorGridLines: const MajorGridLines(width: 0),
+            majorTickLines: const MajorTickLines(size: 0)),
+        //? Y axis as numeric axis placed here. ATAS
+        primaryYAxis: NumericAxis(
+            labelFormat: '{value}',
+            title: AxisTitle(text: 'Qty'),
+            axisLine: const AxisLine(width: 0),
+            majorTickLines: const MajorTickLines(size: 0)),
+        // Chart title
+        title: ChartTitle(text: 'SPK RELEASE vs SPK BRJ'),
+        // Enable legend
+        legend: Legend(isVisible: true, position: LegendPosition.top),
+        // Enable tooltip
+        tooltipBehavior: _tooltipBehavior,
+        series: getDataLevel2SeeMore(),
+      )))),
+      Positioned(
+        left: 2.0,
+        top: -2.0,
+        child: InkResponse(
+          onTap: () {
+            _onTapLevelBackSeeMore('');
           },
           child: Transform.scale(
             scale: 1.5,
@@ -545,16 +737,38 @@ class _HomeScreenProduksiState extends State<HomeScreenProduksi> {
     print(response.body);
   }
 
-  // void _onTapLevel2(siklus) {
-  //   titleLevel2 = siklus.toString();
-  //   setState(() {
-  //     indexLevel = 2;
-  //   });
-  // }
   void _onTapLevelGo(siklus) {
     titleLevel2 = siklus.toString();
     setState(() {
       indexLevel += 1;
+    });
+  }
+
+  void _onDoubleTapLevelGo(siklus) {
+    titleLevel2 = siklus.toString();
+    setState(() {
+      indexLevel += 11;
+    });
+  }
+
+  void _onDoubleTapLevelBack(siklus) {
+    titleLevel2 = siklus.toString();
+    setState(() {
+      indexLevel -= 11;
+    });
+  }
+
+  void _onTapLevelGoSeeMore(siklus) {
+    titleLevel2 = siklus.toString();
+    setState(() {
+      indexLevel += 101;
+    });
+  }
+
+  void _onTapLevelBackSeeMore(siklus) {
+    titleLevel2 = siklus.toString();
+    setState(() {
+      indexLevel -= 101;
     });
   }
 
@@ -576,6 +790,7 @@ class _HomeScreenProduksiState extends State<HomeScreenProduksi> {
         dataSource: chartData!,
         color: const Color.fromRGBO(237, 221, 76, 1),
         name: 'RELEASE',
+        width: 0.8,
         xValueMapper: (ChartData sales, _) => sales.xValue,
         yValueMapper: (ChartData sales, _) => sales.secondSeriesYValue,
         onPointTap: (event) {
@@ -587,11 +802,10 @@ class _HomeScreenProduksiState extends State<HomeScreenProduksi> {
           //   duration: const Duration(seconds: 1),
           // );
         },
-        width: 0.8,
         //? custom diagram batang
-        onCreateRenderer: (ChartSeries<ChartData, dynamic> series) {
-          return _CustomColumnSeriesRenderer();
-        },
+        // onCreateRenderer: (ChartSeries<ChartData, dynamic> series) {
+        //   return _CustomColumnSeriesRenderer();
+        // },
       ),
 
       ///? second series named "BRJ".
@@ -605,19 +819,10 @@ class _HomeScreenProduksiState extends State<HomeScreenProduksi> {
         xValueMapper: (ChartData sales, _) => sales.xValue,
         yValueMapper: (ChartData sales, _) => sales.yValue,
         name: 'BRJ',
+        width: 0.8,
         onPointTap: (event) {
           var i = event.dataPoints![event.pointIndex!].x;
           _onTapLevelGo(i);
-          // showSimpleNotification(
-          //   Text('tap BRJ oke $i'),
-          //   background: Colors.green,
-          //   duration: const Duration(seconds: 1),
-          // );
-        },
-        width: 0.8,
-        //? custom diagram batang
-        onCreateRenderer: (ChartSeries<ChartData, dynamic> series) {
-          return _CustomColumnSeriesRenderer();
         },
       ),
     ];
@@ -625,15 +830,15 @@ class _HomeScreenProduksiState extends State<HomeScreenProduksi> {
 
   List<ColumnSeries<ChartData, dynamic>> getDataLevel2() {
     return <ColumnSeries<ChartData, dynamic>>[
-      //! first series named "RELEASE".
-      ColumnSeries<ChartData, String>(
+      //! first series named "PLANNING".
+      ColumnSeries<ChartData, dynamic>(
         dataLabelSettings: const DataLabelSettings(
             isVisible: true,
             labelAlignment: ChartDataLabelAlignment
                 .middle), //? ini untuk label di dalam diagram
         dataSource: chartDataLevel2!,
         color: const Color.fromRGBO(237, 221, 76, 1),
-        name: 'RELEASE',
+        name: 'PLANNING',
         width: 0.8,
         xValueMapper: (ChartData sales, _) => sales.xValue,
         yValueMapper: (ChartData sales, _) => sales.secondSeriesYValue,
@@ -642,9 +847,206 @@ class _HomeScreenProduksiState extends State<HomeScreenProduksi> {
           var i = event.dataPoints![event.pointIndex!].x;
           _onTapLevelGo(i);
         },
-        //? custom diagram batang
-        onCreateRenderer: (ChartSeries<ChartData, dynamic> series) {
-          return _CustomColumnSeriesRenderer();
+        onPointDoubleTap: (event) {
+          var i = event.dataPoints![event.pointIndex!].x;
+          _onDoubleTapLevelGo(i);
+        },
+      ),
+
+      ///? second series named "ACTUAL".
+      ColumnSeries<ChartData, dynamic>(
+        dataLabelSettings: const DataLabelSettings(
+            isVisible: true,
+            labelAlignment: ChartDataLabelAlignment
+                .middle), //? ini untuk label di dalam diagram
+        dataSource: chartDataLevel2!,
+        color: const Color.fromRGBO(2, 109, 213, 1),
+        name: 'ACTUAL',
+        width: 0.8,
+        xValueMapper: (ChartData sales, _) => sales.xValue,
+        yValueMapper: (ChartData sales, _) => sales.yValue,
+        pointColorMapper: (ChartData sales, _) => sales.pointColor,
+        onPointTap: (event) {
+          var i = event.dataPoints![event.pointIndex!].x;
+          _onTapLevelGo(i);
+        },
+        onPointDoubleTap: (event) {
+          var i = event.dataPoints![event.pointIndex!].x;
+          _onDoubleTapLevelGo(i);
+        },
+      ),
+    ];
+  }
+
+  List<ColumnSeries<ChartData, dynamic>> getDataLevel3() {
+    return <ColumnSeries<ChartData, dynamic>>[
+      //! first series named "RELEASE".
+      ColumnSeries<ChartData, String>(
+        dataLabelSettings: const DataLabelSettings(
+            isVisible: true,
+            labelAlignment: ChartDataLabelAlignment
+                .middle), //? ini untuk label di dalam diagram
+        dataSource: chartDataLevel3!,
+        color: const Color.fromRGBO(237, 221, 76, 1),
+        name: '',
+        width: 0.8,
+        xValueMapper: (ChartData sales, _) => sales.xValue,
+        yValueMapper: (ChartData sales, _) => sales.yValue,
+        pointColorMapper: (ChartData sales, _) => sales.pointColor,
+        onPointTap: (event) {
+          var i = event.dataPoints![event.pointIndex!].x;
+          _onTapLevelGo(i);
+        },
+      ),
+    ];
+  }
+
+  List<ColumnSeries<ChartData, dynamic>> getDataLevel5() {
+    return <ColumnSeries<ChartData, dynamic>>[
+      //! first series named "RELEASE".
+      ColumnSeries<ChartData, String>(
+        dataLabelSettings: const DataLabelSettings(
+            isVisible: true,
+            labelAlignment: ChartDataLabelAlignment
+                .middle), //? ini untuk label di dalam diagram
+        dataSource: chartDataLevel5!,
+        color: const Color.fromRGBO(237, 221, 76, 1),
+        name: '',
+        width: 0.8,
+        xValueMapper: (ChartData sales, _) => sales.xValue,
+        yValueMapper: (ChartData sales, _) => sales.yValue,
+        pointColorMapper: (ChartData sales, _) => sales.pointColor,
+        onPointTap: (event) {
+          // var i = event.dataPoints![event.pointIndex!].x;
+          // _onTapLevelGo(i);
+        },
+      ),
+    ];
+  }
+
+  List<ColumnSeries<ChartData, dynamic>> getDataLevel4() {
+    return <ColumnSeries<ChartData, dynamic>>[
+      //! first series named "ARTIST".
+      ColumnSeries<ChartData, String>(
+        dataLabelSettings: const DataLabelSettings(
+            isVisible: true,
+            labelAlignment: ChartDataLabelAlignment
+                .middle), //? ini untuk label di dalam diagram
+        dataSource: chartDataLevel4!,
+        color: const Color.fromRGBO(237, 221, 76, 1),
+        name: '',
+        xValueMapper: (ChartData sales, _) => sales.xValue,
+        yValueMapper: (ChartData sales, _) => sales.yValue,
+        onPointTap: (event) {
+          var i = event.dataPoints![event.pointIndex!].x;
+          _onTapLevelGo(i);
+        },
+      ),
+    ];
+  }
+
+  // List<ChartSeries<ChartData, String>> getDataLevel3() {
+  //   return <ChartSeries<ChartData, String>>[
+  //     //! first series named "RELEASE".
+  //     LineSeries<ChartData, String>(
+  //       dataSource: chartDataLevel3!,
+  //       yAxisName: 'yAxis1',
+  //       color: const Color.fromRGBO(237, 221, 76, 1),
+  //       name: 'RELEASE',
+  //       xValueMapper: (ChartData sales, _) => sales.x as String,
+  //       yValueMapper: (ChartData sales, _) => sales.secondSeriesYValue,
+  //       // onPointTap: (event) {
+  //       //   var i = event.dataPoints![event.pointIndex!].x;
+  //       //   _onTapLevelGo(i);
+  //       // },
+  //     ),
+
+  //     ///? second series named "BRJ".
+
+  //     ColumnSeries<ChartData, String>(
+  //       // dataLabelSettings: const DataLabelSettings(
+  //       //     isVisible: true,
+  //       //     labelAlignment: ChartDataLabelAlignment
+  //       //         .middle), //? ini untuk label di dalam diagram
+  //       dataSource: chartDataLevel3!,
+  //       color: const Color.fromRGBO(2, 109, 213, 1),
+  //       name: 'BRJ',
+  //       xValueMapper: (ChartData sales, _) => sales.x as String,
+  //       yValueMapper: (ChartData sales, _) => sales.y,
+
+  //       // onPointTap: (event) {
+  //       //   var i = event.dataPoints![event.pointIndex!].x;
+  //       //   _onTapLevelGo(i);
+  //       // },
+  //       // //? custom diagram batang
+  //       // onCreateRenderer: (ChartSeries<ChartData, dynamic> series) {
+  //       //   return _CustomColumnSeriesRenderer();
+  //       // },
+  //     ),
+  //   ];
+  // }
+
+  //! jalur double klik
+  List<ColumnSeries<ChartData, dynamic>> getDataLevel3B() {
+    return <ColumnSeries<ChartData, dynamic>>[
+      //! first series named "RELEASE".
+      ColumnSeries<ChartData, String>(
+        dataLabelSettings: const DataLabelSettings(
+            isVisible: true,
+            labelAlignment: ChartDataLabelAlignment
+                .middle), //? ini untuk label di dalam diagram
+        dataSource: chartDataLevel3B!,
+        color: const Color.fromRGBO(237, 221, 76, 1),
+        name: '',
+        width: 0.8,
+        xValueMapper: (ChartData sales, _) => sales.xValue,
+        yValueMapper: (ChartData sales, _) => sales.secondSeriesYValue,
+        pointColorMapper: (ChartData sales, _) => sales.pointColor,
+        onPointTap: (event) {
+          // var i = event.dataPoints![event.pointIndex!].x;
+          // _onTapLevelGo(i);
+        },
+      ),
+      //! first series named "RELEASE".
+      ColumnSeries<ChartData, String>(
+        dataLabelSettings: const DataLabelSettings(
+            isVisible: true,
+            labelAlignment: ChartDataLabelAlignment
+                .middle), //? ini untuk label di dalam diagram
+        dataSource: chartDataLevel3B!,
+        color: const Color.fromRGBO(2, 109, 213, 1),
+        name: '',
+        width: 0.8,
+        xValueMapper: (ChartData sales, _) => sales.xValue,
+        yValueMapper: (ChartData sales, _) => sales.yValue,
+        pointColorMapper: (ChartData sales, _) => sales.pointColor,
+        onPointTap: (event) {
+          // var i = event.dataPoints![event.pointIndex!].x;
+          // _onTapLevelGo(i);
+        },
+      ),
+    ];
+  }
+
+  //! jalur See more
+  List<ColumnSeries<ChartData, dynamic>> getDataLevel2SeeMore() {
+    return <ColumnSeries<ChartData, dynamic>>[
+      //! first series named "RELEASE".
+      ColumnSeries<ChartData, String>(
+        dataLabelSettings: const DataLabelSettings(
+            isVisible: true,
+            labelAlignment: ChartDataLabelAlignment
+                .middle), //? ini untuk label di dalam diagram
+        dataSource: chartDataLevel2SeeMore!,
+        color: const Color.fromRGBO(237, 221, 76, 1),
+        name: 'RELEASE',
+        width: 0.8,
+        xValueMapper: (ChartData sales, _) => sales.xValue,
+        yValueMapper: (ChartData sales, _) => sales.secondSeriesYValue,
+        pointColorMapper: (ChartData sales, _) => sales.pointColor,
+        onPointTap: (event) {
+          var i = event.dataPoints![event.pointIndex!].x;
+          _onTapLevelGoSeeMore(i);
         },
       ),
 
@@ -655,7 +1057,7 @@ class _HomeScreenProduksiState extends State<HomeScreenProduksi> {
             isVisible: true,
             labelAlignment: ChartDataLabelAlignment
                 .middle), //? ini untuk label di dalam diagram
-        dataSource: chartDataLevel2!,
+        dataSource: chartDataLevel2SeeMore!,
         color: const Color.fromRGBO(2, 109, 213, 1),
         name: 'BRJ',
         width: 0.8,
@@ -666,51 +1068,6 @@ class _HomeScreenProduksiState extends State<HomeScreenProduksi> {
           var i = event.dataPoints![event.pointIndex!].x;
           _onTapLevelGo(i);
         },
-        //? custom diagram batang
-        onCreateRenderer: (ChartSeries<ChartData, dynamic> series) {
-          return _CustomColumnSeriesRenderer();
-        },
-      ),
-    ];
-  }
-
-  List<ChartSeries<ChartData, String>> getDataLevel3() {
-    return <ChartSeries<ChartData, String>>[
-      //! first series named "RELEASE".
-      LineSeries<ChartData, String>(
-        dataSource: chartDataLevel3!,
-        yAxisName: 'yAxis1',
-        color: const Color.fromRGBO(237, 221, 76, 1),
-        name: 'RELEASE',
-        xValueMapper: (ChartData sales, _) => sales.x as String,
-        yValueMapper: (ChartData sales, _) => sales.secondSeriesYValue,
-        // onPointTap: (event) {
-        //   var i = event.dataPoints![event.pointIndex!].x;
-        //   _onTapLevelGo(i);
-        // },
-      ),
-
-      ///? second series named "BRJ".
-
-      ColumnSeries<ChartData, String>(
-        // dataLabelSettings: const DataLabelSettings(
-        //     isVisible: true,
-        //     labelAlignment: ChartDataLabelAlignment
-        //         .middle), //? ini untuk label di dalam diagram
-        dataSource: chartDataLevel3!,
-        color: const Color.fromRGBO(2, 109, 213, 1),
-        name: 'BRJ',
-        xValueMapper: (ChartData sales, _) => sales.x as String,
-        yValueMapper: (ChartData sales, _) => sales.y,
-
-        // onPointTap: (event) {
-        //   var i = event.dataPoints![event.pointIndex!].x;
-        //   _onTapLevelGo(i);
-        // },
-        // //? custom diagram batang
-        // onCreateRenderer: (ChartSeries<ChartData, dynamic> series) {
-        //   return _CustomColumnSeriesRenderer();
-        // },
       ),
     ];
   }

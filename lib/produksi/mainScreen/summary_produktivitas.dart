@@ -498,150 +498,175 @@ class _SummaryProduktivitasScreenState
   //! dashboard produksi
   dashboardProduksi() {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Container(
-          padding: const EdgeInsets.only(top: 26),
-          child: const Text(
-            'Summary Produktivitas',
-            style: TextStyle(
-                color: Colors.black, fontWeight: FontWeight.bold, fontSize: 26),
-          ),
-        ),
-        Container(
-          width: 350,
-          padding: const EdgeInsets.all(10.0),
-          child: DropdownSearch<String>(
-            items: const [
-              "JANUARI",
-              "FEBRUARI",
-              "MARET",
-              "APRIL",
-              "MEI",
-              "JUNI",
-              "JULI",
-              "AGUSTUS",
-              "SEPTEMBER",
-              "OKTOBER",
-              "NOVEMBER",
-              "DESEMBER"
-            ],
-            onChanged: (item) {
-              setState(() {
-                isLoadingJenisBarang = false;
-                siklus.text = item!;
-                siklusDesigner = siklus.text.toString();
-                // _getAllDataProduksi(
-                //     siklusDesigner, sharedPreferences!.getString('nama')!);
-              });
-              Future.delayed(const Duration(milliseconds: 500)).then((value) {
-                setState(() {
-                  isLoadingJenisBarang = true;
-                });
-              });
-            },
-            popupProps: const PopupPropsMultiSelection.modalBottomSheet(
-              showSelectedItems: true,
-              showSearchBox: true,
-            ),
-            dropdownDecoratorProps: const DropDownDecoratorProps(
-              textAlign: TextAlign.center,
-              baseStyle: TextStyle(
-                  fontSize: 16,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Container(
+            padding: const EdgeInsets.only(top: 26),
+            child: const Text(
+              'Summary Produktivitas',
+              style: TextStyle(
                   color: Colors.black,
-                  fontWeight: FontWeight.bold),
-              dropdownSearchDecoration: InputDecoration(
-                  labelText: "Pilih Siklus",
-                  floatingLabelAlignment: FloatingLabelAlignment.center,
-                  filled: true,
-                  fillColor: Colors.white,
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(12)))),
+                  fontWeight: FontWeight.bold,
+                  fontSize: 26),
             ),
           ),
-        ),
-        Expanded(
-          child: isLoading == true
+          Container(
+            width: 350,
+            padding: const EdgeInsets.all(10.0),
+            child: DropdownSearch<String>(
+              items: const [
+                "JANUARI",
+                "FEBRUARI",
+                "MARET",
+                "APRIL",
+                "MEI",
+                "JUNI",
+                "JULI",
+                "AGUSTUS",
+                "SEPTEMBER",
+                "OKTOBER",
+                "NOVEMBER",
+                "DESEMBER"
+              ],
+              onChanged: (item) {
+                setState(() {
+                  isLoadingJenisBarang = false;
+                  siklus.text = item!;
+                  siklusDesigner = siklus.text.toString();
+                  // _getAllDataProduksi(
+                  //     siklusDesigner, sharedPreferences!.getString('nama')!);
+                });
+                Future.delayed(const Duration(milliseconds: 500)).then((value) {
+                  setState(() {
+                    isLoadingJenisBarang = true;
+                  });
+                });
+              },
+              popupProps: const PopupPropsMultiSelection.modalBottomSheet(
+                showSelectedItems: true,
+                showSearchBox: true,
+              ),
+              dropdownDecoratorProps: const DropDownDecoratorProps(
+                textAlign: TextAlign.center,
+                baseStyle: TextStyle(
+                    fontSize: 16,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold),
+                dropdownSearchDecoration: InputDecoration(
+                    labelText: "Pilih Siklus",
+                    floatingLabelAlignment: FloatingLabelAlignment.center,
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(12)))),
+              ),
+            ),
+          ),
+          siklusDesigner.isEmpty
               ? Center(
-                  child: Container(
-                  padding: const EdgeInsets.all(5),
-                  width: 90,
-                  height: 90,
-                  child: Lottie.asset("loadingJSON/loadingV1.json"),
+                  child: Column(
+                  children: [
+                    SizedBox(
+                      width: 250,
+                      height: 210,
+                      child: Lottie.asset("loadingJSON/selectDate.json"),
+                    ),
+                    const Text(
+                      'Pilih siklus terlebih dahulu',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 26,
+                          color: Colors.blueGrey,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Acne',
+                          letterSpacing: 1.5),
+                    ),
+                  ],
                 ))
-              : SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Container(
-                      padding: EdgeInsets.only(left: 5),
-                      child: Column(
-                        children: [
-                          SizedBox(height: 20),
-                          //? BARIS 1
-                          SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Container(
-                                  color: Colors.grey.shade200,
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        'PRODUKTIVITAS',
-                                        style: TextStyle(
-                                            fontSize: 20,
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      _dataTablePendapatan(),
-                                    ],
-                                  ))),
-                          SizedBox(height: 20),
+              : isLoading == true
+                  ? Expanded(
+                      child: Center(
+                        child: Container(
+                          padding: const EdgeInsets.all(5),
+                          width: 90,
+                          height: 90,
+                          child: Lottie.asset("loadingJSON/loadingV1.json"),
+                        ),
+                      ),
+                    )
+                  : Expanded(
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Container(
+                            padding: EdgeInsets.only(left: 5),
+                            child: Column(
+                              children: [
+                                SizedBox(height: 20),
+                                //? BARIS 1
+                                SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: Container(
+                                        color: Colors.grey.shade200,
+                                        child: Column(
+                                          children: [
+                                            Text(
+                                              'PRODUKTIVITAS',
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            _dataTablePendapatan(),
+                                          ],
+                                        ))),
+                                SizedBox(height: 20),
 
-                          //? BARIS 2
-                          SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Container(
-                                  color: Colors.grey.shade200,
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        'BONUS',
-                                        style: TextStyle(
-                                            fontSize: 20,
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      _dataTablePendapatan(),
-                                    ],
-                                  ))),
-                          SizedBox(height: 20),
-                          //? BARIS 3
-                          SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Container(
-                                  color: Colors.grey.shade200,
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        'SUSUT',
-                                        style: TextStyle(
-                                            fontSize: 20,
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      _dataTablePendapatan(),
-                                    ],
-                                  ))),
-                          SizedBox(height: 20),
-                        ],
+                                //? BARIS 2
+                                SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: Container(
+                                        color: Colors.grey.shade200,
+                                        child: Column(
+                                          children: [
+                                            Text(
+                                              'BONUS',
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            _dataTablePendapatan(),
+                                          ],
+                                        ))),
+                                SizedBox(height: 20),
+                                //? BARIS 3
+                                SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: Container(
+                                        color: Colors.grey.shade200,
+                                        child: Column(
+                                          children: [
+                                            Text(
+                                              'SUSUT',
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            _dataTablePendapatan(),
+                                          ],
+                                        ))),
+                                SizedBox(height: 20),
+                              ],
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-        ),
-      ],
-    );
+        ]);
   }
 
   postSiklus() async {
@@ -713,364 +738,6 @@ class RowSource extends DataTableSource {
             padding: const EdgeInsets.all(0),
             child: Text(data.kredit.toString())),
       ),
-      // sharedPreferences!.getString('level') != '1'
-      //     ? const DataCell(SizedBox())
-      //     : DataCell(_verticalDivider),
-      // sharedPreferences!.getString('level') != '1'
-      //     ? const DataCell(SizedBox())
-      //     :
-      //     //Aksi
-      //     DataCell(Builder(builder: (context) {
-      //         return sharedPreferences!.getString('level') != '1'
-      //             ? const Row()
-      //             : Row(
-      //                 children: [
-      //                   IconButton(
-      //                     onPressed: () {
-      //                       showDialog<String>(
-      //                         context: context,
-      //                         builder: (BuildContext context) => AlertDialog(
-      //                           title: const Text(
-      //                             'Perhatian',
-      //                             textAlign: TextAlign.center,
-      //                             style: TextStyle(
-      //                                 color: Colors.black,
-      //                                 fontWeight: FontWeight.bold),
-      //                           ),
-      //                           content: Row(
-      //                             children: [
-      //                               const Text(
-      //                                 'Apakah anda yakin ingin menghapus data batu ',
-      //                               ),
-      //                               Text(
-      //                                 '${data.size}  ?',
-      //                                 style: const TextStyle(
-      //                                     fontWeight: FontWeight.bold,
-      //                                     color: Colors.black),
-      //                               ),
-      //                             ],
-      //                           ),
-      //                           actions: <Widget>[
-      //                             TextButton(
-      //                               onPressed: () => Navigator.pop(
-      //                                 context,
-      //                                 'Batal',
-      //                               ),
-      //                               child: const Text('Batal'),
-      //                             ),
-      //                             TextButton(
-      //                               onPressed: () async {
-      //                                 var id = data.id.toString();
-      //                                 Map<String, String> body = {'id': id};
-      //                                 final response = await http.post(
-      //                                     Uri.parse(ApiConstants.baseUrl +
-      //                                         ApiConstants.postDeleteBatuById),
-      //                                     body: body);
-      //                                 print(response.body);
-
-      //                                 Navigator.push(
-      //                                     context,
-      //                                     MaterialPageRoute(
-      //                                         builder: (c) =>
-      //                                             const MainViewBatu()));
-      //                                 showDialog<String>(
-      //                                     context: context,
-      //                                     builder: (BuildContext context) =>
-      //                                         const AlertDialog(
-      //                                           title: Text(
-      //                                             'Hapus Batu Berhasil',
-      //                                           ),
-      //                                         ));
-      //                               },
-      //                               child: const Text(
-      //                                 'Hapus',
-      //                                 style: TextStyle(color: Colors.red),
-      //                               ),
-      //                             ),
-      //                           ],
-      //                         ),
-      //                       );
-      //                     },
-      //                     icon: const Icon(
-      //                       Icons.delete,
-      //                       color: Colors.red,
-      //                     ),
-      //                   ),
-      //                   Padding(
-      //                     padding: const EdgeInsets.only(left: 25),
-      //                     child: IconButton(
-      //                       onPressed: () {
-      //                         showDialog(
-      //                             context: context,
-      //                             builder: (BuildContext context) {
-      //                               final _formKey = GlobalKey<FormState>();
-      //                               TextEditingController lot =
-      //                                   TextEditingController();
-      //                               TextEditingController size =
-      //                                   TextEditingController();
-      //                               TextEditingController parcel =
-      //                                   TextEditingController();
-      //                               TextEditingController qty =
-      //                                   TextEditingController();
-      //                               String id;
-
-      //                               id = data.id.toString();
-      //                               lot.text = data.lot;
-      //                               size.text = data.size;
-      //                               parcel.text = data.parcel;
-      //                               qty.text = data.qty.toString();
-      //                               RoundedLoadingButtonController
-      //                                   btnController =
-      //                                   RoundedLoadingButtonController();
-      //                               return AlertDialog(
-      //                                 content: Stack(
-      //                                   clipBehavior: Clip.none,
-      //                                   children: <Widget>[
-      //                                     Positioned(
-      //                                       right: -47.0,
-      //                                       top: -47.0,
-      //                                       child: InkResponse(
-      //                                         onTap: () {
-      //                                           Navigator.of(context).pop();
-      //                                         },
-      //                                         child: const CircleAvatar(
-      //                                           backgroundColor: Colors.red,
-      //                                           child: Icon(Icons.close),
-      //                                         ),
-      //                                       ),
-      //                                     ),
-      //                                     Form(
-      //                                       key: _formKey,
-      //                                       child: Column(
-      //                                         mainAxisSize: MainAxisSize.min,
-      //                                         children: <Widget>[
-      //                                           //lot
-      //                                           Padding(
-      //                                             padding:
-      //                                                 const EdgeInsets.all(8.0),
-      //                                             child: TextFormField(
-      //                                               style: const TextStyle(
-      //                                                   fontSize: 14,
-      //                                                   color: Colors.black,
-      //                                                   fontWeight:
-      //                                                       FontWeight.bold),
-      //                                               textInputAction:
-      //                                                   TextInputAction.next,
-      //                                               controller: lot,
-      //                                               decoration: InputDecoration(
-      //                                                 // hintText: "example: Cahaya Sanivokasi",
-      //                                                 labelText: "Lot",
-      //                                                 border:
-      //                                                     OutlineInputBorder(
-      //                                                         borderRadius:
-      //                                                             BorderRadius
-      //                                                                 .circular(
-      //                                                                     5.0)),
-      //                                               ),
-      //                                               validator: (value) {
-      //                                                 if (value!.isEmpty) {
-      //                                                   return 'Wajib diisi *';
-      //                                                 }
-      //                                                 return null;
-      //                                               },
-      //                                             ),
-      //                                           ),
-      //                                           //size
-      //                                           Padding(
-      //                                             padding:
-      //                                                 const EdgeInsets.all(8.0),
-      //                                             child: TextFormField(
-      //                                               style: const TextStyle(
-      //                                                   fontSize: 14,
-      //                                                   color: Colors.black,
-      //                                                   fontWeight:
-      //                                                       FontWeight.bold),
-      //                                               textInputAction:
-      //                                                   TextInputAction.next,
-      //                                               controller: size,
-      //                                               decoration: InputDecoration(
-      //                                                 // hintText: "example: Cahaya Sanivokasi",
-      //                                                 labelText: "Ukuran",
-      //                                                 border:
-      //                                                     OutlineInputBorder(
-      //                                                         borderRadius:
-      //                                                             BorderRadius
-      //                                                                 .circular(
-      //                                                                     5.0)),
-      //                                               ),
-      //                                               validator: (value) {
-      //                                                 if (value!.isEmpty) {
-      //                                                   return 'Wajib diisi *';
-      //                                                 }
-      //                                                 return null;
-      //                                               },
-      //                                             ),
-      //                                           ),
-      //                                           Padding(
-      //                                             padding:
-      //                                                 const EdgeInsets.all(8.0),
-      //                                             child: TextFormField(
-      //                                               style: const TextStyle(
-      //                                                   fontSize: 14,
-      //                                                   color: Colors.black,
-      //                                                   fontWeight:
-      //                                                       FontWeight.bold),
-      //                                               textInputAction:
-      //                                                   TextInputAction.next,
-      //                                               controller: parcel,
-      //                                               decoration: InputDecoration(
-      //                                                 // hintText: "example: Cahaya Sanivokasi",
-      //                                                 labelText: "Parcel",
-      //                                                 border:
-      //                                                     OutlineInputBorder(
-      //                                                         borderRadius:
-      //                                                             BorderRadius
-      //                                                                 .circular(
-      //                                                                     5.0)),
-      //                                               ),
-      //                                               validator: (value) {
-      //                                                 if (value!.isEmpty) {
-      //                                                   return 'Wajib diisi *';
-      //                                                 }
-      //                                                 return null;
-      //                                               },
-      //                                             ),
-      //                                           ),
-      //                                           Padding(
-      //                                             padding:
-      //                                                 const EdgeInsets.all(8.0),
-      //                                             child: TextFormField(
-      //                                               style: const TextStyle(
-      //                                                   fontSize: 14,
-      //                                                   color: Colors.black,
-      //                                                   fontWeight:
-      //                                                       FontWeight.bold),
-      //                                               textInputAction:
-      //                                                   TextInputAction.next,
-      //                                               controller: qty,
-      //                                               decoration: InputDecoration(
-      //                                                 // hintText: "example: Cahaya Sanivokasi",
-      //                                                 labelText: "Qty",
-      //                                                 border:
-      //                                                     OutlineInputBorder(
-      //                                                         borderRadius:
-      //                                                             BorderRadius
-      //                                                                 .circular(
-      //                                                                     5.0)),
-      //                                               ),
-      //                                               validator: (value) {
-      //                                                 if (value!.isEmpty) {
-      //                                                   return 'Wajib diisi *';
-      //                                                 }
-
-      //                                                 return null;
-      //                                               },
-      //                                             ),
-      //                                           ),
-      //                                           Padding(
-      //                                             padding:
-      //                                                 const EdgeInsets.all(8.0),
-      //                                             child: SizedBox(
-      //                                               width: 250,
-      //                                               child: CustomLoadingButton(
-      //                                                   controller:
-      //                                                       btnController,
-      //                                                   child: const Text(
-      //                                                       "Update"),
-      //                                                   onPressed: () async {
-      //                                                     if (_formKey
-      //                                                         .currentState!
-      //                                                         .validate()) {
-      //                                                       _formKey
-      //                                                           .currentState!
-      //                                                           .save();
-      //                                                       Future.delayed(
-      //                                                               const Duration(
-      //                                                                   seconds:
-      //                                                                       2))
-      //                                                           .then(
-      //                                                               (value) async {
-      //                                                         btnController
-      //                                                             .success();
-      //                                                         Map<String,
-      //                                                                 dynamic>
-      //                                                             body = {
-      //                                                           'id': id,
-      //                                                           'lot': lot.text,
-      //                                                           'size':
-      //                                                               size.text,
-      //                                                           'parcel':
-      //                                                               parcel.text,
-      //                                                           'qty': qty.text,
-      //                                                         };
-      //                                                         final response = await http.post(
-      //                                                             Uri.parse(ApiConstants
-      //                                                                     .baseUrl +
-      //                                                                 ApiConstants
-      //                                                                     .postUpdateListDataBatu),
-      //                                                             body: body);
-      //                                                         print(response
-      //                                                             .body);
-      //                                                         Future.delayed(
-      //                                                                 const Duration(
-      //                                                                     seconds:
-      //                                                                         1))
-      //                                                             .then(
-      //                                                                 (value) {
-      //                                                           btnController
-      //                                                               .reset(); //reset
-      //                                                           showDialog<
-      //                                                                   String>(
-      //                                                               context:
-      //                                                                   context,
-      //                                                               builder: (BuildContext
-      //                                                                       context) =>
-      //                                                                   const AlertDialog(
-      //                                                                     title:
-      //                                                                         Text(
-      //                                                                       'Update Berhasil',
-      //                                                                     ),
-      //                                                                   ));
-      //                                                         });
-      //                                                         Navigator.push(
-      //                                                             context,
-      //                                                             MaterialPageRoute(
-      //                                                                 builder:
-      //                                                                     (c) =>
-      //                                                                         const MainViewBatu()));
-      //                                                       });
-      //                                                     } else {
-      //                                                       btnController
-      //                                                           .error();
-      //                                                       Future.delayed(
-      //                                                               const Duration(
-      //                                                                   seconds:
-      //                                                                       1))
-      //                                                           .then((value) {
-      //                                                         btnController
-      //                                                             .reset(); //reset
-      //                                                       });
-      //                                                     }
-      //                                                   }),
-      //                                             ),
-      //                                           )
-      //                                         ],
-      //                                       ),
-      //                                     ),
-      //                                   ],
-      //                                 ),
-      //                               );
-      //                             });
-      //                       },
-      //                       icon: const Icon(
-      //                         Icons.edit,
-      //                         color: Colors.green,
-      //                       ),
-      //                     ),
-      //                   ),
-      //                 ],
-      //               );
-      //       }))
     ]);
   }
 
