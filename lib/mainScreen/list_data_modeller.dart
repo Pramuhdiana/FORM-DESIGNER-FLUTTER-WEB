@@ -6,6 +6,7 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:form_designer/mainScreen/sideScreen/side_screen_batu.dart';
 import 'package:form_designer/mainScreen/sideScreen/side_screen_scm.dart';
+import 'package:form_designer/model/modeller_model.dart';
 import 'package:overlay_support/overlay_support.dart';
 
 import 'package:file_picker/file_picker.dart';
@@ -14,6 +15,8 @@ import 'package:form_designer/mainScreen/form_screen_by_id.dart';
 import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
+// ignore: depend_on_referenced_packages
+import 'package:intl/intl.dart';
 
 import '../api/api_constant.dart';
 import '../global/global.dart';
@@ -33,9 +36,8 @@ Widget _verticalDivider = const VerticalDivider(
 );
 
 class _ListDataModellerScreenState extends State<ListDataModellerScreen> {
-  List<ListBatuModel>? filterListBatu;
-  List<ListBatuModel>? filterListBatuMode2;
-  List<ListBatuModel>? _listBatu;
+  List<ModellerModel>? filterListDataModeller;
+  List<ModellerModel>? _listDataModeller;
   TextEditingController controller = TextEditingController();
   bool sort = true;
   bool isLoading = false;
@@ -44,7 +46,10 @@ class _ListDataModellerScreenState extends State<ListDataModellerScreen> {
   int _currentSortColumn = 0;
   int _rowsPerPage = 50;
   var nowSiklus = '';
+  var kodeBulan = '';
   TextEditingController addSiklus = TextEditingController();
+  String? apiIdDataModeller = '';
+  String? apiNoUrutDataModeller = '';
 
   @override
   initState() {
@@ -52,24 +57,31 @@ class _ListDataModellerScreenState extends State<ListDataModellerScreen> {
     nowSiklus = sharedPreferences!.getString('siklus')!;
     page = 0;
     limit = 20;
-    // _getDataByPagenLimit();
+     var now = DateTime.now();
+    String month = DateFormat('MMMM', 'id').format(now);
+    String kodeMonth = DateFormat('M', 'id').format(now);
+    nowSiklus = month;
+    kodeBulan = getHuruf(int.parse(kodeMonth));
     _getData();
-    _getDataMode2();
   }
 
-  Future<List<ListBatuModel>> _getData() async {
+  String getHuruf(int angka) {
+ return String.fromCharCode(angka + 64);
+}
+
+  Future<List<ModellerModel>> _getData() async {
     final response = await http
-        .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getDataBatu));
+        .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getDataModeller));
 
     // if response successful
 
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);
 
-      var g = jsonResponse.map((data) => ListBatuModel.fromJson(data)).toList();
+      var g = jsonResponse.map((data) => ModellerModel.fromJson(data)).toList();
       setState(() {
-        _listBatu = g;
-        filterListBatu = g;
+        _listDataModeller = g;
+        filterListDataModeller = g;
         isLoading = true;
       });
       return g;
@@ -77,63 +89,6 @@ class _ListDataModellerScreenState extends State<ListDataModellerScreen> {
       throw Exception('Unexpected error occured!');
     }
   }
-
-  Future<List<ListBatuModel>> _getDataMode2() async {
-    final response = await http
-        .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getDataBatu));
-
-    // if response successful
-
-    if (response.statusCode == 200) {
-      List jsonResponse = json.decode(response.body);
-      var g = jsonResponse.map((data) => ListBatuModel.fromJson(data)).toList();
-
-      var modifiedUserData = g.where((element) => element.qty! < 0);
-
-      setState(() {
-        filterListBatuMode2 = modifiedUserData.toList();
-        isLoading = true;
-      });
-
-      return g;
-    } else {
-      throw Exception(response.statusCode);
-    }
-  }
-
-//! function send file to api
-  Future<void> sendFileToApi(File file, String url) async {
-    // ignore: unnecessary_null_comparison
-    if (file == null) {
-      throw ArgumentError('File cannot be null.');
-    }
-
-    if (url.isEmpty) {
-      throw ArgumentError('URL cannot be empty.');
-    }
-
-    final request = http.MultipartRequest('POST', Uri.parse(url));
-    final fileStream = http.ByteStream(file.openRead());
-    final fileLength = await file.length();
-
-    final multipartFile = http.MultipartFile(
-      'file',
-      fileStream,
-      fileLength,
-      filename: file.path.split('/').last,
-    );
-
-    request.files.add(multipartFile);
-
-    final response = await request.send();
-
-    if (response.statusCode != 200) {
-      throw HttpException(
-          'Failed to send file. Status code: ${response.statusCode}');
-    }
-  }
-
-//! end fungsi send file api
 
   postSiklus() async {
     Map<String, String> body = {
@@ -316,18 +271,18 @@ class _ListDataModellerScreenState extends State<ListDataModellerScreen> {
               keyboardType: TextInputType.text,
               onChanged: (value) {
                 //fungsi search anyting
-                _listBatu = filterListBatu!
+                _listDataModeller = filterListDataModeller!
                     .where((element) =>
-                        element.lot!
+                        element.kodeMarketing!
                             .toLowerCase()
                             .contains(value.toLowerCase()) ||
-                        element.size
+                        element.kodeDesign!
                             .toLowerCase()
                             .contains(value.toLowerCase()) ||
-                        element.parcel!
+                        element.tema!
                             .toLowerCase()
                             .contains(value.toLowerCase()) ||
-                        element.qty!.toString().contains(value.toLowerCase()))
+                        element.id!.toString().contains(value.toLowerCase()))
                     .toList();
 
                 setState(() {});
@@ -353,23 +308,55 @@ class _ListDataModellerScreenState extends State<ListDataModellerScreen> {
                 ),
               ),
               FloatingActionButton.extended(
-                onPressed: () {
+                onPressed: () async {
+  final response = await http
+        .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getDataModeller));
+    if (response.statusCode == 200) {
+      List jsonResponse = json.decode(response.body);
+
+      var g = jsonResponse.map((data) => ModellerModel.fromJson(data)).toList();
+      apiIdDataModeller = g.last.id.toString();
+      var filterByMonth = g.where((element) => element.bulan.toString().toLowerCase() == nowSiklus.toString().toLowerCase()).toList();
+      var filterBynoUrut =
+       filterByMonth.where((element) => element.noUrutBulan! > 0).toList();
+    
+      apiNoUrutDataModeller = 
+      filterByMonth.isEmpty ? '0'
+      : filterBynoUrut.last.noUrutBulan.toString();
+    print(apiNoUrutDataModeller);
+    } else {
+      throw Exception('Unexpected error occured!');
+    }
+
                   showDialog(
                       context: context,
                       builder: (BuildContext context) {
+                        
                         String? jenisBatu;
+                        String? statusSPK;
+                        String? brand;
                         final _formKey = GlobalKey<FormState>();
-                        TextEditingController lot = TextEditingController();
-                        TextEditingController size = TextEditingController();
-                        TextEditingController parcel = TextEditingController();
-                        TextEditingController qty = TextEditingController();
-                        TextEditingController caratPcs =
-                            TextEditingController();
-                        TextEditingController keterangan =
+                        TextEditingController temaDataModeller = TextEditingController();
+                        TextEditingController kodeDesignDataModeller = TextEditingController();
+                        TextEditingController idDataModeller = TextEditingController();
+                        TextEditingController noUrutDataModeller = TextEditingController();
+                        TextEditingController kodeMarketingDataModeller = TextEditingController();
+                        TextEditingController marketingDataModeller = TextEditingController();
+                        TextEditingController namaDesignerDataModeller = TextEditingController();
+                        TextEditingController namaModellerDataModeller = TextEditingController();
+                        TextEditingController keteranganDataModeller =
                             TextEditingController();
                         RoundedLoadingButtonController btnController =
                             RoundedLoadingButtonController();
-                        return AlertDialog(
+                            idDataModeller.text = apiIdDataModeller!;
+                            noUrutDataModeller.text = apiNoUrutDataModeller!;
+                        return 
+                        
+                        StatefulBuilder(
+                                                                      builder: (context,
+                                                                              setState) =>
+                                                                        
+                        AlertDialog(
                           content: Stack(
                             clipBehavior: Clip.none,
                             children: <Widget>[
@@ -402,7 +389,7 @@ class _ListDataModellerScreenState extends State<ListDataModellerScreen> {
                                               color: Colors.black,
                                               fontWeight: FontWeight.bold),
                                           textInputAction: TextInputAction.next,
-                                          controller: lot,
+                                          controller: kodeDesignDataModeller,
                                           decoration: InputDecoration(
                                             // hintText: "example: Cahaya Sanivokasi",
                                             labelText: "Kode Design",
@@ -410,17 +397,13 @@ class _ListDataModellerScreenState extends State<ListDataModellerScreen> {
                                                 borderRadius:
                                                     BorderRadius.circular(5.0)),
                                           ),
-                                          validator: (value) {
-                                            if (value!.isEmpty) {
-                                              return 'Wajib diisi *';
-                                            }
-                                            return null;
-                                          },
+                                          
                                         ),
                                       ),
 
                                       //Jenis Batu
-                                      SizedBox(
+                                      Container(
+padding: const EdgeInsets.only(left: 10, right: 10),
                                         child: DecoratedBox(
                                             decoration: BoxDecoration(
                                                 color: jenisBatu != null
@@ -451,7 +434,7 @@ class _ListDataModellerScreenState extends State<ListDataModellerScreen> {
                                                 ]),
                                             child: Padding(
                                                 padding: const EdgeInsets.only(
-                                                    left: 0, right: 0),
+                                                    left: 10, right: 10),
                                                 child: DropdownButton(
                                                   value: jenisBatu,
                                                   items: const [
@@ -472,11 +455,11 @@ class _ListDataModellerScreenState extends State<ListDataModellerScreen> {
                                                   hint:
                                                       const Text('Jenis Batu'),
                                                   onChanged: (value) {
+                                                    jenisBatu = value;
                                                     print(
                                                         "You have selected $value");
-                                                    setState(() {
-                                                      jenisBatu = value;
-                                                    });
+                                                             setState(() => jenisBatu);
+                                                  
                                                   },
                                                   icon: const Padding(
                                                       padding: EdgeInsets.only(
@@ -512,6 +495,7 @@ class _ListDataModellerScreenState extends State<ListDataModellerScreen> {
                                             SizedBox(
                                               width: 100,
                                               child: TextFormField(
+                                                readOnly: true,
                                                 style: const TextStyle(
                                                     fontSize: 14,
                                                     color: Colors.black,
@@ -519,7 +503,7 @@ class _ListDataModellerScreenState extends State<ListDataModellerScreen> {
                                                         FontWeight.bold),
                                                 textInputAction:
                                                     TextInputAction.next,
-                                                controller: parcel,
+                                                controller: idDataModeller,
                                                 decoration: InputDecoration(
                                                   // hintText: "example: Cahaya Sanivokasi",
                                                   labelText: "ID",
@@ -533,6 +517,7 @@ class _ListDataModellerScreenState extends State<ListDataModellerScreen> {
                                             SizedBox(
                                               width: 100,
                                               child: TextFormField(
+                                                readOnly: true,
                                                 style: const TextStyle(
                                                     fontSize: 14,
                                                     color: Colors.black,
@@ -540,7 +525,7 @@ class _ListDataModellerScreenState extends State<ListDataModellerScreen> {
                                                         FontWeight.bold),
                                                 textInputAction:
                                                     TextInputAction.next,
-                                                controller: parcel,
+                                                controller: noUrutDataModeller,
                                                 decoration: InputDecoration(
                                                   // hintText: "example: Cahaya Sanivokasi",
                                                   labelText: "No Urut",
@@ -554,114 +539,8 @@ class _ListDataModellerScreenState extends State<ListDataModellerScreen> {
                                           ],
                                         ),
                                       ),
-                                      //? Bulan
-                                      Container(
-                                        // width: MediaQuery.of(context).size.width *
-                                        //     0.25,
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            SizedBox(
-                                              width: 100,
-                                              child: TextFormField(
-                                                style: const TextStyle(
-                                                    fontSize: 14,
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                                textInputAction:
-                                                    TextInputAction.next,
-                                                controller: parcel,
-                                                decoration: InputDecoration(
-                                                  // hintText: "example: Cahaya Sanivokasi",
-                                                  labelText: "Kode",
-                                                  border: OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5.0)),
-                                                ),
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: 100,
-                                              child: TextFormField(
-                                                style: const TextStyle(
-                                                    fontSize: 14,
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                                textInputAction:
-                                                    TextInputAction.next,
-                                                controller: parcel,
-                                                decoration: InputDecoration(
-                                                  // hintText: "example: Cahaya Sanivokasi",
-                                                  labelText: "Kode Bulan",
-                                                  border: OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5.0)),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      //? id
-                                      Container(
-                                        // width: MediaQuery.of(context).size.width *
-                                        //     0.25,
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            SizedBox(
-                                              width: 100,
-                                              child: TextFormField(
-                                                style: const TextStyle(
-                                                    fontSize: 14,
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                                textInputAction:
-                                                    TextInputAction.next,
-                                                controller: parcel,
-                                                decoration: InputDecoration(
-                                                  // hintText: "example: Cahaya Sanivokasi",
-                                                  labelText: "NO/RO",
-                                                  border: OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5.0)),
-                                                ),
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: 100,
-                                              child: TextFormField(
-                                                style: const TextStyle(
-                                                    fontSize: 14,
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                                textInputAction:
-                                                    TextInputAction.next,
-                                                controller: parcel,
-                                                decoration: InputDecoration(
-                                                  // hintText: "example: Cahaya Sanivokasi",
-                                                  labelText: "Kode Grafir",
-                                                  border: OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5.0)),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
+                                      
+                                      
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: TextFormField(
@@ -670,7 +549,7 @@ class _ListDataModellerScreenState extends State<ListDataModellerScreen> {
                                               color: Colors.black,
                                               fontWeight: FontWeight.bold),
                                           textInputAction: TextInputAction.next,
-                                          controller: qty,
+                                          controller: kodeMarketingDataModeller,
                                           decoration: InputDecoration(
                                             // hintText: "example: Cahaya Sanivokasi",
                                             labelText: "Kode Marketing",
@@ -686,61 +565,78 @@ class _ListDataModellerScreenState extends State<ListDataModellerScreen> {
                                           },
                                         ),
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: TextFormField(
-                                          style: const TextStyle(
-                                              fontSize: 14,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold),
-                                          textInputAction: TextInputAction.next,
-                                          controller: qty,
-                                          decoration: InputDecoration(
-                                            // hintText: "example: Cahaya Sanivokasi",
-                                            labelText: "NO/RO",
-                                            border: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(5.0)),
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: TextFormField(
-                                          style: const TextStyle(
-                                              fontSize: 14,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold),
-                                          textInputAction: TextInputAction.next,
-                                          controller: qty,
-                                          decoration: InputDecoration(
-                                            // hintText: "example: Cahaya Sanivokasi",
-                                            labelText: "Kode Produksi",
-                                            border: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(5.0)),
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: TextFormField(
-                                          style: const TextStyle(
-                                              fontSize: 14,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold),
-                                          textInputAction: TextInputAction.next,
-                                          controller: caratPcs,
-                                          decoration: InputDecoration(
-                                            // hintText: "example: Cahaya Sanivokasi",
-                                            labelText: "Carat Pcs",
-                                            border: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(5.0)),
-                                          ),
-                                        ),
-                                      ),
 
+                                      //! status memilih no atau ro
+                                     Container(
+padding: const EdgeInsets.only(left: 10, right: 10),
+                                        child: DecoratedBox(
+                                            decoration: BoxDecoration(
+                                                color: statusSPK != null
+                                                    ? const Color.fromARGB(
+                                                        255, 8, 209, 69)
+                                                    : const Color.fromRGBO(
+                                                        238,
+                                                        240,
+                                                        235,
+                                                        1), //background color of dropdown button
+                                                border: Border.all(
+                                                  color: Colors.black38,
+                                                  // width:
+                                                  //     3
+                                                ), //border of dropdown button
+                                                borderRadius: BorderRadius.circular(
+                                                    0), //border raiuds of dropdown button
+                                                boxShadow: const <BoxShadow>[
+                                                ]),
+                                            child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 10, right: 10),
+                                                child: DropdownButton(
+                                                  value: statusSPK,
+                                                  items: const [
+                                                    //add items in the dropdown
+                                                    DropdownMenuItem(
+                                                      value: "NO",
+                                                      child: Text("NO"),
+                                                    ),
+                                                    DropdownMenuItem(
+                                                      value: "RO",
+                                                      child: Text("RO"),
+                                                    ),
+                                                  ],
+                                                  hint:
+                                                      const Text('NO Atau RO'),
+                                                  onChanged: (value) {
+                                                    statusSPK = value;
+                                                    print(
+                                                        "You have selected $value");
+                                                        value == 'RO' ? noUrutDataModeller.text ='' : noUrutDataModeller.text = (int.parse(apiNoUrutDataModeller!) + 1).toString(); 
+                                                             setState(() => statusSPK);
+                                                  
+                                                  },
+                                                  icon: const Padding(
+                                                      padding: EdgeInsets.only(
+                                                          left: 20),
+                                                      child: Icon(Icons
+                                                          .arrow_circle_down_sharp)),
+                                                  iconEnabledColor:
+                                                      Colors.black, //Icon color
+                                                  style: const TextStyle(
+                                                    color: Colors
+                                                        .black, //Font color
+                                                    // fontSize:
+                                                    //     15 //font size on dropdown button
+                                                  ),
+
+                                                  dropdownColor: Colors
+                                                      .white, //dropdown background color
+                                                  underline:
+                                                      Container(), //remove underline
+                                                  isExpanded:
+                                                      true, //make true to make width 100%
+                                                ))),
+                                      ),
+                                      
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: TextFormField(
@@ -749,7 +645,160 @@ class _ListDataModellerScreenState extends State<ListDataModellerScreen> {
                                               color: Colors.black,
                                               fontWeight: FontWeight.bold),
                                           textInputAction: TextInputAction.next,
-                                          controller: keterangan,
+                                          controller: temaDataModeller,
+                                          decoration: InputDecoration(
+                                            labelText: "Tema / Project",
+                                            border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(5.0)),
+                                          ),
+                                        ),
+                                      ),
+                                       Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: TextFormField(
+                                          style: const TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold),
+                                          textInputAction: TextInputAction.next,
+                                          controller: marketingDataModeller,
+                                          decoration: InputDecoration(
+                                            labelText: "Marketing",
+                                            border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(5.0)),
+                                          ),
+                                        ),
+                                      ),
+                                      Container(
+padding: const EdgeInsets.only(left: 10, right: 10),
+                                        child: DecoratedBox(
+                                            decoration: BoxDecoration(
+                                                color: brand != null
+                                                    ? const Color.fromARGB(
+                                                        255, 8, 209, 69)
+                                                    : const Color.fromRGBO(
+                                                        238,
+                                                        240,
+                                                        235,
+                                                        1), //background color of dropdown button
+                                                border: Border.all(
+                                                  color: Colors.black38,
+                                                  // width:
+                                                  //     3
+                                                ), //border of dropdown button
+                                                borderRadius: BorderRadius.circular(
+                                                    0), //border raiuds of dropdown button
+                                                boxShadow: const <BoxShadow>[
+                                                  //apply shadow on Dropdown button
+                                                  // BoxShadow(
+                                                  //     color: Color.fromRGBO(
+                                                  //         0,
+                                                  //         0,
+                                                  //         0,
+                                                  //         0.57), //shadow for button
+                                                  //     blurRadius:
+                                                  //         5) //blur radius of shadow
+                                                ]),
+                                            child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 10, right: 10),
+                                                child: DropdownButton(
+                                                  value: brand,
+                                                  items: const [
+                                                    //add items in the dropdown
+                                                    DropdownMenuItem(
+                                                      value: "PARVA",
+                                                      child: Text("PARVA"),
+                                                    ),
+                                                    DropdownMenuItem(
+                                                      value: "METIER",
+                                                      child: Text("METIER"),
+                                                    ),
+                                                    DropdownMenuItem(
+                                                      value: "BELI BERLIAN",
+                                                      child: Text("BELI BERLIAN"),
+                                                    ),
+                                                     DropdownMenuItem(
+                                                      value: "FINE",
+                                                      child: Text("FINE"),
+                                                    )
+                                                  ],
+                                                  hint:
+                                                      const Text('Brand'),
+                                                  onChanged: (value) {
+                                                    brand = value;
+                                                    print(
+                                                        "You have selected $value");
+                                                             setState(() => brand);
+                                                  
+                                                  },
+                                                  icon: const Padding(
+                                                      padding: EdgeInsets.only(
+                                                          left: 20),
+                                                      child: Icon(Icons
+                                                          .arrow_circle_down_sharp)),
+                                                  iconEnabledColor:
+                                                      Colors.black, //Icon color
+                                                  style: const TextStyle(
+                                                    color: Colors
+                                                        .black, //Font color
+                                                    // fontSize:
+                                                    //     15 //font size on dropdown button
+                                                  ),
+
+                                                  dropdownColor: Colors
+                                                      .white, //dropdown background color
+                                                  underline:
+                                                      Container(), //remove underline
+                                                  isExpanded:
+                                                      true, //make true to make width 100%
+                                                ))),
+                                      ),
+ Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: TextFormField(
+                                          style: const TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold),
+                                          textInputAction: TextInputAction.next,
+                                          controller: namaDesignerDataModeller,
+                                          decoration: InputDecoration(
+                                            labelText: "Nama Designer",
+                                            border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(5.0)),
+                                          ),
+                                        ),
+                                      ),
+                                       Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: TextFormField(
+                                          style: const TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold),
+                                          textInputAction: TextInputAction.next,
+                                          controller: namaModellerDataModeller,
+                                          decoration: InputDecoration(
+                                            labelText: "Nama Modeller",
+                                            border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(5.0)),
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: TextFormField(
+                                          style: const TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold),
+                                          textInputAction: TextInputAction.next,
+                                          controller: keteranganDataModeller,
                                           decoration: InputDecoration(
                                             // hintText: "example: Cahaya Sanivokasi",
                                             labelText: "Keterangan",
@@ -765,7 +814,7 @@ class _ListDataModellerScreenState extends State<ListDataModellerScreen> {
                                           width: 250,
                                           child: CustomLoadingButton(
                                               controller: btnController,
-                                              child: const Text("Simpan Batu"),
+                                              child: const Text("Simpan Data"),
                                               onPressed: () async {
                                                 if (_formKey.currentState!
                                                     .validate()) {
@@ -774,27 +823,26 @@ class _ListDataModellerScreenState extends State<ListDataModellerScreen> {
                                                           seconds: 2))
                                                       .then((value) async {
                                                     btnController.success();
-                                                    print(lot.text);
-                                                    print(size.text);
-                                                    print(parcel.text);
-                                                    print(qty.text);
-                                                    print(caratPcs.text);
-                                                    print(keterangan.text);
                                                     Map<String, dynamic> body =
                                                         {
-                                                      'lot': lot.text,
-                                                      'size': size.text,
-                                                      'parcel': parcel.text,
-                                                      'qty': qty.text,
-                                                      'caratPcs': caratPcs.text,
-                                                      'keterangan':
-                                                          keterangan.text,
+                                                  'kodeDesign' : kodeDesignDataModeller.text,
+                                                  'jenisBatu' : jenisBatu,
+                                                  'bulan' : nowSiklus,
+                                                  'kodeBulan': kodeBulan,
+                                                  'noUrutBulan': noUrutDataModeller.text,
+                                                  'kodeMarketing': kodeMarketingDataModeller.text,
+                                                  'status': jenisBatu,
+                                                  'marketing': marketingDataModeller.text,
+                                                  'brand': brand,
+                                                  'designer': namaDesignerDataModeller.text,
+                                                  'modeller': namaModellerDataModeller.text,
+                                                  'keterangan': keteranganDataModeller.text
                                                     };
                                                     final response = await http.post(
                                                         Uri.parse(ApiConstants
                                                                 .baseUrl +
                                                             ApiConstants
-                                                                .postDataBatu),
+                                                                .postDataModeller),
                                                         body: body);
                                                     print(response.body);
                                                     Future.delayed(
@@ -803,22 +851,18 @@ class _ListDataModellerScreenState extends State<ListDataModellerScreen> {
                                                         .then((value) {
                                                       btnController
                                                           .reset(); //reset
-                                                      showDialog<String>(
-                                                          context: context,
-                                                          builder: (BuildContext
-                                                                  context) =>
-                                                              const AlertDialog(
-                                                                title: Text(
-                                                                  'Tambah batu berhasil',
-                                                                ),
-                                                              ));
+                                                       showSimpleNotification(
+            const Text('Tambah Data Modeller Berhasil'),
+            background: Colors.green,
+            duration: const Duration(seconds: 1),
+          );
                                                     });
                                                     Navigator.push(
                                                         context,
                                                         MaterialPageRoute(
                                                             builder: (c) =>
                                                                 MainViewScm(
-                                                                    col: 3)));
+                                                                    col: 1)));
                                                   });
                                                 } else {
                                                   btnController.error();
@@ -838,8 +882,8 @@ class _ListDataModellerScreenState extends State<ListDataModellerScreen> {
                               ),
                             ],
                           ),
-                        );
-                      });
+                        ));
+              });
                 },
                 label: const Text(
                   "Tambah Data Modeller",
@@ -875,6 +919,7 @@ class _ListDataModellerScreenState extends State<ListDataModellerScreen> {
                                   hoverColor: Colors.grey.shade400,
                                   dividerColor: Colors.grey),
                               child: PaginatedDataTable(
+                                
                                   showCheckboxColumn: false,
                                   availableRowsPerPage: const [10, 50, 100],
                                   rowsPerPage: _rowsPerPage,
@@ -886,7 +931,7 @@ class _ListDataModellerScreenState extends State<ListDataModellerScreen> {
                                   sortColumnIndex: _currentSortColumn,
                                   sortAscending: sort,
                                   // rowsPerPage: 25,
-                                  columnSpacing: 0,
+                                  columnSpacing: 2,
                                   columns: [
                                     // kode Design
                                     DataColumn(
@@ -903,24 +948,25 @@ class _ListDataModellerScreenState extends State<ListDataModellerScreen> {
                                             _currentSortColumn = columnIndex;
                                             if (sort == true) {
                                               sort = false;
-                                              filterListBatu!.sort((a, b) => a
-                                                  .lot!
+                                              filterListDataModeller!.sort((a, b) => a
+                                                  .kodeDesign!
                                                   .toLowerCase()
                                                   .compareTo(
-                                                      b.lot!.toLowerCase()));
+                                                      b.kodeDesign!.toLowerCase()));
                                             } else {
                                               sort = true;
-                                              filterListBatu!.sort((a, b) => b
-                                                  .lot!
+                                              filterListDataModeller!.sort((a, b) => b
+                                                  .kodeDesign!
                                                   .toLowerCase()
                                                   .compareTo(
-                                                      a.lot!.toLowerCase()));
+                                                      a.kodeDesign!.toLowerCase()));
                                             }
                                           });
                                         }),
-                                    // Jenis Batu
-                                    DataColumn(
-                                        label: const SizedBox(
+                                    DataColumn(label: _verticalDivider),
+                                    // Jenis batu
+                                    const DataColumn(
+                                        label: SizedBox(
                                             width: 120,
                                             child: Text(
                                               "Jenis Batu",
@@ -928,29 +974,11 @@ class _ListDataModellerScreenState extends State<ListDataModellerScreen> {
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.bold),
                                             )),
-                                        onSort: (columnIndex, _) {
-                                          setState(() {
-                                            _currentSortColumn = columnIndex;
-                                            if (sort == true) {
-                                              sort = false;
-                                              filterListBatu!.sort((a, b) => a
-                                                  .lot!
-                                                  .toLowerCase()
-                                                  .compareTo(
-                                                      b.lot!.toLowerCase()));
-                                            } else {
-                                              sort = true;
-                                              filterListBatu!.sort((a, b) => b
-                                                  .lot!
-                                                  .toLowerCase()
-                                                  .compareTo(
-                                                      a.lot!.toLowerCase()));
-                                            }
-                                          });
-                                        }),
+                                        ),
+                                    DataColumn(label: _verticalDivider),
                                     // ID
-                                    DataColumn(
-                                        label: const SizedBox(
+                                    const DataColumn(
+                                        label: SizedBox(
                                             width: 120,
                                             child: Text(
                                               "ID",
@@ -958,30 +986,12 @@ class _ListDataModellerScreenState extends State<ListDataModellerScreen> {
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.bold),
                                             )),
-                                        onSort: (columnIndex, _) {
-                                          setState(() {
-                                            _currentSortColumn = columnIndex;
-                                            if (sort == true) {
-                                              sort = false;
-                                              filterListBatu!.sort((a, b) => a
-                                                  .lot!
-                                                  .toLowerCase()
-                                                  .compareTo(
-                                                      b.lot!.toLowerCase()));
-                                            } else {
-                                              sort = true;
-                                              filterListBatu!.sort((a, b) => b
-                                                  .lot!
-                                                  .toLowerCase()
-                                                  .compareTo(
-                                                      a.lot!.toLowerCase()));
-                                            }
-                                          });
-                                        }),
+                                        ),
 
+                                    DataColumn(label: _verticalDivider),
                                     // Bulan
-                                    DataColumn(
-                                        label: const SizedBox(
+                                    const DataColumn(
+                                        label: SizedBox(
                                             width: 120,
                                             child: Text(
                                               "Bulan",
@@ -989,61 +999,14 @@ class _ListDataModellerScreenState extends State<ListDataModellerScreen> {
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.bold),
                                             )),
-                                        onSort: (columnIndex, _) {
-                                          setState(() {
-                                            _currentSortColumn = columnIndex;
-                                            if (sort == true) {
-                                              sort = false;
-                                              filterListBatu!.sort((a, b) => a
-                                                  .lot!
-                                                  .toLowerCase()
-                                                  .compareTo(
-                                                      b.lot!.toLowerCase()));
-                                            } else {
-                                              sort = true;
-                                              filterListBatu!.sort((a, b) => b
-                                                  .lot!
-                                                  .toLowerCase()
-                                                  .compareTo(
-                                                      a.lot!.toLowerCase()));
-                                            }
-                                          });
-                                        }),
+                                        ),
 
-                                    // Kode Produk
-                                    DataColumn(
-                                        label: const SizedBox(
-                                            width: 120,
-                                            child: Text(
-                                              "Kode Produk",
-                                              style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold),
-                                            )),
-                                        onSort: (columnIndex, _) {
-                                          setState(() {
-                                            _currentSortColumn = columnIndex;
-                                            if (sort == true) {
-                                              sort = false;
-                                              filterListBatu!.sort((a, b) => a
-                                                  .lot!
-                                                  .toLowerCase()
-                                                  .compareTo(
-                                                      b.lot!.toLowerCase()));
-                                            } else {
-                                              sort = true;
-                                              filterListBatu!.sort((a, b) => b
-                                                  .lot!
-                                                  .toLowerCase()
-                                                  .compareTo(
-                                                      a.lot!.toLowerCase()));
-                                            }
-                                          });
-                                        }),
+                                    DataColumn(label: _verticalDivider),
+                                
 
                                     // No Urut
-                                    DataColumn(
-                                        label: const SizedBox(
+                                    const DataColumn(
+                                        label: SizedBox(
                                             width: 120,
                                             child: Text(
                                               "No Urut",
@@ -1051,30 +1014,12 @@ class _ListDataModellerScreenState extends State<ListDataModellerScreen> {
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.bold),
                                             )),
-                                        onSort: (columnIndex, _) {
-                                          setState(() {
-                                            _currentSortColumn = columnIndex;
-                                            if (sort == true) {
-                                              sort = false;
-                                              filterListBatu!.sort((a, b) => a
-                                                  .lot!
-                                                  .toLowerCase()
-                                                  .compareTo(
-                                                      b.lot!.toLowerCase()));
-                                            } else {
-                                              sort = true;
-                                              filterListBatu!.sort((a, b) => b
-                                                  .lot!
-                                                  .toLowerCase()
-                                                  .compareTo(
-                                                      a.lot!.toLowerCase()));
-                                            }
-                                          });
-                                        }),
+                                        ),
+                                    DataColumn(label: _verticalDivider),
 
                                     // Kode Marketing
-                                    DataColumn(
-                                        label: const SizedBox(
+                                    const DataColumn(
+                                        label: SizedBox(
                                             width: 120,
                                             child: Text(
                                               "Kode Marketing",
@@ -1082,30 +1027,12 @@ class _ListDataModellerScreenState extends State<ListDataModellerScreen> {
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.bold),
                                             )),
-                                        onSort: (columnIndex, _) {
-                                          setState(() {
-                                            _currentSortColumn = columnIndex;
-                                            if (sort == true) {
-                                              sort = false;
-                                              filterListBatu!.sort((a, b) => a
-                                                  .lot!
-                                                  .toLowerCase()
-                                                  .compareTo(
-                                                      b.lot!.toLowerCase()));
-                                            } else {
-                                              sort = true;
-                                              filterListBatu!.sort((a, b) => b
-                                                  .lot!
-                                                  .toLowerCase()
-                                                  .compareTo(
-                                                      a.lot!.toLowerCase()));
-                                            }
-                                          });
-                                        }),
+                                        ),
 
+                                    DataColumn(label: _verticalDivider),
                                     // NO / RO
-                                    DataColumn(
-                                        label: const SizedBox(
+                                    const DataColumn(
+                                        label: SizedBox(
                                             width: 120,
                                             child: Text(
                                               "NO / RO",
@@ -1113,92 +1040,14 @@ class _ListDataModellerScreenState extends State<ListDataModellerScreen> {
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.bold),
                                             )),
-                                        onSort: (columnIndex, _) {
-                                          setState(() {
-                                            _currentSortColumn = columnIndex;
-                                            if (sort == true) {
-                                              sort = false;
-                                              filterListBatu!.sort((a, b) => a
-                                                  .lot!
-                                                  .toLowerCase()
-                                                  .compareTo(
-                                                      b.lot!.toLowerCase()));
-                                            } else {
-                                              sort = true;
-                                              filterListBatu!.sort((a, b) => b
-                                                  .lot!
-                                                  .toLowerCase()
-                                                  .compareTo(
-                                                      a.lot!.toLowerCase()));
-                                            }
-                                          });
-                                        }),
+                                       ),
 
-                                    // Kode Produksi
-                                    DataColumn(
-                                        label: const SizedBox(
-                                            width: 120,
-                                            child: Text(
-                                              "Kode Produksi",
-                                              style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold),
-                                            )),
-                                        onSort: (columnIndex, _) {
-                                          setState(() {
-                                            _currentSortColumn = columnIndex;
-                                            if (sort == true) {
-                                              sort = false;
-                                              filterListBatu!.sort((a, b) => a
-                                                  .lot!
-                                                  .toLowerCase()
-                                                  .compareTo(
-                                                      b.lot!.toLowerCase()));
-                                            } else {
-                                              sort = true;
-                                              filterListBatu!.sort((a, b) => b
-                                                  .lot!
-                                                  .toLowerCase()
-                                                  .compareTo(
-                                                      a.lot!.toLowerCase()));
-                                            }
-                                          });
-                                        }),
-
-                                    // Kode Grafir
-                                    DataColumn(
-                                        label: const SizedBox(
-                                            width: 120,
-                                            child: Text(
-                                              "Kode Grafir",
-                                              style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold),
-                                            )),
-                                        onSort: (columnIndex, _) {
-                                          setState(() {
-                                            _currentSortColumn = columnIndex;
-                                            if (sort == true) {
-                                              sort = false;
-                                              filterListBatu!.sort((a, b) => a
-                                                  .lot!
-                                                  .toLowerCase()
-                                                  .compareTo(
-                                                      b.lot!.toLowerCase()));
-                                            } else {
-                                              sort = true;
-                                              filterListBatu!.sort((a, b) => b
-                                                  .lot!
-                                                  .toLowerCase()
-                                                  .compareTo(
-                                                      a.lot!.toLowerCase()));
-                                            }
-                                          });
-                                        }),
+                                   
+                                    DataColumn(label: _verticalDivider),
 
                                     // Project / Tema
-                                    DataColumn(
-                                        label: const SizedBox(
+                                    const DataColumn(
+                                        label: SizedBox(
                                             width: 120,
                                             child: Text(
                                               "Project / Tema",
@@ -1206,30 +1055,12 @@ class _ListDataModellerScreenState extends State<ListDataModellerScreen> {
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.bold),
                                             )),
-                                        onSort: (columnIndex, _) {
-                                          setState(() {
-                                            _currentSortColumn = columnIndex;
-                                            if (sort == true) {
-                                              sort = false;
-                                              filterListBatu!.sort((a, b) => a
-                                                  .lot!
-                                                  .toLowerCase()
-                                                  .compareTo(
-                                                      b.lot!.toLowerCase()));
-                                            } else {
-                                              sort = true;
-                                              filterListBatu!.sort((a, b) => b
-                                                  .lot!
-                                                  .toLowerCase()
-                                                  .compareTo(
-                                                      a.lot!.toLowerCase()));
-                                            }
-                                          });
-                                        }),
+                                       ),
+                                    DataColumn(label: _verticalDivider),
 
                                     // Marketing
-                                    DataColumn(
-                                        label: const SizedBox(
+                                    const DataColumn(
+                                        label: SizedBox(
                                             width: 120,
                                             child: Text(
                                               "Marketing",
@@ -1237,30 +1068,12 @@ class _ListDataModellerScreenState extends State<ListDataModellerScreen> {
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.bold),
                                             )),
-                                        onSort: (columnIndex, _) {
-                                          setState(() {
-                                            _currentSortColumn = columnIndex;
-                                            if (sort == true) {
-                                              sort = false;
-                                              filterListBatu!.sort((a, b) => a
-                                                  .lot!
-                                                  .toLowerCase()
-                                                  .compareTo(
-                                                      b.lot!.toLowerCase()));
-                                            } else {
-                                              sort = true;
-                                              filterListBatu!.sort((a, b) => b
-                                                  .lot!
-                                                  .toLowerCase()
-                                                  .compareTo(
-                                                      a.lot!.toLowerCase()));
-                                            }
-                                          });
-                                        }),
+                                        ),
+                                    DataColumn(label: _verticalDivider),
 
                                     // Brand
-                                    DataColumn(
-                                        label: const SizedBox(
+                                    const DataColumn(
+                                        label: SizedBox(
                                             width: 120,
                                             child: Text(
                                               "Brand",
@@ -1268,30 +1081,12 @@ class _ListDataModellerScreenState extends State<ListDataModellerScreen> {
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.bold),
                                             )),
-                                        onSort: (columnIndex, _) {
-                                          setState(() {
-                                            _currentSortColumn = columnIndex;
-                                            if (sort == true) {
-                                              sort = false;
-                                              filterListBatu!.sort((a, b) => a
-                                                  .lot!
-                                                  .toLowerCase()
-                                                  .compareTo(
-                                                      b.lot!.toLowerCase()));
-                                            } else {
-                                              sort = true;
-                                              filterListBatu!.sort((a, b) => b
-                                                  .lot!
-                                                  .toLowerCase()
-                                                  .compareTo(
-                                                      a.lot!.toLowerCase()));
-                                            }
-                                          });
-                                        }),
+                                       ),
+                                    DataColumn(label: _verticalDivider),
 
                                     // Designer
-                                    DataColumn(
-                                        label: const SizedBox(
+                                    const DataColumn(
+                                        label: SizedBox(
                                             width: 120,
                                             child: Text(
                                               "Designer",
@@ -1299,61 +1094,14 @@ class _ListDataModellerScreenState extends State<ListDataModellerScreen> {
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.bold),
                                             )),
-                                        onSort: (columnIndex, _) {
-                                          setState(() {
-                                            _currentSortColumn = columnIndex;
-                                            if (sort == true) {
-                                              sort = false;
-                                              filterListBatu!.sort((a, b) => a
-                                                  .lot!
-                                                  .toLowerCase()
-                                                  .compareTo(
-                                                      b.lot!.toLowerCase()));
-                                            } else {
-                                              sort = true;
-                                              filterListBatu!.sort((a, b) => b
-                                                  .lot!
-                                                  .toLowerCase()
-                                                  .compareTo(
-                                                      a.lot!.toLowerCase()));
-                                            }
-                                          });
-                                        }),
+                                        ),
 
-                                    // No Design
-                                    DataColumn(
-                                        label: const SizedBox(
-                                            width: 120,
-                                            child: Text(
-                                              "No Design",
-                                              style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold),
-                                            )),
-                                        onSort: (columnIndex, _) {
-                                          setState(() {
-                                            _currentSortColumn = columnIndex;
-                                            if (sort == true) {
-                                              sort = false;
-                                              filterListBatu!.sort((a, b) => a
-                                                  .lot!
-                                                  .toLowerCase()
-                                                  .compareTo(
-                                                      b.lot!.toLowerCase()));
-                                            } else {
-                                              sort = true;
-                                              filterListBatu!.sort((a, b) => b
-                                                  .lot!
-                                                  .toLowerCase()
-                                                  .compareTo(
-                                                      a.lot!.toLowerCase()));
-                                            }
-                                          });
-                                        }),
+                                    DataColumn(label: _verticalDivider),
+                                    
 
                                     // Modeller
-                                    DataColumn(
-                                        label: const SizedBox(
+                                    const DataColumn(
+                                        label: SizedBox(
                                             width: 120,
                                             child: Text(
                                               "Modeller",
@@ -1361,30 +1109,12 @@ class _ListDataModellerScreenState extends State<ListDataModellerScreen> {
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.bold),
                                             )),
-                                        onSort: (columnIndex, _) {
-                                          setState(() {
-                                            _currentSortColumn = columnIndex;
-                                            if (sort == true) {
-                                              sort = false;
-                                              filterListBatu!.sort((a, b) => a
-                                                  .lot!
-                                                  .toLowerCase()
-                                                  .compareTo(
-                                                      b.lot!.toLowerCase()));
-                                            } else {
-                                              sort = true;
-                                              filterListBatu!.sort((a, b) => b
-                                                  .lot!
-                                                  .toLowerCase()
-                                                  .compareTo(
-                                                      a.lot!.toLowerCase()));
-                                            }
-                                          });
-                                        }),
+                                        ),
+                                    DataColumn(label: _verticalDivider),
 
                                     // Keterangan
-                                    DataColumn(
-                                        label: const SizedBox(
+                                    const DataColumn(
+                                        label: SizedBox(
                                             width: 120,
                                             child: Text(
                                               "Keterangan",
@@ -1392,26 +1122,7 @@ class _ListDataModellerScreenState extends State<ListDataModellerScreen> {
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.bold),
                                             )),
-                                        onSort: (columnIndex, _) {
-                                          setState(() {
-                                            _currentSortColumn = columnIndex;
-                                            if (sort == true) {
-                                              sort = false;
-                                              filterListBatu!.sort((a, b) => a
-                                                  .lot!
-                                                  .toLowerCase()
-                                                  .compareTo(
-                                                      b.lot!.toLowerCase()));
-                                            } else {
-                                              sort = true;
-                                              filterListBatu!.sort((a, b) => b
-                                                  .lot!
-                                                  .toLowerCase()
-                                                  .compareTo(
-                                                      a.lot!.toLowerCase()));
-                                            }
-                                          });
-                                        }),
+                                        ),
 
                                     DataColumn(label: _verticalDivider),
                                     //AKSI
@@ -1434,8 +1145,8 @@ class _ListDataModellerScreenState extends State<ListDataModellerScreen> {
                                   source:
                                       // UserDataTableSource(userData: filterCrm!)),
                                       RowSource(
-                                          myData: _listBatu,
-                                          count: _listBatu!.length)),
+                                          myData: _listDataModeller,
+                                          count: _listDataModeller!.length)),
                             ),
                           ),
                         ),
@@ -1470,73 +1181,70 @@ class RowSource extends DataTableSource {
     return DataRow(cells: [
       //kode Design
       DataCell(
-        Padding(padding: const EdgeInsets.all(0), child: Text(data.lot)),
+        Padding(padding: const EdgeInsets.all(0), child: Text(data.kodeDesign))
       ),
+      DataCell(_verticalDivider),
       //Jenis Batu
       DataCell(
-        Padding(padding: const EdgeInsets.all(0), child: Text(data.size)),
+        Padding(padding: const EdgeInsets.all(0), child: Text(data.jenisBatu)),
       ),
+      DataCell(_verticalDivider),
       //id
       DataCell(
         Padding(
             padding: const EdgeInsets.all(0), child: Text(data.id.toString())),
       ),
+      DataCell(_verticalDivider),
       //bulan
       DataCell(
-        Padding(padding: const EdgeInsets.all(0), child: Text(data.size)),
+        Padding(padding: const EdgeInsets.all(0), child: Text(data.bulan)),
       ),
-      //bulan
+      DataCell(_verticalDivider),
+      //no urut
       DataCell(
-        Padding(padding: const EdgeInsets.all(0), child: Text(data.size)),
+        Padding(padding: const EdgeInsets.all(0), child: Text(data.noUrutBulan.toString())),
       ),
-      //bulan
+      DataCell(_verticalDivider),
+      //kode marketing
       DataCell(
-        Padding(padding: const EdgeInsets.all(0), child: Text(data.size)),
+        Padding(padding: const EdgeInsets.all(0), child: Text(data.kodeMarketing))
       ),
-      //bulan
+      DataCell(_verticalDivider),
+      //no at ro
       DataCell(
-        Padding(padding: const EdgeInsets.all(0), child: Text(data.size)),
+        Padding(padding: const EdgeInsets.all(0), child: Text(data.status)),
       ),
-      //bulan
+      DataCell(_verticalDivider),
+      //project tema
       DataCell(
-        Padding(padding: const EdgeInsets.all(0), child: Text(data.size)),
+        Padding(padding: const EdgeInsets.all(0), child: Text(data.tema)),
       ),
-      //bulan
+      DataCell(_verticalDivider),
+      //marketing
       DataCell(
-        Padding(padding: const EdgeInsets.all(0), child: Text(data.size)),
+        Padding(padding: const EdgeInsets.all(0), child: Text(data.marketing)),
       ),
-      //bulan
+      DataCell(_verticalDivider),
+      //brand
       DataCell(
-        Padding(padding: const EdgeInsets.all(0), child: Text(data.size)),
+        Padding(padding: const EdgeInsets.all(0), child: Text(data.brand)),
       ),
-      //bulan
+      DataCell(_verticalDivider),
+      //designer
       DataCell(
-        Padding(padding: const EdgeInsets.all(0), child: Text(data.size)),
+        Padding(padding: const EdgeInsets.all(0), child: Text(data.designer)),
       ),
-      //bulan
+      DataCell(_verticalDivider),
+      //modeller
       DataCell(
-        Padding(padding: const EdgeInsets.all(0), child: Text(data.size)),
+        Padding(padding: const EdgeInsets.all(0), child: Text(data.modeller)),
       ),
-      //bulan
+      DataCell(_verticalDivider),
+      //keterangan
       DataCell(
-        Padding(padding: const EdgeInsets.all(0), child: Text(data.size)),
+        Padding(padding: const EdgeInsets.all(0), child: Text(data.keterangan)),
       ),
-      //bulan
-      DataCell(
-        Padding(padding: const EdgeInsets.all(0), child: Text(data.size)),
-      ),
-      //bulan
-      DataCell(
-        Padding(padding: const EdgeInsets.all(0), child: Text(data.size)),
-      ),
-      //bulan
-      DataCell(
-        Padding(padding: const EdgeInsets.all(0), child: Text(data.size)),
-      ),
-      //bulan
-      DataCell(
-        Padding(padding: const EdgeInsets.all(0), child: Text(data.size)),
-      ),
+      
 
       DataCell(_verticalDivider),
       //Aksi

@@ -5,12 +5,14 @@ class JenisbarangModel {
   final String nama;
   final int? qty;
   final int? harga;
+  final String? kodeBarang;
 
   JenisbarangModel({
     required this.id,
     required this.nama,
     this.qty,
     this.harga,
+    this.kodeBarang,
   });
 
   factory JenisbarangModel.fromJson(Map<String, dynamic> json) {
@@ -19,6 +21,7 @@ class JenisbarangModel {
       nama: json["nama"] ?? 'null',
       qty: json["qty"] ?? 0,
       harga: json["harga"] ?? 0,
+      kodeBarang: json["kode_barang"],
     );
   }
 

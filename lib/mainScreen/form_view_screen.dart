@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:form_designer/global/global.dart';
 import 'package:form_designer/mainScreen/sideScreen/side_screen.dart';
+import 'package:form_designer/mainScreen/sideScreen/side_screen_scm.dart';
 import 'package:form_designer/model/batu_model.dart';
 import 'package:form_designer/model/earnut_model.dart';
 import 'package:form_designer/model/form_designer_model.dart';
@@ -306,6 +307,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
   TextEditingController keteranganStatusBatu = TextEditingController();
   String? bulanDesigner;
   String? valueBulanDesigner;
+  String? kodeBulan;
 
   String? batu1 = '';
   String? batu2 = '';
@@ -464,6 +466,8 @@ class _FormViewScreenState extends State<FormViewScreen> {
   int others2 = 0;
   int others3 = 0;
   String? imageUrl = '';
+  String? kodeJenisBarang = '';
+  String? kodeWarna = '';
   RoundedLoadingButtonController btnController =
       RoundedLoadingButtonController();
   RoundedLoadingButtonController btnGenerateKodeMarketing =
@@ -594,10 +598,16 @@ class _FormViewScreenState extends State<FormViewScreen> {
         .format(DateTime.parse(widget.modelDesigner!.created_at!.toString()));
     valueBulanDesigner = DateFormat('MMyy')
         .format(DateTime.parse(widget.modelDesigner!.created_at!.toString()));
+    String kodeMonth = DateFormat('M', 'id').format(DateTime.parse(widget.modelDesigner!.created_at!.toString()));
+
+    kodeBulan = getHuruf(int.parse(kodeMonth));
+
     _getData();
     _getDataBatu();
   }
-
+String getHuruf(int angka) {
+ return String.fromCharCode(angka + 64);
+}
   //start image
   XFile? image;
   final ImagePicker picker = ImagePicker();
@@ -1865,7 +1875,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
                       btnController.reset(); //reset
                       // ignore: use_build_context_synchronously
                       Navigator.push(context,
-                          MaterialPageRoute(builder: (c) => const MainView()));
+                          MaterialPageRoute(builder: (c) =>  MainViewScm(col:0)));
 
                       showDialog<String>(
                           context: context,
@@ -2078,7 +2088,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   //kode marketing
-                  kodeMarketing.text.isEmpty
+                  kodeMarketing.text.isEmpty && sharedPreferences!.getString('level') == '1'
                       ? Container(
                           height: tinggiTextfield,
                           width: 200,
@@ -2107,23 +2117,51 @@ class _FormViewScreenState extends State<FormViewScreen> {
                                                 .toString()
                                                 .toLowerCase() ==
                                             bulanDesigner!.toLowerCase());
-                                    noUrutBulan = filterByMonth.length
+      var filterBynoUrut = filterByMonth.where((element) => element.noUrutBulan! > 0).toList();
+
+                                    noUrutBulan = filterByMonth.isEmpty ? '0'.padLeft(3, '0')
+                                    :filterBynoUrut.last.noUrutBulan
                                         .toString()
                                         .padLeft(3, '0');
                                     print(noUrutBulan);
-                                    print(filterByMonth.last.id);
                                   } else {}
                                 } catch (c) {
                                   print('err get data modeller : $c');
                                 }
-                                Future.delayed(const Duration(seconds: 2))
+                                 try {
+                                  final response = await http.get(Uri.parse(
+                                      ApiConstants.baseUrl +
+                                          ApiConstants.getListJenisbarang));
+
+                                  // if response successful
+                                  if (response.statusCode == 200) {
+                                    List jsonResponse =
+                                        jsonDecode(response.body);
+                                    var allData = jsonResponse
+                                        .map((data) =>
+                                            JenisbarangModel.fromJson(data))
+                                        .toList();
+
+                                    var filterByMonth = allData.where(
+                                        (element) =>
+                                            element.nama
+                                                .toString()
+                                                .toLowerCase() ==
+                                            jenisBarang.text.toString().toLowerCase());
+                                            kodeJenisBarang = filterByMonth.first.kodeBarang;
+                                  } else {}
+                                } catch (c) {
+                                  print('err get data jenis barang : $c');
+                                }
+                                color.text == 'WG' ? kodeWarna = '0' : color.text == 'RG' ? kodeWarna = '2' : color.text == 'MIX' ?kodeWarna =  '4' :kodeWarna =  '5';
+                                Future.delayed(const Duration(seconds: 1))
                                     .then((value) async {
                                   btnGenerateKodeMarketing.success();
                                 });
 
                                 setState(() {
                                   kodeMarketing.text =
-                                      'RG0$valueBulanDesigner${noUrutBulan}0A01E';
+                                      '${kodeJenisBarang}0$valueBulanDesigner$noUrutBulan${kodeWarna}A01E';
                                 });
                               },
                               child: const Text('Generate\nKode Marketing'),
@@ -2133,7 +2171,9 @@ class _FormViewScreenState extends State<FormViewScreen> {
                           height: tinggiTextfield,
                           width: 200,
                           child: TextFormField(
-                            readOnly: true,
+                            readOnly: sharedPreferences!.getString('level') == '1'
+                        ? false
+                        : true,
                             style: const TextStyle(
                                 fontSize: 14,
                                 color: Colors.black,
@@ -2582,6 +2622,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
                         setState(() {
                           jenisBarang.text = item!.nama;
                           labour = item.harga;
+                          kodeJenisBarang = item.kodeBarang;
                         });
                       },
                       dropdownDecoratorProps: DropDownDecoratorProps(
@@ -6347,6 +6388,31 @@ class _FormViewScreenState extends State<FormViewScreen> {
         Uri.parse('${ApiConstants.baseUrl}${ApiConstants.addModeller}'),
         body: body);
     print(response.body);
+  }
+
+  postDataModeller() async {
+    Map<String, dynamic> body =
+                                                        {
+                                                  'kodeDesign' : kodeDesign.text,
+                                                  'jenisBatu' : 'VVS',
+                                                  'bulan' : bulanDesigner,
+                                                  'kodeBulan': kodeBulan,
+                                                  // 'noUrutBulan': noUrutBulan,
+                                                  // 'kodeMarketing': kodeMarketingDataModeller.text,
+                                                  // 'status': jenisBatu,
+                                                  // 'marketing': marketingDataModeller.text,
+                                                  // 'brand': brand,
+                                                  // 'designer': namaDesignerDataModeller.text,
+                                                  // 'modeller': namaModellerDataModeller.text,
+                                                  // 'keterangan': keteranganDataModeller.text
+                                                    };
+                                                    final response = await http.post(
+                                                        Uri.parse(ApiConstants
+                                                                .baseUrl +
+                                                            ApiConstants
+                                                                .postDataModeller),
+                                                        body: body);
+                                                    print(response.body);
   }
 
   postPoint() async {
