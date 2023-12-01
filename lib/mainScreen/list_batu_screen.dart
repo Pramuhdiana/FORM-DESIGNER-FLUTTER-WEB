@@ -665,14 +665,13 @@ class _ListBatuScreenState extends State<ListBatuScreen> {
                                           // LOT
                                           DataColumn(
                                               label: const SizedBox(
-                                                  width: 120,
                                                   child: Text(
-                                                    "LOT",
-                                                    style: TextStyle(
-                                                        fontSize: 15,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  )),
+                                                "LOT",
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              )),
                                               onSort: (columnIndex, _) {
                                                 setState(() {
                                                   _currentSortColumn =
@@ -700,14 +699,13 @@ class _ListBatuScreenState extends State<ListBatuScreen> {
                                           //UKURAN
                                           DataColumn(
                                               label: const SizedBox(
-                                                  width: 120,
                                                   child: Text(
-                                                    "UKURAN",
-                                                    style: TextStyle(
-                                                        fontSize: 15,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  )),
+                                                "UKURAN",
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              )),
                                               onSort: (columnIndex, _) {
                                                 setState(() {
                                                   _currentSortColumn =
@@ -735,14 +733,13 @@ class _ListBatuScreenState extends State<ListBatuScreen> {
                                           //PARCEL
                                           DataColumn(
                                               label: const SizedBox(
-                                                  width: 120,
                                                   child: Text(
-                                                    "PARCEL",
-                                                    style: TextStyle(
-                                                        fontSize: 15,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  )),
+                                                "PARCEL",
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              )),
                                               onSort: (columnIndex, _) {
                                                 setState(() {
                                                   _currentSortColumn =
@@ -770,14 +767,12 @@ class _ListBatuScreenState extends State<ListBatuScreen> {
                                           //* carat / cps
                                           const DataColumn(
                                             label: SizedBox(
-                                                width: 120,
                                                 child: Text(
-                                                  "CARAT PER PCS",
-                                                  style: TextStyle(
-                                                      fontSize: 15,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                )),
+                                              "CARAT PER PCS",
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold),
+                                            )),
                                             // onSort: (columnIndex, _) {
                                             //   setState(() {
                                             //     _currentSortColumn =
@@ -804,14 +799,13 @@ class _ListBatuScreenState extends State<ListBatuScreen> {
                                           //QTY
                                           DataColumn(
                                               label: const SizedBox(
-                                                  width: 120,
                                                   child: Text(
-                                                    "QTY",
-                                                    style: TextStyle(
-                                                        fontSize: 15,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  )),
+                                                "QTY",
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              )),
                                               onSort: (columnIndex, _) {
                                                 setState(() {
                                                   _currentSortColumn =
@@ -847,7 +841,6 @@ class _ListBatuScreenState extends State<ListBatuScreen> {
                                                       padding:
                                                           const EdgeInsets.only(
                                                               left: 30),
-                                                      width: 120,
                                                       child: const Text(
                                                         "AKSI",
                                                         style: TextStyle(
@@ -909,14 +902,13 @@ class _ListBatuScreenState extends State<ListBatuScreen> {
                                           // LOT
                                           DataColumn(
                                               label: const SizedBox(
-                                                  width: 120,
                                                   child: Text(
-                                                    "LOT",
-                                                    style: TextStyle(
-                                                        fontSize: 15,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  )),
+                                                "LOT",
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              )),
                                               onSort: (columnIndex, _) {
                                                 setState(() {
                                                   _currentSortColumn =
@@ -942,14 +934,13 @@ class _ListBatuScreenState extends State<ListBatuScreen> {
                                           //UKURAN
                                           DataColumn(
                                               label: const SizedBox(
-                                                  width: 120,
                                                   child: Text(
-                                                    "UKURAN",
-                                                    style: TextStyle(
-                                                        fontSize: 15,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  )),
+                                                "UKURAN",
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              )),
                                               onSort: (columnIndex, _) {
                                                 setState(() {
                                                   _currentSortColumn =
@@ -975,14 +966,13 @@ class _ListBatuScreenState extends State<ListBatuScreen> {
                                           //PARCEL
                                           DataColumn(
                                               label: const SizedBox(
-                                                  width: 120,
                                                   child: Text(
-                                                    "PARCEL",
-                                                    style: TextStyle(
-                                                        fontSize: 15,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  )),
+                                                "PARCEL",
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              )),
                                               onSort: (columnIndex, _) {
                                                 setState(() {
                                                   _currentSortColumn =
@@ -1008,14 +998,13 @@ class _ListBatuScreenState extends State<ListBatuScreen> {
                                           //QTY
                                           DataColumn(
                                               label: const SizedBox(
-                                                  width: 120,
                                                   child: Text(
-                                                    "QTY",
-                                                    style: TextStyle(
-                                                        fontSize: 15,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  )),
+                                                "QTY",
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              )),
                                               onSort: (columnIndex, _) {
                                                 setState(() {
                                                   _currentSortColumn =

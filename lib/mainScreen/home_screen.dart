@@ -4064,13 +4064,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               columns: [
                                 DataColumn(
                                     label: const SizedBox(
-                                        width: 120,
                                         child: Text(
-                                          "Kode MDBC",
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.bold),
-                                        )),
+                                      "Kode MDBC",
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
+                                    )),
                                     onSort: (columnIndex, _) {
                                       setState(() {
                                         _currentSortColumn = columnIndex;
@@ -4094,7 +4093,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                 DataColumn(label: _verticalDivider),
                                 DataColumn(
                                     label: SizedBox(
-                                        width: 120,
                                         child: sharedPreferences!
                                                     .getString('level') !=
                                                 '1'
@@ -4157,7 +4155,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                     label: Container(
                                         padding:
                                             const EdgeInsets.only(left: 35),
-                                        width: 120,
                                         child: const Text(
                                           "Tema",
                                           style: TextStyle(
@@ -4185,13 +4182,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                 DataColumn(label: _verticalDivider),
                                 DataColumn(
                                     label: const SizedBox(
-                                        width: 120,
                                         child: Text(
-                                          "Jenis Barang",
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.bold),
-                                        )),
+                                      "Jenis Barang",
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
+                                    )),
                                     onSort: (columnIndex, _) {
                                       setState(() {
                                         _currentSortColumn = columnIndex;
@@ -4215,14 +4211,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                 DataColumn(label: _verticalDivider),
                                 DataColumn(
                                     label: const SizedBox(
-                                        width: 50,
                                         child: Text(
-                                          "Harga",
-                                          maxLines: 2,
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.bold),
-                                        )),
+                                      "Harga",
+                                      maxLines: 2,
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
+                                    )),
                                     onSort: (columnIndex, _) {
                                       setState(() {
                                         _currentSortColumn = columnIndex;
@@ -4244,19 +4239,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                 DataColumn(label: _verticalDivider),
                                 const DataColumn(
                                   label: SizedBox(
-                                      width: 120,
                                       child: Text(
-                                        "Kelas\nHarga",
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.bold),
-                                      )),
+                                    "Kelas\nHarga",
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold),
+                                  )),
                                 ),
                                 DataColumn(label: _verticalDivider),
                                 DataColumn(
                                   label: Container(
                                       padding: const EdgeInsets.only(left: 30),
-                                      width: 120,
                                       child: const Text(
                                         "Gambar",
                                         style: TextStyle(
@@ -4268,7 +4261,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                 DataColumn(
                                   label: Container(
                                       padding: const EdgeInsets.only(left: 30),
-                                      width: 120,
                                       child: const Text(
                                         "Aksi",
                                         style: TextStyle(
@@ -5151,13 +5143,12 @@ class _HomeScreenState extends State<HomeScreen> {
                             columns: [
                               DataColumn(
                                   label: const SizedBox(
-                                      width: 120,
                                       child: Text(
-                                        "Kode MDBC",
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.bold),
-                                      )),
+                                    "Kode MDBC",
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold),
+                                  )),
                                   onSort: (columnIndex, _) {
                                     setState(() {
                                       _currentSortColumn = columnIndex;
@@ -5181,7 +5172,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               DataColumn(label: _verticalDivider),
                               DataColumn(
                                   label: SizedBox(
-                                      width: 120,
                                       child: sharedPreferences!
                                                   .getString('level') !=
                                               '1'
@@ -5241,7 +5231,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               DataColumn(
                                   label: Container(
                                       padding: const EdgeInsets.only(left: 35),
-                                      width: 120,
                                       child: const Text(
                                         "Tema",
                                         style: TextStyle(
@@ -5267,13 +5256,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               DataColumn(label: _verticalDivider),
                               DataColumn(
                                   label: const SizedBox(
-                                      width: 120,
                                       child: Text(
-                                        "Jenis Barang",
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.bold),
-                                      )),
+                                    "Jenis Barang",
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold),
+                                  )),
                                   onSort: (columnIndex, _) {
                                     setState(() {
                                       _currentSortColumn = columnIndex;
@@ -5295,14 +5283,13 @@ class _HomeScreenState extends State<HomeScreen> {
                               DataColumn(label: _verticalDivider),
                               DataColumn(
                                   label: const SizedBox(
-                                      width: 50,
                                       child: Text(
-                                        "Harga",
-                                        maxLines: 2,
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.bold),
-                                      )),
+                                    "Harga",
+                                    maxLines: 2,
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold),
+                                  )),
                                   onSort: (columnIndex, _) {
                                     setState(() {
                                       _currentSortColumn = columnIndex;
@@ -5335,7 +5322,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               DataColumn(
                                 label: Container(
                                     padding: const EdgeInsets.only(left: 30),
-                                    width: 120,
                                     child: const Text(
                                       "Gambar",
                                       style: TextStyle(
@@ -5347,7 +5333,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               DataColumn(
                                 label: Container(
                                     padding: const EdgeInsets.only(left: 30),
-                                    width: 120,
                                     child: const Text(
                                       "Aksi",
                                       style: TextStyle(

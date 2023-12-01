@@ -204,14 +204,13 @@ class _ListCalculatePricingFujiScreenState
                                         columns: [
                                           DataColumn(
                                               label: const SizedBox(
-                                                  width: 120,
                                                   child: Text(
-                                                    "ID",
-                                                    style: TextStyle(
-                                                        fontSize: 15,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  )),
+                                                "ID",
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              )),
                                               onSort: (columnIndex, _) {
                                                 setState(() {
                                                   _currentSortColumn =
@@ -230,14 +229,13 @@ class _ListCalculatePricingFujiScreenState
                                           DataColumn(label: _verticalDivider),
                                           DataColumn(
                                               label: const SizedBox(
-                                                  width: 150,
                                                   child: Text(
-                                                    "NAMA DESIGNER",
-                                                    style: TextStyle(
-                                                        fontSize: 15,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  )),
+                                                "NAMA DESIGNER",
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              )),
                                               onSort: (columnIndex, _) {
                                                 setState(() {
                                                   _currentSortColumn =
@@ -264,14 +262,13 @@ class _ListCalculatePricingFujiScreenState
                                           DataColumn(label: _verticalDivider),
                                           DataColumn(
                                               label: const SizedBox(
-                                                  width: 120,
                                                   child: Text(
-                                                    "BRAND",
-                                                    style: TextStyle(
-                                                        fontSize: 15,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  )),
+                                                "BRAND",
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              )),
                                               onSort: (columnIndex, _) {
                                                 setState(() {
                                                   _currentSortColumn =
@@ -333,14 +330,13 @@ class _ListCalculatePricingFujiScreenState
                                           DataColumn(label: _verticalDivider),
                                           DataColumn(
                                               label: const SizedBox(
-                                                  width: 120,
                                                   child: Text(
-                                                    "JENIS BARANG",
-                                                    style: TextStyle(
-                                                        fontSize: 15,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  )),
+                                                "JENIS BARANG",
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              )),
                                               onSort: (columnIndex, _) {
                                                 setState(() {
                                                   _currentSortColumn =
@@ -367,14 +363,13 @@ class _ListCalculatePricingFujiScreenState
                                           DataColumn(label: _verticalDivider),
                                           DataColumn(
                                               label: const SizedBox(
-                                                  width: 130,
                                                   child: Text(
-                                                    "ESTIMASI HARGA",
-                                                    style: TextStyle(
-                                                        fontSize: 15,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  )),
+                                                "ESTIMASI HARGA",
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              )),
                                               onSort: (columnIndex, _) {
                                                 setState(() {
                                                   _currentSortColumn =
