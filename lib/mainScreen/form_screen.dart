@@ -2259,7 +2259,7 @@ class _FormScreenState extends State<FormScreen> {
                   btnController.reset(); //reset
                 });
               } else {
-                Future.delayed(const Duration(seconds: 2)).then((value) async {
+                Future.delayed(const Duration(seconds: 1)).then((value) async {
                   btnController.success();
                   await showDialog<String>(
                       barrierDismissible: false,
@@ -2285,7 +2285,8 @@ class _FormScreenState extends State<FormScreen> {
                                                 const EdgeInsets.only(top: 15),
                                             child: ElevatedButton(
                                                 style: ElevatedButton.styleFrom(
-                                                    backgroundColor: Colors.blue,
+                                                    backgroundColor:
+                                                        Colors.blue,
                                                     shape:
                                                         RoundedRectangleBorder(
                                                             borderRadius:
@@ -2364,7 +2365,8 @@ class _FormScreenState extends State<FormScreen> {
                                                 const EdgeInsets.only(top: 15),
                                             child: ElevatedButton(
                                                 style: ElevatedButton.styleFrom(
-                                                    backgroundColor: Colors.blue,
+                                                    backgroundColor:
+                                                        Colors.blue,
                                                     shape:
                                                         RoundedRectangleBorder(
                                                             borderRadius:
@@ -2443,7 +2445,8 @@ class _FormScreenState extends State<FormScreen> {
                                                 const EdgeInsets.only(top: 15),
                                             child: ElevatedButton(
                                                 style: ElevatedButton.styleFrom(
-                                                    backgroundColor: Colors.blue,
+                                                    backgroundColor:
+                                                        Colors.blue,
                                                     shape:
                                                         RoundedRectangleBorder(
                                                             borderRadius:

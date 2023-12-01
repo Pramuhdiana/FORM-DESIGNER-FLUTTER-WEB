@@ -654,7 +654,7 @@ class _ListKebutuhanBatuScreenState extends State<ListKebutuhanBatuScreen> {
                     _getData(siklus.text);
 
                     //? tunggu 2 detik
-                    Future.delayed(const Duration(seconds: 2)).then((value) {
+                    Future.delayed(const Duration(seconds: 1)).then((value) {
                       //! lalu eksekusi fungsi ini
                       setState(() {
                         isLoading = true;

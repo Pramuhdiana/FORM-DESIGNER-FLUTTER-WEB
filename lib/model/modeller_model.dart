@@ -14,6 +14,7 @@ class ModellerModel {
   String? modeller;
   String? keterangan;
   String? createdAt;
+  String? updatedAt;
 
   ModellerModel(
       {this.id,
@@ -30,7 +31,8 @@ class ModellerModel {
       this.designer,
       this.modeller,
       this.keterangan,
-      this.createdAt});
+      this.createdAt,
+      this.updatedAt});
 
   ModellerModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -48,6 +50,7 @@ class ModellerModel {
     modeller = json['modeller'] ?? '';
     keterangan = json['keterangan'] ?? '';
     createdAt = json['createdAt'] ?? '';
+    updatedAt = json['updatedAt'] ?? '';
   }
 
   Map<String, dynamic> toJson() {
@@ -67,6 +70,7 @@ class ModellerModel {
     data['modeller'] = modeller;
     data['keterangan'] = keterangan;
     data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
     return data;
   }
 }

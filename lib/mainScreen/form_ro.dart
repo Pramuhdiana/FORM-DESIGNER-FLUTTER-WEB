@@ -3809,7 +3809,7 @@ class _FormROScreenState extends State<FormROScreen> {
                 });
                 return;
               }
-              Future.delayed(const Duration(seconds: 2)).then((value) async {
+              Future.delayed(const Duration(seconds: 1)).then((value) async {
                 btnController.success();
                 postAPI();
                 postApiQtyBatu1();

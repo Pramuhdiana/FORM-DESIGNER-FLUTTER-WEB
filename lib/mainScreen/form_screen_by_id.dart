@@ -3809,7 +3809,7 @@ class _FormScreenByIdState extends State<FormScreenById> {
                 });
                 return;
               }
-              Future.delayed(const Duration(seconds: 2)).then((value) async {
+              Future.delayed(const Duration(seconds: 1)).then((value) async {
                 btnController.success();
                 postAPI();
                 isBatu1 != true ? null : postApiQtyBatu1();

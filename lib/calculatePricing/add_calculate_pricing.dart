@@ -3291,12 +3291,12 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                 ),
                               ));
                       btnController.error();
-                      Future.delayed(const Duration(seconds: 2))
+                      Future.delayed(const Duration(seconds: 1))
                           .then((value) async {
                         btnController.reset();
                       });
                     })
-                  : Future.delayed(const Duration(seconds: 2))
+                  : Future.delayed(const Duration(seconds: 1))
                       .then((value) async {
                       btnController.success();
                       await postAPI();

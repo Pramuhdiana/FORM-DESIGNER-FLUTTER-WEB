@@ -1346,7 +1346,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               });
                           //call function another class
                           ExcelScreen().exportExcel(siklus.text);
-                          Future.delayed(const Duration(seconds: 2))
+                          Future.delayed(const Duration(seconds: 1))
                               .then((value) {
                             //! lalu eksekusi fungsi ini
                             Navigator.pop(context);
@@ -5807,6 +5807,7 @@ class RowSource extends DataTableSource {
                       MaterialPageRoute(
                           builder: (c) => FormViewScreen(
                                 modelDesigner: FormDesignerModel(
+                                  statusForm: data.statusForm,
                                   id: data.id,
                                   kodeDesignMdbc: data.kodeDesignMdbc,
                                   kodeMarketing: data.kodeMarketing,

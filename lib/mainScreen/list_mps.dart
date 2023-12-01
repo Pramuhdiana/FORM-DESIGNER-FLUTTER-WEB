@@ -306,7 +306,7 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
                       siklusDesigner = siklus.text.toString();
                       _getDataBySiklus(siklus.text);
                       //? tunggu 2 detik
-                      Future.delayed(const Duration(seconds: 2)).then((value) {
+                      Future.delayed(const Duration(seconds: 1)).then((value) {
                         //! lalu eksekusi fungsi ini
                         setState(() {
                           isLoading = true;
@@ -880,7 +880,7 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
                 siklusDesigner = siklus.text.toString();
                 _getDataBySiklus(siklus.text);
                 //? tunggu 2 detik
-                Future.delayed(const Duration(seconds: 2)).then((value) {
+                Future.delayed(const Duration(seconds: 1)).then((value) {
                   //! lalu eksekusi fungsi ini
                   setState(() {
                     isLoading = true;

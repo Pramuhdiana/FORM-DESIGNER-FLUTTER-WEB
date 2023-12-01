@@ -357,7 +357,7 @@ class _ListBatuScreenState extends State<ListBatuScreen> {
                               isLoading = false;
                             });
                             _switchValue = value;
-                            Future.delayed(const Duration(seconds: 2))
+                            Future.delayed(const Duration(seconds: 1))
                                 .then((value) {
                               //! lalu eksekusi fungsi ini
                               setState(() {

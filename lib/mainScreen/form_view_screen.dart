@@ -49,6 +49,8 @@ class _FormViewScreenState extends State<FormViewScreen> {
   // ignore: unused_field
   PlatformFile? _imageFile;
   String? noUrutBulan;
+  String? jenisBatu;
+  String? kodeKualitasBarang;
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   int beforeStokBatu1 = 0;
@@ -474,10 +476,12 @@ class _FormViewScreenState extends State<FormViewScreen> {
       RoundedLoadingButtonController();
   int count = 0;
   List<PlatformFile>? _paths;
+  String? status = 'NO';
 
   @override
   void initState() {
     super.initState();
+    status = widget.modelDesigner!.statusForm!.toString();
     kodeDesignMdbc.text = widget.modelDesigner!.kodeDesignMdbc!.toString();
     kodeMarketing.text = widget.modelDesigner!.kodeMarketing!.toString();
     kodeProduksi.text = widget.modelDesigner!.kodeProduksi!.toString();
@@ -594,20 +598,21 @@ class _FormViewScreenState extends State<FormViewScreen> {
         : DateFormat('dd/MMMM/yyyy').format(DateTime.parse(
             widget.modelDesigner!.tanggalInProduksi!.toString()));
 
-    bulanDesigner = DateFormat('MMMM')
-        .format(DateTime.parse(widget.modelDesigner!.created_at!.toString()));
-    valueBulanDesigner = DateFormat('MMyy')
-        .format(DateTime.parse(widget.modelDesigner!.created_at!.toString()));
-    String kodeMonth = DateFormat('M', 'id').format(DateTime.parse(widget.modelDesigner!.created_at!.toString()));
+    var now = DateTime.now();
+    bulanDesigner = DateFormat('MMMM', 'id').format(now);
+    valueBulanDesigner = DateFormat('MMyy', 'id').format(now);
+    String kodeMonth = DateFormat('M', 'id').format(now);
 
     kodeBulan = getHuruf(int.parse(kodeMonth));
 
     _getData();
     _getDataBatu();
   }
-String getHuruf(int angka) {
- return String.fromCharCode(angka + 64);
-}
+
+  String getHuruf(int angka) {
+    return String.fromCharCode(angka + 64);
+  }
+
   //start image
   XFile? image;
   final ImagePicker picker = ImagePicker();
@@ -659,6 +664,7 @@ String getHuruf(int angka) {
   }
 
   Future _getDataBatu() async {
+    print('masuk get batu');
     //batu1
     try {
       final response = await http.get(
@@ -1867,15 +1873,18 @@ String getHuruf(int angka) {
                   }
                   print('berhasil');
 
-                  Future.delayed(const Duration(seconds: 2))
+                  Future.delayed(const Duration(seconds: 1))
                       .then((value) async {
                     btnController.success();
                     await postAPI();
+                    await postDataModeller();
                     Future.delayed(const Duration(seconds: 1)).then((value) {
                       btnController.reset(); //reset
                       // ignore: use_build_context_synchronously
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (c) =>  MainViewScm(col:0)));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (c) => MainViewScm(col: 0)));
 
                       showDialog<String>(
                           context: context,
@@ -1913,7 +1922,7 @@ String getHuruf(int angka) {
                         });
                         return;
                       }
-                      Future.delayed(const Duration(seconds: 2))
+                      Future.delayed(const Duration(seconds: 1))
                           .then((value) async {
                         btnController.success();
                         await postPoint();
@@ -2088,7 +2097,8 @@ String getHuruf(int angka) {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   //kode marketing
-                  kodeMarketing.text.isEmpty && sharedPreferences!.getString('level') == '1'
+                  kodeMarketing.text.isEmpty &&
+                          sharedPreferences!.getString('level') == '1'
                       ? Container(
                           height: tinggiTextfield,
                           width: 200,
@@ -2097,71 +2107,195 @@ String getHuruf(int angka) {
                             child: CustomLoadingButton(
                               controller: btnGenerateKodeMarketing,
                               onPressed: () async {
-                                try {
-                                  final response = await http.get(Uri.parse(
-                                      ApiConstants.baseUrl +
-                                          ApiConstants.getDataModeller));
+                                await showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return StatefulBuilder(
+                                          builder:
+                                              (context, setState) =>
+                                                  AlertDialog(
 
-                                  // if response successful
-                                  if (response.statusCode == 200) {
-                                    List jsonResponse =
-                                        jsonDecode(response.body);
-                                    var allData = jsonResponse
-                                        .map((data) =>
-                                            ModellerModel.fromJson(data))
-                                        .toList();
+                                                      //Jenis Batu
+                                                      content: Stack(
+                                                          clipBehavior:
+                                                              Clip.none,
+                                                          children: <Widget>[
+                                                        Positioned(
+                                                          right: -47.0,
+                                                          top: -47.0,
+                                                          child: InkResponse(
+                                                            onTap: () {
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .pop();
+                                                            },
+                                                            child:
+                                                                const CircleAvatar(
+                                                              backgroundColor:
+                                                                  Colors.red,
+                                                              child: Icon(
+                                                                  Icons.close),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                          height: 120,
+                                                          child: Column(
+                                                            children: [
+                                                              Container(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                        .only(
+                                                                        left:
+                                                                            10,
+                                                                        right:
+                                                                            10),
+                                                                child: DecoratedBox(
+                                                                    decoration: BoxDecoration(
+                                                                        color: jenisBatu != null ? const Color.fromARGB(255, 8, 209, 69) : const Color.fromRGBO(238, 240, 235, 1), //background color of dropdown button
+                                                                        border: Border.all(
+                                                                          color:
+                                                                              Colors.black38,
+                                                                          // width:
+                                                                          //     3
+                                                                        ), //border of dropdown button
+                                                                        borderRadius: BorderRadius.circular(0), //border raiuds of dropdown button
+                                                                        boxShadow: const <BoxShadow>[
+                                                                          //apply shadow on Dropdown button
+                                                                          // BoxShadow(
+                                                                          //     color: Color.fromRGBO(
+                                                                          //         0,
+                                                                          //         0,
+                                                                          //         0,
+                                                                          //         0.57), //shadow for button
+                                                                          //     blurRadius:
+                                                                          //         5) //blur radius of shadow
+                                                                        ]),
+                                                                    child: Padding(
+                                                                        padding: const EdgeInsets.only(left: 10, right: 10),
+                                                                        child: DropdownButton(
+                                                                          value:
+                                                                              jenisBatu,
+                                                                          items: const [
+                                                                            //add items in the dropdown
+                                                                            DropdownMenuItem(
+                                                                              value: "VVS",
+                                                                              child: Text("VVS"),
+                                                                            ),
+                                                                            DropdownMenuItem(
+                                                                              value: "VS",
+                                                                              child: Text("VS"),
+                                                                            ),
+                                                                            DropdownMenuItem(
+                                                                              value: "SI",
+                                                                              child: Text("SI"),
+                                                                            )
+                                                                          ],
+                                                                          hint:
+                                                                              const Text('Jenis Batu'),
+                                                                          onChanged:
+                                                                              (value) {
+                                                                            jenisBatu =
+                                                                                value;
+                                                                            jenisBatu == 'SI'
+                                                                                ? kodeKualitasBarang = 'I'
+                                                                                : jenisBatu == 'VS'
+                                                                                    ? kodeKualitasBarang = 'E'
+                                                                                    : kodeKualitasBarang = 'A';
 
-                                    var filterByMonth = allData.where(
-                                        (element) =>
-                                            element.bulan
-                                                .toString()
-                                                .toLowerCase() ==
-                                            bulanDesigner!.toLowerCase());
-      var filterBynoUrut = filterByMonth.where((element) => element.noUrutBulan! > 0).toList();
+                                                                            setState(() =>
+                                                                                jenisBatu);
+                                                                          },
+                                                                          icon: const Padding(
+                                                                              padding: EdgeInsets.only(left: 20),
+                                                                              child: Icon(Icons.arrow_circle_down_sharp)),
+                                                                          iconEnabledColor:
+                                                                              Colors.black, //Icon color
+                                                                          style:
+                                                                              const TextStyle(
+                                                                            color:
+                                                                                Colors.black, //Font color
+                                                                            // fontSize:
+                                                                            //     15 //font size on dropdown button
+                                                                          ),
 
-                                    noUrutBulan = filterByMonth.isEmpty ? '0'.padLeft(3, '0')
-                                    :filterBynoUrut.last.noUrutBulan
-                                        .toString()
-                                        .padLeft(3, '0');
-                                    print(noUrutBulan);
-                                  } else {}
-                                } catch (c) {
-                                  print('err get data modeller : $c');
-                                }
-                                 try {
-                                  final response = await http.get(Uri.parse(
-                                      ApiConstants.baseUrl +
-                                          ApiConstants.getListJenisbarang));
+                                                                          dropdownColor:
+                                                                              Colors.white, //dropdown background color
+                                                                          underline:
+                                                                              Container(), //remove underline
+                                                                          isExpanded:
+                                                                              true, //make true to make width 100%
+                                                                        ))),
+                                                              ),
+                                                              Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                          .all(
+                                                                          8.0),
+                                                                  child: SizedBox(
+                                                                      width: 250,
+                                                                      height: 50,
+                                                                      child: ElevatedButton(
+                                                                          child: const Text("Simpan Data"),
+                                                                          onPressed: () async {
+                                                                            try {
+                                                                              final response = await http.get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getDataModeller));
 
-                                  // if response successful
-                                  if (response.statusCode == 200) {
-                                    List jsonResponse =
-                                        jsonDecode(response.body);
-                                    var allData = jsonResponse
-                                        .map((data) =>
-                                            JenisbarangModel.fromJson(data))
-                                        .toList();
+                                                                              // if response successful
+                                                                              if (response.statusCode == 200) {
+                                                                                List jsonResponse = json.decode(response.body);
+                                                                                var allData = jsonResponse.map((data) => ModellerModel.fromJson(data)).toList();
+                                                                                var filterByMonth = allData.where((element) => element.bulan.toString().toLowerCase() == bulanDesigner!.toString().toLowerCase());
+                                                                                var filterBynoUrut = filterByMonth.where((element) => element.noUrutBulan! > 0).toList();
+                                                                                noUrutBulan = filterByMonth.isEmpty
+                                                                                    ? '1'.padLeft(3, '0')
+                                                                                    : filterBynoUrut.isEmpty
+                                                                                        ? '1'.padLeft(3, '0')
+                                                                                        : (filterBynoUrut.last.noUrutBulan! + 1).toString().padLeft(3, '0');
+                                                                                print(noUrutBulan);
+                                                                              } else {}
+                                                                            } catch (c) {
+                                                                              print('err get data modeller : $c');
+                                                                            }
+                                                                            try {
+                                                                              final response = await http.get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getListJenisbarang));
 
-                                    var filterByMonth = allData.where(
-                                        (element) =>
-                                            element.nama
-                                                .toString()
-                                                .toLowerCase() ==
-                                            jenisBarang.text.toString().toLowerCase());
-                                            kodeJenisBarang = filterByMonth.first.kodeBarang;
-                                  } else {}
-                                } catch (c) {
-                                  print('err get data jenis barang : $c');
-                                }
-                                color.text == 'WG' ? kodeWarna = '0' : color.text == 'RG' ? kodeWarna = '2' : color.text == 'MIX' ?kodeWarna =  '4' :kodeWarna =  '5';
-                                Future.delayed(const Duration(seconds: 1))
-                                    .then((value) async {
-                                  btnGenerateKodeMarketing.success();
-                                });
+                                                                              // if response successful
+                                                                              if (response.statusCode == 200) {
+                                                                                List jsonResponse = jsonDecode(response.body);
+                                                                                var allData = jsonResponse.map((data) => JenisbarangModel.fromJson(data)).toList();
 
+                                                                                var filterByMonth = allData.where((element) => element.nama.toString().toLowerCase() == jenisBarang.text.toString().toLowerCase());
+                                                                                kodeJenisBarang = filterByMonth.first.kodeBarang;
+                                                                              } else {}
+                                                                            } catch (c) {
+                                                                              print('err get data jenis barang : $c');
+                                                                            }
+                                                                            color.text == 'WG'
+                                                                                ? kodeWarna = '0'
+                                                                                : color.text == 'RG'
+                                                                                    ? kodeWarna = '2'
+                                                                                    : color.text == 'MIX'
+                                                                                        ? kodeWarna = '4'
+                                                                                        : kodeWarna = '5';
+                                                                            Future.delayed(const Duration(seconds: 1)).then((value) async {
+                                                                              btnGenerateKodeMarketing.success();
+                                                                            });
+
+                                                                            setState(() {
+                                                                              kodeMarketing.text = '${kodeJenisBarang}0$valueBulanDesigner$noUrutBulan$kodeWarna${kodeKualitasBarang}01E';
+                                                                            });
+                                                                            // ignore: use_build_context_synchronously
+                                                                            Navigator.pop(context);
+                                                                          })))
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ])));
+                                    });
                                 setState(() {
                                   kodeMarketing.text =
-                                      '${kodeJenisBarang}0$valueBulanDesigner$noUrutBulan${kodeWarna}A01E';
+                                      '${kodeJenisBarang}0$valueBulanDesigner$noUrutBulan$kodeWarna${kodeKualitasBarang}01E';
                                 });
                               },
                               child: const Text('Generate\nKode Marketing'),
@@ -2171,9 +2305,10 @@ String getHuruf(int angka) {
                           height: tinggiTextfield,
                           width: 200,
                           child: TextFormField(
-                            readOnly: sharedPreferences!.getString('level') == '1'
-                        ? false
-                        : true,
+                            readOnly:
+                                sharedPreferences!.getString('level') == '1'
+                                    ? false
+                                    : true,
                             style: const TextStyle(
                                 fontSize: 14,
                                 color: Colors.black,
@@ -6391,28 +6526,25 @@ String getHuruf(int angka) {
   }
 
   postDataModeller() async {
-    Map<String, dynamic> body =
-                                                        {
-                                                  'kodeDesign' : kodeDesign.text,
-                                                  'jenisBatu' : 'VVS',
-                                                  'bulan' : bulanDesigner,
-                                                  'kodeBulan': kodeBulan,
-                                                  // 'noUrutBulan': noUrutBulan,
-                                                  // 'kodeMarketing': kodeMarketingDataModeller.text,
-                                                  // 'status': jenisBatu,
-                                                  // 'marketing': marketingDataModeller.text,
-                                                  // 'brand': brand,
-                                                  // 'designer': namaDesignerDataModeller.text,
-                                                  // 'modeller': namaModellerDataModeller.text,
-                                                  // 'keterangan': keteranganDataModeller.text
-                                                    };
-                                                    final response = await http.post(
-                                                        Uri.parse(ApiConstants
-                                                                .baseUrl +
-                                                            ApiConstants
-                                                                .postDataModeller),
-                                                        body: body);
-                                                    print(response.body);
+    Map<String, dynamic> body = {
+      'kodeDesign': kodeDesignMdbc.text,
+      'jenisBatu': jenisBatu,
+      'bulan': bulanDesigner,
+      'kodeBulan': kodeBulan,
+      'tema': tema.text,
+      'noUrutBulan': noUrutBulan,
+      'kodeMarketing': kodeMarketing.text,
+      'status': status,
+      'marketing': 'STEPHANIE',
+      'brand': brand.text,
+      'designer': namaDesigner.text,
+      'modeller': namaModeller.text,
+      'keterangan': ''
+    };
+    final response = await http.post(
+        Uri.parse(ApiConstants.baseUrl + ApiConstants.postDataModeller),
+        body: body);
+    print(response.body);
   }
 
   postPoint() async {
