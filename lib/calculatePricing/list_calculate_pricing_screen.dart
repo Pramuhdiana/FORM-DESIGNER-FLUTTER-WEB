@@ -226,224 +226,210 @@ class _ListCalculatePricingScreenState
                             child: Lottie.asset("loadingJSON/loadingV1.json"),
                           )))
                         : Expanded(
-                            child: SingleChildScrollView(
-                              scrollDirection: Axis.vertical,
-                              child: Container(
+                            child: ListView(children: [
+                              Container(
                                 padding: const EdgeInsets.all(15),
-                                width: MediaQuery.of(context).size.width * 1,
-                                child: SizedBox(
-                                  width: double.infinity,
-                                  child: Theme(
-                                    data: ThemeData.light().copyWith(
-                                        // cardColor: Theme.of(context).canvasColor),
-                                        cardColor: Colors.white,
-                                        hoverColor: Colors.grey.shade400,
-                                        dividerColor: Colors.grey),
-                                    child: PaginatedDataTable(
-                                        sortColumnIndex: _currentSortColumn,
-                                        sortAscending: sort,
-                                        rowsPerPage: 10,
-                                        columnSpacing: 1,
-                                        columns: [
-                                          DataColumn(
-                                              label: const SizedBox(
-                                                  child: Text(
-                                                "ID",
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              )),
-                                              onSort: (columnIndex, _) {
-                                                setState(() {
-                                                  _currentSortColumn =
-                                                      columnIndex;
-                                                  if (sort == true) {
-                                                    sort = false;
-                                                    filterCrm!.sort((a, b) =>
-                                                        a.id!.compareTo(b.id!));
-                                                  } else {
-                                                    sort = true;
-                                                    filterCrm!.sort((a, b) =>
-                                                        b.id!.compareTo(a.id!));
-                                                  }
-                                                });
-                                              }),
-                                          DataColumn(label: _verticalDivider),
-                                          DataColumn(
-                                              label: const SizedBox(
-                                                  child: Text(
-                                                "NAMA DESIGNER",
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              )),
-                                              onSort: (columnIndex, _) {
-                                                setState(() {
-                                                  _currentSortColumn =
-                                                      columnIndex;
-                                                  if (sort == true) {
-                                                    sort = false;
-                                                    filterCrm!.sort((a, b) => a
-                                                        .namaDesigner!
-                                                        .toLowerCase()
-                                                        .compareTo(b
-                                                            .namaDesigner!
-                                                            .toLowerCase()));
-                                                  } else {
-                                                    sort = true;
-                                                    filterCrm!.sort((a, b) => b
-                                                        .namaDesigner!
-                                                        .toLowerCase()
-                                                        .compareTo(a
-                                                            .namaDesigner!
-                                                            .toLowerCase()));
-                                                  }
-                                                });
-                                              }),
-                                          DataColumn(label: _verticalDivider),
-                                          DataColumn(
-                                              label: const SizedBox(
-                                                  child: Text(
-                                                "BRAND",
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              )),
-                                              onSort: (columnIndex, _) {
-                                                setState(() {
-                                                  _currentSortColumn =
-                                                      columnIndex;
-                                                  if (sort == true) {
-                                                    sort = false;
-                                                    filterCrm!.sort((a, b) => a
-                                                        .brand!
-                                                        .toLowerCase()
-                                                        .compareTo(b.brand!
-                                                            .toLowerCase()));
-                                                  } else {
-                                                    sort = true;
-                                                    filterCrm!.sort((a, b) => b
-                                                        .brand!
-                                                        .toLowerCase()
-                                                        .compareTo(a.brand!
-                                                            .toLowerCase()));
-                                                  }
-                                                });
-                                              }),
-                                          DataColumn(label: _verticalDivider),
-                                          DataColumn(
-                                              label: const SizedBox(
-                                                  child: Text(
-                                                "BERAT EMAS",
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              )),
-                                              onSort: (columnIndex, _) {
-                                                setState(() {
-                                                  _currentSortColumn =
-                                                      columnIndex;
-                                                  if (sort == true) {
-                                                    sort = false;
-                                                    filterCrm!.sort((a, b) =>
-                                                        a.beratEmas!.compareTo(
-                                                            b.beratEmas!));
-                                                  } else {
-                                                    sort = true;
-                                                    filterCrm!.sort((a, b) =>
-                                                        b.beratEmas!.compareTo(
-                                                            a.beratEmas!));
-                                                  }
-                                                });
-                                              }),
-                                          DataColumn(label: _verticalDivider),
-                                          const DataColumn(
-                                            label: SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.8,
+                                child: Theme(
+                                  data: ThemeData.light().copyWith(
+                                      // cardColor: Theme.of(context).canvasColor),
+                                      cardColor: Colors.white,
+                                      hoverColor: Colors.grey.shade400,
+                                      dividerColor: Colors.grey),
+                                  child: PaginatedDataTable(
+                                      sortColumnIndex: _currentSortColumn,
+                                      sortAscending: sort,
+                                      rowsPerPage: 10,
+                                      columnSpacing: 1,
+                                      columns: [
+                                        DataColumn(
+                                            label: const SizedBox(
                                                 child: Text(
-                                              "BERAT DIAMOND",
+                                              "ID",
                                               style: TextStyle(
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.bold),
                                             )),
-                                          ),
-                                          DataColumn(label: _verticalDivider),
-                                          DataColumn(
-                                              label: const SizedBox(
-                                                  child: Text(
-                                                "JENIS BARANG",
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              )),
-                                              onSort: (columnIndex, _) {
-                                                setState(() {
-                                                  _currentSortColumn =
-                                                      columnIndex;
-                                                  if (sort == true) {
-                                                    sort = false;
-                                                    filterCrm!.sort((a, b) => a
-                                                        .jenisBarang!
-                                                        .toLowerCase()
-                                                        .compareTo(b
-                                                            .jenisBarang!
-                                                            .toLowerCase()));
-                                                  } else {
-                                                    sort = true;
-                                                    filterCrm!.sort((a, b) => b
-                                                        .jenisBarang!
-                                                        .toLowerCase()
-                                                        .compareTo(a
-                                                            .jenisBarang!
-                                                            .toLowerCase()));
-                                                  }
-                                                });
-                                              }),
-                                          DataColumn(label: _verticalDivider),
-                                          DataColumn(
-                                              label: const SizedBox(
-                                                  child: Text(
-                                                "ESTIMASI HARGA",
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              )),
-                                              onSort: (columnIndex, _) {
-                                                setState(() {
-                                                  _currentSortColumn =
-                                                      columnIndex;
-                                                  if (sort == true) {
-                                                    // myCrm.sort((a, b) => a['estimasiHarga'].)
-                                                    sort = false;
-                                                    filterCrm!.sort((a, b) => a
-                                                        .estimasiHarga!
-                                                        .compareTo(
-                                                            b.estimasiHarga!));
-                                                    // onsortColum(columnIndex, ascending);
-                                                  } else {
-                                                    sort = true;
-                                                    filterCrm!.sort((a, b) => b
-                                                        .estimasiHarga!
-                                                        .compareTo(
-                                                            a.estimasiHarga!));
-                                                  }
-                                                });
-                                              }),
-                                        ],
-                                        source:
-                                            // UserDataTableSource(userData: filterCrm!)),
-                                            RowSource(
-                                                myData: myCrm,
-                                                count: myCrm!.length)),
-                                  ),
+                                            onSort: (columnIndex, _) {
+                                              setState(() {
+                                                _currentSortColumn =
+                                                    columnIndex;
+                                                if (sort == true) {
+                                                  sort = false;
+                                                  filterCrm!.sort((a, b) =>
+                                                      a.id!.compareTo(b.id!));
+                                                } else {
+                                                  sort = true;
+                                                  filterCrm!.sort((a, b) =>
+                                                      b.id!.compareTo(a.id!));
+                                                }
+                                              });
+                                            }),
+                                        DataColumn(label: _verticalDivider),
+                                        DataColumn(
+                                            label: const SizedBox(
+                                                child: Text(
+                                              "NAMA DESIGNER",
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold),
+                                            )),
+                                            onSort: (columnIndex, _) {
+                                              setState(() {
+                                                _currentSortColumn =
+                                                    columnIndex;
+                                                if (sort == true) {
+                                                  sort = false;
+                                                  filterCrm!.sort((a, b) => a
+                                                      .namaDesigner!
+                                                      .toLowerCase()
+                                                      .compareTo(b.namaDesigner!
+                                                          .toLowerCase()));
+                                                } else {
+                                                  sort = true;
+                                                  filterCrm!.sort((a, b) => b
+                                                      .namaDesigner!
+                                                      .toLowerCase()
+                                                      .compareTo(a.namaDesigner!
+                                                          .toLowerCase()));
+                                                }
+                                              });
+                                            }),
+                                        DataColumn(label: _verticalDivider),
+                                        DataColumn(
+                                            label: const SizedBox(
+                                                child: Text(
+                                              "BRAND",
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold),
+                                            )),
+                                            onSort: (columnIndex, _) {
+                                              setState(() {
+                                                _currentSortColumn =
+                                                    columnIndex;
+                                                if (sort == true) {
+                                                  sort = false;
+                                                  filterCrm!.sort((a, b) => a
+                                                      .brand!
+                                                      .toLowerCase()
+                                                      .compareTo(b.brand!
+                                                          .toLowerCase()));
+                                                } else {
+                                                  sort = true;
+                                                  filterCrm!.sort((a, b) => b
+                                                      .brand!
+                                                      .toLowerCase()
+                                                      .compareTo(a.brand!
+                                                          .toLowerCase()));
+                                                }
+                                              });
+                                            }),
+                                        DataColumn(label: _verticalDivider),
+                                        DataColumn(
+                                            label: const SizedBox(
+                                                child: Text(
+                                              "BERAT EMAS",
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold),
+                                            )),
+                                            onSort: (columnIndex, _) {
+                                              setState(() {
+                                                _currentSortColumn =
+                                                    columnIndex;
+                                                if (sort == true) {
+                                                  sort = false;
+                                                  filterCrm!.sort((a, b) => a
+                                                      .beratEmas!
+                                                      .compareTo(b.beratEmas!));
+                                                } else {
+                                                  sort = true;
+                                                  filterCrm!.sort((a, b) => b
+                                                      .beratEmas!
+                                                      .compareTo(a.beratEmas!));
+                                                }
+                                              });
+                                            }),
+                                        DataColumn(label: _verticalDivider),
+                                        const DataColumn(
+                                          label: SizedBox(
+                                              child: Text(
+                                            "BERAT DIAMOND",
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold),
+                                          )),
+                                        ),
+                                        DataColumn(label: _verticalDivider),
+                                        DataColumn(
+                                            label: const SizedBox(
+                                                child: Text(
+                                              "JENIS BARANG",
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold),
+                                            )),
+                                            onSort: (columnIndex, _) {
+                                              setState(() {
+                                                _currentSortColumn =
+                                                    columnIndex;
+                                                if (sort == true) {
+                                                  sort = false;
+                                                  filterCrm!.sort((a, b) => a
+                                                      .jenisBarang!
+                                                      .toLowerCase()
+                                                      .compareTo(b.jenisBarang!
+                                                          .toLowerCase()));
+                                                } else {
+                                                  sort = true;
+                                                  filterCrm!.sort((a, b) => b
+                                                      .jenisBarang!
+                                                      .toLowerCase()
+                                                      .compareTo(a.jenisBarang!
+                                                          .toLowerCase()));
+                                                }
+                                              });
+                                            }),
+                                        DataColumn(label: _verticalDivider),
+                                        DataColumn(
+                                            label: const SizedBox(
+                                                child: Text(
+                                              "ESTIMASI HARGA",
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold),
+                                            )),
+                                            onSort: (columnIndex, _) {
+                                              setState(() {
+                                                _currentSortColumn =
+                                                    columnIndex;
+                                                if (sort == true) {
+                                                  // myCrm.sort((a, b) => a['estimasiHarga'].)
+                                                  sort = false;
+                                                  filterCrm!.sort((a, b) => a
+                                                      .estimasiHarga!
+                                                      .compareTo(
+                                                          b.estimasiHarga!));
+                                                  // onsortColum(columnIndex, ascending);
+                                                } else {
+                                                  sort = true;
+                                                  filterCrm!.sort((a, b) => b
+                                                      .estimasiHarga!
+                                                      .compareTo(
+                                                          a.estimasiHarga!));
+                                                }
+                                              });
+                                            }),
+                                      ],
+                                      source:
+                                          // UserDataTableSource(userData: filterCrm!)),
+                                          RowSource(
+                                              myData: myCrm,
+                                              count: myCrm!.length)),
                                 ),
                               ),
-                            ),
+                            ]),
                           )
                   ],
                 ),

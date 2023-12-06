@@ -2271,6 +2271,26 @@ class _FormViewScreenState extends State<FormViewScreen> {
                                                                             } catch (c) {
                                                                               print('err get data jenis barang : $c');
                                                                             }
+
+                                                                            var kodeBrand =
+                                                                                '';
+                                                                            if (brand.text ==
+                                                                                'PARVA') {
+                                                                              kodeBrand = '0';
+                                                                              kodeJenisBarang = '$kodeJenisBarang$kodeBrand';
+                                                                            } else if (brand.text ==
+                                                                                'METIER') {
+                                                                              kodeBrand = 'M';
+                                                                              kodeJenisBarang = '$kodeBrand$kodeJenisBarang';
+                                                                            } else if (brand.text ==
+                                                                                'BELI BERLIAN') {
+                                                                              kodeBrand = 'B';
+                                                                              kodeJenisBarang = '$kodeBrand$kodeJenisBarang';
+                                                                            } else {
+                                                                              kodeBrand = '0';
+                                                                              kodeJenisBarang = '$kodeJenisBarang$kodeBrand';
+                                                                            }
+
                                                                             color.text == 'WG'
                                                                                 ? kodeWarna = '0'
                                                                                 : color.text == 'RG'
@@ -2283,7 +2303,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
                                                                             });
 
                                                                             setState(() {
-                                                                              kodeMarketing.text = '${kodeJenisBarang}0$valueBulanDesigner$noUrutBulan$kodeWarna${kodeKualitasBarang}01E';
+                                                                              kodeMarketing.text = '$kodeJenisBarang$valueBulanDesigner$noUrutBulan$kodeWarna${kodeKualitasBarang}01E';
                                                                             });
                                                                             // ignore: use_build_context_synchronously
                                                                             Navigator.pop(context);
@@ -2295,7 +2315,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
                                     });
                                 setState(() {
                                   kodeMarketing.text =
-                                      '${kodeJenisBarang}0$valueBulanDesigner$noUrutBulan$kodeWarna${kodeKualitasBarang}01E';
+                                      '$kodeJenisBarang$valueBulanDesigner$noUrutBulan$kodeWarna${kodeKualitasBarang}01E';
                                 });
                               },
                               child: const Text('Generate\nKode Marketing'),

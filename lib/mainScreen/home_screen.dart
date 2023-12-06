@@ -2850,222 +2850,211 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: const EdgeInsets.all(15),
                   width: 1300,
                   // width: MediaQuery.of(context).size.width * 0.9,
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: Theme(
-                      data: ThemeData.light().copyWith(
-                          // cardColor: Theme.of(context).canvasColor),
-                          cardColor: Colors.white,
-                          hoverColor: colorDasar,
-                          dividerColor: Colors.grey),
-                      child: PaginatedDataTable(
-                          // ignore: deprecated_member_use
-                          dataRowHeight: 200,
-                          sortColumnIndex: _currentSortColumn,
-                          sortAscending: sort,
-                          rowsPerPage: 10,
-                          columnSpacing: 0,
-                          columns: [
-                            DataColumn(
-                                label: const SizedBox(
-                                    child: Text(
-                                  "Kode MDBC",
+
+                  child: Theme(
+                    data: ThemeData.light().copyWith(
+                        // cardColor: Theme.of(context).canvasColor),
+                        cardColor: Colors.white,
+                        hoverColor: colorDasar,
+                        dividerColor: Colors.grey),
+                    child: PaginatedDataTable(
+                        // ignore: deprecated_member_use
+                        dataRowHeight: 200,
+                        sortColumnIndex: _currentSortColumn,
+                        sortAscending: sort,
+                        rowsPerPage: 10,
+                        columnSpacing: 0,
+                        columns: [
+                          DataColumn(
+                            label: Container(
+                                padding: const EdgeInsets.only(left: 0),
+                                child: const Text(
+                                  "Aksi",
                                   style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold),
                                 )),
-                                onSort: (columnIndex, _) {
-                                  setState(() {
-                                    _currentSortColumn = columnIndex;
-                                    if (sort == true) {
-                                      sort = false;
-                                      filterCrm!.sort((a, b) => a
-                                          .kodeDesignMdbc!
-                                          .toLowerCase()
-                                          .compareTo(
-                                              b.kodeDesignMdbc!.toLowerCase()));
-                                    } else {
-                                      sort = true;
-                                      filterCrm!.sort((a, b) => b
-                                          .kodeDesignMdbc!
-                                          .toLowerCase()
-                                          .compareTo(
-                                              a.kodeDesignMdbc!.toLowerCase()));
-                                    }
-                                  });
-                                }),
-                            DataColumn(label: _verticalDivider),
-                            DataColumn(
-                                label: SizedBox(
-                                    child: sharedPreferences!
-                                                .getString('level') !=
-                                            '1'
-                                        ? const Text(
-                                            "Kode Marketing",
-                                            style: TextStyle(
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.bold),
-                                          )
-                                        : const Text(
-                                            "Nama Designer",
-                                            style: TextStyle(
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.bold),
-                                          )),
-                                onSort: (columnIndex, _) {
-                                  setState(() {
-                                    _currentSortColumn = columnIndex;
-                                    if (sharedPreferences!.getString('level') ==
-                                        '1') {
-                                      if (sort == true) {
-                                        sort = false;
-                                        filterCrm!.sort((a, b) => a
-                                            .namaDesigner!
-                                            .toLowerCase()
-                                            .compareTo(
-                                                b.namaDesigner!.toLowerCase()));
-                                      } else {
-                                        sort = true;
-                                        filterCrm!.sort((a, b) => b
-                                            .namaDesigner!
-                                            .toLowerCase()
-                                            .compareTo(
-                                                a.namaDesigner!.toLowerCase()));
-                                      }
-                                    } else {
-                                      if (sort == true) {
-                                        sort = false;
-                                        filterCrm!.sort((a, b) => a
-                                            .kodeMarketing!
-                                            .toLowerCase()
-                                            .compareTo(b.kodeMarketing!
-                                                .toLowerCase()));
-                                      } else {
-                                        sort = true;
-                                        filterCrm!.sort((a, b) => b
-                                            .kodeMarketing!
-                                            .toLowerCase()
-                                            .compareTo(a.kodeMarketing!
-                                                .toLowerCase()));
-                                      }
-                                    }
-                                  });
-                                }),
-                            DataColumn(label: _verticalDivider),
-                            DataColumn(
-                                label: Container(
-                                    padding: const EdgeInsets.only(left: 35),
-                                    child: const Text(
-                                      "Tema",
-                                      style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold),
-                                    )),
-                                onSort: (columnIndex, _) {
-                                  setState(() {
-                                    _currentSortColumn = columnIndex;
-                                    if (sort == true) {
-                                      sort = false;
-                                      filterCrm!.sort((a, b) => a.tema!
-                                          .toLowerCase()
-                                          .compareTo(b.tema!.toLowerCase()));
-                                    } else {
-                                      sort = true;
-                                      filterCrm!.sort((a, b) => b.tema!
-                                          .toLowerCase()
-                                          .compareTo(a.tema!.toLowerCase()));
-                                    }
-                                  });
-                                }),
-                            DataColumn(label: _verticalDivider),
-                            DataColumn(
-                                label: const SizedBox(
-                                    child: Text(
-                                  "Jenis Barang",
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold),
-                                )),
-                                onSort: (columnIndex, _) {
-                                  setState(() {
-                                    _currentSortColumn = columnIndex;
-                                    if (sort == true) {
-                                      sort = false;
-                                      filterCrm!.sort((a, b) => a.jenisBarang!
-                                          .toLowerCase()
-                                          .compareTo(
-                                              b.jenisBarang!.toLowerCase()));
-                                    } else {
-                                      sort = true;
-                                      filterCrm!.sort((a, b) => b.jenisBarang!
-                                          .toLowerCase()
-                                          .compareTo(
-                                              a.jenisBarang!.toLowerCase()));
-                                    }
-                                  });
-                                }),
-                            DataColumn(label: _verticalDivider),
-                            DataColumn(
-                                label: const SizedBox(
-                                    child: Text(
-                                  "Harga",
-                                  maxLines: 2,
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold),
-                                )),
-                                onSort: (columnIndex, _) {
-                                  setState(() {
-                                    _currentSortColumn = columnIndex;
-                                    if (sort == true) {
-                                      // myCrm.sort((a, b) => a['estimasiHarga'].)
-                                      sort = false;
-                                      filterCrm!.sort((a, b) => a.estimasiHarga!
-                                          .compareTo(b.estimasiHarga!));
-                                      // onsortColum(columnIndex, ascending);
-                                    } else {
-                                      sort = true;
-                                      filterCrm!.sort((a, b) => b.estimasiHarga!
-                                          .compareTo(a.estimasiHarga!));
-                                    }
-                                  });
-                                }),
-                            DataColumn(label: _verticalDivider),
-                            const DataColumn(
-                              label: SizedBox(
+                          ),
+                          DataColumn(label: _verticalDivider),
+                          DataColumn(
+                              label: const SizedBox(
                                   child: Text(
-                                "Kelas\nHarga",
+                                "Kode MDBC",
                                 style: TextStyle(
                                     fontSize: 15, fontWeight: FontWeight.bold),
                               )),
-                            ),
-                            DataColumn(label: _verticalDivider),
-                            DataColumn(
+                              onSort: (columnIndex, _) {
+                                setState(() {
+                                  _currentSortColumn = columnIndex;
+                                  if (sort == true) {
+                                    sort = false;
+                                    filterCrm!.sort((a, b) => a.kodeDesignMdbc!
+                                        .toLowerCase()
+                                        .compareTo(
+                                            b.kodeDesignMdbc!.toLowerCase()));
+                                  } else {
+                                    sort = true;
+                                    filterCrm!.sort((a, b) => b.kodeDesignMdbc!
+                                        .toLowerCase()
+                                        .compareTo(
+                                            a.kodeDesignMdbc!.toLowerCase()));
+                                  }
+                                });
+                              }),
+                          DataColumn(label: _verticalDivider),
+                          DataColumn(
+                              label: SizedBox(
+                                  child:
+                                      sharedPreferences!.getString('level') !=
+                                              '1'
+                                          ? const Text(
+                                              "Kode Marketing",
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold),
+                                            )
+                                          : const Text(
+                                              "Nama\nDesigner",
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold),
+                                            )),
+                              onSort: (columnIndex, _) {
+                                setState(() {
+                                  _currentSortColumn = columnIndex;
+                                  if (sharedPreferences!.getString('level') ==
+                                      '1') {
+                                    if (sort == true) {
+                                      sort = false;
+                                      filterCrm!.sort((a, b) => a.namaDesigner!
+                                          .toLowerCase()
+                                          .compareTo(
+                                              b.namaDesigner!.toLowerCase()));
+                                    } else {
+                                      sort = true;
+                                      filterCrm!.sort((a, b) => b.namaDesigner!
+                                          .toLowerCase()
+                                          .compareTo(
+                                              a.namaDesigner!.toLowerCase()));
+                                    }
+                                  } else {
+                                    if (sort == true) {
+                                      sort = false;
+                                      filterCrm!.sort((a, b) => a.kodeMarketing!
+                                          .toLowerCase()
+                                          .compareTo(
+                                              b.kodeMarketing!.toLowerCase()));
+                                    } else {
+                                      sort = true;
+                                      filterCrm!.sort((a, b) => b.kodeMarketing!
+                                          .toLowerCase()
+                                          .compareTo(
+                                              a.kodeMarketing!.toLowerCase()));
+                                    }
+                                  }
+                                });
+                              }),
+                          DataColumn(label: _verticalDivider),
+                          DataColumn(
                               label: Container(
-                                  padding: const EdgeInsets.only(left: 30),
+                                  padding: const EdgeInsets.only(left: 35),
                                   child: const Text(
-                                    "Gambar",
+                                    "Tema",
                                     style: TextStyle(
                                         fontSize: 15,
                                         fontWeight: FontWeight.bold),
                                   )),
-                            ),
-                            DataColumn(label: _verticalDivider),
-                            DataColumn(
-                              label: Container(
-                                  padding: const EdgeInsets.only(left: 30),
-                                  child: const Text(
-                                    "Aksi",
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold),
-                                  )),
-                            ),
-                          ],
-                          source:
-                              // UserDataTableSource(userData: filterCrm!)),
-                              RowSource(myData: myCrm, count: myCrm!.length)),
-                    ),
+                              onSort: (columnIndex, _) {
+                                setState(() {
+                                  _currentSortColumn = columnIndex;
+                                  if (sort == true) {
+                                    sort = false;
+                                    filterCrm!.sort((a, b) => a.tema!
+                                        .toLowerCase()
+                                        .compareTo(b.tema!.toLowerCase()));
+                                  } else {
+                                    sort = true;
+                                    filterCrm!.sort((a, b) => b.tema!
+                                        .toLowerCase()
+                                        .compareTo(a.tema!.toLowerCase()));
+                                  }
+                                });
+                              }),
+                          DataColumn(label: _verticalDivider),
+                          DataColumn(
+                              label: const SizedBox(
+                                  child: Text(
+                                "Jenis Barang",
+                                style: TextStyle(
+                                    fontSize: 15, fontWeight: FontWeight.bold),
+                              )),
+                              onSort: (columnIndex, _) {
+                                setState(() {
+                                  _currentSortColumn = columnIndex;
+                                  if (sort == true) {
+                                    sort = false;
+                                    filterCrm!.sort((a, b) => a.jenisBarang!
+                                        .toLowerCase()
+                                        .compareTo(
+                                            b.jenisBarang!.toLowerCase()));
+                                  } else {
+                                    sort = true;
+                                    filterCrm!.sort((a, b) => b.jenisBarang!
+                                        .toLowerCase()
+                                        .compareTo(
+                                            a.jenisBarang!.toLowerCase()));
+                                  }
+                                });
+                              }),
+                          DataColumn(label: _verticalDivider),
+                          DataColumn(
+                              label: const SizedBox(
+                                  child: Text(
+                                "Harga",
+                                maxLines: 2,
+                                style: TextStyle(
+                                    fontSize: 15, fontWeight: FontWeight.bold),
+                              )),
+                              onSort: (columnIndex, _) {
+                                setState(() {
+                                  _currentSortColumn = columnIndex;
+                                  if (sort == true) {
+                                    // myCrm.sort((a, b) => a['estimasiHarga'].)
+                                    sort = false;
+                                    filterCrm!.sort((a, b) => a.estimasiHarga!
+                                        .compareTo(b.estimasiHarga!));
+                                    // onsortColum(columnIndex, ascending);
+                                  } else {
+                                    sort = true;
+                                    filterCrm!.sort((a, b) => b.estimasiHarga!
+                                        .compareTo(a.estimasiHarga!));
+                                  }
+                                });
+                              }),
+                          DataColumn(label: _verticalDivider),
+                          const DataColumn(
+                            label: SizedBox(
+                                child: Text(
+                              "Kelas\nHarga",
+                              style: TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.bold),
+                            )),
+                          ),
+                          DataColumn(label: _verticalDivider),
+                          DataColumn(
+                            label: Container(
+                                padding: const EdgeInsets.only(left: 30),
+                                child: const Text(
+                                  "Gambar",
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold),
+                                )),
+                          ),
+                        ],
+                        source:
+                            // UserDataTableSource(userData: filterCrm!)),
+                            RowSource(myData: myCrm, count: myCrm!.length)),
                   ),
                 ),
         ]);
@@ -4046,234 +4035,223 @@ class _HomeScreenState extends State<HomeScreen> {
                   : Container(
                       padding: const EdgeInsets.all(15),
                       width: 1300,
-                      child: SizedBox(
-                        width: double.infinity,
-                        child: Theme(
-                          data: ThemeData.light().copyWith(
-                              // cardColor: Theme.of(context).canvasColor),
-                              cardColor: Colors.white,
-                              hoverColor: Colors.grey.shade400,
-                              dividerColor: Colors.grey),
-                          child: PaginatedDataTable(
-                              // ignore: deprecated_member_use
-                              dataRowHeight: 200,
-                              sortColumnIndex: _currentSortColumn,
-                              sortAscending: sort,
-                              rowsPerPage: 10,
-                              columnSpacing: 0,
-                              columns: [
-                                DataColumn(
-                                    label: const SizedBox(
-                                        child: Text(
-                                      "Kode MDBC",
+                      child: Theme(
+                        data: ThemeData.light().copyWith(
+                            // cardColor: Theme.of(context).canvasColor),
+                            cardColor: Colors.white,
+                            hoverColor: Colors.grey.shade400,
+                            dividerColor: Colors.grey),
+                        child: PaginatedDataTable(
+                            // ignore: deprecated_member_use
+                            dataRowHeight: 200,
+                            sortColumnIndex: _currentSortColumn,
+                            sortAscending: sort,
+                            rowsPerPage: 10,
+                            columnSpacing: 0,
+                            columns: [
+                              DataColumn(
+                                label: Container(
+                                    padding: const EdgeInsets.only(left: 0),
+                                    child: const Text(
+                                      "Aksi",
                                       style: TextStyle(
                                           fontSize: 15,
                                           fontWeight: FontWeight.bold),
                                     )),
-                                    onSort: (columnIndex, _) {
-                                      setState(() {
-                                        _currentSortColumn = columnIndex;
-                                        if (sort == true) {
-                                          sort = false;
-                                          filterCrm!.sort((a, b) => a
-                                              .kodeDesignMdbc!
-                                              .toLowerCase()
-                                              .compareTo(b.kodeDesignMdbc!
-                                                  .toLowerCase()));
-                                        } else {
-                                          sort = true;
-                                          filterCrm!.sort((a, b) => b
-                                              .kodeDesignMdbc!
-                                              .toLowerCase()
-                                              .compareTo(a.kodeDesignMdbc!
-                                                  .toLowerCase()));
-                                        }
-                                      });
-                                    }),
-                                DataColumn(label: _verticalDivider),
-                                DataColumn(
-                                    label: SizedBox(
-                                        child: sharedPreferences!
-                                                    .getString('level') !=
-                                                '1'
-                                            ? const Text(
-                                                "Kode Marketing",
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              )
-                                            : const Text(
-                                                "Nama Designer",
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              )),
-                                    onSort: (columnIndex, _) {
-                                      setState(() {
-                                        _currentSortColumn = columnIndex;
-                                        if (sharedPreferences!
-                                                .getString('level') ==
-                                            '1') {
-                                          if (sort == true) {
-                                            sort = false;
-                                            filterCrm!.sort((a, b) => a
-                                                .namaDesigner!
-                                                .toLowerCase()
-                                                .compareTo(b.namaDesigner!
-                                                    .toLowerCase()));
-                                          } else {
-                                            sort = true;
-                                            filterCrm!.sort((a, b) => b
-                                                .namaDesigner!
-                                                .toLowerCase()
-                                                .compareTo(a.namaDesigner!
-                                                    .toLowerCase()));
-                                          }
-                                        } else {
-                                          if (sort == true) {
-                                            sort = false;
-                                            filterCrm!.sort((a, b) => a
-                                                .kodeMarketing!
-                                                .toLowerCase()
-                                                .compareTo(b.kodeMarketing!
-                                                    .toLowerCase()));
-                                          } else {
-                                            sort = true;
-                                            filterCrm!.sort((a, b) => b
-                                                .kodeMarketing!
-                                                .toLowerCase()
-                                                .compareTo(a.kodeMarketing!
-                                                    .toLowerCase()));
-                                          }
-                                        }
-                                      });
-                                    }),
-                                DataColumn(label: _verticalDivider),
-                                DataColumn(
-                                    label: Container(
-                                        padding:
-                                            const EdgeInsets.only(left: 35),
-                                        child: const Text(
-                                          "Tema",
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.bold),
-                                        )),
-                                    onSort: (columnIndex, _) {
-                                      setState(() {
-                                        _currentSortColumn = columnIndex;
-                                        if (sort == true) {
-                                          sort = false;
-                                          filterCrm!.sort((a, b) => a.tema!
-                                              .toLowerCase()
-                                              .compareTo(
-                                                  b.tema!.toLowerCase()));
-                                        } else {
-                                          sort = true;
-                                          filterCrm!.sort((a, b) => b.tema!
-                                              .toLowerCase()
-                                              .compareTo(
-                                                  a.tema!.toLowerCase()));
-                                        }
-                                      });
-                                    }),
-                                DataColumn(label: _verticalDivider),
-                                DataColumn(
-                                    label: const SizedBox(
-                                        child: Text(
-                                      "Jenis Barang",
-                                      style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold),
-                                    )),
-                                    onSort: (columnIndex, _) {
-                                      setState(() {
-                                        _currentSortColumn = columnIndex;
-                                        if (sort == true) {
-                                          sort = false;
-                                          filterCrm!.sort((a, b) => a
-                                              .jenisBarang!
-                                              .toLowerCase()
-                                              .compareTo(b.jenisBarang!
-                                                  .toLowerCase()));
-                                        } else {
-                                          sort = true;
-                                          filterCrm!.sort((a, b) => b
-                                              .jenisBarang!
-                                              .toLowerCase()
-                                              .compareTo(a.jenisBarang!
-                                                  .toLowerCase()));
-                                        }
-                                      });
-                                    }),
-                                DataColumn(label: _verticalDivider),
-                                DataColumn(
-                                    label: const SizedBox(
-                                        child: Text(
-                                      "Harga",
-                                      maxLines: 2,
-                                      style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold),
-                                    )),
-                                    onSort: (columnIndex, _) {
-                                      setState(() {
-                                        _currentSortColumn = columnIndex;
-                                        if (sort == true) {
-                                          // myCrm.sort((a, b) => a['estimasiHarga'].)
-                                          sort = false;
-                                          filterCrm!.sort((a, b) => a
-                                              .estimasiHarga!
-                                              .compareTo(b.estimasiHarga!));
-                                          // onsortColum(columnIndex, ascending);
-                                        } else {
-                                          sort = true;
-                                          filterCrm!.sort((a, b) => b
-                                              .estimasiHarga!
-                                              .compareTo(a.estimasiHarga!));
-                                        }
-                                      });
-                                    }),
-                                DataColumn(label: _verticalDivider),
-                                const DataColumn(
-                                  label: SizedBox(
+                              ),
+                              DataColumn(label: _verticalDivider),
+                              DataColumn(
+                                  label: const SizedBox(
                                       child: Text(
-                                    "Kelas\nHarga",
+                                    "Kode MDBC",
                                     style: TextStyle(
                                         fontSize: 15,
                                         fontWeight: FontWeight.bold),
                                   )),
-                                ),
-                                DataColumn(label: _verticalDivider),
-                                DataColumn(
+                                  onSort: (columnIndex, _) {
+                                    setState(() {
+                                      _currentSortColumn = columnIndex;
+                                      if (sort == true) {
+                                        sort = false;
+                                        filterCrm!.sort((a, b) => a
+                                            .kodeDesignMdbc!
+                                            .toLowerCase()
+                                            .compareTo(b.kodeDesignMdbc!
+                                                .toLowerCase()));
+                                      } else {
+                                        sort = true;
+                                        filterCrm!.sort((a, b) => b
+                                            .kodeDesignMdbc!
+                                            .toLowerCase()
+                                            .compareTo(a.kodeDesignMdbc!
+                                                .toLowerCase()));
+                                      }
+                                    });
+                                  }),
+                              DataColumn(label: _verticalDivider),
+                              DataColumn(
+                                  label: SizedBox(
+                                      child: sharedPreferences!
+                                                  .getString('level') !=
+                                              '1'
+                                          ? const Text(
+                                              "Kode Marketing",
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold),
+                                            )
+                                          : const Text(
+                                              "Nama\nDesigner",
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold),
+                                            )),
+                                  onSort: (columnIndex, _) {
+                                    setState(() {
+                                      _currentSortColumn = columnIndex;
+                                      if (sharedPreferences!
+                                              .getString('level') ==
+                                          '1') {
+                                        if (sort == true) {
+                                          sort = false;
+                                          filterCrm!.sort((a, b) => a
+                                              .namaDesigner!
+                                              .toLowerCase()
+                                              .compareTo(b.namaDesigner!
+                                                  .toLowerCase()));
+                                        } else {
+                                          sort = true;
+                                          filterCrm!.sort((a, b) => b
+                                              .namaDesigner!
+                                              .toLowerCase()
+                                              .compareTo(a.namaDesigner!
+                                                  .toLowerCase()));
+                                        }
+                                      } else {
+                                        if (sort == true) {
+                                          sort = false;
+                                          filterCrm!.sort((a, b) => a
+                                              .kodeMarketing!
+                                              .toLowerCase()
+                                              .compareTo(b.kodeMarketing!
+                                                  .toLowerCase()));
+                                        } else {
+                                          sort = true;
+                                          filterCrm!.sort((a, b) => b
+                                              .kodeMarketing!
+                                              .toLowerCase()
+                                              .compareTo(a.kodeMarketing!
+                                                  .toLowerCase()));
+                                        }
+                                      }
+                                    });
+                                  }),
+                              DataColumn(label: _verticalDivider),
+                              DataColumn(
                                   label: Container(
-                                      padding: const EdgeInsets.only(left: 30),
+                                      padding: const EdgeInsets.only(left: 35),
                                       child: const Text(
-                                        "Gambar",
+                                        "Tema",
                                         style: TextStyle(
                                             fontSize: 15,
                                             fontWeight: FontWeight.bold),
                                       )),
-                                ),
-                                DataColumn(label: _verticalDivider),
-                                DataColumn(
-                                  label: Container(
-                                      padding: const EdgeInsets.only(left: 30),
-                                      child: const Text(
-                                        "Aksi",
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                ),
-                              ],
-                              source:
-                                  // UserDataTableSource(userData: filterCrm!)),
-                                  RowSource(
-                                      myData: myCrm, count: myCrm!.length)),
-                        ),
+                                  onSort: (columnIndex, _) {
+                                    setState(() {
+                                      _currentSortColumn = columnIndex;
+                                      if (sort == true) {
+                                        sort = false;
+                                        filterCrm!.sort((a, b) => a.tema!
+                                            .toLowerCase()
+                                            .compareTo(b.tema!.toLowerCase()));
+                                      } else {
+                                        sort = true;
+                                        filterCrm!.sort((a, b) => b.tema!
+                                            .toLowerCase()
+                                            .compareTo(a.tema!.toLowerCase()));
+                                      }
+                                    });
+                                  }),
+                              DataColumn(label: _verticalDivider),
+                              DataColumn(
+                                  label: const SizedBox(
+                                      child: Text(
+                                    "Jenis Barang",
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold),
+                                  )),
+                                  onSort: (columnIndex, _) {
+                                    setState(() {
+                                      _currentSortColumn = columnIndex;
+                                      if (sort == true) {
+                                        sort = false;
+                                        filterCrm!.sort((a, b) => a.jenisBarang!
+                                            .toLowerCase()
+                                            .compareTo(
+                                                b.jenisBarang!.toLowerCase()));
+                                      } else {
+                                        sort = true;
+                                        filterCrm!.sort((a, b) => b.jenisBarang!
+                                            .toLowerCase()
+                                            .compareTo(
+                                                a.jenisBarang!.toLowerCase()));
+                                      }
+                                    });
+                                  }),
+                              DataColumn(label: _verticalDivider),
+                              DataColumn(
+                                  label: const SizedBox(
+                                      child: Text(
+                                    "Harga",
+                                    maxLines: 2,
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold),
+                                  )),
+                                  onSort: (columnIndex, _) {
+                                    setState(() {
+                                      _currentSortColumn = columnIndex;
+                                      if (sort == true) {
+                                        // myCrm.sort((a, b) => a['estimasiHarga'].)
+                                        sort = false;
+                                        filterCrm!.sort((a, b) => a
+                                            .estimasiHarga!
+                                            .compareTo(b.estimasiHarga!));
+                                        // onsortColum(columnIndex, ascending);
+                                      } else {
+                                        sort = true;
+                                        filterCrm!.sort((a, b) => b
+                                            .estimasiHarga!
+                                            .compareTo(a.estimasiHarga!));
+                                      }
+                                    });
+                                  }),
+                              DataColumn(label: _verticalDivider),
+                              const DataColumn(
+                                label: SizedBox(
+                                    child: Text(
+                                  "Kelas\nHarga",
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold),
+                                )),
+                              ),
+                              DataColumn(label: _verticalDivider),
+                              DataColumn(
+                                label: Container(
+                                    padding: const EdgeInsets.only(left: 30),
+                                    child: const Text(
+                                      "Gambar",
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
+                                    )),
+                              ),
+                            ],
+                            source:
+                                // UserDataTableSource(userData: filterCrm!)),
+                                RowSource(myData: myCrm, count: myCrm!.length)),
                       ),
                     ),
             ]));
@@ -4941,13 +4919,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                               .toString()
                                                                               .toLowerCase() ==
                                                                           "arif kurniawan"
-                                                                      ? '$pointArif'
+                                                                      ? pointArif
+                                                                          .toStringAsFixed(
+                                                                              2)
                                                                       : sharedPreferences!.getString('nama')!.toString().toLowerCase() ==
                                                                               "aris pravidan"
-                                                                          ? '$pointAris'
+                                                                          ? pointAris
+                                                                              .toStringAsFixed(2)
                                                                           : sharedPreferences!.getString('nama')!.toString().toLowerCase() == "fikryansyah"
-                                                                              ? '$pointFikri'
-                                                                              : '$pointyuse',
+                                                                              ? pointFikri.toStringAsFixed(2)
+                                                                              : pointyuse.toStringAsFixed(2),
                                                                   style: const TextStyle(
                                                                       fontSize:
                                                                           14,
@@ -5125,226 +5106,219 @@ class _HomeScreenState extends State<HomeScreen> {
                 : Container(
                     padding: const EdgeInsets.all(15),
                     width: 1300,
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: Theme(
-                        data: ThemeData.light().copyWith(
-                            // cardColor: Theme.of(context).canvasColor),
-                            cardColor: Colors.white,
-                            hoverColor: Colors.grey.shade400,
-                            dividerColor: Colors.grey),
-                        child: PaginatedDataTable(
-                            // ignore: deprecated_member_use
-                            dataRowHeight: 200,
-                            sortColumnIndex: _currentSortColumn,
-                            sortAscending: sort,
-                            rowsPerPage: 10,
-                            columnSpacing: 0,
-                            columns: [
-                              DataColumn(
-                                  label: const SizedBox(
-                                      child: Text(
-                                    "Kode MDBC",
+                    child: Theme(
+                      data: ThemeData.light().copyWith(
+                          // cardColor: Theme.of(context).canvasColor),
+                          cardColor: Colors.white,
+                          hoverColor: Colors.grey.shade400,
+                          dividerColor: Colors.grey),
+                      child: PaginatedDataTable(
+                          // ignore: deprecated_member_use
+                          dataRowHeight: 200,
+                          sortColumnIndex: _currentSortColumn,
+                          sortAscending: sort,
+                          rowsPerPage: 10,
+                          columnSpacing: 0,
+                          columns: [
+                            DataColumn(
+                              label: Container(
+                                  padding: const EdgeInsets.only(left: 0),
+                                  child: const Text(
+                                    "Aksi",
                                     style: TextStyle(
                                         fontSize: 15,
                                         fontWeight: FontWeight.bold),
                                   )),
-                                  onSort: (columnIndex, _) {
-                                    setState(() {
-                                      _currentSortColumn = columnIndex;
-                                      if (sort == true) {
-                                        sort = false;
-                                        filterCrm!.sort((a, b) => a
-                                            .kodeDesignMdbc!
-                                            .toLowerCase()
-                                            .compareTo(b.kodeDesignMdbc!
-                                                .toLowerCase()));
-                                      } else {
-                                        sort = true;
-                                        filterCrm!.sort((a, b) => b
-                                            .kodeDesignMdbc!
-                                            .toLowerCase()
-                                            .compareTo(a.kodeDesignMdbc!
-                                                .toLowerCase()));
-                                      }
-                                    });
-                                  }),
-                              DataColumn(label: _verticalDivider),
-                              DataColumn(
-                                  label: SizedBox(
-                                      child: sharedPreferences!
-                                                  .getString('level') !=
-                                              '1'
-                                          ? const Text(
-                                              "Kode Marketing",
-                                              style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold),
-                                            )
-                                          : const Text(
-                                              "Nama Designer",
-                                              style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold),
-                                            )),
-                                  onSort: (columnIndex, _) {
-                                    setState(() {
-                                      _currentSortColumn = columnIndex;
-                                      if (sharedPreferences!
-                                              .getString('level') ==
-                                          '1') {
-                                        if (sort == true) {
-                                          sort = false;
-                                          filterCrm!.sort((a, b) => a
-                                              .namaDesigner!
-                                              .toLowerCase()
-                                              .compareTo(b.namaDesigner!
-                                                  .toLowerCase()));
-                                        } else {
-                                          sort = true;
-                                          filterCrm!.sort((a, b) => b
-                                              .namaDesigner!
-                                              .toLowerCase()
-                                              .compareTo(a.namaDesigner!
-                                                  .toLowerCase()));
-                                        }
-                                      } else {
-                                        if (sort == true) {
-                                          sort = false;
-                                          filterCrm!.sort((a, b) => a
-                                              .kodeMarketing!
-                                              .toLowerCase()
-                                              .compareTo(b.kodeMarketing!
-                                                  .toLowerCase()));
-                                        } else {
-                                          sort = true;
-                                          filterCrm!.sort((a, b) => b
-                                              .kodeMarketing!
-                                              .toLowerCase()
-                                              .compareTo(a.kodeMarketing!
-                                                  .toLowerCase()));
-                                        }
-                                      }
-                                    });
-                                  }),
-                              DataColumn(label: _verticalDivider),
-                              DataColumn(
-                                  label: Container(
-                                      padding: const EdgeInsets.only(left: 35),
-                                      child: const Text(
-                                        "Tema",
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                  onSort: (columnIndex, _) {
-                                    setState(() {
-                                      _currentSortColumn = columnIndex;
-                                      if (sort == true) {
-                                        sort = false;
-                                        filterCrm!.sort((a, b) => a.tema!
-                                            .toLowerCase()
-                                            .compareTo(b.tema!.toLowerCase()));
-                                      } else {
-                                        sort = true;
-                                        filterCrm!.sort((a, b) => b.tema!
-                                            .toLowerCase()
-                                            .compareTo(a.tema!.toLowerCase()));
-                                      }
-                                    });
-                                  }),
-                              DataColumn(label: _verticalDivider),
-                              DataColumn(
-                                  label: const SizedBox(
-                                      child: Text(
-                                    "Jenis Barang",
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold),
-                                  )),
-                                  onSort: (columnIndex, _) {
-                                    setState(() {
-                                      _currentSortColumn = columnIndex;
-                                      if (sort == true) {
-                                        sort = false;
-                                        filterCrm!.sort((a, b) => a.jenisBarang!
-                                            .toLowerCase()
-                                            .compareTo(
-                                                b.jenisBarang!.toLowerCase()));
-                                      } else {
-                                        sort = true;
-                                        filterCrm!.sort((a, b) => b.jenisBarang!
-                                            .toLowerCase()
-                                            .compareTo(
-                                                a.jenisBarang!.toLowerCase()));
-                                      }
-                                    });
-                                  }),
-                              DataColumn(label: _verticalDivider),
-                              DataColumn(
-                                  label: const SizedBox(
-                                      child: Text(
-                                    "Harga",
-                                    maxLines: 2,
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold),
-                                  )),
-                                  onSort: (columnIndex, _) {
-                                    setState(() {
-                                      _currentSortColumn = columnIndex;
-                                      if (sort == true) {
-                                        // myCrm.sort((a, b) => a['estimasiHarga'].)
-                                        sort = false;
-                                        filterCrm!.sort((a, b) => a
-                                            .estimasiHarga!
-                                            .compareTo(b.estimasiHarga!));
-                                        // onsortColum(columnIndex, ascending);
-                                      } else {
-                                        sort = true;
-                                        filterCrm!.sort((a, b) => b
-                                            .estimasiHarga!
-                                            .compareTo(a.estimasiHarga!));
-                                      }
-                                    });
-                                  }),
-                              DataColumn(label: _verticalDivider),
-                              const DataColumn(
-                                label: SizedBox(
+                            ),
+                            DataColumn(label: _verticalDivider),
+                            DataColumn(
+                                label: const SizedBox(
                                     child: Text(
-                                  "Kelas\nHarga",
+                                  "Kode MDBC",
                                   style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold),
                                 )),
-                              ),
-                              DataColumn(label: _verticalDivider),
-                              DataColumn(
+                                onSort: (columnIndex, _) {
+                                  setState(() {
+                                    _currentSortColumn = columnIndex;
+                                    if (sort == true) {
+                                      sort = false;
+                                      filterCrm!.sort((a, b) => a
+                                          .kodeDesignMdbc!
+                                          .toLowerCase()
+                                          .compareTo(
+                                              b.kodeDesignMdbc!.toLowerCase()));
+                                    } else {
+                                      sort = true;
+                                      filterCrm!.sort((a, b) => b
+                                          .kodeDesignMdbc!
+                                          .toLowerCase()
+                                          .compareTo(
+                                              a.kodeDesignMdbc!.toLowerCase()));
+                                    }
+                                  });
+                                }),
+                            DataColumn(label: _verticalDivider),
+                            DataColumn(
+                                label: SizedBox(
+                                    child: sharedPreferences!
+                                                .getString('level') !=
+                                            '1'
+                                        ? const Text(
+                                            "Kode Marketing",
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold),
+                                          )
+                                        : const Text(
+                                            "Nama\nDesigner",
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold),
+                                          )),
+                                onSort: (columnIndex, _) {
+                                  setState(() {
+                                    _currentSortColumn = columnIndex;
+                                    if (sharedPreferences!.getString('level') ==
+                                        '1') {
+                                      if (sort == true) {
+                                        sort = false;
+                                        filterCrm!.sort((a, b) => a
+                                            .namaDesigner!
+                                            .toLowerCase()
+                                            .compareTo(
+                                                b.namaDesigner!.toLowerCase()));
+                                      } else {
+                                        sort = true;
+                                        filterCrm!.sort((a, b) => b
+                                            .namaDesigner!
+                                            .toLowerCase()
+                                            .compareTo(
+                                                a.namaDesigner!.toLowerCase()));
+                                      }
+                                    } else {
+                                      if (sort == true) {
+                                        sort = false;
+                                        filterCrm!.sort((a, b) => a
+                                            .kodeMarketing!
+                                            .toLowerCase()
+                                            .compareTo(b.kodeMarketing!
+                                                .toLowerCase()));
+                                      } else {
+                                        sort = true;
+                                        filterCrm!.sort((a, b) => b
+                                            .kodeMarketing!
+                                            .toLowerCase()
+                                            .compareTo(a.kodeMarketing!
+                                                .toLowerCase()));
+                                      }
+                                    }
+                                  });
+                                }),
+                            DataColumn(label: _verticalDivider),
+                            DataColumn(
                                 label: Container(
-                                    padding: const EdgeInsets.only(left: 30),
+                                    padding: const EdgeInsets.only(left: 35),
                                     child: const Text(
-                                      "Gambar",
+                                      "Tema",
                                       style: TextStyle(
                                           fontSize: 15,
                                           fontWeight: FontWeight.bold),
                                     )),
-                              ),
-                              DataColumn(label: _verticalDivider),
-                              DataColumn(
-                                label: Container(
-                                    padding: const EdgeInsets.only(left: 30),
-                                    child: const Text(
-                                      "Aksi",
-                                      style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold),
-                                    )),
-                              ),
-                            ],
-                            source:
-                                // UserDataTableSource(userData: filterCrm!)),
-                                RowSource(myData: myCrm, count: myCrm!.length)),
-                      ),
+                                onSort: (columnIndex, _) {
+                                  setState(() {
+                                    _currentSortColumn = columnIndex;
+                                    if (sort == true) {
+                                      sort = false;
+                                      filterCrm!.sort((a, b) => a.tema!
+                                          .toLowerCase()
+                                          .compareTo(b.tema!.toLowerCase()));
+                                    } else {
+                                      sort = true;
+                                      filterCrm!.sort((a, b) => b.tema!
+                                          .toLowerCase()
+                                          .compareTo(a.tema!.toLowerCase()));
+                                    }
+                                  });
+                                }),
+                            DataColumn(label: _verticalDivider),
+                            DataColumn(
+                                label: const SizedBox(
+                                    child: Text(
+                                  "Jenis Barang",
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold),
+                                )),
+                                onSort: (columnIndex, _) {
+                                  setState(() {
+                                    _currentSortColumn = columnIndex;
+                                    if (sort == true) {
+                                      sort = false;
+                                      filterCrm!.sort((a, b) => a.jenisBarang!
+                                          .toLowerCase()
+                                          .compareTo(
+                                              b.jenisBarang!.toLowerCase()));
+                                    } else {
+                                      sort = true;
+                                      filterCrm!.sort((a, b) => b.jenisBarang!
+                                          .toLowerCase()
+                                          .compareTo(
+                                              a.jenisBarang!.toLowerCase()));
+                                    }
+                                  });
+                                }),
+                            DataColumn(label: _verticalDivider),
+                            DataColumn(
+                                label: const SizedBox(
+                                    child: Text(
+                                  "Harga",
+                                  maxLines: 2,
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold),
+                                )),
+                                onSort: (columnIndex, _) {
+                                  setState(() {
+                                    _currentSortColumn = columnIndex;
+                                    if (sort == true) {
+                                      // myCrm.sort((a, b) => a['estimasiHarga'].)
+                                      sort = false;
+                                      filterCrm!.sort((a, b) => a.estimasiHarga!
+                                          .compareTo(b.estimasiHarga!));
+                                      // onsortColum(columnIndex, ascending);
+                                    } else {
+                                      sort = true;
+                                      filterCrm!.sort((a, b) => b.estimasiHarga!
+                                          .compareTo(a.estimasiHarga!));
+                                    }
+                                  });
+                                }),
+                            DataColumn(label: _verticalDivider),
+                            const DataColumn(
+                              label: SizedBox(
+                                  child: Text(
+                                "Kelas\nHarga",
+                                style: TextStyle(
+                                    fontSize: 15, fontWeight: FontWeight.bold),
+                              )),
+                            ),
+                            DataColumn(label: _verticalDivider),
+                            DataColumn(
+                              label: Container(
+                                  padding: const EdgeInsets.only(left: 30),
+                                  child: const Text(
+                                    "Gambar",
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold),
+                                  )),
+                            ),
+                          ],
+                          source:
+                              // UserDataTableSource(userData: filterCrm!)),
+                              RowSource(myData: myCrm, count: myCrm!.length)),
                     ),
                   ),
           ]),
@@ -5384,144 +5358,10 @@ class RowSource extends DataTableSource {
     // ignore: prefer_interpolation_to_compose_strings
     String? updateSiklus = '';
     return DataRow(cells: [
-      //kodeDesignMdbc
-      DataCell(
-        Container(
-            width: 100,
-            alignment: Alignment.center,
-            padding: const EdgeInsets.all(0),
-            child: Text(
-              data.kodeDesignMdbc,
-              style: const TextStyle(fontSize: 20, color: Colors.black),
-            )),
-      ),
-      DataCell(_verticalDivider),
-      //namaDesigner
-      DataCell(
-        Container(
-            alignment: Alignment.center,
-            padding: const EdgeInsets.all(0),
-            child: sharedPreferences!.getString('level') != '1'
-                ? Text(
-                    data.kodeMarketing,
-                    style: const TextStyle(fontSize: 20, color: Colors.black),
-                  )
-                : Text(
-                    data.namaDesigner,
-                    style: const TextStyle(fontSize: 20, color: Colors.black),
-                  )),
-      ),
-      DataCell(_verticalDivider),
-      //tema
-      DataCell(
-        Container(
-            width: 100,
-            alignment: Alignment.center,
-            padding: const EdgeInsets.all(0),
-            child: Text(
-              data.tema,
-              style: const TextStyle(fontSize: 20, color: Colors.black),
-            )),
-      ),
-      DataCell(_verticalDivider),
-      //jenisBarang
-      DataCell(
-        Container(
-            width: 100,
-            alignment: Alignment.center,
-            padding: const EdgeInsets.all(0),
-            child: Text(
-              data.jenisBarang,
-              style: const TextStyle(fontSize: 20, color: Colors.black),
-            )),
-      ),
-      DataCell(_verticalDivider),
-      //estimasiHarga
-      DataCell(
-        Container(
-          width: 160,
-          alignment: Alignment.centerLeft,
-          padding: const EdgeInsets.all(0),
-          child: Text(
-            data.brand == "BELI BERLIAN"
-                ? 'Rp. ${CurrencyFormat.convertToDollar(data.estimasiHarga, 0)}'
-                : data.brand == "METIER"
-                    ? 'Rp. ${CurrencyFormat.convertToDollar(data.estimasiHarga, 0)}'
-                    : '\$ ${CurrencyFormat.convertToDollar(data.estimasiHarga, 0)}',
-            style: const TextStyle(
-                fontSize: 18, color: Colors.black, fontWeight: FontWeight.bold),
-          ),
-        ),
-      ),
-      DataCell(_verticalDivider),
-      //kelas harga
-      DataCell(
-        Container(
-            alignment: Alignment.center,
-            padding: const EdgeInsets.all(0),
-            child: ((data.estimasiHarga * 0.37) * 11500) <= 5000000
-                ? const Text(
-                    "XS",
-                    maxLines: 2,
-                    style: TextStyle(fontSize: 20, color: Colors.black),
-                  )
-                : ((data.estimasiHarga * 0.37) * 11500) <= 10000000
-                    ? const Text(
-                        "S",
-                        maxLines: 2,
-                        style: TextStyle(fontSize: 20, color: Colors.black),
-                      )
-                    : ((data.estimasiHarga * 0.37) * 11500) <= 20000000
-                        ? const Text(
-                            "M",
-                            maxLines: 2,
-                            style: TextStyle(fontSize: 20, color: Colors.black),
-                          )
-                        : ((data.estimasiHarga * 0.37) * 11500) <= 35000000
-                            ? const Text(
-                                "L",
-                                maxLines: 2,
-                                style: TextStyle(
-                                    fontSize: 20, color: Colors.black),
-                              )
-                            : const Text(
-                                "XL",
-                                maxLines: 2,
-                                style: TextStyle(
-                                    fontSize: 20, color: Colors.black),
-                              )),
-      ),
-      DataCell(_verticalDivider),
-      //gambar
-      DataCell(Builder(builder: (context) {
-        return Padding(
-            padding: const EdgeInsets.all(0),
-            child: SizedBox(
-              width: 150,
-              height: 190,
-              child: InkWell(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (c) => ViewPhotoScreen(
-                                model: FormDesignerModel(
-                                    kodeDesignMdbc: data.kodeDesignMdbc,
-                                    imageUrl: data.imageUrl),
-                              )));
-                },
-                child: Image.network(
-                  ApiConstants.baseUrlImage + data.imageUrl!,
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ));
-      })),
-      DataCell(_verticalDivider),
       //! aksi
       DataCell(Builder(builder: (context) {
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             sharedPreferences!.getString('level') == '1'
                 ? IconButton(
@@ -6087,6 +5927,137 @@ class RowSource extends DataTableSource {
             )
           ],
         );
+      })),
+
+      DataCell(_verticalDivider),
+      //kodeDesignMdbc
+      DataCell(
+        Container(
+            alignment: Alignment.center,
+            padding: const EdgeInsets.all(0),
+            child: Text(
+              data.kodeDesignMdbc,
+              style: const TextStyle(fontSize: 20, color: Colors.black),
+            )),
+      ),
+      DataCell(_verticalDivider),
+      //namaDesigner
+      DataCell(
+        Container(
+            alignment: Alignment.center,
+            padding: const EdgeInsets.all(0),
+            child: sharedPreferences!.getString('level') != '1'
+                ? Text(
+                    data.kodeMarketing,
+                    style: const TextStyle(fontSize: 20, color: Colors.black),
+                  )
+                : Text(
+                    data.namaDesigner,
+                    style: const TextStyle(fontSize: 20, color: Colors.black),
+                  )),
+      ),
+      DataCell(_verticalDivider),
+      //tema
+      DataCell(
+        Container(
+            alignment: Alignment.center,
+            padding: const EdgeInsets.all(0),
+            child: Text(
+              data.tema,
+              style: const TextStyle(fontSize: 20, color: Colors.black),
+            )),
+      ),
+      DataCell(_verticalDivider),
+      //jenisBarang
+      DataCell(
+        Container(
+            alignment: Alignment.center,
+            padding: const EdgeInsets.all(0),
+            child: Text(
+              data.jenisBarang,
+              style: const TextStyle(fontSize: 20, color: Colors.black),
+            )),
+      ),
+      DataCell(_verticalDivider),
+      //estimasiHarga
+      DataCell(
+        Container(
+          alignment: Alignment.centerLeft,
+          padding: const EdgeInsets.all(0),
+          child: Text(
+            data.brand == "BELI BERLIAN"
+                ? 'Rp. ${CurrencyFormat.convertToDollar(data.estimasiHarga, 0)}'
+                : data.brand == "METIER"
+                    ? 'Rp. ${CurrencyFormat.convertToDollar(data.estimasiHarga, 0)}'
+                    : '\$ ${CurrencyFormat.convertToDollar(data.estimasiHarga, 0)}',
+            style: const TextStyle(
+                fontSize: 18, color: Colors.black, fontWeight: FontWeight.bold),
+          ),
+        ),
+      ),
+      DataCell(_verticalDivider),
+      //kelas harga
+      DataCell(
+        Container(
+            alignment: Alignment.center,
+            padding: const EdgeInsets.all(0),
+            child: ((data.estimasiHarga * 0.37) * 11500) <= 5000000
+                ? const Text(
+                    "XS",
+                    maxLines: 2,
+                    style: TextStyle(fontSize: 20, color: Colors.black),
+                  )
+                : ((data.estimasiHarga * 0.37) * 11500) <= 10000000
+                    ? const Text(
+                        "S",
+                        maxLines: 2,
+                        style: TextStyle(fontSize: 20, color: Colors.black),
+                      )
+                    : ((data.estimasiHarga * 0.37) * 11500) <= 20000000
+                        ? const Text(
+                            "M",
+                            maxLines: 2,
+                            style: TextStyle(fontSize: 20, color: Colors.black),
+                          )
+                        : ((data.estimasiHarga * 0.37) * 11500) <= 35000000
+                            ? const Text(
+                                "L",
+                                maxLines: 2,
+                                style: TextStyle(
+                                    fontSize: 20, color: Colors.black),
+                              )
+                            : const Text(
+                                "XL",
+                                maxLines: 2,
+                                style: TextStyle(
+                                    fontSize: 20, color: Colors.black),
+                              )),
+      ),
+      DataCell(_verticalDivider),
+      //gambar
+      DataCell(Builder(builder: (context) {
+        return Padding(
+            padding: const EdgeInsets.all(0),
+            child: SizedBox(
+              width: 150,
+              height: 190,
+              child: InkWell(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (c) => ViewPhotoScreen(
+                                model: FormDesignerModel(
+                                    kodeDesignMdbc: data.kodeDesignMdbc,
+                                    imageUrl: data.imageUrl),
+                              )));
+                },
+                child: Image.network(
+                  ApiConstants.baseUrlImage + data.imageUrl!,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ));
       })),
     ]);
   }

@@ -65,10 +65,9 @@ class _SummaryProduktivitasScreenState
     initializeDateFormatting();
     var now = DateTime.now();
     String month = DateFormat('MMMM', 'id').format(now);
-    siklusDesigner = month;
+    nowSiklus = month;
     // _getAllDataProduksi("all", sharedPreferences!.getString('nama')!);
     nowSiklus = sharedPreferences!.getString('siklus')!;
-    _getDataAll('all');
   }
 
   Future<dynamic> fetchData() async {
@@ -129,9 +128,9 @@ class _SummaryProduktivitasScreenState
         var filterByDivisi = filterBySiklus.where((element) =>
             element.divisi.toString().toLowerCase() != 'pasang batu');
         var allDataProduktivitas = filterByDivisi.toList();
+
         //! jika suklis tidak di pilih
         allData = removeDuplicates(allDataProduktivitas);
-        // allDataFinishing.removeWhere((element) => element == '');
         //? ambil data nama
         for (var i = 0; i < allData.length; i++) {
           artistProduktivitas.add(allData[i].nama);
@@ -139,6 +138,7 @@ class _SummaryProduktivitasScreenState
         artistProduktivitas.removeWhere((element) => element.toString() == '');
         artistProduktivitas.sort((a, b) => a.compareTo(b));
         artistProduktivitas.add('Total');
+
         qtyArtist = artistProduktivitas.length;
       }
       return allData;
@@ -303,18 +303,127 @@ class _SummaryProduktivitasScreenState
         //! jika suklis tidak di pilih
         //? ambil data nama
         for (var i = 0; i < artistProduktivitas.length; i++) {
-          double apiPointProduktivitas = 0;
-          var filterByName = allDataProduktivitas
+          double apiPointProduktivitasFinishing = 0;
+          double apiPointProduktivitasPolishing1 = 0;
+          double apiPointProduktivitasPolishing2 = 0;
+          double apiPointProduktivitasPolishing2Rep = 0;
+          double apiPointProduktivitasStell1 = 0;
+          double apiPointProduktivitasStell2 = 0;
+          double apiPointProduktivitasStell2Rep = 0;
+
+          //! finishing
+          var filterByNameFinishing = allDataProduktivitas
               .where((element) =>
                   element.nama.toString().toLowerCase() ==
                       artistProduktivitas[i].toLowerCase() &&
                   element.divisi.toString().toLowerCase() == 'finishing')
               .toList();
-          for (var j = 0; j < filterByName.length; j++) {
-            apiPointProduktivitas += filterByName[j].point!;
+          for (var j = 0; j < filterByNameFinishing.length; j++) {
+            apiPointProduktivitasFinishing += filterByNameFinishing[j].point!;
           }
-          pointProduktivitasFinishing.add(apiPointProduktivitas);
+          //? end finishing
+
+          //! Polishing1
+          var filterByNamePolishing1 = allDataProduktivitas
+              .where((element) =>
+                  element.nama.toString().toLowerCase() ==
+                      artistProduktivitas[i].toLowerCase() &&
+                  element.divisi.toString().toLowerCase() == 'poleshing 1')
+              .toList();
+          for (var j = 0; j < filterByNamePolishing1.length; j++) {
+            apiPointProduktivitasPolishing1 += filterByNamePolishing1[j].point!;
+          }
+          //? end Polishing1
+
+          //! Polishing2
+          var filterByNamePolishing2 = allDataProduktivitas
+              .where((element) =>
+                  element.nama.toString().toLowerCase() ==
+                      artistProduktivitas[i].toLowerCase() &&
+                  element.divisi.toString().toLowerCase() == 'Polishing 2')
+              .toList();
+          for (var j = 0; j < filterByNamePolishing2.length; j++) {
+            apiPointProduktivitasPolishing2 += filterByNamePolishing2[j].point!;
+          }
+          //? end Polishing2
+
+          //! Polishing2Rep
+          var filterByNamePolishing2Rep = allDataProduktivitas
+              .where((element) =>
+                  element.nama.toString().toLowerCase() ==
+                      artistProduktivitas[i].toLowerCase() &&
+                  element.divisi.toString().toLowerCase() == 'poleshing 2 rep')
+              .toList();
+          for (var j = 0; j < filterByNamePolishing2Rep.length; j++) {
+            apiPointProduktivitasPolishing2Rep +=
+                filterByNamePolishing2Rep[j].point!;
+          }
+          //? end Polishing2Rep
+
+          //! Stell1
+          var filterByNameStell1 = allDataProduktivitas
+              .where((element) =>
+                  element.nama.toString().toLowerCase() ==
+                      artistProduktivitas[i].toLowerCase() &&
+                  element.divisi.toString().toLowerCase() == 'poleshing 1')
+              .toList();
+          for (var j = 0; j < filterByNameStell1.length; j++) {
+            apiPointProduktivitasStell1 += filterByNameStell1[j].point!;
+          }
+          //? end Stell1
+
+          //! Stell2
+          var filterByNameStell2 = allDataProduktivitas
+              .where((element) =>
+                  element.nama.toString().toLowerCase() ==
+                      artistProduktivitas[i].toLowerCase() &&
+                  element.divisi.toString().toLowerCase() == 'Stell 2')
+              .toList();
+          for (var j = 0; j < filterByNameStell2.length; j++) {
+            apiPointProduktivitasStell2 += filterByNameStell2[j].point!;
+          }
+          //? end Stell2
+
+          //! Stell2Rep
+          var filterByNameStell2Rep = allDataProduktivitas
+              .where((element) =>
+                  element.nama.toString().toLowerCase() ==
+                      artistProduktivitas[i].toLowerCase() &&
+                  element.divisi.toString().toLowerCase() == 'Stell 2 rep')
+              .toList();
+          for (var j = 0; j < filterByNameStell2Rep.length; j++) {
+            apiPointProduktivitasStell2Rep += filterByNameStell2Rep[j].point!;
+          }
+          //? end Stell2Rep
+
+          pointProduktivitasFinishing.add(apiPointProduktivitasFinishing);
+          pointProduktivitasPolishing1.add(apiPointProduktivitasPolishing1);
+          pointProduktivitasPolishing2.add(apiPointProduktivitasPolishing2);
+          pointProduktivitasPolishing2Rep
+              .add(apiPointProduktivitasPolishing2Rep);
+          pointProduktivitasStell1.add(apiPointProduktivitasStell1);
+          pointProduktivitasStell2.add(apiPointProduktivitasStell2);
+          pointProduktivitasStell2Rep.add(apiPointProduktivitasStell2Rep);
         }
+        double sumFinishing =
+            pointProduktivitasFinishing.fold(0, (a, b) => a + b);
+        double sumPolishing1 =
+            pointProduktivitasPolishing1.fold(0, (a, b) => a + b);
+        double sumPolishing2 =
+            pointProduktivitasPolishing2.fold(0, (a, b) => a + b);
+        double sumPolishing2Rep =
+            pointProduktivitasPolishing2Rep.fold(0, (a, b) => a + b);
+        double sumStell1 = pointProduktivitasStell1.fold(0, (a, b) => a + b);
+        double sumStell2 = pointProduktivitasStell2.fold(0, (a, b) => a + b);
+        double sumStell2Rep =
+            pointProduktivitasStell2Rep.fold(0, (a, b) => a + b);
+        sumProduktivitas.add(sumFinishing);
+        double allSumPolishing =
+            sumPolishing1 + sumPolishing2 + sumPolishing2Rep;
+        sumProduktivitas.add(allSumPolishing);
+
+        double allSumStell = sumStell1 + sumStell2 + sumStell2Rep;
+        sumProduktivitas.add(allSumStell);
       }
       return allData;
     } else {
@@ -484,7 +593,7 @@ class _SummaryProduktivitasScreenState
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      "Siklus Saat Ini : $nowSiklus",
+                      "Bulan Saat Ini : $nowSiklus",
                       style: const TextStyle(fontSize: 20, color: Colors.black),
                     ),
                   ),
@@ -531,9 +640,10 @@ class _SummaryProduktivitasScreenState
               ],
               onChanged: (item) {
                 setState(() {
-                  isLoadingJenisBarang = false;
                   siklus.text = item!;
                   siklusDesigner = siklus.text.toString();
+                  _getDataAll(siklusDesigner);
+
                   // _getAllDataProduksi(
                   //     siklusDesigner, sharedPreferences!.getString('nama')!);
                 });
@@ -554,7 +664,7 @@ class _SummaryProduktivitasScreenState
                     color: Colors.black,
                     fontWeight: FontWeight.bold),
                 dropdownSearchDecoration: InputDecoration(
-                    labelText: "Pilih Siklus",
+                    labelText: "Pilih Bulan",
                     floatingLabelAlignment: FloatingLabelAlignment.center,
                     filled: true,
                     fillColor: Colors.white,
@@ -573,7 +683,7 @@ class _SummaryProduktivitasScreenState
                       child: Lottie.asset("loadingJSON/selectDate.json"),
                     ),
                     const Text(
-                      'Pilih siklus terlebih dahulu',
+                      'Pilih bulan terlebih dahulu',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           fontSize: 26,

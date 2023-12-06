@@ -57,6 +57,7 @@ class _ListDataModellerScreenState extends State<ListDataModellerScreen> {
   String? kodeJenisBarang = '';
   String? kodeKualitasBarang = '';
   String? kodeWarna = '';
+  String? kodeMarketing = '';
 
   @override
   initState() {
@@ -246,6 +247,8 @@ class _ListDataModellerScreenState extends State<ListDataModellerScreen> {
                       context: context,
                       builder: (BuildContext context) {
                         String? jenisBatu;
+                        String? warnaEmas;
+                        String? pilihMarketing;
                         String? statusSPK;
                         String? brand;
                         final _formKey = GlobalKey<FormState>();
@@ -435,7 +438,7 @@ class _ListDataModellerScreenState extends State<ListDataModellerScreen> {
                                                                   value == 'NO'
                                                                       ? kodeMarketingDataModeller
                                                                               .text =
-                                                                          '${kodeJenisBarang}0$valueBulanDesigner${noUrutDataModeller.text}$kodeWarna${kodeKualitasBarang}01E'
+                                                                          '$kodeJenisBarang$valueBulanDesigner${noUrutDataModeller.text}$kodeWarna${kodeKualitasBarang}01$kodeMarketing'
                                                                       : kodeMarketingDataModeller
                                                                           .text = '';
                                                                   setState(() =>
@@ -665,7 +668,137 @@ class _ListDataModellerScreenState extends State<ListDataModellerScreen> {
                                                                                 'A';
                                                                     kodeMarketingDataModeller
                                                                             .text =
-                                                                        '${kodeJenisBarang}0$valueBulanDesigner${noUrutDataModeller.text}$kodeWarna${kodeKualitasBarang}01E';
+                                                                        '$kodeJenisBarang$valueBulanDesigner${noUrutDataModeller.text}$kodeWarna${kodeKualitasBarang}01$kodeMarketing';
+                                                                  } else {}
+
+                                                                  setState(() =>
+                                                                      kodeMarketingDataModeller);
+                                                                },
+                                                                icon: const Padding(
+                                                                    padding: EdgeInsets
+                                                                        .only(
+                                                                            left:
+                                                                                20),
+                                                                    child: Icon(
+                                                                        Icons
+                                                                            .arrow_circle_down_sharp)),
+                                                                iconEnabledColor:
+                                                                    Colors
+                                                                        .black, //Icon color
+                                                                style:
+                                                                    const TextStyle(
+                                                                  color: Colors
+                                                                      .black, //Font color
+                                                                  // fontSize:
+                                                                  //     15 //font size on dropdown button
+                                                                ),
+
+                                                                dropdownColor:
+                                                                    Colors
+                                                                        .white, //dropdown background color
+                                                                underline:
+                                                                    Container(), //remove underline
+                                                                isExpanded:
+                                                                    true, //make true to make width 100%
+                                                              ))),
+                                                    ),
+
+                                                    // warna emas
+                                                    Container(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              top: 8,
+                                                              left: 10,
+                                                              right: 10),
+                                                      child: DecoratedBox(
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: warnaEmas !=
+                                                                    null
+                                                                ? const Color
+                                                                    .fromARGB(
+                                                                    255,
+                                                                    8,
+                                                                    209,
+                                                                    69)
+                                                                : const Color
+                                                                    .fromRGBO(
+                                                                    238,
+                                                                    240,
+                                                                    235,
+                                                                    1), //background color of dropdown button
+                                                            border: Border.all(
+                                                              color: Colors
+                                                                  .black38,
+                                                              // width:
+                                                              //     3
+                                                            ), //border of dropdown button
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        0), //border raiuds of dropdown button
+                                                          ),
+                                                          child: Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .only(
+                                                                      left: 10,
+                                                                      right:
+                                                                          10),
+                                                              child:
+                                                                  DropdownButton(
+                                                                value:
+                                                                    warnaEmas,
+                                                                items: const [
+                                                                  //add items in the dropdown
+                                                                  DropdownMenuItem(
+                                                                    value: "WG",
+                                                                    child: Text(
+                                                                        "WG"),
+                                                                  ),
+                                                                  DropdownMenuItem(
+                                                                    value: "RG",
+                                                                    child: Text(
+                                                                        "RG"),
+                                                                  ),
+                                                                  DropdownMenuItem(
+                                                                    value:
+                                                                        "MIX",
+                                                                    child: Text(
+                                                                        "MIX"),
+                                                                  ),
+                                                                  DropdownMenuItem(
+                                                                    value:
+                                                                        "MIX WHITE,YELLOW",
+                                                                    child: Text(
+                                                                        "MIX WHITE,YELLOW"),
+                                                                  )
+                                                                ],
+                                                                hint: const Text(
+                                                                    'Warna Emas'),
+                                                                onChanged:
+                                                                    (value) {
+                                                                  warnaEmas =
+                                                                      value;
+                                                                  if (statusSPK ==
+                                                                      'NO') {
+                                                                    warnaEmas ==
+                                                                            'WG'
+                                                                        ? kodeWarna =
+                                                                            '0'
+                                                                        : warnaEmas ==
+                                                                                'RG'
+                                                                            ? kodeWarna =
+                                                                                '2'
+                                                                            : warnaEmas == 'MIX'
+                                                                                ? kodeWarna = '4'
+                                                                                : warnaEmas == 'MIX WHITE,YELLOW'
+                                                                                    ? kodeWarna = '5'
+                                                                                    : kodeKualitasBarang = '0';
+
+                                                                    kodeMarketingDataModeller
+                                                                            .text =
+                                                                        '$kodeJenisBarang$valueBulanDesigner${noUrutDataModeller.text}$kodeWarna${kodeKualitasBarang}01$kodeMarketing';
                                                                   } else {}
 
                                                                   setState(() =>
@@ -744,7 +877,7 @@ class _ListDataModellerScreenState extends State<ListDataModellerScreen> {
                                                                     // });
                                                                     kodeMarketingDataModeller
                                                                             .text =
-                                                                        '${kodeJenisBarang}0$valueBulanDesigner${noUrutDataModeller.text}$kodeWarna${kodeKualitasBarang}01E';
+                                                                        '$kodeJenisBarang$valueBulanDesigner${noUrutDataModeller.text}$kodeWarna${kodeKualitasBarang}01$kodeMarketing';
 
                                                                     setState(() =>
                                                                         kodeMarketingDataModeller
@@ -793,34 +926,139 @@ class _ListDataModellerScreenState extends State<ListDataModellerScreen> {
                                                         ),
                                                       ),
                                                     ),
-                                                    Padding(
+
+                                                    // MARKETING
+                                                    Container(
                                                       padding:
-                                                          const EdgeInsets.all(
-                                                              8.0),
-                                                      child: TextFormField(
-                                                        style: const TextStyle(
-                                                            fontSize: 14,
-                                                            color: Colors.black,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
-                                                        textInputAction:
-                                                            TextInputAction
-                                                                .next,
-                                                        controller:
-                                                            marketingDataModeller,
-                                                        decoration:
-                                                            InputDecoration(
-                                                          labelText:
-                                                              "Marketing",
-                                                          border: OutlineInputBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          5.0)),
-                                                        ),
-                                                      ),
+                                                          const EdgeInsets.only(
+                                                              top: 8,
+                                                              bottom: 8,
+                                                              left: 10,
+                                                              right: 10),
+                                                      child: DecoratedBox(
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: pilihMarketing !=
+                                                                    null
+                                                                ? const Color
+                                                                    .fromARGB(
+                                                                    255,
+                                                                    8,
+                                                                    209,
+                                                                    69)
+                                                                : const Color
+                                                                    .fromRGBO(
+                                                                    238,
+                                                                    240,
+                                                                    235,
+                                                                    1), //background color of dropdown button
+                                                            border: Border.all(
+                                                              color: Colors
+                                                                  .black38,
+                                                              // width:
+                                                              //     3
+                                                            ), //border of dropdown button
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        0), //border raiuds of dropdown button
+                                                          ),
+                                                          child: Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .only(
+                                                                      left: 10,
+                                                                      right:
+                                                                          10),
+                                                              child:
+                                                                  DropdownButton(
+                                                                value:
+                                                                    pilihMarketing,
+                                                                items: const [
+                                                                  //add items in the dropdown
+                                                                  DropdownMenuItem(
+                                                                    value: "N",
+                                                                    child: Text(
+                                                                        "JONATHAN"),
+                                                                  ),
+                                                                  DropdownMenuItem(
+                                                                    value: "E",
+                                                                    child: Text(
+                                                                        "STEPHANIE"),
+                                                                  ),
+                                                                  DropdownMenuItem(
+                                                                    value: "T",
+                                                                    child: Text(
+                                                                        "ADIT"),
+                                                                  ),
+                                                                  DropdownMenuItem(
+                                                                    value: "K",
+                                                                    child: Text(
+                                                                        "ERICK"),
+                                                                  ),
+                                                                  DropdownMenuItem(
+                                                                    value: "I",
+                                                                    child: Text(
+                                                                        "FEBRI / BHESTADI"),
+                                                                  ),
+                                                                  DropdownMenuItem(
+                                                                    value: "O",
+                                                                    child: Text(
+                                                                        "RUDIANTO"),
+                                                                  ),
+                                                                  DropdownMenuItem(
+                                                                    value: "A",
+                                                                    child: Text(
+                                                                        "RITA"),
+                                                                  ),
+                                                                ],
+                                                                hint: const Text(
+                                                                    'Marketing'),
+                                                                onChanged:
+                                                                    (value) {
+                                                                  pilihMarketing =
+                                                                      value;
+                                                                  kodeMarketing =
+                                                                      value;
+                                                                  if (statusSPK ==
+                                                                      'NO') {
+                                                                    kodeMarketingDataModeller
+                                                                            .text =
+                                                                        '$kodeJenisBarang$valueBulanDesigner${noUrutDataModeller.text}$kodeWarna${kodeKualitasBarang}01$kodeMarketing';
+                                                                  } else {}
+
+                                                                  setState(() =>
+                                                                      kodeMarketingDataModeller);
+                                                                },
+                                                                icon: const Padding(
+                                                                    padding: EdgeInsets
+                                                                        .only(
+                                                                            left:
+                                                                                20),
+                                                                    child: Icon(
+                                                                        Icons
+                                                                            .arrow_circle_down_sharp)),
+                                                                iconEnabledColor:
+                                                                    Colors
+                                                                        .black, //Icon color
+                                                                style:
+                                                                    const TextStyle(
+                                                                  color: Colors
+                                                                      .black, //Font color
+                                                                  // fontSize:
+                                                                  //     15 //font size on dropdown button
+                                                                ),
+
+                                                                dropdownColor:
+                                                                    Colors
+                                                                        .white, //dropdown background color
+                                                                underline:
+                                                                    Container(), //remove underline
+                                                                isExpanded:
+                                                                    true, //make true to make width 100%
+                                                              ))),
                                                     ),
+
                                                     Container(
                                                       padding:
                                                           const EdgeInsets.only(
@@ -902,10 +1140,49 @@ class _ListDataModellerScreenState extends State<ListDataModellerScreen> {
                                                                 hint: const Text(
                                                                     'Brand'),
                                                                 onChanged:
-                                                                    (value) {
+                                                                    (value) async {
                                                                   brand = value;
-                                                                  print(
-                                                                      "You have selected $value");
+                                                                  var kodeBrand =
+                                                                      '';
+                                                                  if (brand ==
+                                                                      'PARVA') {
+                                                                    kodeBrand =
+                                                                        '0';
+                                                                    kodeJenisBarang =
+                                                                        '$kodeJenisBarang$kodeBrand';
+                                                                    kodeMarketingDataModeller
+                                                                            .text =
+                                                                        '$kodeJenisBarang$valueBulanDesigner${noUrutDataModeller.text}$kodeWarna${kodeKualitasBarang}01$kodeMarketing';
+                                                                  } else if (brand ==
+                                                                      'METIER') {
+                                                                    kodeBrand =
+                                                                        'M';
+                                                                    kodeJenisBarang =
+                                                                        '$kodeBrand$kodeJenisBarang';
+
+                                                                    kodeMarketingDataModeller
+                                                                            .text =
+                                                                        '$kodeJenisBarang$valueBulanDesigner${noUrutDataModeller.text}$kodeWarna${kodeKualitasBarang}01$kodeMarketing';
+                                                                  } else if (brand ==
+                                                                      'BELI BERLIAN') {
+                                                                    kodeBrand =
+                                                                        'B';
+                                                                    kodeJenisBarang =
+                                                                        '$kodeBrand$kodeJenisBarang';
+
+                                                                    kodeMarketingDataModeller
+                                                                            .text =
+                                                                        '$kodeJenisBarang$valueBulanDesigner${noUrutDataModeller.text}$kodeWarna${kodeKualitasBarang}01$kodeMarketing';
+                                                                  } else {
+                                                                    kodeBrand =
+                                                                        '0';
+                                                                    kodeJenisBarang =
+                                                                        '$kodeJenisBarang$kodeBrand';
+                                                                    kodeMarketingDataModeller
+                                                                            .text =
+                                                                        '$kodeJenisBarang$valueBulanDesigner${noUrutDataModeller.text}$kodeWarna${kodeKualitasBarang}01$kodeMarketing';
+                                                                  }
+
                                                                   setState(() =>
                                                                       brand);
                                                                 },
@@ -1170,235 +1447,229 @@ class _ListDataModellerScreenState extends State<ListDataModellerScreen> {
                       child: Lottie.asset("loadingJSON/loadingV1.json"),
                     )))
                   : Expanded(
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.vertical,
-                        child: Container(
+                      child: ListView(children: [
+                        Container(
                           padding: const EdgeInsets.all(15),
-                          width: MediaQuery.of(context).size.width * 1,
-                          child: SizedBox(
-                            width: double.infinity,
-                            child: Theme(
-                              data: ThemeData.light().copyWith(
-                                  // cardColor: Theme.of(context).canvasColor),
-                                  cardColor: Colors.white,
-                                  hoverColor: Colors.grey.shade400,
-                                  dividerColor: Colors.grey),
-                              child: PaginatedDataTable(
-                                  showCheckboxColumn: false,
-                                  availableRowsPerPage: const [10, 50, 100],
-                                  rowsPerPage: _rowsPerPage,
-                                  onRowsPerPageChanged: (value) {
-                                    setState(() {
-                                      _rowsPerPage = value!;
-                                    });
-                                  },
-                                  sortColumnIndex: _currentSortColumn,
-                                  sortAscending: sort,
-                                  // rowsPerPage: 25,
-                                  columnSpacing: 0,
-                                  columns: [
-                                    // kode Design
-                                    DataColumn(
-                                        label: const SizedBox(
-                                            child: Text(
-                                          "Kode Design",
+                          width: MediaQuery.of(context).size.width * 0.8,
+                          child: Theme(
+                            data: ThemeData.light().copyWith(
+                                // cardColor: Theme.of(context).canvasColor),
+                                cardColor: Colors.white,
+                                hoverColor: Colors.grey.shade400,
+                                dividerColor: Colors.grey),
+                            child: PaginatedDataTable(
+                                showCheckboxColumn: false,
+                                availableRowsPerPage: const [10, 50, 100],
+                                rowsPerPage: _rowsPerPage,
+                                onRowsPerPageChanged: (value) {
+                                  setState(() {
+                                    _rowsPerPage = value!;
+                                  });
+                                },
+                                sortColumnIndex: _currentSortColumn,
+                                sortAscending: sort,
+                                // rowsPerPage: 25,
+                                columnSpacing: 0,
+                                columns: [
+                                  //AKSI
+                                  DataColumn(
+                                    label: Container(
+                                        padding: const EdgeInsets.only(left: 0),
+                                        child: const Text(
+                                          "AKSI",
                                           style: TextStyle(
                                               fontSize: 15,
                                               fontWeight: FontWeight.bold),
                                         )),
-                                        onSort: (columnIndex, _) {
-                                          setState(() {
-                                            _currentSortColumn = columnIndex;
-                                            if (sort == true) {
-                                              sort = false;
-                                              filterListDataModeller!.sort(
-                                                  (a, b) => a.kodeDesign!
-                                                      .toLowerCase()
-                                                      .compareTo(b.kodeDesign!
-                                                          .toLowerCase()));
-                                            } else {
-                                              sort = true;
-                                              filterListDataModeller!.sort(
-                                                  (a, b) => b.kodeDesign!
-                                                      .toLowerCase()
-                                                      .compareTo(a.kodeDesign!
-                                                          .toLowerCase()));
-                                            }
-                                          });
-                                        }),
-                                    DataColumn(label: _verticalDivider),
-                                    // Jenis batu
-                                    const DataColumn(
-                                      label: SizedBox(
+                                  ),
+                                  DataColumn(label: _verticalDivider),
+
+                                  // kode Design
+                                  DataColumn(
+                                      label: const SizedBox(
                                           child: Text(
-                                        "Jenis\nBatu",
+                                        "Kode Design",
                                         style: TextStyle(
                                             fontSize: 15,
                                             fontWeight: FontWeight.bold),
                                       )),
-                                    ),
-                                    DataColumn(label: _verticalDivider),
-                                    // ID
-                                    const DataColumn(
-                                      label: SizedBox(
-                                          child: Text(
-                                        "ID",
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                    ),
+                                      onSort: (columnIndex, _) {
+                                        setState(() {
+                                          _currentSortColumn = columnIndex;
+                                          if (sort == true) {
+                                            sort = false;
+                                            filterListDataModeller!.sort(
+                                                (a, b) => a
+                                                    .kodeDesign!
+                                                    .toLowerCase()
+                                                    .compareTo(b.kodeDesign!
+                                                        .toLowerCase()));
+                                          } else {
+                                            sort = true;
+                                            filterListDataModeller!.sort(
+                                                (a, b) => b
+                                                    .kodeDesign!
+                                                    .toLowerCase()
+                                                    .compareTo(a.kodeDesign!
+                                                        .toLowerCase()));
+                                          }
+                                        });
+                                      }),
+                                  DataColumn(label: _verticalDivider),
+                                  // Jenis batu
+                                  const DataColumn(
+                                    label: SizedBox(
+                                        child: Text(
+                                      "Jenis\nBatu",
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
+                                    )),
+                                  ),
+                                  DataColumn(label: _verticalDivider),
+                                  // ID
+                                  const DataColumn(
+                                    label: SizedBox(
+                                        child: Text(
+                                      "ID",
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
+                                    )),
+                                  ),
 
-                                    DataColumn(label: _verticalDivider),
-                                    // Bulan
-                                    const DataColumn(
-                                      label: SizedBox(
-                                          child: Text(
-                                        "Bulan",
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                    ),
+                                  DataColumn(label: _verticalDivider),
+                                  // Bulan
+                                  const DataColumn(
+                                    label: SizedBox(
+                                        child: Text(
+                                      "Bulan",
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
+                                    )),
+                                  ),
 
-                                    DataColumn(label: _verticalDivider),
+                                  DataColumn(label: _verticalDivider),
 
-                                    // No Urut
-                                    const DataColumn(
-                                      label: SizedBox(
-                                          child: Text(
-                                        "No Urut",
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                    ),
-                                    DataColumn(label: _verticalDivider),
+                                  // No Urut
+                                  const DataColumn(
+                                    label: SizedBox(
+                                        child: Text(
+                                      "No Urut",
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
+                                    )),
+                                  ),
+                                  DataColumn(label: _verticalDivider),
 
-                                    // Kode Marketing
-                                    const DataColumn(
-                                      label: SizedBox(
-                                          child: Text(
-                                        "Kode Marketing",
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                    ),
+                                  // Kode Marketing
+                                  const DataColumn(
+                                    label: SizedBox(
+                                        child: Text(
+                                      "Kode Marketing",
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
+                                    )),
+                                  ),
 
-                                    DataColumn(label: _verticalDivider),
-                                    //* NO / RO
-                                    const DataColumn(
-                                      label: SizedBox(
-                                          child: Text(
-                                        "NO / RO",
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                    ),
+                                  DataColumn(label: _verticalDivider),
+                                  //* NO / RO
+                                  const DataColumn(
+                                    label: SizedBox(
+                                        child: Text(
+                                      "NO / RO",
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
+                                    )),
+                                  ),
 
-                                    DataColumn(label: _verticalDivider),
+                                  DataColumn(label: _verticalDivider),
 
-                                    // Project / Tema
-                                    const DataColumn(
-                                      label: SizedBox(
-                                          child: Text(
-                                        "Project / Tema",
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                    ),
-                                    DataColumn(label: _verticalDivider),
+                                  // Project / Tema
+                                  const DataColumn(
+                                    label: SizedBox(
+                                        child: Text(
+                                      "Project / Tema",
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
+                                    )),
+                                  ),
+                                  DataColumn(label: _verticalDivider),
 
-                                    // Marketing
-                                    const DataColumn(
-                                      label: SizedBox(
-                                          child: Text(
-                                        "Marketing",
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                    ),
-                                    DataColumn(label: _verticalDivider),
+                                  // Marketing
+                                  const DataColumn(
+                                    label: SizedBox(
+                                        child: Text(
+                                      "Marketing",
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
+                                    )),
+                                  ),
+                                  DataColumn(label: _verticalDivider),
 
-                                    // Brand
-                                    const DataColumn(
-                                      label: SizedBox(
-                                          child: Text(
-                                        "Brand",
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                    ),
-                                    DataColumn(label: _verticalDivider),
+                                  // Brand
+                                  const DataColumn(
+                                    label: SizedBox(
+                                        child: Text(
+                                      "Brand",
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
+                                    )),
+                                  ),
+                                  DataColumn(label: _verticalDivider),
 
-                                    // Designer
-                                    const DataColumn(
-                                      label: SizedBox(
-                                          child: Text(
-                                        "Designer",
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                    ),
+                                  // Designer
+                                  const DataColumn(
+                                    label: SizedBox(
+                                        child: Text(
+                                      "Designer",
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
+                                    )),
+                                  ),
 
-                                    DataColumn(label: _verticalDivider),
+                                  DataColumn(label: _verticalDivider),
 
-                                    // Modeller
-                                    const DataColumn(
-                                      label: SizedBox(
-                                          child: Text(
-                                        "Modeller",
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                    ),
-                                    DataColumn(label: _verticalDivider),
+                                  // Modeller
+                                  const DataColumn(
+                                    label: SizedBox(
+                                        child: Text(
+                                      "Modeller",
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
+                                    )),
+                                  ),
+                                  DataColumn(label: _verticalDivider),
 
-                                    // Keterangan
-                                    const DataColumn(
-                                      label: SizedBox(
-                                          child: Text(
-                                        "Keterangan",
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                    ),
-
-                                    DataColumn(label: _verticalDivider),
-                                    //AKSI
-                                    sharedPreferences!.getString('level') != '1'
-                                        ? const DataColumn(label: SizedBox())
-                                        : DataColumn(
-                                            label: Container(
-                                                padding: const EdgeInsets.only(
-                                                    left: 30),
-                                                child: const Text(
-                                                  "AKSI",
-                                                  style: TextStyle(
-                                                      fontSize: 15,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                )),
-                                          ),
-                                  ],
-                                  source:
-                                      // UserDataTableSource(userData: filterCrm!)),
-                                      RowSource(
-                                          context: context,
-                                          myData: _listDataModeller,
-                                          count: _listDataModeller!.length)),
-                            ),
+                                  // Keterangan
+                                  const DataColumn(
+                                    label: SizedBox(
+                                        child: Text(
+                                      "Keterangan",
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
+                                    )),
+                                  ),
+                                ],
+                                source:
+                                    // UserDataTableSource(userData: filterCrm!)),
+                                    RowSource(
+                                        context: context,
+                                        myData: _listDataModeller,
+                                        count: _listDataModeller!.length)),
                           ),
                         ),
-                      ),
+                      ]),
                     )
             ],
           ),
@@ -1441,6 +1712,773 @@ class RowSource extends DataTableSource {
 
   DataRow recentFileDataRow(var data, BuildContext context) {
     return DataRow(cells: [
+      //Aksi
+      DataCell(Builder(builder: (context) {
+        return Padding(
+          padding: const EdgeInsets.only(left: 0),
+          child: IconButton(
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    final _formKey = GlobalKey<FormState>();
+                    String? newJenisBatu;
+                    String? newStatusSpk;
+                    String? newBrand;
+                    String? apinewJenisBatu;
+                    String? apinewStatusSpk;
+                    String? apinewBrand;
+
+                    TextEditingController newTemaDataModeller =
+                        TextEditingController();
+                    TextEditingController newKodeDesignDataModeller =
+                        TextEditingController();
+                    TextEditingController newIdDataModeller =
+                        TextEditingController();
+                    TextEditingController newNoUrutDataModeller =
+                        TextEditingController();
+                    TextEditingController newKodeMarketingDataModeller =
+                        TextEditingController();
+                    TextEditingController newMarketingDataModeller =
+                        TextEditingController();
+                    TextEditingController newNamaDesignerDataModeller =
+                        TextEditingController();
+                    TextEditingController newNamaModellerDataModeller =
+                        TextEditingController();
+                    TextEditingController newKeteranganDataModeller =
+                        TextEditingController();
+                    RoundedLoadingButtonController newBtnController =
+                        RoundedLoadingButtonController();
+                    TextEditingController newBulan = TextEditingController();
+
+                    newKodeDesignDataModeller.text = data.kodeDesign;
+                    apinewJenisBatu = data.jenisBatu;
+                    apinewBrand = data.brand;
+                    apinewStatusSpk = data.status;
+                    newBulan.text = data.bulan;
+                    newNoUrutDataModeller.text =
+                        data.noUrutBulan.toString().padLeft(3, '0');
+                    newKodeMarketingDataModeller.text = data.kodeMarketing;
+                    newTemaDataModeller.text = data.tema;
+                    newMarketingDataModeller.text = data.marketing;
+                    newNamaDesignerDataModeller.text = data.designer;
+                    newNamaModellerDataModeller.text = data.modeller;
+                    newKeteranganDataModeller.text = data.keterangan;
+                    newIdDataModeller.text = data.id.toString();
+
+                    return StatefulBuilder(
+                        builder: (context, setState) => AlertDialog(
+                              content: Stack(
+                                clipBehavior: Clip.none,
+                                children: <Widget>[
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Column(
+                                          children: [
+                                            TextFormField(
+                                              style: const TextStyle(
+                                                  fontStyle: FontStyle.italic,
+                                                  fontSize: 16,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold),
+                                              textInputAction:
+                                                  TextInputAction.next,
+                                              controller:
+                                                  newKodeMarketingDataModeller,
+                                              decoration: InputDecoration(
+                                                // hintText: "example: Cahaya Sanivokasi",
+                                                labelText: "Kode Marketing",
+                                                border: OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5.0)),
+                                              ),
+                                              validator: (value) {
+                                                if (value!.isEmpty) {
+                                                  return 'Wajib diisi *';
+                                                }
+                                                return null;
+                                              },
+                                            ),
+                                            const Text(
+                                              'Pilih terlebih dahulu NO atau RO',
+                                              style: TextStyle(
+                                                  color: Colors.red,
+                                                  fontStyle: FontStyle.italic,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 12),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: SingleChildScrollView(
+                                          scrollDirection: Axis.vertical,
+                                          child: Form(
+                                            key: _formKey,
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: <Widget>[
+                                                //! status memilih no atau ro
+                                                Container(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 10, right: 10),
+                                                  child: DecoratedBox(
+                                                      decoration: BoxDecoration(
+                                                          color: const Color
+                                                              .fromARGB(
+                                                              255,
+                                                              8,
+                                                              209,
+                                                              69), //background color of dropdown button
+                                                          border: Border.all(
+                                                            color:
+                                                                Colors.black38,
+                                                            // width:
+                                                            //     3
+                                                          ), //border of dropdown button
+                                                          borderRadius:
+                                                              BorderRadius.circular(
+                                                                  0), //border raiuds of dropdown button
+                                                          boxShadow: const <BoxShadow>[]),
+                                                      child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .only(
+                                                                  left: 10,
+                                                                  right: 10),
+                                                          child: DropdownButton(
+                                                            value: newStatusSpk,
+                                                            items: const [
+                                                              //add items in the dropdown
+                                                              DropdownMenuItem(
+                                                                value: "NO",
+                                                                child:
+                                                                    Text("NO"),
+                                                              ),
+                                                              DropdownMenuItem(
+                                                                value: "RO",
+                                                                child:
+                                                                    Text("RO"),
+                                                              ),
+                                                            ],
+                                                            hint: Text(
+                                                                data.status),
+                                                            onChanged: (value) {
+                                                              newStatusSpk =
+                                                                  value!;
+                                                              apinewStatusSpk =
+                                                                  newStatusSpk;
+                                                              setState(() =>
+                                                                  newStatusSpk);
+                                                            },
+                                                            icon: const Padding(
+                                                                padding: EdgeInsets
+                                                                    .only(
+                                                                        left:
+                                                                            20),
+                                                                child: Icon(Icons
+                                                                    .arrow_circle_down_sharp)),
+                                                            iconEnabledColor: Colors
+                                                                .black, //Icon color
+                                                            style:
+                                                                const TextStyle(
+                                                              color: Colors
+                                                                  .black, //Font color
+                                                              // fontSize:
+                                                              //     15 //font size on dropdown button
+                                                            ),
+
+                                                            dropdownColor: Colors
+                                                                .white, //dropdown background color
+                                                            underline:
+                                                                Container(), //remove underline
+                                                            isExpanded:
+                                                                true, //make true to make width 100%
+                                                          ))),
+                                                ),
+                                                //? id
+                                                Container(
+                                                  // width: MediaQuery.of(context).size.width *
+                                                  //     0.25,
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      SizedBox(
+                                                        width: 100,
+                                                        child: TextFormField(
+                                                          readOnly: true,
+                                                          style: const TextStyle(
+                                                              fontSize: 14,
+                                                              color:
+                                                                  Colors.black,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                          textInputAction:
+                                                              TextInputAction
+                                                                  .next,
+                                                          controller:
+                                                              newIdDataModeller,
+                                                          decoration:
+                                                              InputDecoration(
+                                                            // hintText: "example: Cahaya Sanivokasi",
+                                                            labelText: "ID",
+                                                            border: OutlineInputBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            5.0)),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        width: 100,
+                                                        child: TextFormField(
+                                                          readOnly: true,
+                                                          style: const TextStyle(
+                                                              fontSize: 14,
+                                                              color:
+                                                                  Colors.black,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                          textInputAction:
+                                                              TextInputAction
+                                                                  .next,
+                                                          controller:
+                                                              newNoUrutDataModeller,
+                                                          decoration:
+                                                              InputDecoration(
+                                                            // hintText: "example: Cahaya Sanivokasi",
+                                                            labelText:
+                                                                "No Urut",
+                                                            border: OutlineInputBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            5.0)),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+
+                                                //Kode Design
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: TextFormField(
+                                                    style: const TextStyle(
+                                                        fontSize: 14,
+                                                        color: Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                    textInputAction:
+                                                        TextInputAction.next,
+                                                    controller:
+                                                        newKodeDesignDataModeller,
+                                                    decoration: InputDecoration(
+                                                      // hintText: "example: Cahaya Sanivokasi",
+                                                      labelText: "Kode Design",
+                                                      border:
+                                                          OutlineInputBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          5.0)),
+                                                    ),
+                                                  ),
+                                                ),
+
+                                                //Jenis Batu
+                                                Container(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 10, right: 10),
+                                                  child: DecoratedBox(
+                                                      decoration: BoxDecoration(
+                                                          color: const Color
+                                                              .fromARGB(
+                                                              255,
+                                                              8,
+                                                              209,
+                                                              69), //background color of dropdown button
+                                                          border: Border.all(
+                                                            color:
+                                                                Colors.black38,
+                                                            // width:
+                                                            //     3
+                                                          ), //border of dropdown button
+                                                          borderRadius:
+                                                              BorderRadius.circular(
+                                                                  0), //border raiuds of dropdown button
+                                                          boxShadow: const <BoxShadow>[
+                                                            //apply shadow on Dropdown button
+                                                            // BoxShadow(
+                                                            //     color: Color.fromRGBO(
+                                                            //         0,
+                                                            //         0,
+                                                            //         0,
+                                                            //         0.57), //shadow for button
+                                                            //     blurRadius:
+                                                            //         5) //blur radius of shadow
+                                                          ]),
+                                                      child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .only(
+                                                                  left: 10,
+                                                                  right: 10),
+                                                          child: DropdownButton(
+                                                            value: newJenisBatu,
+                                                            items: const [
+                                                              //add items in the dropdown
+                                                              DropdownMenuItem(
+                                                                value: "VVS",
+                                                                child:
+                                                                    Text("VVS"),
+                                                              ),
+                                                              DropdownMenuItem(
+                                                                value: "VS",
+                                                                child:
+                                                                    Text("VS"),
+                                                              ),
+                                                              DropdownMenuItem(
+                                                                value: "SI",
+                                                                child:
+                                                                    Text("SI"),
+                                                              )
+                                                            ],
+                                                            hint: Text(
+                                                                data.jenisBatu),
+                                                            onChanged: (value) {
+                                                              newJenisBatu =
+                                                                  value!;
+
+                                                              apinewJenisBatu =
+                                                                  newJenisBatu;
+                                                              setState(() =>
+                                                                  newJenisBatu);
+                                                            },
+                                                            icon: const Padding(
+                                                                padding: EdgeInsets
+                                                                    .only(
+                                                                        left:
+                                                                            20),
+                                                                child: Icon(Icons
+                                                                    .arrow_circle_down_sharp)),
+                                                            iconEnabledColor: Colors
+                                                                .black, //Icon color
+                                                            style:
+                                                                const TextStyle(
+                                                              color: Colors
+                                                                  .black, //Font color
+                                                              // fontSize:
+                                                              //     15 //font size on dropdown button
+                                                            ),
+
+                                                            dropdownColor: Colors
+                                                                .white, //dropdown background color
+                                                            underline:
+                                                                Container(), //remove underline
+                                                            isExpanded:
+                                                                true, //make true to make width 100%
+                                                          ))),
+                                                ),
+
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: TextFormField(
+                                                    style: const TextStyle(
+                                                        fontSize: 14,
+                                                        color: Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                    textInputAction:
+                                                        TextInputAction.next,
+                                                    controller:
+                                                        newTemaDataModeller,
+                                                    decoration: InputDecoration(
+                                                      labelText:
+                                                          "Tema / Project",
+                                                      border:
+                                                          OutlineInputBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          5.0)),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: TextFormField(
+                                                    style: const TextStyle(
+                                                        fontSize: 14,
+                                                        color: Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                    textInputAction:
+                                                        TextInputAction.next,
+                                                    controller:
+                                                        newMarketingDataModeller,
+                                                    decoration: InputDecoration(
+                                                      labelText: "Marketing",
+                                                      border:
+                                                          OutlineInputBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          5.0)),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Container(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 10, right: 10),
+                                                  child: DecoratedBox(
+                                                      decoration: BoxDecoration(
+                                                          color: const Color
+                                                              .fromARGB(
+                                                              255,
+                                                              8,
+                                                              209,
+                                                              69), //background color of dropdown button
+                                                          border: Border.all(
+                                                            color:
+                                                                Colors.black38,
+                                                            // width:
+                                                            //     3
+                                                          ), //border of dropdown button
+                                                          borderRadius:
+                                                              BorderRadius.circular(
+                                                                  0), //border raiuds of dropdown button
+                                                          boxShadow: const <BoxShadow>[
+                                                            //apply shadow on Dropdown button
+                                                            // BoxShadow(
+                                                            //     color: Color.fromRGBO(
+                                                            //         0,
+                                                            //         0,
+                                                            //         0,
+                                                            //         0.57), //shadow for button
+                                                            //     blurRadius:
+                                                            //         5) //blur radius of shadow
+                                                          ]),
+                                                      child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .only(
+                                                                  left: 10,
+                                                                  right: 10),
+                                                          child: DropdownButton(
+                                                            value: newBrand,
+                                                            items: const [
+                                                              //add items in the dropdown
+                                                              DropdownMenuItem(
+                                                                value: "PARVA",
+                                                                child: Text(
+                                                                    "PARVA"),
+                                                              ),
+                                                              DropdownMenuItem(
+                                                                value: "METIER",
+                                                                child: Text(
+                                                                    "METIER"),
+                                                              ),
+                                                              DropdownMenuItem(
+                                                                value:
+                                                                    "BELI BERLIAN",
+                                                                child: Text(
+                                                                    "BELI BERLIAN"),
+                                                              ),
+                                                              DropdownMenuItem(
+                                                                value: "FINE",
+                                                                child: Text(
+                                                                    "FINE"),
+                                                              )
+                                                            ],
+                                                            hint: Text(
+                                                                data.brand),
+                                                            onChanged: (value) {
+                                                              newBrand = value!;
+                                                              apinewBrand =
+                                                                  newBrand;
+                                                              setState(() =>
+                                                                  newBrand);
+                                                            },
+                                                            icon: const Padding(
+                                                                padding: EdgeInsets
+                                                                    .only(
+                                                                        left:
+                                                                            20),
+                                                                child: Icon(Icons
+                                                                    .arrow_circle_down_sharp)),
+                                                            iconEnabledColor: Colors
+                                                                .black, //Icon color
+                                                            style:
+                                                                const TextStyle(
+                                                              color: Colors
+                                                                  .black, //Font color
+                                                              // fontSize:
+                                                              //     15 //font size on dropdown button
+                                                            ),
+
+                                                            dropdownColor: Colors
+                                                                .white, //dropdown background color
+                                                            underline:
+                                                                Container(), //remove underline
+                                                            isExpanded:
+                                                                true, //make true to make width 100%
+                                                          ))),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: TextFormField(
+                                                    style: const TextStyle(
+                                                        fontSize: 14,
+                                                        color: Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                    textInputAction:
+                                                        TextInputAction.next,
+                                                    controller:
+                                                        newNamaDesignerDataModeller,
+                                                    decoration: InputDecoration(
+                                                      labelText:
+                                                          "Nama Designer",
+                                                      border:
+                                                          OutlineInputBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          5.0)),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: TextFormField(
+                                                    style: const TextStyle(
+                                                        fontSize: 14,
+                                                        color: Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                    textInputAction:
+                                                        TextInputAction.next,
+                                                    controller:
+                                                        newNamaModellerDataModeller,
+                                                    decoration: InputDecoration(
+                                                      labelText:
+                                                          "Nama Modeller",
+                                                      border:
+                                                          OutlineInputBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          5.0)),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: TextFormField(
+                                                    style: const TextStyle(
+                                                        fontSize: 14,
+                                                        color: Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                    textInputAction:
+                                                        TextInputAction.next,
+                                                    controller:
+                                                        newKeteranganDataModeller,
+                                                    decoration: InputDecoration(
+                                                      // hintText: "example: Cahaya Sanivokasi",
+                                                      labelText: "Keterangan",
+                                                      border:
+                                                          OutlineInputBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          5.0)),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: SizedBox(
+                                                    width: 250,
+                                                    child: CustomLoadingButton(
+                                                        controller:
+                                                            newBtnController,
+                                                        child: const Text(
+                                                            "Simpan Perubahan Data"),
+                                                        onPressed: () async {
+                                                          if (_formKey
+                                                              .currentState!
+                                                              .validate()) {
+                                                            _formKey
+                                                                .currentState!
+                                                                .save();
+                                                            Future.delayed(
+                                                                    const Duration(
+                                                                        milliseconds:
+                                                                            10))
+                                                                .then(
+                                                                    (value) async {
+                                                              newBtnController
+                                                                  .success();
+                                                              Map<String,
+                                                                      dynamic>
+                                                                  body = {
+                                                                'id':
+                                                                    newIdDataModeller
+                                                                        .text,
+                                                                'kodeDesign':
+                                                                    newKodeDesignDataModeller
+                                                                        .text,
+                                                                'jenisBatu':
+                                                                    apinewJenisBatu,
+                                                                'bulan':
+                                                                    newBulan
+                                                                        .text,
+                                                                'tema':
+                                                                    newTemaDataModeller
+                                                                        .text,
+                                                                'kodeBulan': data
+                                                                    .kodeBulan,
+                                                                'noUrutBulan':
+                                                                    newNoUrutDataModeller
+                                                                        .text,
+                                                                'kodeMarketing':
+                                                                    newKodeMarketingDataModeller
+                                                                        .text,
+                                                                'status':
+                                                                    apinewStatusSpk,
+                                                                'marketing':
+                                                                    newMarketingDataModeller
+                                                                        .text,
+                                                                'brand':
+                                                                    apinewBrand,
+                                                                'designer':
+                                                                    newNamaDesignerDataModeller
+                                                                        .text,
+                                                                'modeller':
+                                                                    newNamaModellerDataModeller
+                                                                        .text,
+                                                                'keterangan':
+                                                                    newKeteranganDataModeller
+                                                                        .text
+                                                              };
+                                                              final response = await http.post(
+                                                                  Uri.parse(ApiConstants
+                                                                          .baseUrl +
+                                                                      ApiConstants
+                                                                          .updateDataModeller),
+                                                                  body: body);
+                                                              print(response
+                                                                  .body);
+                                                              Future.delayed(
+                                                                      const Duration(
+                                                                          milliseconds:
+                                                                              10))
+                                                                  .then(
+                                                                      (value) {
+                                                                newBtnController
+                                                                    .reset(); //reset
+                                                                response.statusCode !=
+                                                                        200
+                                                                    ? showSimpleNotification(
+                                                                        const Text(
+                                                                            'Edit Data Modeller Gagal'),
+                                                                        background:
+                                                                            Colors
+                                                                                .red,
+                                                                        duration:
+                                                                            const Duration(seconds: 1))
+                                                                    : showSimpleNotification(
+                                                                        const Text(
+                                                                            'Edit Data Modeller Berhasil'),
+                                                                        background:
+                                                                            Colors.green,
+                                                                        duration:
+                                                                            const Duration(seconds: 1),
+                                                                      );
+                                                              });
+                                                              Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                      builder: (c) =>
+                                                                          MainViewScm(
+                                                                              col: 1)));
+                                                            });
+                                                          } else {
+                                                            newBtnController
+                                                                .error();
+                                                            Future.delayed(
+                                                                    const Duration(
+                                                                        seconds:
+                                                                            1))
+                                                                .then((value) {
+                                                              newBtnController
+                                                                  .reset(); //reset
+                                                            });
+                                                          }
+                                                        }),
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Positioned(
+                                    right: -47.0,
+                                    top: -47.0,
+                                    child: InkResponse(
+                                      onTap: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: const CircleAvatar(
+                                        backgroundColor: Colors.red,
+                                        child: Icon(Icons.close),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ));
+                  });
+            },
+            icon: const Icon(
+              Icons.edit,
+              color: Colors.green,
+            ),
+          ),
+        );
+      })),
+
+      DataCell(_verticalDivider),
+
       //kode Design
       DataCell(
         onLongPress: () {
@@ -3339,802 +4377,6 @@ class RowSource extends DataTableSource {
         },
         Padding(padding: const EdgeInsets.all(0), child: Text(data.keterangan)),
       ),
-
-      DataCell(_verticalDivider),
-      //Aksi
-      DataCell(Builder(builder: (context) {
-        return sharedPreferences!.getString('level') != '1'
-            ? const Row()
-            : Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 25),
-                    child: IconButton(
-                      onPressed: () {
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              final _formKey = GlobalKey<FormState>();
-                              String? newJenisBatu;
-                              String? newStatusSpk;
-                              String? newBrand;
-                              String? apinewJenisBatu;
-                              String? apinewStatusSpk;
-                              String? apinewBrand;
-
-                              TextEditingController newTemaDataModeller =
-                                  TextEditingController();
-                              TextEditingController newKodeDesignDataModeller =
-                                  TextEditingController();
-                              TextEditingController newIdDataModeller =
-                                  TextEditingController();
-                              TextEditingController newNoUrutDataModeller =
-                                  TextEditingController();
-                              TextEditingController
-                                  newKodeMarketingDataModeller =
-                                  TextEditingController();
-                              TextEditingController newMarketingDataModeller =
-                                  TextEditingController();
-                              TextEditingController
-                                  newNamaDesignerDataModeller =
-                                  TextEditingController();
-                              TextEditingController
-                                  newNamaModellerDataModeller =
-                                  TextEditingController();
-                              TextEditingController newKeteranganDataModeller =
-                                  TextEditingController();
-                              RoundedLoadingButtonController newBtnController =
-                                  RoundedLoadingButtonController();
-                              TextEditingController newBulan =
-                                  TextEditingController();
-
-                              newKodeDesignDataModeller.text = data.kodeDesign;
-                              apinewJenisBatu = data.jenisBatu;
-                              apinewBrand = data.brand;
-                              apinewStatusSpk = data.status;
-                              newBulan.text = data.bulan;
-                              newNoUrutDataModeller.text =
-                                  data.noUrutBulan.toString().padLeft(3, '0');
-                              newKodeMarketingDataModeller.text =
-                                  data.kodeMarketing;
-                              newTemaDataModeller.text = data.tema;
-                              newMarketingDataModeller.text = data.marketing;
-                              newNamaDesignerDataModeller.text = data.designer;
-                              newNamaModellerDataModeller.text = data.modeller;
-                              newKeteranganDataModeller.text = data.keterangan;
-                              newIdDataModeller.text = data.id.toString();
-
-                              return StatefulBuilder(
-                                  builder: (context, setState) => AlertDialog(
-                                        content: Stack(
-                                          clipBehavior: Clip.none,
-                                          children: <Widget>[
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              children: [
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
-                                                  child: Column(
-                                                    children: [
-                                                      TextFormField(
-                                                        style: const TextStyle(
-                                                            fontStyle: FontStyle
-                                                                .italic,
-                                                            fontSize: 16,
-                                                            color: Colors.black,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
-                                                        textInputAction:
-                                                            TextInputAction
-                                                                .next,
-                                                        controller:
-                                                            newKodeMarketingDataModeller,
-                                                        decoration:
-                                                            InputDecoration(
-                                                          // hintText: "example: Cahaya Sanivokasi",
-                                                          labelText:
-                                                              "Kode Marketing",
-                                                          border: OutlineInputBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          5.0)),
-                                                        ),
-                                                        validator: (value) {
-                                                          if (value!.isEmpty) {
-                                                            return 'Wajib diisi *';
-                                                          }
-                                                          return null;
-                                                        },
-                                                      ),
-                                                      const Text(
-                                                        'Pilih terlebih dahulu NO atau RO',
-                                                        style: TextStyle(
-                                                            color: Colors.red,
-                                                            fontStyle: FontStyle
-                                                                .italic,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize: 12),
-                                                      )
-                                                    ],
-                                                  ),
-                                                ),
-                                                Expanded(
-                                                  child: SingleChildScrollView(
-                                                    scrollDirection:
-                                                        Axis.vertical,
-                                                    child: Form(
-                                                      key: _formKey,
-                                                      child: Column(
-                                                        mainAxisSize:
-                                                            MainAxisSize.min,
-                                                        children: <Widget>[
-                                                          //! status memilih no atau ro
-                                                          Container(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .only(
-                                                                    left: 10,
-                                                                    right: 10),
-                                                            child: DecoratedBox(
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                        color: const Color
-                                                                            .fromARGB(
-                                                                            255,
-                                                                            8,
-                                                                            209,
-                                                                            69), //background color of dropdown button
-                                                                        border: Border
-                                                                            .all(
-                                                                          color:
-                                                                              Colors.black38,
-                                                                          // width:
-                                                                          //     3
-                                                                        ), //border of dropdown button
-                                                                        borderRadius: BorderRadius.circular(
-                                                                            0), //border raiuds of dropdown button
-                                                                        boxShadow: const <BoxShadow>[]),
-                                                                child: Padding(
-                                                                    padding: const EdgeInsets
-                                                                        .only(
-                                                                        left:
-                                                                            10,
-                                                                        right:
-                                                                            10),
-                                                                    child:
-                                                                        DropdownButton(
-                                                                      value:
-                                                                          newStatusSpk,
-                                                                      items: const [
-                                                                        //add items in the dropdown
-                                                                        DropdownMenuItem(
-                                                                          value:
-                                                                              "NO",
-                                                                          child:
-                                                                              Text("NO"),
-                                                                        ),
-                                                                        DropdownMenuItem(
-                                                                          value:
-                                                                              "RO",
-                                                                          child:
-                                                                              Text("RO"),
-                                                                        ),
-                                                                      ],
-                                                                      hint: Text(
-                                                                          data.status),
-                                                                      onChanged:
-                                                                          (value) {
-                                                                        newStatusSpk =
-                                                                            value!;
-                                                                        apinewStatusSpk =
-                                                                            newStatusSpk;
-                                                                        setState(() =>
-                                                                            newStatusSpk);
-                                                                      },
-                                                                      icon: const Padding(
-                                                                          padding: EdgeInsets.only(
-                                                                              left:
-                                                                                  20),
-                                                                          child:
-                                                                              Icon(Icons.arrow_circle_down_sharp)),
-                                                                      iconEnabledColor:
-                                                                          Colors
-                                                                              .black, //Icon color
-                                                                      style:
-                                                                          const TextStyle(
-                                                                        color: Colors
-                                                                            .black, //Font color
-                                                                        // fontSize:
-                                                                        //     15 //font size on dropdown button
-                                                                      ),
-
-                                                                      dropdownColor:
-                                                                          Colors
-                                                                              .white, //dropdown background color
-                                                                      underline:
-                                                                          Container(), //remove underline
-                                                                      isExpanded:
-                                                                          true, //make true to make width 100%
-                                                                    ))),
-                                                          ),
-                                                          //? id
-                                                          Container(
-                                                            // width: MediaQuery.of(context).size.width *
-                                                            //     0.25,
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(8.0),
-                                                            child: Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceBetween,
-                                                              children: [
-                                                                SizedBox(
-                                                                  width: 100,
-                                                                  child:
-                                                                      TextFormField(
-                                                                    readOnly:
-                                                                        true,
-                                                                    style: const TextStyle(
-                                                                        fontSize:
-                                                                            14,
-                                                                        color: Colors
-                                                                            .black,
-                                                                        fontWeight:
-                                                                            FontWeight.bold),
-                                                                    textInputAction:
-                                                                        TextInputAction
-                                                                            .next,
-                                                                    controller:
-                                                                        newIdDataModeller,
-                                                                    decoration:
-                                                                        InputDecoration(
-                                                                      // hintText: "example: Cahaya Sanivokasi",
-                                                                      labelText:
-                                                                          "ID",
-                                                                      border: OutlineInputBorder(
-                                                                          borderRadius:
-                                                                              BorderRadius.circular(5.0)),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                                SizedBox(
-                                                                  width: 100,
-                                                                  child:
-                                                                      TextFormField(
-                                                                    readOnly:
-                                                                        true,
-                                                                    style: const TextStyle(
-                                                                        fontSize:
-                                                                            14,
-                                                                        color: Colors
-                                                                            .black,
-                                                                        fontWeight:
-                                                                            FontWeight.bold),
-                                                                    textInputAction:
-                                                                        TextInputAction
-                                                                            .next,
-                                                                    controller:
-                                                                        newNoUrutDataModeller,
-                                                                    decoration:
-                                                                        InputDecoration(
-                                                                      // hintText: "example: Cahaya Sanivokasi",
-                                                                      labelText:
-                                                                          "No Urut",
-                                                                      border: OutlineInputBorder(
-                                                                          borderRadius:
-                                                                              BorderRadius.circular(5.0)),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-
-                                                          //Kode Design
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(8.0),
-                                                            child:
-                                                                TextFormField(
-                                                              style: const TextStyle(
-                                                                  fontSize: 14,
-                                                                  color: Colors
-                                                                      .black,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold),
-                                                              textInputAction:
-                                                                  TextInputAction
-                                                                      .next,
-                                                              controller:
-                                                                  newKodeDesignDataModeller,
-                                                              decoration:
-                                                                  InputDecoration(
-                                                                // hintText: "example: Cahaya Sanivokasi",
-                                                                labelText:
-                                                                    "Kode Design",
-                                                                border: OutlineInputBorder(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            5.0)),
-                                                              ),
-                                                            ),
-                                                          ),
-
-                                                          //Jenis Batu
-                                                          Container(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .only(
-                                                                    left: 10,
-                                                                    right: 10),
-                                                            child: DecoratedBox(
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                        color: const Color
-                                                                            .fromARGB(
-                                                                            255,
-                                                                            8,
-                                                                            209,
-                                                                            69), //background color of dropdown button
-                                                                        border: Border
-                                                                            .all(
-                                                                          color:
-                                                                              Colors.black38,
-                                                                          // width:
-                                                                          //     3
-                                                                        ), //border of dropdown button
-                                                                        borderRadius: BorderRadius.circular(
-                                                                            0), //border raiuds of dropdown button
-                                                                        boxShadow: const <BoxShadow>[
-                                                                      //apply shadow on Dropdown button
-                                                                      // BoxShadow(
-                                                                      //     color: Color.fromRGBO(
-                                                                      //         0,
-                                                                      //         0,
-                                                                      //         0,
-                                                                      //         0.57), //shadow for button
-                                                                      //     blurRadius:
-                                                                      //         5) //blur radius of shadow
-                                                                    ]),
-                                                                child: Padding(
-                                                                    padding: const EdgeInsets
-                                                                        .only(
-                                                                        left:
-                                                                            10,
-                                                                        right:
-                                                                            10),
-                                                                    child:
-                                                                        DropdownButton(
-                                                                      value:
-                                                                          newJenisBatu,
-                                                                      items: const [
-                                                                        //add items in the dropdown
-                                                                        DropdownMenuItem(
-                                                                          value:
-                                                                              "VVS",
-                                                                          child:
-                                                                              Text("VVS"),
-                                                                        ),
-                                                                        DropdownMenuItem(
-                                                                          value:
-                                                                              "VS",
-                                                                          child:
-                                                                              Text("VS"),
-                                                                        ),
-                                                                        DropdownMenuItem(
-                                                                          value:
-                                                                              "SI",
-                                                                          child:
-                                                                              Text("SI"),
-                                                                        )
-                                                                      ],
-                                                                      hint: Text(
-                                                                          data.jenisBatu),
-                                                                      onChanged:
-                                                                          (value) {
-                                                                        newJenisBatu =
-                                                                            value!;
-
-                                                                        apinewJenisBatu =
-                                                                            newJenisBatu;
-                                                                        setState(() =>
-                                                                            newJenisBatu);
-                                                                      },
-                                                                      icon: const Padding(
-                                                                          padding: EdgeInsets.only(
-                                                                              left:
-                                                                                  20),
-                                                                          child:
-                                                                              Icon(Icons.arrow_circle_down_sharp)),
-                                                                      iconEnabledColor:
-                                                                          Colors
-                                                                              .black, //Icon color
-                                                                      style:
-                                                                          const TextStyle(
-                                                                        color: Colors
-                                                                            .black, //Font color
-                                                                        // fontSize:
-                                                                        //     15 //font size on dropdown button
-                                                                      ),
-
-                                                                      dropdownColor:
-                                                                          Colors
-                                                                              .white, //dropdown background color
-                                                                      underline:
-                                                                          Container(), //remove underline
-                                                                      isExpanded:
-                                                                          true, //make true to make width 100%
-                                                                    ))),
-                                                          ),
-
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(8.0),
-                                                            child:
-                                                                TextFormField(
-                                                              style: const TextStyle(
-                                                                  fontSize: 14,
-                                                                  color: Colors
-                                                                      .black,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold),
-                                                              textInputAction:
-                                                                  TextInputAction
-                                                                      .next,
-                                                              controller:
-                                                                  newTemaDataModeller,
-                                                              decoration:
-                                                                  InputDecoration(
-                                                                labelText:
-                                                                    "Tema / Project",
-                                                                border: OutlineInputBorder(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            5.0)),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(8.0),
-                                                            child:
-                                                                TextFormField(
-                                                              style: const TextStyle(
-                                                                  fontSize: 14,
-                                                                  color: Colors
-                                                                      .black,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold),
-                                                              textInputAction:
-                                                                  TextInputAction
-                                                                      .next,
-                                                              controller:
-                                                                  newMarketingDataModeller,
-                                                              decoration:
-                                                                  InputDecoration(
-                                                                labelText:
-                                                                    "Marketing",
-                                                                border: OutlineInputBorder(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            5.0)),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          Container(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .only(
-                                                                    left: 10,
-                                                                    right: 10),
-                                                            child: DecoratedBox(
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                        color: const Color
-                                                                            .fromARGB(
-                                                                            255,
-                                                                            8,
-                                                                            209,
-                                                                            69), //background color of dropdown button
-                                                                        border: Border
-                                                                            .all(
-                                                                          color:
-                                                                              Colors.black38,
-                                                                          // width:
-                                                                          //     3
-                                                                        ), //border of dropdown button
-                                                                        borderRadius: BorderRadius.circular(
-                                                                            0), //border raiuds of dropdown button
-                                                                        boxShadow: const <BoxShadow>[
-                                                                      //apply shadow on Dropdown button
-                                                                      // BoxShadow(
-                                                                      //     color: Color.fromRGBO(
-                                                                      //         0,
-                                                                      //         0,
-                                                                      //         0,
-                                                                      //         0.57), //shadow for button
-                                                                      //     blurRadius:
-                                                                      //         5) //blur radius of shadow
-                                                                    ]),
-                                                                child: Padding(
-                                                                    padding: const EdgeInsets
-                                                                        .only(
-                                                                        left:
-                                                                            10,
-                                                                        right:
-                                                                            10),
-                                                                    child:
-                                                                        DropdownButton(
-                                                                      value:
-                                                                          newBrand,
-                                                                      items: const [
-                                                                        //add items in the dropdown
-                                                                        DropdownMenuItem(
-                                                                          value:
-                                                                              "PARVA",
-                                                                          child:
-                                                                              Text("PARVA"),
-                                                                        ),
-                                                                        DropdownMenuItem(
-                                                                          value:
-                                                                              "METIER",
-                                                                          child:
-                                                                              Text("METIER"),
-                                                                        ),
-                                                                        DropdownMenuItem(
-                                                                          value:
-                                                                              "BELI BERLIAN",
-                                                                          child:
-                                                                              Text("BELI BERLIAN"),
-                                                                        ),
-                                                                        DropdownMenuItem(
-                                                                          value:
-                                                                              "FINE",
-                                                                          child:
-                                                                              Text("FINE"),
-                                                                        )
-                                                                      ],
-                                                                      hint: Text(
-                                                                          data.brand),
-                                                                      onChanged:
-                                                                          (value) {
-                                                                        newBrand =
-                                                                            value!;
-                                                                        apinewBrand =
-                                                                            newBrand;
-                                                                        setState(() =>
-                                                                            newBrand);
-                                                                      },
-                                                                      icon: const Padding(
-                                                                          padding: EdgeInsets.only(
-                                                                              left:
-                                                                                  20),
-                                                                          child:
-                                                                              Icon(Icons.arrow_circle_down_sharp)),
-                                                                      iconEnabledColor:
-                                                                          Colors
-                                                                              .black, //Icon color
-                                                                      style:
-                                                                          const TextStyle(
-                                                                        color: Colors
-                                                                            .black, //Font color
-                                                                        // fontSize:
-                                                                        //     15 //font size on dropdown button
-                                                                      ),
-
-                                                                      dropdownColor:
-                                                                          Colors
-                                                                              .white, //dropdown background color
-                                                                      underline:
-                                                                          Container(), //remove underline
-                                                                      isExpanded:
-                                                                          true, //make true to make width 100%
-                                                                    ))),
-                                                          ),
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(8.0),
-                                                            child:
-                                                                TextFormField(
-                                                              style: const TextStyle(
-                                                                  fontSize: 14,
-                                                                  color: Colors
-                                                                      .black,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold),
-                                                              textInputAction:
-                                                                  TextInputAction
-                                                                      .next,
-                                                              controller:
-                                                                  newNamaDesignerDataModeller,
-                                                              decoration:
-                                                                  InputDecoration(
-                                                                labelText:
-                                                                    "Nama Designer",
-                                                                border: OutlineInputBorder(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            5.0)),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(8.0),
-                                                            child:
-                                                                TextFormField(
-                                                              style: const TextStyle(
-                                                                  fontSize: 14,
-                                                                  color: Colors
-                                                                      .black,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold),
-                                                              textInputAction:
-                                                                  TextInputAction
-                                                                      .next,
-                                                              controller:
-                                                                  newNamaModellerDataModeller,
-                                                              decoration:
-                                                                  InputDecoration(
-                                                                labelText:
-                                                                    "Nama Modeller",
-                                                                border: OutlineInputBorder(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            5.0)),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(8.0),
-                                                            child:
-                                                                TextFormField(
-                                                              style: const TextStyle(
-                                                                  fontSize: 14,
-                                                                  color: Colors
-                                                                      .black,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold),
-                                                              textInputAction:
-                                                                  TextInputAction
-                                                                      .next,
-                                                              controller:
-                                                                  newKeteranganDataModeller,
-                                                              decoration:
-                                                                  InputDecoration(
-                                                                // hintText: "example: Cahaya Sanivokasi",
-                                                                labelText:
-                                                                    "Keterangan",
-                                                                border: OutlineInputBorder(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            5.0)),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(8.0),
-                                                            child: SizedBox(
-                                                              width: 250,
-                                                              child:
-                                                                  CustomLoadingButton(
-                                                                      controller:
-                                                                          newBtnController,
-                                                                      child: const Text(
-                                                                          "Simpan Perubahan Data"),
-                                                                      onPressed:
-                                                                          () async {
-                                                                        if (_formKey
-                                                                            .currentState!
-                                                                            .validate()) {
-                                                                          _formKey
-                                                                              .currentState!
-                                                                              .save();
-                                                                          Future.delayed(const Duration(milliseconds: 10))
-                                                                              .then((value) async {
-                                                                            newBtnController.success();
-                                                                            Map<String, dynamic>
-                                                                                body =
-                                                                                {
-                                                                              'id': newIdDataModeller.text,
-                                                                              'kodeDesign': newKodeDesignDataModeller.text,
-                                                                              'jenisBatu': apinewJenisBatu,
-                                                                              'bulan': newBulan.text,
-                                                                              'tema': newTemaDataModeller.text,
-                                                                              'kodeBulan': data.kodeBulan,
-                                                                              'noUrutBulan': newNoUrutDataModeller.text,
-                                                                              'kodeMarketing': newKodeMarketingDataModeller.text,
-                                                                              'status': apinewStatusSpk,
-                                                                              'marketing': newMarketingDataModeller.text,
-                                                                              'brand': apinewBrand,
-                                                                              'designer': newNamaDesignerDataModeller.text,
-                                                                              'modeller': newNamaModellerDataModeller.text,
-                                                                              'keterangan': newKeteranganDataModeller.text
-                                                                            };
-                                                                            final response =
-                                                                                await http.post(Uri.parse(ApiConstants.baseUrl + ApiConstants.updateDataModeller), body: body);
-                                                                            print(response.body);
-                                                                            Future.delayed(const Duration(milliseconds: 10)).then((value) {
-                                                                              newBtnController.reset(); //reset
-                                                                              response.statusCode != 200
-                                                                                  ? showSimpleNotification(const Text('Edit Data Modeller Gagal'), background: Colors.red, duration: const Duration(seconds: 1))
-                                                                                  : showSimpleNotification(
-                                                                                      const Text('Edit Data Modeller Berhasil'),
-                                                                                      background: Colors.green,
-                                                                                      duration: const Duration(seconds: 1),
-                                                                                    );
-                                                                            });
-                                                                            Navigator.push(context,
-                                                                                MaterialPageRoute(builder: (c) => MainViewScm(col: 1)));
-                                                                          });
-                                                                        } else {
-                                                                          newBtnController
-                                                                              .error();
-                                                                          Future.delayed(const Duration(seconds: 1))
-                                                                              .then((value) {
-                                                                            newBtnController.reset(); //reset
-                                                                          });
-                                                                        }
-                                                                      }),
-                                                            ),
-                                                          )
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            Positioned(
-                                              right: -47.0,
-                                              top: -47.0,
-                                              child: InkResponse(
-                                                onTap: () {
-                                                  Navigator.of(context).pop();
-                                                },
-                                                child: const CircleAvatar(
-                                                  backgroundColor: Colors.red,
-                                                  child: Icon(Icons.close),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ));
-                            });
-                      },
-                      icon: const Icon(
-                        Icons.edit,
-                        color: Colors.green,
-                      ),
-                    ),
-                  ),
-                ],
-              );
-      }))
     ]);
   }
 

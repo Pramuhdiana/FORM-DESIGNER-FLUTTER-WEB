@@ -1,5 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages, avoid_print, prefer_typing_uninitialized_variables, use_build_context_synchronously, prefer_final_fields, prefer_const_constructors, no_leading_underscores_for_local_identifiers, unused_element, avoid_unnecessary_containers
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:form_designer/api/api_constant.dart';
 import 'package:form_designer/global/global.dart';
@@ -9,11 +11,11 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:lottie/lottie.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-class HomeScreenProduksi extends StatefulWidget {
-  const HomeScreenProduksi({super.key});
+class ReportUntukSCM extends StatefulWidget {
+  const ReportUntukSCM({super.key});
 
   @override
-  State<HomeScreenProduksi> createState() => _HomeScreenProduksiState();
+  State<ReportUntukSCM> createState() => _ReportUntukSCMState();
 }
 
 @override
@@ -22,7 +24,7 @@ Widget _verticalDivider = const VerticalDivider(
   thickness: 1,
 );
 
-class _HomeScreenProduksiState extends State<HomeScreenProduksi> {
+class _ReportUntukSCMState extends State<ReportUntukSCM> {
   TextEditingController siklus = TextEditingController();
   String? updateSiklus = '';
   TextEditingController addSiklus = TextEditingController();
@@ -67,20 +69,33 @@ class _HomeScreenProduksiState extends State<HomeScreenProduksi> {
     'Brj',
   ];
 
+  String jan = 'januari';
+  String feb = 'februari';
+  String mar = 'maret';
+  String apr = 'april';
+  String mei = 'mei';
+  String jun = 'juni';
+  String jul = 'juli';
+  String agu = 'agustus';
+  String sep = 'september';
+  String okt = 'oktober';
+  String nov = 'november';
+  String des = 'desember';
+
   int indexLevel = 1;
   String titleLevel2 = '';
   int janRelease = 0;
   int febRelease = 0;
   int marRelease = 0;
   int aprRelease = 0;
-  int mayRelease = 0;
+  int meiRelease = 0;
   int junRelease = 0;
   int julRelease = 0;
-  int augRelease = 0;
+  int aguRelease = 0;
   int sepRelease = 0;
-  int octRelease = 0;
+  int oktRelease = 0;
   int novRelease = 0;
-  int decRelease = 0;
+  int desRelease = 0;
   int janBrj = 0;
   int febBrj = 0;
   int marBrj = 0;
@@ -105,88 +120,32 @@ class _HomeScreenProduksiState extends State<HomeScreenProduksi> {
         header: '');
     // var now = DateTime.now();
     nowSiklus = sharedPreferences!.getString('siklus')!;
-    janRelease = 150;
-    febRelease = 160;
-    marRelease = 170;
-    aprRelease = 250;
-    mayRelease = 130;
-    junRelease = 190;
-    julRelease = 200;
-    augRelease = 160;
-    sepRelease = 215;
-    octRelease = 189;
-    novRelease = 185;
-    decRelease = 250;
-    janBrj = 142;
-    febBrj = 160;
-    marBrj = 130;
-    aprBrj = 200;
-    mayBrj = 130;
-    junBrj = 180;
-    julBrj = 150;
-    augBrj = 100;
-    sepBrj = 200;
-    octBrj = 109;
-    novBrj = 185;
-    decBrj = 200;
+    _getAllData("all");
 
-    chartData = <ChartData>[
-      ChartData(
-          xValue:
-              'JANUARI\n${((janBrj / janRelease) * 100).toStringAsFixed(2)}%',
-          yValue: janBrj,
-          secondSeriesYValue: janRelease),
-      ChartData(
-          xValue:
-              'FEBRUARI\n${((febBrj / febRelease) * 100).toStringAsFixed(2)}%',
-          yValue: febBrj,
-          secondSeriesYValue: febRelease),
-      ChartData(
-          xValue: 'MARET\n${((marBrj / marRelease) * 100).toStringAsFixed(2)}%',
-          yValue: marBrj,
-          secondSeriesYValue: marRelease),
-      ChartData(
-          xValue: 'APRIL\n${((aprBrj / aprRelease) * 100).toStringAsFixed(2)}%',
-          yValue: aprBrj,
-          secondSeriesYValue: aprRelease),
-      ChartData(
-          xValue: 'MEI\n${((mayBrj / mayRelease) * 100).toStringAsFixed(2)}%',
-          yValue: mayBrj,
-          secondSeriesYValue: mayRelease),
-      ChartData(
-          xValue: 'JUNI\n${((junBrj / junRelease) * 100).toStringAsFixed(2)}%',
-          yValue: junBrj,
-          secondSeriesYValue: junRelease),
-      ChartData(
-          xValue: 'JULI\n${((julBrj / julRelease) * 100).toStringAsFixed(2)}%',
-          yValue: julBrj,
-          secondSeriesYValue: julRelease),
-      ChartData(
-          xValue:
-              'AGUSTUS\n${((augBrj / augRelease) * 100).toStringAsFixed(2)}%',
-          yValue: augBrj,
-          secondSeriesYValue: augRelease),
-      ChartData(
-          xValue:
-              'SEPTEMBER\n${((sepBrj / sepRelease) * 100).toStringAsFixed(2)}%',
-          yValue: sepBrj,
-          secondSeriesYValue: sepRelease),
-      ChartData(
-          xValue:
-              'OKTOBER\n${((octBrj / octRelease) * 100).toStringAsFixed(2)}%',
-          yValue: octBrj,
-          secondSeriesYValue: octRelease),
-      ChartData(
-          xValue:
-              'NOVEMBER\n${((novBrj / novRelease) * 100).toStringAsFixed(2)}%',
-          yValue: novBrj,
-          secondSeriesYValue: novRelease),
-      ChartData(
-          xValue:
-              'DESEMBER\n${((decBrj / decRelease) * 100).toStringAsFixed(2)}%',
-          yValue: decBrj,
-          secondSeriesYValue: decRelease)
-    ];
+    // janRelease = 150;
+    // febRelease = 160;
+    // marRelease = 170;
+    // aprRelease = 250;
+    // mayRelease = 130;
+    // junRelease = 190;
+    // julRelease = 200;
+    // augRelease = 160;
+    // sepRelease = 215;
+    // octRelease = 189;
+    // novRelease = 185;
+    // decRelease = 250;
+    janBrj = 0;
+    febBrj = 0;
+    marBrj = 0;
+    aprBrj = 0;
+    mayBrj = 0;
+    junBrj = 0;
+    julBrj = 0;
+    augBrj = 0;
+    sepBrj = 0;
+    octBrj = 0;
+    novBrj = 140;
+    decBrj = 150;
 
     chartDataLevel2 = <ChartData>[
       ChartData(xValue: 'Week 1', yValue: 50, secondSeriesYValue: 50),
@@ -253,6 +212,138 @@ class _HomeScreenProduksiState extends State<HomeScreenProduksi> {
     ];
   }
 
+  void _getAllData(month) async {
+    setState(() {
+      isLoading = true;
+    });
+    // await _getName(month);
+    await _getSpk(month);
+    // await _getPoint(month);
+    // await _getBeratAsal(month);
+
+    chartData = <ChartData>[
+      ChartData(
+          xValue:
+              'JANUARI\n${((janBrj / janRelease) * 100).toStringAsFixed(2)}%',
+          yValue: janBrj,
+          secondSeriesYValue: janRelease),
+      ChartData(
+          xValue:
+              'FEBRUARI\n${((febBrj / febRelease) * 100).toStringAsFixed(2)}%',
+          yValue: febBrj,
+          secondSeriesYValue: febRelease),
+      ChartData(
+          xValue: 'MARET\n${((marBrj / marRelease) * 100).toStringAsFixed(2)}%',
+          yValue: marBrj,
+          secondSeriesYValue: marRelease),
+      ChartData(
+          xValue: 'APRIL\n${((aprBrj / aprRelease) * 100).toStringAsFixed(2)}%',
+          yValue: aprBrj,
+          secondSeriesYValue: aprRelease),
+      ChartData(
+          xValue: 'MEI\n${((mayBrj / meiRelease) * 100).toStringAsFixed(2)}%',
+          yValue: mayBrj,
+          secondSeriesYValue: meiRelease),
+      ChartData(
+          xValue: 'JUNI\n${((junBrj / junRelease) * 100).toStringAsFixed(2)}%',
+          yValue: junBrj,
+          secondSeriesYValue: junRelease),
+      ChartData(
+          xValue: 'JULI\n${((julBrj / julRelease) * 100).toStringAsFixed(2)}%',
+          yValue: julBrj,
+          secondSeriesYValue: julRelease),
+      ChartData(
+          xValue:
+              'AGUSTUS\n${((augBrj / aguRelease) * 100).toStringAsFixed(2)}%',
+          yValue: augBrj,
+          secondSeriesYValue: aguRelease),
+      ChartData(
+          xValue:
+              'SEPTEMBER\n${((sepBrj / sepRelease) * 100).toStringAsFixed(2)}%',
+          yValue: sepBrj,
+          secondSeriesYValue: sepRelease),
+      ChartData(
+          xValue:
+              'OKTOBER\n${((octBrj / oktRelease) * 100).toStringAsFixed(2)}%',
+          yValue: octBrj,
+          secondSeriesYValue: oktRelease),
+      ChartData(
+          xValue:
+              'NOVEMBER\n${((novBrj / novRelease) * 100).toStringAsFixed(2)}%',
+          yValue: novBrj,
+          secondSeriesYValue: novRelease),
+      ChartData(
+          xValue:
+              'DESEMBER\n${((decBrj / desRelease) * 100).toStringAsFixed(2)}%',
+          yValue: decBrj,
+          secondSeriesYValue: desRelease)
+    ];
+
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  _getSpk(month) async {
+    final response = await http.get(
+        Uri.parse(ApiConstants.baseUrl + ApiConstants.getListFormDesigner));
+
+    if (response.statusCode == 200) {
+      List jsonResponse = json.decode(response.body);
+
+      var allData =
+          jsonResponse.map((data) => FormDesignerModel.fromJson(data)).toList();
+      //! jan
+      var filterBySiklusjan = allData.where((element) =>
+          element.siklus.toString().toLowerCase() == jan.toLowerCase());
+      janRelease = filterBySiklusjan.length;
+      //! feb
+      var filterBySiklusfeb = allData.where((element) =>
+          element.siklus.toString().toLowerCase() == feb.toLowerCase());
+      febRelease = filterBySiklusfeb.length;
+      //! mar
+      var filterBySiklusmar = allData.where((element) =>
+          element.siklus.toString().toLowerCase() == mar.toLowerCase());
+      marRelease = filterBySiklusmar.length;
+      //! apr
+      var filterBySiklusapr = allData.where((element) =>
+          element.siklus.toString().toLowerCase() == apr.toLowerCase());
+      aprRelease = filterBySiklusapr.length;
+      //! mei
+      var filterBySiklusmei = allData.where((element) =>
+          element.siklus.toString().toLowerCase() == mei.toLowerCase());
+      meiRelease = filterBySiklusmei.length;
+      //! jun
+      var filterBySiklusjun = allData.where((element) =>
+          element.siklus.toString().toLowerCase() == jun.toLowerCase());
+      junRelease = filterBySiklusjun.length;
+      //! jul
+      var filterBySiklusjul = allData.where((element) =>
+          element.siklus.toString().toLowerCase() == jul.toLowerCase());
+      julRelease = filterBySiklusjul.length;
+      //! agu
+      var filterBySiklusagu = allData.where((element) =>
+          element.siklus.toString().toLowerCase() == agu.toLowerCase());
+      aguRelease = filterBySiklusagu.length;
+      //! sep
+      var filterBySiklussep = allData.where((element) =>
+          element.siklus.toString().toLowerCase() == sep.toLowerCase());
+      sepRelease = filterBySiklussep.length;
+      //! okt
+      var filterBySiklusokt = allData.where((element) =>
+          element.siklus.toString().toLowerCase() == okt.toLowerCase());
+      oktRelease = filterBySiklusokt.length;
+      //! nov
+      var filterBySiklusnov = allData.where((element) =>
+          element.siklus.toString().toLowerCase() == nov.toLowerCase());
+      novRelease = filterBySiklusnov.length;
+      //! des
+      var filterBySiklusdes = allData.where((element) =>
+          element.siklus.toString().toLowerCase() == des.toLowerCase());
+      desRelease = filterBySiklusdes.length;
+    } else {}
+  }
+
   @override
   Widget build(BuildContext context) {
     String greeting() {
@@ -281,20 +372,18 @@ class _HomeScreenProduksiState extends State<HomeScreenProduksi> {
               leadingWidth: 320,
               elevation: 0,
             ),
-            body:
-                //  isLoading == false
-                //     ? Center(
-                //         child: Transform.scale(
-                //         scale: 2,
-                //         child: Container(
-                //           padding: const EdgeInsets.all(5),
-                //           width: MediaQuery.of(context).size.width * 1,
-                //           height: MediaQuery.of(context).size.height * 1,
-                //           child: Lottie.asset("loadingJSON/dashboardBuild.json"),
-                //         ),
-                //       ))
-                //     :
-                Container(
+            body: isLoading == true
+                ? Center(
+                    child: Transform.scale(
+                    scale: 2,
+                    child: Container(
+                      padding: const EdgeInsets.all(5),
+                      width: MediaQuery.of(context).size.width * 1,
+                      height: MediaQuery.of(context).size.height * 1,
+                      child: Lottie.asset("loadingJSON/dashboardBuild.json"),
+                    ),
+                  ))
+                : Container(
                     width: MediaQuery.of(context).size.width * 1,
                     color: colorBG,
                     padding: EdgeInsets.all(10),
@@ -306,7 +395,7 @@ class _HomeScreenProduksiState extends State<HomeScreenProduksi> {
                               Container(
                                 padding: const EdgeInsets.only(top: 26),
                                 child: const Text(
-                                  'Dashboard',
+                                  'Report Untuk SCM',
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.bold,

@@ -5,8 +5,10 @@ import 'package:form_designer/api/api_constant.dart';
 import 'package:form_designer/global/global.dart';
 import 'package:form_designer/mainScreen/list_mps.dart';
 import 'package:form_designer/mainScreen/login.dart';
+import 'package:form_designer/produksi/mainScreen/dashboard_control.dart';
 import 'package:form_designer/produksi/mainScreen/produksi_new_screen.dart';
-import 'package:form_designer/produksi/mainScreen/home_screen_produksi.dart';
+import 'package:form_designer/produksi/mainScreen/report_untuk_manufaktur.dart';
+import 'package:form_designer/produksi/mainScreen/report_untuk_scm.dart';
 import 'package:form_designer/produksi/mainScreen/summary_pasang_batu.dart';
 import 'package:form_designer/produksi/mainScreen/summary_produktivitas.dart';
 import 'package:form_designer/produksi/mainScreen/summary_susut.dart';
@@ -24,19 +26,23 @@ class MainViewProduksi extends StatefulWidget {
 class _MainViewProduksiState extends State<MainViewProduksi> {
   List<Widget> views = [
     //? 0
-    const HomeScreenProduksi(),
+    const ReportUntukSCM(),
     //? 1
-    const ProduksiNewScreen(),
+    const ReportUntukManufaktur(),
     //? 2
-    const ListMpsScreen(),
+    const DashboardControl(),
     //? 3
-    const SummarySusutScreen(),
+    const ProduksiNewScreen(),
     //? 4
-    const SummaryPasangBatuScreen(),
+    const ListMpsScreen(),
     //? 5
-    const SummaryProduktivitasScreen(),
+    const SummarySusutScreen(),
     //? 6
-    const HomeScreenProduksi(),
+    const SummaryPasangBatuScreen(),
+    //? 7
+    const SummaryProduktivitasScreen(),
+    //? 8
+    const ReportUntukSCM(),
   ];
 
   // final _formKey = GlobalKey<FormState>();
@@ -120,7 +126,15 @@ class _MainViewProduksiState extends State<MainViewProduksi> {
           items: const [
             SideNavigationBarItem(
               icon: Icons.home,
-              label: 'Dashboard',
+              label: 'Monthly Meeting SCM',
+            ),
+            SideNavigationBarItem(
+              icon: Icons.home,
+              label: 'Manufaktur Review',
+            ),
+            SideNavigationBarItem(
+              icon: Icons.home,
+              label: 'Dashboard Control',
             ),
             SideNavigationBarItem(
               icon: Icons.format_align_right_outlined,
@@ -149,7 +163,7 @@ class _MainViewProduksiState extends State<MainViewProduksi> {
           ],
 
           onTap: (index) {
-            if (index == 6) {
+            if (index == 8) {
               showDialog(
                   context: context,
                   builder: (BuildContext context) {

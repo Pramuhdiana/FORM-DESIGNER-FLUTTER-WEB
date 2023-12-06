@@ -5,7 +5,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:form_designer/api/api_constant.dart';
 import 'package:form_designer/global/currency_format.dart';
-import 'package:form_designer/global/global.dart';
 import 'dart:convert';
 import 'package:form_designer/model/form_designer_model.dart';
 import 'package:form_designer/produksi/modelProduksi/produksi_model.dart';
@@ -66,10 +65,9 @@ class _SummaryPasangBatuScreenState extends State<SummaryPasangBatuScreen> {
     initializeDateFormatting();
     var now = DateTime.now();
     String month = DateFormat('MMMM', 'id').format(now);
-    siklusDesigner = month;
+    nowSiklus = month;
     // _getAllDataProduksi("all", sharedPreferences!.getString('nama')!);
-    nowSiklus = sharedPreferences!.getString('siklus')!;
-    _getDataAll('all');
+    // _getDataAll();
   }
 
   void _getDataAll(month) async {
@@ -138,7 +136,6 @@ class _SummaryPasangBatuScreenState extends State<SummaryPasangBatuScreen> {
           artistPasangBatu.add(allDataPasangBatu[i].nama);
         }
         artistPasangBatu.sort((a, b) => a.compareTo(b));
-
         qtyNamePasangBatu = artistPasangBatu.length;
       }
       return allData;
@@ -298,7 +295,12 @@ class _SummaryPasangBatuScreenState extends State<SummaryPasangBatuScreen> {
           int dumSumButir = 0;
           double dumSumCarat = 0;
           double dumSumAsal = 0;
+          double dumSumPecahButir = 0;
+          double dumSumPecahCarat = 0;
+          double dumSumHilangButir = 0;
+          double dumSumHilangCarat = 0;
           double dumSumJadi = 0;
+          int dumSumTotalOngkosan = 0;
           var filterByNamePasangBatu = allDataPasangBatu
               .where((element) =>
                   element.nama.toString().toLowerCase() ==
@@ -309,6 +311,11 @@ class _SummaryPasangBatuScreenState extends State<SummaryPasangBatuScreen> {
             dumSumCarat += filterByNamePasangBatu[j].beratDiamond!;
             dumSumAsal += filterByNamePasangBatu[j].debet!;
             dumSumJadi += filterByNamePasangBatu[j].kredit!;
+            dumSumPecahButir += filterByNamePasangBatu[j].pecahButir!;
+            dumSumPecahCarat += filterByNamePasangBatu[j].pecahCarat!;
+            dumSumHilangButir += filterByNamePasangBatu[j].hilangButir!;
+            dumSumHilangCarat += filterByNamePasangBatu[j].hilangCarat!;
+            dumSumTotalOngkosan += filterByNamePasangBatu[j].totalOngkosan!;
           }
           sumButir.add(dumSumButir.toString());
           sumCarat.add(dumSumCarat);
@@ -316,6 +323,11 @@ class _SummaryPasangBatuScreenState extends State<SummaryPasangBatuScreen> {
           sumJadi.add(dumSumJadi);
           sumSusut.add((dumSumCarat * 0.2) + dumSumAsal - dumSumJadi);
           sumJatahSusut.add((sumSusut[i] * 0.25) + 0.075);
+          sumPecahButir.add(dumSumPecahButir);
+          sumPecahCarat.add(dumSumPecahCarat);
+          sumHilangButir.add(dumSumHilangButir);
+          sumHilangCarat.add(dumSumHilangCarat);
+          sumTotalOngkosan.add(dumSumTotalOngkosan);
         }
       }
       return allData;
@@ -503,7 +515,7 @@ class _SummaryPasangBatuScreenState extends State<SummaryPasangBatuScreen> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      "Siklus Saat Ini : $nowSiklus",
+                      "Bulan Saat Ini : $nowSiklus",
                       style: const TextStyle(fontSize: 20, color: Colors.black),
                     ),
                   ),
@@ -548,11 +560,9 @@ class _SummaryPasangBatuScreenState extends State<SummaryPasangBatuScreen> {
             ],
             onChanged: (item) {
               setState(() {
-                isLoadingJenisBarang = false;
                 siklus.text = item!;
                 siklusDesigner = siklus.text.toString();
-                // _getAllDataProduksi(
-                //     siklusDesigner, sharedPreferences!.getString('nama')!);
+                _getDataAll(siklusDesigner);
               });
               Future.delayed(const Duration(milliseconds: 500)).then((value) {
                 setState(() {
@@ -571,7 +581,7 @@ class _SummaryPasangBatuScreenState extends State<SummaryPasangBatuScreen> {
                   color: Colors.black,
                   fontWeight: FontWeight.bold),
               dropdownSearchDecoration: InputDecoration(
-                  labelText: "Pilih Siklus",
+                  labelText: "Pilih Bulan",
                   floatingLabelAlignment: FloatingLabelAlignment.center,
                   filled: true,
                   fillColor: Colors.white,
@@ -590,7 +600,7 @@ class _SummaryPasangBatuScreenState extends State<SummaryPasangBatuScreen> {
                     child: Lottie.asset("loadingJSON/selectDate.json"),
                   ),
                   const Text(
-                    'Pilih siklus terlebih dahulu',
+                    'Pilih bulan terlebih dahulu',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: 26,

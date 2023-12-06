@@ -3813,7 +3813,7 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      "Siklus Saat Ini : $nowSiklus",
+                      "Bulan Saat Ini : $nowSiklus",
                       style: const TextStyle(fontSize: 20, color: Colors.black),
                     ),
                   ),
@@ -3874,7 +3874,7 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
                   color: Colors.black,
                   fontWeight: FontWeight.bold),
               dropdownSearchDecoration: InputDecoration(
-                  labelText: "Pilih Siklus",
+                  labelText: "Pilih Bulan",
                   floatingLabelAlignment: FloatingLabelAlignment.center,
                   filled: true,
                   fillColor: Colors.white,
@@ -3893,7 +3893,7 @@ class _SummarySusutScreenState extends State<SummarySusutScreen> {
                     child: Lottie.asset("loadingJSON/selectDate.json"),
                   ),
                   const Text(
-                    'Pilih siklus terlebih dahulu',
+                    'Pilih bulan terlebih dahulu',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: 26,

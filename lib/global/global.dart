@@ -12,6 +12,8 @@ int rilisPerbaikanbug =
 
 Color colorDasar = const Color.fromRGBO(38, 54, 72, 1);
 Color colorBG = const Color.fromRGBO(245, 245, 249, 1);
+Color colorCard1 = const Color.fromRGBO(90, 174, 170, 1);
+Color colorCard2 = const Color.fromRGBO(194, 203, 201, 1);
 
 String version = 'v$revisiBesar.$revisiKecil.$rilisPerbaikanbug';
 String aksesKode = "S@niv0kasi";

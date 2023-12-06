@@ -31,20 +31,42 @@ class _LoginDesktopState extends State<LoginDesktop> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: colorBG,
-      child: Row(
+    return Stack(clipBehavior: Clip.none, children: [
+      Positioned(
+          left: 0,
+          top: -35,
+          child: Transform.scale(
+            scale: 0.8,
+            child: SizedBox(
+              // width: MediaQuery.of(context).size.width * 1,
+              child: Lottie.asset("loadingJSON/logoLOTI.json"),
+            ),
+          )),
+      Positioned(
+          right: 55,
+          top: 1,
+          child: SizedBox(
+            // width: MediaQuery.of(context).size.width * 1,
+            child: Lottie.asset("loadingJSON/BGlogin.json"),
+          )),
+      Row(
         children: [
           Expanded(
             //<-- Expanded widget
             child: Container(
-              height: MediaQuery.of(context).size.height * 0.8,
-              width: MediaQuery.of(context).size.width * 1,
-              padding: const EdgeInsets.all(12.0),
-              // child: Lottie.asset("loadingJSON/logoOri.json"),
-              child: Lottie.asset("loadingJSON/logo275kb.json"),
-            ),
+                // height: MediaQuery.of(context).size.height * 0.8,
+                // width: MediaQuery.of(context).size.width * 1,
+                // padding: const EdgeInsets.all(12.0),
+                // child: Lottie.asset("loadingJSON/logoOri.json"),
+                // child: Lottie.asset("loadingJSON/logoLOTI.json"),
+
+                // child: Image.network(
+                //   '${ApiConstants.baseUrlImage}sanivokasi_logo-01.png',
+                //   // 'http://192.168.22.228/Api_Flutter/spk/upload/sanivokasi_logo-01.png',
+                //   fit: BoxFit.cover,
+                ),
           ),
+          // ),
           Expanded(
             //<-- Expanded widget
             child: Container(
@@ -239,7 +261,7 @@ class _LoginDesktopState extends State<LoginDesktop> {
           ),
         ],
       ),
-    );
+    ]);
   }
 
   // savePref(

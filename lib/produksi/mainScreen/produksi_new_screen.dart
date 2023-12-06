@@ -106,7 +106,7 @@ class _ProduksiNewScreenState extends State<ProduksiNewScreen>
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        "Siklus Saat Ini : $nowSiklus",
+                        "Bulan Saat Ini : $nowSiklus",
                         style:
                             const TextStyle(fontSize: 20, color: Colors.black),
                       ),
@@ -150,7 +150,7 @@ class _ProduksiNewScreenState extends State<ProduksiNewScreen>
                                                     DropDownDecoratorProps(
                                                   dropdownSearchDecoration:
                                                       InputDecoration(
-                                                    hintText: 'Pilih Siklus',
+                                                    hintText: 'Pilih Bulan',
                                                     filled: true,
                                                     fillColor: Colors.black,
                                                     enabledBorder:
@@ -168,7 +168,7 @@ class _ProduksiNewScreenState extends State<ProduksiNewScreen>
                                                 ),
                                                 validator: (value) => value ==
                                                         null
-                                                    ? "Siklus tidak boleh kosong"
+                                                    ? "Bulan tidak boleh kosong"
                                                     : null,
                                                 onChanged: (String? newValue) {
                                                   addSiklus.text = newValue!;
