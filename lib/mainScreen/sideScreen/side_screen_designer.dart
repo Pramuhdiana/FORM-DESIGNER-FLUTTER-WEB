@@ -94,11 +94,13 @@ class _MainViewDesignerState extends State<MainViewDesigner> {
                     fontWeight: FontWeight.bold,
                     fontSize: 18),
               )),
-          footer: const SideNavigationBarFooter(
+          footer: SideNavigationBarFooter(
               label: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 25),
-            child:
-                Text('© Copyright PT Cahaya Sani Vokasi. All Rights Reserved'),
+            padding: const EdgeInsets.symmetric(horizontal: 25),
+            child: Text(
+              '© Copyright PT Cahaya Sani Vokasi. All Rights Reserved\n $version',
+              style: const TextStyle(color: Colors.white),
+            ),
           )),
           initiallyExpanded: true,
           selectedIndex: widget.col,
@@ -297,16 +299,13 @@ class _MainViewDesignerState extends State<MainViewDesigner> {
           // Change the background color and disabled header/footer dividers
           // Make use of standard() constructor for other themes
           theme: SideNavigationBarTheme(
-            backgroundColor: Colors.blue,
+            backgroundColor: colorDasar,
             itemTheme: SideNavigationBarItemTheme(
-                unselectedItemColor: Colors.white,
-                selectedItemColor: Colors.black,
+                unselectedItemColor: const Color.fromRGBO(147, 155, 163, 1),
+                selectedItemColor: Colors.white,
                 iconSize: 32.5,
-                labelTextStyle: const TextStyle(
-                    fontSize: 15,
-                    // !! Won't work !! Custom text style colors gets overridden
-                    // by unselectedItemColor and selectedItemColor
-                    color: Colors.black)),
+                labelTextStyle:
+                    const TextStyle(fontSize: 15, color: Colors.red)),
             togglerTheme: const SideNavigationBarTogglerTheme(
                 shrinkIconColor: Colors.white),
             dividerTheme: SideNavigationBarDividerTheme.standard(),

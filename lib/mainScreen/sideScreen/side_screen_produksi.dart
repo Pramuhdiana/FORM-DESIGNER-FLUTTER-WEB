@@ -6,9 +6,9 @@ import 'package:form_designer/global/global.dart';
 import 'package:form_designer/mainScreen/list_mps.dart';
 import 'package:form_designer/mainScreen/login.dart';
 import 'package:form_designer/produksi/mainScreen/dashboard_control.dart';
+import 'package:form_designer/produksi/mainScreen/monthly_meeting_scm.dart';
 import 'package:form_designer/produksi/mainScreen/produksi_new_screen.dart';
 import 'package:form_designer/produksi/mainScreen/report_untuk_manufaktur.dart';
-import 'package:form_designer/produksi/mainScreen/report_untuk_scm.dart';
 import 'package:form_designer/produksi/mainScreen/summary_pasang_batu.dart';
 import 'package:form_designer/produksi/mainScreen/summary_produktivitas.dart';
 import 'package:form_designer/produksi/mainScreen/summary_susut.dart';
@@ -26,7 +26,7 @@ class MainViewProduksi extends StatefulWidget {
 class _MainViewProduksiState extends State<MainViewProduksi> {
   List<Widget> views = [
     //? 0
-    const ReportUntukSCM(),
+    const MonthlyMeetingScm(),
     //? 1
     const ReportUntukManufaktur(),
     //? 2
@@ -42,7 +42,7 @@ class _MainViewProduksiState extends State<MainViewProduksi> {
     //? 7
     const SummaryProduktivitasScreen(),
     //? 8
-    const ReportUntukSCM(),
+    const MonthlyMeetingScm(),
   ];
 
   // final _formKey = GlobalKey<FormState>();
@@ -113,12 +113,12 @@ class _MainViewProduksiState extends State<MainViewProduksi> {
                     fontWeight: FontWeight.bold,
                     fontSize: 18),
               )),
-          footer: const SideNavigationBarFooter(
+          footer: SideNavigationBarFooter(
               label: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 25),
+            padding: const EdgeInsets.symmetric(horizontal: 25),
             child: Text(
-              '© Copyright PT Cahaya Sani Vokasi. All Rights Reserved',
-              style: TextStyle(color: Colors.white),
+              '© Copyright PT Cahaya Sani Vokasi. All Rights Reserved\n $version',
+              style: const TextStyle(color: Colors.white),
             ),
           )),
           initiallyExpanded: true,
@@ -299,11 +299,13 @@ class _MainViewProduksiState extends State<MainViewProduksi> {
                     fontWeight: FontWeight.bold,
                     fontSize: 18),
               )),
-          footer: const SideNavigationBarFooter(
+          footer: SideNavigationBarFooter(
               label: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 25),
-            child:
-                Text('© Copyright PT Cahaya Sani Vokasi. All Rights Reserved'),
+            padding: const EdgeInsets.symmetric(horizontal: 25),
+            child: Text(
+              '© Copyright PT Cahaya Sani Vokasi. All Rights Reserved\n $version',
+              style: const TextStyle(color: Colors.white),
+            ),
           )),
           initiallyExpanded: false,
           selectedIndex: selectedIndex,

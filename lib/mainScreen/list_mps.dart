@@ -3313,7 +3313,7 @@ class RowSourceProduksi extends DataTableSource {
                                                                 //           .cover),
                                                                 // ),
                                                                 Text(
-                                                                  'Pilih Artis ${listDivisi[j]}',
+                                                                  'Pilih Artist ${listDivisi[j]}',
                                                                   style: const TextStyle(
                                                                       color: Colors
                                                                           .black,
@@ -3330,6 +3330,65 @@ class RowSourceProduksi extends DataTableSource {
                                                                         listArtist
                                                                             .length;
                                                                     i++)
+                                                                  // FutureBuilder(
+                                                                  //   future: _getListArtist(
+                                                                  //       '${listDivisi[j]}'),
+                                                                  //   builder: (context,
+                                                                  //       snapshot) {
+                                                                  //     if (snapshot
+                                                                  //         .hasData) {
+                                                                  //       return Container(
+                                                                  //         padding: const EdgeInsets
+                                                                  //             .only(
+                                                                  //             top:
+                                                                  //                 15),
+                                                                  //         child: ElevatedButton(
+                                                                  //             // style: ElevatedButton.styleFrom(backgroundColor: colorDasar, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
+                                                                  //             style: ButtonStyle(
+                                                                  //               backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                                                                  //                 (Set<MaterialState> states) {
+                                                                  //                   if (states.contains(MaterialState.hovered)) {
+                                                                  //                     // Saat tombol di-hover, atur warna latar belakang yang berbeda di sini
+                                                                  //                     return Colors.red; // Ganti dengan warna yang diinginkan
+                                                                  //                   }
+                                                                  //                   // Warna latar belakang saat tidak di-hover
+                                                                  //                   return colorDasar; // Ganti dengan warna yang diinginkan
+                                                                  //                 },
+                                                                  //               ),
+                                                                  //             ),
+                                                                  //             onPressed: () async {
+                                                                  //               await postPosisi(
+                                                                  //                 data.id,
+                                                                  //                 "${listDivisi[j]}",
+                                                                  //                 listArtist[i],
+                                                                  //               );
+                                                                  //               onRowPressed();
+
+                                                                  //               await postHistory(
+                                                                  //                 data.kodeDesignMdbc,
+                                                                  //                 data.kodeMarketing,
+                                                                  //                 "${listDivisi[j]}",
+                                                                  //                 listArtist[i],
+                                                                  //               );
+                                                                  //               Navigator.pop(context);
+                                                                  //               showSimpleNotification(
+                                                                  //                 const Text('Menambahkan posisi dan artist berhasil'),
+                                                                  //                 background: Colors.green,
+                                                                  //                 duration: const Duration(seconds: 1),
+                                                                  //               );
+                                                                  //             },
+                                                                  //             child: Text(
+                                                                  //               data.toString(),
+                                                                  //               style: const TextStyle(
+                                                                  //                 fontSize: 16,
+                                                                  //               ),
+                                                                  //             )),
+                                                                  //       );
+                                                                  //     } else {
+                                                                  //       return const CircularProgressIndicator();
+                                                                  //     }
+                                                                  //   },
+                                                                  // ),
                                                                   Container(
                                                                     padding: const EdgeInsets
                                                                         .only(
@@ -3500,6 +3559,27 @@ class RowSourceProduksi extends DataTableSource {
 
   @override
   int get selectedRowCount => 0;
+
+  // _getListArtist(divisi) async {
+  //   listArtist = [];
+  //   final response = await http
+  //       .get(Uri.parse('${ApiConstants.baseUrl}${ApiConstants.getListArtist}'));
+
+  //   if (response.statusCode == 200) {
+  //     List jsonResponse = json.decode(response.body);
+  //     var alldata = jsonResponse
+  //         .map((data) => ArtistProduksiModel.fromJson(data))
+  //         .toList();
+
+  //     var filterByDivisi = alldata.where((element) =>
+  //         element.divisi.toString().toLowerCase() ==
+  //         divisi.toString().toLowerCase());
+
+  //     return filterByDivisi;
+  //   } else {
+  //     throw Exception('Unexpected error occured!');
+  //   }
+  // }
 
   postPosisi(id, posisi, artist) async {
     Map<String, String> body = {

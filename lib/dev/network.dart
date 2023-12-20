@@ -7,11 +7,12 @@ import 'package:http_parser/http_parser.dart';
 class ApiClient {
   static var dio = Dio();
 
-  static Future<String> uploadFile(List<int> file, String fileName) async {
+  static Future<String> uploadFile(
+      List<int> file, String fileName, String id) async {
     FormData formData = FormData.fromMap({
       "imageUrl": MultipartFile.fromBytes(
         file,
-        filename: fileName,
+        filename: id + fileName,
         contentType: MediaType("image", "png"),
       )
     });

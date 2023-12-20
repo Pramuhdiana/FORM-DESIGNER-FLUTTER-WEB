@@ -244,7 +244,7 @@ class FormDesignerModel {
         namaDesigner: json["namaDesigner"] ?? '',
         namaModeller: json["namaModeller"] ?? '',
         kodeDesign: json["kodeDesign"] ?? '',
-        siklus: json["siklus"] ?? '',
+        siklus: (json["siklus"] ?? '').toString().toUpperCase(),
         tema: json["tema"] ?? '',
         rantai: json["rantai"] ?? '',
         qtyRantai: json["qtyRantai"],

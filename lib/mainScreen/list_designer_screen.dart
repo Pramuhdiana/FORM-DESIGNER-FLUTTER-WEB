@@ -11,11 +11,11 @@ import 'package:form_designer/mainScreen/form_screen.dart';
 // ignore: unused_import
 import 'package:form_designer/mainScreen/form_screen_by_id.dart';
 import 'package:form_designer/mainScreen/form_view_screen.dart';
-import 'package:form_designer/mainScreen/sideScreen/side_screen_designer.dart';
 import 'package:form_designer/mainScreen/sideScreen/side_screen_scm.dart';
 import 'package:form_designer/model/form_designer_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';
+import 'package:overlay_support/overlay_support.dart';
 
 import '../api/api_constant.dart';
 import '../global/global.dart';
@@ -71,6 +71,17 @@ class _ListDesignerScreenState extends State<ListDesignerScreen> {
     nowSiklus = sharedPreferences!.getString('siklus')!;
 
     _getData();
+  }
+
+  refresh() async {
+    print('refresh state');
+    // setState(() {
+    //   isLoading = false;
+    // });
+    await _getData();
+    setState(() {
+      // isLoading = true;
+    });
   }
 
   Future<List<FormDesignerModel>> _getData() async {
@@ -744,6 +755,9 @@ class _ListDesignerScreenState extends State<ListDesignerScreen> {
                                       source:
                                           // UserDataTableSource(userData: filterCrm!)),
                                           RowSource(
+                                              onRowPressed: () {
+                                                refresh();
+                                              },
                                               myData: myCrm,
                                               count: myCrm!.length)),
                                 ),
@@ -786,10 +800,12 @@ class _ListDesignerScreenState extends State<ListDesignerScreen> {
 
 class RowSource extends DataTableSource {
   var myData;
+  final VoidCallback onRowPressed; //* menerima data untuk me refresh screen
   final count;
   RowSource({
     required this.myData,
     required this.count,
+    required this.onRowPressed,
   });
 
   @override
@@ -872,30 +888,72 @@ class RowSource extends DataTableSource {
         Container(
             width: 100,
             padding: const EdgeInsets.all(0),
-            child: ((data.estimasiHarga * 0.37) * 11500) <= 5000000
-                ? const Text(
-                    "XS",
-                    maxLines: 2,
-                  )
-                : ((data.estimasiHarga * 0.37) * 11500) <= 10000000
+            child: (data.brand.toString().toLowerCase() == "parva" ||
+                    data.brand.toString().toLowerCase() == "fine")
+                ? ((data.estimasiHarga * 0.37) * 11500) <= 5000000
                     ? const Text(
-                        "S",
+                        "XS",
                         maxLines: 2,
+                        style: TextStyle(fontSize: 20, color: Colors.black),
                       )
-                    : ((data.estimasiHarga * 0.37) * 11500) <= 20000000
+                    : ((data.estimasiHarga * 0.37) * 11500) <= 10000000
                         ? const Text(
-                            "M",
+                            "S",
                             maxLines: 2,
+                            style: TextStyle(fontSize: 20, color: Colors.black),
                           )
-                        : ((data.estimasiHarga * 0.37) * 11500) <= 35000000
+                        : ((data.estimasiHarga * 0.37) * 11500) <= 20000000
                             ? const Text(
-                                "L",
+                                "M",
                                 maxLines: 2,
+                                style: TextStyle(
+                                    fontSize: 20, color: Colors.black),
                               )
-                            : const Text(
-                                "XL",
+                            : ((data.estimasiHarga * 0.37) * 11500) <= 35000000
+                                ? const Text(
+                                    "L",
+                                    maxLines: 2,
+                                    style: TextStyle(
+                                        fontSize: 20, color: Colors.black),
+                                  )
+                                : const Text(
+                                    "XL",
+                                    maxLines: 2,
+                                    style: TextStyle(
+                                        fontSize: 20, color: Colors.black),
+                                  )
+                : (data.estimasiHarga) <= 5000000
+                    ? const Text(
+                        "XS",
+                        maxLines: 2,
+                        style: TextStyle(fontSize: 20, color: Colors.black),
+                      )
+                    : (data.estimasiHarga) <= 10000000
+                        ? const Text(
+                            "S",
+                            maxLines: 2,
+                            style: TextStyle(fontSize: 20, color: Colors.black),
+                          )
+                        : (data.estimasiHarga) <= 20000000
+                            ? const Text(
+                                "M",
                                 maxLines: 2,
-                              )),
+                                style: TextStyle(
+                                    fontSize: 20, color: Colors.black),
+                              )
+                            : (data.estimasiHarga) <= 35000000
+                                ? const Text(
+                                    "L",
+                                    maxLines: 2,
+                                    style: TextStyle(
+                                        fontSize: 20, color: Colors.black),
+                                  )
+                                : const Text(
+                                    "XL",
+                                    maxLines: 2,
+                                    style: TextStyle(
+                                        fontSize: 20, color: Colors.black),
+                                  )),
       ),
       DataCell(_verticalDivider),
 
@@ -1246,28 +1304,16 @@ class RowSource extends DataTableSource {
                                             .postDeleteFormDesignerById),
                                     body: body);
                                 print(response.body);
+                                onRowPressed(); //! function merefresh state
 
-                                showDialog<String>(
-                                    context: context,
-                                    builder: (BuildContext context) =>
-                                        const AlertDialog(
-                                          title: Text(
-                                            'Design Terhapus',
-                                          ),
-                                        ));
-
-                                sharedPreferences!.getString('divisi') ==
-                                        'designer'
-                                    ? Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (c) =>
-                                                MainViewDesigner(col: 1)))
-                                    : Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (c) =>
-                                                MainViewScm(col: 2)));
+                                Navigator.pop(context);
+                                showSimpleNotification(
+                                  const Text(
+                                    'Design Terhapus',
+                                  ),
+                                  background: Colors.green,
+                                  duration: const Duration(seconds: 1),
+                                );
                               },
                               child: const Text(
                                 'Hapus',
@@ -1481,32 +1527,34 @@ class RowSource extends DataTableSource {
                                           ApiConstants.keyById),
                                       body: body);
                                   print(response.body);
+                                  onRowPressed(); //! function merefresh state
 
-                                  showDialog<String>(
-                                      context: context,
-                                      builder: (BuildContext context) =>
-                                          AlertDialog(
-                                            title: edit == 0
-                                                ? const Text(
-                                                    'Design Berhasil Dibuka',
-                                                  )
-                                                : const Text(
-                                                    'Design Berhasil Dikunci',
-                                                  ),
-                                          ));
+                                  Navigator.pop(context);
+                                  showSimpleNotification(
+                                    edit == 0
+                                        ? const Text(
+                                            'Design Berhasil Dibuka',
+                                          )
+                                        : const Text(
+                                            'Design Berhasil Dikunci',
+                                          ),
+                                    background: Colors.green,
+                                    duration: const Duration(seconds: 1),
+                                  );
+                                  // sharedPreferences!.getString('divisi') ==
+                                  //         'designer'
+                                  //     ? Navigator.push(
+                                  //         context,
+                                  //         MaterialPageRoute(
+                                  //             builder: (c) =>
+                                  //                 MainViewDesigner(col: 1)))
+                                  //     : Navigator.push(
+                                  //         context,
+                                  //         MaterialPageRoute(
+                                  //             builder: (c) =>
+                                  //                 MainViewScm(col: 2))
 
-                                  sharedPreferences!.getString('divisi') ==
-                                          'designer'
-                                      ? Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (c) =>
-                                                  MainViewDesigner(col: 1)))
-                                      : Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (c) =>
-                                                  MainViewScm(col: 2)));
+                                  // );
                                 },
                                 child: data.edit! == 0
                                     ? const Text('Buka kunci',

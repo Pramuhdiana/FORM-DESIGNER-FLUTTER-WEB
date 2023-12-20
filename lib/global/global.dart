@@ -1,4 +1,6 @@
 import 'dart:ui';
+// ignore: depend_on_referenced_packages
+import 'package:intl/intl.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -6,7 +8,7 @@ SharedPreferences? sharedPreferences;
 int revisiBesar =
     1; //UI baru, banyak fitur baru, perubahan konsep, dll  (MAJOR)
 int revisiKecil =
-    3; //perubahan kecil                                    (MINOR)
+    15; //perubahan kecil                                    (MINOR)
 int rilisPerbaikanbug =
     0; //perbaikan bug                                      (PATCH)
 
@@ -18,3 +20,6 @@ Color colorCard2 = const Color.fromRGBO(194, 203, 201, 1);
 String version = 'v$revisiBesar.$revisiKecil.$rilisPerbaikanbug';
 String aksesKode = "S@niv0kasi";
 double tinggiTextfield = 75.0; // tinggi text field
+
+var now = DateTime.now();
+String siklusSaatIini = DateFormat('MMMM', 'id').format(now);

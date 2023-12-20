@@ -2,6 +2,8 @@
 
 import 'dart:convert';
 import 'dart:developer';
+// ignore: depend_on_referenced_packages
+import 'package:uuid/uuid.dart';
 
 import 'package:dio/dio.dart';
 import 'package:dropdown_search/dropdown_search.dart';
@@ -39,6 +41,11 @@ class FormROScreen extends StatefulWidget {
   });
   @override
   State<FormROScreen> createState() => _FormROScreenState();
+}
+
+String generateImageName() {
+  var uuid = const Uuid();
+  return 'image_${uuid.v4()}'; // Prefix 'image_' followed by a unique identifier
 }
 
 class _FormROScreenState extends State<FormROScreen> {
@@ -586,6 +593,7 @@ class _FormROScreenState extends State<FormROScreen> {
       RoundedLoadingButtonController();
   int count = 0;
   List<PlatformFile>? _paths;
+  String? lastIdForm = '0';
 
   @override
   void initState() {
@@ -753,7 +761,7 @@ class _FormROScreenState extends State<FormROScreen> {
     }
   }
 
-  Future<void> _pickImage() async {
+  Future<void> _pickImage(id) async {
     try {
       _paths = (await FilePicker.platform.pickFiles(
         type: FileType.custom,
@@ -773,7 +781,7 @@ class _FormROScreenState extends State<FormROScreen> {
           _imageFile = _paths!.first;
           imageUrl = _paths!.first.name;
           //passing file bytes and file name for API call
-          ApiClient.uploadFile(_paths!.first.bytes!, _paths!.first.name);
+          ApiClient.uploadFile(_paths!.first.bytes!, _paths!.first.name, id);
         }
       }
     });
@@ -4146,7 +4154,8 @@ class _FormROScreenState extends State<FormROScreen> {
               padding: const EdgeInsets.only(top: 18, bottom: 10),
               child: ElevatedButton(
                   onPressed: () {
-                    _pickImage();
+                    lastIdForm = generateImageName();
+                    _pickImage(lastIdForm);
                     DropdownSearch<BatuModel>(
                       asyncItems: (String? filter) => getData(filter),
                       popupProps:
@@ -4173,27 +4182,40 @@ class _FormROScreenState extends State<FormROScreen> {
                   },
                   child: const Text('Gambar Design')),
             ),
-            imageUrl != null
+            lastIdForm != '0'
                 ? Container(
                     width: MediaQuery.of(context).size.width * 1,
                     height: 350,
                     padding: const EdgeInsets.all(2),
                     decoration: BoxDecoration(
-                        color: Colors.black,
+                        color: Colors.white,
                         borderRadius: BorderRadius.circular(10)),
-                    child: Image.network(
-                      ApiConstants.baseUrlImage + imageUrl!,
-                      fit: BoxFit.cover,
+                    child: Image.memory(
+                      Uint8List.fromList(_imageFile!.bytes!),
+                      fit: BoxFit.scaleDown,
                     ),
                   )
-                : Container(
-                    width: MediaQuery.of(context).size.width * 1,
-                    height: 350,
-                    padding: const EdgeInsets.only(top: 18),
-                    decoration: BoxDecoration(
-                        color: Colors.grey.shade200,
-                        borderRadius: BorderRadius.circular(10)),
-                  ),
+                : imageUrl != null
+                    ? Container(
+                        width: MediaQuery.of(context).size.width * 1,
+                        height: 350,
+                        padding: const EdgeInsets.all(2),
+                        decoration: BoxDecoration(
+                            color: Colors.black,
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Image.network(
+                          ApiConstants.baseUrlImage + imageUrl!,
+                          fit: BoxFit.scaleDown,
+                        ),
+                      )
+                    : Container(
+                        width: MediaQuery.of(context).size.width * 1,
+                        height: 350,
+                        padding: const EdgeInsets.only(top: 18),
+                        decoration: BoxDecoration(
+                            color: Colors.grey.shade200,
+                            borderRadius: BorderRadius.circular(10)),
+                      ),
             Padding(
               padding: const EdgeInsets.only(top: 18),
               child: Row(
@@ -13265,7 +13287,7 @@ class _FormROScreenState extends State<FormROScreen> {
       'qtyBatu34': qtyBatu34.text,
       'batu35': batu35!,
       'qtyBatu35': qtyBatu35.text,
-      'imageUrl': imageUrl,
+      'imageUrl': lastIdForm! == '0' ? imageUrl! : lastIdForm! + imageUrl!,
       'statusForm': statusForm.text,
     };
     final response = await http.post(

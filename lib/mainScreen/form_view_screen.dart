@@ -477,10 +477,12 @@ class _FormViewScreenState extends State<FormViewScreen> {
   int count = 0;
   List<PlatformFile>? _paths;
   String? status = 'NO';
+  String? lastIdForm = '0';
 
   @override
   void initState() {
     super.initState();
+    lastIdForm = widget.modelDesigner!.id!.toString();
     status = widget.modelDesigner!.statusForm!.toString();
     kodeDesignMdbc.text = widget.modelDesigner!.kodeDesignMdbc!.toString();
     kodeMarketing.text = widget.modelDesigner!.kodeMarketing!.toString();
@@ -637,7 +639,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
   }
 
   // ignore: unused_element
-  Future<void> _pickImage() async {
+  Future<void> _pickImage(id) async {
     try {
       _paths = (await FilePicker.platform.pickFiles(
         type: FileType.custom,
@@ -657,7 +659,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
           _imageFile = _paths!.first;
           imageUrl = _paths!.first.name;
           //passing file bytes and file name for API call
-          ApiClient.uploadFile(_paths!.first.bytes!, _paths!.first.name);
+          ApiClient.uploadFile(_paths!.first.bytes!, _paths!.first.name, id);
         }
       }
     });

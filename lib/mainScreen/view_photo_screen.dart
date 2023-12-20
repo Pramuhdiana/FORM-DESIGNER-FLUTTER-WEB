@@ -3,6 +3,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:form_designer/api/api_constant.dart';
+import 'package:form_designer/global/global.dart';
 import 'package:form_designer/model/form_designer_model.dart';
 import 'package:photo_view/photo_view.dart';
 
@@ -40,14 +41,14 @@ class _ViewPhotoScreen extends State<ViewPhotoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: colorBG,
       appBar: AppBar(
         automaticallyImplyLeading: true,
         title: Text(
           '${widget.model!.kodeDesignMdbc}',
           style: const TextStyle(color: Colors.black),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.grey.shade700,
 
         // leading: IconButton(
         //   icon: Image.asset(

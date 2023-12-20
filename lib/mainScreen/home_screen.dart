@@ -6001,37 +6001,72 @@ class RowSource extends DataTableSource {
         Container(
             alignment: Alignment.center,
             padding: const EdgeInsets.all(0),
-            child: ((data.estimasiHarga * 0.37) * 11500) <= 5000000
-                ? const Text(
-                    "XS",
-                    maxLines: 2,
-                    style: TextStyle(fontSize: 20, color: Colors.black),
-                  )
-                : ((data.estimasiHarga * 0.37) * 11500) <= 10000000
+            child: (data.brand.toString().toLowerCase() == "parva" ||
+                    data.brand.toString().toLowerCase() == "fine")
+                ? ((data.estimasiHarga * 0.37) * 11500) <= 5000000
                     ? const Text(
-                        "S",
+                        "XS",
                         maxLines: 2,
                         style: TextStyle(fontSize: 20, color: Colors.black),
                       )
-                    : ((data.estimasiHarga * 0.37) * 11500) <= 20000000
+                    : ((data.estimasiHarga * 0.37) * 11500) <= 10000000
                         ? const Text(
-                            "M",
+                            "S",
                             maxLines: 2,
                             style: TextStyle(fontSize: 20, color: Colors.black),
                           )
-                        : ((data.estimasiHarga * 0.37) * 11500) <= 35000000
+                        : ((data.estimasiHarga * 0.37) * 11500) <= 20000000
                             ? const Text(
-                                "L",
+                                "M",
                                 maxLines: 2,
                                 style: TextStyle(
                                     fontSize: 20, color: Colors.black),
                               )
-                            : const Text(
-                                "XL",
+                            : ((data.estimasiHarga * 0.37) * 11500) <= 35000000
+                                ? const Text(
+                                    "L",
+                                    maxLines: 2,
+                                    style: TextStyle(
+                                        fontSize: 20, color: Colors.black),
+                                  )
+                                : const Text(
+                                    "XL",
+                                    maxLines: 2,
+                                    style: TextStyle(
+                                        fontSize: 20, color: Colors.black),
+                                  )
+                : (data.estimasiHarga) <= 5000000
+                    ? const Text(
+                        "XS",
+                        maxLines: 2,
+                        style: TextStyle(fontSize: 20, color: Colors.black),
+                      )
+                    : (data.estimasiHarga) <= 10000000
+                        ? const Text(
+                            "S",
+                            maxLines: 2,
+                            style: TextStyle(fontSize: 20, color: Colors.black),
+                          )
+                        : (data.estimasiHarga) <= 20000000
+                            ? const Text(
+                                "M",
                                 maxLines: 2,
                                 style: TextStyle(
                                     fontSize: 20, color: Colors.black),
-                              )),
+                              )
+                            : (data.estimasiHarga) <= 35000000
+                                ? const Text(
+                                    "L",
+                                    maxLines: 2,
+                                    style: TextStyle(
+                                        fontSize: 20, color: Colors.black),
+                                  )
+                                : const Text(
+                                    "XL",
+                                    maxLines: 2,
+                                    style: TextStyle(
+                                        fontSize: 20, color: Colors.black),
+                                  )),
       ),
       DataCell(_verticalDivider),
       //gambar

@@ -621,7 +621,7 @@ class _PrintPageState extends State<PrintPage> {
   }
 
   // ignore: unused_element
-  Future<void> _pickImage() async {
+  Future<void> _pickImage(id) async {
     try {
       _paths = (await FilePicker.platform.pickFiles(
         type: FileType.custom,
@@ -641,7 +641,7 @@ class _PrintPageState extends State<PrintPage> {
           _imageFile = _paths!.first;
           imageUrl = _paths!.first.name;
           //passing file bytes and file name for API call
-          ApiClient.uploadFile(_paths!.first.bytes!, _paths!.first.name);
+          ApiClient.uploadFile(_paths!.first.bytes!, _paths!.first.name, id);
         }
       }
     });

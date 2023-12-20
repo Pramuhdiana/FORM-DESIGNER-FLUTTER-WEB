@@ -131,12 +131,12 @@ class _MainViewScmState extends State<MainViewScm> {
                     fontWeight: FontWeight.bold,
                     fontSize: 18),
               )),
-          footer: const SideNavigationBarFooter(
+          footer: SideNavigationBarFooter(
               label: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 25),
+            padding: const EdgeInsets.symmetric(horizontal: 25),
             child: Text(
-              '© Copyright PT Cahaya Sani Vokasi. All Rights Reserved',
-              style: TextStyle(color: Colors.white),
+              '© Copyright PT Cahaya Sani Vokasi. All Rights Reserved\n $version',
+              style: const TextStyle(color: Colors.white),
             ),
           )),
           initiallyExpanded: true,

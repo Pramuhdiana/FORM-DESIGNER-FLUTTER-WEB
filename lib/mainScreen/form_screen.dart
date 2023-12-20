@@ -2,12 +2,15 @@
 import 'dart:developer';
 
 import 'dart:convert';
+import 'package:uuid/uuid.dart';
 
 import 'package:dio/dio.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:form_designer/mainScreen/sideScreen/side_screen_designer.dart';
+import 'package:form_designer/model/form_designer_model.dart';
 import 'package:form_designer/model/siklus_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
@@ -24,7 +27,6 @@ import '../model/jenis_barang_model.dart';
 import '../model/lain2_model.dart';
 import '../model/rantai_model.dart';
 import '../widgets/custom_loading.dart';
-import 'sideScreen/side_screen_design.dart';
 
 class FormScreen extends StatefulWidget {
   const FormScreen({super.key});
@@ -464,11 +466,18 @@ class _FormScreenState extends State<FormScreen> {
   RoundedLoadingButtonController btnController =
       RoundedLoadingButtonController();
   int count = 0;
+  String? lastIdForm = '0';
+
   @override
   void initState() {
     super.initState();
     namaDesigner.text = sharedPreferences!.getString('nama')!;
     _getSiklus();
+  }
+
+  String generateImageName() {
+    var uuid = const Uuid();
+    return 'image_${uuid.v4()}'; // Prefix 'image_' followed by a unique identifier
   }
 
 //get token
@@ -486,12 +495,27 @@ class _FormScreenState extends State<FormScreen> {
     } else {
       throw Exception('Unexpected error occured!');
     }
+    final response2 = await http.get(
+        Uri.parse(ApiConstants.baseUrl + ApiConstants.getListFormDesigner));
+
+    if (response2.statusCode == 200) {
+      List jsonResponse = json.decode(response2.body);
+
+      var allData =
+          jsonResponse.map((data) => FormDesignerModel.fromJson(data)).toList();
+      setState(() {
+        lastIdForm = allData.first.id.toString();
+        print('ini id gambar $lastIdForm');
+      });
+    } else {
+      throw Exception('Unexpected error occured!');
+    }
   }
 
   //start image
   final ImagePicker imgpicker = ImagePicker();
 
-  Future<void> _pickImage() async {
+  Future<void> _pickImage(id) async {
     try {
       _paths = (await FilePicker.platform.pickFiles(
         type: FileType.custom,
@@ -511,7 +535,7 @@ class _FormScreenState extends State<FormScreen> {
           _imageFile = _paths!.first;
           imageUrl = _paths!.first.name;
           //passing file bytes and file name for API call
-          ApiClient.uploadFile(_paths!.first.bytes!, _paths!.first.name);
+          ApiClient.uploadFile(_paths!.first.bytes!, _paths!.first.name, id);
         }
       }
     });
@@ -2182,6 +2206,18 @@ class _FormScreenState extends State<FormScreen> {
                 Future.delayed(const Duration(seconds: 1)).then((value) {
                   btnController.reset(); //reset
                 });
+              } else if (brand.text.isEmpty) {
+                showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) => const AlertDialog(
+                          title: Text(
+                            'brand wajib diisi',
+                          ),
+                        ));
+                btnController.error();
+                Future.delayed(const Duration(seconds: 1)).then((value) {
+                  btnController.reset(); //reset
+                });
               } else if (jenisBarang.text == "Necklace" &&
                   rantai.text.isEmpty) {
                 showDialog<String>(
@@ -2351,7 +2387,8 @@ class _FormScreenState extends State<FormScreen> {
                                                       context,
                                                       MaterialPageRoute(
                                                           builder: (c) =>
-                                                              const MainViewFormDesign()));
+                                                              MainViewDesigner(
+                                                                  col: 1)));
                                                 },
                                                 child: const Text(
                                                   "All Round",
@@ -2431,7 +2468,8 @@ class _FormScreenState extends State<FormScreen> {
                                                       context,
                                                       MaterialPageRoute(
                                                           builder: (c) =>
-                                                              const MainViewFormDesign()));
+                                                              MainViewDesigner(
+                                                                  col: 1)));
                                                 },
                                                 child: const Text(
                                                   "All Fancy",
@@ -2511,7 +2549,8 @@ class _FormScreenState extends State<FormScreen> {
                                                       context,
                                                       MaterialPageRoute(
                                                           builder: (c) =>
-                                                              const MainViewFormDesign()));
+                                                              MainViewDesigner(
+                                                                  col: 1)));
                                                 },
                                                 child: const Text(
                                                   "MIX",
@@ -2792,7 +2831,10 @@ class _FormScreenState extends State<FormScreen> {
                   //upload image
                   ElevatedButton(
                       onPressed: () {
-                        _pickImage();
+                        lastIdForm = generateImageName();
+                        kodeDesignMdbc.text.isEmpty
+                            ? null
+                            : _pickImage(lastIdForm);
                       },
                       child: const Text('Gambar Design')),
             ),
@@ -2806,7 +2848,7 @@ class _FormScreenState extends State<FormScreen> {
                         borderRadius: BorderRadius.circular(10)),
                     child: Image.memory(
                       Uint8List.fromList(_imageFile!.bytes!),
-                      fit: BoxFit.contain,
+                      fit: BoxFit.scaleDown,
                     ),
                   )
                 : Container(
@@ -14300,7 +14342,7 @@ class _FormScreenState extends State<FormScreen> {
       'qtyBatu34': qtyBatu34.text,
       'batu35': batu35!,
       'qtyBatu35': qtyBatu35.text,
-      'imageUrl': imageUrl,
+      'imageUrl': lastIdForm! + imageUrl!,
       'statusForm': statusForm.text,
       'keteranganBatu': keteranganBatu,
     };
