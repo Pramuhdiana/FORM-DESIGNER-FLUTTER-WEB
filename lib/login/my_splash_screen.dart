@@ -10,6 +10,7 @@ import 'package:form_designer/mainScreen/login.dart';
 import 'package:form_designer/mainScreen/sideScreen/side_screen.dart';
 import 'package:form_designer/mainScreen/sideScreen/side_screen_designer.dart';
 import 'package:form_designer/mainScreen/sideScreen/side_screen_produksi.dart';
+import 'package:form_designer/mainScreen/sideScreen/side_screen_qc.dart';
 import 'package:form_designer/mainScreen/sideScreen/side_screen_scm.dart';
 import 'package:form_designer/model/siklus_model.dart';
 import '../global/global.dart';
@@ -57,6 +58,9 @@ class _MySplashScreenState extends State<MySplashScreen> {
           } else if (sharedPreferences!.getString('divisi') == 'designer') {
             Navigator.push(context,
                 MaterialPageRoute(builder: (c) => MainViewDesigner(col: 0)));
+          } else if (sharedPreferences!.getString('divisi') == 'qc') {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (c) => MainViewQc(col: 0)));
           } else {
             Navigator.push(
                 context, MaterialPageRoute(builder: (c) => const MainView()));

@@ -3314,15 +3314,21 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                       setState(() {
                         clearForm();
                       });
+
                       sharedPreferences!.getString('divisi') == 'designer'
                           ? Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (c) => MainViewDesigner(col: 3)))
-                          : Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (c) => MainViewScm(col: 1)));
+                          : sharedPreferences!.getString('role') == '2'
+                              ? Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (c) => MainViewScm(col: 1)))
+                              : Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (c) => MainViewScm(col: 4)));
                     });
             },
             child: const Text(
