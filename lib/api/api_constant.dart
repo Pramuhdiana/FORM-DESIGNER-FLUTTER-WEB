@@ -37,6 +37,8 @@ class ApiConstants {
   static String getListArtist = 'spk/list_artist_produksi.php';
   static String getListDivisi = 'spk/list_divisi.php';
   static String getDataModeller = 'spk/get_data_modeller.php';
+  static String getDataListItem = 'spk/list_item.php';
+  static String getFormPR = 'spk/get_form_pr.php';
 
   static String postDataBatu = 'spk/create_batu.php';
   static String postLogin = 'spk/login.php';
@@ -57,6 +59,9 @@ class ApiConstants {
   static String updatePosisi = 'spk/add_posisi.php';
   static String updateNilaiProduksi = 'spk/update_nilai_produksi.php';
   static String updateDataModeller = 'spk/update_form_data_modeller.php';
+  static String postDataListItem = 'spk/create_list_item.php';
+  static String postListFormPR = 'spk/create_list_form_pr.php';
+  static String postFormPR = 'spk/create_form_pr.php';
 
   static String addModeller = 'spk/add_modeller.php';
   static String addPointModeller = 'spk/add_point_modeller.php';
