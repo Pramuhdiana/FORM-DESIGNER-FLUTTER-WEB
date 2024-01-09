@@ -14,6 +14,7 @@ class ApiConstants {
   static String getDataBatuCalculator = 'spk/batu_calculator.php';
   static String getDataBatuByName = 'spk/get_batu_by_name.php';
   static String getDataBatuMdbc = 'spk/batu_mdbc.php';
+  static String getDataBatuMdbc2024 = 'spk/batu_mdbc2024.php';
   static String getNilaiData = 'spk/nilaidata.php';
   static String getListRantai = 'spk/list_rantai.php';
   static String getListEarnut = 'spk/list_earnut.php';

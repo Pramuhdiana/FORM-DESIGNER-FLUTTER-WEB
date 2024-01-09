@@ -680,7 +680,7 @@ Widget _listItem(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            item?.item ?? '',
+            item?.nama ?? '',
           ),
         ],
       ),

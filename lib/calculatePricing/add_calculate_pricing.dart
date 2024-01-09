@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:form_designer/global/global.dart';
 import 'package:form_designer/mainScreen/sideScreen/side_screen_designer.dart';
 import 'package:form_designer/mainScreen/sideScreen/side_screen_scm.dart';
-import 'package:form_designer/model/batu_model.dart';
+import 'package:form_designer/model/batu_model2024.dart';
 import 'package:form_designer/model/earnut_model.dart';
 import 'package:form_designer/model/jenis_barang_model.dart';
 import 'package:form_designer/model/lain2_model.dart';
@@ -471,6 +471,42 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
   String? batu34 = '';
   String? batu35 = '';
 
+  String? lotBatu1 = '';
+  String? lotBatu2 = '';
+  String? lotBatu3 = '';
+  String? lotBatu4 = '';
+  String? lotBatu5 = '';
+  String? lotBatu6 = '';
+  String? lotBatu7 = '';
+  String? lotBatu8 = '';
+  String? lotBatu9 = '';
+  String? lotBatu10 = '';
+  String? lotBatu11 = '';
+  String? lotBatu12 = '';
+  String? lotBatu13 = '';
+  String? lotBatu14 = '';
+  String? lotBatu15 = '';
+  String? lotBatu16 = '';
+  String? lotBatu17 = '';
+  String? lotBatu18 = '';
+  String? lotBatu19 = '';
+  String? lotBatu20 = '';
+  String? lotBatu21 = '';
+  String? lotBatu22 = '';
+  String? lotBatu23 = '';
+  String? lotBatu24 = '';
+  String? lotBatu25 = '';
+  String? lotBatu26 = '';
+  String? lotBatu27 = '';
+  String? lotBatu28 = '';
+  String? lotBatu29 = '';
+  String? lotBatu30 = '';
+  String? lotBatu31 = '';
+  String? lotBatu32 = '';
+  String? lotBatu33 = '';
+  String? lotBatu34 = '';
+  String? lotBatu35 = '';
+
   double markUpBatu1 = 1;
   double markUpBatu2 = 1;
   double markUpBatu3 = 1;
@@ -668,10 +704,24 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
   double doubleBeratEmas = 0.0;
   double doubleBeratEmasDariCustomer = 0.0;
 
-  int emas = 0;
+  // int emas = 0; //? before
+  double presentaseEmas = 0; //* after
+  int hargaEmas = 1050000; //* after
   double upEmas = 0;
-  double upEmasMetier = 1.3;
+  double upBatuParva = 0;
+  double upBatuMetier = 0;
+  double upOngkos1Parva = 0;
+  double upOngkos1Metier = 0;
+  double upOngkos2Parva = 0;
+  double upOngkos2Metier = 0;
+  double upEmasParva = 0;
+  double upEmasMetier = 0;
+  double upFinalParva = 0;
+  double upFinalMetier = 0;
+  double upDiamond = 1;
   double upDiamondMetier = 1.1;
+  int kursParva = 0;
+  int kursMetier = 0;
   double upLabour = 0;
   double upBatu = 0;
   double upFinal = 0;
@@ -679,6 +729,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
   int others1 = 0;
   int others2 = 0;
   int others3 = 0;
+  int ongkos1 = 0;
+  int ongkos2 = 0;
   String? imageUrl = '';
   RoundedLoadingButtonController btnController =
       RoundedLoadingButtonController();
@@ -701,8 +753,22 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
         final data = jsonDecode(response.body);
         print(data);
         setState(() {
-          emas = data[0]['emas'];
-          upEmas = data[0]['upEmas'];
+          hargaEmas = 1050000; //? data[0]['emas'];
+          upFinalParva = data[0]['upFinalParva'];
+          upFinalMetier = data[0]['upFinalMetier'];
+          upEmasParva = data[0]['upEmasParva'];
+          upEmasMetier = data[0]['upEmasMetier'];
+          upBatuParva = data[0]['upBatuParva'];
+          upBatuMetier = data[0]['upBatuMetier'];
+          kursParva = data[0]['kursParva'];
+          kursMetier = data[0]['kursMetier'];
+          upOngkos1Parva = data[0]['upOngkos1Parva'];
+          upOngkos1Metier = data[0]['upOngkos1Metier'];
+          upOngkos2Parva = data[0]['upOngkos2Parva'];
+          upOngkos2Metier = data[0]['upOngkos2Metier'];
+          ongkos1 = data[0]['ongkos1'];
+          ongkos2 = data[0]['ongkos2'];
+          presentaseEmas = double.parse(data[0]['presentaseEmas'].toString());
           upBatu = data[0]['upBatu'];
           upLabour = data[0]['upLabour'];
           upFinal = data[0]['upFinal'];
@@ -718,814 +784,329 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
   }
 
   double get totalPriceParva {
-    var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
-        (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
-        (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
-        (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
-        (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
-        (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
-        (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
-        (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
-        (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
-        (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
-        (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
-        (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
-        (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
-        (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
-        (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
-        (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
-        (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
-        (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
-        (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
-        (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
-        (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
-        (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
-        (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
-        (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
-        (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
-        (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
-        (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
-        (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
-        (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
-        (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
-        (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
-        (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
-        (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
-        (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
-        (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
+    //? before
+    // var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
+    //     (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
+    //     (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
+    //     (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
+    //     (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
+    //     (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
+    //     (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
+    //     (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
+    //     (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
+    //     (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
+    //     (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
+    //     (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
+    //     (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
+    //     (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
+    //     (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
+    //     (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
+    //     (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
+    //     (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
+    //     (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
+    //     (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
+    //     (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
+    //     (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
+    //     (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
+    //     (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
+    //     (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
+    //     (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
+    //     (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
+    //     (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
+    //     (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
+    //     (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
+    //     (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
+    //     (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
+    //     (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
+    //     (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
+    //     (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
+    //* after
+    var totalDiamond = (hargaBatu1 *
+            kursParva *
+            (caratPcsBatu1 * qtyIntBatu1!) *
+            upBatuParva) +
+        (hargaBatu2 *
+            kursParva *
+            (caratPcsBatu2 * qtyIntBatu2!) *
+            upBatuParva) +
+        (hargaBatu3 *
+            kursParva *
+            (caratPcsBatu3 * qtyIntBatu3!) *
+            upBatuParva) +
+        (hargaBatu4 *
+            kursParva *
+            (caratPcsBatu4 * qtyIntBatu4!) *
+            upBatuParva) +
+        (hargaBatu5 *
+            kursParva *
+            (caratPcsBatu5 * qtyIntBatu5!) *
+            upBatuParva) +
+        (hargaBatu6 *
+            kursParva *
+            (caratPcsBatu6 * qtyIntBatu6!) *
+            upBatuParva) +
+        (hargaBatu7 *
+            kursParva *
+            (caratPcsBatu7 * qtyIntBatu7!) *
+            upBatuParva) +
+        (hargaBatu8 *
+            kursParva *
+            (caratPcsBatu8 * qtyIntBatu8!) *
+            upBatuParva) +
+        (hargaBatu9 *
+            kursParva *
+            (caratPcsBatu9 * qtyIntBatu9!) *
+            upBatuParva) +
+        (hargaBatu10 *
+            kursParva *
+            (caratPcsBatu10 * qtyIntBatu10!) *
+            upBatuParva) +
+        (hargaBatu11 *
+            kursParva *
+            (caratPcsBatu11 * qtyIntBatu11!) *
+            upBatuParva) +
+        (hargaBatu12 *
+            kursParva *
+            (caratPcsBatu12 * qtyIntBatu12!) *
+            upBatuParva) +
+        (hargaBatu13 *
+            kursParva *
+            (caratPcsBatu13 * qtyIntBatu13!) *
+            upBatuParva) +
+        (hargaBatu14 *
+            kursParva *
+            (caratPcsBatu14 * qtyIntBatu14!) *
+            upBatuParva) +
+        (hargaBatu15 *
+            kursParva *
+            (caratPcsBatu15 * qtyIntBatu15!) *
+            upBatuParva) +
+        (hargaBatu16 *
+            kursParva *
+            (caratPcsBatu16 * qtyIntBatu16!) *
+            upBatuParva) +
+        (hargaBatu17 *
+            kursParva *
+            (caratPcsBatu17 * qtyIntBatu17!) *
+            upBatuParva) +
+        (hargaBatu18 *
+            kursParva *
+            (caratPcsBatu18 * qtyIntBatu18!) *
+            upBatuParva) +
+        (hargaBatu19 *
+            kursParva *
+            (caratPcsBatu19 * qtyIntBatu19!) *
+            upBatuParva) +
+        (hargaBatu20 *
+            kursParva *
+            (caratPcsBatu20 * qtyIntBatu20!) *
+            upBatuParva) +
+        (hargaBatu21 *
+            kursParva *
+            (caratPcsBatu21 * qtyIntBatu21!) *
+            upBatuParva) +
+        (hargaBatu22 *
+            kursParva *
+            (caratPcsBatu22 * qtyIntBatu22!) *
+            upBatuParva) +
+        (hargaBatu23 *
+            kursParva *
+            (caratPcsBatu23 * qtyIntBatu23!) *
+            upBatuParva) +
+        (hargaBatu24 *
+            kursParva *
+            (caratPcsBatu24 * qtyIntBatu24!) *
+            upBatuParva) +
+        (hargaBatu25 *
+            kursParva *
+            (caratPcsBatu25 * qtyIntBatu25!) *
+            upBatuParva) +
+        (hargaBatu26 *
+            kursParva *
+            (caratPcsBatu26 * qtyIntBatu26!) *
+            upBatuParva) +
+        (hargaBatu27 *
+            kursParva *
+            (caratPcsBatu27 * qtyIntBatu27!) *
+            upBatuParva) +
+        (hargaBatu28 *
+            kursParva *
+            (caratPcsBatu28 * qtyIntBatu28!) *
+            upBatuParva) +
+        (hargaBatu29 *
+            kursParva *
+            (caratPcsBatu29 * qtyIntBatu29!) *
+            upBatuParva) +
+        (hargaBatu30 *
+            kursParva *
+            (caratPcsBatu30 * qtyIntBatu30!) *
+            upBatuParva) +
+        (hargaBatu31 *
+            kursParva *
+            (caratPcsBatu31 * qtyIntBatu31!) *
+            upBatuParva) +
+        (hargaBatu32 *
+            kursParva *
+            (caratPcsBatu32 * qtyIntBatu32!) *
+            upBatuParva) +
+        (hargaBatu33 *
+            kursParva *
+            (caratPcsBatu33 * qtyIntBatu33!) *
+            upBatuParva) +
+        (hargaBatu34 *
+            kursParva *
+            (caratPcsBatu34 * qtyIntBatu34!) *
+            upBatuParva) +
+        (hargaBatu35 *
+            kursParva *
+            (caratPcsBatu35 * qtyIntBatu35!) *
+            upBatuParva);
 
     var totalDiamondTanpaUp =
-        ((hargaBatu1 / markUpBatu1) * (caratPcsBatu1 * qtyIntBatu1!)) +
-            ((hargaBatu2 / markUpBatu2) * (caratPcsBatu2 * qtyIntBatu2!)) +
-            ((hargaBatu3 / markUpBatu3) * (caratPcsBatu3 * qtyIntBatu3!)) +
-            ((hargaBatu4 / markUpBatu4) * (caratPcsBatu4 * qtyIntBatu4!)) +
-            ((hargaBatu5 / markUpBatu5) * (caratPcsBatu5 * qtyIntBatu5!)) +
-            ((hargaBatu6 / markUpBatu6) * (caratPcsBatu6 * qtyIntBatu6!)) +
-            ((hargaBatu7 / markUpBatu7) * (caratPcsBatu7 * qtyIntBatu7!)) +
-            ((hargaBatu8 / markUpBatu8) * (caratPcsBatu8 * qtyIntBatu8!)) +
-            ((hargaBatu9 / markUpBatu9) * (caratPcsBatu9 * qtyIntBatu9!)) +
-            ((hargaBatu10 / markUpBatu10) * (caratPcsBatu10 * qtyIntBatu10!)) +
-            ((hargaBatu11 / markUpBatu11) * (caratPcsBatu11 * qtyIntBatu11!)) +
-            ((hargaBatu12 / markUpBatu12) * (caratPcsBatu12 * qtyIntBatu12!)) +
-            ((hargaBatu13 / markUpBatu13) * (caratPcsBatu13 * qtyIntBatu13!)) +
-            ((hargaBatu14 / markUpBatu14) * (caratPcsBatu14 * qtyIntBatu14!)) +
-            ((hargaBatu15 / markUpBatu15) * (caratPcsBatu15 * qtyIntBatu15!)) +
-            ((hargaBatu16 / markUpBatu16) * (caratPcsBatu16 * qtyIntBatu16!)) +
-            ((hargaBatu17 / markUpBatu17) * (caratPcsBatu17 * qtyIntBatu17!)) +
-            ((hargaBatu18 / markUpBatu18) * (caratPcsBatu18 * qtyIntBatu18!)) +
-            ((hargaBatu19 / markUpBatu19) * (caratPcsBatu19 * qtyIntBatu19!)) +
-            ((hargaBatu20 / markUpBatu20) * (caratPcsBatu20 * qtyIntBatu20!)) +
-            ((hargaBatu21 / markUpBatu21) * (caratPcsBatu21 * qtyIntBatu21!)) +
-            ((hargaBatu22 / markUpBatu22) * (caratPcsBatu22 * qtyIntBatu22!)) +
-            ((hargaBatu23 / markUpBatu23) * (caratPcsBatu23 * qtyIntBatu23!)) +
-            ((hargaBatu24 / markUpBatu24) * (caratPcsBatu24 * qtyIntBatu24!)) +
-            ((hargaBatu25 / markUpBatu25) * (caratPcsBatu25 * qtyIntBatu25!)) +
-            ((hargaBatu26 / markUpBatu26) * (caratPcsBatu26 * qtyIntBatu26!)) +
-            ((hargaBatu27 / markUpBatu27) * (caratPcsBatu27 * qtyIntBatu27!)) +
-            ((hargaBatu28 / markUpBatu28) * (caratPcsBatu28 * qtyIntBatu28!)) +
-            ((hargaBatu29 / markUpBatu29) * (caratPcsBatu29 * qtyIntBatu29!)) +
-            ((hargaBatu30 / markUpBatu30) * (caratPcsBatu30 * qtyIntBatu30!)) +
-            ((hargaBatu31 / markUpBatu31) * (caratPcsBatu31 * qtyIntBatu31!)) +
-            ((hargaBatu32 / markUpBatu32) * (caratPcsBatu32 * qtyIntBatu32!)) +
-            ((hargaBatu33 / markUpBatu33) * (caratPcsBatu33 * qtyIntBatu33!)) +
-            ((hargaBatu34 / markUpBatu34) * (caratPcsBatu34 * qtyIntBatu34!)) +
-            ((hargaBatu35 / markUpBatu35) * (caratPcsBatu35 * qtyIntBatu35!));
+        (hargaBatu1 * kursParva * (caratPcsBatu1 * qtyIntBatu1!)) +
+            (hargaBatu2 * kursParva * (caratPcsBatu2 * qtyIntBatu2!)) +
+            (hargaBatu3 * kursParva * (caratPcsBatu3 * qtyIntBatu3!)) +
+            (hargaBatu4 * kursParva * (caratPcsBatu4 * qtyIntBatu4!)) +
+            (hargaBatu5 * kursParva * (caratPcsBatu5 * qtyIntBatu5!)) +
+            (hargaBatu6 * kursParva * (caratPcsBatu6 * qtyIntBatu6!)) +
+            (hargaBatu7 * kursParva * (caratPcsBatu7 * qtyIntBatu7!)) +
+            (hargaBatu8 * kursParva * (caratPcsBatu8 * qtyIntBatu8!)) +
+            (hargaBatu9 * kursParva * (caratPcsBatu9 * qtyIntBatu9!)) +
+            (hargaBatu10 * kursParva * (caratPcsBatu10 * qtyIntBatu10!)) +
+            (hargaBatu11 * kursParva * (caratPcsBatu11 * qtyIntBatu11!)) +
+            (hargaBatu12 * kursParva * (caratPcsBatu12 * qtyIntBatu12!)) +
+            (hargaBatu13 * kursParva * (caratPcsBatu13 * qtyIntBatu13!)) +
+            (hargaBatu14 * kursParva * (caratPcsBatu14 * qtyIntBatu14!)) +
+            (hargaBatu15 * kursParva * (caratPcsBatu15 * qtyIntBatu15!)) +
+            (hargaBatu16 * kursParva * (caratPcsBatu16 * qtyIntBatu16!)) +
+            (hargaBatu17 * kursParva * (caratPcsBatu17 * qtyIntBatu17!)) +
+            (hargaBatu18 * kursParva * (caratPcsBatu18 * qtyIntBatu18!)) +
+            (hargaBatu19 * kursParva * (caratPcsBatu19 * qtyIntBatu19!)) +
+            (hargaBatu20 * kursParva * (caratPcsBatu20 * qtyIntBatu20!)) +
+            (hargaBatu21 * kursParva * (caratPcsBatu21 * qtyIntBatu21!)) +
+            (hargaBatu22 * kursParva * (caratPcsBatu22 * qtyIntBatu22!)) +
+            (hargaBatu23 * kursParva * (caratPcsBatu23 * qtyIntBatu23!)) +
+            (hargaBatu24 * kursParva * (caratPcsBatu24 * qtyIntBatu24!)) +
+            (hargaBatu25 * kursParva * (caratPcsBatu25 * qtyIntBatu25!)) +
+            (hargaBatu26 * kursParva * (caratPcsBatu26 * qtyIntBatu26!)) +
+            (hargaBatu27 * kursParva * (caratPcsBatu27 * qtyIntBatu27!)) +
+            (hargaBatu28 * kursParva * (caratPcsBatu28 * qtyIntBatu28!)) +
+            (hargaBatu29 * kursParva * (caratPcsBatu29 * qtyIntBatu29!)) +
+            (hargaBatu30 * kursParva * (caratPcsBatu30 * qtyIntBatu30!)) +
+            (hargaBatu31 * kursParva * (caratPcsBatu31 * qtyIntBatu31!)) +
+            (hargaBatu32 * kursParva * (caratPcsBatu32 * qtyIntBatu32!)) +
+            (hargaBatu33 * kursParva * (caratPcsBatu33 * qtyIntBatu33!)) +
+            (hargaBatu34 * kursParva * (caratPcsBatu34 * qtyIntBatu34!)) +
+            (hargaBatu35 * kursParva * (caratPcsBatu35 * qtyIntBatu35!));
 
     var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
-                (caratPcsBatu2 * qtyIntBatu2!) +
-                (caratPcsBatu3 * qtyIntBatu3!) +
-                (caratPcsBatu4 * qtyIntBatu4!) +
-                (caratPcsBatu5 * qtyIntBatu5!) +
-                (caratPcsBatu6 * qtyIntBatu6!) +
-                (caratPcsBatu7 * qtyIntBatu7!) +
-                (caratPcsBatu8 * qtyIntBatu8!) +
-                (caratPcsBatu9 * qtyIntBatu9!) +
-                (caratPcsBatu10 * qtyIntBatu10!) +
-                (caratPcsBatu11 * qtyIntBatu11!) +
-                (caratPcsBatu12 * qtyIntBatu12!) +
-                (caratPcsBatu13 * qtyIntBatu13!) +
-                (caratPcsBatu14 * qtyIntBatu14!) +
-                (caratPcsBatu15 * qtyIntBatu15!) +
-                (caratPcsBatu16 * qtyIntBatu16!) +
-                (caratPcsBatu17 * qtyIntBatu17!) +
-                (caratPcsBatu18 * qtyIntBatu18!) +
-                (caratPcsBatu19 * qtyIntBatu19!) +
-                (caratPcsBatu20 * qtyIntBatu20!) +
-                (caratPcsBatu21 * qtyIntBatu21!) +
-                (caratPcsBatu22 * qtyIntBatu22!) +
-                (caratPcsBatu23 * qtyIntBatu23!) +
-                (caratPcsBatu24 * qtyIntBatu24!) +
-                (caratPcsBatu25 * qtyIntBatu25!) +
-                (caratPcsBatu26 * qtyIntBatu26!) +
-                (caratPcsBatu27 * qtyIntBatu27!) +
-                (caratPcsBatu28 * qtyIntBatu28!) +
-                (caratPcsBatu29 * qtyIntBatu29!) +
-                (caratPcsBatu30 * qtyIntBatu30!) +
-                (caratPcsBatu31 * qtyIntBatu31!) +
-                (caratPcsBatu32 * qtyIntBatu32!) +
-                (caratPcsBatu33 * qtyIntBatu33!) +
-                (caratPcsBatu34 * qtyIntBatu34!) +
-                (caratPcsBatu35 * qtyIntBatu35!)) +
-            doubleBeratEmasDariCustomer) /
-        5);
+            (caratPcsBatu2 * qtyIntBatu2!) +
+            (caratPcsBatu3 * qtyIntBatu3!) +
+            (caratPcsBatu4 * qtyIntBatu4!) +
+            (caratPcsBatu5 * qtyIntBatu5!) +
+            (caratPcsBatu6 * qtyIntBatu6!) +
+            (caratPcsBatu7 * qtyIntBatu7!) +
+            (caratPcsBatu8 * qtyIntBatu8!) +
+            (caratPcsBatu9 * qtyIntBatu9!) +
+            (caratPcsBatu10 * qtyIntBatu10!) +
+            (caratPcsBatu11 * qtyIntBatu11!) +
+            (caratPcsBatu12 * qtyIntBatu12!) +
+            (caratPcsBatu13 * qtyIntBatu13!) +
+            (caratPcsBatu14 * qtyIntBatu14!) +
+            (caratPcsBatu15 * qtyIntBatu15!) +
+            (caratPcsBatu16 * qtyIntBatu16!) +
+            (caratPcsBatu17 * qtyIntBatu17!) +
+            (caratPcsBatu18 * qtyIntBatu18!) +
+            (caratPcsBatu19 * qtyIntBatu19!) +
+            (caratPcsBatu20 * qtyIntBatu20!) +
+            (caratPcsBatu21 * qtyIntBatu21!) +
+            (caratPcsBatu22 * qtyIntBatu22!) +
+            (caratPcsBatu23 * qtyIntBatu23!) +
+            (caratPcsBatu24 * qtyIntBatu24!) +
+            (caratPcsBatu25 * qtyIntBatu25!) +
+            (caratPcsBatu26 * qtyIntBatu26!) +
+            (caratPcsBatu27 * qtyIntBatu27!) +
+            (caratPcsBatu28 * qtyIntBatu28!) +
+            (caratPcsBatu29 * qtyIntBatu29!) +
+            (caratPcsBatu30 * qtyIntBatu30!) +
+            (caratPcsBatu31 * qtyIntBatu31!) +
+            (caratPcsBatu32 * qtyIntBatu32!) +
+            (caratPcsBatu33 * qtyIntBatu33!) +
+            (caratPcsBatu34 * qtyIntBatu34!) +
+            (caratPcsBatu35 * qtyIntBatu35!)) +
+        doubleBeratEmasDariCustomer));
     double totalEmas;
-    totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmas);
-    var totalLabour = ((labour! + 0) * upLabour);
-    var totalLabourTanpaUp = ((labour! + 0));
-    var totalEmasTanpaUp = (((doubleBeratEmas + totalQtyCrt) * emas));
+    // totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmas); //? before
+    totalEmas = doubleBeratEmas *
+        (presentaseEmas / 100) *
+        hargaEmas *
+        upEmasParva; //* after
 
+    // var totalLabour = ((labour! + 0) * upLabour); //? before
+    var resultOngkos1 = totalQtyCrt * ongkos1 * upOngkos1Parva;
+    var resultOngkos2 = doubleBeratEmas * ongkos2 * upOngkos2Parva;
+    var totalLabour = resultOngkos1 + resultOngkos2; //* After
+    var totalLabourTanpaUp =
+        (totalQtyCrt * ongkos1) + (doubleBeratEmas * ongkos2);
+    // var totalEmasTanpaUp = (((doubleBeratEmas + totalQtyCrt) * emas)); //? before
+    var totalEmasTanpaUp =
+        doubleBeratEmas * (presentaseEmas / 100) * hargaEmas; //* after
+
+    // double total;
+    // total = ((totalDiamond + totalEmas + totalLabour) * upFinal) / kurs; //? before
     double total;
-    total = ((totalDiamond + totalEmas + totalLabour) * upFinal) / kurs;
+    total = ((totalDiamond + totalEmas + totalLabour) * upFinalParva) /
+        kursParva; //* After
 
     if (total.toString() == 'NaN') {
       return 0;
-    } else if (total < 1500) {
-      var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
-          (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
-          (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
-          (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
-          (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
-          (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
-          (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
-          (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
-          (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
-          (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
-          (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
-          (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
-          (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
-          (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
-          (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
-          (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
-          (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
-          (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
-          (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
-          (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
-          (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
-          (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
-          (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
-          (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
-          (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
-          (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
-          (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
-          (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
-          (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
-          (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
-          (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
-          (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
-          (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
-          (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
-          (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
-
-      var totalDiamondTanpaUp = ((hargaBatu1 / markUpBatu1) *
-              (caratPcsBatu1 * qtyIntBatu1!)) +
-          ((hargaBatu2 / markUpBatu2) * (caratPcsBatu2 * qtyIntBatu2!)) +
-          ((hargaBatu3 / markUpBatu3) * (caratPcsBatu3 * qtyIntBatu3!)) +
-          ((hargaBatu4 / markUpBatu4) * (caratPcsBatu4 * qtyIntBatu4!)) +
-          ((hargaBatu5 / markUpBatu5) * (caratPcsBatu5 * qtyIntBatu5!)) +
-          ((hargaBatu6 / markUpBatu6) * (caratPcsBatu6 * qtyIntBatu6!)) +
-          ((hargaBatu7 / markUpBatu7) * (caratPcsBatu7 * qtyIntBatu7!)) +
-          ((hargaBatu8 / markUpBatu8) * (caratPcsBatu8 * qtyIntBatu8!)) +
-          ((hargaBatu9 / markUpBatu9) * (caratPcsBatu9 * qtyIntBatu9!)) +
-          ((hargaBatu10 / markUpBatu10) * (caratPcsBatu10 * qtyIntBatu10!)) +
-          ((hargaBatu11 / markUpBatu11) * (caratPcsBatu11 * qtyIntBatu11!)) +
-          ((hargaBatu12 / markUpBatu12) * (caratPcsBatu12 * qtyIntBatu12!)) +
-          ((hargaBatu13 / markUpBatu13) * (caratPcsBatu13 * qtyIntBatu13!)) +
-          ((hargaBatu14 / markUpBatu14) * (caratPcsBatu14 * qtyIntBatu14!)) +
-          ((hargaBatu15 / markUpBatu15) * (caratPcsBatu15 * qtyIntBatu15!)) +
-          ((hargaBatu16 / markUpBatu16) * (caratPcsBatu16 * qtyIntBatu16!)) +
-          ((hargaBatu17 / markUpBatu17) * (caratPcsBatu17 * qtyIntBatu17!)) +
-          ((hargaBatu18 / markUpBatu18) * (caratPcsBatu18 * qtyIntBatu18!)) +
-          ((hargaBatu19 / markUpBatu19) * (caratPcsBatu19 * qtyIntBatu19!)) +
-          ((hargaBatu20 / markUpBatu20) * (caratPcsBatu20 * qtyIntBatu20!)) +
-          ((hargaBatu21 / markUpBatu21) * (caratPcsBatu21 * qtyIntBatu21!)) +
-          ((hargaBatu22 / markUpBatu22) * (caratPcsBatu22 * qtyIntBatu22!)) +
-          ((hargaBatu23 / markUpBatu23) * (caratPcsBatu23 * qtyIntBatu23!)) +
-          ((hargaBatu24 / markUpBatu24) * (caratPcsBatu24 * qtyIntBatu24!)) +
-          ((hargaBatu25 / markUpBatu25) * (caratPcsBatu25 * qtyIntBatu25!)) +
-          ((hargaBatu26 / markUpBatu26) * (caratPcsBatu26 * qtyIntBatu26!)) +
-          ((hargaBatu27 / markUpBatu27) * (caratPcsBatu27 * qtyIntBatu27!)) +
-          ((hargaBatu28 / markUpBatu28) * (caratPcsBatu28 * qtyIntBatu28!)) +
-          ((hargaBatu29 / markUpBatu29) * (caratPcsBatu29 * qtyIntBatu29!)) +
-          ((hargaBatu30 / markUpBatu30) * (caratPcsBatu30 * qtyIntBatu30!)) +
-          ((hargaBatu31 / markUpBatu31) * (caratPcsBatu31 * qtyIntBatu31!)) +
-          ((hargaBatu32 / markUpBatu32) * (caratPcsBatu32 * qtyIntBatu32!)) +
-          ((hargaBatu33 / markUpBatu33) * (caratPcsBatu33 * qtyIntBatu33!)) +
-          ((hargaBatu34 / markUpBatu34) * (caratPcsBatu34 * qtyIntBatu34!)) +
-          ((hargaBatu35 / markUpBatu35) * (caratPcsBatu35 * qtyIntBatu35!));
-
-      var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
-                  (caratPcsBatu2 * qtyIntBatu2!) +
-                  (caratPcsBatu3 * qtyIntBatu3!) +
-                  (caratPcsBatu4 * qtyIntBatu4!) +
-                  (caratPcsBatu5 * qtyIntBatu5!) +
-                  (caratPcsBatu6 * qtyIntBatu6!) +
-                  (caratPcsBatu7 * qtyIntBatu7!) +
-                  (caratPcsBatu8 * qtyIntBatu8!) +
-                  (caratPcsBatu9 * qtyIntBatu9!) +
-                  (caratPcsBatu10 * qtyIntBatu10!) +
-                  (caratPcsBatu11 * qtyIntBatu11!) +
-                  (caratPcsBatu12 * qtyIntBatu12!) +
-                  (caratPcsBatu13 * qtyIntBatu13!) +
-                  (caratPcsBatu14 * qtyIntBatu14!) +
-                  (caratPcsBatu15 * qtyIntBatu15!) +
-                  (caratPcsBatu16 * qtyIntBatu16!) +
-                  (caratPcsBatu17 * qtyIntBatu17!) +
-                  (caratPcsBatu18 * qtyIntBatu18!) +
-                  (caratPcsBatu19 * qtyIntBatu19!) +
-                  (caratPcsBatu20 * qtyIntBatu20!) +
-                  (caratPcsBatu21 * qtyIntBatu21!) +
-                  (caratPcsBatu22 * qtyIntBatu22!) +
-                  (caratPcsBatu23 * qtyIntBatu23!) +
-                  (caratPcsBatu24 * qtyIntBatu24!) +
-                  (caratPcsBatu25 * qtyIntBatu25!) +
-                  (caratPcsBatu26 * qtyIntBatu26!) +
-                  (caratPcsBatu27 * qtyIntBatu27!) +
-                  (caratPcsBatu28 * qtyIntBatu28!) +
-                  (caratPcsBatu29 * qtyIntBatu29!) +
-                  (caratPcsBatu30 * qtyIntBatu30!) +
-                  (caratPcsBatu31 * qtyIntBatu31!) +
-                  (caratPcsBatu32 * qtyIntBatu32!) +
-                  (caratPcsBatu33 * qtyIntBatu33!) +
-                  (caratPcsBatu34 * qtyIntBatu34!) +
-                  (caratPcsBatu35 * qtyIntBatu35!)) +
-              doubleBeratEmasDariCustomer) /
-          5);
-      double totalEmas;
-      totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmas);
-      var totalLabour = ((labour!) * upLabour);
-      var totalLabourTanpaUp = ((labour! + 0));
-      var totalEmasTanpaUp = (((doubleBeratEmas + totalQtyCrt) * emas));
-
-      double total;
-      total = ((totalDiamond + totalEmas + totalLabour) * upFinal) / kurs;
-      var output =
-          total.round().toString()[total.round().toString().length - 1];
-
-      if (int.parse(output) >= 1 && int.parse(output) <= 4) {
-        setState(() {
-          postLabour = totalLabourTanpaUp.round();
-          postEmas = totalEmasTanpaUp.round();
-          postDiamond = totalDiamondTanpaUp.round();
-          print('parva/fine ori a');
-          print(
-              'Labour : Rp. ${CurrencyFormat.convertToDollar(totalLabour, 0)}');
-          print('Emas : Rp. ${CurrencyFormat.convertToDollar(totalEmas, 0)}');
-          print(
-              'Diamond : Rp. ${CurrencyFormat.convertToDollar(totalDiamond, 0)}');
-
-          total = (total + (5 - int.parse(output)));
-          estimasiHarga.text = total.round().toString();
-        });
-        return total;
-      } else if (int.parse(output) >= 6 && int.parse(output) <= 9) {
-        setState(() {
-          postLabour = totalLabourTanpaUp.round();
-          postEmas = totalEmasTanpaUp.round();
-          postDiamond = totalDiamondTanpaUp.round();
-          print('parva/fine ori b');
-          print(
-              'Labour : Rp. ${CurrencyFormat.convertToDollar(totalLabour, 0)}');
-          print('Emas : Rp. ${CurrencyFormat.convertToDollar(totalEmas, 0)}');
-          print(
-              'Diamond : Rp. ${CurrencyFormat.convertToDollar(totalDiamond, 0)}');
-
-          total = (total + (10 - int.parse(output)));
-
-          estimasiHarga.text = total.round().toString();
-        });
-        return total;
-      } else {
-        setState(() {
-          postLabour = totalLabourTanpaUp.round();
-          postEmas = totalEmasTanpaUp.round();
-          postDiamond = totalDiamondTanpaUp.round();
-          print('parva/fine ori');
-          print(
-              'Labour : Rp. ${CurrencyFormat.convertToDollar(totalLabour, 0)}');
-          print('Emas : Rp. ${CurrencyFormat.convertToDollar(totalEmas, 0)}');
-          print(
-              'Diamond : Rp. ${CurrencyFormat.convertToDollar(totalDiamond, 0)}');
-          estimasiHarga.text = total.round().toString();
-        });
-        return total;
-      }
-    } else if (total <= 2251) {
-      var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
-          (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
-          (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
-          (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
-          (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
-          (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
-          (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
-          (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
-          (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
-          (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
-          (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
-          (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
-          (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
-          (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
-          (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
-          (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
-          (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
-          (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
-          (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
-          (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
-          (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
-          (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
-          (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
-          (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
-          (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
-          (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
-          (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
-          (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
-          (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
-          (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
-          (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
-          (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
-          (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
-          (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
-          (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
-
-      var totalDiamondTanpaUp = ((hargaBatu1 / markUpBatu1) *
-              (caratPcsBatu1 * qtyIntBatu1!)) +
-          ((hargaBatu2 / markUpBatu2) * (caratPcsBatu2 * qtyIntBatu2!)) +
-          ((hargaBatu3 / markUpBatu3) * (caratPcsBatu3 * qtyIntBatu3!)) +
-          ((hargaBatu4 / markUpBatu4) * (caratPcsBatu4 * qtyIntBatu4!)) +
-          ((hargaBatu5 / markUpBatu5) * (caratPcsBatu5 * qtyIntBatu5!)) +
-          ((hargaBatu6 / markUpBatu6) * (caratPcsBatu6 * qtyIntBatu6!)) +
-          ((hargaBatu7 / markUpBatu7) * (caratPcsBatu7 * qtyIntBatu7!)) +
-          ((hargaBatu8 / markUpBatu8) * (caratPcsBatu8 * qtyIntBatu8!)) +
-          ((hargaBatu9 / markUpBatu9) * (caratPcsBatu9 * qtyIntBatu9!)) +
-          ((hargaBatu10 / markUpBatu10) * (caratPcsBatu10 * qtyIntBatu10!)) +
-          ((hargaBatu11 / markUpBatu11) * (caratPcsBatu11 * qtyIntBatu11!)) +
-          ((hargaBatu12 / markUpBatu12) * (caratPcsBatu12 * qtyIntBatu12!)) +
-          ((hargaBatu13 / markUpBatu13) * (caratPcsBatu13 * qtyIntBatu13!)) +
-          ((hargaBatu14 / markUpBatu14) * (caratPcsBatu14 * qtyIntBatu14!)) +
-          ((hargaBatu15 / markUpBatu15) * (caratPcsBatu15 * qtyIntBatu15!)) +
-          ((hargaBatu16 / markUpBatu16) * (caratPcsBatu16 * qtyIntBatu16!)) +
-          ((hargaBatu17 / markUpBatu17) * (caratPcsBatu17 * qtyIntBatu17!)) +
-          ((hargaBatu18 / markUpBatu18) * (caratPcsBatu18 * qtyIntBatu18!)) +
-          ((hargaBatu19 / markUpBatu19) * (caratPcsBatu19 * qtyIntBatu19!)) +
-          ((hargaBatu20 / markUpBatu20) * (caratPcsBatu20 * qtyIntBatu20!)) +
-          ((hargaBatu21 / markUpBatu21) * (caratPcsBatu21 * qtyIntBatu21!)) +
-          ((hargaBatu22 / markUpBatu22) * (caratPcsBatu22 * qtyIntBatu22!)) +
-          ((hargaBatu23 / markUpBatu23) * (caratPcsBatu23 * qtyIntBatu23!)) +
-          ((hargaBatu24 / markUpBatu24) * (caratPcsBatu24 * qtyIntBatu24!)) +
-          ((hargaBatu25 / markUpBatu25) * (caratPcsBatu25 * qtyIntBatu25!)) +
-          ((hargaBatu26 / markUpBatu26) * (caratPcsBatu26 * qtyIntBatu26!)) +
-          ((hargaBatu27 / markUpBatu27) * (caratPcsBatu27 * qtyIntBatu27!)) +
-          ((hargaBatu28 / markUpBatu28) * (caratPcsBatu28 * qtyIntBatu28!)) +
-          ((hargaBatu29 / markUpBatu29) * (caratPcsBatu29 * qtyIntBatu29!)) +
-          ((hargaBatu30 / markUpBatu30) * (caratPcsBatu30 * qtyIntBatu30!)) +
-          ((hargaBatu31 / markUpBatu31) * (caratPcsBatu31 * qtyIntBatu31!)) +
-          ((hargaBatu32 / markUpBatu32) * (caratPcsBatu32 * qtyIntBatu32!)) +
-          ((hargaBatu33 / markUpBatu33) * (caratPcsBatu33 * qtyIntBatu33!)) +
-          ((hargaBatu34 / markUpBatu34) * (caratPcsBatu34 * qtyIntBatu34!)) +
-          ((hargaBatu35 / markUpBatu35) * (caratPcsBatu35 * qtyIntBatu35!));
-      var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
-                  (caratPcsBatu2 * qtyIntBatu2!) +
-                  (caratPcsBatu3 * qtyIntBatu3!) +
-                  (caratPcsBatu4 * qtyIntBatu4!) +
-                  (caratPcsBatu5 * qtyIntBatu5!) +
-                  (caratPcsBatu6 * qtyIntBatu6!) +
-                  (caratPcsBatu7 * qtyIntBatu7!) +
-                  (caratPcsBatu8 * qtyIntBatu8!) +
-                  (caratPcsBatu9 * qtyIntBatu9!) +
-                  (caratPcsBatu10 * qtyIntBatu10!) +
-                  (caratPcsBatu11 * qtyIntBatu11!) +
-                  (caratPcsBatu12 * qtyIntBatu12!) +
-                  (caratPcsBatu13 * qtyIntBatu13!) +
-                  (caratPcsBatu14 * qtyIntBatu14!) +
-                  (caratPcsBatu15 * qtyIntBatu15!) +
-                  (caratPcsBatu16 * qtyIntBatu16!) +
-                  (caratPcsBatu17 * qtyIntBatu17!) +
-                  (caratPcsBatu18 * qtyIntBatu18!) +
-                  (caratPcsBatu19 * qtyIntBatu19!) +
-                  (caratPcsBatu20 * qtyIntBatu20!) +
-                  (caratPcsBatu21 * qtyIntBatu21!) +
-                  (caratPcsBatu22 * qtyIntBatu22!) +
-                  (caratPcsBatu23 * qtyIntBatu23!) +
-                  (caratPcsBatu24 * qtyIntBatu24!) +
-                  (caratPcsBatu25 * qtyIntBatu25!) +
-                  (caratPcsBatu26 * qtyIntBatu26!) +
-                  (caratPcsBatu27 * qtyIntBatu27!) +
-                  (caratPcsBatu28 * qtyIntBatu28!) +
-                  (caratPcsBatu29 * qtyIntBatu29!) +
-                  (caratPcsBatu30 * qtyIntBatu30!) +
-                  (caratPcsBatu31 * qtyIntBatu31!) +
-                  (caratPcsBatu32 * qtyIntBatu32!) +
-                  (caratPcsBatu33 * qtyIntBatu33!) +
-                  (caratPcsBatu34 * qtyIntBatu34!) +
-                  (caratPcsBatu35 * qtyIntBatu35!)) +
-              doubleBeratEmasDariCustomer) /
-          5);
-      double totalEmas;
-      totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmas);
-
-      var totalLabour = ((labour! + others1) * upLabour);
-      var totalLabourTanpaUp = ((labour! + others1));
-      var totalEmasTanpaUp = (((doubleBeratEmas + totalQtyCrt) * emas));
-
-      double total;
-      total = ((totalDiamond + totalEmas + totalLabour) * upFinal) / kurs;
-      var output =
-          total.round().toString()[total.round().toString().length - 1];
-
-      if (int.parse(output) >= 1 && int.parse(output) <= 4) {
-        setState(() {
-          postLabour = totalLabourTanpaUp.round();
-          postEmas = totalEmasTanpaUp.round();
-          postDiamond = totalDiamondTanpaUp.round();
-          print('parva/fine others1 a');
-          print(
-              'Labour : Rp. ${CurrencyFormat.convertToDollar(totalLabour, 0)}');
-          print('Emas : Rp. ${CurrencyFormat.convertToDollar(totalEmas, 0)}');
-          print(
-              'Diamond : Rp. ${CurrencyFormat.convertToDollar(totalDiamond, 0)}');
-
-          total = (total + (5 - int.parse(output)));
-
-          estimasiHarga.text = total.round().toString();
-        });
-        return total;
-      } else if (int.parse(output) >= 6 && int.parse(output) <= 9) {
-        setState(() {
-          postLabour = totalLabourTanpaUp.round();
-          postEmas = totalEmasTanpaUp.round();
-          postDiamond = totalDiamondTanpaUp.round();
-          print('parva/fine others1 b');
-          print(
-              'Labour : Rp. ${CurrencyFormat.convertToDollar(totalLabour, 0)}');
-          print('Emas : Rp. ${CurrencyFormat.convertToDollar(totalEmas, 0)}');
-          print(
-              'Diamond : Rp. ${CurrencyFormat.convertToDollar(totalDiamond, 0)}');
-
-          total = (total + (10 - int.parse(output)));
-
-          estimasiHarga.text = total.round().toString();
-        });
-        return total;
-      } else {
-        setState(() {
-          postLabour = totalLabourTanpaUp.round();
-          postEmas = totalEmasTanpaUp.round();
-          postDiamond = totalDiamondTanpaUp.round();
-          print('parva/fine others1 ori');
-          print(
-              'Labour : Rp. ${CurrencyFormat.convertToDollar(totalLabour, 0)}');
-          print('Emas : Rp. ${CurrencyFormat.convertToDollar(totalEmas, 0)}');
-          print(
-              'Diamond : Rp. ${CurrencyFormat.convertToDollar(totalDiamond, 0)}');
-
-          estimasiHarga.text = total.round().toString();
-        });
-        return total;
-      }
-    } else if (total <= 4000) {
-      var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
-          (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
-          (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
-          (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
-          (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
-          (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
-          (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
-          (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
-          (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
-          (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
-          (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
-          (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
-          (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
-          (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
-          (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
-          (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
-          (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
-          (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
-          (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
-          (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
-          (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
-          (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
-          (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
-          (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
-          (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
-          (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
-          (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
-          (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
-          (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
-          (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
-          (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
-          (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
-          (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
-          (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
-          (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
-
-      var totalDiamondTanpaUp = ((hargaBatu1 / markUpBatu1) *
-              (caratPcsBatu1 * qtyIntBatu1!)) +
-          ((hargaBatu2 / markUpBatu2) * (caratPcsBatu2 * qtyIntBatu2!)) +
-          ((hargaBatu3 / markUpBatu3) * (caratPcsBatu3 * qtyIntBatu3!)) +
-          ((hargaBatu4 / markUpBatu4) * (caratPcsBatu4 * qtyIntBatu4!)) +
-          ((hargaBatu5 / markUpBatu5) * (caratPcsBatu5 * qtyIntBatu5!)) +
-          ((hargaBatu6 / markUpBatu6) * (caratPcsBatu6 * qtyIntBatu6!)) +
-          ((hargaBatu7 / markUpBatu7) * (caratPcsBatu7 * qtyIntBatu7!)) +
-          ((hargaBatu8 / markUpBatu8) * (caratPcsBatu8 * qtyIntBatu8!)) +
-          ((hargaBatu9 / markUpBatu9) * (caratPcsBatu9 * qtyIntBatu9!)) +
-          ((hargaBatu10 / markUpBatu10) * (caratPcsBatu10 * qtyIntBatu10!)) +
-          ((hargaBatu11 / markUpBatu11) * (caratPcsBatu11 * qtyIntBatu11!)) +
-          ((hargaBatu12 / markUpBatu12) * (caratPcsBatu12 * qtyIntBatu12!)) +
-          ((hargaBatu13 / markUpBatu13) * (caratPcsBatu13 * qtyIntBatu13!)) +
-          ((hargaBatu14 / markUpBatu14) * (caratPcsBatu14 * qtyIntBatu14!)) +
-          ((hargaBatu15 / markUpBatu15) * (caratPcsBatu15 * qtyIntBatu15!)) +
-          ((hargaBatu16 / markUpBatu16) * (caratPcsBatu16 * qtyIntBatu16!)) +
-          ((hargaBatu17 / markUpBatu17) * (caratPcsBatu17 * qtyIntBatu17!)) +
-          ((hargaBatu18 / markUpBatu18) * (caratPcsBatu18 * qtyIntBatu18!)) +
-          ((hargaBatu19 / markUpBatu19) * (caratPcsBatu19 * qtyIntBatu19!)) +
-          ((hargaBatu20 / markUpBatu20) * (caratPcsBatu20 * qtyIntBatu20!)) +
-          ((hargaBatu21 / markUpBatu21) * (caratPcsBatu21 * qtyIntBatu21!)) +
-          ((hargaBatu22 / markUpBatu22) * (caratPcsBatu22 * qtyIntBatu22!)) +
-          ((hargaBatu23 / markUpBatu23) * (caratPcsBatu23 * qtyIntBatu23!)) +
-          ((hargaBatu24 / markUpBatu24) * (caratPcsBatu24 * qtyIntBatu24!)) +
-          ((hargaBatu25 / markUpBatu25) * (caratPcsBatu25 * qtyIntBatu25!)) +
-          ((hargaBatu26 / markUpBatu26) * (caratPcsBatu26 * qtyIntBatu26!)) +
-          ((hargaBatu27 / markUpBatu27) * (caratPcsBatu27 * qtyIntBatu27!)) +
-          ((hargaBatu28 / markUpBatu28) * (caratPcsBatu28 * qtyIntBatu28!)) +
-          ((hargaBatu29 / markUpBatu29) * (caratPcsBatu29 * qtyIntBatu29!)) +
-          ((hargaBatu30 / markUpBatu30) * (caratPcsBatu30 * qtyIntBatu30!)) +
-          ((hargaBatu31 / markUpBatu31) * (caratPcsBatu31 * qtyIntBatu31!)) +
-          ((hargaBatu32 / markUpBatu32) * (caratPcsBatu32 * qtyIntBatu32!)) +
-          ((hargaBatu33 / markUpBatu33) * (caratPcsBatu33 * qtyIntBatu33!)) +
-          ((hargaBatu34 / markUpBatu34) * (caratPcsBatu34 * qtyIntBatu34!)) +
-          ((hargaBatu35 / markUpBatu35) * (caratPcsBatu35 * qtyIntBatu35!));
-
-      var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
-                  (caratPcsBatu2 * qtyIntBatu2!) +
-                  (caratPcsBatu3 * qtyIntBatu3!) +
-                  (caratPcsBatu4 * qtyIntBatu4!) +
-                  (caratPcsBatu5 * qtyIntBatu5!) +
-                  (caratPcsBatu6 * qtyIntBatu6!) +
-                  (caratPcsBatu7 * qtyIntBatu7!) +
-                  (caratPcsBatu8 * qtyIntBatu8!) +
-                  (caratPcsBatu9 * qtyIntBatu9!) +
-                  (caratPcsBatu10 * qtyIntBatu10!) +
-                  (caratPcsBatu11 * qtyIntBatu11!) +
-                  (caratPcsBatu12 * qtyIntBatu12!) +
-                  (caratPcsBatu13 * qtyIntBatu13!) +
-                  (caratPcsBatu14 * qtyIntBatu14!) +
-                  (caratPcsBatu15 * qtyIntBatu15!) +
-                  (caratPcsBatu16 * qtyIntBatu16!) +
-                  (caratPcsBatu17 * qtyIntBatu17!) +
-                  (caratPcsBatu18 * qtyIntBatu18!) +
-                  (caratPcsBatu19 * qtyIntBatu19!) +
-                  (caratPcsBatu20 * qtyIntBatu20!) +
-                  (caratPcsBatu21 * qtyIntBatu21!) +
-                  (caratPcsBatu22 * qtyIntBatu22!) +
-                  (caratPcsBatu23 * qtyIntBatu23!) +
-                  (caratPcsBatu24 * qtyIntBatu24!) +
-                  (caratPcsBatu25 * qtyIntBatu25!) +
-                  (caratPcsBatu26 * qtyIntBatu26!) +
-                  (caratPcsBatu27 * qtyIntBatu27!) +
-                  (caratPcsBatu28 * qtyIntBatu28!) +
-                  (caratPcsBatu29 * qtyIntBatu29!) +
-                  (caratPcsBatu30 * qtyIntBatu30!) +
-                  (caratPcsBatu31 * qtyIntBatu31!) +
-                  (caratPcsBatu32 * qtyIntBatu32!) +
-                  (caratPcsBatu33 * qtyIntBatu33!) +
-                  (caratPcsBatu34 * qtyIntBatu34!) +
-                  (caratPcsBatu35 * qtyIntBatu35!)) +
-              doubleBeratEmasDariCustomer) /
-          5);
-      double totalEmas;
-      totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmas);
-
-      var totalLabour = ((labour! + others2) * upLabour);
-      var totalLabourTanpaUp = ((labour! + others2));
-      var totalEmasTanpaUp = (((doubleBeratEmas + totalQtyCrt) * emas));
-
-      double total;
-      total = ((totalDiamond + totalEmas + totalLabour) * upFinal) / kurs;
-
-      var output =
-          total.round().toString()[total.round().toString().length - 1];
-      if (int.parse(output) >= 1 && int.parse(output) <= 4) {
-        setState(() {
-          postLabour = totalLabourTanpaUp.round();
-          postEmas = totalEmasTanpaUp.round();
-          postDiamond = totalDiamondTanpaUp.round();
-          print('parva/fine others2 a');
-          print(
-              'Labour : Rp. ${CurrencyFormat.convertToDollar(totalLabour, 0)}');
-          print('Emas : Rp. ${CurrencyFormat.convertToDollar(totalEmas, 0)}');
-          print(
-              'Diamond : Rp. ${CurrencyFormat.convertToDollar(totalDiamond, 0)}');
-          total = (total + (5 - int.parse(output)));
-
-          estimasiHarga.text = total.round().toString();
-        });
-        return total;
-      } else if (int.parse(output) >= 6 && int.parse(output) <= 9) {
-        setState(() {
-          postLabour = totalLabourTanpaUp.round();
-          postEmas = totalEmasTanpaUp.round();
-          postDiamond = totalDiamondTanpaUp.round();
-          print('parva/fine others2 b');
-          print(
-              'Labour : Rp. ${CurrencyFormat.convertToDollar(totalLabour, 0)}');
-          print('Emas : Rp. ${CurrencyFormat.convertToDollar(totalEmas, 0)}');
-          print(
-              'Diamond : Rp. ${CurrencyFormat.convertToDollar(totalDiamond, 0)}');
-          total = (total + (10 - int.parse(output)));
-
-          estimasiHarga.text = total.round().toString();
-        });
-        return total;
-      } else {
-        setState(() {
-          postLabour = totalLabourTanpaUp.round();
-          postEmas = totalEmasTanpaUp.round();
-          postDiamond = totalDiamondTanpaUp.round();
-          print('parva/fine others2 ori');
-          print(
-              'Labour : Rp. ${CurrencyFormat.convertToDollar(totalLabour, 0)}');
-          print('Emas : Rp. ${CurrencyFormat.convertToDollar(totalEmas, 0)}');
-          print(
-              'Diamond : Rp. ${CurrencyFormat.convertToDollar(totalDiamond, 0)}');
-
-          estimasiHarga.text = total.round().toString();
-        });
-        return total;
-      }
     } else {
-      var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
-          (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
-          (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
-          (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
-          (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
-          (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
-          (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
-          (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
-          (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
-          (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
-          (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
-          (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
-          (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
-          (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
-          (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
-          (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
-          (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
-          (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
-          (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
-          (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
-          (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
-          (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
-          (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
-          (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
-          (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
-          (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
-          (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
-          (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
-          (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
-          (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
-          (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
-          (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
-          (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
-          (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
-          (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
-
-      var totalDiamondTanpaUp = ((hargaBatu1 / markUpBatu1) *
-              (caratPcsBatu1 * qtyIntBatu1!)) +
-          ((hargaBatu2 / markUpBatu2) * (caratPcsBatu2 * qtyIntBatu2!)) +
-          ((hargaBatu3 / markUpBatu3) * (caratPcsBatu3 * qtyIntBatu3!)) +
-          ((hargaBatu4 / markUpBatu4) * (caratPcsBatu4 * qtyIntBatu4!)) +
-          ((hargaBatu5 / markUpBatu5) * (caratPcsBatu5 * qtyIntBatu5!)) +
-          ((hargaBatu6 / markUpBatu6) * (caratPcsBatu6 * qtyIntBatu6!)) +
-          ((hargaBatu7 / markUpBatu7) * (caratPcsBatu7 * qtyIntBatu7!)) +
-          ((hargaBatu8 / markUpBatu8) * (caratPcsBatu8 * qtyIntBatu8!)) +
-          ((hargaBatu9 / markUpBatu9) * (caratPcsBatu9 * qtyIntBatu9!)) +
-          ((hargaBatu10 / markUpBatu10) * (caratPcsBatu10 * qtyIntBatu10!)) +
-          ((hargaBatu11 / markUpBatu11) * (caratPcsBatu11 * qtyIntBatu11!)) +
-          ((hargaBatu12 / markUpBatu12) * (caratPcsBatu12 * qtyIntBatu12!)) +
-          ((hargaBatu13 / markUpBatu13) * (caratPcsBatu13 * qtyIntBatu13!)) +
-          ((hargaBatu14 / markUpBatu14) * (caratPcsBatu14 * qtyIntBatu14!)) +
-          ((hargaBatu15 / markUpBatu15) * (caratPcsBatu15 * qtyIntBatu15!)) +
-          ((hargaBatu16 / markUpBatu16) * (caratPcsBatu16 * qtyIntBatu16!)) +
-          ((hargaBatu17 / markUpBatu17) * (caratPcsBatu17 * qtyIntBatu17!)) +
-          ((hargaBatu18 / markUpBatu18) * (caratPcsBatu18 * qtyIntBatu18!)) +
-          ((hargaBatu19 / markUpBatu19) * (caratPcsBatu19 * qtyIntBatu19!)) +
-          ((hargaBatu20 / markUpBatu20) * (caratPcsBatu20 * qtyIntBatu20!)) +
-          ((hargaBatu21 / markUpBatu21) * (caratPcsBatu21 * qtyIntBatu21!)) +
-          ((hargaBatu22 / markUpBatu22) * (caratPcsBatu22 * qtyIntBatu22!)) +
-          ((hargaBatu23 / markUpBatu23) * (caratPcsBatu23 * qtyIntBatu23!)) +
-          ((hargaBatu24 / markUpBatu24) * (caratPcsBatu24 * qtyIntBatu24!)) +
-          ((hargaBatu25 / markUpBatu25) * (caratPcsBatu25 * qtyIntBatu25!)) +
-          ((hargaBatu26 / markUpBatu26) * (caratPcsBatu26 * qtyIntBatu26!)) +
-          ((hargaBatu27 / markUpBatu27) * (caratPcsBatu27 * qtyIntBatu27!)) +
-          ((hargaBatu28 / markUpBatu28) * (caratPcsBatu28 * qtyIntBatu28!)) +
-          ((hargaBatu29 / markUpBatu29) * (caratPcsBatu29 * qtyIntBatu29!)) +
-          ((hargaBatu30 / markUpBatu30) * (caratPcsBatu30 * qtyIntBatu30!)) +
-          ((hargaBatu31 / markUpBatu31) * (caratPcsBatu31 * qtyIntBatu31!)) +
-          ((hargaBatu32 / markUpBatu32) * (caratPcsBatu32 * qtyIntBatu32!)) +
-          ((hargaBatu33 / markUpBatu33) * (caratPcsBatu33 * qtyIntBatu33!)) +
-          ((hargaBatu34 / markUpBatu34) * (caratPcsBatu34 * qtyIntBatu34!)) +
-          ((hargaBatu35 / markUpBatu35) * (caratPcsBatu35 * qtyIntBatu35!));
-
-      var totalQtyCrt = ((((caratPcsBatu1 * qtyIntBatu1!) +
-                  (caratPcsBatu2 * qtyIntBatu2!) +
-                  (caratPcsBatu3 * qtyIntBatu3!) +
-                  (caratPcsBatu4 * qtyIntBatu4!) +
-                  (caratPcsBatu5 * qtyIntBatu5!) +
-                  (caratPcsBatu6 * qtyIntBatu6!) +
-                  (caratPcsBatu7 * qtyIntBatu7!) +
-                  (caratPcsBatu8 * qtyIntBatu8!) +
-                  (caratPcsBatu9 * qtyIntBatu9!) +
-                  (caratPcsBatu10 * qtyIntBatu10!) +
-                  (caratPcsBatu11 * qtyIntBatu11!) +
-                  (caratPcsBatu12 * qtyIntBatu12!) +
-                  (caratPcsBatu13 * qtyIntBatu13!) +
-                  (caratPcsBatu14 * qtyIntBatu14!) +
-                  (caratPcsBatu15 * qtyIntBatu15!) +
-                  (caratPcsBatu16 * qtyIntBatu16!) +
-                  (caratPcsBatu17 * qtyIntBatu17!) +
-                  (caratPcsBatu18 * qtyIntBatu18!) +
-                  (caratPcsBatu19 * qtyIntBatu19!) +
-                  (caratPcsBatu20 * qtyIntBatu20!) +
-                  (caratPcsBatu21 * qtyIntBatu21!) +
-                  (caratPcsBatu22 * qtyIntBatu22!) +
-                  (caratPcsBatu23 * qtyIntBatu23!) +
-                  (caratPcsBatu24 * qtyIntBatu24!) +
-                  (caratPcsBatu25 * qtyIntBatu25!) +
-                  (caratPcsBatu26 * qtyIntBatu26!) +
-                  (caratPcsBatu27 * qtyIntBatu27!) +
-                  (caratPcsBatu28 * qtyIntBatu28!) +
-                  (caratPcsBatu29 * qtyIntBatu29!) +
-                  (caratPcsBatu30 * qtyIntBatu30!) +
-                  (caratPcsBatu31 * qtyIntBatu31!) +
-                  (caratPcsBatu32 * qtyIntBatu32!) +
-                  (caratPcsBatu33 * qtyIntBatu33!) +
-                  (caratPcsBatu34 * qtyIntBatu34!) +
-                  (caratPcsBatu35 * qtyIntBatu35!)) +
-              doubleBeratEmasDariCustomer) /
-          5);
-      double totalEmas;
-      totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmas);
-
-      var totalLabour = ((labour! + others3) * upLabour);
-      var totalLabourTanpaUp = ((labour! + others3));
-      var totalEmasTanpaUp = (((doubleBeratEmas + totalQtyCrt) * emas));
-
-      double total;
-      total = ((totalDiamond + totalEmas + totalLabour) * upFinal) / kurs;
-
       var output =
           total.round().toString()[total.round().toString().length - 1];
+
       if (int.parse(output) >= 1 && int.parse(output) <= 4) {
         setState(() {
           postLabour = totalLabourTanpaUp.round();
           postEmas = totalEmasTanpaUp.round();
           postDiamond = totalDiamondTanpaUp.round();
-          print('parva/fine others3 a');
+          print(upEmasParva);
+          print(doubleBeratEmas);
+          print(presentaseEmas);
+          print(hargaEmas);
+          print(kursParva);
+          print('perhitungan parva A');
           print(
               'Labour : Rp. ${CurrencyFormat.convertToDollar(totalLabour, 0)}');
           print('Emas : Rp. ${CurrencyFormat.convertToDollar(totalEmas, 0)}');
           print(
               'Diamond : Rp. ${CurrencyFormat.convertToDollar(totalDiamond, 0)}');
+
           total = (total + (5 - int.parse(output)));
           estimasiHarga.text = total.round().toString();
         });
-        return total;
       } else if (int.parse(output) >= 6 && int.parse(output) <= 9) {
         setState(() {
           postLabour = totalLabourTanpaUp.round();
           postEmas = totalEmasTanpaUp.round();
           postDiamond = totalDiamondTanpaUp.round();
-          print('parva/fine others3 b');
+          print('perhitungan parva B');
           print(
               'Labour : Rp. ${CurrencyFormat.convertToDollar(totalLabour, 0)}');
           print('Emas : Rp. ${CurrencyFormat.convertToDollar(totalEmas, 0)}');
           print(
               'Diamond : Rp. ${CurrencyFormat.convertToDollar(totalDiamond, 0)}');
+
           total = (total + (10 - int.parse(output)));
 
           estimasiHarga.text = total.round().toString();
         });
-        return total;
-      } else {
-        setState(() {
-          postLabour = totalLabourTanpaUp.round();
-          postEmas = totalEmasTanpaUp.round();
-          postDiamond = totalDiamondTanpaUp.round();
-          print('parva/fine others3 ori');
-          print(
-              'Labour : Rp. ${CurrencyFormat.convertToDollar(totalLabour, 0)}');
-          print('Emas : Rp. ${CurrencyFormat.convertToDollar(totalEmas, 0)}');
-          print(
-              'Diamond : Rp. ${CurrencyFormat.convertToDollar(totalDiamond, 0)}');
-
-          estimasiHarga.text = total.round().toString();
-        });
-        return total;
       }
+      return total;
     }
   }
 
   double get totalPriceBeliBerlian {
+    //? before
     var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
         (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
         (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
@@ -1637,10 +1218,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
             doubleBeratEmasDariCustomer) /
         5);
     double totalEmas;
-    totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmasMetier);
+    totalEmas = (((doubleBeratEmas + totalQtyCrt) * hargaEmas) * upEmasMetier);
     var totalLabour = ((labour! + 0) * upLabour);
     var totalLabourTanpaUp = ((labour! + 0));
-    var totalEmasTanpaUp = (((doubleBeratEmas + totalQtyCrt) * emas));
+    var totalEmasTanpaUp = (((doubleBeratEmas + totalQtyCrt) * hargaEmas));
 
     double total;
     total = (((totalDiamond * upDiamondMetier) + totalEmas + totalLabour) *
@@ -1650,6 +1231,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
     if (total.toString() == 'NaN') {
       return 0;
     } else if (total < 1500) {
+      //? before
       var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
           (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
           (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
@@ -1761,10 +1343,11 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
               doubleBeratEmasDariCustomer) /
           5);
       double totalEmas;
-      totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmasMetier);
+      totalEmas =
+          (((doubleBeratEmas + totalQtyCrt) * hargaEmas) * upEmasMetier);
       var totalLabour = ((labour!) * upLabour);
       var totalLabourTanpaUp = ((labour! + 0));
-      var totalEmasTanpaUp = (((doubleBeratEmas + totalQtyCrt) * emas));
+      var totalEmasTanpaUp = (((doubleBeratEmas + totalQtyCrt) * hargaEmas));
 
       double total;
       total = (((totalDiamond * upDiamondMetier) + totalEmas + totalLabour));
@@ -1806,6 +1389,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
         return total;
       }
     } else if (total <= 2251) {
+      // ? before
       var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
           (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
           (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
@@ -1835,6 +1419,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
           (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
           (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
           (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
+          (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
           (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
           (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
           (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
@@ -1879,10 +1464,11 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
               doubleBeratEmasDariCustomer) /
           5);
       double totalEmas;
-      totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmasMetier);
+      totalEmas =
+          (((doubleBeratEmas + totalQtyCrt) * hargaEmas) * upEmasMetier);
       var totalLabour = ((labour! + others1) * upLabour);
       var totalLabourTanpaUp = ((labour! + others1));
-      var totalEmasTanpaUp = (((doubleBeratEmas + totalQtyCrt) * emas));
+      var totalEmasTanpaUp = (((doubleBeratEmas + totalQtyCrt) * hargaEmas));
 
       double total;
       total = (((totalDiamond * upDiamondMetier) + totalEmas + totalLabour));
@@ -1922,6 +1508,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
         return total;
       }
     } else if (total <= 4000) {
+      //? before
       var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
           (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
           (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
@@ -2033,10 +1620,11 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
               doubleBeratEmasDariCustomer) /
           5);
       double totalEmas;
-      totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmasMetier);
+      totalEmas =
+          (((doubleBeratEmas + totalQtyCrt) * hargaEmas) * upEmasMetier);
       var totalLabour = ((labour! + others2) * upLabour);
       var totalLabourTanpaUp = ((labour! + others2));
-      var totalEmasTanpaUp = (((doubleBeratEmas + totalQtyCrt) * emas));
+      var totalEmasTanpaUp = (((doubleBeratEmas + totalQtyCrt) * hargaEmas));
 
       double total;
       total = (((totalDiamond * upDiamondMetier) + totalEmas + totalLabour));
@@ -2077,6 +1665,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
         return total;
       }
     } else {
+      //? before
       var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
           (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
           (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
@@ -2188,10 +1777,11 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
               doubleBeratEmasDariCustomer) /
           5);
       double totalEmas;
-      totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmasMetier);
+      totalEmas =
+          (((doubleBeratEmas + totalQtyCrt) * hargaEmas) * upEmasMetier);
       var totalLabour = ((labour! + others3) * upLabour);
       var totalLabourTanpaUp = ((labour! + others3));
-      var totalEmasTanpaUp = (((doubleBeratEmas + totalQtyCrt) * emas));
+      var totalEmasTanpaUp = (((doubleBeratEmas + totalQtyCrt) * hargaEmas));
 
       double total;
       total = (((totalDiamond * upDiamondMetier) + totalEmas + totalLabour));
@@ -2235,41 +1825,79 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
   }
 
   double get totalPriceMetier {
-    var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
-        (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
-        (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
-        (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
-        (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
-        (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
-        (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
-        (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
-        (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
-        (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
-        (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
-        (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
-        (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
-        (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
-        (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
-        (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
-        (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
-        (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
-        (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
-        (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
-        (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
-        (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
-        (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
-        (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
-        (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
-        (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
-        (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
-        (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
-        (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
-        (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
-        (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
-        (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
-        (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
-        (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
-        (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
+    //? before
+    // var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
+    //     (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
+    //     (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
+    //     (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
+    //     (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
+    //     (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
+    //     (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
+    //     (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
+    //     (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
+    //     (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
+    //     (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
+    //     (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
+    //     (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
+    //     (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
+    //     (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
+    //     (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
+    //     (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
+    //     (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
+    //     (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
+    //     (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
+    //     (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
+    //     (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
+    //     (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
+    //     (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
+    //     (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
+    //     (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
+    //     (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
+    //     (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
+    //     (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
+    //     (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
+    //     (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
+    //     (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
+    //     (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
+    //     (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
+    //     (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
+    //* after
+    var totalDiamond =
+        (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!) * upDiamond) +
+            (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!) * upDiamond) +
+            (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!) * upDiamond) +
+            (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!) * upDiamond) +
+            (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!) * upDiamond) +
+            (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!) * upDiamond) +
+            (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!) * upDiamond) +
+            (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!) * upDiamond) +
+            (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!) * upDiamond) +
+            (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!) * upDiamond) +
+            (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!) * upDiamond) +
+            (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!) * upDiamond) +
+            (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!) * upDiamond) +
+            (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!) * upDiamond) +
+            (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!) * upDiamond) +
+            (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!) * upDiamond) +
+            (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!) * upDiamond) +
+            (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!) * upDiamond) +
+            (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!) * upDiamond) +
+            (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!) * upDiamond) +
+            (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!) * upDiamond) +
+            (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!) * upDiamond) +
+            (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!) * upDiamond) +
+            (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!) * upDiamond) +
+            (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!) * upDiamond) +
+            (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!) * upDiamond) +
+            (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!) * upDiamond) +
+            (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!) * upDiamond) +
+            (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!) * upDiamond) +
+            (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!) * upDiamond) +
+            (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!) * upDiamond) +
+            (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!) * upDiamond) +
+            (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!) * upDiamond) +
+            (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!) * upDiamond) +
+            (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!) * upDiamond);
 
     var totalDiamondTanpaUp =
         ((hargaBatu1 / markUpBatu1) * (caratPcsBatu1 * qtyIntBatu1!)) +
@@ -2347,10 +1975,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
         5);
 
     double totalEmas;
-    totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmasMetier);
+    totalEmas = (((doubleBeratEmas + totalQtyCrt) * hargaEmas) * upEmasMetier);
     var totalLabour = ((labour! + 0) * upLabour);
     var totalLabourTanpaUp = ((labour! + 0));
-    var totalEmasTanpaUp = (((doubleBeratEmas + totalQtyCrt) * emas));
+    var totalEmasTanpaUp = (((doubleBeratEmas + totalQtyCrt) * hargaEmas));
 
     double total;
     total = (((totalDiamond * upDiamondMetier) + totalEmas + totalLabour) *
@@ -2360,41 +1988,79 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
     if (total.toString() == 'NaN') {
       return 0;
     } else if (total < 1500) {
-      var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
-          (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
-          (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
-          (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
-          (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
-          (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
-          (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
-          (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
-          (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
-          (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
-          (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
-          (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
-          (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
-          (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
-          (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
-          (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
-          (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
-          (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
-          (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
-          (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
-          (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
-          (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
-          (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
-          (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
-          (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
-          (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
-          (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
-          (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
-          (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
-          (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
-          (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
-          (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
-          (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
-          (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
-          (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
+      //? before
+      // var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
+      //     (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
+      //     (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
+      //     (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
+      //     (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
+      //     (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
+      //     (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
+      //     (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
+      //     (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
+      //     (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
+      //     (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
+      //     (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
+      //     (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
+      //     (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
+      //     (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
+      //     (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
+      //     (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
+      //     (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
+      //     (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
+      //     (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
+      //     (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
+      //     (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
+      //     (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
+      //     (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
+      //     (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
+      //     (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
+      //     (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
+      //     (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
+      //     (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
+      //     (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
+      //     (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
+      //     (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
+      //     (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
+      //     (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
+      //     (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
+      //* after
+      var totalDiamond =
+          (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!) * upDiamond) +
+              (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!) * upDiamond) +
+              (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!) * upDiamond) +
+              (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!) * upDiamond) +
+              (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!) * upDiamond) +
+              (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!) * upDiamond) +
+              (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!) * upDiamond) +
+              (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!) * upDiamond) +
+              (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!) * upDiamond) +
+              (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!) * upDiamond) +
+              (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!) * upDiamond) +
+              (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!) * upDiamond) +
+              (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!) * upDiamond) +
+              (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!) * upDiamond) +
+              (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!) * upDiamond) +
+              (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!) * upDiamond) +
+              (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!) * upDiamond) +
+              (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!) * upDiamond) +
+              (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!) * upDiamond) +
+              (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!) * upDiamond) +
+              (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!) * upDiamond) +
+              (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!) * upDiamond) +
+              (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!) * upDiamond) +
+              (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!) * upDiamond) +
+              (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!) * upDiamond) +
+              (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!) * upDiamond) +
+              (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!) * upDiamond) +
+              (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!) * upDiamond) +
+              (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!) * upDiamond) +
+              (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!) * upDiamond) +
+              (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!) * upDiamond) +
+              (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!) * upDiamond) +
+              (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!) * upDiamond) +
+              (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!) * upDiamond) +
+              (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!) * upDiamond);
 
       var totalDiamondTanpaUp = ((hargaBatu1 / markUpBatu1) *
               (caratPcsBatu1 * qtyIntBatu1!)) +
@@ -2471,11 +2137,12 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
               doubleBeratEmasDariCustomer) /
           5);
       double totalEmas;
-      totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmasMetier);
+      totalEmas =
+          (((doubleBeratEmas + totalQtyCrt) * hargaEmas) * upEmasMetier);
 
       var totalLabour = ((labour! + 0) * upLabour);
       var totalLabourTanpaUp = ((labour! + 0));
-      var totalEmasTanpaUp = (((doubleBeratEmas + totalQtyCrt) * emas));
+      var totalEmasTanpaUp = (((doubleBeratEmas + totalQtyCrt) * hargaEmas));
 
       double total;
       total = (((totalDiamond * upDiamondMetier) +
@@ -2522,41 +2189,79 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
         return total;
       }
     } else if (total <= 2251) {
-      var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
-          (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
-          (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
-          (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
-          (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
-          (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
-          (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
-          (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
-          (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
-          (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
-          (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
-          (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
-          (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
-          (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
-          (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
-          (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
-          (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
-          (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
-          (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
-          (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
-          (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
-          (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
-          (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
-          (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
-          (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
-          (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
-          (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
-          (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
-          (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
-          (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
-          (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
-          (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
-          (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
-          (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
-          (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
+      //? before
+      // var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
+      //     (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
+      //     (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
+      //     (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
+      //     (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
+      //     (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
+      //     (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
+      //     (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
+      //     (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
+      //     (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
+      //     (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
+      //     (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
+      //     (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
+      //     (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
+      //     (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
+      //     (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
+      //     (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
+      //     (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
+      //     (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
+      //     (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
+      //     (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
+      //     (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
+      //     (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
+      //     (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
+      //     (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
+      //     (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
+      //     (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
+      //     (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
+      //     (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
+      //     (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
+      //     (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
+      //     (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
+      //     (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
+      //     (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
+      //     (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
+      //* after
+      var totalDiamond =
+          (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!) * upDiamond) +
+              (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!) * upDiamond) +
+              (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!) * upDiamond) +
+              (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!) * upDiamond) +
+              (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!) * upDiamond) +
+              (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!) * upDiamond) +
+              (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!) * upDiamond) +
+              (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!) * upDiamond) +
+              (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!) * upDiamond) +
+              (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!) * upDiamond) +
+              (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!) * upDiamond) +
+              (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!) * upDiamond) +
+              (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!) * upDiamond) +
+              (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!) * upDiamond) +
+              (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!) * upDiamond) +
+              (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!) * upDiamond) +
+              (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!) * upDiamond) +
+              (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!) * upDiamond) +
+              (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!) * upDiamond) +
+              (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!) * upDiamond) +
+              (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!) * upDiamond) +
+              (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!) * upDiamond) +
+              (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!) * upDiamond) +
+              (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!) * upDiamond) +
+              (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!) * upDiamond) +
+              (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!) * upDiamond) +
+              (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!) * upDiamond) +
+              (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!) * upDiamond) +
+              (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!) * upDiamond) +
+              (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!) * upDiamond) +
+              (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!) * upDiamond) +
+              (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!) * upDiamond) +
+              (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!) * upDiamond) +
+              (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!) * upDiamond) +
+              (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!) * upDiamond);
 
       var totalDiamondTanpaUp = ((hargaBatu1 / markUpBatu1) *
               (caratPcsBatu1 * qtyIntBatu1!)) +
@@ -2633,11 +2338,12 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
               doubleBeratEmasDariCustomer) /
           5);
       double totalEmas;
-      totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmasMetier);
+      totalEmas =
+          (((doubleBeratEmas + totalQtyCrt) * hargaEmas) * upEmasMetier);
 
       var totalLabour = ((labour! + others1) * upLabour);
       var totalLabourTanpaUp = ((labour! + others1));
-      var totalEmasTanpaUp = (((doubleBeratEmas + totalQtyCrt) * emas));
+      var totalEmasTanpaUp = (((doubleBeratEmas + totalQtyCrt) * hargaEmas));
 
       double total;
       total = (((totalDiamond * upDiamondMetier) +
@@ -2682,41 +2388,79 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
         return total;
       }
     } else if (total <= 4000) {
-      var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
-          (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
-          (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
-          (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
-          (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
-          (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
-          (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
-          (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
-          (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
-          (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
-          (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
-          (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
-          (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
-          (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
-          (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
-          (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
-          (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
-          (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
-          (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
-          (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
-          (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
-          (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
-          (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
-          (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
-          (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
-          (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
-          (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
-          (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
-          (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
-          (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
-          (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
-          (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
-          (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
-          (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
-          (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
+      //? before
+      // var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
+      //     (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
+      //     (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
+      //     (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
+      //     (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
+      //     (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
+      //     (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
+      //     (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
+      //     (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
+      //     (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
+      //     (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
+      //     (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
+      //     (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
+      //     (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
+      //     (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
+      //     (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
+      //     (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
+      //     (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
+      //     (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
+      //     (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
+      //     (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
+      //     (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
+      //     (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
+      //     (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
+      //     (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
+      //     (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
+      //     (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
+      //     (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
+      //     (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
+      //     (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
+      //     (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
+      //     (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
+      //     (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
+      //     (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
+      //     (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
+      //* after
+      var totalDiamond =
+          (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!) * upDiamond) +
+              (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!) * upDiamond) +
+              (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!) * upDiamond) +
+              (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!) * upDiamond) +
+              (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!) * upDiamond) +
+              (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!) * upDiamond) +
+              (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!) * upDiamond) +
+              (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!) * upDiamond) +
+              (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!) * upDiamond) +
+              (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!) * upDiamond) +
+              (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!) * upDiamond) +
+              (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!) * upDiamond) +
+              (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!) * upDiamond) +
+              (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!) * upDiamond) +
+              (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!) * upDiamond) +
+              (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!) * upDiamond) +
+              (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!) * upDiamond) +
+              (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!) * upDiamond) +
+              (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!) * upDiamond) +
+              (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!) * upDiamond) +
+              (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!) * upDiamond) +
+              (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!) * upDiamond) +
+              (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!) * upDiamond) +
+              (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!) * upDiamond) +
+              (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!) * upDiamond) +
+              (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!) * upDiamond) +
+              (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!) * upDiamond) +
+              (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!) * upDiamond) +
+              (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!) * upDiamond) +
+              (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!) * upDiamond) +
+              (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!) * upDiamond) +
+              (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!) * upDiamond) +
+              (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!) * upDiamond) +
+              (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!) * upDiamond) +
+              (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!) * upDiamond);
 
       var totalDiamondTanpaUp = ((hargaBatu1 / markUpBatu1) *
               (caratPcsBatu1 * qtyIntBatu1!)) +
@@ -2793,11 +2537,12 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
               doubleBeratEmasDariCustomer) /
           5);
       double totalEmas;
-      totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmasMetier);
+      totalEmas =
+          (((doubleBeratEmas + totalQtyCrt) * hargaEmas) * upEmasMetier);
 
       var totalLabour = ((labour! + others2) * upLabour);
       var totalLabourTanpaUp = ((labour! + others2));
-      var totalEmasTanpaUp = (((doubleBeratEmas + totalQtyCrt) * emas));
+      var totalEmasTanpaUp = (((doubleBeratEmas + totalQtyCrt) * hargaEmas));
 
       double total;
 
@@ -2845,41 +2590,79 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
         return total;
       }
     } else {
-      var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
-          (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
-          (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
-          (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
-          (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
-          (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
-          (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
-          (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
-          (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
-          (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
-          (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
-          (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
-          (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
-          (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
-          (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
-          (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
-          (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
-          (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
-          (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
-          (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
-          (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
-          (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
-          (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
-          (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
-          (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
-          (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
-          (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
-          (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
-          (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
-          (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
-          (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
-          (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
-          (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
-          (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
-          (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
+      //? before
+      // var totalDiamond = (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!)) +
+      //     (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!)) +
+      //     (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!)) +
+      //     (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!)) +
+      //     (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!)) +
+      //     (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!)) +
+      //     (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!)) +
+      //     (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!)) +
+      //     (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!)) +
+      //     (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!)) +
+      //     (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!)) +
+      //     (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!)) +
+      //     (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!)) +
+      //     (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!)) +
+      //     (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!)) +
+      //     (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!)) +
+      //     (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!)) +
+      //     (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!)) +
+      //     (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!)) +
+      //     (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!)) +
+      //     (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!)) +
+      //     (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!)) +
+      //     (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!)) +
+      //     (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!)) +
+      //     (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!)) +
+      //     (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!)) +
+      //     (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!)) +
+      //     (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!)) +
+      //     (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!)) +
+      //     (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!)) +
+      //     (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!)) +
+      //     (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!)) +
+      //     (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!)) +
+      //     (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!)) +
+      //     (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!));
+      //* after
+      var totalDiamond =
+          (hargaBatu1 * (caratPcsBatu1 * qtyIntBatu1!) * upDiamond) +
+              (hargaBatu2 * (caratPcsBatu2 * qtyIntBatu2!) * upDiamond) +
+              (hargaBatu3 * (caratPcsBatu3 * qtyIntBatu3!) * upDiamond) +
+              (hargaBatu4 * (caratPcsBatu4 * qtyIntBatu4!) * upDiamond) +
+              (hargaBatu5 * (caratPcsBatu5 * qtyIntBatu5!) * upDiamond) +
+              (hargaBatu6 * (caratPcsBatu6 * qtyIntBatu6!) * upDiamond) +
+              (hargaBatu7 * (caratPcsBatu7 * qtyIntBatu7!) * upDiamond) +
+              (hargaBatu8 * (caratPcsBatu8 * qtyIntBatu8!) * upDiamond) +
+              (hargaBatu9 * (caratPcsBatu9 * qtyIntBatu9!) * upDiamond) +
+              (hargaBatu10 * (caratPcsBatu10 * qtyIntBatu10!) * upDiamond) +
+              (hargaBatu11 * (caratPcsBatu11 * qtyIntBatu11!) * upDiamond) +
+              (hargaBatu12 * (caratPcsBatu12 * qtyIntBatu12!) * upDiamond) +
+              (hargaBatu13 * (caratPcsBatu13 * qtyIntBatu13!) * upDiamond) +
+              (hargaBatu14 * (caratPcsBatu14 * qtyIntBatu14!) * upDiamond) +
+              (hargaBatu15 * (caratPcsBatu15 * qtyIntBatu15!) * upDiamond) +
+              (hargaBatu16 * (caratPcsBatu16 * qtyIntBatu16!) * upDiamond) +
+              (hargaBatu17 * (caratPcsBatu17 * qtyIntBatu17!) * upDiamond) +
+              (hargaBatu18 * (caratPcsBatu18 * qtyIntBatu18!) * upDiamond) +
+              (hargaBatu19 * (caratPcsBatu19 * qtyIntBatu19!) * upDiamond) +
+              (hargaBatu20 * (caratPcsBatu20 * qtyIntBatu20!) * upDiamond) +
+              (hargaBatu21 * (caratPcsBatu21 * qtyIntBatu21!) * upDiamond) +
+              (hargaBatu22 * (caratPcsBatu22 * qtyIntBatu22!) * upDiamond) +
+              (hargaBatu23 * (caratPcsBatu23 * qtyIntBatu23!) * upDiamond) +
+              (hargaBatu24 * (caratPcsBatu24 * qtyIntBatu24!) * upDiamond) +
+              (hargaBatu25 * (caratPcsBatu25 * qtyIntBatu25!) * upDiamond) +
+              (hargaBatu26 * (caratPcsBatu26 * qtyIntBatu26!) * upDiamond) +
+              (hargaBatu27 * (caratPcsBatu27 * qtyIntBatu27!) * upDiamond) +
+              (hargaBatu28 * (caratPcsBatu28 * qtyIntBatu28!) * upDiamond) +
+              (hargaBatu29 * (caratPcsBatu29 * qtyIntBatu29!) * upDiamond) +
+              (hargaBatu30 * (caratPcsBatu30 * qtyIntBatu30!) * upDiamond) +
+              (hargaBatu31 * (caratPcsBatu31 * qtyIntBatu31!) * upDiamond) +
+              (hargaBatu32 * (caratPcsBatu32 * qtyIntBatu32!) * upDiamond) +
+              (hargaBatu33 * (caratPcsBatu33 * qtyIntBatu33!) * upDiamond) +
+              (hargaBatu34 * (caratPcsBatu34 * qtyIntBatu34!) * upDiamond) +
+              (hargaBatu35 * (caratPcsBatu35 * qtyIntBatu35!) * upDiamond);
 
       var totalDiamondTanpaUp = ((hargaBatu1 / markUpBatu1) *
               (caratPcsBatu1 * qtyIntBatu1!)) +
@@ -2956,11 +2739,12 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
               doubleBeratEmasDariCustomer) /
           5);
       double totalEmas;
-      totalEmas = (((doubleBeratEmas + totalQtyCrt) * emas) * upEmasMetier);
+      totalEmas =
+          (((doubleBeratEmas + totalQtyCrt) * hargaEmas) * upEmasMetier);
 
       var totalLabour = ((labour! + others3) * upLabour);
       var totalLabourTanpaUp = ((labour! + others3));
-      var totalEmasTanpaUp = (((doubleBeratEmas + totalQtyCrt) * emas));
+      var totalEmasTanpaUp = (((doubleBeratEmas + totalQtyCrt) * hargaEmas));
 
       double total;
       total = (((totalDiamond * upDiamondMetier) +
@@ -3144,7 +2928,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                             onChanged: (kadar) {
                               setState(() {
                                 kadar == "9K"
-                                    ? emas = int.parse((emas / 2).toString())
+                                    ? hargaEmas =
+                                        int.parse((hargaEmas / 2).toString())
                                     : _getData();
                                 kadarEmas.text = kadar!;
                               });
@@ -3595,7 +3380,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                       width: 300,
                                       height: 50,
                                       padding: const EdgeInsets.only(top: 5),
-                                      child: DropdownSearch<BatuModel>(
+                                      child: DropdownSearch<BatuModel2024>(
                                         asyncItems: (String? filter) =>
                                             getData(filter),
                                         popupProps:
@@ -3607,34 +3392,30 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                         ),
                                         compareFn: (item, sItem) =>
                                             item.id == sItem.id,
-                                        onChanged: (item) async {
-                                          try {
-                                            final response = await http.get(
-                                              Uri.parse(
-                                                  '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
-                                            );
-                                            if (response.statusCode == 200) {
-                                              final data =
-                                                  jsonDecode(response.body);
-                                              print(data);
-                                              setState(() {
-                                                ukuranBatu1.text = '';
-                                                crtPcsBatu1.text = '';
-                                                idStone1 = item.idStone;
-                                                idBatu1 = item.id;
-                                                hargaBatu1 =
-                                                    data[0]['unitCost'];
-                                                markUpBatu1 = data[0]['markUp'];
-                                                caratPcsBatu1 =
-                                                    data[0]['caratPcs'];
-                                                batu1 = item.keyWord.toString();
-                                                stokBatu1.text =
-                                                    item.qty.toString();
-                                              });
-                                            }
-                                          } catch (e) {
-                                            print(e);
-                                          }
+                                        onChanged: (item) {
+                                          setState(() {
+                                            ukuranBatu1.text = '';
+                                            crtPcsBatu1.text = '';
+                                            idBatu1 = item!.id;
+                                            hargaBatu1 = brand.text
+                                                        .toLowerCase()
+                                                        .toString() ==
+                                                    "metier"
+                                                ? double.parse(item
+                                                    .hargaCaratPcsMetier
+                                                    .toString())
+                                                : double.parse(item
+                                                    .hargaCaratPcsParva
+                                                    .toString());
+                                            caratPcsBatu1 = double.parse(
+                                                item.caratPcs.toString());
+                                            batu1 = item.keyWord.toString();
+                                            stokBatu1.text =
+                                                item.qty.toString();
+                                            lotBatu1 = item.lot
+                                                .toString()
+                                                .toLowerCase();
+                                          });
                                         },
                                         dropdownDecoratorProps:
                                             const DropDownDecoratorProps(
@@ -3648,9 +3429,27 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                     ),
 
                                     //ukuran batu1
-                                    //! untuk baguete
-                                    batu1.toString().toLowerCase() ==
-                                            'custom baguete'
+                                    //? jika pilih selain round
+                                    lotBatu1.toString().toLowerCase() ==
+                                                'baguete' ||
+                                            lotBatu1.toString().toLowerCase() ==
+                                                'emerald' ||
+                                            lotBatu1.toString().toLowerCase() ==
+                                                'heart' ||
+                                            lotBatu1.toString().toLowerCase() ==
+                                                'marquise' ||
+                                            lotBatu1.toString().toLowerCase() ==
+                                                'oval' ||
+                                            lotBatu1.toString().toLowerCase() ==
+                                                'pear' ||
+                                            lotBatu1.toString().toLowerCase() ==
+                                                'princess cut' ||
+                                            lotBatu1.toString().toLowerCase() ==
+                                                'tapper' ||
+                                            lotBatu1.toString().toLowerCase() ==
+                                                'piecutt' ||
+                                            lotBatu1.toString().toLowerCase() ==
+                                                'stone'
                                         ? Row(
                                             children: [
                                               Container(
@@ -3666,32 +3465,6 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                     setState(() async {
                                                       intPanjangBatu1 =
                                                           int.parse(value);
-                                                      baguettebatu1();
-                                                      try {
-                                                        final response =
-                                                            await http.get(
-                                                          Uri.parse(
-                                                              '${ApiConstants.baseUrl}${ApiConstants.getBatuMdbcByKeyword}?size="$sizeMdbcBatu1"'),
-                                                        );
-                                                        if (response
-                                                                .statusCode ==
-                                                            200) {
-                                                          final data =
-                                                              jsonDecode(
-                                                                  response
-                                                                      .body);
-                                                          print(data);
-                                                          setState(() {
-                                                            hargaBatu1 = data[0]
-                                                                ['unitCost'];
-                                                            markUpBatu1 =
-                                                                data[0]
-                                                                    ['markUp'];
-                                                          });
-                                                        }
-                                                      } catch (e) {
-                                                        print(e);
-                                                      }
                                                     });
                                                   },
                                                   decoration: InputDecoration(
@@ -3717,32 +3490,6 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                     setState(() async {
                                                       intlebarBatu1 =
                                                           int.parse(value);
-                                                      baguettebatu1();
-                                                      try {
-                                                        final response =
-                                                            await http.get(
-                                                          Uri.parse(
-                                                              '${ApiConstants.baseUrl}${ApiConstants.getBatuMdbcByKeyword}?size="$sizeMdbcBatu1"'),
-                                                        );
-                                                        if (response
-                                                                .statusCode ==
-                                                            200) {
-                                                          final data =
-                                                              jsonDecode(
-                                                                  response
-                                                                      .body);
-                                                          print(data);
-                                                          setState(() {
-                                                            hargaBatu1 = data[0]
-                                                                ['unitCost'];
-                                                            markUpBatu1 =
-                                                                data[0]
-                                                                    ['markUp'];
-                                                          });
-                                                        }
-                                                      } catch (e) {
-                                                        print(e);
-                                                      }
                                                     });
                                                   },
                                                   decoration: InputDecoration(
@@ -3756,565 +3503,31 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                               ),
                                             ],
                                           )
-                                        :
-                                        //! untuk tapper
-                                        batu1.toString().toLowerCase() ==
-                                                'custom tapper'
-                                            ? Row(
-                                                children: [
-                                                  Container(
-                                                    width: 110,
-                                                    height: 50,
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            top: 10, left: 15),
-                                                    child: TextFormField(
-                                                      textInputAction:
-                                                          TextInputAction.next,
-                                                      controller: panjangBatu1,
-                                                      onChanged: (value) {
-                                                        setState(() async {
-                                                          intPanjangBatu1 =
-                                                              int.parse(value);
-                                                          tapperbatu1();
-                                                          try {
-                                                            final response =
-                                                                await http.get(
-                                                              Uri.parse(
-                                                                  '${ApiConstants.baseUrl}${ApiConstants.getBatuMdbcByKeyword}?size="$sizeMdbcBatu1"'),
-                                                            );
-                                                            if (response
-                                                                    .statusCode ==
-                                                                200) {
-                                                              final data =
-                                                                  jsonDecode(
-                                                                      response
-                                                                          .body);
-                                                              print(data);
-                                                              setState(() {
-                                                                hargaBatu1 = data[
-                                                                        0][
-                                                                    'unitCost'];
-                                                                markUpBatu1 =
-                                                                    data[0][
-                                                                        'markUp'];
-                                                              });
-                                                            }
-                                                          } catch (e) {
-                                                            print(e);
-                                                          }
-                                                        });
-                                                      },
-                                                      decoration:
-                                                          InputDecoration(
-                                                        label: const Text(
-                                                            'Panjang'),
-                                                        border: OutlineInputBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        5.0)),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Container(
-                                                    width: 110,
-                                                    height: 50,
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            top: 10, left: 15),
-                                                    child: TextFormField(
-                                                      textInputAction:
-                                                          TextInputAction.next,
-                                                      controller: lebarBatu1,
-                                                      onChanged: (value) {
-                                                        setState(() async {
-                                                          intlebarBatu1 =
-                                                              int.parse(value);
-                                                          tapperbatu1();
-                                                          try {
-                                                            final response =
-                                                                await http.get(
-                                                              Uri.parse(
-                                                                  '${ApiConstants.baseUrl}${ApiConstants.getBatuMdbcByKeyword}?size="$sizeMdbcBatu1"'),
-                                                            );
-                                                            if (response
-                                                                    .statusCode ==
-                                                                200) {
-                                                              final data =
-                                                                  jsonDecode(
-                                                                      response
-                                                                          .body);
-                                                              print(data);
-                                                              setState(() {
-                                                                hargaBatu1 = data[
-                                                                        0][
-                                                                    'unitCost'];
-                                                                markUpBatu1 =
-                                                                    data[0][
-                                                                        'markUp'];
-                                                              });
-                                                            }
-                                                          } catch (e) {
-                                                            print(e);
-                                                          }
-                                                        });
-                                                      },
-                                                      decoration:
-                                                          InputDecoration(
-                                                        label:
-                                                            const Text('Lebar'),
-                                                        border: OutlineInputBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        5.0)),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              )
-                                            : idStone1 != -2
-                                                ? const SizedBox()
-                                                : Container(
-                                                    width: 220,
-                                                    height: 50,
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            top: 10, left: 15),
-                                                    child: TextFormField(
-                                                      textInputAction:
-                                                          TextInputAction.next,
-                                                      controller: ukuranBatu1,
-                                                      onChanged: (value) {
-                                                        setState(() {});
-                                                      },
-                                                      decoration:
-                                                          InputDecoration(
-                                                        label: const Text(
-                                                            'Ukuran'),
-                                                        border: OutlineInputBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        5.0)),
-                                                      ),
-                                                    ),
-                                                  ),
-
-                                    //crt/pcs
-                                    //! untuk baguettte
-                                    batu1.toString().toLowerCase() ==
-                                            'custom baguete'
-                                        ? Container(
-                                            width: 100,
-                                            height: 50,
-                                            padding: const EdgeInsets.only(
-                                                top: 10, left: 15),
-                                            child: TextFormField(
-                                              textInputAction:
-                                                  TextInputAction.next,
-                                              controller: crtPcsBatu1,
-                                              onChanged: (value) {
-                                                setState(() async {
-                                                  caratPcsBatu1 =
-                                                      double.parse(value);
-                                                  baguettebatu1();
-                                                  try {
-                                                    final response =
-                                                        await http.get(
-                                                      Uri.parse(
-                                                          '${ApiConstants.baseUrl}${ApiConstants.getBatuMdbcByKeyword}?size="$sizeMdbcBatu1"'),
-                                                    );
-                                                    if (response.statusCode ==
-                                                        200) {
-                                                      final data = jsonDecode(
-                                                          response.body);
-                                                      print(data);
-                                                      setState(() {
-                                                        hargaBatu1 =
-                                                            data[0]['unitCost'];
-                                                        markUpBatu1 =
-                                                            data[0]['markUp'];
-                                                      });
-                                                    }
-                                                  } catch (e) {
-                                                    print(e);
-                                                  }
-                                                });
-                                              },
-                                              decoration: InputDecoration(
-                                                label:
-                                                    const Text('Carat / Pcs'),
-                                                border: OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5.0)),
-                                              ),
-                                            ),
-                                          )
-                                        :
-                                        //! untuk tapper
-                                        batu1.toString().toLowerCase() ==
-                                                'custom tapper'
-                                            ? Container(
-                                                width: 100,
-                                                height: 50,
-                                                padding: const EdgeInsets.only(
-                                                    top: 10, left: 15),
-                                                child: TextFormField(
-                                                  textInputAction:
-                                                      TextInputAction.next,
-                                                  controller: crtPcsBatu1,
-                                                  onChanged: (value) {
-                                                    setState(() async {
-                                                      caratPcsBatu1 =
-                                                          double.parse(value);
-                                                      tapperbatu1();
-                                                      try {
-                                                        final response =
-                                                            await http.get(
-                                                          Uri.parse(
-                                                              '${ApiConstants.baseUrl}${ApiConstants.getBatuMdbcByKeyword}?size="$sizeMdbcBatu1"'),
-                                                        );
-                                                        if (response
-                                                                .statusCode ==
-                                                            200) {
-                                                          final data =
-                                                              jsonDecode(
-                                                                  response
-                                                                      .body);
-                                                          print(data);
-                                                          setState(() {
-                                                            hargaBatu1 = data[0]
-                                                                ['unitCost'];
-                                                            markUpBatu1 =
-                                                                data[0]
-                                                                    ['markUp'];
-                                                          });
-                                                        }
-                                                      } catch (e) {
-                                                        print(e);
-                                                      }
-                                                    });
-                                                  },
-                                                  decoration: InputDecoration(
-                                                    label: const Text(
-                                                        'Carat / Pcs'),
-                                                    border: OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(5.0)),
-                                                  ),
-                                                ),
-                                              )
-                                            : idStone1 != -2
-                                                ? const SizedBox()
-                                                : Container(
-                                                    width: 100,
-                                                    height: 50,
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            top: 10, left: 15),
-                                                    child: TextFormField(
-                                                      textInputAction:
-                                                          TextInputAction.next,
-                                                      controller: crtPcsBatu1,
-                                                      onChanged: (value) {
-                                                        setState(() {
-                                                          //todo: perhitungan batu custom
-                                                          if (batu1!.toLowerCase() == "custom emerald" ||
-                                                              batu1!.toLowerCase() ==
-                                                                  "custom heart" ||
-                                                              batu1!.toLowerCase() ==
-                                                                  "custom marquise" ||
-                                                              batu1!.toLowerCase() ==
-                                                                  "custom oval" ||
-                                                              batu1!.toLowerCase() ==
-                                                                  "custom pear" ||
-                                                              batu1!.toLowerCase() ==
-                                                                  "custom princess" ||
-                                                              batu1!.toLowerCase() ==
-                                                                  "custom ruby" ||
-                                                              batu1!.toLowerCase() ==
-                                                                  "custom tapper") {
-                                                            //? kondisi sesuai carat/pcs
-                                                            if (double.parse(
-                                                                    value) <
-                                                                0.071) {
-                                                              hargaBatu1 =
-                                                                  customGol1!;
-                                                              caratPcsBatu1 =
-                                                                  double.parse(
-                                                                      value);
-                                                            } else if (double
-                                                                    .parse(
-                                                                        value) <
-                                                                0.121) {
-                                                              hargaBatu1 =
-                                                                  customGol2!;
-                                                              caratPcsBatu1 =
-                                                                  double.parse(
-                                                                      value);
-                                                            } else if (double
-                                                                    .parse(
-                                                                        value) <
-                                                                0.182) {
-                                                              hargaBatu1 =
-                                                                  customGol3!;
-                                                              caratPcsBatu1 =
-                                                                  double.parse(
-                                                                      value);
-                                                            } else if (double
-                                                                    .parse(
-                                                                        value) <
-                                                                0.231) {
-                                                              hargaBatu1 =
-                                                                  customGol4!;
-                                                              caratPcsBatu1 =
-                                                                  double.parse(
-                                                                      value);
-                                                            } else if (double
-                                                                    .parse(
-                                                                        value) <
-                                                                0.266) {
-                                                              hargaBatu1 =
-                                                                  customGol5!;
-                                                              caratPcsBatu1 =
-                                                                  double.parse(
-                                                                      value);
-                                                            } else if (double
-                                                                    .parse(
-                                                                        value) <
-                                                                0.356) {
-                                                              hargaBatu1 =
-                                                                  customGol6!;
-                                                              caratPcsBatu1 =
-                                                                  double.parse(
-                                                                      value);
-                                                            } else if (double
-                                                                    .parse(
-                                                                        value) <
-                                                                0.406) {
-                                                              hargaBatu1 =
-                                                                  customGol7!;
-                                                              caratPcsBatu1 =
-                                                                  double.parse(
-                                                                      value);
-                                                            } else if (double
-                                                                    .parse(
-                                                                        value) <
-                                                                0.456) {
-                                                              hargaBatu1 =
-                                                                  customGol8!;
-                                                              caratPcsBatu1 =
-                                                                  double.parse(
-                                                                      value);
-                                                            } else if (double
-                                                                    .parse(
-                                                                        value) <
-                                                                0.506) {
-                                                              hargaBatu1 =
-                                                                  customGol9!;
-                                                              caratPcsBatu1 =
-                                                                  double.parse(
-                                                                      value);
-                                                            } else if (double
-                                                                    .parse(
-                                                                        value) <
-                                                                0.556) {
-                                                              hargaBatu1 =
-                                                                  customGol10!;
-                                                              caratPcsBatu1 =
-                                                                  double.parse(
-                                                                      value);
-                                                            } else if (double
-                                                                    .parse(
-                                                                        value) <
-                                                                0.606) {
-                                                              hargaBatu1 =
-                                                                  customGol11!;
-                                                              caratPcsBatu1 =
-                                                                  double.parse(
-                                                                      value);
-                                                            } else if (double
-                                                                    .parse(
-                                                                        value) <
-                                                                0.656) {
-                                                              hargaBatu1 =
-                                                                  customGol12!;
-                                                              caratPcsBatu1 =
-                                                                  double.parse(
-                                                                      value);
-                                                            } else if (double
-                                                                    .parse(
-                                                                        value) <
-                                                                0.706) {
-                                                              hargaBatu1 =
-                                                                  customGol13!;
-                                                              caratPcsBatu1 =
-                                                                  double.parse(
-                                                                      value);
-                                                            } else {
-                                                              hargaBatu1 =
-                                                                  customGol14!;
-                                                              caratPcsBatu1 =
-                                                                  double.parse(
-                                                                      value);
-                                                            }
-                                                          }
-                                                          //! keluar dari kondisi batu custom
-                                                          else {}
-                                                        });
-                                                      },
-                                                      decoration:
-                                                          InputDecoration(
-                                                        label: const Text(
-                                                            'Carat / Pcs'),
-                                                        border: OutlineInputBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        5.0)),
-                                                      ),
-                                                    ),
-                                                  ),
+                                        : const SizedBox(),
 
                                     //qty batu1
-                                    batu1.toString().toLowerCase() ==
-                                            'custom baguete'
-                                        ? Container(
-                                            width: 80,
-                                            height: 50,
-                                            padding: const EdgeInsets.only(
-                                                top: 10, left: 15),
-                                            child: TextFormField(
-                                              enabled:
-                                                  batu1 == '' ? false : true,
-                                              textInputAction:
-                                                  TextInputAction.next,
-                                              controller: qtyBatu1,
-                                              onChanged: (value) {
-                                                setState(() async {
-                                                  print('masuk baguete');
-                                                  qtyIntBatu1 =
-                                                      int.parse(value);
-                                                  baguettebatu1();
-                                                  try {
-                                                    final response =
-                                                        await http.get(
-                                                      Uri.parse(
-                                                          '${ApiConstants.baseUrl}${ApiConstants.getBatuMdbcByKeyword}?size="$sizeMdbcBatu1"'),
-                                                    );
-                                                    if (response.statusCode ==
-                                                        200) {
-                                                      final data = jsonDecode(
-                                                          response.body);
-                                                      print(data);
-                                                      setState(() {
-                                                        hargaBatu1 =
-                                                            data[0]['unitCost'];
-                                                        markUpBatu1 =
-                                                            data[0]['markUp'];
-                                                      });
-                                                    }
-                                                  } catch (e) {
-                                                    print(e);
-                                                  }
-                                                });
-                                              },
-                                              decoration: InputDecoration(
-                                                label: const Text('Qty'),
-                                                border: OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5.0)),
-                                              ),
-                                            ),
-                                          )
-                                        : batu1.toString().toLowerCase() ==
-                                                'custom tapper'
-                                            ? Container(
-                                                width: 80,
-                                                height: 50,
-                                                padding: const EdgeInsets.only(
-                                                    top: 10, left: 15),
-                                                child: TextFormField(
-                                                  enabled: batu1 == ''
-                                                      ? false
-                                                      : true,
-                                                  textInputAction:
-                                                      TextInputAction.next,
-                                                  controller: qtyBatu1,
-                                                  onChanged: (value) {
-                                                    setState(() async {
-                                                      print('masuk tapper');
-                                                      qtyIntBatu1 =
-                                                          int.parse(value);
-                                                      tapperbatu1();
-                                                      try {
-                                                        final response =
-                                                            await http.get(
-                                                          Uri.parse(
-                                                              '${ApiConstants.baseUrl}${ApiConstants.getBatuMdbcByKeyword}?size="$sizeMdbcBatu1"'),
-                                                        );
-                                                        if (response
-                                                                .statusCode ==
-                                                            200) {
-                                                          final data =
-                                                              jsonDecode(
-                                                                  response
-                                                                      .body);
-                                                          print(data);
-                                                          setState(() {
-                                                            hargaBatu1 = data[0]
-                                                                ['unitCost'];
-                                                            markUpBatu1 =
-                                                                data[0]
-                                                                    ['markUp'];
-                                                          });
-                                                        }
-                                                      } catch (e) {
-                                                        print(e);
-                                                      }
-                                                    });
-                                                  },
-                                                  decoration: InputDecoration(
-                                                    label: const Text('Qty'),
-                                                    border: OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(5.0)),
-                                                  ),
-                                                ),
-                                              )
-                                            : Container(
-                                                width: 80,
-                                                height: 50,
-                                                padding: const EdgeInsets.only(
-                                                    top: 10, left: 15),
-                                                child: TextFormField(
-                                                  enabled: batu1 == ''
-                                                      ? false
-                                                      : true,
-                                                  textInputAction:
-                                                      TextInputAction.next,
-                                                  controller: qtyBatu1,
-                                                  onChanged: (value) {
-                                                    setState(() {
-                                                      qtyIntBatu1 =
-                                                          int.parse(value);
-                                                    });
-                                                  },
-                                                  decoration: InputDecoration(
-                                                    label: const Text('Qty'),
-                                                    border: OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(5.0)),
-                                                  ),
-                                                ),
-                                              ),
+                                    Container(
+                                      width: 80,
+                                      height: 50,
+                                      padding: const EdgeInsets.only(
+                                          top: 10, left: 15),
+                                      child: TextFormField(
+                                        enabled: batu1 == '' ? false : true,
+                                        textInputAction: TextInputAction.next,
+                                        controller: qtyBatu1,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            qtyIntBatu1 = int.parse(value);
+                                          });
+                                        },
+                                        decoration: InputDecoration(
+                                          label: const Text('Qty'),
+                                          border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(5.0)),
+                                        ),
+                                      ),
+                                    ),
 
                                     //stok batu1
                                     Container(
@@ -4348,8 +3561,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                             child: IconButton(
                                                 onPressed: () {
                                                   setState(() {
+                                                    idBatu1 = 0;
                                                     qtyBatu1.text = '0';
                                                     stokBatu1.text = '';
+                                                    crtPcsBatu1.text = '';
                                                     ukuranBatu1.text = '';
                                                     stokBatu1.text = '';
                                                     batu1 = '';
@@ -4363,6 +3578,43 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                 },
                                                 icon: const Icon(Icons.cancel)),
                                           ),
+                                    sharedPreferences!.getString('nama') !=
+                                            'admin'
+                                        ? const SizedBox()
+                                        : Container(
+                                            width: 150,
+                                            height: 50,
+                                            padding: const EdgeInsets.only(
+                                                top: 10, left: 15),
+                                            child: TextFormField(
+                                              textInputAction:
+                                                  TextInputAction.next,
+                                              controller: crtPcsBatu1,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  caratPcsBatu1 =
+                                                      double.parse(value);
+                                                });
+                                              },
+                                              decoration: InputDecoration(
+                                                label:
+                                                    const Text('Carat / Pcs'),
+                                                border: OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5.0)),
+                                              ),
+                                            ),
+                                          ),
+                                    const SizedBox(width: 20),
+                                    sharedPreferences!.getString('nama') !=
+                                            'admin'
+                                        ? const SizedBox()
+                                        : Text(
+                                            'Carat/Pcs : $caratPcsBatu1',
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.bold),
+                                          )
                                   ],
                                 ),
                                 // end row batu1
@@ -4381,7 +3633,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                             height: 50,
                                             padding:
                                                 const EdgeInsets.only(top: 5),
-                                            child: DropdownSearch<BatuModel>(
+                                            child:
+                                                DropdownSearch<BatuModel2024>(
                                               asyncItems: (String? filter) =>
                                                   getData(filter),
                                               popupProps:
@@ -4393,38 +3646,31 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                               ),
                                               compareFn: (item, sItem) =>
                                                   item.id == sItem.id,
-                                              onChanged: (item) async {
-                                                try {
-                                                  final response =
-                                                      await http.get(
-                                                    Uri.parse(
-                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
-                                                  );
-                                                  if (response.statusCode ==
-                                                      200) {
-                                                    final data = jsonDecode(
-                                                        response.body);
-                                                    print(data);
-                                                    setState(() {
-                                                      ukuranBatu2.text = '';
-                                                      crtPcsBatu2.text = '';
-                                                      idStone2 = item.idStone;
-                                                      idBatu2 = item.id;
-                                                      hargaBatu2 =
-                                                          data[0]['unitCost'];
-                                                      markUpBatu2 =
-                                                          data[0]['markUp'];
-                                                      caratPcsBatu2 =
-                                                          data[0]['caratPcs'];
-                                                      batu2 = item.keyWord
-                                                          .toString();
-                                                      stokBatu2.text =
-                                                          item.qty.toString();
-                                                    });
-                                                  }
-                                                } catch (e) {
-                                                  print(e);
-                                                }
+                                              onChanged: (item) {
+                                                setState(() {
+                                                  ukuranBatu2.text = '';
+                                                  crtPcsBatu2.text = '';
+                                                  idBatu2 = item!.id;
+                                                  hargaBatu2 = brand.text
+                                                              .toLowerCase()
+                                                              .toString() ==
+                                                          "metier"
+                                                      ? double.parse(item
+                                                          .hargaCaratPcsMetier
+                                                          .toString())
+                                                      : double.parse(item
+                                                          .hargaCaratPcsParva
+                                                          .toString());
+                                                  caratPcsBatu2 = double.parse(
+                                                      item.caratPcs.toString());
+                                                  batu2 =
+                                                      item.keyWord.toString();
+                                                  stokBatu2.text =
+                                                      item.qty.toString();
+                                                  lotBatu2 = item.lot
+                                                      .toString()
+                                                      .toLowerCase();
+                                                });
                                               },
                                               dropdownDecoratorProps:
                                                   const DropDownDecoratorProps(
@@ -4438,9 +3684,47 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           ),
 
                                           //ukuran batu2
-                                          //! untuk baguete
-                                          batu2.toString().toLowerCase() ==
-                                                  'custom baguete'
+                                          //? jika pilih selain round
+                                          lotBatu2
+                                                          .toString()
+                                                          .toLowerCase() ==
+                                                      'baguete' ||
+                                                  lotBatu2
+                                                          .toString()
+                                                          .toLowerCase() ==
+                                                      'emerald' ||
+                                                  lotBatu2
+                                                          .toString()
+                                                          .toLowerCase() ==
+                                                      'heart' ||
+                                                  lotBatu2
+                                                          .toString()
+                                                          .toLowerCase() ==
+                                                      'marquise' ||
+                                                  lotBatu2
+                                                          .toString()
+                                                          .toLowerCase() ==
+                                                      'oval' ||
+                                                  lotBatu2
+                                                          .toString()
+                                                          .toLowerCase() ==
+                                                      'pear' ||
+                                                  lotBatu2
+                                                          .toString()
+                                                          .toLowerCase() ==
+                                                      'princess cut' ||
+                                                  lotBatu2
+                                                          .toString()
+                                                          .toLowerCase() ==
+                                                      'tapper' ||
+                                                  lotBatu2
+                                                          .toString()
+                                                          .toLowerCase() ==
+                                                      'piecutt' ||
+                                                  lotBatu2
+                                                          .toString()
+                                                          .toLowerCase() ==
+                                                      'stone'
                                               ? Row(
                                                   children: [
                                                     Container(
@@ -4461,34 +3745,6 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                             intPanjangBatu2 =
                                                                 int.parse(
                                                                     value);
-                                                            baguettebatu2();
-                                                            try {
-                                                              final response =
-                                                                  await http
-                                                                      .get(
-                                                                Uri.parse(
-                                                                    '${ApiConstants.baseUrl}${ApiConstants.getBatuMdbcByKeyword}?size="$sizeMdbcBatu2"'),
-                                                              );
-                                                              if (response
-                                                                      .statusCode ==
-                                                                  200) {
-                                                                final data =
-                                                                    jsonDecode(
-                                                                        response
-                                                                            .body);
-                                                                print(data);
-                                                                setState(() {
-                                                                  hargaBatu2 =
-                                                                      data[0][
-                                                                          'unitCost'];
-                                                                  markUpBatu2 =
-                                                                      data[0][
-                                                                          'markUp'];
-                                                                });
-                                                              }
-                                                            } catch (e) {
-                                                              print(e);
-                                                            }
                                                           });
                                                         },
                                                         decoration:
@@ -4520,34 +3776,6 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                             intlebarBatu2 =
                                                                 int.parse(
                                                                     value);
-                                                            baguettebatu2();
-                                                            try {
-                                                              final response =
-                                                                  await http
-                                                                      .get(
-                                                                Uri.parse(
-                                                                    '${ApiConstants.baseUrl}${ApiConstants.getBatuMdbcByKeyword}?size="$sizeMdbcBatu2"'),
-                                                              );
-                                                              if (response
-                                                                      .statusCode ==
-                                                                  200) {
-                                                                final data =
-                                                                    jsonDecode(
-                                                                        response
-                                                                            .body);
-                                                                print(data);
-                                                                setState(() {
-                                                                  hargaBatu2 =
-                                                                      data[0][
-                                                                          'unitCost'];
-                                                                  markUpBatu2 =
-                                                                      data[0][
-                                                                          'markUp'];
-                                                                });
-                                                              }
-                                                            } catch (e) {
-                                                              print(e);
-                                                            }
                                                           });
                                                         },
                                                         decoration:
@@ -4564,635 +3792,35 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                     ),
                                                   ],
                                                 )
-                                              :
-                                              //! untuk tapper
-                                              batu2.toString().toLowerCase() ==
-                                                      'custom tapper'
-                                                  ? Row(
-                                                      children: [
-                                                        Container(
-                                                          width: 110,
-                                                          height: 50,
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .only(
-                                                                  top: 10,
-                                                                  left: 15),
-                                                          child: TextFormField(
-                                                            textInputAction:
-                                                                TextInputAction
-                                                                    .next,
-                                                            controller:
-                                                                panjangBatu2,
-                                                            onChanged: (value) {
-                                                              setState(
-                                                                  () async {
-                                                                intPanjangBatu2 =
-                                                                    int.parse(
-                                                                        value);
-                                                                tapperbatu2();
-                                                                try {
-                                                                  final response =
-                                                                      await http
-                                                                          .get(
-                                                                    Uri.parse(
-                                                                        '${ApiConstants.baseUrl}${ApiConstants.getBatuMdbcByKeyword}?size="$sizeMdbcBatu2"'),
-                                                                  );
-                                                                  if (response
-                                                                          .statusCode ==
-                                                                      200) {
-                                                                    final data =
-                                                                        jsonDecode(
-                                                                            response.body);
-                                                                    print(data);
-                                                                    setState(
-                                                                        () {
-                                                                      hargaBatu2 =
-                                                                          data[0]
-                                                                              [
-                                                                              'unitCost'];
-                                                                      markUpBatu2 =
-                                                                          data[0]
-                                                                              [
-                                                                              'markUp'];
-                                                                    });
-                                                                  }
-                                                                } catch (e) {
-                                                                  print(e);
-                                                                }
-                                                              });
-                                                            },
-                                                            decoration:
-                                                                InputDecoration(
-                                                              label: const Text(
-                                                                  'Panjang'),
-                                                              border: OutlineInputBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              5.0)),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        Container(
-                                                          width: 110,
-                                                          height: 50,
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .only(
-                                                                  top: 10,
-                                                                  left: 15),
-                                                          child: TextFormField(
-                                                            textInputAction:
-                                                                TextInputAction
-                                                                    .next,
-                                                            controller:
-                                                                lebarBatu2,
-                                                            onChanged: (value) {
-                                                              setState(
-                                                                  () async {
-                                                                intlebarBatu2 =
-                                                                    int.parse(
-                                                                        value);
-                                                                tapperbatu2();
-                                                                try {
-                                                                  final response =
-                                                                      await http
-                                                                          .get(
-                                                                    Uri.parse(
-                                                                        '${ApiConstants.baseUrl}${ApiConstants.getBatuMdbcByKeyword}?size="$sizeMdbcBatu2"'),
-                                                                  );
-                                                                  if (response
-                                                                          .statusCode ==
-                                                                      200) {
-                                                                    final data =
-                                                                        jsonDecode(
-                                                                            response.body);
-                                                                    print(data);
-                                                                    setState(
-                                                                        () {
-                                                                      hargaBatu2 =
-                                                                          data[0]
-                                                                              [
-                                                                              'unitCost'];
-                                                                      markUpBatu2 =
-                                                                          data[0]
-                                                                              [
-                                                                              'markUp'];
-                                                                    });
-                                                                  }
-                                                                } catch (e) {
-                                                                  print(e);
-                                                                }
-                                                              });
-                                                            },
-                                                            decoration:
-                                                                InputDecoration(
-                                                              label: const Text(
-                                                                  'Lebar'),
-                                                              border: OutlineInputBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              5.0)),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    )
-                                                  : idStone2 != -2
-                                                      ? const SizedBox()
-                                                      : Container(
-                                                          width: 220,
-                                                          height: 50,
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .only(
-                                                                  top: 10,
-                                                                  left: 15),
-                                                          child: TextFormField(
-                                                            textInputAction:
-                                                                TextInputAction
-                                                                    .next,
-                                                            controller:
-                                                                ukuranBatu2,
-                                                            onChanged: (value) {
-                                                              setState(() {});
-                                                            },
-                                                            decoration:
-                                                                InputDecoration(
-                                                              label: const Text(
-                                                                  'Ukuran'),
-                                                              border: OutlineInputBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              5.0)),
-                                                            ),
-                                                          ),
-                                                        ),
-
-                                          //crt/pcs
-                                          //! untuk baguettte
-                                          batu2.toString().toLowerCase() ==
-                                                  'custom baguete'
-                                              ? Container(
-                                                  width: 100,
-                                                  height: 50,
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          top: 10, left: 15),
-                                                  child: TextFormField(
-                                                    textInputAction:
-                                                        TextInputAction.next,
-                                                    controller: crtPcsBatu2,
-                                                    onChanged: (value) {
-                                                      setState(() async {
-                                                        caratPcsBatu2 =
-                                                            double.parse(value);
-                                                        baguettebatu2();
-                                                        try {
-                                                          final response =
-                                                              await http.get(
-                                                            Uri.parse(
-                                                                '${ApiConstants.baseUrl}${ApiConstants.getBatuMdbcByKeyword}?size="$sizeMdbcBatu2"'),
-                                                          );
-                                                          if (response
-                                                                  .statusCode ==
-                                                              200) {
-                                                            final data =
-                                                                jsonDecode(
-                                                                    response
-                                                                        .body);
-                                                            print(data);
-                                                            setState(() {
-                                                              hargaBatu2 = data[
-                                                                      0]
-                                                                  ['unitCost'];
-                                                              markUpBatu2 =
-                                                                  data[0][
-                                                                      'markUp'];
-                                                            });
-                                                          }
-                                                        } catch (e) {
-                                                          print(e);
-                                                        }
-                                                      });
-                                                    },
-                                                    decoration: InputDecoration(
-                                                      label: const Text(
-                                                          'Carat / Pcs'),
-                                                      border:
-                                                          OutlineInputBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          5.0)),
-                                                    ),
-                                                  ),
-                                                )
-                                              :
-                                              //! untuk tapper
-                                              batu2.toString().toLowerCase() ==
-                                                      'custom tapper'
-                                                  ? Container(
-                                                      width: 100,
-                                                      height: 50,
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              top: 10,
-                                                              left: 15),
-                                                      child: TextFormField(
-                                                        textInputAction:
-                                                            TextInputAction
-                                                                .next,
-                                                        controller: crtPcsBatu2,
-                                                        onChanged: (value) {
-                                                          setState(() async {
-                                                            caratPcsBatu2 =
-                                                                double.parse(
-                                                                    value);
-                                                            tapperbatu2();
-                                                            try {
-                                                              final response =
-                                                                  await http
-                                                                      .get(
-                                                                Uri.parse(
-                                                                    '${ApiConstants.baseUrl}${ApiConstants.getBatuMdbcByKeyword}?size="$sizeMdbcBatu2"'),
-                                                              );
-                                                              if (response
-                                                                      .statusCode ==
-                                                                  200) {
-                                                                final data =
-                                                                    jsonDecode(
-                                                                        response
-                                                                            .body);
-                                                                print(data);
-                                                                setState(() {
-                                                                  hargaBatu2 =
-                                                                      data[0][
-                                                                          'unitCost'];
-                                                                  markUpBatu2 =
-                                                                      data[0][
-                                                                          'markUp'];
-                                                                });
-                                                              }
-                                                            } catch (e) {
-                                                              print(e);
-                                                            }
-                                                          });
-                                                        },
-                                                        decoration:
-                                                            InputDecoration(
-                                                          label: const Text(
-                                                              'Carat / Pcs'),
-                                                          border: OutlineInputBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          5.0)),
-                                                        ),
-                                                      ),
-                                                    )
-                                                  : idStone2 != -2
-                                                      ? const SizedBox()
-                                                      : Container(
-                                                          width: 100,
-                                                          height: 50,
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .only(
-                                                                  top: 10,
-                                                                  left: 15),
-                                                          child: TextFormField(
-                                                            textInputAction:
-                                                                TextInputAction
-                                                                    .next,
-                                                            controller:
-                                                                crtPcsBatu2,
-                                                            onChanged: (value) {
-                                                              setState(() {
-                                                                //todo: perhitungan batu custom
-                                                                if (batu2!.toLowerCase() == "custom emerald" ||
-                                                                    batu2!.toLowerCase() ==
-                                                                        "custom heart" ||
-                                                                    batu2!.toLowerCase() ==
-                                                                        "custom marquise" ||
-                                                                    batu2!.toLowerCase() ==
-                                                                        "custom oval" ||
-                                                                    batu2!.toLowerCase() ==
-                                                                        "custom pear" ||
-                                                                    batu2!.toLowerCase() ==
-                                                                        "custom princess" ||
-                                                                    batu2!.toLowerCase() ==
-                                                                        "custom ruby" ||
-                                                                    batu2!.toLowerCase() ==
-                                                                        "custom tapper") {
-                                                                  //? kondisi sesuai carat/pcs
-                                                                  if (double.parse(
-                                                                          value) <
-                                                                      0.071) {
-                                                                    hargaBatu2 =
-                                                                        customGol1!;
-                                                                    caratPcsBatu2 =
-                                                                        double.parse(
-                                                                            value);
-                                                                  } else if (double
-                                                                          .parse(
-                                                                              value) <
-                                                                      0.121) {
-                                                                    hargaBatu2 =
-                                                                        customGol2!;
-                                                                    caratPcsBatu2 =
-                                                                        double.parse(
-                                                                            value);
-                                                                  } else if (double
-                                                                          .parse(
-                                                                              value) <
-                                                                      0.182) {
-                                                                    hargaBatu2 =
-                                                                        customGol3!;
-                                                                    caratPcsBatu2 =
-                                                                        double.parse(
-                                                                            value);
-                                                                  } else if (double
-                                                                          .parse(
-                                                                              value) <
-                                                                      0.231) {
-                                                                    hargaBatu2 =
-                                                                        customGol4!;
-                                                                    caratPcsBatu2 =
-                                                                        double.parse(
-                                                                            value);
-                                                                  } else if (double
-                                                                          .parse(
-                                                                              value) <
-                                                                      0.266) {
-                                                                    hargaBatu2 =
-                                                                        customGol5!;
-                                                                    caratPcsBatu2 =
-                                                                        double.parse(
-                                                                            value);
-                                                                  } else if (double
-                                                                          .parse(
-                                                                              value) <
-                                                                      0.356) {
-                                                                    hargaBatu2 =
-                                                                        customGol6!;
-                                                                    caratPcsBatu2 =
-                                                                        double.parse(
-                                                                            value);
-                                                                  } else if (double
-                                                                          .parse(
-                                                                              value) <
-                                                                      0.406) {
-                                                                    hargaBatu2 =
-                                                                        customGol7!;
-                                                                    caratPcsBatu2 =
-                                                                        double.parse(
-                                                                            value);
-                                                                  } else if (double
-                                                                          .parse(
-                                                                              value) <
-                                                                      0.456) {
-                                                                    hargaBatu2 =
-                                                                        customGol8!;
-                                                                    caratPcsBatu2 =
-                                                                        double.parse(
-                                                                            value);
-                                                                  } else if (double
-                                                                          .parse(
-                                                                              value) <
-                                                                      0.506) {
-                                                                    hargaBatu2 =
-                                                                        customGol9!;
-                                                                    caratPcsBatu2 =
-                                                                        double.parse(
-                                                                            value);
-                                                                  } else if (double
-                                                                          .parse(
-                                                                              value) <
-                                                                      0.556) {
-                                                                    hargaBatu2 =
-                                                                        customGol10!;
-                                                                    caratPcsBatu2 =
-                                                                        double.parse(
-                                                                            value);
-                                                                  } else if (double
-                                                                          .parse(
-                                                                              value) <
-                                                                      0.606) {
-                                                                    hargaBatu2 =
-                                                                        customGol11!;
-                                                                    caratPcsBatu2 =
-                                                                        double.parse(
-                                                                            value);
-                                                                  } else if (double
-                                                                          .parse(
-                                                                              value) <
-                                                                      0.656) {
-                                                                    hargaBatu2 =
-                                                                        customGol12!;
-                                                                    caratPcsBatu2 =
-                                                                        double.parse(
-                                                                            value);
-                                                                  } else if (double
-                                                                          .parse(
-                                                                              value) <
-                                                                      0.706) {
-                                                                    hargaBatu2 =
-                                                                        customGol13!;
-                                                                    caratPcsBatu2 =
-                                                                        double.parse(
-                                                                            value);
-                                                                  } else {
-                                                                    hargaBatu2 =
-                                                                        customGol14!;
-                                                                    caratPcsBatu2 =
-                                                                        double.parse(
-                                                                            value);
-                                                                  }
-                                                                }
-                                                                //! keluar dari kondisi batu custom
-                                                                else {}
-                                                              });
-                                                            },
-                                                            decoration:
-                                                                InputDecoration(
-                                                              label: const Text(
-                                                                  'Carat / Pcs'),
-                                                              border: OutlineInputBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              5.0)),
-                                                            ),
-                                                          ),
-                                                        ),
+                                              : const SizedBox(),
 
                                           //qty batu2
-                                          batu2.toString().toLowerCase() ==
-                                                  'custom baguete'
-                                              ? Container(
-                                                  width: 80,
-                                                  height: 50,
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          top: 10, left: 15),
-                                                  child: TextFormField(
-                                                    enabled: batu2 == ''
-                                                        ? false
-                                                        : true,
-                                                    textInputAction:
-                                                        TextInputAction.next,
-                                                    controller: qtyBatu2,
-                                                    onChanged: (value) {
-                                                      setState(() async {
-                                                        print('masuk baguete');
-                                                        qtyIntBatu2 =
-                                                            int.parse(value);
-                                                        baguettebatu2();
-                                                        try {
-                                                          final response =
-                                                              await http.get(
-                                                            Uri.parse(
-                                                                '${ApiConstants.baseUrl}${ApiConstants.getBatuMdbcByKeyword}?size="$sizeMdbcBatu2"'),
-                                                          );
-                                                          if (response
-                                                                  .statusCode ==
-                                                              200) {
-                                                            final data =
-                                                                jsonDecode(
-                                                                    response
-                                                                        .body);
-                                                            print(data);
-                                                            setState(() {
-                                                              hargaBatu2 = data[
-                                                                      0]
-                                                                  ['unitCost'];
-                                                              markUpBatu2 =
-                                                                  data[0][
-                                                                      'markUp'];
-                                                            });
-                                                          }
-                                                        } catch (e) {
-                                                          print(e);
-                                                        }
-                                                      });
-                                                    },
-                                                    decoration: InputDecoration(
-                                                      label: const Text('Qty'),
-                                                      border:
-                                                          OutlineInputBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          5.0)),
-                                                    ),
-                                                  ),
-                                                )
-                                              : batu2
-                                                          .toString()
-                                                          .toLowerCase() ==
-                                                      'custom tapper'
-                                                  ? Container(
-                                                      width: 80,
-                                                      height: 50,
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              top: 10,
-                                                              left: 15),
-                                                      child: TextFormField(
-                                                        enabled: batu2 == ''
-                                                            ? false
-                                                            : true,
-                                                        textInputAction:
-                                                            TextInputAction
-                                                                .next,
-                                                        controller: qtyBatu2,
-                                                        onChanged: (value) {
-                                                          setState(() async {
-                                                            print(
-                                                                'masuk tapper');
-                                                            qtyIntBatu2 =
-                                                                int.parse(
-                                                                    value);
-                                                            tapperbatu2();
-                                                            try {
-                                                              final response =
-                                                                  await http
-                                                                      .get(
-                                                                Uri.parse(
-                                                                    '${ApiConstants.baseUrl}${ApiConstants.getBatuMdbcByKeyword}?size="$sizeMdbcBatu2"'),
-                                                              );
-                                                              if (response
-                                                                      .statusCode ==
-                                                                  200) {
-                                                                final data =
-                                                                    jsonDecode(
-                                                                        response
-                                                                            .body);
-                                                                print(data);
-                                                                setState(() {
-                                                                  hargaBatu2 =
-                                                                      data[0][
-                                                                          'unitCost'];
-                                                                  markUpBatu2 =
-                                                                      data[0][
-                                                                          'markUp'];
-                                                                });
-                                                              }
-                                                            } catch (e) {
-                                                              print(e);
-                                                            }
-                                                          });
-                                                        },
-                                                        decoration:
-                                                            InputDecoration(
-                                                          label:
-                                                              const Text('Qty'),
-                                                          border: OutlineInputBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          5.0)),
-                                                        ),
-                                                      ),
-                                                    )
-                                                  : Container(
-                                                      width: 80,
-                                                      height: 50,
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              top: 10,
-                                                              left: 15),
-                                                      child: TextFormField(
-                                                        enabled: batu2 == ''
-                                                            ? false
-                                                            : true,
-                                                        textInputAction:
-                                                            TextInputAction
-                                                                .next,
-                                                        controller: qtyBatu2,
-                                                        onChanged: (value) {
-                                                          setState(() {
-                                                            qtyIntBatu2 =
-                                                                int.parse(
-                                                                    value);
-                                                          });
-                                                        },
-                                                        decoration:
-                                                            InputDecoration(
-                                                          label:
-                                                              const Text('Qty'),
-                                                          border: OutlineInputBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          5.0)),
-                                                        ),
-                                                      ),
-                                                    ),
+                                          Container(
+                                            width: 80,
+                                            height: 50,
+                                            padding: const EdgeInsets.only(
+                                                top: 10, left: 15),
+                                            child: TextFormField(
+                                              enabled:
+                                                  batu2 == '' ? false : true,
+                                              textInputAction:
+                                                  TextInputAction.next,
+                                              controller: qtyBatu2,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  qtyIntBatu2 =
+                                                      int.parse(value);
+                                                });
+                                              },
+                                              decoration: InputDecoration(
+                                                label: const Text('Qty'),
+                                                border: OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5.0)),
+                                              ),
+                                            ),
+                                          ),
 
                                           //stok batu2
                                           Container(
@@ -5230,8 +3858,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   child: IconButton(
                                                       onPressed: () {
                                                         setState(() {
+                                                          idBatu2 = 0;
                                                           qtyBatu2.text = '0';
                                                           stokBatu2.text = '';
+                                                          crtPcsBatu2.text = '';
                                                           ukuranBatu2.text = '';
                                                           stokBatu2.text = '';
                                                           batu2 = '';
@@ -5247,6 +3877,49 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       icon: const Icon(
                                                           Icons.cancel)),
                                                 ),
+                                          sharedPreferences!
+                                                      .getString('nama') !=
+                                                  'admin'
+                                              ? const SizedBox()
+                                              : Container(
+                                                  width: 150,
+                                                  height: 50,
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 10, left: 15),
+                                                  child: TextFormField(
+                                                    textInputAction:
+                                                        TextInputAction.next,
+                                                    controller: crtPcsBatu2,
+                                                    onChanged: (value) {
+                                                      setState(() {
+                                                        caratPcsBatu2 =
+                                                            double.parse(value);
+                                                      });
+                                                    },
+                                                    decoration: InputDecoration(
+                                                      label: const Text(
+                                                          'Carat / Pcs'),
+                                                      border:
+                                                          OutlineInputBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          5.0)),
+                                                    ),
+                                                  ),
+                                                ),
+                                          const SizedBox(width: 20),
+                                          sharedPreferences!
+                                                      .getString('nama') !=
+                                                  'admin'
+                                              ? const SizedBox()
+                                              : Text(
+                                                  'Carat/Pcs : $caratPcsBatu2',
+                                                  style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                )
                                         ],
                                       ),
                                 // end row batu2
@@ -5255,7 +3928,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                 qtyBatu2.text.isEmpty
                                     ? const SizedBox()
                                     :
-                                    //size batu3
+                                       //size batu3
                                     Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
@@ -5265,7 +3938,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                             height: 50,
                                             padding:
                                                 const EdgeInsets.only(top: 5),
-                                            child: DropdownSearch<BatuModel>(
+                                            child:
+                                                DropdownSearch<BatuModel2024>(
                                               asyncItems: (String? filter) =>
                                                   getData(filter),
                                               popupProps:
@@ -5277,38 +3951,31 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                               ),
                                               compareFn: (item, sItem) =>
                                                   item.id == sItem.id,
-                                              onChanged: (item) async {
-                                                try {
-                                                  final response =
-                                                      await http.get(
-                                                    Uri.parse(
-                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
-                                                  );
-                                                  if (response.statusCode ==
-                                                      200) {
-                                                    final data = jsonDecode(
-                                                        response.body);
-                                                    print(data);
-                                                    setState(() {
-                                                      ukuranBatu3.text = '';
-                                                      crtPcsBatu3.text = '';
-                                                      idStone3 = item.idStone;
-                                                      idBatu3 = item.id;
-                                                      hargaBatu3 =
-                                                          data[0]['unitCost'];
-                                                      markUpBatu3 =
-                                                          data[0]['markUp'];
-                                                      caratPcsBatu3 =
-                                                          data[0]['caratPcs'];
-                                                      batu3 = item.keyWord
-                                                          .toString();
-                                                      stokBatu3.text =
-                                                          item.qty.toString();
-                                                    });
-                                                  }
-                                                } catch (e) {
-                                                  print(e);
-                                                }
+                                              onChanged: (item) {
+                                                setState(() {
+                                                  ukuranBatu3.text = '';
+                                                  crtPcsBatu3.text = '';
+                                                  idBatu3 = item!.id;
+                                                  hargaBatu3 = brand.text
+                                                              .toLowerCase()
+                                                              .toString() ==
+                                                          "metier"
+                                                      ? double.parse(item
+                                                          .hargaCaratPcsMetier
+                                                          .toString())
+                                                      : double.parse(item
+                                                          .hargaCaratPcsParva
+                                                          .toString());
+                                                  caratPcsBatu3 = double.parse(
+                                                      item.caratPcs.toString());
+                                                  batu3 =
+                                                      item.keyWord.toString();
+                                                  stokBatu3.text =
+                                                      item.qty.toString();
+                                                  lotBatu3 = item.lot
+                                                      .toString()
+                                                      .toLowerCase();
+                                                });
                                               },
                                               dropdownDecoratorProps:
                                                   const DropDownDecoratorProps(
@@ -5322,9 +3989,47 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                           ),
 
                                           //ukuran batu3
-                                          //! untuk baguete
-                                          batu3.toString().toLowerCase() ==
-                                                  'custom baguete'
+                                          //? jika pilih selain round
+                                          lotBatu3
+                                                          .toString()
+                                                          .toLowerCase() ==
+                                                      'baguete' ||
+                                                  lotBatu3
+                                                          .toString()
+                                                          .toLowerCase() ==
+                                                      'emerald' ||
+                                                  lotBatu3
+                                                          .toString()
+                                                          .toLowerCase() ==
+                                                      'heart' ||
+                                                  lotBatu3
+                                                          .toString()
+                                                          .toLowerCase() ==
+                                                      'marquise' ||
+                                                  lotBatu3
+                                                          .toString()
+                                                          .toLowerCase() ==
+                                                      'oval' ||
+                                                  lotBatu3
+                                                          .toString()
+                                                          .toLowerCase() ==
+                                                      'pear' ||
+                                                  lotBatu3
+                                                          .toString()
+                                                          .toLowerCase() ==
+                                                      'princess cut' ||
+                                                  lotBatu3
+                                                          .toString()
+                                                          .toLowerCase() ==
+                                                      'tapper' ||
+                                                  lotBatu3
+                                                          .toString()
+                                                          .toLowerCase() ==
+                                                      'piecutt' ||
+                                                  lotBatu3
+                                                          .toString()
+                                                          .toLowerCase() ==
+                                                      'stone'
                                               ? Row(
                                                   children: [
                                                     Container(
@@ -5345,34 +4050,6 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                             intPanjangBatu3 =
                                                                 int.parse(
                                                                     value);
-                                                            baguettebatu3();
-                                                            try {
-                                                              final response =
-                                                                  await http
-                                                                      .get(
-                                                                Uri.parse(
-                                                                    '${ApiConstants.baseUrl}${ApiConstants.getBatuMdbcByKeyword}?size="$sizeMdbcBatu3"'),
-                                                              );
-                                                              if (response
-                                                                      .statusCode ==
-                                                                  200) {
-                                                                final data =
-                                                                    jsonDecode(
-                                                                        response
-                                                                            .body);
-                                                                print(data);
-                                                                setState(() {
-                                                                  hargaBatu3 =
-                                                                      data[0][
-                                                                          'unitCost'];
-                                                                  markUpBatu3 =
-                                                                      data[0][
-                                                                          'markUp'];
-                                                                });
-                                                              }
-                                                            } catch (e) {
-                                                              print(e);
-                                                            }
                                                           });
                                                         },
                                                         decoration:
@@ -5404,34 +4081,6 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                             intlebarBatu3 =
                                                                 int.parse(
                                                                     value);
-                                                            baguettebatu3();
-                                                            try {
-                                                              final response =
-                                                                  await http
-                                                                      .get(
-                                                                Uri.parse(
-                                                                    '${ApiConstants.baseUrl}${ApiConstants.getBatuMdbcByKeyword}?size="$sizeMdbcBatu3"'),
-                                                              );
-                                                              if (response
-                                                                      .statusCode ==
-                                                                  200) {
-                                                                final data =
-                                                                    jsonDecode(
-                                                                        response
-                                                                            .body);
-                                                                print(data);
-                                                                setState(() {
-                                                                  hargaBatu3 =
-                                                                      data[0][
-                                                                          'unitCost'];
-                                                                  markUpBatu3 =
-                                                                      data[0][
-                                                                          'markUp'];
-                                                                });
-                                                              }
-                                                            } catch (e) {
-                                                              print(e);
-                                                            }
                                                           });
                                                         },
                                                         decoration:
@@ -5448,635 +4097,35 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                     ),
                                                   ],
                                                 )
-                                              :
-                                              //! untuk tapper
-                                              batu3.toString().toLowerCase() ==
-                                                      'custom tapper'
-                                                  ? Row(
-                                                      children: [
-                                                        Container(
-                                                          width: 110,
-                                                          height: 50,
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .only(
-                                                                  top: 10,
-                                                                  left: 15),
-                                                          child: TextFormField(
-                                                            textInputAction:
-                                                                TextInputAction
-                                                                    .next,
-                                                            controller:
-                                                                panjangBatu3,
-                                                            onChanged: (value) {
-                                                              setState(
-                                                                  () async {
-                                                                intPanjangBatu3 =
-                                                                    int.parse(
-                                                                        value);
-                                                                tapperbatu3();
-                                                                try {
-                                                                  final response =
-                                                                      await http
-                                                                          .get(
-                                                                    Uri.parse(
-                                                                        '${ApiConstants.baseUrl}${ApiConstants.getBatuMdbcByKeyword}?size="$sizeMdbcBatu3"'),
-                                                                  );
-                                                                  if (response
-                                                                          .statusCode ==
-                                                                      200) {
-                                                                    final data =
-                                                                        jsonDecode(
-                                                                            response.body);
-                                                                    print(data);
-                                                                    setState(
-                                                                        () {
-                                                                      hargaBatu3 =
-                                                                          data[0]
-                                                                              [
-                                                                              'unitCost'];
-                                                                      markUpBatu3 =
-                                                                          data[0]
-                                                                              [
-                                                                              'markUp'];
-                                                                    });
-                                                                  }
-                                                                } catch (e) {
-                                                                  print(e);
-                                                                }
-                                                              });
-                                                            },
-                                                            decoration:
-                                                                InputDecoration(
-                                                              label: const Text(
-                                                                  'Panjang'),
-                                                              border: OutlineInputBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              5.0)),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        Container(
-                                                          width: 110,
-                                                          height: 50,
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .only(
-                                                                  top: 10,
-                                                                  left: 15),
-                                                          child: TextFormField(
-                                                            textInputAction:
-                                                                TextInputAction
-                                                                    .next,
-                                                            controller:
-                                                                lebarBatu3,
-                                                            onChanged: (value) {
-                                                              setState(
-                                                                  () async {
-                                                                intlebarBatu3 =
-                                                                    int.parse(
-                                                                        value);
-                                                                tapperbatu3();
-                                                                try {
-                                                                  final response =
-                                                                      await http
-                                                                          .get(
-                                                                    Uri.parse(
-                                                                        '${ApiConstants.baseUrl}${ApiConstants.getBatuMdbcByKeyword}?size="$sizeMdbcBatu3"'),
-                                                                  );
-                                                                  if (response
-                                                                          .statusCode ==
-                                                                      200) {
-                                                                    final data =
-                                                                        jsonDecode(
-                                                                            response.body);
-                                                                    print(data);
-                                                                    setState(
-                                                                        () {
-                                                                      hargaBatu3 =
-                                                                          data[0]
-                                                                              [
-                                                                              'unitCost'];
-                                                                      markUpBatu3 =
-                                                                          data[0]
-                                                                              [
-                                                                              'markUp'];
-                                                                    });
-                                                                  }
-                                                                } catch (e) {
-                                                                  print(e);
-                                                                }
-                                                              });
-                                                            },
-                                                            decoration:
-                                                                InputDecoration(
-                                                              label: const Text(
-                                                                  'Lebar'),
-                                                              border: OutlineInputBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              5.0)),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    )
-                                                  : idStone3 != -2
-                                                      ? const SizedBox()
-                                                      : Container(
-                                                          width: 220,
-                                                          height: 50,
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .only(
-                                                                  top: 10,
-                                                                  left: 15),
-                                                          child: TextFormField(
-                                                            textInputAction:
-                                                                TextInputAction
-                                                                    .next,
-                                                            controller:
-                                                                ukuranBatu3,
-                                                            onChanged: (value) {
-                                                              setState(() {});
-                                                            },
-                                                            decoration:
-                                                                InputDecoration(
-                                                              label: const Text(
-                                                                  'Ukuran'),
-                                                              border: OutlineInputBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              5.0)),
-                                                            ),
-                                                          ),
-                                                        ),
-
-                                          //crt/pcs
-                                          //! untuk baguettte
-                                          batu3.toString().toLowerCase() ==
-                                                  'custom baguete'
-                                              ? Container(
-                                                  width: 100,
-                                                  height: 50,
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          top: 10, left: 15),
-                                                  child: TextFormField(
-                                                    textInputAction:
-                                                        TextInputAction.next,
-                                                    controller: crtPcsBatu3,
-                                                    onChanged: (value) {
-                                                      setState(() async {
-                                                        caratPcsBatu3 =
-                                                            double.parse(value);
-                                                        baguettebatu3();
-                                                        try {
-                                                          final response =
-                                                              await http.get(
-                                                            Uri.parse(
-                                                                '${ApiConstants.baseUrl}${ApiConstants.getBatuMdbcByKeyword}?size="$sizeMdbcBatu3"'),
-                                                          );
-                                                          if (response
-                                                                  .statusCode ==
-                                                              200) {
-                                                            final data =
-                                                                jsonDecode(
-                                                                    response
-                                                                        .body);
-                                                            print(data);
-                                                            setState(() {
-                                                              hargaBatu3 = data[
-                                                                      0]
-                                                                  ['unitCost'];
-                                                              markUpBatu3 =
-                                                                  data[0][
-                                                                      'markUp'];
-                                                            });
-                                                          }
-                                                        } catch (e) {
-                                                          print(e);
-                                                        }
-                                                      });
-                                                    },
-                                                    decoration: InputDecoration(
-                                                      label: const Text(
-                                                          'Carat / Pcs'),
-                                                      border:
-                                                          OutlineInputBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          5.0)),
-                                                    ),
-                                                  ),
-                                                )
-                                              :
-                                              //! untuk tapper
-                                              batu3.toString().toLowerCase() ==
-                                                      'custom tapper'
-                                                  ? Container(
-                                                      width: 100,
-                                                      height: 50,
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              top: 10,
-                                                              left: 15),
-                                                      child: TextFormField(
-                                                        textInputAction:
-                                                            TextInputAction
-                                                                .next,
-                                                        controller: crtPcsBatu3,
-                                                        onChanged: (value) {
-                                                          setState(() async {
-                                                            caratPcsBatu3 =
-                                                                double.parse(
-                                                                    value);
-                                                            tapperbatu3();
-                                                            try {
-                                                              final response =
-                                                                  await http
-                                                                      .get(
-                                                                Uri.parse(
-                                                                    '${ApiConstants.baseUrl}${ApiConstants.getBatuMdbcByKeyword}?size="$sizeMdbcBatu3"'),
-                                                              );
-                                                              if (response
-                                                                      .statusCode ==
-                                                                  200) {
-                                                                final data =
-                                                                    jsonDecode(
-                                                                        response
-                                                                            .body);
-                                                                print(data);
-                                                                setState(() {
-                                                                  hargaBatu3 =
-                                                                      data[0][
-                                                                          'unitCost'];
-                                                                  markUpBatu3 =
-                                                                      data[0][
-                                                                          'markUp'];
-                                                                });
-                                                              }
-                                                            } catch (e) {
-                                                              print(e);
-                                                            }
-                                                          });
-                                                        },
-                                                        decoration:
-                                                            InputDecoration(
-                                                          label: const Text(
-                                                              'Carat / Pcs'),
-                                                          border: OutlineInputBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          5.0)),
-                                                        ),
-                                                      ),
-                                                    )
-                                                  : idStone3 != -2
-                                                      ? const SizedBox()
-                                                      : Container(
-                                                          width: 100,
-                                                          height: 50,
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .only(
-                                                                  top: 10,
-                                                                  left: 15),
-                                                          child: TextFormField(
-                                                            textInputAction:
-                                                                TextInputAction
-                                                                    .next,
-                                                            controller:
-                                                                crtPcsBatu3,
-                                                            onChanged: (value) {
-                                                              setState(() {
-                                                                //todo: perhitungan batu custom
-                                                                if (batu3!.toLowerCase() == "custom emerald" ||
-                                                                    batu3!.toLowerCase() ==
-                                                                        "custom heart" ||
-                                                                    batu3!.toLowerCase() ==
-                                                                        "custom marquise" ||
-                                                                    batu3!.toLowerCase() ==
-                                                                        "custom oval" ||
-                                                                    batu3!.toLowerCase() ==
-                                                                        "custom pear" ||
-                                                                    batu3!.toLowerCase() ==
-                                                                        "custom princess" ||
-                                                                    batu3!.toLowerCase() ==
-                                                                        "custom ruby" ||
-                                                                    batu3!.toLowerCase() ==
-                                                                        "custom tapper") {
-                                                                  //? kondisi sesuai carat/pcs
-                                                                  if (double.parse(
-                                                                          value) <
-                                                                      0.071) {
-                                                                    hargaBatu3 =
-                                                                        customGol1!;
-                                                                    caratPcsBatu3 =
-                                                                        double.parse(
-                                                                            value);
-                                                                  } else if (double
-                                                                          .parse(
-                                                                              value) <
-                                                                      0.121) {
-                                                                    hargaBatu3 =
-                                                                        customGol2!;
-                                                                    caratPcsBatu3 =
-                                                                        double.parse(
-                                                                            value);
-                                                                  } else if (double
-                                                                          .parse(
-                                                                              value) <
-                                                                      0.182) {
-                                                                    hargaBatu3 =
-                                                                        customGol3!;
-                                                                    caratPcsBatu3 =
-                                                                        double.parse(
-                                                                            value);
-                                                                  } else if (double
-                                                                          .parse(
-                                                                              value) <
-                                                                      0.231) {
-                                                                    hargaBatu3 =
-                                                                        customGol4!;
-                                                                    caratPcsBatu3 =
-                                                                        double.parse(
-                                                                            value);
-                                                                  } else if (double
-                                                                          .parse(
-                                                                              value) <
-                                                                      0.266) {
-                                                                    hargaBatu3 =
-                                                                        customGol5!;
-                                                                    caratPcsBatu3 =
-                                                                        double.parse(
-                                                                            value);
-                                                                  } else if (double
-                                                                          .parse(
-                                                                              value) <
-                                                                      0.356) {
-                                                                    hargaBatu3 =
-                                                                        customGol6!;
-                                                                    caratPcsBatu3 =
-                                                                        double.parse(
-                                                                            value);
-                                                                  } else if (double
-                                                                          .parse(
-                                                                              value) <
-                                                                      0.406) {
-                                                                    hargaBatu3 =
-                                                                        customGol7!;
-                                                                    caratPcsBatu3 =
-                                                                        double.parse(
-                                                                            value);
-                                                                  } else if (double
-                                                                          .parse(
-                                                                              value) <
-                                                                      0.456) {
-                                                                    hargaBatu3 =
-                                                                        customGol8!;
-                                                                    caratPcsBatu3 =
-                                                                        double.parse(
-                                                                            value);
-                                                                  } else if (double
-                                                                          .parse(
-                                                                              value) <
-                                                                      0.506) {
-                                                                    hargaBatu3 =
-                                                                        customGol9!;
-                                                                    caratPcsBatu3 =
-                                                                        double.parse(
-                                                                            value);
-                                                                  } else if (double
-                                                                          .parse(
-                                                                              value) <
-                                                                      0.556) {
-                                                                    hargaBatu3 =
-                                                                        customGol10!;
-                                                                    caratPcsBatu3 =
-                                                                        double.parse(
-                                                                            value);
-                                                                  } else if (double
-                                                                          .parse(
-                                                                              value) <
-                                                                      0.606) {
-                                                                    hargaBatu3 =
-                                                                        customGol11!;
-                                                                    caratPcsBatu3 =
-                                                                        double.parse(
-                                                                            value);
-                                                                  } else if (double
-                                                                          .parse(
-                                                                              value) <
-                                                                      0.656) {
-                                                                    hargaBatu3 =
-                                                                        customGol12!;
-                                                                    caratPcsBatu3 =
-                                                                        double.parse(
-                                                                            value);
-                                                                  } else if (double
-                                                                          .parse(
-                                                                              value) <
-                                                                      0.706) {
-                                                                    hargaBatu3 =
-                                                                        customGol13!;
-                                                                    caratPcsBatu3 =
-                                                                        double.parse(
-                                                                            value);
-                                                                  } else {
-                                                                    hargaBatu3 =
-                                                                        customGol14!;
-                                                                    caratPcsBatu3 =
-                                                                        double.parse(
-                                                                            value);
-                                                                  }
-                                                                }
-                                                                //! keluar dari kondisi batu custom
-                                                                else {}
-                                                              });
-                                                            },
-                                                            decoration:
-                                                                InputDecoration(
-                                                              label: const Text(
-                                                                  'Carat / Pcs'),
-                                                              border: OutlineInputBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              5.0)),
-                                                            ),
-                                                          ),
-                                                        ),
+                                              : const SizedBox(),
 
                                           //qty batu3
-                                          batu3.toString().toLowerCase() ==
-                                                  'custom baguete'
-                                              ? Container(
-                                                  width: 80,
-                                                  height: 50,
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          top: 10, left: 15),
-                                                  child: TextFormField(
-                                                    enabled: batu3 == ''
-                                                        ? false
-                                                        : true,
-                                                    textInputAction:
-                                                        TextInputAction.next,
-                                                    controller: qtyBatu3,
-                                                    onChanged: (value) {
-                                                      setState(() async {
-                                                        print('masuk baguete');
-                                                        qtyIntBatu3 =
-                                                            int.parse(value);
-                                                        baguettebatu3();
-                                                        try {
-                                                          final response =
-                                                              await http.get(
-                                                            Uri.parse(
-                                                                '${ApiConstants.baseUrl}${ApiConstants.getBatuMdbcByKeyword}?size="$sizeMdbcBatu3"'),
-                                                          );
-                                                          if (response
-                                                                  .statusCode ==
-                                                              200) {
-                                                            final data =
-                                                                jsonDecode(
-                                                                    response
-                                                                        .body);
-                                                            print(data);
-                                                            setState(() {
-                                                              hargaBatu3 = data[
-                                                                      0]
-                                                                  ['unitCost'];
-                                                              markUpBatu3 =
-                                                                  data[0][
-                                                                      'markUp'];
-                                                            });
-                                                          }
-                                                        } catch (e) {
-                                                          print(e);
-                                                        }
-                                                      });
-                                                    },
-                                                    decoration: InputDecoration(
-                                                      label: const Text('Qty'),
-                                                      border:
-                                                          OutlineInputBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          5.0)),
-                                                    ),
-                                                  ),
-                                                )
-                                              : batu3
-                                                          .toString()
-                                                          .toLowerCase() ==
-                                                      'custom tapper'
-                                                  ? Container(
-                                                      width: 80,
-                                                      height: 50,
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              top: 10,
-                                                              left: 15),
-                                                      child: TextFormField(
-                                                        enabled: batu3 == ''
-                                                            ? false
-                                                            : true,
-                                                        textInputAction:
-                                                            TextInputAction
-                                                                .next,
-                                                        controller: qtyBatu3,
-                                                        onChanged: (value) {
-                                                          setState(() async {
-                                                            print(
-                                                                'masuk tapper');
-                                                            qtyIntBatu3 =
-                                                                int.parse(
-                                                                    value);
-                                                            tapperbatu3();
-                                                            try {
-                                                              final response =
-                                                                  await http
-                                                                      .get(
-                                                                Uri.parse(
-                                                                    '${ApiConstants.baseUrl}${ApiConstants.getBatuMdbcByKeyword}?size="$sizeMdbcBatu3"'),
-                                                              );
-                                                              if (response
-                                                                      .statusCode ==
-                                                                  200) {
-                                                                final data =
-                                                                    jsonDecode(
-                                                                        response
-                                                                            .body);
-                                                                print(data);
-                                                                setState(() {
-                                                                  hargaBatu3 =
-                                                                      data[0][
-                                                                          'unitCost'];
-                                                                  markUpBatu3 =
-                                                                      data[0][
-                                                                          'markUp'];
-                                                                });
-                                                              }
-                                                            } catch (e) {
-                                                              print(e);
-                                                            }
-                                                          });
-                                                        },
-                                                        decoration:
-                                                            InputDecoration(
-                                                          label:
-                                                              const Text('Qty'),
-                                                          border: OutlineInputBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          5.0)),
-                                                        ),
-                                                      ),
-                                                    )
-                                                  : Container(
-                                                      width: 80,
-                                                      height: 50,
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              top: 10,
-                                                              left: 15),
-                                                      child: TextFormField(
-                                                        enabled: batu3 == ''
-                                                            ? false
-                                                            : true,
-                                                        textInputAction:
-                                                            TextInputAction
-                                                                .next,
-                                                        controller: qtyBatu3,
-                                                        onChanged: (value) {
-                                                          setState(() {
-                                                            qtyIntBatu3 =
-                                                                int.parse(
-                                                                    value);
-                                                          });
-                                                        },
-                                                        decoration:
-                                                            InputDecoration(
-                                                          label:
-                                                              const Text('Qty'),
-                                                          border: OutlineInputBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          5.0)),
-                                                        ),
-                                                      ),
-                                                    ),
+                                          Container(
+                                            width: 80,
+                                            height: 50,
+                                            padding: const EdgeInsets.only(
+                                                top: 10, left: 15),
+                                            child: TextFormField(
+                                              enabled:
+                                                  batu3 == '' ? false : true,
+                                              textInputAction:
+                                                  TextInputAction.next,
+                                              controller: qtyBatu3,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  qtyIntBatu3 =
+                                                      int.parse(value);
+                                                });
+                                              },
+                                              decoration: InputDecoration(
+                                                label: const Text('Qty'),
+                                                border: OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5.0)),
+                                              ),
+                                            ),
+                                          ),
 
                                           //stok batu3
                                           Container(
@@ -6114,8 +4163,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   child: IconButton(
                                                       onPressed: () {
                                                         setState(() {
+                                                          idBatu3 = 0;
                                                           qtyBatu3.text = '0';
                                                           stokBatu3.text = '';
+                                                          crtPcsBatu3.text = '';
                                                           ukuranBatu3.text = '';
                                                           stokBatu3.text = '';
                                                           batu3 = '';
@@ -6131,6 +4182,49 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       icon: const Icon(
                                                           Icons.cancel)),
                                                 ),
+                                          sharedPreferences!
+                                                      .getString('nama') !=
+                                                  'admin'
+                                              ? const SizedBox()
+                                              : Container(
+                                                  width: 150,
+                                                  height: 50,
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 10, left: 15),
+                                                  child: TextFormField(
+                                                    textInputAction:
+                                                        TextInputAction.next,
+                                                    controller: crtPcsBatu3,
+                                                    onChanged: (value) {
+                                                      setState(() {
+                                                        caratPcsBatu3 =
+                                                            double.parse(value);
+                                                      });
+                                                    },
+                                                    decoration: InputDecoration(
+                                                      label: const Text(
+                                                          'Carat / Pcs'),
+                                                      border:
+                                                          OutlineInputBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          5.0)),
+                                                    ),
+                                                  ),
+                                                ),
+                                          const SizedBox(width: 20),
+                                          sharedPreferences!
+                                                      .getString('nama') !=
+                                                  'admin'
+                                              ? const SizedBox()
+                                              : Text(
+                                                  'Carat/Pcs : $caratPcsBatu3',
+                                                  style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                )
                                         ],
                                       ),
                                 // end row batu3
@@ -6149,7 +4243,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                             height: 50,
                                             padding:
                                                 const EdgeInsets.only(top: 5),
-                                            child: DropdownSearch<BatuModel>(
+                                            child:
+                                                DropdownSearch<BatuModel2024>(
                                               asyncItems: (String? filter) =>
                                                   getData(filter),
                                               popupProps:
@@ -6166,7 +4261,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   final response =
                                                       await http.get(
                                                     Uri.parse(
-                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
+                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc2024}?idStone=${item!.idStone}'),
                                                   );
                                                   if (response.statusCode ==
                                                       200) {
@@ -6178,10 +4273,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       crtPcsBatu4.text = '';
                                                       idStone4 = item.idStone;
                                                       idBatu4 = item.id;
-                                                      hargaBatu4 =
-                                                          data[0]['unitCost'];
-                                                      markUpBatu4 =
-                                                          data[0]['markUp'];
+                                                      hargaBatu4 = brand.text
+                                                                  .toLowerCase()
+                                                                  .toString() ==
+                                                              "metier"
+                                                          ? double.parse(data[0]
+                                                                  [
+                                                                  'hargaCaratPcsMetier']
+                                                              .toString())
+                                                          : double.parse(data[0]
+                                                                  [
+                                                                  'hargaCaratPcsParva']
+                                                              .toString());
+
                                                       caratPcsBatu4 =
                                                           data[0]['caratPcs'];
                                                       batu4 = item.keyWord
@@ -6246,12 +4350,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu4 =
-                                                                      data[0][
-                                                                          'unitCost'];
-                                                                  markUpBatu4 =
-                                                                      data[0][
-                                                                          'markUp'];
+                                                                  hargaBatu4 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? double.parse(data[0]
+                                                                              [
+                                                                              'hargaCaratPcsMetier']
+                                                                          .toString())
+                                                                      : double.parse(data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva']
+                                                                          .toString());
                                                                 });
                                                               }
                                                             } catch (e) {
@@ -6305,12 +4416,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu4 =
-                                                                      data[0][
-                                                                          'unitCost'];
-                                                                  markUpBatu4 =
-                                                                      data[0][
-                                                                          'markUp'];
+                                                                  hargaBatu4 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? double.parse(data[0]
+                                                                              [
+                                                                              'hargaCaratPcsMetier']
+                                                                          .toString())
+                                                                      : double.parse(data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva']
+                                                                          .toString());
                                                                 });
                                                               }
                                                             } catch (e) {
@@ -6375,14 +4493,12 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu4 =
-                                                                          data[0]
-                                                                              [
-                                                                              'unitCost'];
-                                                                      markUpBatu4 =
-                                                                          data[0]
-                                                                              [
-                                                                              'markUp'];
+                                                                      hargaBatu4 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? double.parse(data[0]['hargaCaratPcsMetier']
+                                                                              .toString())
+                                                                          : double.parse(
+                                                                              data[0]['hargaCaratPcsParva'].toString());
                                                                     });
                                                                   }
                                                                 } catch (e) {
@@ -6439,14 +4555,12 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu4 =
-                                                                          data[0]
-                                                                              [
-                                                                              'unitCost'];
-                                                                      markUpBatu4 =
-                                                                          data[0]
-                                                                              [
-                                                                              'markUp'];
+                                                                      hargaBatu4 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? double.parse(data[0]['hargaCaratPcsMetier']
+                                                                              .toString())
+                                                                          : double.parse(
+                                                                              data[0]['hargaCaratPcsParva'].toString());
                                                                     });
                                                                   }
                                                                 } catch (e) {
@@ -6468,7 +4582,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                         ),
                                                       ],
                                                     )
-                                                  : idStone4 != -2
+                                                  : idStone2 != -2
                                                       ? const SizedBox()
                                                       : Container(
                                                           width: 220,
@@ -6534,12 +4648,21 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu4 = data[
-                                                                      0]
-                                                                  ['unitCost'];
-                                                              markUpBatu4 =
-                                                                  data[0][
-                                                                      'markUp'];
+                                                              hargaBatu4 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? double.parse(data[
+                                                                              0]
+                                                                          [
+                                                                          'hargaCaratPcsMetier']
+                                                                      .toString())
+                                                                  : double.parse(data[
+                                                                              0]
+                                                                          [
+                                                                          'hargaCaratPcsParva']
+                                                                      .toString());
                                                             });
                                                           }
                                                         } catch (e) {
@@ -6597,12 +4720,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu4 =
-                                                                      data[0][
-                                                                          'unitCost'];
-                                                                  markUpBatu4 =
-                                                                      data[0][
-                                                                          'markUp'];
+                                                                  hargaBatu4 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? double.parse(data[0]
+                                                                              [
+                                                                              'hargaCaratPcsMetier']
+                                                                          .toString())
+                                                                      : double.parse(data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva']
+                                                                          .toString());
                                                                 });
                                                               }
                                                             } catch (e) {
@@ -6622,7 +4752,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                         ),
                                                       ),
                                                     )
-                                                  : idStone4 != -2
+                                                  : idStone2 != -2
                                                       ? const SizedBox()
                                                       : Container(
                                                           width: 100,
@@ -6835,12 +4965,21 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu4 = data[
-                                                                      0]
-                                                                  ['unitCost'];
-                                                              markUpBatu4 =
-                                                                  data[0][
-                                                                      'markUp'];
+                                                              hargaBatu4 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? double.parse(data[
+                                                                              0]
+                                                                          [
+                                                                          'hargaCaratPcsMetier']
+                                                                      .toString())
+                                                                  : double.parse(data[
+                                                                              0]
+                                                                          [
+                                                                          'hargaCaratPcsParva']
+                                                                      .toString());
                                                             });
                                                           }
                                                         } catch (e) {
@@ -6902,12 +5041,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu4 =
-                                                                      data[0][
-                                                                          'unitCost'];
-                                                                  markUpBatu4 =
-                                                                      data[0][
-                                                                          'markUp'];
+                                                                  hargaBatu4 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? double.parse(data[0]
+                                                                              [
+                                                                              'hargaCaratPcsMetier']
+                                                                          .toString())
+                                                                      : double.parse(data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva']
+                                                                          .toString());
                                                                 });
                                                               }
                                                             } catch (e) {
@@ -7033,7 +5179,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                             height: 50,
                                             padding:
                                                 const EdgeInsets.only(top: 5),
-                                            child: DropdownSearch<BatuModel>(
+                                            child:
+                                                DropdownSearch<BatuModel2024>(
                                               asyncItems: (String? filter) =>
                                                   getData(filter),
                                               popupProps:
@@ -7050,7 +5197,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   final response =
                                                       await http.get(
                                                     Uri.parse(
-                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
+                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc2024}?idStone=${item!.idStone}'),
                                                   );
                                                   if (response.statusCode ==
                                                       200) {
@@ -7062,10 +5209,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       crtPcsBatu5.text = '';
                                                       idStone5 = item.idStone;
                                                       idBatu5 = item.id;
-                                                      hargaBatu5 =
-                                                          data[0]['unitCost'];
-                                                      markUpBatu5 =
-                                                          data[0]['markUp'];
+                                                      hargaBatu5 = brand.text
+                                                                  .toLowerCase()
+                                                                  .toString() ==
+                                                              "metier"
+                                                          ? double.parse(data[0]
+                                                                  [
+                                                                  'hargaCaratPcsMetier']
+                                                              .toString())
+                                                          : double.parse(data[0]
+                                                                  [
+                                                                  'hargaCaratPcsParva']
+                                                              .toString());
+
                                                       caratPcsBatu5 =
                                                           data[0]['caratPcs'];
                                                       batu5 = item.keyWord
@@ -7130,12 +5286,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu5 =
-                                                                      data[0][
-                                                                          'unitCost'];
-                                                                  markUpBatu5 =
-                                                                      data[0][
-                                                                          'markUp'];
+                                                                  hargaBatu5 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? double.parse(data[0]
+                                                                              [
+                                                                              'hargaCaratPcsMetier']
+                                                                          .toString())
+                                                                      : double.parse(data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva']
+                                                                          .toString());
                                                                 });
                                                               }
                                                             } catch (e) {
@@ -7189,12 +5352,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu5 =
-                                                                      data[0][
-                                                                          'unitCost'];
-                                                                  markUpBatu5 =
-                                                                      data[0][
-                                                                          'markUp'];
+                                                                  hargaBatu5 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? double.parse(data[0]
+                                                                              [
+                                                                              'hargaCaratPcsMetier']
+                                                                          .toString())
+                                                                      : double.parse(data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva']
+                                                                          .toString());
                                                                 });
                                                               }
                                                             } catch (e) {
@@ -7259,14 +5429,12 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu5 =
-                                                                          data[0]
-                                                                              [
-                                                                              'unitCost'];
-                                                                      markUpBatu5 =
-                                                                          data[0]
-                                                                              [
-                                                                              'markUp'];
+                                                                      hargaBatu5 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? double.parse(data[0]['hargaCaratPcsMetier']
+                                                                              .toString())
+                                                                          : double.parse(
+                                                                              data[0]['hargaCaratPcsParva'].toString());
                                                                     });
                                                                   }
                                                                 } catch (e) {
@@ -7323,14 +5491,12 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu5 =
-                                                                          data[0]
-                                                                              [
-                                                                              'unitCost'];
-                                                                      markUpBatu5 =
-                                                                          data[0]
-                                                                              [
-                                                                              'markUp'];
+                                                                      hargaBatu5 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? double.parse(data[0]['hargaCaratPcsMetier']
+                                                                              .toString())
+                                                                          : double.parse(
+                                                                              data[0]['hargaCaratPcsParva'].toString());
                                                                     });
                                                                   }
                                                                 } catch (e) {
@@ -7352,7 +5518,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                         ),
                                                       ],
                                                     )
-                                                  : idStone5 != -2
+                                                  : idStone2 != -2
                                                       ? const SizedBox()
                                                       : Container(
                                                           width: 220,
@@ -7418,12 +5584,21 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu5 = data[
-                                                                      0]
-                                                                  ['unitCost'];
-                                                              markUpBatu5 =
-                                                                  data[0][
-                                                                      'markUp'];
+                                                              hargaBatu5 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? double.parse(data[
+                                                                              0]
+                                                                          [
+                                                                          'hargaCaratPcsMetier']
+                                                                      .toString())
+                                                                  : double.parse(data[
+                                                                              0]
+                                                                          [
+                                                                          'hargaCaratPcsParva']
+                                                                      .toString());
                                                             });
                                                           }
                                                         } catch (e) {
@@ -7481,12 +5656,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu5 =
-                                                                      data[0][
-                                                                          'unitCost'];
-                                                                  markUpBatu5 =
-                                                                      data[0][
-                                                                          'markUp'];
+                                                                  hargaBatu5 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? double.parse(data[0]
+                                                                              [
+                                                                              'hargaCaratPcsMetier']
+                                                                          .toString())
+                                                                      : double.parse(data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva']
+                                                                          .toString());
                                                                 });
                                                               }
                                                             } catch (e) {
@@ -7506,7 +5688,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                         ),
                                                       ),
                                                     )
-                                                  : idStone5 != -2
+                                                  : idStone2 != -2
                                                       ? const SizedBox()
                                                       : Container(
                                                           width: 100,
@@ -7719,12 +5901,21 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu5 = data[
-                                                                      0]
-                                                                  ['unitCost'];
-                                                              markUpBatu5 =
-                                                                  data[0][
-                                                                      'markUp'];
+                                                              hargaBatu5 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? double.parse(data[
+                                                                              0]
+                                                                          [
+                                                                          'hargaCaratPcsMetier']
+                                                                      .toString())
+                                                                  : double.parse(data[
+                                                                              0]
+                                                                          [
+                                                                          'hargaCaratPcsParva']
+                                                                      .toString());
                                                             });
                                                           }
                                                         } catch (e) {
@@ -7786,12 +5977,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu5 =
-                                                                      data[0][
-                                                                          'unitCost'];
-                                                                  markUpBatu5 =
-                                                                      data[0][
-                                                                          'markUp'];
+                                                                  hargaBatu5 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? double.parse(data[0]
+                                                                              [
+                                                                              'hargaCaratPcsMetier']
+                                                                          .toString())
+                                                                      : double.parse(data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva']
+                                                                          .toString());
                                                                 });
                                                               }
                                                             } catch (e) {
@@ -7917,7 +6115,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                             height: 50,
                                             padding:
                                                 const EdgeInsets.only(top: 5),
-                                            child: DropdownSearch<BatuModel>(
+                                            child:
+                                                DropdownSearch<BatuModel2024>(
                                               asyncItems: (String? filter) =>
                                                   getData(filter),
                                               popupProps:
@@ -7934,7 +6133,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   final response =
                                                       await http.get(
                                                     Uri.parse(
-                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
+                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc2024}?idStone=${item!.idStone}'),
                                                   );
                                                   if (response.statusCode ==
                                                       200) {
@@ -7946,10 +6145,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       crtPcsBatu6.text = '';
                                                       idStone6 = item.idStone;
                                                       idBatu6 = item.id;
-                                                      hargaBatu6 =
-                                                          data[0]['unitCost'];
-                                                      markUpBatu6 =
-                                                          data[0]['markUp'];
+                                                      hargaBatu6 = brand.text
+                                                                  .toLowerCase()
+                                                                  .toString() ==
+                                                              "metier"
+                                                          ? double.parse(data[0]
+                                                                  [
+                                                                  'hargaCaratPcsMetier']
+                                                              .toString())
+                                                          : double.parse(data[0]
+                                                                  [
+                                                                  'hargaCaratPcsParva']
+                                                              .toString());
+
                                                       caratPcsBatu6 =
                                                           data[0]['caratPcs'];
                                                       batu6 = item.keyWord
@@ -8014,12 +6222,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu6 =
-                                                                      data[0][
-                                                                          'unitCost'];
-                                                                  markUpBatu6 =
-                                                                      data[0][
-                                                                          'markUp'];
+                                                                  hargaBatu6 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? double.parse(data[0]
+                                                                              [
+                                                                              'hargaCaratPcsMetier']
+                                                                          .toString())
+                                                                      : double.parse(data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva']
+                                                                          .toString());
                                                                 });
                                                               }
                                                             } catch (e) {
@@ -8073,12 +6288,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu6 =
-                                                                      data[0][
-                                                                          'unitCost'];
-                                                                  markUpBatu6 =
-                                                                      data[0][
-                                                                          'markUp'];
+                                                                  hargaBatu6 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? double.parse(data[0]
+                                                                              [
+                                                                              'hargaCaratPcsMetier']
+                                                                          .toString())
+                                                                      : double.parse(data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva']
+                                                                          .toString());
                                                                 });
                                                               }
                                                             } catch (e) {
@@ -8143,14 +6365,12 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu6 =
-                                                                          data[0]
-                                                                              [
-                                                                              'unitCost'];
-                                                                      markUpBatu6 =
-                                                                          data[0]
-                                                                              [
-                                                                              'markUp'];
+                                                                      hargaBatu6 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? double.parse(data[0]['hargaCaratPcsMetier']
+                                                                              .toString())
+                                                                          : double.parse(
+                                                                              data[0]['hargaCaratPcsParva'].toString());
                                                                     });
                                                                   }
                                                                 } catch (e) {
@@ -8207,14 +6427,12 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu6 =
-                                                                          data[0]
-                                                                              [
-                                                                              'unitCost'];
-                                                                      markUpBatu6 =
-                                                                          data[0]
-                                                                              [
-                                                                              'markUp'];
+                                                                      hargaBatu6 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? double.parse(data[0]['hargaCaratPcsMetier']
+                                                                              .toString())
+                                                                          : double.parse(
+                                                                              data[0]['hargaCaratPcsParva'].toString());
                                                                     });
                                                                   }
                                                                 } catch (e) {
@@ -8236,7 +6454,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                         ),
                                                       ],
                                                     )
-                                                  : idStone6 != -2
+                                                  : idStone2 != -2
                                                       ? const SizedBox()
                                                       : Container(
                                                           width: 220,
@@ -8302,12 +6520,21 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu6 = data[
-                                                                      0]
-                                                                  ['unitCost'];
-                                                              markUpBatu6 =
-                                                                  data[0][
-                                                                      'markUp'];
+                                                              hargaBatu6 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? double.parse(data[
+                                                                              0]
+                                                                          [
+                                                                          'hargaCaratPcsMetier']
+                                                                      .toString())
+                                                                  : double.parse(data[
+                                                                              0]
+                                                                          [
+                                                                          'hargaCaratPcsParva']
+                                                                      .toString());
                                                             });
                                                           }
                                                         } catch (e) {
@@ -8365,12 +6592,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu6 =
-                                                                      data[0][
-                                                                          'unitCost'];
-                                                                  markUpBatu6 =
-                                                                      data[0][
-                                                                          'markUp'];
+                                                                  hargaBatu6 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? double.parse(data[0]
+                                                                              [
+                                                                              'hargaCaratPcsMetier']
+                                                                          .toString())
+                                                                      : double.parse(data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva']
+                                                                          .toString());
                                                                 });
                                                               }
                                                             } catch (e) {
@@ -8390,7 +6624,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                         ),
                                                       ),
                                                     )
-                                                  : idStone6 != -2
+                                                  : idStone2 != -2
                                                       ? const SizedBox()
                                                       : Container(
                                                           width: 100,
@@ -8603,12 +6837,21 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu6 = data[
-                                                                      0]
-                                                                  ['unitCost'];
-                                                              markUpBatu6 =
-                                                                  data[0][
-                                                                      'markUp'];
+                                                              hargaBatu6 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? double.parse(data[
+                                                                              0]
+                                                                          [
+                                                                          'hargaCaratPcsMetier']
+                                                                      .toString())
+                                                                  : double.parse(data[
+                                                                              0]
+                                                                          [
+                                                                          'hargaCaratPcsParva']
+                                                                      .toString());
                                                             });
                                                           }
                                                         } catch (e) {
@@ -8670,12 +6913,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu6 =
-                                                                      data[0][
-                                                                          'unitCost'];
-                                                                  markUpBatu6 =
-                                                                      data[0][
-                                                                          'markUp'];
+                                                                  hargaBatu6 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? double.parse(data[0]
+                                                                              [
+                                                                              'hargaCaratPcsMetier']
+                                                                          .toString())
+                                                                      : double.parse(data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva']
+                                                                          .toString());
                                                                 });
                                                               }
                                                             } catch (e) {
@@ -8801,7 +7051,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                             height: 50,
                                             padding:
                                                 const EdgeInsets.only(top: 5),
-                                            child: DropdownSearch<BatuModel>(
+                                            child:
+                                                DropdownSearch<BatuModel2024>(
                                               asyncItems: (String? filter) =>
                                                   getData(filter),
                                               popupProps:
@@ -8818,7 +7069,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   final response =
                                                       await http.get(
                                                     Uri.parse(
-                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
+                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc2024}?idStone=${item!.idStone}'),
                                                   );
                                                   if (response.statusCode ==
                                                       200) {
@@ -8830,10 +7081,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       crtPcsBatu7.text = '';
                                                       idStone7 = item.idStone;
                                                       idBatu7 = item.id;
-                                                      hargaBatu7 =
-                                                          data[0]['unitCost'];
-                                                      markUpBatu7 =
-                                                          data[0]['markUp'];
+                                                      hargaBatu7 = brand.text
+                                                                  .toLowerCase()
+                                                                  .toString() ==
+                                                              "metier"
+                                                          ? double.parse(data[0]
+                                                                  [
+                                                                  'hargaCaratPcsMetier']
+                                                              .toString())
+                                                          : double.parse(data[0]
+                                                                  [
+                                                                  'hargaCaratPcsParva']
+                                                              .toString());
+
                                                       caratPcsBatu7 =
                                                           data[0]['caratPcs'];
                                                       batu7 = item.keyWord
@@ -8898,12 +7158,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu7 =
-                                                                      data[0][
-                                                                          'unitCost'];
-                                                                  markUpBatu7 =
-                                                                      data[0][
-                                                                          'markUp'];
+                                                                  hargaBatu7 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? double.parse(data[0]
+                                                                              [
+                                                                              'hargaCaratPcsMetier']
+                                                                          .toString())
+                                                                      : double.parse(data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva']
+                                                                          .toString());
                                                                 });
                                                               }
                                                             } catch (e) {
@@ -8957,12 +7224,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu7 =
-                                                                      data[0][
-                                                                          'unitCost'];
-                                                                  markUpBatu7 =
-                                                                      data[0][
-                                                                          'markUp'];
+                                                                  hargaBatu7 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? double.parse(data[0]
+                                                                              [
+                                                                              'hargaCaratPcsMetier']
+                                                                          .toString())
+                                                                      : double.parse(data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva']
+                                                                          .toString());
                                                                 });
                                                               }
                                                             } catch (e) {
@@ -9027,14 +7301,12 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu7 =
-                                                                          data[0]
-                                                                              [
-                                                                              'unitCost'];
-                                                                      markUpBatu7 =
-                                                                          data[0]
-                                                                              [
-                                                                              'markUp'];
+                                                                      hargaBatu7 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? double.parse(data[0]['hargaCaratPcsMetier']
+                                                                              .toString())
+                                                                          : double.parse(
+                                                                              data[0]['hargaCaratPcsParva'].toString());
                                                                     });
                                                                   }
                                                                 } catch (e) {
@@ -9091,14 +7363,12 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu7 =
-                                                                          data[0]
-                                                                              [
-                                                                              'unitCost'];
-                                                                      markUpBatu7 =
-                                                                          data[0]
-                                                                              [
-                                                                              'markUp'];
+                                                                      hargaBatu7 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? double.parse(data[0]['hargaCaratPcsMetier']
+                                                                              .toString())
+                                                                          : double.parse(
+                                                                              data[0]['hargaCaratPcsParva'].toString());
                                                                     });
                                                                   }
                                                                 } catch (e) {
@@ -9120,7 +7390,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                         ),
                                                       ],
                                                     )
-                                                  : idStone7 != -2
+                                                  : idStone2 != -2
                                                       ? const SizedBox()
                                                       : Container(
                                                           width: 220,
@@ -9186,12 +7456,21 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu7 = data[
-                                                                      0]
-                                                                  ['unitCost'];
-                                                              markUpBatu7 =
-                                                                  data[0][
-                                                                      'markUp'];
+                                                              hargaBatu7 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? double.parse(data[
+                                                                              0]
+                                                                          [
+                                                                          'hargaCaratPcsMetier']
+                                                                      .toString())
+                                                                  : double.parse(data[
+                                                                              0]
+                                                                          [
+                                                                          'hargaCaratPcsParva']
+                                                                      .toString());
                                                             });
                                                           }
                                                         } catch (e) {
@@ -9249,12 +7528,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu7 =
-                                                                      data[0][
-                                                                          'unitCost'];
-                                                                  markUpBatu7 =
-                                                                      data[0][
-                                                                          'markUp'];
+                                                                  hargaBatu7 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? double.parse(data[0]
+                                                                              [
+                                                                              'hargaCaratPcsMetier']
+                                                                          .toString())
+                                                                      : double.parse(data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva']
+                                                                          .toString());
                                                                 });
                                                               }
                                                             } catch (e) {
@@ -9274,7 +7560,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                         ),
                                                       ),
                                                     )
-                                                  : idStone7 != -2
+                                                  : idStone2 != -2
                                                       ? const SizedBox()
                                                       : Container(
                                                           width: 100,
@@ -9487,12 +7773,21 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu7 = data[
-                                                                      0]
-                                                                  ['unitCost'];
-                                                              markUpBatu7 =
-                                                                  data[0][
-                                                                      'markUp'];
+                                                              hargaBatu7 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? double.parse(data[
+                                                                              0]
+                                                                          [
+                                                                          'hargaCaratPcsMetier']
+                                                                      .toString())
+                                                                  : double.parse(data[
+                                                                              0]
+                                                                          [
+                                                                          'hargaCaratPcsParva']
+                                                                      .toString());
                                                             });
                                                           }
                                                         } catch (e) {
@@ -9554,12 +7849,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu7 =
-                                                                      data[0][
-                                                                          'unitCost'];
-                                                                  markUpBatu7 =
-                                                                      data[0][
-                                                                          'markUp'];
+                                                                  hargaBatu7 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? double.parse(data[0]
+                                                                              [
+                                                                              'hargaCaratPcsMetier']
+                                                                          .toString())
+                                                                      : double.parse(data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva']
+                                                                          .toString());
                                                                 });
                                                               }
                                                             } catch (e) {
@@ -9685,7 +7987,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                             height: 50,
                                             padding:
                                                 const EdgeInsets.only(top: 5),
-                                            child: DropdownSearch<BatuModel>(
+                                            child:
+                                                DropdownSearch<BatuModel2024>(
                                               asyncItems: (String? filter) =>
                                                   getData(filter),
                                               popupProps:
@@ -9702,7 +8005,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   final response =
                                                       await http.get(
                                                     Uri.parse(
-                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
+                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc2024}?idStone=${item!.idStone}'),
                                                   );
                                                   if (response.statusCode ==
                                                       200) {
@@ -9714,10 +8017,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       crtPcsBatu8.text = '';
                                                       idStone8 = item.idStone;
                                                       idBatu8 = item.id;
-                                                      hargaBatu8 =
-                                                          data[0]['unitCost'];
-                                                      markUpBatu8 =
-                                                          data[0]['markUp'];
+                                                      hargaBatu8 = brand.text
+                                                                  .toLowerCase()
+                                                                  .toString() ==
+                                                              "metier"
+                                                          ? double.parse(data[0]
+                                                                  [
+                                                                  'hargaCaratPcsMetier']
+                                                              .toString())
+                                                          : double.parse(data[0]
+                                                                  [
+                                                                  'hargaCaratPcsParva']
+                                                              .toString());
+
                                                       caratPcsBatu8 =
                                                           data[0]['caratPcs'];
                                                       batu8 = item.keyWord
@@ -9782,12 +8094,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu8 =
-                                                                      data[0][
-                                                                          'unitCost'];
-                                                                  markUpBatu8 =
-                                                                      data[0][
-                                                                          'markUp'];
+                                                                  hargaBatu8 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? double.parse(data[0]
+                                                                              [
+                                                                              'hargaCaratPcsMetier']
+                                                                          .toString())
+                                                                      : double.parse(data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva']
+                                                                          .toString());
                                                                 });
                                                               }
                                                             } catch (e) {
@@ -9841,12 +8160,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu8 =
-                                                                      data[0][
-                                                                          'unitCost'];
-                                                                  markUpBatu8 =
-                                                                      data[0][
-                                                                          'markUp'];
+                                                                  hargaBatu8 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? double.parse(data[0]
+                                                                              [
+                                                                              'hargaCaratPcsMetier']
+                                                                          .toString())
+                                                                      : double.parse(data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva']
+                                                                          .toString());
                                                                 });
                                                               }
                                                             } catch (e) {
@@ -9911,14 +8237,12 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu8 =
-                                                                          data[0]
-                                                                              [
-                                                                              'unitCost'];
-                                                                      markUpBatu8 =
-                                                                          data[0]
-                                                                              [
-                                                                              'markUp'];
+                                                                      hargaBatu8 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? double.parse(data[0]['hargaCaratPcsMetier']
+                                                                              .toString())
+                                                                          : double.parse(
+                                                                              data[0]['hargaCaratPcsParva'].toString());
                                                                     });
                                                                   }
                                                                 } catch (e) {
@@ -9975,14 +8299,12 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu8 =
-                                                                          data[0]
-                                                                              [
-                                                                              'unitCost'];
-                                                                      markUpBatu8 =
-                                                                          data[0]
-                                                                              [
-                                                                              'markUp'];
+                                                                      hargaBatu8 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? double.parse(data[0]['hargaCaratPcsMetier']
+                                                                              .toString())
+                                                                          : double.parse(
+                                                                              data[0]['hargaCaratPcsParva'].toString());
                                                                     });
                                                                   }
                                                                 } catch (e) {
@@ -10004,7 +8326,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                         ),
                                                       ],
                                                     )
-                                                  : idStone8 != -2
+                                                  : idStone2 != -2
                                                       ? const SizedBox()
                                                       : Container(
                                                           width: 220,
@@ -10070,12 +8392,21 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu8 = data[
-                                                                      0]
-                                                                  ['unitCost'];
-                                                              markUpBatu8 =
-                                                                  data[0][
-                                                                      'markUp'];
+                                                              hargaBatu8 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? double.parse(data[
+                                                                              0]
+                                                                          [
+                                                                          'hargaCaratPcsMetier']
+                                                                      .toString())
+                                                                  : double.parse(data[
+                                                                              0]
+                                                                          [
+                                                                          'hargaCaratPcsParva']
+                                                                      .toString());
                                                             });
                                                           }
                                                         } catch (e) {
@@ -10133,12 +8464,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu8 =
-                                                                      data[0][
-                                                                          'unitCost'];
-                                                                  markUpBatu8 =
-                                                                      data[0][
-                                                                          'markUp'];
+                                                                  hargaBatu8 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? double.parse(data[0]
+                                                                              [
+                                                                              'hargaCaratPcsMetier']
+                                                                          .toString())
+                                                                      : double.parse(data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva']
+                                                                          .toString());
                                                                 });
                                                               }
                                                             } catch (e) {
@@ -10158,7 +8496,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                         ),
                                                       ),
                                                     )
-                                                  : idStone8 != -2
+                                                  : idStone2 != -2
                                                       ? const SizedBox()
                                                       : Container(
                                                           width: 100,
@@ -10371,12 +8709,21 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu8 = data[
-                                                                      0]
-                                                                  ['unitCost'];
-                                                              markUpBatu8 =
-                                                                  data[0][
-                                                                      'markUp'];
+                                                              hargaBatu8 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? double.parse(data[
+                                                                              0]
+                                                                          [
+                                                                          'hargaCaratPcsMetier']
+                                                                      .toString())
+                                                                  : double.parse(data[
+                                                                              0]
+                                                                          [
+                                                                          'hargaCaratPcsParva']
+                                                                      .toString());
                                                             });
                                                           }
                                                         } catch (e) {
@@ -10438,12 +8785,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu8 =
-                                                                      data[0][
-                                                                          'unitCost'];
-                                                                  markUpBatu8 =
-                                                                      data[0][
-                                                                          'markUp'];
+                                                                  hargaBatu8 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? double.parse(data[0]
+                                                                              [
+                                                                              'hargaCaratPcsMetier']
+                                                                          .toString())
+                                                                      : double.parse(data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva']
+                                                                          .toString());
                                                                 });
                                                               }
                                                             } catch (e) {
@@ -10569,7 +8923,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                             height: 50,
                                             padding:
                                                 const EdgeInsets.only(top: 5),
-                                            child: DropdownSearch<BatuModel>(
+                                            child:
+                                                DropdownSearch<BatuModel2024>(
                                               asyncItems: (String? filter) =>
                                                   getData(filter),
                                               popupProps:
@@ -10586,7 +8941,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   final response =
                                                       await http.get(
                                                     Uri.parse(
-                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
+                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc2024}?idStone=${item!.idStone}'),
                                                   );
                                                   if (response.statusCode ==
                                                       200) {
@@ -10598,10 +8953,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       crtPcsBatu9.text = '';
                                                       idStone9 = item.idStone;
                                                       idBatu9 = item.id;
-                                                      hargaBatu9 =
-                                                          data[0]['unitCost'];
-                                                      markUpBatu9 =
-                                                          data[0]['markUp'];
+                                                      hargaBatu9 = brand.text
+                                                                  .toLowerCase()
+                                                                  .toString() ==
+                                                              "metier"
+                                                          ? double.parse(data[0]
+                                                                  [
+                                                                  'hargaCaratPcsMetier']
+                                                              .toString())
+                                                          : double.parse(data[0]
+                                                                  [
+                                                                  'hargaCaratPcsParva']
+                                                              .toString());
+
                                                       caratPcsBatu9 =
                                                           data[0]['caratPcs'];
                                                       batu9 = item.keyWord
@@ -10666,12 +9030,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu9 =
-                                                                      data[0][
-                                                                          'unitCost'];
-                                                                  markUpBatu9 =
-                                                                      data[0][
-                                                                          'markUp'];
+                                                                  hargaBatu9 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? double.parse(data[0]
+                                                                              [
+                                                                              'hargaCaratPcsMetier']
+                                                                          .toString())
+                                                                      : double.parse(data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva']
+                                                                          .toString());
                                                                 });
                                                               }
                                                             } catch (e) {
@@ -10725,12 +9096,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu9 =
-                                                                      data[0][
-                                                                          'unitCost'];
-                                                                  markUpBatu9 =
-                                                                      data[0][
-                                                                          'markUp'];
+                                                                  hargaBatu9 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? double.parse(data[0]
+                                                                              [
+                                                                              'hargaCaratPcsMetier']
+                                                                          .toString())
+                                                                      : double.parse(data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva']
+                                                                          .toString());
                                                                 });
                                                               }
                                                             } catch (e) {
@@ -10795,14 +9173,12 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu9 =
-                                                                          data[0]
-                                                                              [
-                                                                              'unitCost'];
-                                                                      markUpBatu9 =
-                                                                          data[0]
-                                                                              [
-                                                                              'markUp'];
+                                                                      hargaBatu9 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? double.parse(data[0]['hargaCaratPcsMetier']
+                                                                              .toString())
+                                                                          : double.parse(
+                                                                              data[0]['hargaCaratPcsParva'].toString());
                                                                     });
                                                                   }
                                                                 } catch (e) {
@@ -10859,14 +9235,12 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu9 =
-                                                                          data[0]
-                                                                              [
-                                                                              'unitCost'];
-                                                                      markUpBatu9 =
-                                                                          data[0]
-                                                                              [
-                                                                              'markUp'];
+                                                                      hargaBatu9 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? double.parse(data[0]['hargaCaratPcsMetier']
+                                                                              .toString())
+                                                                          : double.parse(
+                                                                              data[0]['hargaCaratPcsParva'].toString());
                                                                     });
                                                                   }
                                                                 } catch (e) {
@@ -10888,7 +9262,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                         ),
                                                       ],
                                                     )
-                                                  : idStone9 != -2
+                                                  : idStone2 != -2
                                                       ? const SizedBox()
                                                       : Container(
                                                           width: 220,
@@ -10954,12 +9328,21 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu9 = data[
-                                                                      0]
-                                                                  ['unitCost'];
-                                                              markUpBatu9 =
-                                                                  data[0][
-                                                                      'markUp'];
+                                                              hargaBatu9 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? double.parse(data[
+                                                                              0]
+                                                                          [
+                                                                          'hargaCaratPcsMetier']
+                                                                      .toString())
+                                                                  : double.parse(data[
+                                                                              0]
+                                                                          [
+                                                                          'hargaCaratPcsParva']
+                                                                      .toString());
                                                             });
                                                           }
                                                         } catch (e) {
@@ -11017,12 +9400,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu9 =
-                                                                      data[0][
-                                                                          'unitCost'];
-                                                                  markUpBatu9 =
-                                                                      data[0][
-                                                                          'markUp'];
+                                                                  hargaBatu9 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? double.parse(data[0]
+                                                                              [
+                                                                              'hargaCaratPcsMetier']
+                                                                          .toString())
+                                                                      : double.parse(data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva']
+                                                                          .toString());
                                                                 });
                                                               }
                                                             } catch (e) {
@@ -11042,7 +9432,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                         ),
                                                       ),
                                                     )
-                                                  : idStone9 != -2
+                                                  : idStone2 != -2
                                                       ? const SizedBox()
                                                       : Container(
                                                           width: 100,
@@ -11255,12 +9645,21 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu9 = data[
-                                                                      0]
-                                                                  ['unitCost'];
-                                                              markUpBatu9 =
-                                                                  data[0][
-                                                                      'markUp'];
+                                                              hargaBatu9 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? double.parse(data[
+                                                                              0]
+                                                                          [
+                                                                          'hargaCaratPcsMetier']
+                                                                      .toString())
+                                                                  : double.parse(data[
+                                                                              0]
+                                                                          [
+                                                                          'hargaCaratPcsParva']
+                                                                      .toString());
                                                             });
                                                           }
                                                         } catch (e) {
@@ -11322,12 +9721,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu9 =
-                                                                      data[0][
-                                                                          'unitCost'];
-                                                                  markUpBatu9 =
-                                                                      data[0][
-                                                                          'markUp'];
+                                                                  hargaBatu9 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? double.parse(data[0]
+                                                                              [
+                                                                              'hargaCaratPcsMetier']
+                                                                          .toString())
+                                                                      : double.parse(data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva']
+                                                                          .toString());
                                                                 });
                                                               }
                                                             } catch (e) {
@@ -11453,7 +9859,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                             height: 50,
                                             padding:
                                                 const EdgeInsets.only(top: 5),
-                                            child: DropdownSearch<BatuModel>(
+                                            child:
+                                                DropdownSearch<BatuModel2024>(
                                               asyncItems: (String? filter) =>
                                                   getData(filter),
                                               popupProps:
@@ -11470,7 +9877,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   final response =
                                                       await http.get(
                                                     Uri.parse(
-                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
+                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc2024}?idStone=${item!.idStone}'),
                                                   );
                                                   if (response.statusCode ==
                                                       200) {
@@ -11482,10 +9889,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       crtPcsBatu10.text = '';
                                                       idStone10 = item.idStone;
                                                       idBatu10 = item.id;
-                                                      hargaBatu10 =
-                                                          data[0]['unitCost'];
-                                                      markUpBatu10 =
-                                                          data[0]['markUp'];
+                                                      hargaBatu10 = brand.text
+                                                                  .toLowerCase()
+                                                                  .toString() ==
+                                                              "metier"
+                                                          ? double.parse(data[0]
+                                                                  [
+                                                                  'hargaCaratPcsMetier']
+                                                              .toString())
+                                                          : double.parse(data[0]
+                                                                  [
+                                                                  'hargaCaratPcsParva']
+                                                              .toString());
+
                                                       caratPcsBatu10 =
                                                           data[0]['caratPcs'];
                                                       batu10 = item.keyWord
@@ -11550,12 +9966,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu10 =
-                                                                      data[0][
-                                                                          'unitCost'];
-                                                                  markUpBatu10 =
-                                                                      data[0][
-                                                                          'markUp'];
+                                                                  hargaBatu10 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? double.parse(data[0]
+                                                                              [
+                                                                              'hargaCaratPcsMetier']
+                                                                          .toString())
+                                                                      : double.parse(data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva']
+                                                                          .toString());
                                                                 });
                                                               }
                                                             } catch (e) {
@@ -11609,12 +10032,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu10 =
-                                                                      data[0][
-                                                                          'unitCost'];
-                                                                  markUpBatu10 =
-                                                                      data[0][
-                                                                          'markUp'];
+                                                                  hargaBatu10 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? double.parse(data[0]
+                                                                              [
+                                                                              'hargaCaratPcsMetier']
+                                                                          .toString())
+                                                                      : double.parse(data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva']
+                                                                          .toString());
                                                                 });
                                                               }
                                                             } catch (e) {
@@ -11679,14 +10109,12 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu10 =
-                                                                          data[0]
-                                                                              [
-                                                                              'unitCost'];
-                                                                      markUpBatu10 =
-                                                                          data[0]
-                                                                              [
-                                                                              'markUp'];
+                                                                      hargaBatu10 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? double.parse(data[0]['hargaCaratPcsMetier']
+                                                                              .toString())
+                                                                          : double.parse(
+                                                                              data[0]['hargaCaratPcsParva'].toString());
                                                                     });
                                                                   }
                                                                 } catch (e) {
@@ -11743,14 +10171,12 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu10 =
-                                                                          data[0]
-                                                                              [
-                                                                              'unitCost'];
-                                                                      markUpBatu10 =
-                                                                          data[0]
-                                                                              [
-                                                                              'markUp'];
+                                                                      hargaBatu10 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? double.parse(data[0]['hargaCaratPcsMetier']
+                                                                              .toString())
+                                                                          : double.parse(
+                                                                              data[0]['hargaCaratPcsParva'].toString());
                                                                     });
                                                                   }
                                                                 } catch (e) {
@@ -11772,7 +10198,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                         ),
                                                       ],
                                                     )
-                                                  : idStone10 != -2
+                                                  : idStone2 != -2
                                                       ? const SizedBox()
                                                       : Container(
                                                           width: 220,
@@ -11838,12 +10264,21 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu10 = data[
-                                                                      0]
-                                                                  ['unitCost'];
-                                                              markUpBatu10 =
-                                                                  data[0][
-                                                                      'markUp'];
+                                                              hargaBatu10 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? double.parse(data[
+                                                                              0]
+                                                                          [
+                                                                          'hargaCaratPcsMetier']
+                                                                      .toString())
+                                                                  : double.parse(data[
+                                                                              0]
+                                                                          [
+                                                                          'hargaCaratPcsParva']
+                                                                      .toString());
                                                             });
                                                           }
                                                         } catch (e) {
@@ -11902,12 +10337,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu10 =
-                                                                      data[0][
-                                                                          'unitCost'];
-                                                                  markUpBatu10 =
-                                                                      data[0][
-                                                                          'markUp'];
+                                                                  hargaBatu10 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? double.parse(data[0]
+                                                                              [
+                                                                              'hargaCaratPcsMetier']
+                                                                          .toString())
+                                                                      : double.parse(data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva']
+                                                                          .toString());
                                                                 });
                                                               }
                                                             } catch (e) {
@@ -11927,7 +10369,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                         ),
                                                       ),
                                                     )
-                                                  : idStone10 != -2
+                                                  : idStone2 != -2
                                                       ? const SizedBox()
                                                       : Container(
                                                           width: 100,
@@ -12140,12 +10582,21 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu10 = data[
-                                                                      0]
-                                                                  ['unitCost'];
-                                                              markUpBatu10 =
-                                                                  data[0][
-                                                                      'markUp'];
+                                                              hargaBatu10 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? double.parse(data[
+                                                                              0]
+                                                                          [
+                                                                          'hargaCaratPcsMetier']
+                                                                      .toString())
+                                                                  : double.parse(data[
+                                                                              0]
+                                                                          [
+                                                                          'hargaCaratPcsParva']
+                                                                      .toString());
                                                             });
                                                           }
                                                         } catch (e) {
@@ -12207,12 +10658,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu10 =
-                                                                      data[0][
-                                                                          'unitCost'];
-                                                                  markUpBatu10 =
-                                                                      data[0][
-                                                                          'markUp'];
+                                                                  hargaBatu10 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? double.parse(data[0]
+                                                                              [
+                                                                              'hargaCaratPcsMetier']
+                                                                          .toString())
+                                                                      : double.parse(data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva']
+                                                                          .toString());
                                                                 });
                                                               }
                                                             } catch (e) {
@@ -12339,7 +10797,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                             height: 50,
                                             padding:
                                                 const EdgeInsets.only(top: 5),
-                                            child: DropdownSearch<BatuModel>(
+                                            child:
+                                                DropdownSearch<BatuModel2024>(
                                               asyncItems: (String? filter) =>
                                                   getData(filter),
                                               popupProps:
@@ -12356,7 +10815,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   final response =
                                                       await http.get(
                                                     Uri.parse(
-                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
+                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc2024}?idStone=${item!.idStone}'),
                                                   );
                                                   if (response.statusCode ==
                                                       200) {
@@ -12368,8 +10827,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       crtPcsBatu11.text = '';
                                                       idStone11 = item.idStone;
                                                       idBatu11 = item.id;
-                                                      hargaBatu11 =
-                                                          data[0]['unitCost'];
+                                                      hargaBatu11 = brand.text
+                                                                  .toLowerCase()
+                                                                  .toString() ==
+                                                              "metier"
+                                                          ? data[0][
+                                                              'hargaCaratPcsMetier']
+                                                          : data[0][
+                                                              'hargaCaratPcsParva'];
                                                       markUpBatu11 =
                                                           data[0]['markUp'];
                                                       caratPcsBatu11 =
@@ -12436,9 +10901,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu11 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu11 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu11 =
                                                                       data[0][
                                                                           'markUp'];
@@ -12495,9 +10966,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu11 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu11 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu11 =
                                                                       data[0][
                                                                           'markUp'];
@@ -12565,10 +11042,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu11 =
-                                                                          data[0]
+                                                                      hargaBatu11 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? data[0]
                                                                               [
-                                                                              'unitCost'];
+                                                                              'hargaCaratPcsMetier']
+                                                                          : data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva'];
                                                                       markUpBatu11 =
                                                                           data[0]
                                                                               [
@@ -12629,10 +11110,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu11 =
-                                                                          data[0]
+                                                                      hargaBatu11 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? data[0]
                                                                               [
-                                                                              'unitCost'];
+                                                                              'hargaCaratPcsMetier']
+                                                                          : data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva'];
                                                                       markUpBatu11 =
                                                                           data[0]
                                                                               [
@@ -12724,9 +11209,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu11 = data[
-                                                                      0]
-                                                                  ['unitCost'];
+                                                              hargaBatu11 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? data[0][
+                                                                      'hargaCaratPcsMetier']
+                                                                  : data[0][
+                                                                      'hargaCaratPcsParva'];
                                                               markUpBatu11 =
                                                                   data[0][
                                                                       'markUp'];
@@ -12788,9 +11279,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu11 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu11 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu11 =
                                                                       data[0][
                                                                           'markUp'];
@@ -13026,9 +11523,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu11 = data[
-                                                                      0]
-                                                                  ['unitCost'];
+                                                              hargaBatu11 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? data[0][
+                                                                      'hargaCaratPcsMetier']
+                                                                  : data[0][
+                                                                      'hargaCaratPcsParva'];
                                                               markUpBatu11 =
                                                                   data[0][
                                                                       'markUp'];
@@ -13093,9 +11596,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu11 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu11 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu11 =
                                                                       data[0][
                                                                           'markUp'];
@@ -13225,7 +11734,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                             height: 50,
                                             padding:
                                                 const EdgeInsets.only(top: 5),
-                                            child: DropdownSearch<BatuModel>(
+                                            child:
+                                                DropdownSearch<BatuModel2024>(
                                               asyncItems: (String? filter) =>
                                                   getData(filter),
                                               popupProps:
@@ -13242,7 +11752,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   final response =
                                                       await http.get(
                                                     Uri.parse(
-                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
+                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc2024}?idStone=${item!.idStone}'),
                                                   );
                                                   if (response.statusCode ==
                                                       200) {
@@ -13254,8 +11764,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       crtPcsBatu12.text = '';
                                                       idStone12 = item.idStone;
                                                       idBatu12 = item.id;
-                                                      hargaBatu12 =
-                                                          data[0]['unitCost'];
+                                                      hargaBatu12 = brand.text
+                                                                  .toLowerCase()
+                                                                  .toString() ==
+                                                              "metier"
+                                                          ? data[0][
+                                                              'hargaCaratPcsMetier']
+                                                          : data[0][
+                                                              'hargaCaratPcsParva'];
                                                       markUpBatu12 =
                                                           data[0]['markUp'];
                                                       caratPcsBatu12 =
@@ -13322,9 +11838,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu12 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu12 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu12 =
                                                                       data[0][
                                                                           'markUp'];
@@ -13381,9 +11903,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu12 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu12 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu12 =
                                                                       data[0][
                                                                           'markUp'];
@@ -13451,10 +11979,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu12 =
-                                                                          data[0]
+                                                                      hargaBatu12 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? data[0]
                                                                               [
-                                                                              'unitCost'];
+                                                                              'hargaCaratPcsMetier']
+                                                                          : data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva'];
                                                                       markUpBatu12 =
                                                                           data[0]
                                                                               [
@@ -13515,10 +12047,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu12 =
-                                                                          data[0]
+                                                                      hargaBatu12 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? data[0]
                                                                               [
-                                                                              'unitCost'];
+                                                                              'hargaCaratPcsMetier']
+                                                                          : data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva'];
                                                                       markUpBatu12 =
                                                                           data[0]
                                                                               [
@@ -13610,9 +12146,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu12 = data[
-                                                                      0]
-                                                                  ['unitCost'];
+                                                              hargaBatu12 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? data[0][
+                                                                      'hargaCaratPcsMetier']
+                                                                  : data[0][
+                                                                      'hargaCaratPcsParva'];
                                                               markUpBatu12 =
                                                                   data[0][
                                                                       'markUp'];
@@ -13674,9 +12216,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu12 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu12 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu12 =
                                                                       data[0][
                                                                           'markUp'];
@@ -13912,9 +12460,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu12 = data[
-                                                                      0]
-                                                                  ['unitCost'];
+                                                              hargaBatu12 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? data[0][
+                                                                      'hargaCaratPcsMetier']
+                                                                  : data[0][
+                                                                      'hargaCaratPcsParva'];
                                                               markUpBatu12 =
                                                                   data[0][
                                                                       'markUp'];
@@ -13979,9 +12533,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu12 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu12 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu12 =
                                                                       data[0][
                                                                           'markUp'];
@@ -14111,7 +12671,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                             height: 50,
                                             padding:
                                                 const EdgeInsets.only(top: 5),
-                                            child: DropdownSearch<BatuModel>(
+                                            child:
+                                                DropdownSearch<BatuModel2024>(
                                               asyncItems: (String? filter) =>
                                                   getData(filter),
                                               popupProps:
@@ -14128,7 +12689,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   final response =
                                                       await http.get(
                                                     Uri.parse(
-                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
+                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc2024}?idStone=${item!.idStone}'),
                                                   );
                                                   if (response.statusCode ==
                                                       200) {
@@ -14140,8 +12701,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       crtPcsBatu13.text = '';
                                                       idStone13 = item.idStone;
                                                       idBatu13 = item.id;
-                                                      hargaBatu13 =
-                                                          data[0]['unitCost'];
+                                                      hargaBatu13 = brand.text
+                                                                  .toLowerCase()
+                                                                  .toString() ==
+                                                              "metier"
+                                                          ? data[0][
+                                                              'hargaCaratPcsMetier']
+                                                          : data[0][
+                                                              'hargaCaratPcsParva'];
                                                       markUpBatu13 =
                                                           data[0]['markUp'];
                                                       caratPcsBatu13 =
@@ -14208,9 +12775,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu13 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu13 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu13 =
                                                                       data[0][
                                                                           'markUp'];
@@ -14267,9 +12840,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu13 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu13 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu13 =
                                                                       data[0][
                                                                           'markUp'];
@@ -14337,10 +12916,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu13 =
-                                                                          data[0]
+                                                                      hargaBatu13 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? data[0]
                                                                               [
-                                                                              'unitCost'];
+                                                                              'hargaCaratPcsMetier']
+                                                                          : data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva'];
                                                                       markUpBatu13 =
                                                                           data[0]
                                                                               [
@@ -14401,10 +12984,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu13 =
-                                                                          data[0]
+                                                                      hargaBatu13 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? data[0]
                                                                               [
-                                                                              'unitCost'];
+                                                                              'hargaCaratPcsMetier']
+                                                                          : data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva'];
                                                                       markUpBatu13 =
                                                                           data[0]
                                                                               [
@@ -14496,9 +13083,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu13 = data[
-                                                                      0]
-                                                                  ['unitCost'];
+                                                              hargaBatu13 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? data[0][
+                                                                      'hargaCaratPcsMetier']
+                                                                  : data[0][
+                                                                      'hargaCaratPcsParva'];
                                                               markUpBatu13 =
                                                                   data[0][
                                                                       'markUp'];
@@ -14560,9 +13153,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu13 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu13 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu13 =
                                                                       data[0][
                                                                           'markUp'];
@@ -14798,9 +13397,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu13 = data[
-                                                                      0]
-                                                                  ['unitCost'];
+                                                              hargaBatu13 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? data[0][
+                                                                      'hargaCaratPcsMetier']
+                                                                  : data[0][
+                                                                      'hargaCaratPcsParva'];
                                                               markUpBatu13 =
                                                                   data[0][
                                                                       'markUp'];
@@ -14865,9 +13470,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu13 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu13 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu13 =
                                                                       data[0][
                                                                           'markUp'];
@@ -14997,7 +13608,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                             height: 50,
                                             padding:
                                                 const EdgeInsets.only(top: 5),
-                                            child: DropdownSearch<BatuModel>(
+                                            child:
+                                                DropdownSearch<BatuModel2024>(
                                               asyncItems: (String? filter) =>
                                                   getData(filter),
                                               popupProps:
@@ -15014,7 +13626,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   final response =
                                                       await http.get(
                                                     Uri.parse(
-                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
+                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc2024}?idStone=${item!.idStone}'),
                                                   );
                                                   if (response.statusCode ==
                                                       200) {
@@ -15026,8 +13638,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       crtPcsBatu14.text = '';
                                                       idStone14 = item.idStone;
                                                       idBatu14 = item.id;
-                                                      hargaBatu14 =
-                                                          data[0]['unitCost'];
+                                                      hargaBatu14 = brand.text
+                                                                  .toLowerCase()
+                                                                  .toString() ==
+                                                              "metier"
+                                                          ? data[0][
+                                                              'hargaCaratPcsMetier']
+                                                          : data[0][
+                                                              'hargaCaratPcsParva'];
                                                       markUpBatu14 =
                                                           data[0]['markUp'];
                                                       caratPcsBatu14 =
@@ -15094,9 +13712,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu14 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu14 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu14 =
                                                                       data[0][
                                                                           'markUp'];
@@ -15153,9 +13777,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu14 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu14 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu14 =
                                                                       data[0][
                                                                           'markUp'];
@@ -15223,10 +13853,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu14 =
-                                                                          data[0]
+                                                                      hargaBatu14 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? data[0]
                                                                               [
-                                                                              'unitCost'];
+                                                                              'hargaCaratPcsMetier']
+                                                                          : data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva'];
                                                                       markUpBatu14 =
                                                                           data[0]
                                                                               [
@@ -15287,10 +13921,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu14 =
-                                                                          data[0]
+                                                                      hargaBatu14 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? data[0]
                                                                               [
-                                                                              'unitCost'];
+                                                                              'hargaCaratPcsMetier']
+                                                                          : data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva'];
                                                                       markUpBatu14 =
                                                                           data[0]
                                                                               [
@@ -15382,9 +14020,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu14 = data[
-                                                                      0]
-                                                                  ['unitCost'];
+                                                              hargaBatu14 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? data[0][
+                                                                      'hargaCaratPcsMetier']
+                                                                  : data[0][
+                                                                      'hargaCaratPcsParva'];
                                                               markUpBatu14 =
                                                                   data[0][
                                                                       'markUp'];
@@ -15446,9 +14090,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu14 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu14 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu14 =
                                                                       data[0][
                                                                           'markUp'];
@@ -15684,9 +14334,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu14 = data[
-                                                                      0]
-                                                                  ['unitCost'];
+                                                              hargaBatu14 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? data[0][
+                                                                      'hargaCaratPcsMetier']
+                                                                  : data[0][
+                                                                      'hargaCaratPcsParva'];
                                                               markUpBatu14 =
                                                                   data[0][
                                                                       'markUp'];
@@ -15751,9 +14407,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu14 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu14 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu14 =
                                                                       data[0][
                                                                           'markUp'];
@@ -15883,7 +14545,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                             height: 50,
                                             padding:
                                                 const EdgeInsets.only(top: 5),
-                                            child: DropdownSearch<BatuModel>(
+                                            child:
+                                                DropdownSearch<BatuModel2024>(
                                               asyncItems: (String? filter) =>
                                                   getData(filter),
                                               popupProps:
@@ -15900,7 +14563,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   final response =
                                                       await http.get(
                                                     Uri.parse(
-                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
+                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc2024}?idStone=${item!.idStone}'),
                                                   );
                                                   if (response.statusCode ==
                                                       200) {
@@ -15912,8 +14575,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       crtPcsBatu15.text = '';
                                                       idStone15 = item.idStone;
                                                       idBatu15 = item.id;
-                                                      hargaBatu15 =
-                                                          data[0]['unitCost'];
+                                                      hargaBatu15 = brand.text
+                                                                  .toLowerCase()
+                                                                  .toString() ==
+                                                              "metier"
+                                                          ? data[0][
+                                                              'hargaCaratPcsMetier']
+                                                          : data[0][
+                                                              'hargaCaratPcsParva'];
                                                       markUpBatu15 =
                                                           data[0]['markUp'];
                                                       caratPcsBatu15 =
@@ -15980,9 +14649,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu15 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu15 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu15 =
                                                                       data[0][
                                                                           'markUp'];
@@ -16039,9 +14714,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu15 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu15 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu15 =
                                                                       data[0][
                                                                           'markUp'];
@@ -16109,10 +14790,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu15 =
-                                                                          data[0]
+                                                                      hargaBatu15 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? data[0]
                                                                               [
-                                                                              'unitCost'];
+                                                                              'hargaCaratPcsMetier']
+                                                                          : data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva'];
                                                                       markUpBatu15 =
                                                                           data[0]
                                                                               [
@@ -16173,10 +14858,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu15 =
-                                                                          data[0]
+                                                                      hargaBatu15 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? data[0]
                                                                               [
-                                                                              'unitCost'];
+                                                                              'hargaCaratPcsMetier']
+                                                                          : data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva'];
                                                                       markUpBatu15 =
                                                                           data[0]
                                                                               [
@@ -16268,9 +14957,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu15 = data[
-                                                                      0]
-                                                                  ['unitCost'];
+                                                              hargaBatu15 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? data[0][
+                                                                      'hargaCaratPcsMetier']
+                                                                  : data[0][
+                                                                      'hargaCaratPcsParva'];
                                                               markUpBatu15 =
                                                                   data[0][
                                                                       'markUp'];
@@ -16332,9 +15027,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu15 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu15 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu15 =
                                                                       data[0][
                                                                           'markUp'];
@@ -16570,9 +15271,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu15 = data[
-                                                                      0]
-                                                                  ['unitCost'];
+                                                              hargaBatu15 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? data[0][
+                                                                      'hargaCaratPcsMetier']
+                                                                  : data[0][
+                                                                      'hargaCaratPcsParva'];
                                                               markUpBatu15 =
                                                                   data[0][
                                                                       'markUp'];
@@ -16637,9 +15344,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu15 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu15 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu15 =
                                                                       data[0][
                                                                           'markUp'];
@@ -16769,7 +15482,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                             height: 50,
                                             padding:
                                                 const EdgeInsets.only(top: 5),
-                                            child: DropdownSearch<BatuModel>(
+                                            child:
+                                                DropdownSearch<BatuModel2024>(
                                               asyncItems: (String? filter) =>
                                                   getData(filter),
                                               popupProps:
@@ -16786,7 +15500,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   final response =
                                                       await http.get(
                                                     Uri.parse(
-                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
+                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc2024}?idStone=${item!.idStone}'),
                                                   );
                                                   if (response.statusCode ==
                                                       200) {
@@ -16798,8 +15512,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       crtPcsBatu16.text = '';
                                                       idStone16 = item.idStone;
                                                       idBatu16 = item.id;
-                                                      hargaBatu16 =
-                                                          data[0]['unitCost'];
+                                                      hargaBatu16 = brand.text
+                                                                  .toLowerCase()
+                                                                  .toString() ==
+                                                              "metier"
+                                                          ? data[0][
+                                                              'hargaCaratPcsMetier']
+                                                          : data[0][
+                                                              'hargaCaratPcsParva'];
                                                       markUpBatu16 =
                                                           data[0]['markUp'];
                                                       caratPcsBatu16 =
@@ -16866,9 +15586,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu16 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu16 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu16 =
                                                                       data[0][
                                                                           'markUp'];
@@ -16925,9 +15651,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu16 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu16 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu16 =
                                                                       data[0][
                                                                           'markUp'];
@@ -16995,10 +15727,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu16 =
-                                                                          data[0]
+                                                                      hargaBatu16 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? data[0]
                                                                               [
-                                                                              'unitCost'];
+                                                                              'hargaCaratPcsMetier']
+                                                                          : data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva'];
                                                                       markUpBatu16 =
                                                                           data[0]
                                                                               [
@@ -17059,10 +15795,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu16 =
-                                                                          data[0]
+                                                                      hargaBatu16 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? data[0]
                                                                               [
-                                                                              'unitCost'];
+                                                                              'hargaCaratPcsMetier']
+                                                                          : data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva'];
                                                                       markUpBatu16 =
                                                                           data[0]
                                                                               [
@@ -17154,9 +15894,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu16 = data[
-                                                                      0]
-                                                                  ['unitCost'];
+                                                              hargaBatu16 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? data[0][
+                                                                      'hargaCaratPcsMetier']
+                                                                  : data[0][
+                                                                      'hargaCaratPcsParva'];
                                                               markUpBatu16 =
                                                                   data[0][
                                                                       'markUp'];
@@ -17218,9 +15964,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu16 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu16 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu16 =
                                                                       data[0][
                                                                           'markUp'];
@@ -17456,9 +16208,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu16 = data[
-                                                                      0]
-                                                                  ['unitCost'];
+                                                              hargaBatu16 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? data[0][
+                                                                      'hargaCaratPcsMetier']
+                                                                  : data[0][
+                                                                      'hargaCaratPcsParva'];
                                                               markUpBatu16 =
                                                                   data[0][
                                                                       'markUp'];
@@ -17523,9 +16281,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu16 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu16 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu16 =
                                                                       data[0][
                                                                           'markUp'];
@@ -17655,7 +16419,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                             height: 50,
                                             padding:
                                                 const EdgeInsets.only(top: 5),
-                                            child: DropdownSearch<BatuModel>(
+                                            child:
+                                                DropdownSearch<BatuModel2024>(
                                               asyncItems: (String? filter) =>
                                                   getData(filter),
                                               popupProps:
@@ -17672,7 +16437,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   final response =
                                                       await http.get(
                                                     Uri.parse(
-                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
+                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc2024}?idStone=${item!.idStone}'),
                                                   );
                                                   if (response.statusCode ==
                                                       200) {
@@ -17684,8 +16449,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       crtPcsBatu17.text = '';
                                                       idStone17 = item.idStone;
                                                       idBatu17 = item.id;
-                                                      hargaBatu17 =
-                                                          data[0]['unitCost'];
+                                                      hargaBatu17 = brand.text
+                                                                  .toLowerCase()
+                                                                  .toString() ==
+                                                              "metier"
+                                                          ? data[0][
+                                                              'hargaCaratPcsMetier']
+                                                          : data[0][
+                                                              'hargaCaratPcsParva'];
                                                       markUpBatu17 =
                                                           data[0]['markUp'];
                                                       caratPcsBatu17 =
@@ -17752,9 +16523,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu17 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu17 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu17 =
                                                                       data[0][
                                                                           'markUp'];
@@ -17811,9 +16588,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu17 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu17 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu17 =
                                                                       data[0][
                                                                           'markUp'];
@@ -17881,10 +16664,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu17 =
-                                                                          data[0]
+                                                                      hargaBatu17 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? data[0]
                                                                               [
-                                                                              'unitCost'];
+                                                                              'hargaCaratPcsMetier']
+                                                                          : data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva'];
                                                                       markUpBatu17 =
                                                                           data[0]
                                                                               [
@@ -17945,10 +16732,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu17 =
-                                                                          data[0]
+                                                                      hargaBatu17 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? data[0]
                                                                               [
-                                                                              'unitCost'];
+                                                                              'hargaCaratPcsMetier']
+                                                                          : data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva'];
                                                                       markUpBatu17 =
                                                                           data[0]
                                                                               [
@@ -18040,9 +16831,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu17 = data[
-                                                                      0]
-                                                                  ['unitCost'];
+                                                              hargaBatu17 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? data[0][
+                                                                      'hargaCaratPcsMetier']
+                                                                  : data[0][
+                                                                      'hargaCaratPcsParva'];
                                                               markUpBatu17 =
                                                                   data[0][
                                                                       'markUp'];
@@ -18104,9 +16901,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu17 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu17 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu17 =
                                                                       data[0][
                                                                           'markUp'];
@@ -18342,9 +17145,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu17 = data[
-                                                                      0]
-                                                                  ['unitCost'];
+                                                              hargaBatu17 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? data[0][
+                                                                      'hargaCaratPcsMetier']
+                                                                  : data[0][
+                                                                      'hargaCaratPcsParva'];
                                                               markUpBatu17 =
                                                                   data[0][
                                                                       'markUp'];
@@ -18409,9 +17218,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu17 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu17 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu17 =
                                                                       data[0][
                                                                           'markUp'];
@@ -18541,7 +17356,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                             height: 50,
                                             padding:
                                                 const EdgeInsets.only(top: 5),
-                                            child: DropdownSearch<BatuModel>(
+                                            child:
+                                                DropdownSearch<BatuModel2024>(
                                               asyncItems: (String? filter) =>
                                                   getData(filter),
                                               popupProps:
@@ -18558,7 +17374,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   final response =
                                                       await http.get(
                                                     Uri.parse(
-                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
+                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc2024}?idStone=${item!.idStone}'),
                                                   );
                                                   if (response.statusCode ==
                                                       200) {
@@ -18570,8 +17386,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       crtPcsBatu18.text = '';
                                                       idStone18 = item.idStone;
                                                       idBatu18 = item.id;
-                                                      hargaBatu18 =
-                                                          data[0]['unitCost'];
+                                                      hargaBatu18 = brand.text
+                                                                  .toLowerCase()
+                                                                  .toString() ==
+                                                              "metier"
+                                                          ? data[0][
+                                                              'hargaCaratPcsMetier']
+                                                          : data[0][
+                                                              'hargaCaratPcsParva'];
                                                       markUpBatu18 =
                                                           data[0]['markUp'];
                                                       caratPcsBatu18 =
@@ -18638,9 +17460,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu18 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu18 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu18 =
                                                                       data[0][
                                                                           'markUp'];
@@ -18697,9 +17525,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu18 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu18 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu18 =
                                                                       data[0][
                                                                           'markUp'];
@@ -18767,10 +17601,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu18 =
-                                                                          data[0]
+                                                                      hargaBatu18 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? data[0]
                                                                               [
-                                                                              'unitCost'];
+                                                                              'hargaCaratPcsMetier']
+                                                                          : data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva'];
                                                                       markUpBatu18 =
                                                                           data[0]
                                                                               [
@@ -18831,10 +17669,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu18 =
-                                                                          data[0]
+                                                                      hargaBatu18 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? data[0]
                                                                               [
-                                                                              'unitCost'];
+                                                                              'hargaCaratPcsMetier']
+                                                                          : data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva'];
                                                                       markUpBatu18 =
                                                                           data[0]
                                                                               [
@@ -18926,9 +17768,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu18 = data[
-                                                                      0]
-                                                                  ['unitCost'];
+                                                              hargaBatu18 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? data[0][
+                                                                      'hargaCaratPcsMetier']
+                                                                  : data[0][
+                                                                      'hargaCaratPcsParva'];
                                                               markUpBatu18 =
                                                                   data[0][
                                                                       'markUp'];
@@ -18990,9 +17838,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu18 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu18 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu18 =
                                                                       data[0][
                                                                           'markUp'];
@@ -19228,9 +18082,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu18 = data[
-                                                                      0]
-                                                                  ['unitCost'];
+                                                              hargaBatu18 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? data[0][
+                                                                      'hargaCaratPcsMetier']
+                                                                  : data[0][
+                                                                      'hargaCaratPcsParva'];
                                                               markUpBatu18 =
                                                                   data[0][
                                                                       'markUp'];
@@ -19295,9 +18155,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu18 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu18 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu18 =
                                                                       data[0][
                                                                           'markUp'];
@@ -19427,7 +18293,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                             height: 50,
                                             padding:
                                                 const EdgeInsets.only(top: 5),
-                                            child: DropdownSearch<BatuModel>(
+                                            child:
+                                                DropdownSearch<BatuModel2024>(
                                               asyncItems: (String? filter) =>
                                                   getData(filter),
                                               popupProps:
@@ -19444,7 +18311,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   final response =
                                                       await http.get(
                                                     Uri.parse(
-                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
+                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc2024}?idStone=${item!.idStone}'),
                                                   );
                                                   if (response.statusCode ==
                                                       200) {
@@ -19456,8 +18323,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       crtPcsBatu19.text = '';
                                                       idStone19 = item.idStone;
                                                       idBatu19 = item.id;
-                                                      hargaBatu19 =
-                                                          data[0]['unitCost'];
+                                                      hargaBatu19 = brand.text
+                                                                  .toLowerCase()
+                                                                  .toString() ==
+                                                              "metier"
+                                                          ? data[0][
+                                                              'hargaCaratPcsMetier']
+                                                          : data[0][
+                                                              'hargaCaratPcsParva'];
                                                       markUpBatu19 =
                                                           data[0]['markUp'];
                                                       caratPcsBatu19 =
@@ -19524,9 +18397,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu19 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu19 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu19 =
                                                                       data[0][
                                                                           'markUp'];
@@ -19583,9 +18462,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu19 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu19 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu19 =
                                                                       data[0][
                                                                           'markUp'];
@@ -19653,10 +18538,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu19 =
-                                                                          data[0]
+                                                                      hargaBatu19 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? data[0]
                                                                               [
-                                                                              'unitCost'];
+                                                                              'hargaCaratPcsMetier']
+                                                                          : data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva'];
                                                                       markUpBatu19 =
                                                                           data[0]
                                                                               [
@@ -19717,10 +18606,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu19 =
-                                                                          data[0]
+                                                                      hargaBatu19 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? data[0]
                                                                               [
-                                                                              'unitCost'];
+                                                                              'hargaCaratPcsMetier']
+                                                                          : data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva'];
                                                                       markUpBatu19 =
                                                                           data[0]
                                                                               [
@@ -19812,9 +18705,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu19 = data[
-                                                                      0]
-                                                                  ['unitCost'];
+                                                              hargaBatu19 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? data[0][
+                                                                      'hargaCaratPcsMetier']
+                                                                  : data[0][
+                                                                      'hargaCaratPcsParva'];
                                                               markUpBatu19 =
                                                                   data[0][
                                                                       'markUp'];
@@ -19876,9 +18775,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu19 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu19 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu19 =
                                                                       data[0][
                                                                           'markUp'];
@@ -20114,9 +19019,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu19 = data[
-                                                                      0]
-                                                                  ['unitCost'];
+                                                              hargaBatu19 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? data[0][
+                                                                      'hargaCaratPcsMetier']
+                                                                  : data[0][
+                                                                      'hargaCaratPcsParva'];
                                                               markUpBatu19 =
                                                                   data[0][
                                                                       'markUp'];
@@ -20181,9 +19092,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu19 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu19 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu19 =
                                                                       data[0][
                                                                           'markUp'];
@@ -20313,7 +19230,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                             height: 50,
                                             padding:
                                                 const EdgeInsets.only(top: 5),
-                                            child: DropdownSearch<BatuModel>(
+                                            child:
+                                                DropdownSearch<BatuModel2024>(
                                               asyncItems: (String? filter) =>
                                                   getData(filter),
                                               popupProps:
@@ -20330,7 +19248,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   final response =
                                                       await http.get(
                                                     Uri.parse(
-                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
+                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc2024}?idStone=${item!.idStone}'),
                                                   );
                                                   if (response.statusCode ==
                                                       200) {
@@ -20342,8 +19260,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       crtPcsBatu20.text = '';
                                                       idStone20 = item.idStone;
                                                       idBatu20 = item.id;
-                                                      hargaBatu20 =
-                                                          data[0]['unitCost'];
+                                                      hargaBatu20 = brand.text
+                                                                  .toLowerCase()
+                                                                  .toString() ==
+                                                              "metier"
+                                                          ? data[0][
+                                                              'hargaCaratPcsMetier']
+                                                          : data[0][
+                                                              'hargaCaratPcsParva'];
                                                       markUpBatu20 =
                                                           data[0]['markUp'];
                                                       caratPcsBatu20 =
@@ -20410,9 +19334,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu20 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu20 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu20 =
                                                                       data[0][
                                                                           'markUp'];
@@ -20469,9 +19399,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu20 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu20 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu20 =
                                                                       data[0][
                                                                           'markUp'];
@@ -20539,10 +19475,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu20 =
-                                                                          data[0]
+                                                                      hargaBatu20 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? data[0]
                                                                               [
-                                                                              'unitCost'];
+                                                                              'hargaCaratPcsMetier']
+                                                                          : data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva'];
                                                                       markUpBatu20 =
                                                                           data[0]
                                                                               [
@@ -20603,10 +19543,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu20 =
-                                                                          data[0]
+                                                                      hargaBatu20 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? data[0]
                                                                               [
-                                                                              'unitCost'];
+                                                                              'hargaCaratPcsMetier']
+                                                                          : data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva'];
                                                                       markUpBatu20 =
                                                                           data[0]
                                                                               [
@@ -20698,9 +19642,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu20 = data[
-                                                                      0]
-                                                                  ['unitCost'];
+                                                              hargaBatu20 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? data[0][
+                                                                      'hargaCaratPcsMetier']
+                                                                  : data[0][
+                                                                      'hargaCaratPcsParva'];
                                                               markUpBatu20 =
                                                                   data[0][
                                                                       'markUp'];
@@ -20762,9 +19712,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu20 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu20 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu20 =
                                                                       data[0][
                                                                           'markUp'];
@@ -21000,9 +19956,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu20 = data[
-                                                                      0]
-                                                                  ['unitCost'];
+                                                              hargaBatu20 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? data[0][
+                                                                      'hargaCaratPcsMetier']
+                                                                  : data[0][
+                                                                      'hargaCaratPcsParva'];
                                                               markUpBatu20 =
                                                                   data[0][
                                                                       'markUp'];
@@ -21067,9 +20029,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu20 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu20 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu20 =
                                                                       data[0][
                                                                           'markUp'];
@@ -21199,7 +20167,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                             height: 50,
                                             padding:
                                                 const EdgeInsets.only(top: 5),
-                                            child: DropdownSearch<BatuModel>(
+                                            child:
+                                                DropdownSearch<BatuModel2024>(
                                               asyncItems: (String? filter) =>
                                                   getData(filter),
                                               popupProps:
@@ -21216,7 +20185,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   final response =
                                                       await http.get(
                                                     Uri.parse(
-                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
+                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc2024}?idStone=${item!.idStone}'),
                                                   );
                                                   if (response.statusCode ==
                                                       200) {
@@ -21228,8 +20197,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       crtPcsBatu21.text = '';
                                                       idStone21 = item.idStone;
                                                       idBatu21 = item.id;
-                                                      hargaBatu21 =
-                                                          data[0]['unitCost'];
+                                                      hargaBatu21 = brand.text
+                                                                  .toLowerCase()
+                                                                  .toString() ==
+                                                              "metier"
+                                                          ? data[0][
+                                                              'hargaCaratPcsMetier']
+                                                          : data[0][
+                                                              'hargaCaratPcsParva'];
                                                       markUpBatu21 =
                                                           data[0]['markUp'];
                                                       caratPcsBatu21 =
@@ -21296,9 +20271,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu21 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu21 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu21 =
                                                                       data[0][
                                                                           'markUp'];
@@ -21355,9 +20336,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu21 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu21 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu21 =
                                                                       data[0][
                                                                           'markUp'];
@@ -21425,10 +20412,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu21 =
-                                                                          data[0]
+                                                                      hargaBatu21 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? data[0]
                                                                               [
-                                                                              'unitCost'];
+                                                                              'hargaCaratPcsMetier']
+                                                                          : data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva'];
                                                                       markUpBatu21 =
                                                                           data[0]
                                                                               [
@@ -21489,10 +20480,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu21 =
-                                                                          data[0]
+                                                                      hargaBatu21 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? data[0]
                                                                               [
-                                                                              'unitCost'];
+                                                                              'hargaCaratPcsMetier']
+                                                                          : data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva'];
                                                                       markUpBatu21 =
                                                                           data[0]
                                                                               [
@@ -21584,9 +20579,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu21 = data[
-                                                                      0]
-                                                                  ['unitCost'];
+                                                              hargaBatu21 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? data[0][
+                                                                      'hargaCaratPcsMetier']
+                                                                  : data[0][
+                                                                      'hargaCaratPcsParva'];
                                                               markUpBatu21 =
                                                                   data[0][
                                                                       'markUp'];
@@ -21648,9 +20649,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu21 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu21 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu21 =
                                                                       data[0][
                                                                           'markUp'];
@@ -21886,9 +20893,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu21 = data[
-                                                                      0]
-                                                                  ['unitCost'];
+                                                              hargaBatu21 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? data[0][
+                                                                      'hargaCaratPcsMetier']
+                                                                  : data[0][
+                                                                      'hargaCaratPcsParva'];
                                                               markUpBatu21 =
                                                                   data[0][
                                                                       'markUp'];
@@ -21953,9 +20966,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu21 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu21 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu21 =
                                                                       data[0][
                                                                           'markUp'];
@@ -22085,7 +21104,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                             height: 50,
                                             padding:
                                                 const EdgeInsets.only(top: 5),
-                                            child: DropdownSearch<BatuModel>(
+                                            child:
+                                                DropdownSearch<BatuModel2024>(
                                               asyncItems: (String? filter) =>
                                                   getData(filter),
                                               popupProps:
@@ -22102,7 +21122,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   final response =
                                                       await http.get(
                                                     Uri.parse(
-                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
+                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc2024}?idStone=${item!.idStone}'),
                                                   );
                                                   if (response.statusCode ==
                                                       200) {
@@ -22114,8 +21134,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       crtPcsBatu22.text = '';
                                                       idStone22 = item.idStone;
                                                       idBatu22 = item.id;
-                                                      hargaBatu22 =
-                                                          data[0]['unitCost'];
+                                                      hargaBatu22 = brand.text
+                                                                  .toLowerCase()
+                                                                  .toString() ==
+                                                              "metier"
+                                                          ? data[0][
+                                                              'hargaCaratPcsMetier']
+                                                          : data[0][
+                                                              'hargaCaratPcsParva'];
                                                       markUpBatu22 =
                                                           data[0]['markUp'];
                                                       caratPcsBatu22 =
@@ -22182,9 +21208,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu22 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu22 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu22 =
                                                                       data[0][
                                                                           'markUp'];
@@ -22241,9 +21273,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu22 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu22 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu22 =
                                                                       data[0][
                                                                           'markUp'];
@@ -22311,10 +21349,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu22 =
-                                                                          data[0]
+                                                                      hargaBatu22 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? data[0]
                                                                               [
-                                                                              'unitCost'];
+                                                                              'hargaCaratPcsMetier']
+                                                                          : data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva'];
                                                                       markUpBatu22 =
                                                                           data[0]
                                                                               [
@@ -22375,10 +21417,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu22 =
-                                                                          data[0]
+                                                                      hargaBatu22 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? data[0]
                                                                               [
-                                                                              'unitCost'];
+                                                                              'hargaCaratPcsMetier']
+                                                                          : data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva'];
                                                                       markUpBatu22 =
                                                                           data[0]
                                                                               [
@@ -22470,9 +21516,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu22 = data[
-                                                                      0]
-                                                                  ['unitCost'];
+                                                              hargaBatu22 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? data[0][
+                                                                      'hargaCaratPcsMetier']
+                                                                  : data[0][
+                                                                      'hargaCaratPcsParva'];
                                                               markUpBatu22 =
                                                                   data[0][
                                                                       'markUp'];
@@ -22534,9 +21586,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu22 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu22 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu22 =
                                                                       data[0][
                                                                           'markUp'];
@@ -22772,9 +21830,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu22 = data[
-                                                                      0]
-                                                                  ['unitCost'];
+                                                              hargaBatu22 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? data[0][
+                                                                      'hargaCaratPcsMetier']
+                                                                  : data[0][
+                                                                      'hargaCaratPcsParva'];
                                                               markUpBatu22 =
                                                                   data[0][
                                                                       'markUp'];
@@ -22839,9 +21903,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu22 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu22 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu22 =
                                                                       data[0][
                                                                           'markUp'];
@@ -22971,7 +22041,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                             height: 50,
                                             padding:
                                                 const EdgeInsets.only(top: 5),
-                                            child: DropdownSearch<BatuModel>(
+                                            child:
+                                                DropdownSearch<BatuModel2024>(
                                               asyncItems: (String? filter) =>
                                                   getData(filter),
                                               popupProps:
@@ -22988,7 +22059,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   final response =
                                                       await http.get(
                                                     Uri.parse(
-                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
+                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc2024}?idStone=${item!.idStone}'),
                                                   );
                                                   if (response.statusCode ==
                                                       200) {
@@ -23000,8 +22071,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       crtPcsBatu23.text = '';
                                                       idStone23 = item.idStone;
                                                       idBatu23 = item.id;
-                                                      hargaBatu23 =
-                                                          data[0]['unitCost'];
+                                                      hargaBatu23 = brand.text
+                                                                  .toLowerCase()
+                                                                  .toString() ==
+                                                              "metier"
+                                                          ? data[0][
+                                                              'hargaCaratPcsMetier']
+                                                          : data[0][
+                                                              'hargaCaratPcsParva'];
                                                       markUpBatu23 =
                                                           data[0]['markUp'];
                                                       caratPcsBatu23 =
@@ -23068,9 +22145,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu23 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu23 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu23 =
                                                                       data[0][
                                                                           'markUp'];
@@ -23127,9 +22210,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu23 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu23 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu23 =
                                                                       data[0][
                                                                           'markUp'];
@@ -23197,10 +22286,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu23 =
-                                                                          data[0]
+                                                                      hargaBatu23 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? data[0]
                                                                               [
-                                                                              'unitCost'];
+                                                                              'hargaCaratPcsMetier']
+                                                                          : data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva'];
                                                                       markUpBatu23 =
                                                                           data[0]
                                                                               [
@@ -23261,10 +22354,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu23 =
-                                                                          data[0]
+                                                                      hargaBatu23 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? data[0]
                                                                               [
-                                                                              'unitCost'];
+                                                                              'hargaCaratPcsMetier']
+                                                                          : data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva'];
                                                                       markUpBatu23 =
                                                                           data[0]
                                                                               [
@@ -23356,9 +22453,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu23 = data[
-                                                                      0]
-                                                                  ['unitCost'];
+                                                              hargaBatu23 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? data[0][
+                                                                      'hargaCaratPcsMetier']
+                                                                  : data[0][
+                                                                      'hargaCaratPcsParva'];
                                                               markUpBatu23 =
                                                                   data[0][
                                                                       'markUp'];
@@ -23420,9 +22523,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu23 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu23 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu23 =
                                                                       data[0][
                                                                           'markUp'];
@@ -23658,9 +22767,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu23 = data[
-                                                                      0]
-                                                                  ['unitCost'];
+                                                              hargaBatu23 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? data[0][
+                                                                      'hargaCaratPcsMetier']
+                                                                  : data[0][
+                                                                      'hargaCaratPcsParva'];
                                                               markUpBatu23 =
                                                                   data[0][
                                                                       'markUp'];
@@ -23725,9 +22840,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu23 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu23 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu23 =
                                                                       data[0][
                                                                           'markUp'];
@@ -23857,7 +22978,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                             height: 50,
                                             padding:
                                                 const EdgeInsets.only(top: 5),
-                                            child: DropdownSearch<BatuModel>(
+                                            child:
+                                                DropdownSearch<BatuModel2024>(
                                               asyncItems: (String? filter) =>
                                                   getData(filter),
                                               popupProps:
@@ -23874,7 +22996,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   final response =
                                                       await http.get(
                                                     Uri.parse(
-                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
+                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc2024}?idStone=${item!.idStone}'),
                                                   );
                                                   if (response.statusCode ==
                                                       200) {
@@ -23886,8 +23008,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       crtPcsBatu24.text = '';
                                                       idStone24 = item.idStone;
                                                       idBatu24 = item.id;
-                                                      hargaBatu24 =
-                                                          data[0]['unitCost'];
+                                                      hargaBatu24 = brand.text
+                                                                  .toLowerCase()
+                                                                  .toString() ==
+                                                              "metier"
+                                                          ? data[0][
+                                                              'hargaCaratPcsMetier']
+                                                          : data[0][
+                                                              'hargaCaratPcsParva'];
                                                       markUpBatu24 =
                                                           data[0]['markUp'];
                                                       caratPcsBatu24 =
@@ -23954,9 +23082,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu24 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu24 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu24 =
                                                                       data[0][
                                                                           'markUp'];
@@ -24013,9 +23147,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu24 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu24 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu24 =
                                                                       data[0][
                                                                           'markUp'];
@@ -24083,10 +23223,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu24 =
-                                                                          data[0]
+                                                                      hargaBatu24 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? data[0]
                                                                               [
-                                                                              'unitCost'];
+                                                                              'hargaCaratPcsMetier']
+                                                                          : data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva'];
                                                                       markUpBatu24 =
                                                                           data[0]
                                                                               [
@@ -24147,10 +23291,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu24 =
-                                                                          data[0]
+                                                                      hargaBatu24 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? data[0]
                                                                               [
-                                                                              'unitCost'];
+                                                                              'hargaCaratPcsMetier']
+                                                                          : data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva'];
                                                                       markUpBatu24 =
                                                                           data[0]
                                                                               [
@@ -24242,9 +23390,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu24 = data[
-                                                                      0]
-                                                                  ['unitCost'];
+                                                              hargaBatu24 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? data[0][
+                                                                      'hargaCaratPcsMetier']
+                                                                  : data[0][
+                                                                      'hargaCaratPcsParva'];
                                                               markUpBatu24 =
                                                                   data[0][
                                                                       'markUp'];
@@ -24306,9 +23460,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu24 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu24 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu24 =
                                                                       data[0][
                                                                           'markUp'];
@@ -24544,9 +23704,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu24 = data[
-                                                                      0]
-                                                                  ['unitCost'];
+                                                              hargaBatu24 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? data[0][
+                                                                      'hargaCaratPcsMetier']
+                                                                  : data[0][
+                                                                      'hargaCaratPcsParva'];
                                                               markUpBatu24 =
                                                                   data[0][
                                                                       'markUp'];
@@ -24611,9 +23777,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu24 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu24 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu24 =
                                                                       data[0][
                                                                           'markUp'];
@@ -24743,7 +23915,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                             height: 50,
                                             padding:
                                                 const EdgeInsets.only(top: 5),
-                                            child: DropdownSearch<BatuModel>(
+                                            child:
+                                                DropdownSearch<BatuModel2024>(
                                               asyncItems: (String? filter) =>
                                                   getData(filter),
                                               popupProps:
@@ -24760,7 +23933,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   final response =
                                                       await http.get(
                                                     Uri.parse(
-                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
+                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc2024}?idStone=${item!.idStone}'),
                                                   );
                                                   if (response.statusCode ==
                                                       200) {
@@ -24772,8 +23945,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       crtPcsBatu25.text = '';
                                                       idStone25 = item.idStone;
                                                       idBatu25 = item.id;
-                                                      hargaBatu25 =
-                                                          data[0]['unitCost'];
+                                                      hargaBatu25 = brand.text
+                                                                  .toLowerCase()
+                                                                  .toString() ==
+                                                              "metier"
+                                                          ? data[0][
+                                                              'hargaCaratPcsMetier']
+                                                          : data[0][
+                                                              'hargaCaratPcsParva'];
                                                       markUpBatu25 =
                                                           data[0]['markUp'];
                                                       caratPcsBatu25 =
@@ -24840,9 +24019,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu25 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu25 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu25 =
                                                                       data[0][
                                                                           'markUp'];
@@ -24899,9 +24084,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu25 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu25 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu25 =
                                                                       data[0][
                                                                           'markUp'];
@@ -24969,10 +24160,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu25 =
-                                                                          data[0]
+                                                                      hargaBatu25 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? data[0]
                                                                               [
-                                                                              'unitCost'];
+                                                                              'hargaCaratPcsMetier']
+                                                                          : data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva'];
                                                                       markUpBatu25 =
                                                                           data[0]
                                                                               [
@@ -25033,10 +24228,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu25 =
-                                                                          data[0]
+                                                                      hargaBatu25 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? data[0]
                                                                               [
-                                                                              'unitCost'];
+                                                                              'hargaCaratPcsMetier']
+                                                                          : data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva'];
                                                                       markUpBatu25 =
                                                                           data[0]
                                                                               [
@@ -25128,9 +24327,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu25 = data[
-                                                                      0]
-                                                                  ['unitCost'];
+                                                              hargaBatu25 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? data[0][
+                                                                      'hargaCaratPcsMetier']
+                                                                  : data[0][
+                                                                      'hargaCaratPcsParva'];
                                                               markUpBatu25 =
                                                                   data[0][
                                                                       'markUp'];
@@ -25192,9 +24397,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu25 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu25 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu25 =
                                                                       data[0][
                                                                           'markUp'];
@@ -25430,9 +24641,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu25 = data[
-                                                                      0]
-                                                                  ['unitCost'];
+                                                              hargaBatu25 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? data[0][
+                                                                      'hargaCaratPcsMetier']
+                                                                  : data[0][
+                                                                      'hargaCaratPcsParva'];
                                                               markUpBatu25 =
                                                                   data[0][
                                                                       'markUp'];
@@ -25497,9 +24714,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu25 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu25 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu25 =
                                                                       data[0][
                                                                           'markUp'];
@@ -25629,7 +24852,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                             height: 50,
                                             padding:
                                                 const EdgeInsets.only(top: 5),
-                                            child: DropdownSearch<BatuModel>(
+                                            child:
+                                                DropdownSearch<BatuModel2024>(
                                               asyncItems: (String? filter) =>
                                                   getData(filter),
                                               popupProps:
@@ -25646,7 +24870,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   final response =
                                                       await http.get(
                                                     Uri.parse(
-                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
+                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc2024}?idStone=${item!.idStone}'),
                                                   );
                                                   if (response.statusCode ==
                                                       200) {
@@ -25658,8 +24882,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       crtPcsBatu26.text = '';
                                                       idStone26 = item.idStone;
                                                       idBatu26 = item.id;
-                                                      hargaBatu26 =
-                                                          data[0]['unitCost'];
+                                                      hargaBatu26 = brand.text
+                                                                  .toLowerCase()
+                                                                  .toString() ==
+                                                              "metier"
+                                                          ? data[0][
+                                                              'hargaCaratPcsMetier']
+                                                          : data[0][
+                                                              'hargaCaratPcsParva'];
                                                       markUpBatu26 =
                                                           data[0]['markUp'];
                                                       caratPcsBatu26 =
@@ -25726,9 +24956,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu26 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu26 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu26 =
                                                                       data[0][
                                                                           'markUp'];
@@ -25785,9 +25021,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu26 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu26 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu26 =
                                                                       data[0][
                                                                           'markUp'];
@@ -25855,10 +25097,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu26 =
-                                                                          data[0]
+                                                                      hargaBatu26 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? data[0]
                                                                               [
-                                                                              'unitCost'];
+                                                                              'hargaCaratPcsMetier']
+                                                                          : data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva'];
                                                                       markUpBatu26 =
                                                                           data[0]
                                                                               [
@@ -25919,10 +25165,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu26 =
-                                                                          data[0]
+                                                                      hargaBatu26 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? data[0]
                                                                               [
-                                                                              'unitCost'];
+                                                                              'hargaCaratPcsMetier']
+                                                                          : data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva'];
                                                                       markUpBatu26 =
                                                                           data[0]
                                                                               [
@@ -26014,9 +25264,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu26 = data[
-                                                                      0]
-                                                                  ['unitCost'];
+                                                              hargaBatu26 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? data[0][
+                                                                      'hargaCaratPcsMetier']
+                                                                  : data[0][
+                                                                      'hargaCaratPcsParva'];
                                                               markUpBatu26 =
                                                                   data[0][
                                                                       'markUp'];
@@ -26078,9 +25334,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu26 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu26 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu26 =
                                                                       data[0][
                                                                           'markUp'];
@@ -26316,9 +25578,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu26 = data[
-                                                                      0]
-                                                                  ['unitCost'];
+                                                              hargaBatu26 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? data[0][
+                                                                      'hargaCaratPcsMetier']
+                                                                  : data[0][
+                                                                      'hargaCaratPcsParva'];
                                                               markUpBatu26 =
                                                                   data[0][
                                                                       'markUp'];
@@ -26383,9 +25651,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu26 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu26 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu26 =
                                                                       data[0][
                                                                           'markUp'];
@@ -26515,7 +25789,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                             height: 50,
                                             padding:
                                                 const EdgeInsets.only(top: 5),
-                                            child: DropdownSearch<BatuModel>(
+                                            child:
+                                                DropdownSearch<BatuModel2024>(
                                               asyncItems: (String? filter) =>
                                                   getData(filter),
                                               popupProps:
@@ -26532,7 +25807,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   final response =
                                                       await http.get(
                                                     Uri.parse(
-                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
+                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc2024}?idStone=${item!.idStone}'),
                                                   );
                                                   if (response.statusCode ==
                                                       200) {
@@ -26544,8 +25819,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       crtPcsBatu27.text = '';
                                                       idStone27 = item.idStone;
                                                       idBatu27 = item.id;
-                                                      hargaBatu27 =
-                                                          data[0]['unitCost'];
+                                                      hargaBatu27 = brand.text
+                                                                  .toLowerCase()
+                                                                  .toString() ==
+                                                              "metier"
+                                                          ? data[0][
+                                                              'hargaCaratPcsMetier']
+                                                          : data[0][
+                                                              'hargaCaratPcsParva'];
                                                       markUpBatu27 =
                                                           data[0]['markUp'];
                                                       caratPcsBatu27 =
@@ -26612,9 +25893,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu27 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu27 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu27 =
                                                                       data[0][
                                                                           'markUp'];
@@ -26671,9 +25958,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu27 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu27 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu27 =
                                                                       data[0][
                                                                           'markUp'];
@@ -26741,10 +26034,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu27 =
-                                                                          data[0]
+                                                                      hargaBatu27 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? data[0]
                                                                               [
-                                                                              'unitCost'];
+                                                                              'hargaCaratPcsMetier']
+                                                                          : data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva'];
                                                                       markUpBatu27 =
                                                                           data[0]
                                                                               [
@@ -26805,10 +26102,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu27 =
-                                                                          data[0]
+                                                                      hargaBatu27 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? data[0]
                                                                               [
-                                                                              'unitCost'];
+                                                                              'hargaCaratPcsMetier']
+                                                                          : data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva'];
                                                                       markUpBatu27 =
                                                                           data[0]
                                                                               [
@@ -26900,9 +26201,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu27 = data[
-                                                                      0]
-                                                                  ['unitCost'];
+                                                              hargaBatu27 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? data[0][
+                                                                      'hargaCaratPcsMetier']
+                                                                  : data[0][
+                                                                      'hargaCaratPcsParva'];
                                                               markUpBatu27 =
                                                                   data[0][
                                                                       'markUp'];
@@ -26964,9 +26271,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu27 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu27 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu27 =
                                                                       data[0][
                                                                           'markUp'];
@@ -27202,9 +26515,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu27 = data[
-                                                                      0]
-                                                                  ['unitCost'];
+                                                              hargaBatu27 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? data[0][
+                                                                      'hargaCaratPcsMetier']
+                                                                  : data[0][
+                                                                      'hargaCaratPcsParva'];
                                                               markUpBatu27 =
                                                                   data[0][
                                                                       'markUp'];
@@ -27269,9 +26588,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu27 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu27 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu27 =
                                                                       data[0][
                                                                           'markUp'];
@@ -27401,7 +26726,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                             height: 50,
                                             padding:
                                                 const EdgeInsets.only(top: 5),
-                                            child: DropdownSearch<BatuModel>(
+                                            child:
+                                                DropdownSearch<BatuModel2024>(
                                               asyncItems: (String? filter) =>
                                                   getData(filter),
                                               popupProps:
@@ -27418,7 +26744,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   final response =
                                                       await http.get(
                                                     Uri.parse(
-                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
+                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc2024}?idStone=${item!.idStone}'),
                                                   );
                                                   if (response.statusCode ==
                                                       200) {
@@ -27430,8 +26756,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       crtPcsBatu28.text = '';
                                                       idStone28 = item.idStone;
                                                       idBatu28 = item.id;
-                                                      hargaBatu28 =
-                                                          data[0]['unitCost'];
+                                                      hargaBatu28 = brand.text
+                                                                  .toLowerCase()
+                                                                  .toString() ==
+                                                              "metier"
+                                                          ? data[0][
+                                                              'hargaCaratPcsMetier']
+                                                          : data[0][
+                                                              'hargaCaratPcsParva'];
                                                       markUpBatu28 =
                                                           data[0]['markUp'];
                                                       caratPcsBatu28 =
@@ -27498,9 +26830,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu28 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu28 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu28 =
                                                                       data[0][
                                                                           'markUp'];
@@ -27557,9 +26895,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu28 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu28 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu28 =
                                                                       data[0][
                                                                           'markUp'];
@@ -27627,10 +26971,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu28 =
-                                                                          data[0]
+                                                                      hargaBatu28 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? data[0]
                                                                               [
-                                                                              'unitCost'];
+                                                                              'hargaCaratPcsMetier']
+                                                                          : data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva'];
                                                                       markUpBatu28 =
                                                                           data[0]
                                                                               [
@@ -27691,10 +27039,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu28 =
-                                                                          data[0]
+                                                                      hargaBatu28 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? data[0]
                                                                               [
-                                                                              'unitCost'];
+                                                                              'hargaCaratPcsMetier']
+                                                                          : data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva'];
                                                                       markUpBatu28 =
                                                                           data[0]
                                                                               [
@@ -27786,9 +27138,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu28 = data[
-                                                                      0]
-                                                                  ['unitCost'];
+                                                              hargaBatu28 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? data[0][
+                                                                      'hargaCaratPcsMetier']
+                                                                  : data[0][
+                                                                      'hargaCaratPcsParva'];
                                                               markUpBatu28 =
                                                                   data[0][
                                                                       'markUp'];
@@ -27850,9 +27208,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu28 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu28 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu28 =
                                                                       data[0][
                                                                           'markUp'];
@@ -28088,9 +27452,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu28 = data[
-                                                                      0]
-                                                                  ['unitCost'];
+                                                              hargaBatu28 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? data[0][
+                                                                      'hargaCaratPcsMetier']
+                                                                  : data[0][
+                                                                      'hargaCaratPcsParva'];
                                                               markUpBatu28 =
                                                                   data[0][
                                                                       'markUp'];
@@ -28155,9 +27525,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu28 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu28 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu28 =
                                                                       data[0][
                                                                           'markUp'];
@@ -28287,7 +27663,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                             height: 50,
                                             padding:
                                                 const EdgeInsets.only(top: 5),
-                                            child: DropdownSearch<BatuModel>(
+                                            child:
+                                                DropdownSearch<BatuModel2024>(
                                               asyncItems: (String? filter) =>
                                                   getData(filter),
                                               popupProps:
@@ -28304,7 +27681,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   final response =
                                                       await http.get(
                                                     Uri.parse(
-                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
+                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc2024}?idStone=${item!.idStone}'),
                                                   );
                                                   if (response.statusCode ==
                                                       200) {
@@ -28316,8 +27693,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       crtPcsBatu29.text = '';
                                                       idStone29 = item.idStone;
                                                       idBatu29 = item.id;
-                                                      hargaBatu29 =
-                                                          data[0]['unitCost'];
+                                                      hargaBatu29 = brand.text
+                                                                  .toLowerCase()
+                                                                  .toString() ==
+                                                              "metier"
+                                                          ? data[0][
+                                                              'hargaCaratPcsMetier']
+                                                          : data[0][
+                                                              'hargaCaratPcsParva'];
                                                       markUpBatu29 =
                                                           data[0]['markUp'];
                                                       caratPcsBatu29 =
@@ -28384,9 +27767,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu29 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu29 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu29 =
                                                                       data[0][
                                                                           'markUp'];
@@ -28443,9 +27832,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu29 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu29 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu29 =
                                                                       data[0][
                                                                           'markUp'];
@@ -28513,10 +27908,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu29 =
-                                                                          data[0]
+                                                                      hargaBatu29 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? data[0]
                                                                               [
-                                                                              'unitCost'];
+                                                                              'hargaCaratPcsMetier']
+                                                                          : data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva'];
                                                                       markUpBatu29 =
                                                                           data[0]
                                                                               [
@@ -28577,10 +27976,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu29 =
-                                                                          data[0]
+                                                                      hargaBatu29 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? data[0]
                                                                               [
-                                                                              'unitCost'];
+                                                                              'hargaCaratPcsMetier']
+                                                                          : data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva'];
                                                                       markUpBatu29 =
                                                                           data[0]
                                                                               [
@@ -28672,9 +28075,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu29 = data[
-                                                                      0]
-                                                                  ['unitCost'];
+                                                              hargaBatu29 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? data[0][
+                                                                      'hargaCaratPcsMetier']
+                                                                  : data[0][
+                                                                      'hargaCaratPcsParva'];
                                                               markUpBatu29 =
                                                                   data[0][
                                                                       'markUp'];
@@ -28736,9 +28145,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu29 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu29 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu29 =
                                                                       data[0][
                                                                           'markUp'];
@@ -28974,9 +28389,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu29 = data[
-                                                                      0]
-                                                                  ['unitCost'];
+                                                              hargaBatu29 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? data[0][
+                                                                      'hargaCaratPcsMetier']
+                                                                  : data[0][
+                                                                      'hargaCaratPcsParva'];
                                                               markUpBatu29 =
                                                                   data[0][
                                                                       'markUp'];
@@ -29041,9 +28462,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu29 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu29 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu29 =
                                                                       data[0][
                                                                           'markUp'];
@@ -29173,7 +28600,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                             height: 50,
                                             padding:
                                                 const EdgeInsets.only(top: 5),
-                                            child: DropdownSearch<BatuModel>(
+                                            child:
+                                                DropdownSearch<BatuModel2024>(
                                               asyncItems: (String? filter) =>
                                                   getData(filter),
                                               popupProps:
@@ -29190,7 +28618,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   final response =
                                                       await http.get(
                                                     Uri.parse(
-                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
+                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc2024}?idStone=${item!.idStone}'),
                                                   );
                                                   if (response.statusCode ==
                                                       200) {
@@ -29202,8 +28630,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       crtPcsBatu30.text = '';
                                                       idStone30 = item.idStone;
                                                       idBatu30 = item.id;
-                                                      hargaBatu30 =
-                                                          data[0]['unitCost'];
+                                                      hargaBatu30 = brand.text
+                                                                  .toLowerCase()
+                                                                  .toString() ==
+                                                              "metier"
+                                                          ? data[0][
+                                                              'hargaCaratPcsMetier']
+                                                          : data[0][
+                                                              'hargaCaratPcsParva'];
                                                       markUpBatu30 =
                                                           data[0]['markUp'];
                                                       caratPcsBatu30 =
@@ -29270,9 +28704,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu30 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu30 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu30 =
                                                                       data[0][
                                                                           'markUp'];
@@ -29329,9 +28769,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu30 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu30 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu30 =
                                                                       data[0][
                                                                           'markUp'];
@@ -29399,10 +28845,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu30 =
-                                                                          data[0]
+                                                                      hargaBatu30 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? data[0]
                                                                               [
-                                                                              'unitCost'];
+                                                                              'hargaCaratPcsMetier']
+                                                                          : data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva'];
                                                                       markUpBatu30 =
                                                                           data[0]
                                                                               [
@@ -29463,10 +28913,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu30 =
-                                                                          data[0]
+                                                                      hargaBatu30 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? data[0]
                                                                               [
-                                                                              'unitCost'];
+                                                                              'hargaCaratPcsMetier']
+                                                                          : data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva'];
                                                                       markUpBatu30 =
                                                                           data[0]
                                                                               [
@@ -29558,9 +29012,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu30 = data[
-                                                                      0]
-                                                                  ['unitCost'];
+                                                              hargaBatu30 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? data[0][
+                                                                      'hargaCaratPcsMetier']
+                                                                  : data[0][
+                                                                      'hargaCaratPcsParva'];
                                                               markUpBatu30 =
                                                                   data[0][
                                                                       'markUp'];
@@ -29622,9 +29082,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu30 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu30 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu30 =
                                                                       data[0][
                                                                           'markUp'];
@@ -29860,9 +29326,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu30 = data[
-                                                                      0]
-                                                                  ['unitCost'];
+                                                              hargaBatu30 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? data[0][
+                                                                      'hargaCaratPcsMetier']
+                                                                  : data[0][
+                                                                      'hargaCaratPcsParva'];
                                                               markUpBatu30 =
                                                                   data[0][
                                                                       'markUp'];
@@ -29927,9 +29399,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu30 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu30 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu30 =
                                                                       data[0][
                                                                           'markUp'];
@@ -30059,7 +29537,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                             height: 50,
                                             padding:
                                                 const EdgeInsets.only(top: 5),
-                                            child: DropdownSearch<BatuModel>(
+                                            child:
+                                                DropdownSearch<BatuModel2024>(
                                               asyncItems: (String? filter) =>
                                                   getData(filter),
                                               popupProps:
@@ -30076,7 +29555,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   final response =
                                                       await http.get(
                                                     Uri.parse(
-                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
+                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc2024}?idStone=${item!.idStone}'),
                                                   );
                                                   if (response.statusCode ==
                                                       200) {
@@ -30088,8 +29567,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       crtPcsBatu31.text = '';
                                                       idStone31 = item.idStone;
                                                       idBatu31 = item.id;
-                                                      hargaBatu31 =
-                                                          data[0]['unitCost'];
+                                                      hargaBatu31 = brand.text
+                                                                  .toLowerCase()
+                                                                  .toString() ==
+                                                              "metier"
+                                                          ? data[0][
+                                                              'hargaCaratPcsMetier']
+                                                          : data[0][
+                                                              'hargaCaratPcsParva'];
                                                       markUpBatu31 =
                                                           data[0]['markUp'];
                                                       caratPcsBatu31 =
@@ -30156,9 +29641,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu31 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu31 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu31 =
                                                                       data[0][
                                                                           'markUp'];
@@ -30215,9 +29706,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu31 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu31 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu31 =
                                                                       data[0][
                                                                           'markUp'];
@@ -30285,10 +29782,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu31 =
-                                                                          data[0]
+                                                                      hargaBatu31 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? data[0]
                                                                               [
-                                                                              'unitCost'];
+                                                                              'hargaCaratPcsMetier']
+                                                                          : data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva'];
                                                                       markUpBatu31 =
                                                                           data[0]
                                                                               [
@@ -30349,10 +29850,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu31 =
-                                                                          data[0]
+                                                                      hargaBatu31 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? data[0]
                                                                               [
-                                                                              'unitCost'];
+                                                                              'hargaCaratPcsMetier']
+                                                                          : data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva'];
                                                                       markUpBatu31 =
                                                                           data[0]
                                                                               [
@@ -30444,9 +29949,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu31 = data[
-                                                                      0]
-                                                                  ['unitCost'];
+                                                              hargaBatu31 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? data[0][
+                                                                      'hargaCaratPcsMetier']
+                                                                  : data[0][
+                                                                      'hargaCaratPcsParva'];
                                                               markUpBatu31 =
                                                                   data[0][
                                                                       'markUp'];
@@ -30508,9 +30019,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu31 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu31 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu31 =
                                                                       data[0][
                                                                           'markUp'];
@@ -30746,9 +30263,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu31 = data[
-                                                                      0]
-                                                                  ['unitCost'];
+                                                              hargaBatu31 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? data[0][
+                                                                      'hargaCaratPcsMetier']
+                                                                  : data[0][
+                                                                      'hargaCaratPcsParva'];
                                                               markUpBatu31 =
                                                                   data[0][
                                                                       'markUp'];
@@ -30813,9 +30336,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu31 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu31 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu31 =
                                                                       data[0][
                                                                           'markUp'];
@@ -30945,7 +30474,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                             height: 50,
                                             padding:
                                                 const EdgeInsets.only(top: 5),
-                                            child: DropdownSearch<BatuModel>(
+                                            child:
+                                                DropdownSearch<BatuModel2024>(
                                               asyncItems: (String? filter) =>
                                                   getData(filter),
                                               popupProps:
@@ -30962,7 +30492,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   final response =
                                                       await http.get(
                                                     Uri.parse(
-                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
+                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc2024}?idStone=${item!.idStone}'),
                                                   );
                                                   if (response.statusCode ==
                                                       200) {
@@ -30974,8 +30504,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       crtPcsBatu32.text = '';
                                                       idStone32 = item.idStone;
                                                       idBatu32 = item.id;
-                                                      hargaBatu32 =
-                                                          data[0]['unitCost'];
+                                                      hargaBatu32 = brand.text
+                                                                  .toLowerCase()
+                                                                  .toString() ==
+                                                              "metier"
+                                                          ? data[0][
+                                                              'hargaCaratPcsMetier']
+                                                          : data[0][
+                                                              'hargaCaratPcsParva'];
                                                       markUpBatu32 =
                                                           data[0]['markUp'];
                                                       caratPcsBatu32 =
@@ -31042,9 +30578,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu32 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu32 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu32 =
                                                                       data[0][
                                                                           'markUp'];
@@ -31101,9 +30643,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu32 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu32 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu32 =
                                                                       data[0][
                                                                           'markUp'];
@@ -31171,10 +30719,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu32 =
-                                                                          data[0]
+                                                                      hargaBatu32 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? data[0]
                                                                               [
-                                                                              'unitCost'];
+                                                                              'hargaCaratPcsMetier']
+                                                                          : data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva'];
                                                                       markUpBatu32 =
                                                                           data[0]
                                                                               [
@@ -31235,10 +30787,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu32 =
-                                                                          data[0]
+                                                                      hargaBatu32 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? data[0]
                                                                               [
-                                                                              'unitCost'];
+                                                                              'hargaCaratPcsMetier']
+                                                                          : data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva'];
                                                                       markUpBatu32 =
                                                                           data[0]
                                                                               [
@@ -31330,9 +30886,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu32 = data[
-                                                                      0]
-                                                                  ['unitCost'];
+                                                              hargaBatu32 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? data[0][
+                                                                      'hargaCaratPcsMetier']
+                                                                  : data[0][
+                                                                      'hargaCaratPcsParva'];
                                                               markUpBatu32 =
                                                                   data[0][
                                                                       'markUp'];
@@ -31394,9 +30956,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu32 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu32 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu32 =
                                                                       data[0][
                                                                           'markUp'];
@@ -31632,9 +31200,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu32 = data[
-                                                                      0]
-                                                                  ['unitCost'];
+                                                              hargaBatu32 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? data[0][
+                                                                      'hargaCaratPcsMetier']
+                                                                  : data[0][
+                                                                      'hargaCaratPcsParva'];
                                                               markUpBatu32 =
                                                                   data[0][
                                                                       'markUp'];
@@ -31699,9 +31273,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu32 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu32 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu32 =
                                                                       data[0][
                                                                           'markUp'];
@@ -31831,7 +31411,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                             height: 50,
                                             padding:
                                                 const EdgeInsets.only(top: 5),
-                                            child: DropdownSearch<BatuModel>(
+                                            child:
+                                                DropdownSearch<BatuModel2024>(
                                               asyncItems: (String? filter) =>
                                                   getData(filter),
                                               popupProps:
@@ -31848,7 +31429,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   final response =
                                                       await http.get(
                                                     Uri.parse(
-                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
+                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc2024}?idStone=${item!.idStone}'),
                                                   );
                                                   if (response.statusCode ==
                                                       200) {
@@ -31860,8 +31441,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       crtPcsBatu33.text = '';
                                                       idStone33 = item.idStone;
                                                       idBatu33 = item.id;
-                                                      hargaBatu33 =
-                                                          data[0]['unitCost'];
+                                                      hargaBatu33 = brand.text
+                                                                  .toLowerCase()
+                                                                  .toString() ==
+                                                              "metier"
+                                                          ? data[0][
+                                                              'hargaCaratPcsMetier']
+                                                          : data[0][
+                                                              'hargaCaratPcsParva'];
                                                       markUpBatu33 =
                                                           data[0]['markUp'];
                                                       caratPcsBatu33 =
@@ -31928,9 +31515,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu33 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu33 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu33 =
                                                                       data[0][
                                                                           'markUp'];
@@ -31987,9 +31580,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu33 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu33 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu33 =
                                                                       data[0][
                                                                           'markUp'];
@@ -32057,10 +31656,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu33 =
-                                                                          data[0]
+                                                                      hargaBatu33 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? data[0]
                                                                               [
-                                                                              'unitCost'];
+                                                                              'hargaCaratPcsMetier']
+                                                                          : data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva'];
                                                                       markUpBatu33 =
                                                                           data[0]
                                                                               [
@@ -32121,10 +31724,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu33 =
-                                                                          data[0]
+                                                                      hargaBatu33 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? data[0]
                                                                               [
-                                                                              'unitCost'];
+                                                                              'hargaCaratPcsMetier']
+                                                                          : data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva'];
                                                                       markUpBatu33 =
                                                                           data[0]
                                                                               [
@@ -32216,9 +31823,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu33 = data[
-                                                                      0]
-                                                                  ['unitCost'];
+                                                              hargaBatu33 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? data[0][
+                                                                      'hargaCaratPcsMetier']
+                                                                  : data[0][
+                                                                      'hargaCaratPcsParva'];
                                                               markUpBatu33 =
                                                                   data[0][
                                                                       'markUp'];
@@ -32280,9 +31893,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu33 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu33 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu33 =
                                                                       data[0][
                                                                           'markUp'];
@@ -32518,9 +32137,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu33 = data[
-                                                                      0]
-                                                                  ['unitCost'];
+                                                              hargaBatu33 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? data[0][
+                                                                      'hargaCaratPcsMetier']
+                                                                  : data[0][
+                                                                      'hargaCaratPcsParva'];
                                                               markUpBatu33 =
                                                                   data[0][
                                                                       'markUp'];
@@ -32585,9 +32210,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu33 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu33 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu33 =
                                                                       data[0][
                                                                           'markUp'];
@@ -32717,7 +32348,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                             height: 50,
                                             padding:
                                                 const EdgeInsets.only(top: 5),
-                                            child: DropdownSearch<BatuModel>(
+                                            child:
+                                                DropdownSearch<BatuModel2024>(
                                               asyncItems: (String? filter) =>
                                                   getData(filter),
                                               popupProps:
@@ -32734,7 +32366,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   final response =
                                                       await http.get(
                                                     Uri.parse(
-                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
+                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc2024}?idStone=${item!.idStone}'),
                                                   );
                                                   if (response.statusCode ==
                                                       200) {
@@ -32746,8 +32378,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       crtPcsBatu34.text = '';
                                                       idStone34 = item.idStone;
                                                       idBatu34 = item.id;
-                                                      hargaBatu34 =
-                                                          data[0]['unitCost'];
+                                                      hargaBatu34 = brand.text
+                                                                  .toLowerCase()
+                                                                  .toString() ==
+                                                              "metier"
+                                                          ? data[0][
+                                                              'hargaCaratPcsMetier']
+                                                          : data[0][
+                                                              'hargaCaratPcsParva'];
                                                       markUpBatu34 =
                                                           data[0]['markUp'];
                                                       caratPcsBatu34 =
@@ -32814,9 +32452,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu34 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu34 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu34 =
                                                                       data[0][
                                                                           'markUp'];
@@ -32873,9 +32517,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu34 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu34 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu34 =
                                                                       data[0][
                                                                           'markUp'];
@@ -32943,10 +32593,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu34 =
-                                                                          data[0]
+                                                                      hargaBatu34 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? data[0]
                                                                               [
-                                                                              'unitCost'];
+                                                                              'hargaCaratPcsMetier']
+                                                                          : data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva'];
                                                                       markUpBatu34 =
                                                                           data[0]
                                                                               [
@@ -33007,10 +32661,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu34 =
-                                                                          data[0]
+                                                                      hargaBatu34 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? data[0]
                                                                               [
-                                                                              'unitCost'];
+                                                                              'hargaCaratPcsMetier']
+                                                                          : data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva'];
                                                                       markUpBatu34 =
                                                                           data[0]
                                                                               [
@@ -33102,9 +32760,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu34 = data[
-                                                                      0]
-                                                                  ['unitCost'];
+                                                              hargaBatu34 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? data[0][
+                                                                      'hargaCaratPcsMetier']
+                                                                  : data[0][
+                                                                      'hargaCaratPcsParva'];
                                                               markUpBatu34 =
                                                                   data[0][
                                                                       'markUp'];
@@ -33166,9 +32830,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu34 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu34 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu34 =
                                                                       data[0][
                                                                           'markUp'];
@@ -33404,9 +33074,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu34 = data[
-                                                                      0]
-                                                                  ['unitCost'];
+                                                              hargaBatu34 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? data[0][
+                                                                      'hargaCaratPcsMetier']
+                                                                  : data[0][
+                                                                      'hargaCaratPcsParva'];
                                                               markUpBatu34 =
                                                                   data[0][
                                                                       'markUp'];
@@ -33471,9 +33147,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu34 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu34 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu34 =
                                                                       data[0][
                                                                           'markUp'];
@@ -33603,7 +33285,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                             height: 50,
                                             padding:
                                                 const EdgeInsets.only(top: 5),
-                                            child: DropdownSearch<BatuModel>(
+                                            child:
+                                                DropdownSearch<BatuModel2024>(
                                               asyncItems: (String? filter) =>
                                                   getData(filter),
                                               popupProps:
@@ -33620,7 +33303,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   final response =
                                                       await http.get(
                                                     Uri.parse(
-                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone=${item!.idStone}'),
+                                                        '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc2024}?idStone=${item!.idStone}'),
                                                   );
                                                   if (response.statusCode ==
                                                       200) {
@@ -33632,8 +33315,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                       crtPcsBatu35.text = '';
                                                       idStone35 = item.idStone;
                                                       idBatu35 = item.id;
-                                                      hargaBatu35 =
-                                                          data[0]['unitCost'];
+                                                      hargaBatu35 = brand.text
+                                                                  .toLowerCase()
+                                                                  .toString() ==
+                                                              "metier"
+                                                          ? data[0][
+                                                              'hargaCaratPcsMetier']
+                                                          : data[0][
+                                                              'hargaCaratPcsParva'];
                                                       markUpBatu35 =
                                                           data[0]['markUp'];
                                                       caratPcsBatu35 =
@@ -33700,9 +33389,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu35 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu35 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu35 =
                                                                       data[0][
                                                                           'markUp'];
@@ -33759,9 +33454,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu35 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu35 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu35 =
                                                                       data[0][
                                                                           'markUp'];
@@ -33829,10 +33530,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu35 =
-                                                                          data[0]
+                                                                      hargaBatu35 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? data[0]
                                                                               [
-                                                                              'unitCost'];
+                                                                              'hargaCaratPcsMetier']
+                                                                          : data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva'];
                                                                       markUpBatu35 =
                                                                           data[0]
                                                                               [
@@ -33893,10 +33598,14 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                     print(data);
                                                                     setState(
                                                                         () {
-                                                                      hargaBatu35 =
-                                                                          data[0]
+                                                                      hargaBatu35 = brand.text.toLowerCase().toString() ==
+                                                                              "metier"
+                                                                          ? data[0]
                                                                               [
-                                                                              'unitCost'];
+                                                                              'hargaCaratPcsMetier']
+                                                                          : data[0]
+                                                                              [
+                                                                              'hargaCaratPcsParva'];
                                                                       markUpBatu35 =
                                                                           data[0]
                                                                               [
@@ -33988,9 +33697,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu35 = data[
-                                                                      0]
-                                                                  ['unitCost'];
+                                                              hargaBatu35 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? data[0][
+                                                                      'hargaCaratPcsMetier']
+                                                                  : data[0][
+                                                                      'hargaCaratPcsParva'];
                                                               markUpBatu35 =
                                                                   data[0][
                                                                       'markUp'];
@@ -34052,9 +33767,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu35 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu35 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu35 =
                                                                       data[0][
                                                                           'markUp'];
@@ -34290,9 +34011,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                         .body);
                                                             print(data);
                                                             setState(() {
-                                                              hargaBatu35 = data[
-                                                                      0]
-                                                                  ['unitCost'];
+                                                              hargaBatu35 = brand
+                                                                          .text
+                                                                          .toLowerCase()
+                                                                          .toString() ==
+                                                                      "metier"
+                                                                  ? data[0][
+                                                                      'hargaCaratPcsMetier']
+                                                                  : data[0][
+                                                                      'hargaCaratPcsParva'];
                                                               markUpBatu35 =
                                                                   data[0][
                                                                       'markUp'];
@@ -34357,9 +34084,15 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                                             .body);
                                                                 print(data);
                                                                 setState(() {
-                                                                  hargaBatu35 =
-                                                                      data[0][
-                                                                          'unitCost'];
+                                                                  hargaBatu35 = brand
+                                                                              .text
+                                                                              .toLowerCase()
+                                                                              .toString() ==
+                                                                          "metier"
+                                                                      ? data[0][
+                                                                          'hargaCaratPcsMetier']
+                                                                      : data[0][
+                                                                          'hargaCaratPcsParva'];
                                                                   markUpBatu35 =
                                                                       data[0][
                                                                           'markUp'];
@@ -35443,17 +35176,17 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
     print(response.body);
   }
 
-  Future<List<BatuModel>> getData(filter) async {
+  Future<List<BatuModel2024>> getData(filter) async {
     // 'http://54.179.58.215:8080/api/indexcustomer',
     // 'http://192.168.22.228/Api_Flutter/spk/batu.php',
     // 'https://fakestoreapi.com/products',
     var response = await Dio().get(
-      ApiConstants.baseUrl + ApiConstants.getDataBatuCalculator,
+      ApiConstants.baseUrl + ApiConstants.getDataBatuMdbc2024,
       queryParameters: {"filter": filter.toLowerCase()},
     );
     final data = response.data;
     if (data != null) {
-      return BatuModel.fromJsonList(data);
+      return BatuModel2024.fromJsonList(data);
     }
     return [];
   }
@@ -41763,7 +41496,7 @@ extension E on String {
 
 Widget _listBatu(
   BuildContext context,
-  BatuModel? item,
+  BatuModel2024? item,
   bool isSelected,
 ) {
   return Container(

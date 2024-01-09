@@ -3,7 +3,7 @@
 class ListItemModel {
   final int id;
   String? noPr;
-  final String item;
+  final String nama;
   final String? qty;
   final String? berat;
   final String? kadar;
@@ -12,7 +12,7 @@ class ListItemModel {
 
   ListItemModel({
     required this.id,
-    required this.item,
+    required this.nama,
     this.noPr,
     this.qty,
     this.berat,
@@ -24,13 +24,13 @@ class ListItemModel {
   factory ListItemModel.fromJson(Map<String, dynamic> json) {
     return ListItemModel(
       id: json["id"],
-      item: json["item"] ?? 'null',
+      nama: json["nama"] ?? '',
       noPr: json["noPr"] ?? '',
-      qty: json["qty"] ?? 0,
+      qty: json["qty"].toString(),
       berat: json["berat"].toString(),
-      kadar: json["kadar"] ?? 0,
-      color: json["color"] ?? 0,
-      created_at: json["created_at"] ?? 0,
+      kadar: json["kadar"].toString(),
+      color: json["color"].toString(),
+      created_at: json["created_at"].toString(),
     );
   }
 
@@ -40,7 +40,7 @@ class ListItemModel {
 
   ///this method will prevent the override of toString
   String userAsString() {
-    return '#${this.id} ${this.item}';
+    return '#${this.id} ${this.nama}';
   }
 
   ///custom comparing function to check if two users are equal
@@ -49,6 +49,6 @@ class ListItemModel {
   }
 
   @override
-  String toString() => item;
+  String toString() => nama;
   String toId() => id.toString();
 }
