@@ -269,7 +269,7 @@ class _ListCalculatePricingScreenState
                                         DataColumn(
                                             label: const SizedBox(
                                                 child: Text(
-                                              "NAMA DESIGNER",
+                                              "NAMA",
                                               style: TextStyle(
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.bold),

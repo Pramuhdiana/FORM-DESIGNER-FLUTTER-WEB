@@ -13722,7 +13722,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
     }
     print('ini pr : $pricePerCarat & $priceAfterDiskon');
     Map<String, String> body = {
-      'namaDesigner': namaDesigner.text,
+      'namaDesigner':  '(N) ${namaDesigner.text}',
       'namaToko': namaToko.text,
       'jenisBarang': jenisBarang.text,
       'brand': brand.text,

@@ -259,7 +259,7 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
               //       ))
               // ],
             ),
-            body: sharedPreferences!.getString('level') == '4'
+            body: sharedPreferences!.getString('level') == '4' || sharedPreferences!.getString('divisi') == 'admin'
                 ? mpsProduksi()
                 : mpsSCM(),
 
@@ -3249,9 +3249,9 @@ class RowSourceProduksi extends DataTableSource {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text('${data.posisi}\n${data.artist}'),
-            sharedPreferences!.getString('level') != '4'
-                ? const SizedBox()
-                : IconButton(
+            sharedPreferences!.getString('level') == '4' || sharedPreferences!.getString('divisi') == 'admin'
+                ? 
+                IconButton(
                     onPressed: () {
                       showDialog(
                           context: context,
@@ -3467,7 +3467,8 @@ class RowSourceProduksi extends DataTableSource {
                     },
                     icon: const Icon(
                       Icons.change_circle,
-                    )),
+                    ))
+                : const SizedBox(),
           ],
         );
       })),
