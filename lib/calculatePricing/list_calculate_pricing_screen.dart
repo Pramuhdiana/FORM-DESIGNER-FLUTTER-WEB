@@ -641,26 +641,7 @@ class RowSource extends DataTableSource {
                                                   padding:
                                                       const EdgeInsets.only(
                                                           left: 15),
-                                                  child: FutureBuilder(
-                                                      future: _getDataMdbc(
-                                                          data.batu1),
-                                                      builder:
-                                                          (context, snapshot) {
-                                                        if (snapshot.hasData) {
-                                                          return Text(
-                                                            '(${snapshot.data!} Crt/Pcs)',
-                                                            textAlign:
-                                                                TextAlign.left,
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          );
-                                                        } else {
-                                                          return Text(
+                                                  child: Text(
                                                             '(${data.caratPcsBatu1} Crt/Pcs)',
                                                             style: const TextStyle(
                                                                 fontSize: 15,
@@ -669,9 +650,8 @@ class RowSource extends DataTableSource {
                                                                         .bold,
                                                                 color: Colors
                                                                     .black),
-                                                          );
-                                                        }
-                                                      }),
+                                                          )
+                                             
                                                 )
                                               ],
                                             ),
@@ -716,26 +696,7 @@ class RowSource extends DataTableSource {
                                                   padding:
                                                       const EdgeInsets.only(
                                                           left: 15),
-                                                  child: FutureBuilder(
-                                                      future: _getDataMdbc(
-                                                          data.batu2),
-                                                      builder:
-                                                          (context, snapshot) {
-                                                        if (snapshot.hasData) {
-                                                          return Text(
-                                                            '(${snapshot.data!} Crt/Pcs)',
-                                                            textAlign:
-                                                                TextAlign.left,
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          );
-                                                        } else {
-                                                          return Text(
+                                                  child: Text(
                                                             '(${data.caratPcsBatu2} Crt/Pcs)',
                                                             style: const TextStyle(
                                                                 fontSize: 15,
@@ -744,9 +705,8 @@ class RowSource extends DataTableSource {
                                                                         .bold,
                                                                 color: Colors
                                                                     .black),
-                                                          );
-                                                        }
-                                                      }),
+                                                          )
+                                             
                                                 )
                                               ],
                                             ),
@@ -792,26 +752,7 @@ class RowSource extends DataTableSource {
                                                   padding:
                                                       const EdgeInsets.only(
                                                           left: 15),
-                                                  child: FutureBuilder(
-                                                      future: _getDataMdbc(
-                                                          data.batu3),
-                                                      builder:
-                                                          (context, snapshot) {
-                                                        if (snapshot.hasData) {
-                                                          return Text(
-                                                            '(${snapshot.data!} Crt/Pcs)',
-                                                            textAlign:
-                                                                TextAlign.left,
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          );
-                                                        } else {
-                                                          return Text(
+                                                  child: Text(
                                                             '(${data.caratPcsBatu3} Crt/Pcs)',
                                                             style: const TextStyle(
                                                                 fontSize: 15,
@@ -820,9 +761,8 @@ class RowSource extends DataTableSource {
                                                                         .bold,
                                                                 color: Colors
                                                                     .black),
-                                                          );
-                                                        }
-                                                      }),
+                                                          )
+                                             
                                                 )
                                               ],
                                             ),
@@ -868,26 +808,7 @@ class RowSource extends DataTableSource {
                                                   padding:
                                                       const EdgeInsets.only(
                                                           left: 15),
-                                                  child: FutureBuilder(
-                                                      future: _getDataMdbc(
-                                                          data.batu4),
-                                                      builder:
-                                                          (context, snapshot) {
-                                                        if (snapshot.hasData) {
-                                                          return Text(
-                                                            '(${snapshot.data!} Crt/Pcs)',
-                                                            textAlign:
-                                                                TextAlign.left,
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          );
-                                                        } else {
-                                                          return Text(
+                                                  child: Text(
                                                             '(${data.caratPcsBatu4} Crt/Pcs)',
                                                             style: const TextStyle(
                                                                 fontSize: 15,
@@ -896,9 +817,8 @@ class RowSource extends DataTableSource {
                                                                         .bold,
                                                                 color: Colors
                                                                     .black),
-                                                          );
-                                                        }
-                                                      }),
+                                                          )
+                                             
                                                 )
                                               ],
                                             ),
@@ -944,26 +864,7 @@ class RowSource extends DataTableSource {
                                                   padding:
                                                       const EdgeInsets.only(
                                                           left: 15),
-                                                  child: FutureBuilder(
-                                                      future: _getDataMdbc(
-                                                          data.batu5),
-                                                      builder:
-                                                          (context, snapshot) {
-                                                        if (snapshot.hasData) {
-                                                          return Text(
-                                                            '(${snapshot.data!} Crt/Pcs)',
-                                                            textAlign:
-                                                                TextAlign.left,
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          );
-                                                        } else {
-                                                          return Text(
+                                                  child: Text(
                                                             '(${data.caratPcsBatu5} Crt/Pcs)',
                                                             style: const TextStyle(
                                                                 fontSize: 15,
@@ -972,9 +873,8 @@ class RowSource extends DataTableSource {
                                                                         .bold,
                                                                 color: Colors
                                                                     .black),
-                                                          );
-                                                        }
-                                                      }),
+                                                          )
+                                             
                                                 )
                                               ],
                                             ),
@@ -1019,26 +919,7 @@ class RowSource extends DataTableSource {
                                                   padding:
                                                       const EdgeInsets.only(
                                                           left: 15),
-                                                  child: FutureBuilder(
-                                                      future: _getDataMdbc(
-                                                          data.batu6),
-                                                      builder:
-                                                          (context, snapshot) {
-                                                        if (snapshot.hasData) {
-                                                          return Text(
-                                                            '(${snapshot.data!} Crt/Pcs)',
-                                                            textAlign:
-                                                                TextAlign.left,
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          );
-                                                        } else {
-                                                          return Text(
+                                                  child: Text(
                                                             '(${data.caratPcsBatu6} Crt/Pcs)',
                                                             style: const TextStyle(
                                                                 fontSize: 15,
@@ -1047,9 +928,8 @@ class RowSource extends DataTableSource {
                                                                         .bold,
                                                                 color: Colors
                                                                     .black),
-                                                          );
-                                                        }
-                                                      }),
+                                                          )
+                                             
                                                 )
                                               ],
                                             ),
@@ -1090,30 +970,11 @@ class RowSource extends DataTableSource {
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
-                                                Padding(
+                                               Padding(
                                                   padding:
                                                       const EdgeInsets.only(
                                                           left: 15),
-                                                  child: FutureBuilder(
-                                                      future: _getDataMdbc(
-                                                          data.batu7),
-                                                      builder:
-                                                          (context, snapshot) {
-                                                        if (snapshot.hasData) {
-                                                          return Text(
-                                                            '(${snapshot.data!} Crt/Pcs)',
-                                                            textAlign:
-                                                                TextAlign.left,
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          );
-                                                        } else {
-                                                          return Text(
+                                                  child: Text(
                                                             '(${data.caratPcsBatu7} Crt/Pcs)',
                                                             style: const TextStyle(
                                                                 fontSize: 15,
@@ -1122,9 +983,8 @@ class RowSource extends DataTableSource {
                                                                         .bold,
                                                                 color: Colors
                                                                     .black),
-                                                          );
-                                                        }
-                                                      }),
+                                                          )
+                                             
                                                 )
                                               ],
                                             ),
@@ -1169,26 +1029,7 @@ class RowSource extends DataTableSource {
                                                   padding:
                                                       const EdgeInsets.only(
                                                           left: 15),
-                                                  child: FutureBuilder(
-                                                      future: _getDataMdbc(
-                                                          data.batu8),
-                                                      builder:
-                                                          (context, snapshot) {
-                                                        if (snapshot.hasData) {
-                                                          return Text(
-                                                            '(${snapshot.data!} Crt/Pcs)',
-                                                            textAlign:
-                                                                TextAlign.left,
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          );
-                                                        } else {
-                                                          return Text(
+                                                  child: Text(
                                                             '(${data.caratPcsBatu8} Crt/Pcs)',
                                                             style: const TextStyle(
                                                                 fontSize: 15,
@@ -1197,9 +1038,8 @@ class RowSource extends DataTableSource {
                                                                         .bold,
                                                                 color: Colors
                                                                     .black),
-                                                          );
-                                                        }
-                                                      }),
+                                                          )
+                                             
                                                 )
                                               ],
                                             ),
@@ -1240,30 +1080,11 @@ class RowSource extends DataTableSource {
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
-                                                Padding(
+                                               Padding(
                                                   padding:
                                                       const EdgeInsets.only(
                                                           left: 15),
-                                                  child: FutureBuilder(
-                                                      future: _getDataMdbc(
-                                                          data.batu9),
-                                                      builder:
-                                                          (context, snapshot) {
-                                                        if (snapshot.hasData) {
-                                                          return Text(
-                                                            '(${snapshot.data!} Crt/Pcs)',
-                                                            textAlign:
-                                                                TextAlign.left,
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          );
-                                                        } else {
-                                                          return Text(
+                                                  child: Text(
                                                             '(${data.caratPcsBatu9} Crt/Pcs)',
                                                             style: const TextStyle(
                                                                 fontSize: 15,
@@ -1272,9 +1093,8 @@ class RowSource extends DataTableSource {
                                                                         .bold,
                                                                 color: Colors
                                                                     .black),
-                                                          );
-                                                        }
-                                                      }),
+                                                          )
+                                             
                                                 )
                                               ],
                                             ),
@@ -1315,30 +1135,11 @@ class RowSource extends DataTableSource {
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
-                                                Padding(
+                                               Padding(
                                                   padding:
                                                       const EdgeInsets.only(
                                                           left: 15),
-                                                  child: FutureBuilder(
-                                                      future: _getDataMdbc(
-                                                          data.batu10),
-                                                      builder:
-                                                          (context, snapshot) {
-                                                        if (snapshot.hasData) {
-                                                          return Text(
-                                                            '(${snapshot.data!} Crt/Pcs)',
-                                                            textAlign:
-                                                                TextAlign.left,
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          );
-                                                        } else {
-                                                          return Text(
+                                                  child: Text(
                                                             '(${data.caratPcsBatu10} Crt/Pcs)',
                                                             style: const TextStyle(
                                                                 fontSize: 15,
@@ -1347,9 +1148,8 @@ class RowSource extends DataTableSource {
                                                                         .bold,
                                                                 color: Colors
                                                                     .black),
-                                                          );
-                                                        }
-                                                      }),
+                                                          )
+                                             
                                                 )
                                               ],
                                             ),
@@ -1394,26 +1194,7 @@ class RowSource extends DataTableSource {
                                                   padding:
                                                       const EdgeInsets.only(
                                                           left: 15),
-                                                  child: FutureBuilder(
-                                                      future: _getDataMdbc(
-                                                          data.batu11),
-                                                      builder:
-                                                          (context, snapshot) {
-                                                        if (snapshot.hasData) {
-                                                          return Text(
-                                                            '(${snapshot.data!} Crt/Pcs)',
-                                                            textAlign:
-                                                                TextAlign.left,
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          );
-                                                        } else {
-                                                          return Text(
+                                                  child: Text(
                                                             '(${data.caratPcsBatu11} Crt/Pcs)',
                                                             style: const TextStyle(
                                                                 fontSize: 15,
@@ -1422,9 +1203,8 @@ class RowSource extends DataTableSource {
                                                                         .bold,
                                                                 color: Colors
                                                                     .black),
-                                                          );
-                                                        }
-                                                      }),
+                                                          )
+                                             
                                                 )
                                               ],
                                             ),
@@ -1465,30 +1245,11 @@ class RowSource extends DataTableSource {
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
-                                                Padding(
+                                               Padding(
                                                   padding:
                                                       const EdgeInsets.only(
                                                           left: 15),
-                                                  child: FutureBuilder(
-                                                      future: _getDataMdbc(
-                                                          data.batu12),
-                                                      builder:
-                                                          (context, snapshot) {
-                                                        if (snapshot.hasData) {
-                                                          return Text(
-                                                            '(${snapshot.data!} Crt/Pcs)',
-                                                            textAlign:
-                                                                TextAlign.left,
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          );
-                                                        } else {
-                                                          return Text(
+                                                  child: Text(
                                                             '(${data.caratPcsBatu12} Crt/Pcs)',
                                                             style: const TextStyle(
                                                                 fontSize: 15,
@@ -1497,9 +1258,8 @@ class RowSource extends DataTableSource {
                                                                         .bold,
                                                                 color: Colors
                                                                     .black),
-                                                          );
-                                                        }
-                                                      }),
+                                                          )
+                                             
                                                 )
                                               ],
                                             ),
@@ -1540,30 +1300,11 @@ class RowSource extends DataTableSource {
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
-                                                Padding(
+                                               Padding(
                                                   padding:
                                                       const EdgeInsets.only(
                                                           left: 15),
-                                                  child: FutureBuilder(
-                                                      future: _getDataMdbc(
-                                                          data.batu13),
-                                                      builder:
-                                                          (context, snapshot) {
-                                                        if (snapshot.hasData) {
-                                                          return Text(
-                                                            '(${snapshot.data!} Crt/Pcs)',
-                                                            textAlign:
-                                                                TextAlign.left,
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          );
-                                                        } else {
-                                                          return Text(
+                                                  child: Text(
                                                             '(${data.caratPcsBatu13} Crt/Pcs)',
                                                             style: const TextStyle(
                                                                 fontSize: 15,
@@ -1572,9 +1313,8 @@ class RowSource extends DataTableSource {
                                                                         .bold,
                                                                 color: Colors
                                                                     .black),
-                                                          );
-                                                        }
-                                                      }),
+                                                          )
+                                             
                                                 )
                                               ],
                                             ),
@@ -1615,30 +1355,11 @@ class RowSource extends DataTableSource {
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
-                                                Padding(
+                                               Padding(
                                                   padding:
                                                       const EdgeInsets.only(
                                                           left: 15),
-                                                  child: FutureBuilder(
-                                                      future: _getDataMdbc(
-                                                          data.batu14),
-                                                      builder:
-                                                          (context, snapshot) {
-                                                        if (snapshot.hasData) {
-                                                          return Text(
-                                                            '(${snapshot.data!} Crt/Pcs)',
-                                                            textAlign:
-                                                                TextAlign.left,
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          );
-                                                        } else {
-                                                          return Text(
+                                                  child: Text(
                                                             '(${data.caratPcsBatu14} Crt/Pcs)',
                                                             style: const TextStyle(
                                                                 fontSize: 15,
@@ -1647,9 +1368,8 @@ class RowSource extends DataTableSource {
                                                                         .bold,
                                                                 color: Colors
                                                                     .black),
-                                                          );
-                                                        }
-                                                      }),
+                                                          )
+                                             
                                                 )
                                               ],
                                             ),
@@ -1690,30 +1410,11 @@ class RowSource extends DataTableSource {
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
-                                                Padding(
+                                              Padding(
                                                   padding:
                                                       const EdgeInsets.only(
                                                           left: 15),
-                                                  child: FutureBuilder(
-                                                      future: _getDataMdbc(
-                                                          data.batu15),
-                                                      builder:
-                                                          (context, snapshot) {
-                                                        if (snapshot.hasData) {
-                                                          return Text(
-                                                            '(${snapshot.data!} Crt/Pcs)',
-                                                            textAlign:
-                                                                TextAlign.left,
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          );
-                                                        } else {
-                                                          return Text(
+                                                  child: Text(
                                                             '(${data.caratPcsBatu15} Crt/Pcs)',
                                                             style: const TextStyle(
                                                                 fontSize: 15,
@@ -1722,9 +1423,8 @@ class RowSource extends DataTableSource {
                                                                         .bold,
                                                                 color: Colors
                                                                     .black),
-                                                          );
-                                                        }
-                                                      }),
+                                                          )
+                                             
                                                 )
                                               ],
                                             ),
@@ -1765,30 +1465,11 @@ class RowSource extends DataTableSource {
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
-                                                Padding(
+                                               Padding(
                                                   padding:
                                                       const EdgeInsets.only(
                                                           left: 15),
-                                                  child: FutureBuilder(
-                                                      future: _getDataMdbc(
-                                                          data.batu16),
-                                                      builder:
-                                                          (context, snapshot) {
-                                                        if (snapshot.hasData) {
-                                                          return Text(
-                                                            '(${snapshot.data!} Crt/Pcs)',
-                                                            textAlign:
-                                                                TextAlign.left,
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          );
-                                                        } else {
-                                                          return Text(
+                                                  child: Text(
                                                             '(${data.caratPcsBatu16} Crt/Pcs)',
                                                             style: const TextStyle(
                                                                 fontSize: 15,
@@ -1797,9 +1478,8 @@ class RowSource extends DataTableSource {
                                                                         .bold,
                                                                 color: Colors
                                                                     .black),
-                                                          );
-                                                        }
-                                                      }),
+                                                          )
+                                             
                                                 )
                                               ],
                                             ),
@@ -1840,30 +1520,11 @@ class RowSource extends DataTableSource {
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
-                                                Padding(
+                                               Padding(
                                                   padding:
                                                       const EdgeInsets.only(
                                                           left: 15),
-                                                  child: FutureBuilder(
-                                                      future: _getDataMdbc(
-                                                          data.batu17),
-                                                      builder:
-                                                          (context, snapshot) {
-                                                        if (snapshot.hasData) {
-                                                          return Text(
-                                                            '(${snapshot.data!} Crt/Pcs)',
-                                                            textAlign:
-                                                                TextAlign.left,
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          );
-                                                        } else {
-                                                          return Text(
+                                                  child: Text(
                                                             '(${data.caratPcsBatu17} Crt/Pcs)',
                                                             style: const TextStyle(
                                                                 fontSize: 15,
@@ -1872,9 +1533,8 @@ class RowSource extends DataTableSource {
                                                                         .bold,
                                                                 color: Colors
                                                                     .black),
-                                                          );
-                                                        }
-                                                      }),
+                                                          )
+                                             
                                                 )
                                               ],
                                             ),
@@ -1919,26 +1579,7 @@ class RowSource extends DataTableSource {
                                                   padding:
                                                       const EdgeInsets.only(
                                                           left: 15),
-                                                  child: FutureBuilder(
-                                                      future: _getDataMdbc(
-                                                          data.batu18),
-                                                      builder:
-                                                          (context, snapshot) {
-                                                        if (snapshot.hasData) {
-                                                          return Text(
-                                                            '(${snapshot.data!} Crt/Pcs)',
-                                                            textAlign:
-                                                                TextAlign.left,
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          );
-                                                        } else {
-                                                          return Text(
+                                                  child: Text(
                                                             '(${data.caratPcsBatu18} Crt/Pcs)',
                                                             style: const TextStyle(
                                                                 fontSize: 15,
@@ -1947,9 +1588,8 @@ class RowSource extends DataTableSource {
                                                                         .bold,
                                                                 color: Colors
                                                                     .black),
-                                                          );
-                                                        }
-                                                      }),
+                                                          )
+                                             
                                                 )
                                               ],
                                             ),
@@ -1990,30 +1630,11 @@ class RowSource extends DataTableSource {
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
-                                                Padding(
+                                               Padding(
                                                   padding:
                                                       const EdgeInsets.only(
                                                           left: 15),
-                                                  child: FutureBuilder(
-                                                      future: _getDataMdbc(
-                                                          data.batu19),
-                                                      builder:
-                                                          (context, snapshot) {
-                                                        if (snapshot.hasData) {
-                                                          return Text(
-                                                            '(${snapshot.data!} Crt/Pcs)',
-                                                            textAlign:
-                                                                TextAlign.left,
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          );
-                                                        } else {
-                                                          return Text(
+                                                  child: Text(
                                                             '(${data.caratPcsBatu19} Crt/Pcs)',
                                                             style: const TextStyle(
                                                                 fontSize: 15,
@@ -2022,9 +1643,8 @@ class RowSource extends DataTableSource {
                                                                         .bold,
                                                                 color: Colors
                                                                     .black),
-                                                          );
-                                                        }
-                                                      }),
+                                                          )
+                                             
                                                 )
                                               ],
                                             ),
@@ -2065,30 +1685,11 @@ class RowSource extends DataTableSource {
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
-                                                Padding(
+                                               Padding(
                                                   padding:
                                                       const EdgeInsets.only(
                                                           left: 15),
-                                                  child: FutureBuilder(
-                                                      future: _getDataMdbc(
-                                                          data.batu20),
-                                                      builder:
-                                                          (context, snapshot) {
-                                                        if (snapshot.hasData) {
-                                                          return Text(
-                                                            '(${snapshot.data!} Crt/Pcs)',
-                                                            textAlign:
-                                                                TextAlign.left,
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          );
-                                                        } else {
-                                                          return Text(
+                                                  child: Text(
                                                             '(${data.caratPcsBatu20} Crt/Pcs)',
                                                             style: const TextStyle(
                                                                 fontSize: 15,
@@ -2097,9 +1698,8 @@ class RowSource extends DataTableSource {
                                                                         .bold,
                                                                 color: Colors
                                                                     .black),
-                                                          );
-                                                        }
-                                                      }),
+                                                          )
+                                             
                                                 )
                                               ],
                                             ),
@@ -2140,30 +1740,11 @@ class RowSource extends DataTableSource {
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
-                                                Padding(
+                                               Padding(
                                                   padding:
                                                       const EdgeInsets.only(
                                                           left: 15),
-                                                  child: FutureBuilder(
-                                                      future: _getDataMdbc(
-                                                          data.batu21),
-                                                      builder:
-                                                          (context, snapshot) {
-                                                        if (snapshot.hasData) {
-                                                          return Text(
-                                                            '(${snapshot.data!} Crt/Pcs)',
-                                                            textAlign:
-                                                                TextAlign.left,
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          );
-                                                        } else {
-                                                          return Text(
+                                                  child: Text(
                                                             '(${data.caratPcsBatu21} Crt/Pcs)',
                                                             style: const TextStyle(
                                                                 fontSize: 15,
@@ -2172,9 +1753,8 @@ class RowSource extends DataTableSource {
                                                                         .bold,
                                                                 color: Colors
                                                                     .black),
-                                                          );
-                                                        }
-                                                      }),
+                                                          )
+                                             
                                                 )
                                               ],
                                             ),
@@ -2215,30 +1795,11 @@ class RowSource extends DataTableSource {
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
-                                                Padding(
+                                               Padding(
                                                   padding:
                                                       const EdgeInsets.only(
                                                           left: 15),
-                                                  child: FutureBuilder(
-                                                      future: _getDataMdbc(
-                                                          data.batu22),
-                                                      builder:
-                                                          (context, snapshot) {
-                                                        if (snapshot.hasData) {
-                                                          return Text(
-                                                            '(${snapshot.data!} Crt/Pcs)',
-                                                            textAlign:
-                                                                TextAlign.left,
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          );
-                                                        } else {
-                                                          return Text(
+                                                  child: Text(
                                                             '(${data.caratPcsBatu22} Crt/Pcs)',
                                                             style: const TextStyle(
                                                                 fontSize: 15,
@@ -2247,9 +1808,8 @@ class RowSource extends DataTableSource {
                                                                         .bold,
                                                                 color: Colors
                                                                     .black),
-                                                          );
-                                                        }
-                                                      }),
+                                                          )
+                                             
                                                 )
                                               ],
                                             ),
@@ -2290,30 +1850,11 @@ class RowSource extends DataTableSource {
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
-                                                Padding(
+                                              Padding(
                                                   padding:
                                                       const EdgeInsets.only(
                                                           left: 15),
-                                                  child: FutureBuilder(
-                                                      future: _getDataMdbc(
-                                                          data.batu23),
-                                                      builder:
-                                                          (context, snapshot) {
-                                                        if (snapshot.hasData) {
-                                                          return Text(
-                                                            '(${snapshot.data!} Crt/Pcs)',
-                                                            textAlign:
-                                                                TextAlign.left,
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          );
-                                                        } else {
-                                                          return Text(
+                                                  child: Text(
                                                             '(${data.caratPcsBatu23} Crt/Pcs)',
                                                             style: const TextStyle(
                                                                 fontSize: 15,
@@ -2322,9 +1863,8 @@ class RowSource extends DataTableSource {
                                                                         .bold,
                                                                 color: Colors
                                                                     .black),
-                                                          );
-                                                        }
-                                                      }),
+                                                          )
+                                             
                                                 )
                                               ],
                                             ),
@@ -2365,30 +1905,11 @@ class RowSource extends DataTableSource {
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
-                                                Padding(
+                                              Padding(
                                                   padding:
                                                       const EdgeInsets.only(
                                                           left: 15),
-                                                  child: FutureBuilder(
-                                                      future: _getDataMdbc(
-                                                          data.batu24),
-                                                      builder:
-                                                          (context, snapshot) {
-                                                        if (snapshot.hasData) {
-                                                          return Text(
-                                                            '(${snapshot.data!} Crt/Pcs)',
-                                                            textAlign:
-                                                                TextAlign.left,
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          );
-                                                        } else {
-                                                          return Text(
+                                                  child: Text(
                                                             '(${data.caratPcsBatu24} Crt/Pcs)',
                                                             style: const TextStyle(
                                                                 fontSize: 15,
@@ -2397,9 +1918,8 @@ class RowSource extends DataTableSource {
                                                                         .bold,
                                                                 color: Colors
                                                                     .black),
-                                                          );
-                                                        }
-                                                      }),
+                                                          )
+                                             
                                                 )
                                               ],
                                             ),
@@ -2440,30 +1960,11 @@ class RowSource extends DataTableSource {
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
-                                                Padding(
+                                             Padding(
                                                   padding:
                                                       const EdgeInsets.only(
                                                           left: 15),
-                                                  child: FutureBuilder(
-                                                      future: _getDataMdbc(
-                                                          data.batu25),
-                                                      builder:
-                                                          (context, snapshot) {
-                                                        if (snapshot.hasData) {
-                                                          return Text(
-                                                            '(${snapshot.data!} Crt/Pcs)',
-                                                            textAlign:
-                                                                TextAlign.left,
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          );
-                                                        } else {
-                                                          return Text(
+                                                  child: Text(
                                                             '(${data.caratPcsBatu25} Crt/Pcs)',
                                                             style: const TextStyle(
                                                                 fontSize: 15,
@@ -2472,9 +1973,8 @@ class RowSource extends DataTableSource {
                                                                         .bold,
                                                                 color: Colors
                                                                     .black),
-                                                          );
-                                                        }
-                                                      }),
+                                                          )
+                                             
                                                 )
                                               ],
                                             ),
@@ -2515,30 +2015,11 @@ class RowSource extends DataTableSource {
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
-                                                Padding(
+                                              Padding(
                                                   padding:
                                                       const EdgeInsets.only(
                                                           left: 15),
-                                                  child: FutureBuilder(
-                                                      future: _getDataMdbc(
-                                                          data.batu26),
-                                                      builder:
-                                                          (context, snapshot) {
-                                                        if (snapshot.hasData) {
-                                                          return Text(
-                                                            '(${snapshot.data!} Crt/Pcs)',
-                                                            textAlign:
-                                                                TextAlign.left,
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          );
-                                                        } else {
-                                                          return Text(
+                                                  child: Text(
                                                             '(${data.caratPcsBatu26} Crt/Pcs)',
                                                             style: const TextStyle(
                                                                 fontSize: 15,
@@ -2547,9 +2028,8 @@ class RowSource extends DataTableSource {
                                                                         .bold,
                                                                 color: Colors
                                                                     .black),
-                                                          );
-                                                        }
-                                                      }),
+                                                          )
+                                             
                                                 )
                                               ],
                                             ),
@@ -2590,30 +2070,11 @@ class RowSource extends DataTableSource {
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
-                                                Padding(
+                                               Padding(
                                                   padding:
                                                       const EdgeInsets.only(
                                                           left: 15),
-                                                  child: FutureBuilder(
-                                                      future: _getDataMdbc(
-                                                          data.batu27),
-                                                      builder:
-                                                          (context, snapshot) {
-                                                        if (snapshot.hasData) {
-                                                          return Text(
-                                                            '(${snapshot.data!} Crt/Pcs)',
-                                                            textAlign:
-                                                                TextAlign.left,
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          );
-                                                        } else {
-                                                          return Text(
+                                                  child: Text(
                                                             '(${data.caratPcsBatu27} Crt/Pcs)',
                                                             style: const TextStyle(
                                                                 fontSize: 15,
@@ -2622,9 +2083,8 @@ class RowSource extends DataTableSource {
                                                                         .bold,
                                                                 color: Colors
                                                                     .black),
-                                                          );
-                                                        }
-                                                      }),
+                                                          )
+                                             
                                                 )
                                               ],
                                             ),
@@ -2665,30 +2125,11 @@ class RowSource extends DataTableSource {
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
-                                                Padding(
+                                               Padding(
                                                   padding:
                                                       const EdgeInsets.only(
                                                           left: 15),
-                                                  child: FutureBuilder(
-                                                      future: _getDataMdbc(
-                                                          data.batu28),
-                                                      builder:
-                                                          (context, snapshot) {
-                                                        if (snapshot.hasData) {
-                                                          return Text(
-                                                            '(${snapshot.data!} Crt/Pcs)',
-                                                            textAlign:
-                                                                TextAlign.left,
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          );
-                                                        } else {
-                                                          return Text(
+                                                  child: Text(
                                                             '(${data.caratPcsBatu28} Crt/Pcs)',
                                                             style: const TextStyle(
                                                                 fontSize: 15,
@@ -2697,9 +2138,8 @@ class RowSource extends DataTableSource {
                                                                         .bold,
                                                                 color: Colors
                                                                     .black),
-                                                          );
-                                                        }
-                                                      }),
+                                                          )
+                                             
                                                 )
                                               ],
                                             ),
@@ -2740,30 +2180,11 @@ class RowSource extends DataTableSource {
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
-                                                Padding(
+                                               Padding(
                                                   padding:
                                                       const EdgeInsets.only(
                                                           left: 15),
-                                                  child: FutureBuilder(
-                                                      future: _getDataMdbc(
-                                                          data.batu29),
-                                                      builder:
-                                                          (context, snapshot) {
-                                                        if (snapshot.hasData) {
-                                                          return Text(
-                                                            '(${snapshot.data!} Crt/Pcs)',
-                                                            textAlign:
-                                                                TextAlign.left,
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          );
-                                                        } else {
-                                                          return Text(
+                                                  child: Text(
                                                             '(${data.caratPcsBatu29} Crt/Pcs)',
                                                             style: const TextStyle(
                                                                 fontSize: 15,
@@ -2772,9 +2193,8 @@ class RowSource extends DataTableSource {
                                                                         .bold,
                                                                 color: Colors
                                                                     .black),
-                                                          );
-                                                        }
-                                                      }),
+                                                          )
+                                             
                                                 )
                                               ],
                                             ),
@@ -2819,26 +2239,7 @@ class RowSource extends DataTableSource {
                                                   padding:
                                                       const EdgeInsets.only(
                                                           left: 15),
-                                                  child: FutureBuilder(
-                                                      future: _getDataMdbc(
-                                                          data.batu30),
-                                                      builder:
-                                                          (context, snapshot) {
-                                                        if (snapshot.hasData) {
-                                                          return Text(
-                                                            '(${snapshot.data!} Crt/Pcs)',
-                                                            textAlign:
-                                                                TextAlign.left,
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          );
-                                                        } else {
-                                                          return Text(
+                                                  child: Text(
                                                             '(${data.caratPcsBatu30} Crt/Pcs)',
                                                             style: const TextStyle(
                                                                 fontSize: 15,
@@ -2847,9 +2248,8 @@ class RowSource extends DataTableSource {
                                                                         .bold,
                                                                 color: Colors
                                                                     .black),
-                                                          );
-                                                        }
-                                                      }),
+                                                          )
+                                             
                                                 )
                                               ],
                                             ),
@@ -2890,30 +2290,11 @@ class RowSource extends DataTableSource {
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
-                                                Padding(
+                                               Padding(
                                                   padding:
                                                       const EdgeInsets.only(
                                                           left: 15),
-                                                  child: FutureBuilder(
-                                                      future: _getDataMdbc(
-                                                          data.batu31),
-                                                      builder:
-                                                          (context, snapshot) {
-                                                        if (snapshot.hasData) {
-                                                          return Text(
-                                                            '(${snapshot.data!} Crt/Pcs)',
-                                                            textAlign:
-                                                                TextAlign.left,
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          );
-                                                        } else {
-                                                          return Text(
+                                                  child: Text(
                                                             '(${data.caratPcsBatu31} Crt/Pcs)',
                                                             style: const TextStyle(
                                                                 fontSize: 15,
@@ -2922,9 +2303,8 @@ class RowSource extends DataTableSource {
                                                                         .bold,
                                                                 color: Colors
                                                                     .black),
-                                                          );
-                                                        }
-                                                      }),
+                                                          )
+                                             
                                                 )
                                               ],
                                             ),
@@ -2965,30 +2345,11 @@ class RowSource extends DataTableSource {
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
-                                                Padding(
+                                              Padding(
                                                   padding:
                                                       const EdgeInsets.only(
                                                           left: 15),
-                                                  child: FutureBuilder(
-                                                      future: _getDataMdbc(
-                                                          data.batu32),
-                                                      builder:
-                                                          (context, snapshot) {
-                                                        if (snapshot.hasData) {
-                                                          return Text(
-                                                            '(${snapshot.data!} Crt/Pcs)',
-                                                            textAlign:
-                                                                TextAlign.left,
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          );
-                                                        } else {
-                                                          return Text(
+                                                  child: Text(
                                                             '(${data.caratPcsBatu32} Crt/Pcs)',
                                                             style: const TextStyle(
                                                                 fontSize: 15,
@@ -2997,9 +2358,8 @@ class RowSource extends DataTableSource {
                                                                         .bold,
                                                                 color: Colors
                                                                     .black),
-                                                          );
-                                                        }
-                                                      }),
+                                                          )
+                                             
                                                 )
                                               ],
                                             ),
@@ -3040,30 +2400,11 @@ class RowSource extends DataTableSource {
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
-                                                Padding(
+                                               Padding(
                                                   padding:
                                                       const EdgeInsets.only(
                                                           left: 15),
-                                                  child: FutureBuilder(
-                                                      future: _getDataMdbc(
-                                                          data.batu33),
-                                                      builder:
-                                                          (context, snapshot) {
-                                                        if (snapshot.hasData) {
-                                                          return Text(
-                                                            '(${snapshot.data!} Crt/Pcs)',
-                                                            textAlign:
-                                                                TextAlign.left,
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          );
-                                                        } else {
-                                                          return Text(
+                                                  child: Text(
                                                             '(${data.caratPcsBatu33} Crt/Pcs)',
                                                             style: const TextStyle(
                                                                 fontSize: 15,
@@ -3072,9 +2413,8 @@ class RowSource extends DataTableSource {
                                                                         .bold,
                                                                 color: Colors
                                                                     .black),
-                                                          );
-                                                        }
-                                                      }),
+                                                          )
+                                             
                                                 )
                                               ],
                                             ),
@@ -3115,30 +2455,11 @@ class RowSource extends DataTableSource {
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
-                                                Padding(
+                                               Padding(
                                                   padding:
                                                       const EdgeInsets.only(
                                                           left: 15),
-                                                  child: FutureBuilder(
-                                                      future: _getDataMdbc(
-                                                          data.batu34),
-                                                      builder:
-                                                          (context, snapshot) {
-                                                        if (snapshot.hasData) {
-                                                          return Text(
-                                                            '(${snapshot.data!} Crt/Pcs)',
-                                                            textAlign:
-                                                                TextAlign.left,
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          );
-                                                        } else {
-                                                          return Text(
+                                                  child: Text(
                                                             '(${data.caratPcsBatu34} Crt/Pcs)',
                                                             style: const TextStyle(
                                                                 fontSize: 15,
@@ -3147,9 +2468,8 @@ class RowSource extends DataTableSource {
                                                                         .bold,
                                                                 color: Colors
                                                                     .black),
-                                                          );
-                                                        }
-                                                      }),
+                                                          )
+                                             
                                                 )
                                               ],
                                             ),
@@ -3190,30 +2510,11 @@ class RowSource extends DataTableSource {
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
-                                                Padding(
+                                               Padding(
                                                   padding:
                                                       const EdgeInsets.only(
                                                           left: 15),
-                                                  child: FutureBuilder(
-                                                      future: _getDataMdbc(
-                                                          data.batu35),
-                                                      builder:
-                                                          (context, snapshot) {
-                                                        if (snapshot.hasData) {
-                                                          return Text(
-                                                            '(${snapshot.data!} Crt/Pcs)',
-                                                            textAlign:
-                                                                TextAlign.left,
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          );
-                                                        } else {
-                                                          return Text(
+                                                  child: Text(
                                                             '(${data.caratPcsBatu35} Crt/Pcs)',
                                                             style: const TextStyle(
                                                                 fontSize: 15,
@@ -3222,9 +2523,8 @@ class RowSource extends DataTableSource {
                                                                         .bold,
                                                                 color: Colors
                                                                     .black),
-                                                          );
-                                                        }
-                                                      }),
+                                                          )
+                                             
                                                 )
                                               ],
                                             ),
@@ -3316,32 +2616,32 @@ class RowSource extends DataTableSource {
   @override
   int get selectedRowCount => 0;
 
-  _getDataMdbc(size) async {
-    try {
-      final response = await http.get(
-        Uri.parse(
-            '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$size"'),
-      );
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-        var sum = data[0]['idStone'] ?? 0;
-        var result;
-        try {
-          final response = await http.get(
-            Uri.parse(
-                '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone="$sum"'),
-          );
-          final data = jsonDecode(response.body);
-          result = data[0]['caratPcs'] ?? 0;
-        } catch (c) {
-          print(c);
-        }
-        return result;
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
+  // _getDataMdbc(size) async {
+  //   try {
+  //     final response = await http.get(
+  //       Uri.parse(
+  //           '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$size"'),
+  //     );
+  //     if (response.statusCode == 200) {
+  //       final data = jsonDecode(response.body);
+  //       var sum = data[0]['idStone'] ?? 0;
+  //       var result;
+  //       try {
+  //         final response = await http.get(
+  //           Uri.parse(
+  //               '${ApiConstants.baseUrl}${ApiConstants.getDataBatuMdbc}?idStone="$sum"'),
+  //         );
+  //         final data = jsonDecode(response.body);
+  //         result = data[0]['caratPcs'] ?? 0;
+  //       } catch (c) {
+  //         print(c);
+  //       }
+  //       return result;
+  //     }
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
 }
 
 class UserDataTableSource extends DataTableSource {

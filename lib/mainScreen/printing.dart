@@ -469,11 +469,11 @@ class _PrintPageState extends State<PrintPage> {
     polseBalesPoint.text = "  ";
     inModeller.text = '${widget.modelDesigner!.tanggalInModeller!} ';
     outModeller.text = '${widget.modelDesigner!.tanggalOutModeller!} ';
-    kodeDesignMdbc.text = '${widget.modelDesigner!.kodeDesignMdbc!} ';
+    kodeDesignMdbc.text = widget.modelDesigner!.kodeDesignMdbc!;
     kodeMarketing.text = '${widget.modelDesigner!.kodeMarketing!} ';
     kodeProduksi.text = '${widget.modelDesigner!.kodeProduksi!} ';
-    namaDesigner.text = '${widget.modelDesigner!.namaDesigner!} ';
-    namaModeller.text = '${widget.modelDesigner!.namaModeller!} ';
+    namaDesigner.text = widget.modelDesigner!.namaDesigner!;
+    namaModeller.text = widget.modelDesigner!.namaModeller!;
     siklus.text = '${widget.modelDesigner!.siklus!} ';
     kodeDesign.text = '${widget.modelDesigner!.kodeDesign!} ';
     tema.text = '${widget.modelDesigner!.tema!} ';
@@ -654,61 +654,82 @@ class _PrintPageState extends State<PrintPage> {
         scrollDirection: Axis.horizontal,
         child: SingleChildScrollView(
           scrollDirection: Axis.vertical,
-          child: Row(
-            children: [
-              SizedBox(
-                // decoration: BoxDecoration(
-                //     border: Border.all(
-                //         color: Colors.black, style: BorderStyle.solid)),
-                width: 1100,
-                child: Row(
+          child: Column(
+               mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                 Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start, children: [
+                     Container(
+                            
+                            width: 750,
+                              height: 540,
+                                 padding: const EdgeInsets.all(0),
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Image.network(
+                                ApiConstants.baseUrlImage + imageUrl!,
+                                fit: BoxFit.scaleDown,
+                                // fit: BoxFit.contain,
+                                // scale: 2,
+                              ),
+                            ),
+                        _bagianTengah(),
+                   ],
+                 ),
+              Row(
                   mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    _bagianKiri(),
-                    _bagianTengah(),
-                  ],
-                ),
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                       children: [
+               
+                  Container(
+                    padding: const EdgeInsets.only(right: 0),
+                    // decoration: BoxDecoration(
+                    //     border: Border.all(
+                    //         color: Colors.black, style: BorderStyle.solid)),
+                    width: 1100,
+                    
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        _bagianKiri(),
+                        // _bagianTengah(),
+                           
+                      ],
+                    ),
+                  ),
+                 
+                  
+                ],
               ),
               Container(
-                alignment: Alignment.topCenter,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // const Center(
-                    //     child: Text(
-                    //   'Tekan CTRL + P untuk print',
-                    //   style: TextStyle(
-                    //       fontSize: 18,
-                    //       color: Colors.black,
-                    //       fontWeight: FontWeight.bold),
-                    // )),
-                    InkWell(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: Center(
-                        child: SizedBox(
-                          child: Row(
-                            children: [
-                              Lottie.asset("loadingJSON/backbutton.json",
-                                  fit: BoxFit.cover),
-                              Text(
-                                'Kembali',
-                                style: TextStyle(
-                                    color: Colors.blue.shade200,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20),
-                              )
-                            ],
+                    padding: const EdgeInsets.only(top: 20),
+                     child: InkWell(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Center(
+                              child: SizedBox(
+                                child: Row(
+                                  children: [
+                                    Lottie.asset("loadingJSON/backbutton.json",
+                                        fit: BoxFit.cover),
+                                    Text(
+                                      'Kembali',
+                                      style: TextStyle(
+                                          color: Colors.blue.shade200,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              )
+                   )
             ],
           ),
         ),
@@ -720,86 +741,12 @@ class _PrintPageState extends State<PrintPage> {
     return Padding(
       padding: const EdgeInsets.only(top: 5, left: 15),
       child: SizedBox(
-          width: 600,
+          width: 700,
           child: Form(
             key: formKey,
             child:
                 Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-              //baris 1
-              Padding(
-                padding: const EdgeInsets.only(bottom: 5),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    //kode design mdbc
-                    Container(
-                      padding: const EdgeInsets.only(right: 15),
-                      width: 200,
-                      height: 30,
-                      child: TextFormField(
-                        enabled: false,
-                        style: const TextStyle(
-                            fontSize: 12,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
-                        textInputAction: TextInputAction.next,
-                        controller: kodeDesignMdbc,
-                        decoration: InputDecoration(
-                          labelText: kodeDesignMdbc.text.isEmpty
-                              ? ""
-                              : "Kode Design MDBC",
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                        ),
-                      ),
-                    ),
-
-                    //nama deisner
-                    Container(
-                      padding: const EdgeInsets.only(right: 15),
-                      width: 200,
-                      height: 30,
-                      child: TextFormField(
-                        enabled: false,
-                        style: const TextStyle(
-                            fontSize: 12,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
-                        textInputAction: TextInputAction.next,
-                        controller: namaDesigner,
-                        decoration: InputDecoration(
-                          labelText:
-                              namaDesigner.text.isEmpty ? "" : "Nama Designer",
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                        ),
-                      ),
-                    ),
-
-                    //nama modeller
-                    Container(
-                      padding: const EdgeInsets.only(right: 15),
-                      width: 200,
-                      height: 30,
-                      child: TextFormField(
-                        enabled: false,
-                        style: const TextStyle(
-                            fontSize: 12,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
-                        textInputAction: TextInputAction.next,
-                        controller: namaModeller,
-                        decoration: InputDecoration(
-                          labelText:
-                              namaModeller.text.isEmpty ? "" : "Nama Modeller",
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              
               //! baris 2
               Padding(
                 padding: const EdgeInsets.only(bottom: 5),
@@ -808,7 +755,7 @@ class _PrintPageState extends State<PrintPage> {
                   children: [
                     //kode marketing
                     Container(
-                      padding: const EdgeInsets.only(right: 15),
+                      padding: const EdgeInsets.only(right: 5),
                       width: 200,
                       height: 30,
                       child: TextFormField(
@@ -831,7 +778,7 @@ class _PrintPageState extends State<PrintPage> {
 
                     //siklus
                     Container(
-                      padding: const EdgeInsets.only(right: 15),
+                      padding: const EdgeInsets.only(right: 5),
                       width: 200,
                       height: 30,
                       child: TextFormField(
@@ -849,86 +796,9 @@ class _PrintPageState extends State<PrintPage> {
                         ),
                       ),
                     ),
-
-                    //kode design
+                     //Tema
                     Container(
-                      padding: const EdgeInsets.only(right: 15),
-                      width: 200,
-                      height: 30,
-                      child: TextFormField(
-                        enabled: false,
-                        style: const TextStyle(
-                            fontSize: 12,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
-                        textInputAction: TextInputAction.next,
-                        controller: kodeDesign,
-                        decoration: InputDecoration(
-                          labelText:
-                              kodeDesign.text.isEmpty ? "" : "Kode Design",
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
-              //! baris 3
-              Padding(
-                padding: const EdgeInsets.only(bottom: 5),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    //kode produksi
-                    Container(
-                      padding: const EdgeInsets.only(right: 15),
-                      width: 200,
-                      height: 30,
-                      child: TextFormField(
-                        enabled: false,
-                        style: const TextStyle(
-                            fontSize: 12,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
-                        textInputAction: TextInputAction.next,
-                        controller: kodeProduksi,
-                        decoration: InputDecoration(
-                          labelText:
-                              kodeProduksi.text.isEmpty ? "" : "Kode Produksi",
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                        ),
-                      ),
-                    ),
-
-                    //keterangan status batu
-                    Container(
-                      padding: const EdgeInsets.only(right: 15),
-                      width: 200,
-                      height: 30,
-                      child: TextFormField(
-                        enabled: false,
-                        style: const TextStyle(
-                            fontSize: 12,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
-                        textInputAction: TextInputAction.next,
-                        controller: keteranganStatusBatu,
-                        decoration: InputDecoration(
-                          labelText: keteranganStatusBatu.text.isEmpty
-                              ? "  "
-                              : "Status Batu",
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                        ),
-                      ),
-                    ),
-
-                    //Tema
-                    Container(
-                      padding: const EdgeInsets.only(right: 15),
+                      padding: const EdgeInsets.only(right: 5),
                       width: 200,
                       height: 30,
                       child: TextFormField(
@@ -946,41 +816,120 @@ class _PrintPageState extends State<PrintPage> {
                         ),
                       ),
                     ),
+                      //Berat Emas
+                    Container(
+                      padding: const EdgeInsets.only(right: 5),
+                      width: 70,
+                      height: 30,
+                      child: TextFormField(
+                        enabled: false,
+                        style: const TextStyle(
+                            fontSize: 12,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold),
+                        textInputAction: TextInputAction.next,
+                        controller: beratEmas,
+                        decoration: InputDecoration(
+                          labelText: beratEmas.text.isEmpty ? "" : "B.Emas",
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5.0)),
+                        ),
+                      ),
+                    ),
+
                   ],
                 ),
               ),
 
-              //gambar
-              imageUrl != null
-                  ? Row(
-                      children: [
-                        Container(
-                          width: 400,
-                          height: 288,
-                          padding: const EdgeInsets.all(2),
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10)),
-                          child: Image.network(
-                            ApiConstants.baseUrlImage + imageUrl!,
-                            fit: BoxFit.scaleDown,
-                            // scale: 2,
-                          ),
-                        ),
-                      ],
-                    )
-                  : Row(
-                      children: [
-                        Container(
-                          width: 490,
-                          height: 200,
-                          padding: const EdgeInsets.all(2),
-                          decoration: BoxDecoration(
-                              color: Colors.grey.shade200,
-                              borderRadius: BorderRadius.circular(10)),
-                        ),
-                      ],
-                    ),
+              // //! baris 3
+              // Padding(
+              //   padding: const EdgeInsets.only(bottom: 5),
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.start,
+              //     children: [
+              //       //kode produksi
+              //       Container(
+              //         padding: const EdgeInsets.only(right: 15),
+              //         width: 200,
+              //         height: 30,
+              //         child: TextFormField(
+              //           enabled: false,
+              //           style: const TextStyle(
+              //               fontSize: 12,
+              //               color: Colors.black,
+              //               fontWeight: FontWeight.bold),
+              //           textInputAction: TextInputAction.next,
+              //           controller: kodeProduksi,
+              //           decoration: InputDecoration(
+              //             labelText:
+              //                 kodeProduksi.text.isEmpty ? "" : "Kode Produksi",
+              //             border: OutlineInputBorder(
+              //                 borderRadius: BorderRadius.circular(5.0)),
+              //           ),
+              //         ),
+              //       ),
+
+              //       //keterangan status batu
+              //       Container(
+              //         padding: const EdgeInsets.only(right: 15),
+              //         width: 200,
+              //         height: 30,
+              //         child: TextFormField(
+              //           enabled: false,
+              //           style: const TextStyle(
+              //               fontSize: 12,
+              //               color: Colors.black,
+              //               fontWeight: FontWeight.bold),
+              //           textInputAction: TextInputAction.next,
+              //           controller: keteranganStatusBatu,
+              //           decoration: InputDecoration(
+              //             labelText: keteranganStatusBatu.text.isEmpty
+              //                 ? "  "
+              //                 : "Status Batu",
+              //             border: OutlineInputBorder(
+              //                 borderRadius: BorderRadius.circular(5.0)),
+              //           ),
+              //         ),
+              //       ),
+
+             
+
+              // //gambar
+              // imageUrl != null
+              //     ? Row(
+              //         children: [
+              //           Container(
+              //             // width: 400,
+              //             // height: 288,
+              //           // width: 1200,
+              //           //   height: 600,
+              //           //      padding: const EdgeInsets.all(2),
+              //           //   decoration: BoxDecoration(
+              //           //       color: Colors.white,
+              //           //       borderRadius: BorderRadius.circular(10)),
+              //           //   child: Image.network(
+              //           //     ApiConstants.baseUrlImage + imageUrl!,
+              //           //     // fit: BoxFit.scaleDown,
+              //           //     fit: BoxFit.contain,
+              //           //     // scale: 2,
+              //           //   ),
+              //           ),
+              //         ],
+              //       )
+              //     : Row(
+              //         children: [
+              //           Container(
+              //             width: 600,
+              //             height: 600,
+              //             padding: const EdgeInsets.all(2),
+              //             decoration: BoxDecoration(
+              //                 color: Colors.grey.shade200,
+              //                 borderRadius: BorderRadius.circular(10)),
+              //           ),
+              //         ],
+              //       ),
+              
+              
               //! baris 4
               Padding(
                 padding: const EdgeInsets.only(bottom: 5, top: 5),
@@ -989,7 +938,7 @@ class _PrintPageState extends State<PrintPage> {
                   children: [
                     //Rantai
                     Container(
-                      padding: const EdgeInsets.only(right: 15),
+                      padding: const EdgeInsets.only(right: 5),
                       width: 260,
                       height: 30,
                       child: TextFormField(
@@ -1010,7 +959,7 @@ class _PrintPageState extends State<PrintPage> {
 
                     //qty
                     Container(
-                      padding: const EdgeInsets.only(right: 15),
+                      padding: const EdgeInsets.only(right: 5),
                       width: 70,
                       height: 30,
                       child: TextFormField(
@@ -1028,62 +977,9 @@ class _PrintPageState extends State<PrintPage> {
                         ),
                       ),
                     ),
-
-                    //stok
+    //lain2
                     Container(
-                      padding: const EdgeInsets.only(right: 15),
-                      width: 70,
-                      height: 30,
-                      child: TextFormField(
-                        enabled: false,
-                        style: const TextStyle(
-                            fontSize: 12,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
-                        textInputAction: TextInputAction.next,
-                        controller: stokRantai,
-                        decoration: InputDecoration(
-                          labelText: stokRantai.text.isEmpty ? "" : "Stok",
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                        ),
-                      ),
-                    ),
-
-                    //jenis barang
-                    Container(
-                      padding: const EdgeInsets.only(right: 15),
-                      width: 200,
-                      height: 30,
-                      child: TextFormField(
-                        enabled: false,
-                        style: const TextStyle(
-                            fontSize: 12,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
-                        textInputAction: TextInputAction.next,
-                        controller: jenisBarang,
-                        decoration: InputDecoration(
-                          labelText:
-                              jenisBarang.text.isEmpty ? "" : "Jenis Barang",
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
-              //! baris 5
-              Padding(
-                padding: const EdgeInsets.only(bottom: 5),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    //lain2
-                    Container(
-                      padding: const EdgeInsets.only(right: 15),
+                      padding: const EdgeInsets.only(right: 5),
                       width: 260,
                       height: 30,
                       child: TextFormField(
@@ -1104,7 +1000,7 @@ class _PrintPageState extends State<PrintPage> {
 
                     //qty
                     Container(
-                      padding: const EdgeInsets.only(right: 15),
+                      padding: const EdgeInsets.only(right: 5),
                       width: 70,
                       height: 30,
                       child: TextFormField(
@@ -1122,50 +1018,7 @@ class _PrintPageState extends State<PrintPage> {
                         ),
                       ),
                     ),
-
-                    //stok
-                    Container(
-                      padding: const EdgeInsets.only(right: 15),
-                      width: 70,
-                      height: 30,
-                      child: TextFormField(
-                        enabled: false,
-                        style: const TextStyle(
-                            fontSize: 12,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
-                        textInputAction: TextInputAction.next,
-                        controller: stokLain2,
-                        decoration: InputDecoration(
-                          labelText: stokLain2.text.isEmpty ? "" : "Stok",
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                        ),
-                      ),
-                    ),
-
-                    //kategori barang
-                    Container(
-                      padding: const EdgeInsets.only(right: 15),
-                      width: 200,
-                      height: 30,
-                      child: TextFormField(
-                        enabled: false,
-                        style: const TextStyle(
-                            fontSize: 12,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
-                        textInputAction: TextInputAction.next,
-                        controller: kategoriBarang,
-                        decoration: InputDecoration(
-                          labelText: kategoriBarang.text.isEmpty
-                              ? ""
-                              : "Kategori Barang",
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                        ),
-                      ),
-                    ),
+                  
                   ],
                 ),
               ),
@@ -1178,7 +1031,7 @@ class _PrintPageState extends State<PrintPage> {
                   children: [
                     //earnut
                     Container(
-                      padding: const EdgeInsets.only(right: 15),
+                      padding: const EdgeInsets.only(right: 5),
                       width: 260,
                       height: 30,
                       child: TextFormField(
@@ -1199,7 +1052,7 @@ class _PrintPageState extends State<PrintPage> {
 
                     //qty
                     Container(
-                      padding: const EdgeInsets.only(right: 15),
+                      padding: const EdgeInsets.only(right: 5),
                       width: 70,
                       height: 30,
                       child: TextFormField(
@@ -1218,128 +1071,9 @@ class _PrintPageState extends State<PrintPage> {
                       ),
                     ),
 
-                    //stok
-                    Container(
-                      padding: const EdgeInsets.only(right: 15),
-                      width: 70,
-                      height: 30,
-                      child: TextFormField(
-                        enabled: false,
-                        style: const TextStyle(
-                            fontSize: 12,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
-                        textInputAction: TextInputAction.next,
-                        controller: stokEarnut,
-                        decoration: InputDecoration(
-                          labelText: stokEarnut.text.isEmpty ? "" : "Stok",
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                        ),
-                      ),
-                    ),
-
-                    //Brand
-                    Container(
-                      padding: const EdgeInsets.only(right: 15),
-                      width: 200,
-                      height: 30,
-                      child: TextFormField(
-                        enabled: false,
-                        style: const TextStyle(
-                            fontSize: 12,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
-                        textInputAction: TextInputAction.next,
-                        controller: brand,
-                        decoration: InputDecoration(
-                          labelText: brand.text.isEmpty ? "" : "Brand",
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
-              //! baris 7
-              Padding(
-                padding: const EdgeInsets.only(bottom: 5),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    //panjang rantai
-                    Container(
-                      padding: const EdgeInsets.only(right: 15),
-                      width: 260,
-                      height: 30,
-                      child: TextFormField(
-                        enabled: false,
-                        style: const TextStyle(
-                            fontSize: 12,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
-                        textInputAction: TextInputAction.next,
-                        controller: panjangRantai,
-                        decoration: InputDecoration(
-                          labelText: panjangRantai.text.isEmpty
-                              ? ""
-                              : "Panjang Rantai",
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                        ),
-                      ),
-                    ),
-
-                    //
-                    Container(
-                      padding: const EdgeInsets.only(right: 15),
-                      width: 70,
-                      height: 30,
-                    ),
-
-                    //
-                    Container(
-                      padding: const EdgeInsets.only(right: 15),
-                      width: 70,
-                      height: 30,
-                    ),
-
-                    //photo shoot
-                    Container(
-                      padding: const EdgeInsets.only(right: 15),
-                      width: 200,
-                      height: 30,
-                      child: TextFormField(
-                        enabled: false,
-                        style: const TextStyle(
-                            fontSize: 12,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
-                        textInputAction: TextInputAction.next,
-                        controller: photoShoot,
-                        decoration: InputDecoration(
-                          labelText:
-                              photoShoot.text.isEmpty ? "" : "Photo Shoot",
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
-              //! baris 8
-              Padding(
-                padding: const EdgeInsets.only(bottom: 5),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
                     //custom componen
                     Container(
-                      padding: const EdgeInsets.only(right: 15),
+                      padding: const EdgeInsets.only(right: 5),
                       width: 260,
                       height: 30,
                       child: TextFormField(
@@ -1362,7 +1096,7 @@ class _PrintPageState extends State<PrintPage> {
 
                     //qty
                     Container(
-                      padding: const EdgeInsets.only(right: 15),
+                      padding: const EdgeInsets.only(right: 5),
                       width: 70,
                       height: 30,
                       child: TextFormField(
@@ -1382,31 +1116,20 @@ class _PrintPageState extends State<PrintPage> {
                       ),
                     ),
 
-                    //stok
-                    Container(
-                      padding: const EdgeInsets.only(right: 15),
-                      width: 70,
-                      height: 30,
-                      child: TextFormField(
-                        enabled: false,
-                        style: const TextStyle(
-                            fontSize: 12,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
-                        textInputAction: TextInputAction.next,
-                        controller: stokCustomKomponen,
-                        decoration: InputDecoration(
-                          labelText:
-                              stokCustomKomponen.text.isEmpty ? "" : "Stok",
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                        ),
-                      ),
-                    ),
+                   
+                  ],
+                ),
+              ),
 
-                    //Color
-                    Container(
-                      padding: const EdgeInsets.only(right: 15),
+              //! baris 7
+              Padding(
+                padding: const EdgeInsets.only(bottom: 5),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    //panjang rantai
+                      Container(
+                      padding: const EdgeInsets.only(right: 5),
                       width: 200,
                       height: 30,
                       child: TextFormField(
@@ -1416,28 +1139,20 @@ class _PrintPageState extends State<PrintPage> {
                             color: Colors.black,
                             fontWeight: FontWeight.bold),
                         textInputAction: TextInputAction.next,
-                        controller: color,
+                        controller: panjangRantai,
                         decoration: InputDecoration(
-                          labelText: color.text.isEmpty ? "" : "Color",
+                          labelText: panjangRantai.text.isEmpty
+                              ? ""
+                              : "Panjang Rantai",
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(5.0)),
                         ),
                       ),
                     ),
-                  ],
-                ),
-              ),
-
-              //! baris 9
-              Padding(
-                padding: const EdgeInsets.only(bottom: 5),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    //Berat Emas
+  //jenis barang
                     Container(
-                      padding: const EdgeInsets.only(right: 15),
-                      width: 260,
+                      padding: const EdgeInsets.only(right: 5),
+                      width: 200,
                       height: 30,
                       child: TextFormField(
                         enabled: false,
@@ -1446,19 +1161,19 @@ class _PrintPageState extends State<PrintPage> {
                             color: Colors.black,
                             fontWeight: FontWeight.bold),
                         textInputAction: TextInputAction.next,
-                        controller: beratEmas,
+                        controller: jenisBarang,
                         decoration: InputDecoration(
-                          labelText: beratEmas.text.isEmpty ? "" : "Berat Emas",
+                          labelText:
+                              jenisBarang.text.isEmpty ? "" : "Jenis Barang",
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(5.0)),
                         ),
                       ),
                     ),
-
-                    //estimasi harga
+//estimasi harga
                     Container(
-                      padding: const EdgeInsets.only(right: 15),
-                      width: 140,
+                      padding: const EdgeInsets.only(right: 5),
+                      width: 200,
                       height: 30,
                       child: TextFormField(
                         enabled: false,
@@ -1477,11 +1192,10 @@ class _PrintPageState extends State<PrintPage> {
                         ),
                       ),
                     ),
-
-                    //ringSize
-                    Container(
-                      padding: const EdgeInsets.only(right: 15),
-                      width: 200,
+                      //ringSize
+                   Container(
+                      padding: const EdgeInsets.only(right: 5),
+                      width: 70,
                       height: 30,
                       child: TextFormField(
                         enabled: false,
@@ -1498,6 +1212,27 @@ class _PrintPageState extends State<PrintPage> {
                         ),
                       ),
                     ),
+                    // //photo shoot
+                    // Container(
+                    //   padding: const EdgeInsets.only(right: 5),
+                    //   width: 200,
+                    //   height: 30,
+                    //   child: TextFormField(
+                    //     enabled: false,
+                    //     style: const TextStyle(
+                    //         fontSize: 12,
+                    //         color: Colors.black,
+                    //         fontWeight: FontWeight.bold),
+                    //     textInputAction: TextInputAction.next,
+                    //     controller: photoShoot,
+                    //     decoration: InputDecoration(
+                    //       labelText:
+                    //           photoShoot.text.isEmpty ? "" : "Photo Shoot",
+                    //       border: OutlineInputBorder(
+                    //           borderRadius: BorderRadius.circular(5.0)),
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
               ),
@@ -1508,7 +1243,7 @@ class _PrintPageState extends State<PrintPage> {
 
   Widget _bagianTengah() {
     return Padding(
-      padding: const EdgeInsets.only(top: 5, left: 10),
+      padding: const EdgeInsets.only(top: 5, left: 0),
       child: SizedBox(
         width: 445,
         child: SingleChildScrollView(
@@ -1528,7 +1263,7 @@ class _PrintPageState extends State<PrintPage> {
                           children: [
                             Container(
                               padding:
-                                  const EdgeInsets.only(right: 15, bottom: 5),
+                                  const EdgeInsets.only(right: 5, bottom: 5),
                               width: 200,
                               height: 30,
                               child: TextFormField(
@@ -1547,7 +1282,7 @@ class _PrintPageState extends State<PrintPage> {
                             ),
                             Container(
                               padding:
-                                  const EdgeInsets.only(right: 15, bottom: 5),
+                                  const EdgeInsets.only(right: 5, bottom: 5),
                               width: 60,
                               height: 30,
                               child: TextFormField(
@@ -1586,6 +1321,7 @@ class _PrintPageState extends State<PrintPage> {
                       ),
                     ),
                   ),
+               
                 ],
               ),
               // end row batu1
@@ -1603,7 +1339,7 @@ class _PrintPageState extends State<PrintPage> {
                           children: [
                             Container(
                               padding:
-                                  const EdgeInsets.only(right: 15, bottom: 5),
+                                  const EdgeInsets.only(right: 5, bottom: 5),
                               width: 200,
                               height: 30,
                               child: TextFormField(
@@ -1622,7 +1358,7 @@ class _PrintPageState extends State<PrintPage> {
                             ),
                             Container(
                               padding:
-                                  const EdgeInsets.only(right: 15, bottom: 5),
+                                  const EdgeInsets.only(right: 5, bottom: 5),
                               width: 60,
                               height: 30,
                               child: TextFormField(
@@ -1677,7 +1413,7 @@ class _PrintPageState extends State<PrintPage> {
                           children: [
                             Container(
                               padding:
-                                  const EdgeInsets.only(right: 15, bottom: 5),
+                                  const EdgeInsets.only(right: 5, bottom: 5),
                               width: 200,
                               height: 30,
                               child: TextFormField(
@@ -1696,7 +1432,7 @@ class _PrintPageState extends State<PrintPage> {
                             ),
                             Container(
                               padding:
-                                  const EdgeInsets.only(right: 15, bottom: 5),
+                                  const EdgeInsets.only(right: 5, bottom: 5),
                               width: 60,
                               height: 30,
                               child: TextFormField(
@@ -1751,7 +1487,7 @@ class _PrintPageState extends State<PrintPage> {
                           children: [
                             Container(
                               padding:
-                                  const EdgeInsets.only(right: 15, bottom: 5),
+                                  const EdgeInsets.only(right: 5, bottom: 5),
                               width: 200,
                               height: 30,
                               child: TextFormField(
@@ -1770,7 +1506,7 @@ class _PrintPageState extends State<PrintPage> {
                             ),
                             Container(
                               padding:
-                                  const EdgeInsets.only(right: 15, bottom: 5),
+                                  const EdgeInsets.only(right: 5, bottom: 5),
                               width: 60,
                               height: 30,
                               child: TextFormField(
@@ -1825,7 +1561,7 @@ class _PrintPageState extends State<PrintPage> {
                           children: [
                             Container(
                               padding:
-                                  const EdgeInsets.only(right: 15, bottom: 5),
+                                  const EdgeInsets.only(right: 5, bottom: 5),
                               width: 200,
                               height: 30,
                               child: TextFormField(
@@ -1844,7 +1580,7 @@ class _PrintPageState extends State<PrintPage> {
                             ),
                             Container(
                               padding:
-                                  const EdgeInsets.only(right: 15, bottom: 5),
+                                  const EdgeInsets.only(right: 5, bottom: 5),
                               width: 60,
                               height: 30,
                               child: TextFormField(
@@ -1899,7 +1635,7 @@ class _PrintPageState extends State<PrintPage> {
                           children: [
                             Container(
                               padding:
-                                  const EdgeInsets.only(right: 15, bottom: 5),
+                                  const EdgeInsets.only(right: 5, bottom: 5),
                               width: 200,
                               height: 30,
                               child: TextFormField(
@@ -1918,7 +1654,7 @@ class _PrintPageState extends State<PrintPage> {
                             ),
                             Container(
                               padding:
-                                  const EdgeInsets.only(right: 15, bottom: 5),
+                                  const EdgeInsets.only(right: 5, bottom: 5),
                               width: 60,
                               height: 30,
                               child: TextFormField(
@@ -1973,7 +1709,7 @@ class _PrintPageState extends State<PrintPage> {
                           children: [
                             Container(
                               padding:
-                                  const EdgeInsets.only(right: 15, bottom: 5),
+                                  const EdgeInsets.only(right: 5, bottom: 5),
                               width: 200,
                               height: 30,
                               child: TextFormField(
@@ -1992,7 +1728,7 @@ class _PrintPageState extends State<PrintPage> {
                             ),
                             Container(
                               padding:
-                                  const EdgeInsets.only(right: 15, bottom: 5),
+                                  const EdgeInsets.only(right: 5, bottom: 5),
                               width: 60,
                               height: 30,
                               child: TextFormField(
@@ -2047,7 +1783,7 @@ class _PrintPageState extends State<PrintPage> {
                           children: [
                             Container(
                               padding:
-                                  const EdgeInsets.only(right: 15, bottom: 5),
+                                  const EdgeInsets.only(right: 5, bottom: 5),
                               width: 200,
                               height: 30,
                               child: TextFormField(
@@ -2066,7 +1802,7 @@ class _PrintPageState extends State<PrintPage> {
                             ),
                             Container(
                               padding:
-                                  const EdgeInsets.only(right: 15, bottom: 5),
+                                  const EdgeInsets.only(right: 5, bottom: 5),
                               width: 140,
                               height: 30,
                               child: TextFormField(
@@ -2121,7 +1857,7 @@ class _PrintPageState extends State<PrintPage> {
                           children: [
                             Container(
                               padding:
-                                  const EdgeInsets.only(right: 15, bottom: 5),
+                                  const EdgeInsets.only(right: 5, bottom: 5),
                               width: 200,
                               height: 30,
                               child: TextFormField(
@@ -2140,7 +1876,7 @@ class _PrintPageState extends State<PrintPage> {
                             ),
                             Container(
                               padding:
-                                  const EdgeInsets.only(right: 15, bottom: 5),
+                                  const EdgeInsets.only(right: 5, bottom: 5),
                               width: 140,
                               height: 30,
                               child: TextFormField(
@@ -2182,321 +1918,560 @@ class _PrintPageState extends State<PrintPage> {
                 ],
               ),
               // end row batu9
+
               //size batu10
-              int.parse(qtyBatu10.text) <= 0
-                  ? const SizedBox()
-                  : Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.only(right: 15, bottom: 5),
-                          width: 200,
+              Row(
+                children: [
+                  int.parse(qtyBatu10.text) <= 0
+                      ? const SizedBox(
+                          width: 260,
                           height: 30,
-                          child: TextFormField(
-                            enabled: false,
-                            style: const TextStyle(
-                                fontSize: 12,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold),
-                            textInputAction: TextInputAction.next,
-                            decoration: InputDecoration(
-                              labelText: batu10,
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(5.0)),
+                        )
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              padding:
+                                  const EdgeInsets.only(right: 5, bottom: 5),
+                              width: 200,
+                              height: 30,
+                              child: TextFormField(
+                                enabled: false,
+                                style: const TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold),
+                                textInputAction: TextInputAction.next,
+                                decoration: InputDecoration(
+                                  labelText: batu10,
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5.0)),
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.only(right: 15, bottom: 5),
-                          width: 140,
-                          height: 30,
-                          child: TextFormField(
-                            enabled: false,
-                            style: const TextStyle(
-                                fontSize: 12,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold),
-                            textInputAction: TextInputAction.next,
-                            decoration: InputDecoration(
-                              labelText: qtyBatu10.text,
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(5.0)),
+                            Container(
+                              padding:
+                                  const EdgeInsets.only(right: 5, bottom: 5),
+                              width: 140,
+                              height: 30,
+                              child: TextFormField(
+                                enabled: false,
+                                style: const TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold),
+                                textInputAction: TextInputAction.next,
+                                decoration: InputDecoration(
+                                  labelText: qtyBatu10.text,
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5.0)),
+                                ),
+                              ),
                             ),
-                          ),
+                          ],
                         ),
-                      ],
+                  //Kode Design MDBC
+                  Container(
+                  padding:
+                                  const EdgeInsets.only(right: 0, bottom: 3),
+                                 width: 100,
+                              height: kodeDesignMdbc.text.length > 10 ? 60 : 30,
+                    child: TextFormField(
+                      enabled: false,
+                      maxLines: kodeDesignMdbc.text.length > 10 ? 2 : 1,
+                      style: const TextStyle(
+                          fontSize: 12,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold),
+                      textInputAction: TextInputAction.next,
+                        controller: kodeDesignMdbc,
+                        decoration: InputDecoration(
+                          labelText: kodeDesignMdbc.text.isEmpty
+                              ? ""
+                              : "Kode MDBC",
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5.0)),
+                        ),
                     ),
+                  ),
+                ],
+              ),
               // end row batu10
               //size batu11
-              int.parse(qtyBatu11.text) <= 0
-                  ? const SizedBox()
-                  : Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.only(right: 15, bottom: 5),
-                          width: 200,
+              Row(
+                children: [
+                  int.parse(qtyBatu11.text) <= 0
+                      ? const SizedBox(
+                          width: 260,
                           height: 30,
-                          child: TextFormField(
-                            enabled: false,
-                            style: const TextStyle(
-                                fontSize: 12,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold),
-                            textInputAction: TextInputAction.next,
-                            decoration: InputDecoration(
-                              labelText: batu11,
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(5.0)),
+                        )
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              padding:
+                                  const EdgeInsets.only(right: 5, bottom: 5),
+                              width: 200,
+                              height: 30,
+                              child: TextFormField(
+                                enabled: false,
+                                style: const TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold),
+                                textInputAction: TextInputAction.next,
+                                decoration: InputDecoration(
+                                  labelText: batu11,
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5.0)),
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.only(right: 15, bottom: 5),
-                          width: 140,
-                          height: 30,
-                          child: TextFormField(
-                            enabled: false,
-                            style: const TextStyle(
-                                fontSize: 12,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold),
-                            textInputAction: TextInputAction.next,
-                            decoration: InputDecoration(
-                              labelText: qtyBatu11.text,
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(5.0)),
+                            Container(
+                              padding:
+                                  const EdgeInsets.only(right: 5, bottom: 5),
+                              width: 140,
+                              height: 30,
+                              child: TextFormField(
+                                enabled: false,
+                                style: const TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold),
+                                textInputAction: TextInputAction.next,
+                                decoration: InputDecoration(
+                                  labelText: qtyBatu11.text,
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5.0)),
+                                ),
+                              ),
                             ),
-                          ),
+                          ],
                         ),
-                      ],
+                  //nama Designer
+                  Container(
+                  padding:
+                                  const EdgeInsets.only(right: 0, bottom: 3),
+                                 width: 100,
+                              height: namaDesigner.text.length > 10 ? 60 : 30,
+                    child: TextFormField(
+                      enabled: false,
+                      maxLines: namaDesigner.text.length > 10 ? 2 : 1,
+                      style: const TextStyle(
+                          fontSize: 12,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold),
+                      textInputAction: TextInputAction.next,
+                        controller: namaDesigner,
+                        decoration: InputDecoration(
+                          labelText: namaDesigner.text.isEmpty
+                              ? ""
+                              : "Nama Designer",
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5.0)),
+                        ),
                     ),
+                  ),
+                ],
+              ),
               // end row batu11
+
               //size batu12
-              int.parse(qtyBatu12.text) <= 0
-                  ? const SizedBox()
-                  : Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.only(right: 15, bottom: 5),
-                          width: 200,
+              Row(
+                children: [
+                  int.parse(qtyBatu12.text) <= 0
+                      ? const SizedBox(
+                          width: 260,
                           height: 30,
-                          child: TextFormField(
-                            enabled: false,
-                            style: const TextStyle(
-                                fontSize: 12,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold),
-                            textInputAction: TextInputAction.next,
-                            decoration: InputDecoration(
-                              labelText: batu12,
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(5.0)),
+                        )
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              padding:
+                                  const EdgeInsets.only(right: 5, bottom: 5),
+                              width: 200,
+                              height: 30,
+                              child: TextFormField(
+                                enabled: false,
+                                style: const TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold),
+                                textInputAction: TextInputAction.next,
+                                decoration: InputDecoration(
+                                  labelText: batu12,
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5.0)),
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.only(right: 15, bottom: 5),
-                          width: 140,
-                          height: 30,
-                          child: TextFormField(
-                            enabled: false,
-                            style: const TextStyle(
-                                fontSize: 12,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold),
-                            textInputAction: TextInputAction.next,
-                            decoration: InputDecoration(
-                              labelText: qtyBatu12.text,
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(5.0)),
+                            Container(
+                              padding:
+                                  const EdgeInsets.only(right: 5, bottom: 5),
+                              width: 140,
+                              height: 30,
+                              child: TextFormField(
+                                enabled: false,
+                                style: const TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold),
+                                textInputAction: TextInputAction.next,
+                                decoration: InputDecoration(
+                                  labelText: qtyBatu12.text,
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5.0)),
+                                ),
+                              ),
                             ),
-                          ),
+                          ],
                         ),
-                      ],
+                  //nama Modeller
+                  Container(
+                  padding:
+                                  const EdgeInsets.only(right: 0, bottom: 3),
+                                 width: 100,
+                              height: namaModeller.text.length > 12 ? 60 : 30,
+                    child: TextFormField(
+                      enabled: false,
+                      maxLines: namaModeller.text.length > 12 ? 2 : 1,
+                      style: const TextStyle(
+                          fontSize: 12,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold),
+                      textInputAction: TextInputAction.next,
+                        controller: namaModeller,
+                        decoration: InputDecoration(
+                          labelText: namaModeller.text.isEmpty
+                              ? ""
+                              : "Nama Modeller",
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5.0)),
+                        ),
                     ),
+                  ),
+                ],
+              ),
               // end row batu12
-              //size batu13
-              int.parse(qtyBatu13.text) <= 0
-                  ? const SizedBox()
-                  : Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.only(right: 15, bottom: 5),
-                          width: 200,
+
+             //size batu13
+              Row(
+                children: [
+                  int.parse(qtyBatu13.text) <= 0
+                      ? const SizedBox(
+                          width: 260,
                           height: 30,
-                          child: TextFormField(
-                            enabled: false,
-                            style: const TextStyle(
-                                fontSize: 12,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold),
-                            textInputAction: TextInputAction.next,
-                            decoration: InputDecoration(
-                              labelText: batu13,
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(5.0)),
+                        )
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              padding:
+                                  const EdgeInsets.only(right: 5, bottom: 5),
+                              width: 200,
+                              height: 30,
+                              child: TextFormField(
+                                enabled: false,
+                                style: const TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold),
+                                textInputAction: TextInputAction.next,
+                                decoration: InputDecoration(
+                                  labelText: batu13,
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5.0)),
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.only(right: 15, bottom: 5),
-                          width: 140,
-                          height: 30,
-                          child: TextFormField(
-                            enabled: false,
-                            style: const TextStyle(
-                                fontSize: 12,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold),
-                            textInputAction: TextInputAction.next,
-                            decoration: InputDecoration(
-                              labelText: qtyBatu13.text,
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(5.0)),
+                            Container(
+                              padding:
+                                  const EdgeInsets.only(right: 5, bottom: 5),
+                              width: 140,
+                              height: 30,
+                              child: TextFormField(
+                                enabled: false,
+                                style: const TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold),
+                                textInputAction: TextInputAction.next,
+                                decoration: InputDecoration(
+                                  labelText: qtyBatu13.text,
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5.0)),
+                                ),
+                              ),
                             ),
-                          ),
+                          ],
                         ),
-                      ],
+                  //kode Design
+                  Container(
+                  padding:
+                                  const EdgeInsets.only(right: 0, bottom: 3),
+                                 width: 100,
+                              height: kodeDesign.text.length > 12 ? 60 : 30,
+                    child: TextFormField(
+                      enabled: false,
+                      maxLines: kodeDesign.text.length > 12 ? 2 : 1,
+                      style: const TextStyle(
+                          fontSize: 12,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold),
+                      textInputAction: TextInputAction.next,
+                        controller: kodeDesign,
+                        decoration: InputDecoration(
+                          labelText: kodeDesign.text.isEmpty
+                              ? ""
+                              : "Kode Design",
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5.0)),
+                        ),
                     ),
+                  ),
+                ],
+              ),
               // end row batu13
-              //size batu14
-              int.parse(qtyBatu14.text) <= 0
-                  ? const SizedBox()
-                  : Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.only(right: 15, bottom: 5),
-                          width: 200,
+
+               //size batu14
+              Row(
+                children: [
+                  int.parse(qtyBatu14.text) <= 0
+                      ? const SizedBox(
+                          width: 260,
                           height: 30,
-                          child: TextFormField(
-                            enabled: false,
-                            style: const TextStyle(
-                                fontSize: 12,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold),
-                            textInputAction: TextInputAction.next,
-                            decoration: InputDecoration(
-                              labelText: batu14,
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(5.0)),
+                        )
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              padding:
+                                  const EdgeInsets.only(right: 5, bottom: 5),
+                              width: 200,
+                              height: 30,
+                              child: TextFormField(
+                                enabled: false,
+                                style: const TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold),
+                                textInputAction: TextInputAction.next,
+                                decoration: InputDecoration(
+                                  labelText: batu14,
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5.0)),
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.only(right: 15, bottom: 5),
-                          width: 140,
-                          height: 30,
-                          child: TextFormField(
-                            enabled: false,
-                            style: const TextStyle(
-                                fontSize: 12,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold),
-                            textInputAction: TextInputAction.next,
-                            decoration: InputDecoration(
-                              labelText: qtyBatu14.text,
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(5.0)),
+                            Container(
+                              padding:
+                                  const EdgeInsets.only(right: 5, bottom: 5),
+                              width: 140,
+                              height: 30,
+                              child: TextFormField(
+                                enabled: false,
+                                style: const TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold),
+                                textInputAction: TextInputAction.next,
+                                decoration: InputDecoration(
+                                  labelText: qtyBatu14.text,
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5.0)),
+                                ),
+                              ),
                             ),
-                          ),
+                          ],
                         ),
-                      ],
+                  //brand
+                  Container(
+                  padding:
+                                  const EdgeInsets.only(right: 0, bottom: 3),
+                                 width: 100,
+                              height: brand.text.length > 12 ? 60 : 30,
+                    child: TextFormField(
+                      enabled: false,
+                      maxLines: brand.text.length > 12 ? 2 : 1,
+                      style: const TextStyle(
+                          fontSize: 12,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold),
+                      textInputAction: TextInputAction.next,
+                        controller: brand,
+                        decoration: InputDecoration(
+                          labelText: brand.text.isEmpty
+                              ? ""
+                              : "Brand",
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5.0)),
+                        ),
                     ),
+                  ),
+                ],
+              ),
               // end row batu14
-              //size batu15
-              int.parse(qtyBatu15.text) <= 0
-                  ? const SizedBox()
-                  : Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.only(right: 15, bottom: 5),
-                          width: 200,
+
+               //size batu15
+              Row(
+                children: [
+                  int.parse(qtyBatu15.text) <= 0
+                      ? const SizedBox(
+                          width: 260,
                           height: 30,
-                          child: TextFormField(
-                            enabled: false,
-                            style: const TextStyle(
-                                fontSize: 12,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold),
-                            textInputAction: TextInputAction.next,
-                            decoration: InputDecoration(
-                              labelText: batu15,
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(5.0)),
+                        )
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              padding:
+                                  const EdgeInsets.only(right: 5, bottom: 5),
+                              width: 200,
+                              height: 30,
+                              child: TextFormField(
+                                enabled: false,
+                                style: const TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold),
+                                textInputAction: TextInputAction.next,
+                                decoration: InputDecoration(
+                                  labelText: batu15,
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5.0)),
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.only(right: 15, bottom: 5),
-                          width: 140,
-                          height: 30,
-                          child: TextFormField(
-                            enabled: false,
-                            style: const TextStyle(
-                                fontSize: 12,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold),
-                            textInputAction: TextInputAction.next,
-                            decoration: InputDecoration(
-                              labelText: qtyBatu15.text,
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(5.0)),
+                            Container(
+                              padding:
+                                  const EdgeInsets.only(right: 5, bottom: 5),
+                              width: 140,
+                              height: 30,
+                              child: TextFormField(
+                                enabled: false,
+                                style: const TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold),
+                                textInputAction: TextInputAction.next,
+                                decoration: InputDecoration(
+                                  labelText: qtyBatu15.text,
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5.0)),
+                                ),
+                              ),
                             ),
-                          ),
+                          ],
                         ),
-                      ],
+                  //kategori barang
+                  Container(
+                  padding:
+                                  const EdgeInsets.only(right: 0, bottom: 3),
+                                 width: 100,
+                              height: kategoriBarang.text.length > 12 ? 60 : 30,
+                    child: TextFormField(
+                      enabled: false,
+                      maxLines: kategoriBarang.text.length > 12 ? 2 : 1,
+                      style: const TextStyle(
+                          fontSize: 12,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold),
+                      textInputAction: TextInputAction.next,
+                        controller: kategoriBarang,
+                        decoration: InputDecoration(
+                          labelText: kategoriBarang.text.isEmpty
+                              ? ""
+                              : "Kategori Barang",
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5.0)),
+                        ),
                     ),
+                  ),
+                ],
+              ),
               // end row batu15
-              //size batu16
-              int.parse(qtyBatu16.text) <= 0
-                  ? const SizedBox()
-                  : Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.only(right: 15, bottom: 5),
-                          width: 200,
+
+
+             //size batu16
+              Row(
+                children: [
+                  int.parse(qtyBatu16.text) <= 0
+                      ? const SizedBox(
+                          width: 260,
                           height: 30,
-                          child: TextFormField(
-                            enabled: false,
-                            style: const TextStyle(
-                                fontSize: 12,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold),
-                            textInputAction: TextInputAction.next,
-                            decoration: InputDecoration(
-                              labelText: batu16,
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(5.0)),
+                        )
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              padding:
+                                  const EdgeInsets.only(right: 5, bottom: 5),
+                              width: 200,
+                              height: 30,
+                              child: TextFormField(
+                                enabled: false,
+                                style: const TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold),
+                                textInputAction: TextInputAction.next,
+                                decoration: InputDecoration(
+                                  labelText: batu16,
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5.0)),
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.only(right: 15, bottom: 5),
-                          width: 140,
-                          height: 30,
-                          child: TextFormField(
-                            enabled: false,
-                            style: const TextStyle(
-                                fontSize: 12,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold),
-                            textInputAction: TextInputAction.next,
-                            decoration: InputDecoration(
-                              labelText: qtyBatu16.text,
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(5.0)),
+                            Container(
+                              padding:
+                                  const EdgeInsets.only(right: 5, bottom: 5),
+                              width: 140,
+                              height: 30,
+                              child: TextFormField(
+                                enabled: false,
+                                style: const TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold),
+                                textInputAction: TextInputAction.next,
+                                decoration: InputDecoration(
+                                  labelText: qtyBatu16.text,
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5.0)),
+                                ),
+                              ),
                             ),
-                          ),
+                          ],
                         ),
-                      ],
+                  //color
+                  Container(
+                  padding:
+                                  const EdgeInsets.only(right: 0, bottom: 3),
+                                 width: 100,
+                              height: color.text.length > 12 ? 60 : 30,
+                    child: TextFormField(
+                      enabled: false,
+                      maxLines: color.text.length > 12 ? 2 : 1,
+                      style: const TextStyle(
+                          fontSize: 12,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold),
+                      textInputAction: TextInputAction.next,
+                        controller: color,
+                        decoration: InputDecoration(
+                          labelText: color.text.isEmpty
+                              ? ""
+                              : "Color",
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5.0)),
+                        ),
                     ),
+                  ),
+                ],
+              ),
               // end row batu16
+
               //size batu17
               int.parse(qtyBatu17.text) <= 0
                   ? const SizedBox()
