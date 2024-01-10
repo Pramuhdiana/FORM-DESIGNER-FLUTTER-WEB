@@ -706,7 +706,7 @@ class _PrintPageState extends State<PrintPage> {
                 ],
               ),
               Container(
-                    padding: const EdgeInsets.only(top: 20),
+                    padding: const EdgeInsets.only(top: 50),
                      child: InkWell(
                             onTap: () {
                               Navigator.pop(context);
@@ -1243,7 +1243,7 @@ class _PrintPageState extends State<PrintPage> {
 
   Widget _bagianTengah() {
     return Padding(
-      padding: const EdgeInsets.only(top: 5, left: 0),
+      padding: const EdgeInsets.only(top: 20, left: 0),
       child: SizedBox(
         width: 445,
         child: SingleChildScrollView(
