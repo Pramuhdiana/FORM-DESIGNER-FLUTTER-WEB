@@ -2096,8 +2096,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
     // double total;
     // total = ((totalDiamond + totalEmas + totalLabour) * upFinal) / kurs; //? before
     double total;
-    total = ((totalDiamond + totalEmas + totalLabour)) /
-        upFinalMetier; //* After
+    total =
+        ((totalDiamond + totalEmas + totalLabour)) / upFinalMetier; //* After
 
     if (total.toString() == 'NaN') {
       return 0;
@@ -2456,21 +2456,24 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                       setState(() {
                         clearForm();
                       });
-
-                      sharedPreferences!.getString('divisi') == 'designer'
-                          ? Navigator.push(
+                      sharedPreferences!.getString('divisi') == 'admin'
+                          ? Navigator.pop(
                               context,
-                              MaterialPageRoute(
-                                  builder: (c) => MainViewDesigner(col: 3)))
-                          : sharedPreferences!.getString('role') == '2'
+                            )
+                          : sharedPreferences!.getString('divisi') == 'designer'
                               ? Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (c) => MainViewScm(col: 1)))
-                              : Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (c) => MainViewScm(col: 4)));
+                                      builder: (c) => MainViewDesigner(col: 3)))
+                              : sharedPreferences!.getString('role') == '2'
+                                  ? Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (c) => MainViewScm(col: 1)))
+                                  : Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (c) => MainViewScm(col: 4)));
                     });
             },
             child: const Text(
@@ -3285,7 +3288,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                 qtyBatu2.text.isEmpty
                                     ? const SizedBox()
                                     :
-                                       //size batu3
+                                    //size batu3
                                     Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
@@ -5658,8 +5661,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           idBatu10 = 0;
                                                           qtyBatu10.text = '0';
                                                           stokBatu10.text = '';
-                                                          crtPcsBatu10.text = '';
-                                                          ukuranBatu10.text = '';
+                                                          crtPcsBatu10.text =
+                                                              '';
+                                                          ukuranBatu10.text =
+                                                              '';
                                                           stokBatu10.text = '';
                                                           batu10 = '';
                                                           hargaBatu10 = 0;
@@ -5725,7 +5730,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                 qtyBatu10.text.isEmpty
                                     ? const SizedBox()
                                     :
-                                   //size batu11
+                                    //size batu11
                                     Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
@@ -5963,8 +5968,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           idBatu11 = 0;
                                                           qtyBatu11.text = '0';
                                                           stokBatu11.text = '';
-                                                          crtPcsBatu11.text = '';
-                                                          ukuranBatu11.text = '';
+                                                          crtPcsBatu11.text =
+                                                              '';
+                                                          ukuranBatu11.text =
+                                                              '';
                                                           stokBatu11.text = '';
                                                           batu11 = '';
                                                           hargaBatu11 = 0;
@@ -6268,8 +6275,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           idBatu12 = 0;
                                                           qtyBatu12.text = '0';
                                                           stokBatu12.text = '';
-                                                          crtPcsBatu12.text = '';
-                                                          ukuranBatu12.text = '';
+                                                          crtPcsBatu12.text =
+                                                              '';
+                                                          ukuranBatu12.text =
+                                                              '';
                                                           stokBatu12.text = '';
                                                           batu12 = '';
                                                           hargaBatu12 = 0;
@@ -6335,7 +6344,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                 qtyBatu12.text.isEmpty
                                     ? const SizedBox()
                                     :
-                                       //size batu13
+                                    //size batu13
                                     Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
@@ -6573,8 +6582,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           idBatu13 = 0;
                                                           qtyBatu13.text = '0';
                                                           stokBatu13.text = '';
-                                                          crtPcsBatu13.text = '';
-                                                          ukuranBatu13.text = '';
+                                                          crtPcsBatu13.text =
+                                                              '';
+                                                          ukuranBatu13.text =
+                                                              '';
                                                           stokBatu13.text = '';
                                                           batu13 = '';
                                                           hargaBatu13 = 0;
@@ -6878,8 +6889,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           idBatu14 = 0;
                                                           qtyBatu14.text = '0';
                                                           stokBatu14.text = '';
-                                                          crtPcsBatu14.text = '';
-                                                          ukuranBatu14.text = '';
+                                                          crtPcsBatu14.text =
+                                                              '';
+                                                          ukuranBatu14.text =
+                                                              '';
                                                           stokBatu14.text = '';
                                                           batu14 = '';
                                                           hargaBatu14 = 0;
@@ -7183,8 +7196,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           idBatu15 = 0;
                                                           qtyBatu15.text = '0';
                                                           stokBatu15.text = '';
-                                                          crtPcsBatu15.text = '';
-                                                          ukuranBatu15.text = '';
+                                                          crtPcsBatu15.text =
+                                                              '';
+                                                          ukuranBatu15.text =
+                                                              '';
                                                           stokBatu15.text = '';
                                                           batu15 = '';
                                                           hargaBatu15 = 0;
@@ -7488,8 +7503,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           idBatu16 = 0;
                                                           qtyBatu16.text = '0';
                                                           stokBatu16.text = '';
-                                                          crtPcsBatu16.text = '';
-                                                          ukuranBatu16.text = '';
+                                                          crtPcsBatu16.text =
+                                                              '';
+                                                          ukuranBatu16.text =
+                                                              '';
                                                           stokBatu16.text = '';
                                                           batu16 = '';
                                                           hargaBatu16 = 0;
@@ -7793,8 +7810,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           idBatu17 = 0;
                                                           qtyBatu17.text = '0';
                                                           stokBatu17.text = '';
-                                                          crtPcsBatu17.text = '';
-                                                          ukuranBatu17.text = '';
+                                                          crtPcsBatu17.text =
+                                                              '';
+                                                          ukuranBatu17.text =
+                                                              '';
                                                           stokBatu17.text = '';
                                                           batu17 = '';
                                                           hargaBatu17 = 0;
@@ -8098,8 +8117,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           idBatu18 = 0;
                                                           qtyBatu18.text = '0';
                                                           stokBatu18.text = '';
-                                                          crtPcsBatu18.text = '';
-                                                          ukuranBatu18.text = '';
+                                                          crtPcsBatu18.text =
+                                                              '';
+                                                          ukuranBatu18.text =
+                                                              '';
                                                           stokBatu18.text = '';
                                                           batu18 = '';
                                                           hargaBatu18 = 0;
@@ -8403,8 +8424,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           idBatu19 = 0;
                                                           qtyBatu19.text = '0';
                                                           stokBatu19.text = '';
-                                                          crtPcsBatu19.text = '';
-                                                          ukuranBatu19.text = '';
+                                                          crtPcsBatu19.text =
+                                                              '';
+                                                          ukuranBatu19.text =
+                                                              '';
                                                           stokBatu19.text = '';
                                                           batu19 = '';
                                                           hargaBatu19 = 0;
@@ -8708,8 +8731,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           idBatu20 = 0;
                                                           qtyBatu20.text = '0';
                                                           stokBatu20.text = '';
-                                                          crtPcsBatu20.text = '';
-                                                          ukuranBatu20.text = '';
+                                                          crtPcsBatu20.text =
+                                                              '';
+                                                          ukuranBatu20.text =
+                                                              '';
                                                           stokBatu20.text = '';
                                                           batu20 = '';
                                                           hargaBatu20 = 0;
@@ -8775,7 +8800,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                 qtyBatu20.text.isEmpty
                                     ? const SizedBox()
                                     :
-                                   //size batu21
+                                    //size batu21
                                     Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
@@ -9013,8 +9038,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           idBatu21 = 0;
                                                           qtyBatu21.text = '0';
                                                           stokBatu21.text = '';
-                                                          crtPcsBatu21.text = '';
-                                                          ukuranBatu21.text = '';
+                                                          crtPcsBatu21.text =
+                                                              '';
+                                                          ukuranBatu21.text =
+                                                              '';
                                                           stokBatu21.text = '';
                                                           batu21 = '';
                                                           hargaBatu21 = 0;
@@ -9318,8 +9345,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           idBatu22 = 0;
                                                           qtyBatu22.text = '0';
                                                           stokBatu22.text = '';
-                                                          crtPcsBatu22.text = '';
-                                                          ukuranBatu22.text = '';
+                                                          crtPcsBatu22.text =
+                                                              '';
+                                                          ukuranBatu22.text =
+                                                              '';
                                                           stokBatu22.text = '';
                                                           batu22 = '';
                                                           hargaBatu22 = 0;
@@ -9385,7 +9414,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                 qtyBatu22.text.isEmpty
                                     ? const SizedBox()
                                     :
-                                       //size batu23
+                                    //size batu23
                                     Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
@@ -9623,8 +9652,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           idBatu23 = 0;
                                                           qtyBatu23.text = '0';
                                                           stokBatu23.text = '';
-                                                          crtPcsBatu23.text = '';
-                                                          ukuranBatu23.text = '';
+                                                          crtPcsBatu23.text =
+                                                              '';
+                                                          ukuranBatu23.text =
+                                                              '';
                                                           stokBatu23.text = '';
                                                           batu23 = '';
                                                           hargaBatu23 = 0;
@@ -9928,8 +9959,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           idBatu24 = 0;
                                                           qtyBatu24.text = '0';
                                                           stokBatu24.text = '';
-                                                          crtPcsBatu24.text = '';
-                                                          ukuranBatu24.text = '';
+                                                          crtPcsBatu24.text =
+                                                              '';
+                                                          ukuranBatu24.text =
+                                                              '';
                                                           stokBatu24.text = '';
                                                           batu24 = '';
                                                           hargaBatu24 = 0;
@@ -10233,8 +10266,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           idBatu25 = 0;
                                                           qtyBatu25.text = '0';
                                                           stokBatu25.text = '';
-                                                          crtPcsBatu25.text = '';
-                                                          ukuranBatu25.text = '';
+                                                          crtPcsBatu25.text =
+                                                              '';
+                                                          ukuranBatu25.text =
+                                                              '';
                                                           stokBatu25.text = '';
                                                           batu25 = '';
                                                           hargaBatu25 = 0;
@@ -10538,8 +10573,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           idBatu26 = 0;
                                                           qtyBatu26.text = '0';
                                                           stokBatu26.text = '';
-                                                          crtPcsBatu26.text = '';
-                                                          ukuranBatu26.text = '';
+                                                          crtPcsBatu26.text =
+                                                              '';
+                                                          ukuranBatu26.text =
+                                                              '';
                                                           stokBatu26.text = '';
                                                           batu26 = '';
                                                           hargaBatu26 = 0;
@@ -10843,8 +10880,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           idBatu27 = 0;
                                                           qtyBatu27.text = '0';
                                                           stokBatu27.text = '';
-                                                          crtPcsBatu27.text = '';
-                                                          ukuranBatu27.text = '';
+                                                          crtPcsBatu27.text =
+                                                              '';
+                                                          ukuranBatu27.text =
+                                                              '';
                                                           stokBatu27.text = '';
                                                           batu27 = '';
                                                           hargaBatu27 = 0;
@@ -11148,8 +11187,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           idBatu28 = 0;
                                                           qtyBatu28.text = '0';
                                                           stokBatu28.text = '';
-                                                          crtPcsBatu28.text = '';
-                                                          ukuranBatu28.text = '';
+                                                          crtPcsBatu28.text =
+                                                              '';
+                                                          ukuranBatu28.text =
+                                                              '';
                                                           stokBatu28.text = '';
                                                           batu28 = '';
                                                           hargaBatu28 = 0;
@@ -11453,8 +11494,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           idBatu29 = 0;
                                                           qtyBatu29.text = '0';
                                                           stokBatu29.text = '';
-                                                          crtPcsBatu29.text = '';
-                                                          ukuranBatu29.text = '';
+                                                          crtPcsBatu29.text =
+                                                              '';
+                                                          ukuranBatu29.text =
+                                                              '';
                                                           stokBatu29.text = '';
                                                           batu29 = '';
                                                           hargaBatu29 = 0;
@@ -11758,8 +11801,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           idBatu30 = 0;
                                                           qtyBatu30.text = '0';
                                                           stokBatu30.text = '';
-                                                          crtPcsBatu30.text = '';
-                                                          ukuranBatu30.text = '';
+                                                          crtPcsBatu30.text =
+                                                              '';
+                                                          ukuranBatu30.text =
+                                                              '';
                                                           stokBatu30.text = '';
                                                           batu30 = '';
                                                           hargaBatu30 = 0;
@@ -11825,7 +11870,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                 qtyBatu30.text.isEmpty
                                     ? const SizedBox()
                                     :
-                                   //size batu31
+                                    //size batu31
                                     Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
@@ -12063,8 +12108,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           idBatu31 = 0;
                                                           qtyBatu31.text = '0';
                                                           stokBatu31.text = '';
-                                                          crtPcsBatu31.text = '';
-                                                          ukuranBatu31.text = '';
+                                                          crtPcsBatu31.text =
+                                                              '';
+                                                          ukuranBatu31.text =
+                                                              '';
                                                           stokBatu31.text = '';
                                                           batu31 = '';
                                                           hargaBatu31 = 0;
@@ -12368,8 +12415,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           idBatu32 = 0;
                                                           qtyBatu32.text = '0';
                                                           stokBatu32.text = '';
-                                                          crtPcsBatu32.text = '';
-                                                          ukuranBatu32.text = '';
+                                                          crtPcsBatu32.text =
+                                                              '';
+                                                          ukuranBatu32.text =
+                                                              '';
                                                           stokBatu32.text = '';
                                                           batu32 = '';
                                                           hargaBatu32 = 0;
@@ -12435,7 +12484,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                 qtyBatu32.text.isEmpty
                                     ? const SizedBox()
                                     :
-                                       //size batu33
+                                    //size batu33
                                     Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
@@ -12673,8 +12722,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           idBatu33 = 0;
                                                           qtyBatu33.text = '0';
                                                           stokBatu33.text = '';
-                                                          crtPcsBatu33.text = '';
-                                                          ukuranBatu33.text = '';
+                                                          crtPcsBatu33.text =
+                                                              '';
+                                                          ukuranBatu33.text =
+                                                              '';
                                                           stokBatu33.text = '';
                                                           batu33 = '';
                                                           hargaBatu33 = 0;
@@ -12978,8 +13029,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           idBatu34 = 0;
                                                           qtyBatu34.text = '0';
                                                           stokBatu34.text = '';
-                                                          crtPcsBatu34.text = '';
-                                                          ukuranBatu34.text = '';
+                                                          crtPcsBatu34.text =
+                                                              '';
+                                                          ukuranBatu34.text =
+                                                              '';
                                                           stokBatu34.text = '';
                                                           batu34 = '';
                                                           hargaBatu34 = 0;
@@ -13283,8 +13336,10 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                           idBatu35 = 0;
                                                           qtyBatu35.text = '0';
                                                           stokBatu35.text = '';
-                                                          crtPcsBatu35.text = '';
-                                                          ukuranBatu35.text = '';
+                                                          crtPcsBatu35.text =
+                                                              '';
+                                                          ukuranBatu35.text =
+                                                              '';
                                                           stokBatu35.text = '';
                                                           batu35 = '';
                                                           hargaBatu35 = 0;
@@ -13722,7 +13777,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
     }
     print('ini pr : $pricePerCarat & $priceAfterDiskon');
     Map<String, String> body = {
-      'namaDesigner':  '(N) ${namaDesigner.text}',
+      'namaDesigner': '(N) ${namaDesigner.text}',
       'namaToko': namaToko.text,
       'jenisBarang': jenisBarang.text,
       'brand': brand.text,
