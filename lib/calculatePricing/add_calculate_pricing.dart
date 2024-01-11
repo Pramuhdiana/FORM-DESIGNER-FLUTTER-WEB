@@ -543,6 +543,42 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
   double markUpBatu34 = 1;
   double markUpBatu35 = 1;
 
+  double muMetierBatu1 = 1;
+  double muMetierBatu2 = 1;
+  double muMetierBatu3 = 1;
+  double muMetierBatu4 = 1;
+  double muMetierBatu5 = 1;
+  double muMetierBatu6 = 1;
+  double muMetierBatu7 = 1;
+  double muMetierBatu8 = 1;
+  double muMetierBatu9 = 1;
+  double muMetierBatu10 = 1;
+  double muMetierBatu11 = 1;
+  double muMetierBatu12 = 1;
+  double muMetierBatu13 = 1;
+  double muMetierBatu14 = 1;
+  double muMetierBatu15 = 1;
+  double muMetierBatu16 = 1;
+  double muMetierBatu17 = 1;
+  double muMetierBatu18 = 1;
+  double muMetierBatu19 = 1;
+  double muMetierBatu20 = 1;
+  double muMetierBatu21 = 1;
+  double muMetierBatu22 = 1;
+  double muMetierBatu23 = 1;
+  double muMetierBatu24 = 1;
+  double muMetierBatu25 = 1;
+  double muMetierBatu26 = 1;
+  double muMetierBatu27 = 1;
+  double muMetierBatu28 = 1;
+  double muMetierBatu29 = 1;
+  double muMetierBatu30 = 1;
+  double muMetierBatu31 = 1;
+  double muMetierBatu32 = 1;
+  double muMetierBatu33 = 1;
+  double muMetierBatu34 = 1;
+  double muMetierBatu35 = 1;
+
   double hargaBatu1 = 0;
   double hargaBatu2 = 0;
   double hargaBatu3 = 0;
@@ -1864,144 +1900,109 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
     //* after
     var totalDiamond = (hargaBatu1 *
             kursMetier *
-            (caratPcsBatu1 * qtyIntBatu1!) *
-            upBatuMetier) +
+            (caratPcsBatu1 * qtyIntBatu1!)) +
         (hargaBatu2 *
             kursMetier *
-            (caratPcsBatu2 * qtyIntBatu2!) *
-            upBatuMetier) +
+            (caratPcsBatu2 * qtyIntBatu2!)) +
         (hargaBatu3 *
             kursMetier *
-            (caratPcsBatu3 * qtyIntBatu3!) *
-            upBatuMetier) +
+            (caratPcsBatu3 * qtyIntBatu3!)) +
         (hargaBatu4 *
             kursMetier *
-            (caratPcsBatu4 * qtyIntBatu4!) *
-            upBatuMetier) +
+            (caratPcsBatu4 * qtyIntBatu4!)) +
         (hargaBatu5 *
             kursMetier *
-            (caratPcsBatu5 * qtyIntBatu5!) *
-            upBatuMetier) +
+            (caratPcsBatu5 * qtyIntBatu5!)) +
         (hargaBatu6 *
             kursMetier *
-            (caratPcsBatu6 * qtyIntBatu6!) *
-            upBatuMetier) +
+            (caratPcsBatu6 * qtyIntBatu6!)) +
         (hargaBatu7 *
             kursMetier *
-            (caratPcsBatu7 * qtyIntBatu7!) *
-            upBatuMetier) +
+            (caratPcsBatu7 * qtyIntBatu7!))+
         (hargaBatu8 *
             kursMetier *
-            (caratPcsBatu8 * qtyIntBatu8!) *
-            upBatuMetier) +
+            (caratPcsBatu8 * qtyIntBatu8!)) +
         (hargaBatu9 *
             kursMetier *
-            (caratPcsBatu9 * qtyIntBatu9!) *
-            upBatuMetier) +
+            (caratPcsBatu9 * qtyIntBatu9!)) +
         (hargaBatu10 *
             kursMetier *
-            (caratPcsBatu10 * qtyIntBatu10!) *
-            upBatuMetier) +
+            (caratPcsBatu10 * qtyIntBatu10!)) +
         (hargaBatu11 *
             kursMetier *
-            (caratPcsBatu11 * qtyIntBatu11!) *
-            upBatuMetier) +
+            (caratPcsBatu11 * qtyIntBatu11!)) +
         (hargaBatu12 *
             kursMetier *
-            (caratPcsBatu12 * qtyIntBatu12!) *
-            upBatuMetier) +
+            (caratPcsBatu12 * qtyIntBatu12!)) +
         (hargaBatu13 *
             kursMetier *
-            (caratPcsBatu13 * qtyIntBatu13!) *
-            upBatuMetier) +
+            (caratPcsBatu13 * qtyIntBatu13!)) +
         (hargaBatu14 *
             kursMetier *
-            (caratPcsBatu14 * qtyIntBatu14!) *
-            upBatuMetier) +
+            (caratPcsBatu14 * qtyIntBatu14!)) +
         (hargaBatu15 *
             kursMetier *
-            (caratPcsBatu15 * qtyIntBatu15!) *
-            upBatuMetier) +
+            (caratPcsBatu15 * qtyIntBatu15!)) +
         (hargaBatu16 *
             kursMetier *
-            (caratPcsBatu16 * qtyIntBatu16!) *
-            upBatuMetier) +
+            (caratPcsBatu16 * qtyIntBatu16!)) +
         (hargaBatu17 *
             kursMetier *
-            (caratPcsBatu17 * qtyIntBatu17!) *
-            upBatuMetier) +
+            (caratPcsBatu17 * qtyIntBatu17!)) +
         (hargaBatu18 *
             kursMetier *
-            (caratPcsBatu18 * qtyIntBatu18!) *
-            upBatuMetier) +
+            (caratPcsBatu18 * qtyIntBatu18!)) +
         (hargaBatu19 *
             kursMetier *
-            (caratPcsBatu19 * qtyIntBatu19!) *
-            upBatuMetier) +
+            (caratPcsBatu19 * qtyIntBatu19!)) +
         (hargaBatu20 *
             kursMetier *
-            (caratPcsBatu20 * qtyIntBatu20!) *
-            upBatuMetier) +
+            (caratPcsBatu20 * qtyIntBatu20!)) +
         (hargaBatu21 *
             kursMetier *
-            (caratPcsBatu21 * qtyIntBatu21!) *
-            upBatuMetier) +
+            (caratPcsBatu21 * qtyIntBatu21!)) +
         (hargaBatu22 *
             kursMetier *
-            (caratPcsBatu22 * qtyIntBatu22!) *
-            upBatuMetier) +
+            (caratPcsBatu22 * qtyIntBatu22!)) +
         (hargaBatu23 *
             kursMetier *
-            (caratPcsBatu23 * qtyIntBatu23!) *
-            upBatuMetier) +
+            (caratPcsBatu23 * qtyIntBatu23!)) +
         (hargaBatu24 *
             kursMetier *
-            (caratPcsBatu24 * qtyIntBatu24!) *
-            upBatuMetier) +
+            (caratPcsBatu24 * qtyIntBatu24!)) +
         (hargaBatu25 *
             kursMetier *
-            (caratPcsBatu25 * qtyIntBatu25!) *
-            upBatuMetier) +
+            (caratPcsBatu25 * qtyIntBatu25!)) +
         (hargaBatu26 *
             kursMetier *
-            (caratPcsBatu26 * qtyIntBatu26!) *
-            upBatuMetier) +
+            (caratPcsBatu26 * qtyIntBatu26!)) +
         (hargaBatu27 *
             kursMetier *
-            (caratPcsBatu27 * qtyIntBatu27!) *
-            upBatuMetier) +
+            (caratPcsBatu27 * qtyIntBatu27!)) +
         (hargaBatu28 *
             kursMetier *
-            (caratPcsBatu28 * qtyIntBatu28!) *
-            upBatuMetier) +
+            (caratPcsBatu28 * qtyIntBatu28!)) +
         (hargaBatu29 *
             kursMetier *
-            (caratPcsBatu29 * qtyIntBatu29!) *
-            upBatuMetier) +
+            (caratPcsBatu29 * qtyIntBatu29!)) +
         (hargaBatu30 *
             kursMetier *
-            (caratPcsBatu30 * qtyIntBatu30!) *
-            upBatuMetier) +
+            (caratPcsBatu30 * qtyIntBatu30!)) +
         (hargaBatu31 *
             kursMetier *
-            (caratPcsBatu31 * qtyIntBatu31!) *
-            upBatuMetier) +
+            (caratPcsBatu31 * qtyIntBatu31!)) +
         (hargaBatu32 *
             kursMetier *
-            (caratPcsBatu32 * qtyIntBatu32!) *
-            upBatuMetier) +
+            (caratPcsBatu32 * qtyIntBatu32!)) +
         (hargaBatu33 *
             kursMetier *
-            (caratPcsBatu33 * qtyIntBatu33!) *
-            upBatuMetier) +
+            (caratPcsBatu33 * qtyIntBatu33!)) +
         (hargaBatu34 *
             kursMetier *
-            (caratPcsBatu34 * qtyIntBatu34!) *
-            upBatuMetier) +
+            (caratPcsBatu34 * qtyIntBatu34!)) +
         (hargaBatu35 *
             kursMetier *
-            (caratPcsBatu35 * qtyIntBatu35!) *
-            upBatuMetier);
+            (caratPcsBatu35 * qtyIntBatu35!));
 
     var totalDiamondTanpaUp =
         (hargaBatu1 * kursMetier * (caratPcsBatu1 * qtyIntBatu1!)) +
@@ -2182,9 +2183,9 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                       child: DropdownSearch<String>(
                         items: const [
                           "PARVA",
-                          "BELI BERLIAN",
+                          // "BELI BERLIAN",
                           "METIER",
-                          "FINE"
+                          // "FINE"
                         ],
                         onChanged: (item) {
                           setState(() {
@@ -2761,9 +2762,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                         .toLowerCase()
                                                         .toString() ==
                                                     "metier"
-                                                ? double.parse(item
-                                                    .hargaCaratPcsMetier
-                                                    .toString())
+                                                ? (double.parse(item.hargaCaratPcsMetier.toString()) * double.parse(item.muMetier.toString()))
                                                 : double.parse(item
                                                     .hargaCaratPcsParva
                                                     .toString());
@@ -2967,10 +2966,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                             ),
                                           ),
                                     const SizedBox(width: 20),
-                                    sharedPreferences!.getString('nama') !=
-                                            'admin'
-                                        ? const SizedBox()
-                                        : Text(
+                                   Text(
                                             'Carat/Pcs : $caratPcsBatu1',
                                             style: const TextStyle(
                                                 fontWeight: FontWeight.bold),
@@ -3015,10 +3011,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                               .toLowerCase()
                                                               .toString() ==
                                                           "metier"
-                                                      ? double.parse(item
-                                                          .hargaCaratPcsMetier
-                                                          .toString())
-                                                      : double.parse(item
+                                                      ? (double.parse(item.hargaCaratPcsMetier.toString()) * double.parse(item.muMetier.toString()))
+                                                : double.parse(item
                                                           .hargaCaratPcsParva
                                                           .toString());
                                                   caratPcsBatu2 = double.parse(
@@ -3270,11 +3264,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   ),
                                                 ),
                                           const SizedBox(width: 20),
-                                          sharedPreferences!
-                                                      .getString('nama') !=
-                                                  'admin'
-                                              ? const SizedBox()
-                                              : Text(
+                                          Text(
                                                   'Carat/Pcs : $caratPcsBatu2',
                                                   style: const TextStyle(
                                                       fontWeight:
@@ -3320,10 +3310,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                               .toLowerCase()
                                                               .toString() ==
                                                           "metier"
-                                                      ? double.parse(item
-                                                          .hargaCaratPcsMetier
-                                                          .toString())
-                                                      : double.parse(item
+                                                      ? (double.parse(item.hargaCaratPcsMetier.toString()) * double.parse(item.muMetier.toString()))
+                                                : double.parse(item
                                                           .hargaCaratPcsParva
                                                           .toString());
                                                   caratPcsBatu3 = double.parse(
@@ -3575,11 +3563,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   ),
                                                 ),
                                           const SizedBox(width: 20),
-                                          sharedPreferences!
-                                                      .getString('nama') !=
-                                                  'admin'
-                                              ? const SizedBox()
-                                              : Text(
+                                          Text(
                                                   'Carat/Pcs : $caratPcsBatu3',
                                                   style: const TextStyle(
                                                       fontWeight:
@@ -3625,10 +3609,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                               .toLowerCase()
                                                               .toString() ==
                                                           "metier"
-                                                      ? double.parse(item
-                                                          .hargaCaratPcsMetier
-                                                          .toString())
-                                                      : double.parse(item
+                                                      ? (double.parse(item.hargaCaratPcsMetier.toString()) * double.parse(item.muMetier.toString()))
+                                                : double.parse(item
                                                           .hargaCaratPcsParva
                                                           .toString());
                                                   caratPcsBatu4 = double.parse(
@@ -3880,11 +3862,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   ),
                                                 ),
                                           const SizedBox(width: 20),
-                                          sharedPreferences!
-                                                      .getString('nama') !=
-                                                  'admin'
-                                              ? const SizedBox()
-                                              : Text(
+                                          Text(
                                                   'Carat/Pcs : $caratPcsBatu4',
                                                   style: const TextStyle(
                                                       fontWeight:
@@ -3930,10 +3908,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                               .toLowerCase()
                                                               .toString() ==
                                                           "metier"
-                                                      ? double.parse(item
-                                                          .hargaCaratPcsMetier
-                                                          .toString())
-                                                      : double.parse(item
+                                                      ? (double.parse(item.hargaCaratPcsMetier.toString()) * double.parse(item.muMetier.toString()))
+                                                : double.parse(item
                                                           .hargaCaratPcsParva
                                                           .toString());
                                                   caratPcsBatu5 = double.parse(
@@ -4185,11 +4161,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   ),
                                                 ),
                                           const SizedBox(width: 20),
-                                          sharedPreferences!
-                                                      .getString('nama') !=
-                                                  'admin'
-                                              ? const SizedBox()
-                                              : Text(
+                                        Text(
                                                   'Carat/Pcs : $caratPcsBatu5',
                                                   style: const TextStyle(
                                                       fontWeight:
@@ -4235,10 +4207,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                               .toLowerCase()
                                                               .toString() ==
                                                           "metier"
-                                                      ? double.parse(item
-                                                          .hargaCaratPcsMetier
-                                                          .toString())
-                                                      : double.parse(item
+                                                      ? (double.parse(item.hargaCaratPcsMetier.toString()) * double.parse(item.muMetier.toString()))
+                                                : double.parse(item
                                                           .hargaCaratPcsParva
                                                           .toString());
                                                   caratPcsBatu6 = double.parse(
@@ -4490,11 +4460,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   ),
                                                 ),
                                           const SizedBox(width: 20),
-                                          sharedPreferences!
-                                                      .getString('nama') !=
-                                                  'admin'
-                                              ? const SizedBox()
-                                              : Text(
+                                        Text(
                                                   'Carat/Pcs : $caratPcsBatu6',
                                                   style: const TextStyle(
                                                       fontWeight:
@@ -4540,10 +4506,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                               .toLowerCase()
                                                               .toString() ==
                                                           "metier"
-                                                      ? double.parse(item
-                                                          .hargaCaratPcsMetier
-                                                          .toString())
-                                                      : double.parse(item
+                                                      ? (double.parse(item.hargaCaratPcsMetier.toString()) * double.parse(item.muMetier.toString()))
+                                                : double.parse(item
                                                           .hargaCaratPcsParva
                                                           .toString());
                                                   caratPcsBatu7 = double.parse(
@@ -4795,11 +4759,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   ),
                                                 ),
                                           const SizedBox(width: 20),
-                                          sharedPreferences!
-                                                      .getString('nama') !=
-                                                  'admin'
-                                              ? const SizedBox()
-                                              : Text(
+                                         Text(
                                                   'Carat/Pcs : $caratPcsBatu7',
                                                   style: const TextStyle(
                                                       fontWeight:
@@ -4845,10 +4805,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                               .toLowerCase()
                                                               .toString() ==
                                                           "metier"
-                                                      ? double.parse(item
-                                                          .hargaCaratPcsMetier
-                                                          .toString())
-                                                      : double.parse(item
+                                                      ? (double.parse(item.hargaCaratPcsMetier.toString()) * double.parse(item.muMetier.toString()))
+                                                : double.parse(item
                                                           .hargaCaratPcsParva
                                                           .toString());
                                                   caratPcsBatu8 = double.parse(
@@ -5100,11 +5058,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   ),
                                                 ),
                                           const SizedBox(width: 20),
-                                          sharedPreferences!
-                                                      .getString('nama') !=
-                                                  'admin'
-                                              ? const SizedBox()
-                                              : Text(
+                                        Text(
                                                   'Carat/Pcs : $caratPcsBatu8',
                                                   style: const TextStyle(
                                                       fontWeight:
@@ -5150,10 +5104,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                               .toLowerCase()
                                                               .toString() ==
                                                           "metier"
-                                                      ? double.parse(item
-                                                          .hargaCaratPcsMetier
-                                                          .toString())
-                                                      : double.parse(item
+                                                      ? (double.parse(item.hargaCaratPcsMetier.toString()) * double.parse(item.muMetier.toString()))
+                                                : double.parse(item
                                                           .hargaCaratPcsParva
                                                           .toString());
                                                   caratPcsBatu9 = double.parse(
@@ -5405,11 +5357,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   ),
                                                 ),
                                           const SizedBox(width: 20),
-                                          sharedPreferences!
-                                                      .getString('nama') !=
-                                                  'admin'
-                                              ? const SizedBox()
-                                              : Text(
+                                         Text(
                                                   'Carat/Pcs : $caratPcsBatu9',
                                                   style: const TextStyle(
                                                       fontWeight:
@@ -5455,10 +5403,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                               .toLowerCase()
                                                               .toString() ==
                                                           "metier"
-                                                      ? double.parse(item
-                                                          .hargaCaratPcsMetier
-                                                          .toString())
-                                                      : double.parse(item
+                                                      ? (double.parse(item.hargaCaratPcsMetier.toString()) * double.parse(item.muMetier.toString()))
+                                                : double.parse(item
                                                           .hargaCaratPcsParva
                                                           .toString());
                                                   caratPcsBatu10 = double.parse(
@@ -5712,11 +5658,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   ),
                                                 ),
                                           const SizedBox(width: 20),
-                                          sharedPreferences!
-                                                      .getString('nama') !=
-                                                  'admin'
-                                              ? const SizedBox()
-                                              : Text(
+                                         Text(
                                                   'Carat/Pcs : $caratPcsBatu10',
                                                   style: const TextStyle(
                                                       fontWeight:
@@ -5762,10 +5704,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                               .toLowerCase()
                                                               .toString() ==
                                                           "metier"
-                                                      ? double.parse(item
-                                                          .hargaCaratPcsMetier
-                                                          .toString())
-                                                      : double.parse(item
+                                                      ? (double.parse(item.hargaCaratPcsMetier.toString()) * double.parse(item.muMetier.toString()))
+                                                : double.parse(item
                                                           .hargaCaratPcsParva
                                                           .toString());
                                                   caratPcsBatu11 = double.parse(
@@ -6019,11 +5959,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   ),
                                                 ),
                                           const SizedBox(width: 20),
-                                          sharedPreferences!
-                                                      .getString('nama') !=
-                                                  'admin'
-                                              ? const SizedBox()
-                                              : Text(
+                                         Text(
                                                   'Carat/Pcs : $caratPcsBatu11',
                                                   style: const TextStyle(
                                                       fontWeight:
@@ -6069,10 +6005,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                               .toLowerCase()
                                                               .toString() ==
                                                           "metier"
-                                                      ? double.parse(item
-                                                          .hargaCaratPcsMetier
-                                                          .toString())
-                                                      : double.parse(item
+                                                      ? (double.parse(item.hargaCaratPcsMetier.toString()) * double.parse(item.muMetier.toString()))
+                                                : double.parse(item
                                                           .hargaCaratPcsParva
                                                           .toString());
                                                   caratPcsBatu12 = double.parse(
@@ -6326,11 +6260,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   ),
                                                 ),
                                           const SizedBox(width: 20),
-                                          sharedPreferences!
-                                                      .getString('nama') !=
-                                                  'admin'
-                                              ? const SizedBox()
-                                              : Text(
+                                        Text(
                                                   'Carat/Pcs : $caratPcsBatu12',
                                                   style: const TextStyle(
                                                       fontWeight:
@@ -6376,10 +6306,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                               .toLowerCase()
                                                               .toString() ==
                                                           "metier"
-                                                      ? double.parse(item
-                                                          .hargaCaratPcsMetier
-                                                          .toString())
-                                                      : double.parse(item
+                                                      ? (double.parse(item.hargaCaratPcsMetier.toString()) * double.parse(item.muMetier.toString()))
+                                                : double.parse(item
                                                           .hargaCaratPcsParva
                                                           .toString());
                                                   caratPcsBatu13 = double.parse(
@@ -6633,11 +6561,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   ),
                                                 ),
                                           const SizedBox(width: 20),
-                                          sharedPreferences!
-                                                      .getString('nama') !=
-                                                  'admin'
-                                              ? const SizedBox()
-                                              : Text(
+                                         Text(
                                                   'Carat/Pcs : $caratPcsBatu13',
                                                   style: const TextStyle(
                                                       fontWeight:
@@ -6683,10 +6607,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                               .toLowerCase()
                                                               .toString() ==
                                                           "metier"
-                                                      ? double.parse(item
-                                                          .hargaCaratPcsMetier
-                                                          .toString())
-                                                      : double.parse(item
+                                                      ? (double.parse(item.hargaCaratPcsMetier.toString()) * double.parse(item.muMetier.toString()))
+                                                : double.parse(item
                                                           .hargaCaratPcsParva
                                                           .toString());
                                                   caratPcsBatu14 = double.parse(
@@ -6940,11 +6862,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   ),
                                                 ),
                                           const SizedBox(width: 20),
-                                          sharedPreferences!
-                                                      .getString('nama') !=
-                                                  'admin'
-                                              ? const SizedBox()
-                                              : Text(
+                                         Text(
                                                   'Carat/Pcs : $caratPcsBatu14',
                                                   style: const TextStyle(
                                                       fontWeight:
@@ -6990,10 +6908,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                               .toLowerCase()
                                                               .toString() ==
                                                           "metier"
-                                                      ? double.parse(item
-                                                          .hargaCaratPcsMetier
-                                                          .toString())
-                                                      : double.parse(item
+                                                      ? (double.parse(item.hargaCaratPcsMetier.toString()) * double.parse(item.muMetier.toString()))
+                                                : double.parse(item
                                                           .hargaCaratPcsParva
                                                           .toString());
                                                   caratPcsBatu15 = double.parse(
@@ -7247,11 +7163,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   ),
                                                 ),
                                           const SizedBox(width: 20),
-                                          sharedPreferences!
-                                                      .getString('nama') !=
-                                                  'admin'
-                                              ? const SizedBox()
-                                              : Text(
+                                         Text(
                                                   'Carat/Pcs : $caratPcsBatu15',
                                                   style: const TextStyle(
                                                       fontWeight:
@@ -7297,10 +7209,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                               .toLowerCase()
                                                               .toString() ==
                                                           "metier"
-                                                      ? double.parse(item
-                                                          .hargaCaratPcsMetier
-                                                          .toString())
-                                                      : double.parse(item
+                                                      ? (double.parse(item.hargaCaratPcsMetier.toString()) * double.parse(item.muMetier.toString()))
+                                                : double.parse(item
                                                           .hargaCaratPcsParva
                                                           .toString());
                                                   caratPcsBatu16 = double.parse(
@@ -7554,11 +7464,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   ),
                                                 ),
                                           const SizedBox(width: 20),
-                                          sharedPreferences!
-                                                      .getString('nama') !=
-                                                  'admin'
-                                              ? const SizedBox()
-                                              : Text(
+                                          Text(
                                                   'Carat/Pcs : $caratPcsBatu16',
                                                   style: const TextStyle(
                                                       fontWeight:
@@ -7604,10 +7510,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                               .toLowerCase()
                                                               .toString() ==
                                                           "metier"
-                                                      ? double.parse(item
-                                                          .hargaCaratPcsMetier
-                                                          .toString())
-                                                      : double.parse(item
+                                                      ? (double.parse(item.hargaCaratPcsMetier.toString()) * double.parse(item.muMetier.toString()))
+                                                : double.parse(item
                                                           .hargaCaratPcsParva
                                                           .toString());
                                                   caratPcsBatu17 = double.parse(
@@ -7861,11 +7765,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   ),
                                                 ),
                                           const SizedBox(width: 20),
-                                          sharedPreferences!
-                                                      .getString('nama') !=
-                                                  'admin'
-                                              ? const SizedBox()
-                                              : Text(
+                                         Text(
                                                   'Carat/Pcs : $caratPcsBatu17',
                                                   style: const TextStyle(
                                                       fontWeight:
@@ -7911,10 +7811,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                               .toLowerCase()
                                                               .toString() ==
                                                           "metier"
-                                                      ? double.parse(item
-                                                          .hargaCaratPcsMetier
-                                                          .toString())
-                                                      : double.parse(item
+                                                      ? (double.parse(item.hargaCaratPcsMetier.toString()) * double.parse(item.muMetier.toString()))
+                                                : double.parse(item
                                                           .hargaCaratPcsParva
                                                           .toString());
                                                   caratPcsBatu18 = double.parse(
@@ -8168,11 +8066,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   ),
                                                 ),
                                           const SizedBox(width: 20),
-                                          sharedPreferences!
-                                                      .getString('nama') !=
-                                                  'admin'
-                                              ? const SizedBox()
-                                              : Text(
+                                         Text(
                                                   'Carat/Pcs : $caratPcsBatu18',
                                                   style: const TextStyle(
                                                       fontWeight:
@@ -8218,10 +8112,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                               .toLowerCase()
                                                               .toString() ==
                                                           "metier"
-                                                      ? double.parse(item
-                                                          .hargaCaratPcsMetier
-                                                          .toString())
-                                                      : double.parse(item
+                                                      ? (double.parse(item.hargaCaratPcsMetier.toString()) * double.parse(item.muMetier.toString()))
+                                                : double.parse(item
                                                           .hargaCaratPcsParva
                                                           .toString());
                                                   caratPcsBatu19 = double.parse(
@@ -8475,11 +8367,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   ),
                                                 ),
                                           const SizedBox(width: 20),
-                                          sharedPreferences!
-                                                      .getString('nama') !=
-                                                  'admin'
-                                              ? const SizedBox()
-                                              : Text(
+                                         Text(
                                                   'Carat/Pcs : $caratPcsBatu19',
                                                   style: const TextStyle(
                                                       fontWeight:
@@ -8525,10 +8413,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                               .toLowerCase()
                                                               .toString() ==
                                                           "metier"
-                                                      ? double.parse(item
-                                                          .hargaCaratPcsMetier
-                                                          .toString())
-                                                      : double.parse(item
+                                                      ? (double.parse(item.hargaCaratPcsMetier.toString()) * double.parse(item.muMetier.toString()))
+                                                : double.parse(item
                                                           .hargaCaratPcsParva
                                                           .toString());
                                                   caratPcsBatu20 = double.parse(
@@ -8782,11 +8668,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   ),
                                                 ),
                                           const SizedBox(width: 20),
-                                          sharedPreferences!
-                                                      .getString('nama') !=
-                                                  'admin'
-                                              ? const SizedBox()
-                                              : Text(
+                                          Text(
                                                   'Carat/Pcs : $caratPcsBatu20',
                                                   style: const TextStyle(
                                                       fontWeight:
@@ -8832,10 +8714,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                               .toLowerCase()
                                                               .toString() ==
                                                           "metier"
-                                                      ? double.parse(item
-                                                          .hargaCaratPcsMetier
-                                                          .toString())
-                                                      : double.parse(item
+                                                      ? (double.parse(item.hargaCaratPcsMetier.toString()) * double.parse(item.muMetier.toString()))
+                                                : double.parse(item
                                                           .hargaCaratPcsParva
                                                           .toString());
                                                   caratPcsBatu21 = double.parse(
@@ -9089,11 +8969,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   ),
                                                 ),
                                           const SizedBox(width: 20),
-                                          sharedPreferences!
-                                                      .getString('nama') !=
-                                                  'admin'
-                                              ? const SizedBox()
-                                              : Text(
+                                          Text(
                                                   'Carat/Pcs : $caratPcsBatu21',
                                                   style: const TextStyle(
                                                       fontWeight:
@@ -9139,10 +9015,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                               .toLowerCase()
                                                               .toString() ==
                                                           "metier"
-                                                      ? double.parse(item
-                                                          .hargaCaratPcsMetier
-                                                          .toString())
-                                                      : double.parse(item
+                                                      ? (double.parse(item.hargaCaratPcsMetier.toString()) * double.parse(item.muMetier.toString()))
+                                                : double.parse(item
                                                           .hargaCaratPcsParva
                                                           .toString());
                                                   caratPcsBatu22 = double.parse(
@@ -9396,11 +9270,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   ),
                                                 ),
                                           const SizedBox(width: 20),
-                                          sharedPreferences!
-                                                      .getString('nama') !=
-                                                  'admin'
-                                              ? const SizedBox()
-                                              : Text(
+                                          Text(
                                                   'Carat/Pcs : $caratPcsBatu22',
                                                   style: const TextStyle(
                                                       fontWeight:
@@ -9446,10 +9316,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                               .toLowerCase()
                                                               .toString() ==
                                                           "metier"
-                                                      ? double.parse(item
-                                                          .hargaCaratPcsMetier
-                                                          .toString())
-                                                      : double.parse(item
+                                                      ? (double.parse(item.hargaCaratPcsMetier.toString()) * double.parse(item.muMetier.toString()))
+                                                : double.parse(item
                                                           .hargaCaratPcsParva
                                                           .toString());
                                                   caratPcsBatu23 = double.parse(
@@ -9703,11 +9571,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   ),
                                                 ),
                                           const SizedBox(width: 20),
-                                          sharedPreferences!
-                                                      .getString('nama') !=
-                                                  'admin'
-                                              ? const SizedBox()
-                                              : Text(
+                                          Text(
                                                   'Carat/Pcs : $caratPcsBatu23',
                                                   style: const TextStyle(
                                                       fontWeight:
@@ -9753,10 +9617,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                               .toLowerCase()
                                                               .toString() ==
                                                           "metier"
-                                                      ? double.parse(item
-                                                          .hargaCaratPcsMetier
-                                                          .toString())
-                                                      : double.parse(item
+                                                      ? (double.parse(item.hargaCaratPcsMetier.toString()) * double.parse(item.muMetier.toString()))
+                                                : double.parse(item
                                                           .hargaCaratPcsParva
                                                           .toString());
                                                   caratPcsBatu24 = double.parse(
@@ -10010,11 +9872,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   ),
                                                 ),
                                           const SizedBox(width: 20),
-                                          sharedPreferences!
-                                                      .getString('nama') !=
-                                                  'admin'
-                                              ? const SizedBox()
-                                              : Text(
+                                         Text(
                                                   'Carat/Pcs : $caratPcsBatu24',
                                                   style: const TextStyle(
                                                       fontWeight:
@@ -10060,10 +9918,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                               .toLowerCase()
                                                               .toString() ==
                                                           "metier"
-                                                      ? double.parse(item
-                                                          .hargaCaratPcsMetier
-                                                          .toString())
-                                                      : double.parse(item
+                                                      ? (double.parse(item.hargaCaratPcsMetier.toString()) * double.parse(item.muMetier.toString()))
+                                                : double.parse(item
                                                           .hargaCaratPcsParva
                                                           .toString());
                                                   caratPcsBatu25 = double.parse(
@@ -10317,11 +10173,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   ),
                                                 ),
                                           const SizedBox(width: 20),
-                                          sharedPreferences!
-                                                      .getString('nama') !=
-                                                  'admin'
-                                              ? const SizedBox()
-                                              : Text(
+                                        Text(
                                                   'Carat/Pcs : $caratPcsBatu25',
                                                   style: const TextStyle(
                                                       fontWeight:
@@ -10367,10 +10219,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                               .toLowerCase()
                                                               .toString() ==
                                                           "metier"
-                                                      ? double.parse(item
-                                                          .hargaCaratPcsMetier
-                                                          .toString())
-                                                      : double.parse(item
+                                                      ? (double.parse(item.hargaCaratPcsMetier.toString()) * double.parse(item.muMetier.toString()))
+                                                : double.parse(item
                                                           .hargaCaratPcsParva
                                                           .toString());
                                                   caratPcsBatu26 = double.parse(
@@ -10624,11 +10474,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   ),
                                                 ),
                                           const SizedBox(width: 20),
-                                          sharedPreferences!
-                                                      .getString('nama') !=
-                                                  'admin'
-                                              ? const SizedBox()
-                                              : Text(
+                                         Text(
                                                   'Carat/Pcs : $caratPcsBatu26',
                                                   style: const TextStyle(
                                                       fontWeight:
@@ -10674,10 +10520,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                               .toLowerCase()
                                                               .toString() ==
                                                           "metier"
-                                                      ? double.parse(item
-                                                          .hargaCaratPcsMetier
-                                                          .toString())
-                                                      : double.parse(item
+                                                      ? (double.parse(item.hargaCaratPcsMetier.toString()) * double.parse(item.muMetier.toString()))
+                                                : double.parse(item
                                                           .hargaCaratPcsParva
                                                           .toString());
                                                   caratPcsBatu27 = double.parse(
@@ -10931,11 +10775,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   ),
                                                 ),
                                           const SizedBox(width: 20),
-                                          sharedPreferences!
-                                                      .getString('nama') !=
-                                                  'admin'
-                                              ? const SizedBox()
-                                              : Text(
+                                          Text(
                                                   'Carat/Pcs : $caratPcsBatu27',
                                                   style: const TextStyle(
                                                       fontWeight:
@@ -10981,10 +10821,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                               .toLowerCase()
                                                               .toString() ==
                                                           "metier"
-                                                      ? double.parse(item
-                                                          .hargaCaratPcsMetier
-                                                          .toString())
-                                                      : double.parse(item
+                                                      ? (double.parse(item.hargaCaratPcsMetier.toString()) * double.parse(item.muMetier.toString()))
+                                                : double.parse(item
                                                           .hargaCaratPcsParva
                                                           .toString());
                                                   caratPcsBatu28 = double.parse(
@@ -11238,11 +11076,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   ),
                                                 ),
                                           const SizedBox(width: 20),
-                                          sharedPreferences!
-                                                      .getString('nama') !=
-                                                  'admin'
-                                              ? const SizedBox()
-                                              : Text(
+                                        Text(
                                                   'Carat/Pcs : $caratPcsBatu28',
                                                   style: const TextStyle(
                                                       fontWeight:
@@ -11288,10 +11122,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                               .toLowerCase()
                                                               .toString() ==
                                                           "metier"
-                                                      ? double.parse(item
-                                                          .hargaCaratPcsMetier
-                                                          .toString())
-                                                      : double.parse(item
+                                                      ? (double.parse(item.hargaCaratPcsMetier.toString()) * double.parse(item.muMetier.toString()))
+                                                : double.parse(item
                                                           .hargaCaratPcsParva
                                                           .toString());
                                                   caratPcsBatu29 = double.parse(
@@ -11545,11 +11377,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   ),
                                                 ),
                                           const SizedBox(width: 20),
-                                          sharedPreferences!
-                                                      .getString('nama') !=
-                                                  'admin'
-                                              ? const SizedBox()
-                                              : Text(
+                                          Text(
                                                   'Carat/Pcs : $caratPcsBatu29',
                                                   style: const TextStyle(
                                                       fontWeight:
@@ -11595,10 +11423,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                               .toLowerCase()
                                                               .toString() ==
                                                           "metier"
-                                                      ? double.parse(item
-                                                          .hargaCaratPcsMetier
-                                                          .toString())
-                                                      : double.parse(item
+                                                      ? (double.parse(item.hargaCaratPcsMetier.toString()) * double.parse(item.muMetier.toString()))
+                                                : double.parse(item
                                                           .hargaCaratPcsParva
                                                           .toString());
                                                   caratPcsBatu30 = double.parse(
@@ -11852,11 +11678,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   ),
                                                 ),
                                           const SizedBox(width: 20),
-                                          sharedPreferences!
-                                                      .getString('nama') !=
-                                                  'admin'
-                                              ? const SizedBox()
-                                              : Text(
+                                         Text(
                                                   'Carat/Pcs : $caratPcsBatu30',
                                                   style: const TextStyle(
                                                       fontWeight:
@@ -11902,10 +11724,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                               .toLowerCase()
                                                               .toString() ==
                                                           "metier"
-                                                      ? double.parse(item
-                                                          .hargaCaratPcsMetier
-                                                          .toString())
-                                                      : double.parse(item
+                                                      ? (double.parse(item.hargaCaratPcsMetier.toString()) * double.parse(item.muMetier.toString()))
+                                                : double.parse(item
                                                           .hargaCaratPcsParva
                                                           .toString());
                                                   caratPcsBatu31 = double.parse(
@@ -12159,11 +11979,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   ),
                                                 ),
                                           const SizedBox(width: 20),
-                                          sharedPreferences!
-                                                      .getString('nama') !=
-                                                  'admin'
-                                              ? const SizedBox()
-                                              : Text(
+                                         Text(
                                                   'Carat/Pcs : $caratPcsBatu31',
                                                   style: const TextStyle(
                                                       fontWeight:
@@ -12209,10 +12025,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                               .toLowerCase()
                                                               .toString() ==
                                                           "metier"
-                                                      ? double.parse(item
-                                                          .hargaCaratPcsMetier
-                                                          .toString())
-                                                      : double.parse(item
+                                                      ? (double.parse(item.hargaCaratPcsMetier.toString()) * double.parse(item.muMetier.toString()))
+                                                : double.parse(item
                                                           .hargaCaratPcsParva
                                                           .toString());
                                                   caratPcsBatu32 = double.parse(
@@ -12466,11 +12280,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   ),
                                                 ),
                                           const SizedBox(width: 20),
-                                          sharedPreferences!
-                                                      .getString('nama') !=
-                                                  'admin'
-                                              ? const SizedBox()
-                                              : Text(
+                                          Text(
                                                   'Carat/Pcs : $caratPcsBatu32',
                                                   style: const TextStyle(
                                                       fontWeight:
@@ -12516,10 +12326,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                               .toLowerCase()
                                                               .toString() ==
                                                           "metier"
-                                                      ? double.parse(item
-                                                          .hargaCaratPcsMetier
-                                                          .toString())
-                                                      : double.parse(item
+                                                      ? (double.parse(item.hargaCaratPcsMetier.toString()) * double.parse(item.muMetier.toString()))
+                                                : double.parse(item
                                                           .hargaCaratPcsParva
                                                           .toString());
                                                   caratPcsBatu33 = double.parse(
@@ -12773,11 +12581,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   ),
                                                 ),
                                           const SizedBox(width: 20),
-                                          sharedPreferences!
-                                                      .getString('nama') !=
-                                                  'admin'
-                                              ? const SizedBox()
-                                              : Text(
+                                       Text(
                                                   'Carat/Pcs : $caratPcsBatu33',
                                                   style: const TextStyle(
                                                       fontWeight:
@@ -12823,10 +12627,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                               .toLowerCase()
                                                               .toString() ==
                                                           "metier"
-                                                      ? double.parse(item
-                                                          .hargaCaratPcsMetier
-                                                          .toString())
-                                                      : double.parse(item
+                                                      ? (double.parse(item.hargaCaratPcsMetier.toString()) * double.parse(item.muMetier.toString()))
+                                                : double.parse(item
                                                           .hargaCaratPcsParva
                                                           .toString());
                                                   caratPcsBatu34 = double.parse(
@@ -13080,11 +12882,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   ),
                                                 ),
                                           const SizedBox(width: 20),
-                                          sharedPreferences!
-                                                      .getString('nama') !=
-                                                  'admin'
-                                              ? const SizedBox()
-                                              : Text(
+                                         Text(
                                                   'Carat/Pcs : $caratPcsBatu34',
                                                   style: const TextStyle(
                                                       fontWeight:
@@ -13130,10 +12928,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                               .toLowerCase()
                                                               .toString() ==
                                                           "metier"
-                                                      ? double.parse(item
-                                                          .hargaCaratPcsMetier
-                                                          .toString())
-                                                      : double.parse(item
+                                                      ? (double.parse(item.hargaCaratPcsMetier.toString()) * double.parse(item.muMetier.toString()))
+                                                : double.parse(item
                                                           .hargaCaratPcsParva
                                                           .toString());
                                                   caratPcsBatu35 = double.parse(
@@ -13387,11 +13183,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
                                                   ),
                                                 ),
                                           const SizedBox(width: 20),
-                                          sharedPreferences!
-                                                      .getString('nama') !=
-                                                  'admin'
-                                              ? const SizedBox()
-                                              : Text(
+                                         Text(
                                                   'Carat/Pcs : $caratPcsBatu35',
                                                   style: const TextStyle(
                                                       fontWeight:

@@ -12,6 +12,9 @@ class BatuModel2024 {
   final String? created_at;
   final int? idStone;
   final String keyWord;
+  final String? muParva;
+  final String? muMetier;
+
 
   BatuModel2024({
     required this.id,
@@ -25,6 +28,8 @@ class BatuModel2024 {
     this.idStone,
     this.created_at,
     required this.keyWord,
+    this.muParva,
+    this.muMetier,
   });
 
   factory BatuModel2024.fromJson(Map<String, dynamic> json) {
@@ -40,6 +45,9 @@ class BatuModel2024 {
       idStone: json["idStone"],
       created_at: json["created_at"] ?? '',
       keyWord: json["keyWord"] ?? 'null',
+      muParva: json["muParva"].toString(),
+      muMetier: json["muMetier"].toString(),
+
     );
   }
 
