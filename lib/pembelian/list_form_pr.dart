@@ -8,8 +8,10 @@ import 'package:form_designer/api/api_constant.dart';
 import 'package:form_designer/global/global.dart';
 import 'package:form_designer/mainScreen/sideScreen/side_screen_addPR.dart';
 import 'package:form_designer/pembelian/form_pr_model.dart';
+import 'package:form_designer/pembelian/list_form_pr_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';
+import 'package:overlay_support/overlay_support.dart';
 
 class ListFormPr extends StatefulWidget {
   const ListFormPr({super.key});
@@ -34,6 +36,9 @@ class _ListFormPrState extends State<ListFormPr> {
   int _currentSortColumn = 0;
   int _rowsPerPage = 10;
 
+  List<ListItemPRModel>? _listItemPR;
+  var dataListPR;
+
   @override
   initState() {
     super.initState();
@@ -57,6 +62,23 @@ class _ListFormPrState extends State<ListFormPr> {
       setState(() {
         filterFormPR = data;
         dataFormPR = data;
+      });
+    } else {
+      print(response.body);
+      throw Exception('Unexpected error occured!');
+    }
+    //get listnya
+     final responseList = await http
+        .get(Uri.parse('${ApiConstants.baseUrl}${ApiConstants.getListFormPR}'));
+
+    if (responseList.statusCode == 200) {
+      List jsonResponse = json.decode(responseList.body);
+
+      var dataList =
+          jsonResponse.map((dataList) => ListItemPRModel.fromJson(dataList)).toList();
+
+      setState(() {
+        _listItemPR = dataList;
         isLoading = false;
       });
     } else {
@@ -308,6 +330,7 @@ class _ListFormPrState extends State<ListFormPr> {
                                   source:
                                       // UserDataTableSource(userData: filterCrm!)),
                                       RowSource(
+                                        listDataPR: _listItemPR,
                                           context: context,
                                           myData: dataFormPR,
                                           count: dataFormPR!.length)),
@@ -449,6 +472,7 @@ class _ListFormPrState extends State<ListFormPr> {
               source:
                   // UserDataTableSource(userData: filterCrm!)),
                   RowSource(
+                    listDataPR: _listItemPR,
                       context: context,
                       myData: dataFormPR,
                       count: dataFormPR!.length)),
@@ -461,23 +485,25 @@ class _ListFormPrState extends State<ListFormPr> {
 class RowSource extends DataTableSource {
   BuildContext context;
   var myData;
+  List<ListItemPRModel>? listDataPR;
   final count;
   RowSource({
     required this.myData,
     required this.count,
     required this.context,
+    required this.listDataPR,
   });
 
   @override
   DataRow? getRow(int index) {
     if (index < rowCount) {
-      return recentFileDataRow(myData![index], context);
+      return recentFileDataRow(myData![index], context,listDataPR!);
     } else {
       return null;
     }
   }
 
-  DataRow recentFileDataRow(var data, BuildContext context) {
+  DataRow recentFileDataRow(var data, BuildContext context,List<ListItemPRModel>? listDataPR) {
     return DataRow(cells: [
       //Aksi
       DataCell(Builder(builder: (context) {
@@ -486,23 +512,144 @@ class RowSource extends DataTableSource {
             Padding(
               padding: const EdgeInsets.only(left: 0),
               child: IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  var filterBynoPR = listDataPR!.where((element) => element.noPr.toString().toLowerCase() == data.noPR.toString().toLowerCase()).toList();
+                  showGeneralDialog(
+              transitionDuration: const Duration(milliseconds: 200),
+              barrierDismissible: true,
+              barrierLabel: '',
+              context: context,
+              pageBuilder: (context, animation1, animation2) {
+                return const Text('');
+              },
+              barrierColor: Colors.black.withOpacity(0.5),
+              transitionBuilder: (context, a1, a2, widget) {
+                return Transform.scale(
+                    scale: a1.value,
+                    child: Opacity(
+                        opacity: a1.value,
+                        child:   AlertDialog(
+                            content: Stack(
+                                clipBehavior: Clip.none,
+                                children: <Widget>[
+                              SizedBox(
+                                child: Column(
+                                mainAxisSize: MainAxisSize.min,
+
+                                  children: [
+                                      const Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                            'Jl. Raya Daan Mogot\nKM 21 Pergudangan Eraprima\nBlok I No.2 Batu Ceper, Tanggerang,\nBanten 15122, Tangerang',
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                               
+                                                fontSize: 12),
+                                                                            ),
+                                                                              Text(
+                                          'NO PR-0011',
+                                          textAlign: TextAlign.start,
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 18),
+                                    ),
+                                          ],
+                                        ),
+                                      ),
+                                    const Text(
+                                      'TANDA TERIMA',
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 22),
+                                    ),
+                                     const Align(
+                                      alignment: Alignment.topLeft,
+                                       child: Text(
+                                        'Sudah Diterima dengan rincian sbb',
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 12),
+                                                                         ),
+                                     ),
+                                      Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                       children: [
+                                         Text(
+                                          'Vendor : ${data.vendor}',
+                                          textAlign: TextAlign.start,
+                                          style: const TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 12),
+                                    ),
+                                       const Text(
+                                          'Tanggal : 12 - Januari - 2023',
+                                          textAlign: TextAlign.start,
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 12),
+                                    ),
+                                       ],
+                                     ),
+                                       const Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                       children: [
+                                         Text(
+                                          'Lokasi  : CSV',
+                                          textAlign: TextAlign.start,
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 12),
+                                    ),
+                                       Text(
+                                          'Jam : 16.00',
+                                          textAlign: TextAlign.start,
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 12),
+                                    ),
+                                       ],
+                                     ),
+                                 dataTableForm(filterBynoPR),
+                                  ],
+                                ),
+                              )
+                            ]))));
+              });
+                },
                 icon: const Icon(
                   Icons.remove_red_eye_outlined,
                   color: Colors.green,
                 ),
               ),
             ),
-            // Padding(
-            //   padding: const EdgeInsets.only(left: 0),
-            //   child: IconButton(
-            //     onPressed: () {},
-            //     icon: const Icon(
-            //       Icons.delete,
-            //       color: Colors.red,
-            //     ),
-            //   ),
-            // ),
+            Padding(
+              padding: const EdgeInsets.only(left: 0),
+              child: IconButton(
+                onPressed: () {
+                   showSimpleNotification(
+            const Text(
+              'Form Terkirim',
+            ),
+            background: Colors.green,
+            duration: const Duration(seconds: 1),
+          );
+                },
+                icon: const Icon(
+                  Icons.send,
+                  color: Colors.blue,
+                ),
+              ),
+            ),
           ],
         );
       })),
@@ -538,6 +685,81 @@ class RowSource extends DataTableSource {
         Padding(padding: const EdgeInsets.all(0), child: Text(data.totalBerat)),
       ),
     ]);
+  }
+
+ dataTableForm(List<ListItemPRModel>? listData) {
+    return DataTable(
+        headingTextStyle:
+            const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+        headingRowColor:
+            MaterialStateProperty.resolveWith((states) => Colors.black54),
+        dataRowColor:
+            MaterialStateProperty.resolveWith((states) => Colors.white),
+        columnSpacing: 0,
+        headingRowHeight: 50,
+        // dataRowMaxHeight: 50,
+        columns: columnsData(),
+        border: TableBorder.all(),
+        rows: rowsData(listData,listData!.length));
+  }
+  List<DataColumn> columnsData() {
+    return [
+       const DataColumn(
+          label: Center(child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10),
+            child: Text('No'),
+          ))),
+      const DataColumn(
+          label: Center(child: Padding(
+             padding: EdgeInsets.symmetric(horizontal: 10),
+            child: Text('Nama Barang / Dokumen'),
+          ))),
+              const DataColumn(
+          label: Center(child: Padding(
+             padding: EdgeInsets.symmetric(horizontal: 10),
+            child: Text('Qty'),
+          ))),
+              const DataColumn(
+          label: Center(child: Padding(
+               padding: EdgeInsets.symmetric(horizontal: 10),
+            child: Text('Berat'),
+          ))),
+          const DataColumn(
+          label: Center(child: Padding(
+               padding: EdgeInsets.symmetric(horizontal: 10),
+            child: Text('Kadar'),
+          ))),
+          const DataColumn(
+          label: Center(child: Padding(
+               padding: EdgeInsets.symmetric(horizontal: 10),
+            child: Text('Color'),
+          ))),
+    ];
+  }
+  List<DataRow> rowsData(var data, int count) {
+    return [
+      for (var i = 0; i < count; i++)
+        DataRow(cells: [
+            DataCell(Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Center(child: Text('$i')))),
+               DataCell(Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Center(child: Text(data[i].item)))),
+          DataCell(Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Center(child: Text(data[i].qty)))),
+               DataCell(Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+              child:  Center(child: Text(data[i].berat)))),
+                DataCell(Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+              child:  Center(child: Text(data[i].kadar)))),
+                DataCell(Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+              child:  Center(child: Text(data[i].color)))),
+        ]),
+    ];
   }
 
   @override

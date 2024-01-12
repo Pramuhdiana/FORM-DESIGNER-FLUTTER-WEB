@@ -40,6 +40,8 @@ class ApiConstants {
   static String getDataModeller = 'spk/get_data_modeller.php';
   static String getDataListItem = 'spk/list_item.php';
   static String getFormPR = 'spk/get_form_pr.php';
+  static String getListFormPR = 'spk/get_list_form_pr.php';
+
 
   static String postDataBatu = 'spk/create_batu.php';
   static String postLogin = 'spk/login.php';

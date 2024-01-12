@@ -637,10 +637,10 @@ class _AddFormPrState extends State<AddFormPr> {
     print(response.body);
   }
 
-  postDataListItem(nama) async {
-    print('ini namanya $nama');
+  postDataListItem(item) async {
+    print('ini namanya $item');
     Map<String, String> body = {
-      'nama': nama,
+      'item': item,
     };
     final response = await http.post(
         Uri.parse('${ApiConstants.baseUrl}${ApiConstants.postDataListItem}'),
@@ -680,7 +680,7 @@ Widget _listItem(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            item?.nama ?? '',
+            item?.item ?? '',
           ),
         ],
       ),

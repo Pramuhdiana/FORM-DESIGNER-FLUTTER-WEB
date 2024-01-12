@@ -1,6 +1,6 @@
 // ignore_for_file: non_constant_identifier_names, unnecessary_this
 
-class ListItemModel {
+class ListItemPRModel {
   final int id;
   String? noPr;
   final String item;
@@ -10,7 +10,7 @@ class ListItemModel {
   final String? color;
   final String? created_at;
 
-  ListItemModel({
+  ListItemPRModel({
     required this.id,
     required this.item,
     this.noPr,
@@ -21,9 +21,9 @@ class ListItemModel {
     this.created_at,
   });
 
-  factory ListItemModel.fromJson(Map<String, dynamic> json) {
-    return ListItemModel(
-      id: json["id"],
+  factory ListItemPRModel.fromJson(Map<String, dynamic> json) {
+    return ListItemPRModel(
+     id: json["id"],
       item: json["item"] ?? '',
       noPr: json["noPr"] ?? '',
       qty: json["qty"].toString(),
@@ -33,22 +33,16 @@ class ListItemModel {
       created_at: json["created_at"].toString(),
     );
   }
-
-  static List<ListItemModel> fromJsonList(List list) {
-    return list.map((item) => ListItemModel.fromJson(item)).toList();
+Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['item'] = item;
+    data['noPr'] = noPr;
+    data['qty'] = qty;
+    data['berat'] = berat;
+    data['kadar'] = kadar;
+    data['color'] = color;
+    data['created_at'] = created_at;
+     return data;
   }
-
-  ///this method will prevent the override of toString
-  String userAsString() {
-    return '#${this.id} ${this.item}';
-  }
-
-  ///custom comparing function to check if two users are equal
-  bool isEqual(ListItemModel model) {
-    return this.id == model.id;
-  }
-
-  @override
-  String toString() => item;
-  String toId() => id.toString();
 }

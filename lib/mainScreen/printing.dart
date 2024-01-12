@@ -1160,10 +1160,10 @@ class _PrintPageState extends State<PrintPage> {
   }
 
   Widget _bagianTengah() {
-    double wid = 150;
+    double wid = 130;
 
     return Padding(
-      padding: const EdgeInsets.only(top: 10, left: 0),
+      padding: const EdgeInsets.only(top: 20, left: 0),
       child: SizedBox(
         child: SingleChildScrollView(
           scrollDirection: Axis.vertical,

@@ -7,7 +7,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:form_designer/api/api_constant.dart';
 import 'package:form_designer/global/currency_format.dart';
-import 'package:form_designer/global/global.dart';
 import 'package:form_designer/model/form_designer_model.dart';
 import 'package:form_designer/produksi/modelProduksi/produksi_model.dart';
 import 'package:http/http.dart' as http;
@@ -67,7 +66,7 @@ class _SummaryProduktivitasScreenState
     String month = DateFormat('MMMM', 'id').format(now);
     nowSiklus = month;
     // _getAllDataProduksi("all", sharedPreferences!.getString('nama')!);
-    nowSiklus = sharedPreferences!.getString('siklus')!;
+    // nowSiklus = sharedPreferences!.getString('siklus')!;
   }
 
   Future<dynamic> fetchData() async {
