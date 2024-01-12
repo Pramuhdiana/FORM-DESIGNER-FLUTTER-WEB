@@ -6,16 +6,16 @@ import 'package:form_designer/global/global.dart';
 // ignore: unused_import
 import 'package:form_designer/mainScreen/form_screen_by_id.dart';
 
-class HomeScreenPembelian extends StatefulWidget {
-  const HomeScreenPembelian({super.key});
+class HomeScreenQc extends StatefulWidget {
+  const HomeScreenQc({super.key});
 
   @override
-  State<HomeScreenPembelian> createState() => _HomeScreenPembelianState();
+  State<HomeScreenQc> createState() => _HomeScreenQcState();
 }
 
 TextEditingController controller = TextEditingController();
 
-class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
+class _HomeScreenQcState extends State<HomeScreenQc> {
   @override
   initState() {
     super.initState();
@@ -78,7 +78,7 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
                           Container(
                             padding: const EdgeInsets.only(top: 26),
                             child: const Text(
-                              'Dashboard Pembelian',
+                              'Dashboard QC',
                               style: TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold,

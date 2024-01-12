@@ -13556,16 +13556,16 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
     if (brand.text.toLowerCase().toString() == "parva" ||
         brand.text.toLowerCase().toString() == "fine") {
       print('parva or vine');
-      pricePerCarat = ((double.parse(estimasiHarga.text) * 0.37 * 11500) -
+      pricePerCarat = ((double.parse(estimasiHarga.text) * 0.5 * 14500) -
               (double.parse(beratEmas.text) * 1000000)) /
           beratDiamond;
-      priceAfterDiskon = (int.parse(estimasiHarga.text) * 0.37) * 11500;
+      priceAfterDiskon = (int.parse(estimasiHarga.text) * 0.5) * 14500;
     } else {
       print('bukan parva or fine');
       pricePerCarat = ((double.parse(estimasiHarga.text)) -
               (double.parse(beratEmas.text) * 1000000)) /
           beratDiamond;
-      priceAfterDiskon = (int.parse(estimasiHarga.text));
+      priceAfterDiskon = (int.parse(estimasiHarga.text) / 0.75 );
     }
     print('ini pr : $pricePerCarat & $priceAfterDiskon');
     Map<String, String> body = {

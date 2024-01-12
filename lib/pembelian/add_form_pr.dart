@@ -1,4 +1,4 @@
-// ignore_for_file: depend_on_referenced_packages, avoid_print, prefer_typing_uninitialized_variables
+// ignore_for_file: depend_on_referenced_packages, avoid_print, prefer_typing_uninitialized_variables, use_build_context_synchronously
 
 import 'dart:convert';
 
@@ -562,8 +562,9 @@ class _AddFormPrState extends State<AddFormPr> {
                                         '',
                                         '');
                               }
-                              // ignore: use_build_context_synchronously
-                              Navigator.push(
+                            sharedPreferences!.getString('divisi') == 'admin'
+                            ? Navigator.pop(context)
+                            :  Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (c) => MainViewPembelian(

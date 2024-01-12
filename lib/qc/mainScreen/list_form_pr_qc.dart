@@ -14,11 +14,11 @@ import 'package:lottie/lottie.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:intl/intl.dart';
 
-class ListFormPr extends StatefulWidget {
-  const ListFormPr({super.key});
+class ListFormPrQc extends StatefulWidget {
+  const ListFormPrQc({super.key});
 
   @override
-  State<ListFormPr> createState() => _ListFormPrState();
+  State<ListFormPrQc> createState() => _ListFormPrQcState();
 }
 
 @override
@@ -27,7 +27,7 @@ Widget _verticalDivider = const VerticalDivider(
   thickness: 1,
 );
 
-class _ListFormPrState extends State<ListFormPr> {
+class _ListFormPrQcState extends State<ListFormPrQc> {
   TextEditingController controller = TextEditingController();
 
   List<FormPrModel>? filterFormPR;

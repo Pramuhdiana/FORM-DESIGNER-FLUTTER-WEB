@@ -5,6 +5,7 @@ import 'package:form_designer/SCM/mainScreen/kebutuhan_batu_by_siklus.dart';
 import 'package:form_designer/api/api_constant.dart';
 import 'package:form_designer/calculatePricing/list_calculate_pricing_screen.dart';
 import 'package:form_designer/global/global.dart';
+import 'package:form_designer/mainScreen/home_admin.dart';
 import 'package:form_designer/mainScreen/home_screen.dart';
 import 'package:form_designer/mainScreen/list_batu_screen.dart';
 import 'package:form_designer/mainScreen/list_data_modeller.dart';
@@ -20,6 +21,7 @@ import 'package:form_designer/produksi/mainScreen/report_untuk_manufaktur.dart';
 import 'package:form_designer/produksi/mainScreen/summary_pasang_batu.dart';
 import 'package:form_designer/produksi/mainScreen/summary_produktivitas.dart';
 import 'package:form_designer/produksi/mainScreen/summary_susut.dart';
+import 'package:form_designer/qc/mainScreen/list_form_pr_qc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:side_navigation/side_navigation.dart';
 
@@ -34,7 +36,7 @@ class MainViewAdmin extends StatefulWidget {
 class _MainViewAdminState extends State<MainViewAdmin> {
   List<Widget> views = [
     //? 0
-    const HomeScreen(),
+    const HomeScreenAdmin(),
     const ListDataModellerScreen(),
     const ListBatuScreen(), //* produksi
     const ListDesignerScreen(),
@@ -43,6 +45,7 @@ class _MainViewAdminState extends State<MainViewAdmin> {
     const ListStatusApprovalScreen(),
     const ListMpsScreen(),
     const ListFormPr(),
+    const ListFormPrQc(),
     const MonthlyMeetingScm(),
     const ReportUntukManufaktur(),
     const DashboardControl(),
@@ -165,7 +168,11 @@ class _MainViewAdminState extends State<MainViewAdmin> {
             ),
              SideNavigationBarItem(
               icon: Icons.developer_mode,
-              label: 'Form PR',
+              label: 'Form PR Pembelian',
+            ),
+              SideNavigationBarItem(
+              icon: Icons.developer_mode,
+              label: 'Form PR QC',
             ),
              SideNavigationBarItem(
               icon: Icons.developer_mode,
@@ -202,7 +209,7 @@ class _MainViewAdminState extends State<MainViewAdmin> {
           ],
 
           onTap: (index) {
-            if (index == 16) {
+            if (index == views.length){
               showDialog(
                   context: context,
                   builder: (BuildContext context) {
@@ -422,7 +429,7 @@ class _MainViewAdminState extends State<MainViewAdmin> {
           ],
 
           onTap: (index) {
-            if (index == 16) {
+            if (index == views.length) {
               showDialog(
                   context: context,
                   builder: (BuildContext context) {

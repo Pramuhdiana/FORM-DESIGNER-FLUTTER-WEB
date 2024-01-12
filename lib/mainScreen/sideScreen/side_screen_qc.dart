@@ -1,10 +1,10 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: file_names, avoid_print
 
 import 'package:flutter/material.dart';
 import 'package:form_designer/global/global.dart';
-import 'package:form_designer/mainScreen/home_screen.dart';
 import 'package:form_designer/mainScreen/login.dart';
-import 'package:form_designer/qc/mainScreen/list_batu_qc.dart';
+import 'package:form_designer/pembelian/home_pembelian.dart';
+import 'package:form_designer/qc/mainScreen/list_form_pr_qc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:side_navigation/side_navigation.dart';
 
@@ -12,8 +12,9 @@ import 'package:side_navigation/side_navigation.dart';
 class MainViewQc extends StatefulWidget {
   //fungsi untuk menerima data
   int col = 0;
+  final VoidCallback? onBackPressed;
   //init data
-  MainViewQc({super.key, required this.col});
+  MainViewQc({super.key, required this.col, this.onBackPressed});
 
   @override
   // ignore: library_private_types_in_public_api
@@ -27,12 +28,10 @@ class _MainViewQcState extends State<MainViewQc> {
   }
 
   List<Widget> views = [
-    const HomeScreen(),
-    const ListBatuQc(),
-    const HomeScreen(),
+    const HomeScreenPembelian(),
+    const ListFormPrQc(),
+    const HomeScreenPembelian()
   ];
-
-  final _formKey = GlobalKey<FormState>();
 
   bool isKodeAkses = false;
   TextEditingController kodeAkses = TextEditingController();
@@ -43,11 +42,7 @@ class _MainViewQcState extends State<MainViewQc> {
       //method multi screen
       body: LayoutBuilder(
         builder: (context, constraints) {
-          if (constraints.maxWidth < 900) {
-            return screenDekstop();
-          } else {
-            return screenDekstop();
-          }
+          return screenDekstop();
         },
       ),
     );
@@ -106,8 +101,8 @@ class _MainViewQcState extends State<MainViewQc> {
               label: 'Dashboard',
             ),
             SideNavigationBarItem(
-              icon: Icons.add_card_sharp,
-              label: 'Add Batu',
+              icon: Icons.list_alt,
+              label: 'List Form PR',
             ),
             SideNavigationBarItem(
               icon: Icons.logout,
@@ -116,10 +111,7 @@ class _MainViewQcState extends State<MainViewQc> {
           ],
 
           onTap: (index) {
-            print(index);
-            print(sharedPreferences!.getString('level'));
             if (index == 2) {
-              //! sign out
               showDialog(
                   context: context,
                   builder: (BuildContext context) {
@@ -170,96 +162,6 @@ class _MainViewQcState extends State<MainViewQc> {
                                             MaterialPageRoute(
                                                 builder: (c) =>
                                                     const LoginScreen()));
-                                      },
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  });
-            } else if (index == 3) {
-              //! kalkulator
-              showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      content: Stack(
-                        clipBehavior: Clip.none,
-                        children: <Widget>[
-                          Positioned(
-                            right: -47.0,
-                            top: -47.0,
-                            child: InkResponse(
-                              onTap: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: const CircleAvatar(
-                                backgroundColor: Colors.red,
-                                child: Icon(Icons.close),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 190,
-                            child: Form(
-                              key: _formKey,
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  const Padding(
-                                    padding:
-                                        EdgeInsets.only(top: 5, bottom: 10),
-                                    child: Text('Masukan Kode Akses'),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: TextFormField(
-                                      autofocus: true,
-                                      obscureText: true,
-                                      style: const TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold),
-                                      textInputAction: TextInputAction.next,
-                                      controller: kodeAkses,
-                                      validator: (value) {
-                                        if (value! != aksesKode) {
-                                          return 'Kode akses salah';
-                                        }
-                                        return null;
-                                      },
-                                      onChanged: (value) {
-                                        isKodeAkses = true;
-                                        kodeAkses.text == aksesKode
-                                            ? isKodeAkses = true
-                                            : isKodeAkses = false;
-                                      },
-                                      decoration: InputDecoration(
-                                        labelText: "Kode Akses",
-                                        border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(5.0)),
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    width: 200,
-                                    height: 50,
-                                    padding: const EdgeInsets.only(top: 10),
-                                    child: ElevatedButton(
-                                      child: const Text("Submit"),
-                                      onPressed: () {
-                                        if (_formKey.currentState!.validate()) {
-                                          _formKey.currentState!.save();
-                                          setState(() {
-                                            widget.col = index;
-                                            Navigator.of(context).pop();
-                                          });
-                                        } else {}
                                       },
                                     ),
                                   )
