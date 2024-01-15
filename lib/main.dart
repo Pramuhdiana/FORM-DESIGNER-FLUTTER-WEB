@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:form_designer/login/my_splash_screen.dart';
@@ -8,6 +9,17 @@ import 'global/global.dart';
 
 Future<void> main() async {
   sharedPreferences = await SharedPreferences.getInstance();
+  // var option = {
+  //  var apiKey: "AIzaSyDOyDK9Pm49VTkT7-1-DACD-M84FZaiHhU",
+  // authDomain: "flutter-web-83673.firebaseapp.com",
+  // projectId: "flutter-web-83673",
+  // storageBucket: "flutter-web-83673.appspot.com",
+  // messagingSenderId: "493427708399",
+  // appId: "1:493427708399:web:b9d4abd257d81fa639e61a"
+  // };
+  // await Firebase.initializeApp(
+  //   options: 
+  // );
   runApp(const MyApp());
 }
 
