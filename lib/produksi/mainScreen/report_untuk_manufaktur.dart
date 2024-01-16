@@ -415,7 +415,7 @@ class _ReportUntukManufakturState extends State<ReportUntukManufaktur> {
             height: 550,
             padding: const EdgeInsets.all(5),
             decoration: BoxDecoration(
-              border: Border.all(width: 5, color: colorDasar),
+              border: Border.all(width: 5, color: colorCard1),
             ),
             child: indexLevel == 13
                 ? chartLevel3B()
@@ -446,6 +446,7 @@ class _ReportUntukManufakturState extends State<ReportUntukManufaktur> {
   chartLevel1() {
     return Stack(clipBehavior: Clip.none, children: [
       Container(
+        color: colorCard1,
           child: Center(
               child: Container(
                   child: SfCartesianChart(

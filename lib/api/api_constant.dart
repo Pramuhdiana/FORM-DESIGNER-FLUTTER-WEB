@@ -61,6 +61,7 @@ class ApiConstants {
   static String updateFormDesigner = 'spk/update_form_designer.php';
   static String updateSiklusdesigner = 'spk/update_siklus_designer.php';
   static String updatePosisi = 'spk/add_posisi.php';
+  static String updatePosisidanWeek = 'spk/add_posisi_mps.php';
   static String updateNilaiProduksi = 'spk/update_nilai_produksi.php';
   static String updateDataModeller = 'spk/update_form_data_modeller.php';
   static String postDataListItem = 'spk/create_list_item.php';

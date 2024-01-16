@@ -7,8 +7,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:form_designer/global/currency_format.dart';
-import 'package:form_designer/mainScreen/view_photo_screen.dart';
-import 'package:form_designer/model/form_designer_model.dart';
+import 'package:form_designer/mainScreen/view_photo_mps.dart';
+// import 'package:form_designer/model/form_designer_model.dart';
 import 'package:form_designer/model/list_mps_model.dart';
 import 'package:form_designer/produksi/modelProduksi/artist_produksi_model.dart';
 import 'package:form_designer/produksi/modelProduksi/divisi_produksi_model.dart';
@@ -39,11 +39,10 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
   TextEditingController controller = TextEditingController();
   bool sort = true;
   int _currentSortColumn = 0;
-  // List<FormDesignerModel>? filterCrm;
+  // List<FormDesignerModel>? filterDataProduksi;
   // List<FormDesignerModel>? myCrm;
   // List<FormDesignerModel>? myDataProduksi;
-  List<ListMpsModel>? filterCrm;
-  List<ListMpsModel>? myCrm;
+  List<ListMpsModel>? filterDataProduksi;
   List<ListMpsModel>? myDataProduksi;
   final searchController = TextEditingController();
   bool isLoading = false;
@@ -61,11 +60,11 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
   onsortColum(int columnIndex, bool ascending) {
     if (columnIndex == 0) {
       if (ascending) {
-        filterCrm!.sort((a, b) => a.kodeDesignMdbc!
+        filterDataProduksi!.sort((a, b) => a.kodeDesignMdbc!
             .toLowerCase()
             .compareTo(b.kodeDesignMdbc!.toLowerCase()));
       } else {
-        filterCrm!.sort((a, b) => b.kodeDesignMdbc!
+        filterDataProduksi!.sort((a, b) => b.kodeDesignMdbc!
             .toLowerCase()
             .compareTo(a.kodeDesignMdbc!.toLowerCase()));
       }
@@ -172,8 +171,7 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
 
       setState(() {
         myDataProduksi = alldata.toList();
-        filterCrm = alldata.toList();
-        myCrm = alldata.toList();
+        filterDataProduksi = alldata.toList();
       });
     } else {
       throw Exception('Unexpected error occured!');
@@ -222,7 +220,7 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
 
   //     setState(() {
   //       myDataProduksi = alldata.toList();
-  //       filterCrm = alldata.toList();
+  //       filterDataProduksi = alldata.toList();
   //       myCrm = alldata.toList();
   //     });
   //   } else {
@@ -273,7 +271,7 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
                   keyboardType: TextInputType.text,
                   onChanged: (value) {
                     //fungsi search anyting
-                    myCrm = filterCrm!
+                    myDataProduksi = filterDataProduksi!
                         .where((element) =>
                             element.kodeDesignMdbc!
                                 .toLowerCase()
@@ -422,7 +420,7 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
     //             //           hintText: "Search Anything ..."),
     //             //       onChanged: (value) {
     //             //         //fungsi search anyting
-    //             //         myCrm = filterCrm!
+    //             //         myCrm = filterDataProduksi!
     //             //             .where((element) =>
     //             //                 element.kodeDesignMdbc!
     //             //                     .toLowerCase()
@@ -533,14 +531,14 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
     //                                         _currentSortColumn = columnIndex;
     //                                         if (sort == true) {
     //                                           sort = false;
-    //                                           filterCrm!.sort((a, b) => a
+    //                                           filterDataProduksi!.sort((a, b) => a
     //                                               .kodeDesign!
     //                                               .toLowerCase()
     //                                               .compareTo(b.kodeDesign!
     //                                                   .toLowerCase()));
     //                                         } else {
     //                                           sort = true;
-    //                                           filterCrm!.sort((a, b) => b
+    //                                           filterDataProduksi!.sort((a, b) => b
     //                                               .kodeDesign!
     //                                               .toLowerCase()
     //                                               .compareTo(a.kodeDesign!
@@ -564,14 +562,14 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
     //                                         _currentSortColumn = columnIndex;
     //                                         if (sort == true) {
     //                                           sort = false;
-    //                                           filterCrm!.sort((a, b) => a
+    //                                           filterDataProduksi!.sort((a, b) => a
     //                                               .kodeDesignMdbc!
     //                                               .toLowerCase()
     //                                               .compareTo(b.kodeDesignMdbc!
     //                                                   .toLowerCase()));
     //                                         } else {
     //                                           sort = true;
-    //                                           filterCrm!.sort((a, b) => b
+    //                                           filterDataProduksi!.sort((a, b) => b
     //                                               .kodeDesignMdbc!
     //                                               .toLowerCase()
     //                                               .compareTo(a.kodeDesignMdbc!
@@ -596,14 +594,14 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
 
     //                                         if (sort == true) {
     //                                           sort = false;
-    //                                           filterCrm!.sort((a, b) => a
+    //                                           filterDataProduksi!.sort((a, b) => a
     //                                               .kodeMarketing!
     //                                               .toLowerCase()
     //                                               .compareTo(b.kodeMarketing!
     //                                                   .toLowerCase()));
     //                                         } else {
     //                                           sort = true;
-    //                                           filterCrm!.sort((a, b) => b
+    //                                           filterDataProduksi!.sort((a, b) => b
     //                                               .kodeMarketing!
     //                                               .toLowerCase()
     //                                               .compareTo(a.kodeMarketing!
@@ -628,12 +626,12 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
     //                                         _currentSortColumn = columnIndex;
     //                                         if (sort == true) {
     //                                           sort = false;
-    //                                           filterCrm!.sort((a, b) => a
+    //                                           filterDataProduksi!.sort((a, b) => a
     //                                               .photoShoot!
     //                                               .compareTo(b.photoShoot!));
     //                                         } else {
     //                                           sort = true;
-    //                                           filterCrm!.sort((a, b) => b
+    //                                           filterDataProduksi!.sort((a, b) => b
     //                                               .photoShoot!
     //                                               .compareTo(a.photoShoot!));
     //                                         }
@@ -656,7 +654,7 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
 
     //                                         if (sort == true) {
     //                                           sort = false;
-    //                                           filterCrm!.sort((a, b) => a
+    //                                           filterDataProduksi!.sort((a, b) => a
     //                                               .keteranganStatusBatu!
     //                                               .toLowerCase()
     //                                               .compareTo(b
@@ -664,7 +662,7 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
     //                                                   .toLowerCase()));
     //                                         } else {
     //                                           sort = true;
-    //                                           filterCrm!.sort((a, b) => b
+    //                                           filterDataProduksi!.sort((a, b) => b
     //                                               .keteranganStatusBatu!
     //                                               .toLowerCase()
     //                                               .compareTo(a
@@ -690,14 +688,14 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
 
     //                                         if (sort == true) {
     //                                           sort = false;
-    //                                           filterCrm!.sort((a, b) => a
+    //                                           filterDataProduksi!.sort((a, b) => a
     //                                               .namaDesigner!
     //                                               .toLowerCase()
     //                                               .compareTo(b.namaDesigner!
     //                                                   .toLowerCase()));
     //                                         } else {
     //                                           sort = true;
-    //                                           filterCrm!.sort((a, b) => b
+    //                                           filterDataProduksi!.sort((a, b) => b
     //                                               .namaDesigner!
     //                                               .toLowerCase()
     //                                               .compareTo(a.namaDesigner!
@@ -721,13 +719,13 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
     //                                         _currentSortColumn = columnIndex;
     //                                         if (sort == true) {
     //                                           sort = false;
-    //                                           filterCrm!.sort((a, b) => a.tema!
+    //                                           filterDataProduksi!.sort((a, b) => a.tema!
     //                                               .toLowerCase()
     //                                               .compareTo(
     //                                                   b.tema!.toLowerCase()));
     //                                         } else {
     //                                           sort = true;
-    //                                           filterCrm!.sort((a, b) => b.tema!
+    //                                           filterDataProduksi!.sort((a, b) => b.tema!
     //                                               .toLowerCase()
     //                                               .compareTo(
     //                                                   a.tema!.toLowerCase()));
@@ -750,14 +748,14 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
     //                                         _currentSortColumn = columnIndex;
     //                                         if (sort == true) {
     //                                           sort = false;
-    //                                           filterCrm!.sort((a, b) => a
+    //                                           filterDataProduksi!.sort((a, b) => a
     //                                               .jenisBarang!
     //                                               .toLowerCase()
     //                                               .compareTo(b.jenisBarang!
     //                                                   .toLowerCase()));
     //                                         } else {
     //                                           sort = true;
-    //                                           filterCrm!.sort((a, b) => b
+    //                                           filterDataProduksi!.sort((a, b) => b
     //                                               .jenisBarang!
     //                                               .toLowerCase()
     //                                               .compareTo(a.jenisBarang!
@@ -783,12 +781,12 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
     //                                         if (sort == true) {
     //                                           // myCrm.sort((a, b) => a['estimasiHarga'].)
     //                                           sort = false;
-    //                                           filterCrm!.sort((a, b) =>
+    //                                           filterDataProduksi!.sort((a, b) =>
     //                                               a.brand!.compareTo(b.brand!));
     //                                           // onsortColum(columnIndex, ascending);
     //                                         } else {
     //                                           sort = true;
-    //                                           filterCrm!.sort((a, b) =>
+    //                                           filterDataProduksi!.sort((a, b) =>
     //                                               b.brand!.compareTo(a.brand!));
     //                                         }
     //                                       });
@@ -823,14 +821,14 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
     //                                         _currentSortColumn = columnIndex;
     //                                         if (sort == true) {
     //                                           sort = false;
-    //                                           filterCrm!.sort((a, b) => a
+    //                                           filterDataProduksi!.sort((a, b) => a
     //                                               .namaModeller!
     //                                               .toLowerCase()
     //                                               .compareTo(b.namaModeller!
     //                                                   .toLowerCase()));
     //                                         } else {
     //                                           sort = true;
-    //                                           filterCrm!.sort((a, b) => b
+    //                                           filterDataProduksi!.sort((a, b) => b
     //                                               .namaModeller!
     //                                               .toLowerCase()
     //                                               .compareTo(a.namaModeller!
@@ -854,7 +852,7 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
     //                                         _currentSortColumn = columnIndex;
     //                                         if (sort == true) {
     //                                           sort = false;
-    //                                           filterCrm!.sort((a, b) => a
+    //                                           filterDataProduksi!.sort((a, b) => a
     //                                               .tanggalOutModeller!
     //                                               .toLowerCase()
     //                                               .compareTo(b
@@ -862,7 +860,7 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
     //                                                   .toLowerCase()));
     //                                         } else {
     //                                           sort = true;
-    //                                           filterCrm!.sort((a, b) => b
+    //                                           filterDataProduksi!.sort((a, b) => b
     //                                               .tanggalOutModeller!
     //                                               .toLowerCase()
     //                                               .compareTo(a
@@ -887,7 +885,7 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
     //                                         _currentSortColumn = columnIndex;
     //                                         if (sort == true) {
     //                                           sort = false;
-    //                                           filterCrm!.sort((a, b) => a
+    //                                           filterDataProduksi!.sort((a, b) => a
     //                                               .tanggalInProduksi!
     //                                               .toLowerCase()
     //                                               .compareTo(b
@@ -895,7 +893,7 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
     //                                                   .toLowerCase()));
     //                                         } else {
     //                                           sort = true;
-    //                                           filterCrm!.sort((a, b) => b
+    //                                           filterDataProduksi!.sort((a, b) => b
     //                                               .tanggalInProduksi!
     //                                               .toLowerCase()
     //                                               .compareTo(a
@@ -906,7 +904,7 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
     //                                     }),
     //                               ],
     //                               source:
-    //                                   // UserDataTableSource(userData: filterCrm!)),
+    //                                   // UserDataTableSource(userData: filterDataProduksi!)),
     //                                   RowSource(
     //                                       myData: myCrm, count: myCrm!.length)),
     //                         ),
@@ -925,7 +923,7 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          padding: const EdgeInsets.only(top: 26),
+          padding: const EdgeInsets.only(top: 26,left: 20),
           child: const Text(
             'Master Planning Siklus',
             style: TextStyle(
@@ -1194,14 +1192,14 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
                                         _currentSortColumn = columnIndex;
                                         if (sort == true) {
                                           sort = false;
-                                          filterCrm!.sort((a, b) => a
+                                          filterDataProduksi!.sort((a, b) => a
                                               .kodeDesignMdbc!
                                               .toLowerCase()
                                               .compareTo(b.kodeDesignMdbc!
                                                   .toLowerCase()));
                                         } else {
                                           sort = true;
-                                          filterCrm!.sort((a, b) => b
+                                          filterDataProduksi!.sort((a, b) => b
                                               .kodeDesignMdbc!
                                               .toLowerCase()
                                               .compareTo(a.kodeDesignMdbc!
@@ -1225,14 +1223,14 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
 
                                         if (sort == true) {
                                           sort = false;
-                                          filterCrm!.sort((a, b) => a
+                                          filterDataProduksi!.sort((a, b) => a
                                               .kodeMarketing!
                                               .toLowerCase()
                                               .compareTo(b.kodeMarketing!
                                                   .toLowerCase()));
                                         } else {
                                           sort = true;
-                                          filterCrm!.sort((a, b) => b
+                                          filterDataProduksi!.sort((a, b) => b
                                               .kodeMarketing!
                                               .toLowerCase()
                                               .compareTo(a.kodeMarketing!
@@ -1256,11 +1254,11 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
                                         _currentSortColumn = columnIndex;
                                         if (sort == true) {
                                           sort = false;
-                                          filterCrm!.sort((a, b) =>
+                                          myDataProduksi!.sort((a, b) =>
                                               a.posisi!.compareTo(b.posisi!));
                                         } else {
                                           sort = true;
-                                          filterCrm!.sort((a, b) =>
+                                          myDataProduksi!.sort((a, b) =>
                                               b.posisi!.compareTo(a.posisi!));
                                         }
                                       });
@@ -1282,14 +1280,14 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
 
                                         if (sort == true) {
                                           sort = false;
-                                          filterCrm!.sort((a, b) => a
+                                          filterDataProduksi!.sort((a, b) => a
                                               .keteranganStatusBatu!
                                               .toLowerCase()
                                               .compareTo(b.keteranganStatusBatu!
                                                   .toLowerCase()));
                                         } else {
                                           sort = true;
-                                          filterCrm!.sort((a, b) => b
+                                          filterDataProduksi!.sort((a, b) => b
                                               .keteranganStatusBatu!
                                               .toLowerCase()
                                               .compareTo(a.keteranganStatusBatu!
@@ -1313,7 +1311,7 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
 
                                   //     if (sort == true) {
                                   //       sort = false;
-                                  //       filterCrm!.sort((a, b) => a
+                                  //       filterDataProduksi!.sort((a, b) => a
                                   //           .keteranganStatusBatu!
                                   //           .toLowerCase()
                                   //           .compareTo(b
@@ -1321,7 +1319,7 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
                                   //               .toLowerCase()));
                                   //     } else {
                                   //       sort = true;
-                                  //       filterCrm!.sort((a, b) => b
+                                  //       filterDataProduksi!.sort((a, b) => b
                                   //           .keteranganStatusBatu!
                                   //           .toLowerCase()
                                   //           .compareTo(a
@@ -1346,13 +1344,13 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
                                         _currentSortColumn = columnIndex;
                                         if (sort == true) {
                                           sort = false;
-                                          filterCrm!.sort((a, b) => a.tema!
+                                          filterDataProduksi!.sort((a, b) => a.tema!
                                               .toLowerCase()
                                               .compareTo(
                                                   b.tema!.toLowerCase()));
                                         } else {
                                           sort = true;
-                                          filterCrm!.sort((a, b) => b.tema!
+                                          filterDataProduksi!.sort((a, b) => b.tema!
                                               .toLowerCase()
                                               .compareTo(
                                                   a.tema!.toLowerCase()));
@@ -1370,18 +1368,19 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
                                           fontWeight: FontWeight.bold),
                                     )),
                                     onSort: (columnIndex, _) {
+                                      print('tap jenis barnag');
                                       setState(() {
                                         _currentSortColumn = columnIndex;
                                         if (sort == true) {
                                           sort = false;
-                                          filterCrm!.sort((a, b) => a
+                                          myDataProduksi!.sort((a, b) => a
                                               .jenisBarang!
                                               .toLowerCase()
                                               .compareTo(b.jenisBarang!
                                                   .toLowerCase()));
                                         } else {
                                           sort = true;
-                                          filterCrm!.sort((a, b) => b
+                                          myDataProduksi!.sort((a, b) => b
                                               .jenisBarang!
                                               .toLowerCase()
                                               .compareTo(a.jenisBarang!
@@ -1406,12 +1405,12 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
                                         if (sort == true) {
                                           // myCrm.sort((a, b) => a['estimasiHarga'].)
                                           sort = false;
-                                          filterCrm!.sort((a, b) =>
+                                          filterDataProduksi!.sort((a, b) =>
                                               a.brand!.compareTo(b.brand!));
                                           // onsortColum(columnIndex, ascending);
                                         } else {
                                           sort = true;
-                                          filterCrm!.sort((a, b) =>
+                                          filterDataProduksi!.sort((a, b) =>
                                               b.brand!.compareTo(a.brand!));
                                         }
                                       });
@@ -1455,14 +1454,14 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
                                         _currentSortColumn = columnIndex;
                                         if (sort == true) {
                                           sort = false;
-                                          filterCrm!.sort((a, b) => a
+                                          filterDataProduksi!.sort((a, b) => a
                                               .tanggalInProduksi!
                                               .toLowerCase()
                                               .compareTo(b.tanggalInProduksi!
                                                   .toLowerCase()));
                                         } else {
                                           sort = true;
-                                          filterCrm!.sort((a, b) => b
+                                          filterDataProduksi!.sort((a, b) => b
                                               .tanggalInProduksi!
                                               .toLowerCase()
                                               .compareTo(a.tanggalInProduksi!
@@ -3253,13 +3252,15 @@ class RowSourceProduksi extends DataTableSource {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (c) => ViewPhotoScreen(
-                                model: FormDesignerModel(
+                          builder: (c) => ViewPhotoMpsScreen(
+                                modelMps: ListMpsModel(
                                     kodeDesignMdbc: data.kodeDesignMdbc,
                                     imageUrl: data.imageUrl),
                               )));
                 },
-                child: Image.network(
+                child:
+                
+                 Image.network(
                   ApiConstants.baseUrlImage + data.imageUrl!,
                   fit: BoxFit.cover,
                 ),
@@ -3597,9 +3598,9 @@ class RowSourceProduksi extends DataTableSource {
                                                                     .circular(
                                                                         50.0))),
                                                     onPressed: () async {
-                                                      // await postKeteranganMinggu(
-                                                      //     data.id, 'WEEK 1');
-                                                      // onRowPressed();
+                                                      await postKeteranganStatusBatu(
+                                                          data.id, 'ECER');
+                                                      onRowPressed();
                                                       Navigator.pop(context);
                                                       showSimpleNotification(
                                                         const Text(
@@ -3612,7 +3613,7 @@ class RowSourceProduksi extends DataTableSource {
                                                       );
                                                     },
                                                     child: const Text(
-                                                      "Ecer",
+                                                      "ECER",
                                                       style: TextStyle(
                                                         fontSize: 16,
                                                       ),
@@ -3631,9 +3632,9 @@ class RowSourceProduksi extends DataTableSource {
                                                                     .circular(
                                                                         50.0))),
                                                     onPressed: () async {
-                                                      // await postKeteranganMinggu(
-                                                      //     data.id, 'WEEK 2');
-                                                      // onRowPressed();
+                                                      await postKeteranganStatusBatu(
+                                                          data.id, 'KOMPLIT BATU');
+                                                      onRowPressed();
                                                       Navigator.pop(context);
                                                       showSimpleNotification(
                                                         const Text(
@@ -3646,7 +3647,7 @@ class RowSourceProduksi extends DataTableSource {
                                                       );
                                                     },
                                                     child: const Text(
-                                                      "Complete",
+                                                      "KOMPLIT BATU",
                                                       style: TextStyle(
                                                         fontSize: 16,
                                                       ),
@@ -3665,9 +3666,9 @@ class RowSourceProduksi extends DataTableSource {
                                                                     .circular(
                                                                         50.0))),
                                                     onPressed: () async {
-                                                      // await postKeteranganMinggu(
-                                                      //     data.id, 'WEEK 3');
-                                                      // onRowPressed();
+                                                      await postKeteranganStatusBatu(
+                                                          data.id, 'BELUM KOMPLIT');
+                                                      onRowPressed();
                                                       Navigator.pop(context);
                                                       showSimpleNotification(
                                                         const Text(
@@ -3680,7 +3681,7 @@ class RowSourceProduksi extends DataTableSource {
                                                       );
                                                     },
                                                     child: const Text(
-                                                      "Tidak Complete",
+                                                      "BELUM KOMPLIT",
                                                       style: TextStyle(
                                                         fontSize: 16,
                                                       ),
@@ -3813,7 +3814,7 @@ class RowSourceProduksi extends DataTableSource {
       'artist': artist.toString(),
     };
     final response = await http.post(
-        Uri.parse('${ApiConstants.baseUrl}${ApiConstants.updatePosisi}'),
+        Uri.parse('${ApiConstants.baseUrl}${ApiConstants.updatePosisidanWeek}'),
         body: body);
     print(response.body);
   }
@@ -3824,7 +3825,18 @@ class RowSourceProduksi extends DataTableSource {
       'keteranganMinggu': keteranganMinggu,
     };
     final response = await http.post(
-        Uri.parse('${ApiConstants.baseUrl}${ApiConstants.updatePosisi}'),
+        Uri.parse('${ApiConstants.baseUrl}${ApiConstants.updatePosisidanWeek}'),
+        body: body);
+    print(response.body);
+  }
+
+  postKeteranganStatusBatu(id, keteranganStatusBatu) async {
+    Map<String, String> body = {
+      'id': id.toString(),
+      'keteranganStatusBatu': keteranganStatusBatu,
+    };
+    final response = await http.post(
+        Uri.parse('${ApiConstants.baseUrl}${ApiConstants.updatePosisidanWeek}'),
         body: body);
     print(response.body);
   }

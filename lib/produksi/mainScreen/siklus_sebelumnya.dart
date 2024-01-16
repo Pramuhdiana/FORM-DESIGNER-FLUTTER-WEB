@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:form_designer/api/api_constant.dart';
 import 'package:form_designer/global/currency_format.dart';
 import 'package:form_designer/global/global.dart';
-import 'package:form_designer/model/form_designer_model.dart';
+import 'package:form_designer/model/list_mps_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:lottie/lottie.dart';
@@ -34,8 +34,8 @@ class _SiklusSebelumnyaState extends State<SiklusSebelumnya> {
   bool isSelected1 = false;
   TextEditingController controller = TextEditingController();
   bool sort = true;
-  List<FormDesignerModel>? filterCrm;
-  List<FormDesignerModel>? myCrm;
+  List<ListMpsModel>? filterCrm;
+  List<ListMpsModel>? myCrm;
   final searchController = TextEditingController();
   bool isLoading = false;
   bool isTimelineClick = false;
@@ -52,8 +52,8 @@ class _SiklusSebelumnyaState extends State<SiklusSebelumnya> {
   List<ChartData>? chartDataLevel5;
   //!jalur double tap
   List<ChartData>? chartDataLevel3B;
-  List<FormDesignerModel>? _listBrand;
-  List<FormDesignerModel>? _uniqListBrand;
+  List<ListMpsModel>? _listBrand;
+  List<ListMpsModel>? _uniqListBrand;
 
   Map<String, int> summaryValuePencapaian = {};
 
@@ -105,7 +105,7 @@ class _SiklusSebelumnyaState extends State<SiklusSebelumnya> {
   List<int> _listM = [];
   List<int> _listL = [];
   List<int> _listXL = [];
-  List<FormDesignerModel>? _listBarang;
+  List<ListMpsModel>? _listBarang;
 
   @override
   initState() {
@@ -179,14 +179,14 @@ class _SiklusSebelumnyaState extends State<SiklusSebelumnya> {
     _listXL = [];
     print('get data bulan on');
     final response = await http.get(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.getListFormDesigner));
+        Uri.parse(ApiConstants.baseUrl + ApiConstants.getListMps));
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);
       var allData =
-          jsonResponse.map((data) => FormDesignerModel.fromJson(data)).toList();
+          jsonResponse.map((data) => ListMpsModel.fromJson(data)).toList();
       var filterByMonth = allData
           .where((element) =>
-              element.siklus.toString().toLowerCase() ==
+              element.bulan.toString().toLowerCase() ==
               month.toString().toLowerCase())
           .toList();
 
@@ -389,7 +389,10 @@ class _SiklusSebelumnyaState extends State<SiklusSebelumnya> {
       isLoading = true;
     });
     await _getData(month);
-
+    novBrj =147;
+    novRelease = 160;
+    desBrj = 186;
+    desRelease = 245;
     chartDataReportLevel1 = <ChartData>[
       ChartData(
           xValue: 'JANUARI',
@@ -484,15 +487,15 @@ class _SiklusSebelumnyaState extends State<SiklusSebelumnya> {
 
   _getDataByMonth(month) async {
     final response = await http.get(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.getListFormDesigner));
+        Uri.parse(ApiConstants.baseUrl + ApiConstants.getListMps));
 
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);
 
       var allData =
-          jsonResponse.map((data) => FormDesignerModel.fromJson(data)).toList();
+          jsonResponse.map((data) => ListMpsModel.fromJson(data)).toList();
       var filterBySiklus = allData.where((element) =>
-          element.siklus.toString().toLowerCase() == month.toLowerCase());
+          element.bulan.toString().toLowerCase() == month.toLowerCase());
       return filterBySiklus.toList();
     } else {
       throw Exception('Unexpected error occured!');
@@ -510,14 +513,14 @@ class _SiklusSebelumnyaState extends State<SiklusSebelumnya> {
   getDataTableValuePencapaian(month) async {
     print('get data value on');
     final response = await http.get(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.getListFormDesigner));
+        Uri.parse(ApiConstants.baseUrl + ApiConstants.getListMps));
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);
       var allData =
-          jsonResponse.map((data) => FormDesignerModel.fromJson(data)).toList();
+          jsonResponse.map((data) => ListMpsModel.fromJson(data)).toList();
       var filterBySiklus = allData
           .where((element) =>
-              element.siklus.toString().toLowerCase() ==
+              element.bulan.toString().toLowerCase() ==
               month.toString().toLowerCase())
           .toList();
 
@@ -545,8 +548,8 @@ class _SiklusSebelumnyaState extends State<SiklusSebelumnya> {
   }
 
   // fungsi remove duplicate object
-  List<FormDesignerModel> removeDuplicates(List<FormDesignerModel> items) {
-    List<FormDesignerModel> uniqueItems = []; // uniqueList
+  List<ListMpsModel> removeDuplicates(List<ListMpsModel> items) {
+    List<ListMpsModel> uniqueItems = []; // uniqueList
     var uniqueNames = items
         .map((e) => e.brand)
         .toSet(); //list if UniqueID to remove duplicates
@@ -558,15 +561,15 @@ class _SiklusSebelumnyaState extends State<SiklusSebelumnya> {
 
   _getData(month) async {
     final response = await http.get(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.getListFormDesigner));
+        Uri.parse(ApiConstants.baseUrl + ApiConstants.getListMps));
 
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);
 
       var allData =
-          jsonResponse.map((data) => FormDesignerModel.fromJson(data)).toList();
+          jsonResponse.map((data) => ListMpsModel.fromJson(data)).toList();
       var filterByMonth = allData
-          .where((element) => element.siklus.toString().toLowerCase() != '')
+          .where((element) => element.bulan.toString().toLowerCase() != '')
           .toList();
 
       for (var i = 0; i < filterByMonth.length; i++) {
@@ -577,84 +580,84 @@ class _SiklusSebelumnyaState extends State<SiklusSebelumnya> {
 
       //! jan
       var filterBySiklusjan = allData.where((element) =>
-          element.siklus.toString().toLowerCase() == jan.toLowerCase());
+          element.bulan.toString().toLowerCase() == jan.toLowerCase());
       janRelease = filterBySiklusjan.length;
       var filterBySiklusjanBrj = filterBySiklusjan
           .where((element) => element.posisi.toString().toLowerCase() == 'brj');
       janBrj = filterBySiklusjanBrj.length;
       //! feb
       var filterBySiklusfeb = allData.where((element) =>
-          element.siklus.toString().toLowerCase() == feb.toLowerCase());
+          element.bulan.toString().toLowerCase() == feb.toLowerCase());
       febRelease = filterBySiklusfeb.length;
       var filterBySiklusfebBrj = filterBySiklusfeb
           .where((element) => element.posisi.toString().toLowerCase() == 'brj');
       febBrj = filterBySiklusfebBrj.length;
       //! mar
       var filterBySiklusmar = allData.where((element) =>
-          element.siklus.toString().toLowerCase() == mar.toLowerCase());
+          element.bulan.toString().toLowerCase() == mar.toLowerCase());
       marRelease = filterBySiklusmar.length;
       var filterBySiklusmarBrj = filterBySiklusmar
           .where((element) => element.posisi.toString().toLowerCase() == 'brj');
       marBrj = filterBySiklusmarBrj.length;
       //! apr
       var filterBySiklusapr = allData.where((element) =>
-          element.siklus.toString().toLowerCase() == apr.toLowerCase());
+          element.bulan.toString().toLowerCase() == apr.toLowerCase());
       aprRelease = filterBySiklusapr.length;
       var filterBySiklusaprBrj = filterBySiklusapr
           .where((element) => element.posisi.toString().toLowerCase() == 'brj');
       aprBrj = filterBySiklusaprBrj.length;
       //! mei
       var filterBySiklusmei = allData.where((element) =>
-          element.siklus.toString().toLowerCase() == mei.toLowerCase());
+          element.bulan.toString().toLowerCase() == mei.toLowerCase());
       meiRelease = filterBySiklusmei.length;
       var filterBySiklusmeiBrj = filterBySiklusmei
           .where((element) => element.posisi.toString().toLowerCase() == 'brj');
       meiBrj = filterBySiklusmeiBrj.length;
       //! jun
       var filterBySiklusjun = allData.where((element) =>
-          element.siklus.toString().toLowerCase() == jun.toLowerCase());
+          element.bulan.toString().toLowerCase() == jun.toLowerCase());
       junRelease = filterBySiklusjun.length;
       var filterBySiklusjunBrj = filterBySiklusjun
           .where((element) => element.posisi.toString().toLowerCase() == 'brj');
       junBrj = filterBySiklusjunBrj.length;
       //! jul
       var filterBySiklusjul = allData.where((element) =>
-          element.siklus.toString().toLowerCase() == jul.toLowerCase());
+          element.bulan.toString().toLowerCase() == jul.toLowerCase());
       julRelease = filterBySiklusjul.length;
       var filterBySiklusjulBrj = filterBySiklusjul
           .where((element) => element.posisi.toString().toLowerCase() == 'brj');
       julBrj = filterBySiklusjulBrj.length;
       //! agu
       var filterBySiklusagu = allData.where((element) =>
-          element.siklus.toString().toLowerCase() == agu.toLowerCase());
+          element.bulan.toString().toLowerCase() == agu.toLowerCase());
       aguRelease = filterBySiklusagu.length;
       var filterBySiklusaguBrj = filterBySiklusagu
           .where((element) => element.posisi.toString().toLowerCase() == 'brj');
       aguBrj = filterBySiklusaguBrj.length;
       //! sep
       var filterBySiklussep = allData.where((element) =>
-          element.siklus.toString().toLowerCase() == sep.toLowerCase());
+          element.bulan.toString().toLowerCase() == sep.toLowerCase());
       sepRelease = filterBySiklussep.length;
       var filterBySiklussepBrj = filterBySiklussep
           .where((element) => element.posisi.toString().toLowerCase() == 'brj');
       sepBrj = filterBySiklussepBrj.length;
       //! okt
       var filterBySiklusokt = allData.where((element) =>
-          element.siklus.toString().toLowerCase() == okt.toLowerCase());
+          element.bulan.toString().toLowerCase() == okt.toLowerCase());
       oktRelease = filterBySiklusokt.length;
       var filterBySiklusoktBrj = filterBySiklusokt
           .where((element) => element.posisi.toString().toLowerCase() == 'brj');
       oktBrj = filterBySiklusoktBrj.length;
       //! nov
       var filterBySiklusnov = allData.where((element) =>
-          element.siklus.toString().toLowerCase() == nov.toLowerCase());
+          element.bulan.toString().toLowerCase() == nov.toLowerCase());
       novRelease = filterBySiklusnov.length;
       var filterBySiklusnovBrj = filterBySiklusnov
           .where((element) => element.posisi.toString().toLowerCase() == 'brj');
       novBrj = filterBySiklusnovBrj.length;
       //! des
       var filterBySiklusdes = allData.where((element) =>
-          element.siklus.toString().toLowerCase() == des.toLowerCase());
+          element.bulan.toString().toLowerCase() == des.toLowerCase());
       desRelease = filterBySiklusdes.length;
       var filterBySiklusdesBrj = filterBySiklusdes
           .where((element) => element.posisi.toString().toLowerCase() == 'brj');

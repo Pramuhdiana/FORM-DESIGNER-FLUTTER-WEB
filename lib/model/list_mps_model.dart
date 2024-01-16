@@ -89,7 +89,7 @@ class ListMpsModel {
     keteranganMinggu = json['keteranganMinggu'] ?? '';
     keteranganBatu = json['keteranganBatu'] ?? '';
     keteranganStatusBatu = json['keteranganStatusBatu'] ?? '';
-    imageUrl = json['imageUrl'] ?? '';
+    imageUrl = json['imageUrl'] ?? 'default.jpg';
     artist = json['artist'] ?? '';
     keteranganStatusAcc = json['keteranganStatusAcc'] ?? '';
     rantai = json['rantai'] ?? '';

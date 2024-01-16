@@ -6,8 +6,9 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:form_designer/api/api_constant.dart';
 import 'package:form_designer/global/global.dart';
-import 'package:form_designer/mainScreen/view_photo_screen.dart';
-import 'package:form_designer/model/form_designer_model.dart';
+import 'package:form_designer/mainScreen/view_photo_mps.dart';
+// import 'package:form_designer/model/form_designer_model.dart';
+import 'package:form_designer/model/list_mps_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:lottie/lottie.dart';
@@ -36,8 +37,8 @@ class _DashboardControlState extends State<DashboardControl> {
   bool isSelected1 = false;
   TextEditingController controller = TextEditingController();
   bool sort = true;
-  List<FormDesignerModel>? filterCrm;
-  List<FormDesignerModel>? myCrm;
+  List<ListMpsModel>? filterCrm;
+  List<ListMpsModel>? myCrm;
   final searchController = TextEditingController();
   bool isLoading = false;
   bool isLoadingFinishing = false;
@@ -88,10 +89,10 @@ class _DashboardControlState extends State<DashboardControl> {
   String? pilihArtistPasangBatu;
   String? pilihArtistPolishing;
   String? pilihArtistStell;
-  List<FormDesignerModel>? _listFinishing;
-  List<FormDesignerModel>? _listPolishing;
-  List<FormDesignerModel>? _listPasangBatu;
-  List<FormDesignerModel>? _listStell;
+  List<ListMpsModel>? _listFinishing;
+  List<ListMpsModel>? _listPolishing;
+  List<ListMpsModel>? _listPasangBatu;
+  List<ListMpsModel>? _listStell;
 
   String jan = 'januari';
   String feb = 'februari';
@@ -376,16 +377,19 @@ class _DashboardControlState extends State<DashboardControl> {
     List<String> dummyArtistStell1 = [];
     List<String> dummyArtistStell2 = [];
 
-    final response = await http.get(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.getListFormDesigner));
-
+    // final response = await http.get(
+    //     Uri.parse(ApiConstants.baseUrl + ApiConstants.getListFormDesigner));
+final response = await http.get(
+        Uri.parse(ApiConstants.baseUrl + ApiConstants.getListMps));
     print(response.statusCode);
     print(response.body);
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);
 
-      var allData =
-          jsonResponse.map((data) => FormDesignerModel.fromJson(data)).toList();
+      // var allData =
+      //     jsonResponse.map((data) => FormDesignerModel.fromJson(data)).toList();
+ var allData =
+          jsonResponse.map((data) => ListMpsModel.fromJson(data)).toList();
 
       //! printing resin
       var filterByPrintingResin = allData
@@ -581,11 +585,11 @@ class _DashboardControlState extends State<DashboardControl> {
   getDataTable(artist) async {
     print('get data divisi on');
     final response = await http.get(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.getListFormDesigner));
+        Uri.parse(ApiConstants.baseUrl + ApiConstants.getListMps));
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);
       var allData =
-          jsonResponse.map((data) => FormDesignerModel.fromJson(data)).toList();
+          jsonResponse.map((data) => ListMpsModel.fromJson(data)).toList();
       //! finishing
       var filterByFinishing = allData
           .where((element) =>
@@ -603,11 +607,11 @@ class _DashboardControlState extends State<DashboardControl> {
   getDataTablePasangBatu(artist) async {
     print('get data divisi on');
     final response = await http.get(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.getListFormDesigner));
+        Uri.parse(ApiConstants.baseUrl + ApiConstants.getListMps));
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);
       var allData =
-          jsonResponse.map((data) => FormDesignerModel.fromJson(data)).toList();
+          jsonResponse.map((data) => ListMpsModel.fromJson(data)).toList();
       //! finishing
       var filterByPasangBatu = allData
           .where((element) =>
@@ -625,11 +629,11 @@ class _DashboardControlState extends State<DashboardControl> {
   getDataTablePolishing(artist) async {
     print('get data divisi on');
     final response = await http.get(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.getListFormDesigner));
+        Uri.parse(ApiConstants.baseUrl + ApiConstants.getListMps));
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);
       var allData =
-          jsonResponse.map((data) => FormDesignerModel.fromJson(data)).toList();
+          jsonResponse.map((data) => ListMpsModel.fromJson(data)).toList();
       //! polishing
       var filterBypolishing = allData
           .where((element) =>
@@ -648,11 +652,11 @@ class _DashboardControlState extends State<DashboardControl> {
   getDataTableStell(artist) async {
     print('get data divisi on');
     final response = await http.get(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.getListFormDesigner));
+        Uri.parse(ApiConstants.baseUrl + ApiConstants.getListMps));
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);
       var allData =
-          jsonResponse.map((data) => FormDesignerModel.fromJson(data)).toList();
+          jsonResponse.map((data) => ListMpsModel.fromJson(data)).toList();
       //! polishing
       var filterByStell = allData
           .where((element) =>
@@ -865,7 +869,7 @@ class _DashboardControlState extends State<DashboardControl> {
                                 ),
                               ),
                               SizedBox(
-                                width: 180,
+                                width: 150,
                               ),
                               Container(
                                 width: MediaQuery.of(context).size.width * 0.2,
@@ -1009,7 +1013,7 @@ class _DashboardControlState extends State<DashboardControl> {
                                     ),
                                   ),
                                   SizedBox(
-                                    width: 180,
+                                    width: 150,
                                   ),
                                   Container(
                                       padding:
@@ -1131,7 +1135,7 @@ class _DashboardControlState extends State<DashboardControl> {
                                     ),
                                   ),
                                   SizedBox(
-                                    width: 180,
+                                    width: 150,
                                   ),
                                   Container(
                                     width:
@@ -1284,7 +1288,7 @@ class _DashboardControlState extends State<DashboardControl> {
                                         ),
                                       ),
                                       SizedBox(
-                                        width: 180,
+                                        width: 150,
                                       ),
                                       Container(
                                           padding:
@@ -1413,10 +1417,10 @@ class _DashboardControlState extends State<DashboardControl> {
                                 ),
                               ),
                               SizedBox(
-                                width: 180,
+                                width: 150,
                               ),
                               Container(
-                                width: MediaQuery.of(context).size.width * 0.2,
+                                width: MediaQuery.of(context).size.width * 0.2, //?
                                 padding: const EdgeInsets.only(
                                     top: 5, left: 10, right: 10),
                                 child: DecoratedBox(
@@ -1608,7 +1612,7 @@ class _DashboardControlState extends State<DashboardControl> {
                                 ),
                               ),
                               SizedBox(
-                                width: 180,
+                                width: 150,
                               ),
                               Container(
                                 width: MediaQuery.of(context).size.width * 0.2,
@@ -1995,8 +1999,8 @@ class _DashboardControlState extends State<DashboardControl> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (c) => ViewPhotoScreen(
-                                  model: FormDesignerModel(
+                            builder: (c) => ViewPhotoMpsScreen(
+                                  modelMps: ListMpsModel(
                                       kodeDesignMdbc: data[i].kodeDesignMdbc,
                                       imageUrl: data[i].imageUrl),
                                 )));
@@ -2106,8 +2110,8 @@ class _DashboardControlState extends State<DashboardControl> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (c) => ViewPhotoScreen(
-                                  model: FormDesignerModel(
+                            builder: (c) => ViewPhotoMpsScreen(
+                                  modelMps: ListMpsModel(
                                       kodeDesignMdbc: data[i].kodeDesignMdbc,
                                       imageUrl: data[i].imageUrl),
                                 )));
