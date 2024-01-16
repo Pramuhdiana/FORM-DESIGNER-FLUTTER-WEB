@@ -15,6 +15,8 @@ import 'package:form_designer/produksi/modelProduksi/divisi_produksi_model.dart'
 import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';
 import 'package:overlay_support/overlay_support.dart';
+// ignore: depend_on_referenced_packages
+import 'package:intl/intl.dart';
 
 import '../api/api_constant.dart';
 import '../global/global.dart';
@@ -76,7 +78,11 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
   @override
   void initState() {
     super.initState();
-    nowSiklus = sharedPreferences!.getString('siklus')!;
+    var now = DateTime.now();
+    String month = DateFormat('MMMM', 'id').format(now);
+    // nowSiklus = sharedPreferences!.getString('siklus')!;
+    nowSiklus = month;
+
     _getList('all');
     _getListDivisi();
   }
@@ -248,7 +254,7 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      "Siklus Saat Ini : $nowSiklus",
+                      "Bulan: $nowSiklus",
                       style:
                           TextStyle(fontSize: 20, color: Colors.grey.shade700),
                     ),
@@ -1291,6 +1297,37 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
                                               .keteranganStatusBatu!
                                               .toLowerCase()
                                               .compareTo(a.keteranganStatusBatu!
+                                                  .toLowerCase()));
+                                        }
+                                      });
+                                    }),
+                                DataColumn(label: _verticalDivider),
+                                //status acc
+                                DataColumn(
+                                    label: const SizedBox(
+                                        child: Text(
+                                      "Status ACC",
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
+                                    )),
+                                    onSort: (columnIndex, _) {
+                                      setState(() {
+                                        _currentSortColumn = columnIndex;
+
+                                        if (sort == true) {
+                                          sort = false;
+                                          filterDataProduksi!.sort((a, b) => a
+                                              .keteranganStatusAcc!
+                                              .toLowerCase()
+                                              .compareTo(b.keteranganStatusAcc!
+                                                  .toLowerCase()));
+                                        } else {
+                                          sort = true;
+                                          filterDataProduksi!.sort((a, b) => b
+                                              .keteranganStatusAcc!
+                                              .toLowerCase()
+                                              .compareTo(a.keteranganStatusAcc!
                                                   .toLowerCase()));
                                         }
                                       });
@@ -3700,6 +3737,169 @@ class RowSourceProduksi extends DataTableSource {
         }),
       ),
       DataCell(_verticalDivider),
+      //status acc
+      DataCell(
+        Builder(builder: (context) {
+          return Padding(
+              padding: const EdgeInsets.all(0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(data.keteranganStatusAcc),
+                  Stack(
+                    clipBehavior: Clip.none, //agar tidak menghalangi object
+                    children: [
+                      //tambahan icon ADD
+                      Positioned(
+                        right: -5.0,
+                        top: -3.0,
+                        child: InkResponse(
+                          onTap: () {
+                            // Navigator.of(context).pop();
+                          },
+                          child: const Icon(
+                            Icons.add_circle_outline,
+                            color: Colors.green,
+                            size: 20,
+                          ),
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8)),
+                                    content: SizedBox(
+                                        height: 250,
+                                        child: SingleChildScrollView(
+                                            scrollDirection: Axis.vertical,
+                                            child: Column(children: [
+                                              const Text(
+                                                'Pilih Status Acc',
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 18,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              Container(
+                                                padding: const EdgeInsets.only(
+                                                    top: 15),
+                                                child: ElevatedButton(
+                                                    style: ElevatedButton.styleFrom(
+                                                        backgroundColor:
+                                                            Colors.blue,
+                                                        shape: RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        50.0))),
+                                                    onPressed: () async {
+                                                      await postKeteranganStatusAcc(
+                                                          data.id, 'Tidak Ada');
+                                                      onRowPressed();
+                                                      Navigator.pop(context);
+                                                      showSimpleNotification(
+                                                        const Text(
+                                                            'Pemilihan Status Batu Berhasil'),
+                                                        background:
+                                                            Colors.green,
+                                                        duration:
+                                                            const Duration(
+                                                                seconds: 1),
+                                                      );
+                                                    },
+                                                    child: const Text(
+                                                      "Tidak Ada",
+                                                      style: TextStyle(
+                                                        fontSize: 16,
+                                                      ),
+                                                    )),
+                                              ),
+                                              Container(
+                                                padding: const EdgeInsets.only(
+                                                    top: 15),
+                                                child: ElevatedButton(
+                                                    style: ElevatedButton.styleFrom(
+                                                        backgroundColor:
+                                                            Colors.blue,
+                                                        shape: RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        50.0))),
+                                                    onPressed: () async {
+                                                     await postKeteranganStatusAcc(
+                                                          data.id, 'KOMPLIT ACC');
+                                                      onRowPressed();
+                                                      Navigator.pop(context);
+                                                      showSimpleNotification(
+                                                        const Text(
+                                                            'Pemilihan Status Acc Berhasil'),
+                                                        background:
+                                                            Colors.green,
+                                                        duration:
+                                                            const Duration(
+                                                                seconds: 1),
+                                                      );
+                                                    },
+                                                    child: const Text(
+                                                      "KOMPLIT ACC",
+                                                      style: TextStyle(
+                                                        fontSize: 16,
+                                                      ),
+                                                    )),
+                                              ),
+                                              Container(
+                                                padding: const EdgeInsets.only(
+                                                    top: 15),
+                                                child: ElevatedButton(
+                                                    style: ElevatedButton.styleFrom(
+                                                        backgroundColor:
+                                                            Colors.blue,
+                                                        shape: RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        50.0))),
+                                                    onPressed: () async {
+                                                      await postKeteranganStatusAcc(
+                                                          data.id, 'BELUM KOMPLIT');
+                                                      onRowPressed();
+                                                      Navigator.pop(context);
+                                                      showSimpleNotification(
+                                                        const Text(
+                                                            'Pemilihan Status Acc Berhasil'),
+                                                        background:
+                                                            Colors.green,
+                                                        duration:
+                                                            const Duration(
+                                                                seconds: 1),
+                                                      );
+                                                    },
+                                                    child: const Text(
+                                                      "BELUM KOMPLIT",
+                                                      style: TextStyle(
+                                                        fontSize: 16,
+                                                      ),
+                                                    )),
+                                              ),
+                                            ]))));
+                              });
+                        },
+                        icon: const Icon(Icons.toll_outlined),
+                        color: Colors.green,
+                      ),
+                    ],
+                  )
+                ],
+              ));
+        }),
+      ),
+      DataCell(_verticalDivider),
       //keterangan batu
       DataCell(
         Padding(
@@ -3834,6 +4034,17 @@ class RowSourceProduksi extends DataTableSource {
     Map<String, String> body = {
       'id': id.toString(),
       'keteranganStatusBatu': keteranganStatusBatu,
+    };
+    final response = await http.post(
+        Uri.parse('${ApiConstants.baseUrl}${ApiConstants.updatePosisidanWeek}'),
+        body: body);
+    print(response.body);
+  }
+
+  postKeteranganStatusAcc(id, keteranganStatusAcc) async {
+    Map<String, String> body = {
+      'id': id.toString(),
+      'keteranganStatusAcc': keteranganStatusAcc,
     };
     final response = await http.post(
         Uri.parse('${ApiConstants.baseUrl}${ApiConstants.updatePosisidanWeek}'),
