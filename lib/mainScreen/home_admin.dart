@@ -44,6 +44,8 @@ class _HomeScreenAdminState extends State<HomeScreenAdmin> {
 
   String siklusDesigner = '';
   List<FormDesignerModel>? listJenisBarang;
+  List<FormDesignerModel>? uniqListJenisBarang;
+
   List<FormDesignerModel>? listJenisBarangView1;
   List<String> listKelasHarga = [];
   List sumNamaModeller = [
@@ -92,6 +94,50 @@ class _HomeScreenAdminState extends State<HomeScreenAdmin> {
     siklusDesigner = month;
     _getAllData("all", sharedPreferences!.getString('nama')!);
     nowSiklus = sharedPreferences!.getString('siklus')!;
+    _getDataJenisBarang('all','');
+  }
+
+  Future<List<FormDesignerModel>> _getDataJenisBarang(chooseSiklus, nama) async {
+   setState(() {
+  isLoadingJenisBarang = true;
+  });
+    final response = await http.get(
+        Uri.parse(ApiConstants.baseUrl + ApiConstants.getListFormDesigner));
+    if (response.statusCode == 200) {
+      print('fungsi jenis barang oke');
+
+      List jsonResponse = json.decode(response.body);
+
+      var g =
+          jsonResponse.map((data) => FormDesignerModel.fromJson(data)).toList();
+      //! method admin
+    
+        if (chooseSiklus.toString().toLowerCase() == "all") {
+          listJenisBarang = g;
+
+         
+        } else {
+          var filterBySiklus = g.where((element) =>
+              element.siklus.toString().toLowerCase() ==
+              chooseSiklus.toString().toLowerCase());
+
+          filterBySiklus.toList();
+          listJenisBarang = filterBySiklus.toList();
+        }
+     
+      print(g.length);
+
+      g = removeDuplicates(listJenisBarang!);
+    uniqListJenisBarang =g;
+       setState(() {
+  isLoadingJenisBarang = false;
+  });
+      // g = filterBySiklus.toList();
+      return g;
+    } else {
+      throw Exception('Unexpected error occured!');
+    }
+    
   }
 
   Future<List<FormDesignerModel>> _getAllData(month, name) async {
@@ -104,8 +150,8 @@ class _HomeScreenAdminState extends State<HomeScreenAdmin> {
       var allData =
           jsonResponse.map((data) => FormDesignerModel.fromJson(data)).toList();
 
-      //! method scm
-      if (sharedPreferences!.getString('level') == '1') {
+      //! method admin
+     
         if (month.toString().toLowerCase() == "all") {
           var filterByStatusBatu = allData.where((element) =>
               element.keteranganStatusBatu.toString().toLowerCase() ==
@@ -121,52 +167,14 @@ class _HomeScreenAdminState extends State<HomeScreenAdmin> {
           batuLengkap = filterByStatusBatu.toList().length;
           allData = filterBySiklus.toList();
         }
-      }
-      //! method designer
-      else if (sharedPreferences!.getString('level') == '2') {
-        if (month.toString().toLowerCase() == "all") {
-          var filterByName = allData.where((element) =>
-              element.namaDesigner.toString().toLowerCase() ==
-              name.toString().toLowerCase());
-          allData = filterByName.toList();
-        } else {
-          var filterBySiklus = allData.where((element) =>
-              element.siklus.toString().toLowerCase() ==
-              month.toString().toLowerCase());
-          var filterByName = filterBySiklus.where((element) =>
-              element.namaDesigner.toString().toLowerCase() ==
-              name.toString().toLowerCase());
-          allData = filterByName.toList();
-        }
-      }
-      //! method modeller
-
-      else {
-        if (month.toString().toLowerCase() == "all") {
-          var filterByName = allData.where((element) =>
-              element.namaModeller.toString().toLowerCase() ==
-              name.toString().toLowerCase());
-          allData = filterByName.toList();
-          allData.sort((a, b) => double.parse(a.pointModeller!)
-              .compareTo(double.parse(b.pointModeller!)));
-        } else {
-          var filterBySiklus = allData.where((element) =>
-              element.siklus.toString().toLowerCase() ==
-              month.toString().toLowerCase());
-          var filterByName = filterBySiklus.where((element) =>
-              element.namaModeller.toString().toLowerCase() ==
-              name.toString().toLowerCase());
-          allData = filterByName.toList();
-          allData.sort((a, b) => double.parse(a.pointModeller!)
-              .compareTo(double.parse(b.pointModeller!)));
-        }
-      }
+    
+      
 
       setState(() {
         filterCrm = allData;
         myCrm = allData;
         isLoading = true;
-        isLoadingJenisBarang = true;
+        // isLoadingJenisBarang = true;
         totalSPK = allData.length;
         totalSPKSelesai = allData
             .where((element) => double.parse(element.pointModeller!) > 0)
@@ -187,7 +195,7 @@ class _HomeScreenAdminState extends State<HomeScreenAdmin> {
 
       var g =
           jsonResponse.map((data) => FormDesignerModel.fromJson(data)).toList();
-      //! method scm
+      //! method admin
       if (chooseSiklus.toString().toLowerCase() == "all") {
         var filterByJenisBarang = g.where((element) =>
             element.jenisBarang.toString().toLowerCase() ==
@@ -211,20 +219,21 @@ class _HomeScreenAdminState extends State<HomeScreenAdmin> {
     }
   }
 
+
+
   Future<List<FormDesignerModel>> _getData(chooseSiklus, nama) async {
     final response = await http.get(
         Uri.parse(ApiConstants.baseUrl + ApiConstants.getListFormDesigner));
     if (response.statusCode == 200) {
-      print('fungsi jenis barang oke');
+      print('fungsi get data oke');
 
       List jsonResponse = json.decode(response.body);
 
       var g =
           jsonResponse.map((data) => FormDesignerModel.fromJson(data)).toList();
-      //! method scm
-      if (sharedPreferences!.getString('level') == '1') {
+      //! method admin
+    
         if (chooseSiklus.toString().toLowerCase() == "all") {
-          listJenisBarang = g;
 
           //! point modeller
           var filterByPoint =
@@ -306,7 +315,6 @@ class _HomeScreenAdminState extends State<HomeScreenAdmin> {
               chooseSiklus.toString().toLowerCase());
 
           filterBySiklus.toList();
-          listJenisBarang = filterBySiklus.toList();
 
           //! point modeller
           var filterByPoint =
@@ -344,7 +352,7 @@ class _HomeScreenAdminState extends State<HomeScreenAdmin> {
             pointyuse += double.parse(filterByyuse.toList()[i].pointModeller!);
           }
 
-//! berat modeller
+        //! berat modeller
           var filterByberat =
               g.where((element) => double.parse(element.beratModeller!) > 0);
           //? berat modeller arif
@@ -383,197 +391,8 @@ class _HomeScreenAdminState extends State<HomeScreenAdmin> {
                 double.parse(filterBeratByyuse.toList()[i].beratModeller!);
           }
         }
-      }
-      //! method designer
+     
 
-      else if (sharedPreferences!.getString('level') == '2') {
-        if (chooseSiklus.toString().toLowerCase() == "all") {
-          var filterByName = g.where((element) =>
-              element.namaDesigner.toString().toLowerCase() ==
-              nama.toString().toLowerCase());
-
-          listJenisBarang = filterByName.toList();
-        } else {
-          var filterBySiklus = g.where((element) =>
-              element.siklus.toString().toLowerCase() ==
-              chooseSiklus.toString().toLowerCase());
-          var filterByName = filterBySiklus.where((element) =>
-              element.namaDesigner.toString().toLowerCase() ==
-              nama.toString().toLowerCase());
-
-          listJenisBarang = filterByName.toList();
-        }
-      }
-      //! method modeller
-
-      else {
-        if (chooseSiklus.toString().toLowerCase() == "all") {
-          var filterByNameModeller = g.where((element) =>
-              element.namaModeller.toString().toLowerCase() ==
-              nama.toString().toLowerCase());
-
-          listJenisBarang = filterByNameModeller.toList();
-          //! point modeller
-          var filterByPoint =
-              g.where((element) => double.parse(element.pointModeller!) > 0);
-          //? point modeller arif
-          var filterByArif = filterByPoint.where((element) =>
-              element.namaModeller.toString().toLowerCase() ==
-              "arif kurniawan");
-          pointArif = 0.0;
-          for (var i = 0; i < filterByArif.length; i++) {
-            pointArif += double.parse(filterByArif.toList()[i].pointModeller!);
-          }
-          //? point modeller aris
-          var filterByAris = filterByPoint.where((element) =>
-              element.namaModeller.toString().toLowerCase() == "aris pravidan");
-          pointAris = 0.0;
-          for (var i = 0; i < filterByAris.length; i++) {
-            pointAris += double.parse(filterByAris.toList()[i].pointModeller!);
-          }
-
-          //? point modeller fikri
-          var filterByFikri = filterByPoint.where((element) =>
-              element.namaModeller.toString().toLowerCase() == "fikryansyah");
-          pointFikri = 0.0;
-          for (var i = 0; i < filterByFikri.length; i++) {
-            pointFikri +=
-                double.parse(filterByFikri.toList()[i].pointModeller!);
-          }
-
-          //? point modeller yuse
-          var filterByyuse = filterByPoint.where((element) =>
-              element.namaModeller.toString().toLowerCase() == "yuse");
-          pointyuse = 0.0;
-          for (var i = 0; i < filterByyuse.length; i++) {
-            pointyuse += double.parse(filterByyuse.toList()[i].pointModeller!);
-          }
-
-//! berat modeller
-          var filterByberat =
-              g.where((element) => double.parse(element.beratModeller!) > 0);
-          //? berat modeller arif
-          var filterBeratByArif = filterByberat.where((element) =>
-              element.namaModeller.toString().toLowerCase() ==
-              "arif kurniawan");
-          beratArif = 0.0;
-          for (var i = 0; i < filterBeratByArif.length; i++) {
-            beratArif +=
-                double.parse(filterBeratByArif.toList()[i].beratModeller!);
-          }
-          //? berat modeller aris
-          var filterBeratByAris = filterByberat.where((element) =>
-              element.namaModeller.toString().toLowerCase() == "aris pravidan");
-          beratAris = 0.0;
-          for (var i = 0; i < filterBeratByAris.length; i++) {
-            beratAris +=
-                double.parse(filterBeratByAris.toList()[i].beratModeller!);
-          }
-
-          //? berat modeller fikri
-          var filterBeratByFikri = filterByberat.where((element) =>
-              element.namaModeller.toString().toLowerCase() == "fikryansyah");
-          beratFikri = 0.0;
-          for (var i = 0; i < filterBeratByFikri.length; i++) {
-            beratFikri +=
-                double.parse(filterBeratByFikri.toList()[i].beratModeller!);
-          }
-
-          //? berat modeller yuse
-          var filterBeratByyuse = filterByberat.where((element) =>
-              element.namaModeller.toString().toLowerCase() == "yuse");
-          beratyuse = 0.0;
-          for (var i = 0; i < filterBeratByyuse.length; i++) {
-            beratyuse +=
-                double.parse(filterBeratByyuse.toList()[i].beratModeller!);
-          }
-        } else {
-          var filterBySiklus = g.where((element) =>
-              element.siklus.toString().toLowerCase() ==
-              chooseSiklus.toString().toLowerCase());
-          var filterByName = filterBySiklus.where((element) =>
-              element.namaModeller.toString().toLowerCase() ==
-              nama.toString().toLowerCase());
-
-          listJenisBarang = filterByName.toList();
-          //! point modeller
-          var filterByPoint = filterBySiklus
-              .where((element) => double.parse(element.pointModeller!) > 0);
-          //? point modeller arif
-          var filterByArif = filterByPoint.where((element) =>
-              element.namaModeller.toString().toLowerCase() ==
-              "arif kurniawan");
-          pointArif = 0.0;
-          for (var i = 0; i < filterByArif.length; i++) {
-            pointArif += double.parse(filterByArif.toList()[i].pointModeller!);
-          }
-          //? point modeller aris
-          var filterByAris = filterByPoint.where((element) =>
-              element.namaModeller.toString().toLowerCase() == "aris pravidan");
-          pointAris = 0.0;
-          for (var i = 0; i < filterByAris.length; i++) {
-            pointAris += double.parse(filterByAris.toList()[i].pointModeller!);
-          }
-
-          //? point modeller fikri
-          var filterByFikri = filterByPoint.where((element) =>
-              element.namaModeller.toString().toLowerCase() == "fikryansyah");
-          pointFikri = 0.0;
-          for (var i = 0; i < filterByFikri.length; i++) {
-            pointFikri +=
-                double.parse(filterByFikri.toList()[i].pointModeller!);
-          }
-
-          //? point modeller yuse
-          var filterByyuse = filterByPoint.where((element) =>
-              element.namaModeller.toString().toLowerCase() == "yuse");
-          pointyuse = 0.0;
-          for (var i = 0; i < filterByyuse.length; i++) {
-            pointyuse += double.parse(filterByyuse.toList()[i].pointModeller!);
-          }
-
-//! berat modeller
-          var filterByberat = filterBySiklus
-              .where((element) => double.parse(element.beratModeller!) > 0);
-          //? berat modeller arif
-          var filterBeratByArif = filterByberat.where((element) =>
-              element.namaModeller.toString().toLowerCase() ==
-              "arif kurniawan");
-          beratArif = 0.0;
-          for (var i = 0; i < filterBeratByArif.length; i++) {
-            beratArif +=
-                double.parse(filterBeratByArif.toList()[i].beratModeller!);
-          }
-          //? berat modeller aris
-          var filterBeratByAris = filterByberat.where((element) =>
-              element.namaModeller.toString().toLowerCase() == "aris pravidan");
-          beratAris = 0.0;
-          for (var i = 0; i < filterBeratByAris.length; i++) {
-            beratAris +=
-                double.parse(filterBeratByAris.toList()[i].beratModeller!);
-          }
-
-          //? berat modeller fikri
-          var filterBeratByFikri = filterByberat.where((element) =>
-              element.namaModeller.toString().toLowerCase() == "fikryansyah");
-          beratFikri = 0.0;
-          for (var i = 0; i < filterBeratByFikri.length; i++) {
-            beratFikri +=
-                double.parse(filterBeratByFikri.toList()[i].beratModeller!);
-          }
-
-          //? berat modeller yuse
-          var filterBeratByyuse = filterByberat.where((element) =>
-              element.namaModeller.toString().toLowerCase() == "yuse");
-          beratyuse = 0.0;
-          for (var i = 0; i < filterBeratByyuse.length; i++) {
-            beratyuse +=
-                double.parse(filterBeratByyuse.toList()[i].beratModeller!);
-          }
-        }
-      }
-
-      g = removeDuplicates(listJenisBarang!);
       // g = filterBySiklus.toList();
       return g;
     } else {
@@ -931,11 +750,8 @@ class _HomeScreenAdminState extends State<HomeScreenAdmin> {
                       fontSize: 26),
                 ),
               ),
-              sharedPreferences!.getString('level') == '1'
-                  ? dashboardSCM()
-                  : sharedPreferences!.getString('level') == '2'
-                      ? dashboardDesigner()
-                      : dashboardModeller()
+              dashboardSCM()
+                  
             ]),
           ]),
         ));
@@ -1282,7 +1098,7 @@ class _HomeScreenAdminState extends State<HomeScreenAdmin> {
                             setState(() {
                               listKelasHarga.clear();
 
-                              isLoadingJenisBarang = false;
+                              // isLoadingJenisBarang = true;
                               siklus.text = item!;
                               siklusDesigner = siklus.text.toString();
                               _getData(siklusDesigner,
@@ -1293,7 +1109,7 @@ class _HomeScreenAdminState extends State<HomeScreenAdmin> {
                             Future.delayed(const Duration(milliseconds: 500))
                                 .then((value) {
                               setState(() {
-                                isLoadingJenisBarang = true;
+                                // isLoadingJenisBarang = false;
                               });
                             });
                           },
@@ -1387,8 +1203,8 @@ class _HomeScreenAdminState extends State<HomeScreenAdmin> {
                           onChanged: (item) {
                             setState(() {
                               listKelasHarga.clear();
-
-                              isLoadingJenisBarang = false;
+_getDataJenisBarang(item,'');
+                              isLoadingJenisBarang = true;
                               siklus.text = item!;
                               siklusDesigner = siklus.text.toString();
                               _getData(siklusDesigner,
@@ -1399,7 +1215,7 @@ class _HomeScreenAdminState extends State<HomeScreenAdmin> {
                             Future.delayed(const Duration(milliseconds: 500))
                                 .then((value) {
                               setState(() {
-                                isLoadingJenisBarang = true;
+                                isLoadingJenisBarang = false;
                               });
                             });
                           },
@@ -1729,7 +1545,7 @@ class _HomeScreenAdminState extends State<HomeScreenAdmin> {
                                                   Expanded(
                                                     child:
                                                         isLoadingJenisBarang ==
-                                                                false
+                                                                true
                                                             ? Container(
                                                                 padding:
                                                                     const EdgeInsets
@@ -2927,7 +2743,8 @@ class _HomeScreenAdminState extends State<HomeScreenAdmin> {
                           //*report jenis barang SCM
                           isJenisBarangView1 == true
                               ? jenisBarangView1(namaJenisBarangView1)
-                              : Align(
+                              : 
+                              Align(
                                   alignment: Alignment.bottomLeft,
                                   child: Container(
                                       padding: const EdgeInsets.all(12),
@@ -2935,95 +2752,8 @@ class _HomeScreenAdminState extends State<HomeScreenAdmin> {
                                       height: 300,
                                       child: Card(
                                           color: Colors.white,
-                                          child: FutureBuilder(
-                                              future: siklus.text.isEmpty
-                                                  ? _getData(
-                                                      "all",
-                                                      sharedPreferences!
-                                                          .getString('nama')!)
-                                                  : _getData(
-                                                      siklusDesigner,
-                                                      sharedPreferences!
-                                                          .getString('nama')!),
-                                              builder: (context, snapshot) {
-                                                if (snapshot.hasError) {
-                                                  return Column(children: [
-                                                    const Text('Jenis Barang',
-                                                        style: TextStyle(
-                                                          color: Colors.black,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize: 24,
-                                                        )),
-                                                    const Divider(thickness: 5),
-                                                    Center(
-                                                        child: SizedBox(
-                                                      width: 250,
-                                                      height: 210,
-                                                      child: Lottie.asset(
-                                                          "loadingJSON/somethingwentwrong.json"),
-                                                    ))
-                                                  ]);
-                                                }
-
-                                                if (snapshot.connectionState ==
-                                                    ConnectionState.waiting) {
-                                                  return Column(children: [
-                                                    const Text('Jenis Barang',
-                                                        style: TextStyle(
-                                                          color: Colors.black,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize: 24,
-                                                        )),
-                                                    const Divider(thickness: 5),
-                                                    Container(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              0),
-                                                      width: 90,
-                                                      height: 90,
-                                                      child: Lottie.asset(
-                                                          "loadingJSON/loadingV1.json"),
-                                                    )
-                                                  ]);
-                                                }
-                                                if (snapshot.data!.isEmpty) {
-                                                  return const Column(
-                                                      children: [
-                                                        Text('Jenis Barang',
-                                                            style: TextStyle(
-                                                              color:
-                                                                  Colors.black,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              fontSize: 24,
-                                                            )),
-                                                        Divider(thickness: 5),
-                                                        Center(
-                                                          child: Text(
-                                                            'Tidak ada data',
-                                                            textAlign: TextAlign
-                                                                .center,
-                                                            style: TextStyle(
-                                                                fontSize: 26,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                fontFamily:
-                                                                    'Acne',
-                                                                letterSpacing:
-                                                                    1.5),
-                                                          ),
-                                                        )
-                                                      ]);
-                                                }
-                                                if (snapshot.hasData) {
-                                                  return Column(children: [
-                                                    const Text('Jenis Barang',
+                                          child: Column(children: [
+                                                    const Text('Sum Jenis Barang',
                                                         style: TextStyle(
                                                           color: Colors.black,
                                                           fontWeight:
@@ -3033,32 +2763,30 @@ class _HomeScreenAdminState extends State<HomeScreenAdmin> {
                                                     const Divider(thickness: 5),
                                                     Expanded(
                                                       child:
-                                                          isLoadingJenisBarang ==
-                                                                  false
-                                                              ? Container(
-                                                                  padding:
-                                                                      const EdgeInsets
-                                                                          .all(
-                                                                          0),
-                                                                  width: 90,
-                                                                  height: 90,
-                                                                  child: Lottie
-                                                                      .asset(
-                                                                          "loadingJSON/loadingV1.json"),
-                                                                )
-                                                              : ListView
+                                                      isLoadingJenisBarang == true
+                                                      
+                                                       ? Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(0),
+                                                        width: 90,
+                                                        height: 90,
+                                                        child: Lottie.asset(
+                                                            "loadingJSON/loadingV1.json"),
+                                                      )
+                                                    
+                                                      :
+                                                              ListView
                                                                   .builder(
                                                                   itemCount:
-                                                                      snapshot
-                                                                          .data!
-                                                                          .length,
+                                                                      uniqListJenisBarang!.length,
                                                                   itemBuilder:
                                                                       (BuildContext
                                                                               context,
                                                                           int index) {
                                                                     var data =
-                                                                        snapshot
-                                                                            .data![index];
+                                                                        listJenisBarang![index];
+                                                                    var dataUniq = uniqListJenisBarang![index];
                                                                     return Container(
                                                                       padding:
                                                                           const EdgeInsets
@@ -3083,7 +2811,7 @@ class _HomeScreenAdminState extends State<HomeScreenAdmin> {
                                                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                                 children: [
                                                                                   Text(
-                                                                                    data.jenisBarang.toString(),
+                                                                                    dataUniq.jenisBarang.toString(),
                                                                                     style: const TextStyle(fontSize: 14, color: Colors.black, fontWeight: FontWeight.bold),
                                                                                   ),
                                                                                   Text(
@@ -3106,27 +2834,8 @@ class _HomeScreenAdminState extends State<HomeScreenAdmin> {
                                                                   },
                                                                 ),
                                                     ),
-                                                  ]);
-                                                }
-                                                return Column(children: [
-                                                  const Text('Jenis Barang',
-                                                      style: TextStyle(
-                                                        color: Colors.black,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 24,
-                                                      )),
-                                                  const Divider(thickness: 5),
-                                                  Container(
-                                                    padding:
-                                                        const EdgeInsets.all(0),
-                                                    width: 90,
-                                                    height: 90,
-                                                    child: Lottie.asset(
-                                                        "loadingJSON/loadingV1.json"),
-                                                  )
-                                                ]);
-                                              })))),
+                                                  ])))),
+                                           
 
                           //*report kelas harga
                           Align(
@@ -4581,7 +4290,7 @@ class _HomeScreenAdminState extends State<HomeScreenAdmin> {
                           ),
                           const Divider(thickness: 5),
                           Expanded(
-                            child: isLoadingJenisBarang == false
+                            child: isLoadingJenisBarang == true
                                 ? Container(
                                     padding: const EdgeInsets.all(0),
                                     width: 90,
@@ -4666,1997 +4375,6 @@ class _HomeScreenAdminState extends State<HomeScreenAdmin> {
                         )
                       ]);
                     }))));
-  }
-
-  //! dashboard Designer
-  dashboardDesigner() {
-    return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.only(),
-                  width: 350,
-                  child: DropdownSearch<String>(
-                    items: const [
-                      "JANUARI",
-                      "FEBRUARI",
-                      "MARET",
-                      "APRIL",
-                      "MEI",
-                      "JUNI",
-                      "JULI",
-                      "AGUSTUS",
-                      "SEPTEMBER",
-                      "OKTOBER",
-                      "NOVEMBER",
-                      "DESEMBER"
-                    ],
-                    onChanged: (item) {
-                      setState(() {
-                        listKelasHarga.clear();
-                        sumHarga.clear();
-
-                        isLoading = false;
-                        siklus.text = item!;
-                        siklusDesigner = siklus.text.toString();
-                        _getData(siklusDesigner,
-                            sharedPreferences!.getString('nama')!);
-                        _getAllData(siklusDesigner,
-                            sharedPreferences!.getString('nama')!);
-                      });
-                      Future.delayed(const Duration(milliseconds: 500))
-                          .then((value) {
-                        setState(() {
-                          isLoading = true;
-                        });
-                      });
-                    },
-                    popupProps: const PopupPropsMultiSelection.modalBottomSheet(
-                      showSelectedItems: true,
-                      showSearchBox: true,
-                    ),
-                    dropdownDecoratorProps: const DropDownDecoratorProps(
-                      textAlign: TextAlign.center,
-                      baseStyle: TextStyle(
-                          fontSize: 16,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold),
-                      dropdownSearchDecoration: InputDecoration(
-                          labelText: "Pilih Siklus",
-                          floatingLabelAlignment: FloatingLabelAlignment.center,
-                          filled: true,
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(12)))),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 30),
-                // //? search anything
-                // Container(
-                //   width: 500,
-                //   height: 45,
-                //   padding: const EdgeInsets.all(0),
-                //   decoration: BoxDecoration(
-                //       border: Border.all(
-                //           color: Colors.black, style: BorderStyle.solid),
-                //       borderRadius: BorderRadius.circular(12)),
-                //   child: Align(
-                //     alignment: Alignment.bottomCenter,
-                //     child: TextField(
-                //       textAlign: TextAlign.center,
-                //       controller: controller,
-                //       decoration: const InputDecoration(
-                //           hintText: "Search Anything ..."),
-                //       onChanged: (value) {
-                //         //fungsi search anyting
-                //         myCrm = filterCrm!
-                //             .where((element) =>
-                //                 element.kodeDesignMdbc!
-                //                     .toLowerCase()
-                //                     .contains(value.toLowerCase()) ||
-                //                 element.namaDesigner!
-                //                     .toLowerCase()
-                //                     .contains(value.toLowerCase()) ||
-                //                 element.kodeDesign!
-                //                     .toLowerCase()
-                //                     .contains(value.toLowerCase()) ||
-                //                 element.kodeDesign!
-                //                     .toLowerCase()
-                //                     .contains(value.toLowerCase()) ||
-                //                 element.tema!
-                //                     .toLowerCase()
-                //                     .contains(value.toLowerCase()) ||
-                //                 element.jenisBarang!
-                //                     .toLowerCase()
-                //                     .contains(value.toLowerCase()) ||
-                //                 element.estimasiHarga!
-                //                     .toString()
-                //                     .contains(value.toLowerCase()))
-                //             .toList();
-
-                //         setState(() {});
-                //       },
-                //     ),
-                //   ),
-                // ),
-              ],
-            ),
-          ),
-
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(children: [
-              Align(
-                  alignment: Alignment.bottomLeft,
-                  child: Container(
-                      padding: const EdgeInsets.all(12),
-                      width: 300,
-                      height: 300,
-                      child: Card(
-                          color: Colors.white,
-                          child: FutureBuilder(
-                              future: siklus.text.isEmpty
-                                  ? _getData("all",
-                                      sharedPreferences!.getString('nama')!)
-                                  : _getData(siklusDesigner,
-                                      sharedPreferences!.getString('nama')!),
-                              builder: (context, snapshot) {
-                                if (snapshot.hasError) {
-                                  return Column(children: [
-                                    const Text('Jenis Barang',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 24,
-                                        )),
-                                    const Divider(thickness: 5),
-                                    Center(
-                                        child: SizedBox(
-                                      width: 250,
-                                      height: 210,
-                                      child: Lottie.asset(
-                                          "loadingJSON/somethingwentwrong.json"),
-                                    ))
-                                  ]);
-                                }
-
-                                if (snapshot.connectionState ==
-                                    ConnectionState.waiting) {
-                                  return Column(children: [
-                                    const Text('Jenis Barang',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 24,
-                                        )),
-                                    const Divider(thickness: 5),
-                                    Container(
-                                      padding: const EdgeInsets.all(0),
-                                      width: 90,
-                                      height: 90,
-                                      child: Lottie.asset(
-                                          "loadingJSON/loadingV1.json"),
-                                    )
-                                  ]);
-                                }
-                                if (snapshot.data!.isEmpty) {
-                                  return const Column(children: [
-                                    Text('Jenis Barang',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 24,
-                                        )),
-                                    Divider(thickness: 5),
-                                    Center(
-                                      child: Text(
-                                        'Tidak ada data',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            fontSize: 26,
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold,
-                                            fontFamily: 'Acne',
-                                            letterSpacing: 1.5),
-                                      ),
-                                    )
-                                  ]);
-                                }
-                                if (snapshot.hasData) {
-                                  return Column(children: [
-                                    const Text('Jenis Barang',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 24,
-                                        )),
-                                    const Divider(thickness: 5),
-                                    Expanded(
-                                      child: isLoading == false
-                                          ? Container(
-                                              padding: const EdgeInsets.all(0),
-                                              width: 90,
-                                              height: 90,
-                                              child: Lottie.asset(
-                                                  "loadingJSON/loadingV1.json"),
-                                            )
-                                          : ListView.builder(
-                                              itemCount: snapshot.data!.length,
-                                              itemBuilder:
-                                                  (BuildContext context,
-                                                      int index) {
-                                                var data =
-                                                    snapshot.data![index];
-                                                return Container(
-                                                  padding:
-                                                      const EdgeInsets.all(0),
-                                                  child: Column(
-                                                    children: [
-                                                      Container(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .symmetric(
-                                                                horizontal: 17),
-                                                        child: ElevatedButton(
-                                                          onPressed: () {
-                                                            setState(() {});
-                                                          },
-                                                          style: ElevatedButton.styleFrom(
-                                                              backgroundColor:
-                                                                  Colors.blue
-                                                                      .shade100,
-                                                              shape: RoundedRectangleBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              50.0))),
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceBetween,
-                                                            children: [
-                                                              Text(
-                                                                data.jenisBarang
-                                                                    .toString(),
-                                                                style: const TextStyle(
-                                                                    fontSize:
-                                                                        14,
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold),
-                                                              ),
-                                                              Text(
-                                                                listJenisBarang!
-                                                                    .where((element) =>
-                                                                        element
-                                                                            .jenisBarang
-                                                                            .toString()
-                                                                            .toLowerCase() ==
-                                                                        data.jenisBarang
-                                                                            .toString()
-                                                                            .toLowerCase())
-                                                                    .toList()
-                                                                    .length
-                                                                    .toString(),
-                                                                style: const TextStyle(
-                                                                    fontSize:
-                                                                        14,
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      const Divider(
-                                                        thickness: 1,
-                                                        color: Colors.grey,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                );
-                                              },
-                                            ),
-                                    ),
-                                  ]);
-                                }
-                                return Column(children: [
-                                  const Text('Jenis Barang',
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 24,
-                                      )),
-                                  const Divider(thickness: 5),
-                                  Container(
-                                    padding: const EdgeInsets.all(0),
-                                    width: 90,
-                                    height: 90,
-                                    child: Lottie.asset(
-                                        "loadingJSON/loadingV1.json"),
-                                  )
-                                ]);
-                              })))),
-              Align(
-                  alignment: Alignment.bottomLeft,
-                  child: Container(
-                      padding: const EdgeInsets.all(12),
-                      width: 300,
-                      height: 300,
-                      child: Card(
-                          color: Colors.white,
-                          child: FutureBuilder(
-                              future: siklus.text.isEmpty
-                                  ? _getKelasHarga("all",
-                                      sharedPreferences!.getString('nama')!)
-                                  : _getKelasHarga(siklusDesigner,
-                                      sharedPreferences!.getString('nama')!),
-                              builder: (context, snapshot) {
-                                if (snapshot.hasError) {
-                                  return Column(children: [
-                                    const Text('Kelas Harga',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 24,
-                                        )),
-                                    const Divider(thickness: 5),
-                                    Center(
-                                        child: SizedBox(
-                                      height: 210,
-                                      child: Lottie.asset(
-                                          "loadingJSON/somethingwentwrong.json"),
-                                    ))
-                                  ]);
-                                }
-
-                                if (snapshot.connectionState ==
-                                    ConnectionState.waiting) {
-                                  return Column(children: [
-                                    const Text('Kelas Harga',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 24,
-                                        )),
-                                    const Divider(thickness: 5),
-                                    Container(
-                                      padding: const EdgeInsets.all(0),
-                                      width: 90,
-                                      height: 90,
-                                      child: Lottie.asset(
-                                          "loadingJSON/loadingV1.json"),
-                                    )
-                                  ]);
-                                }
-                                if (snapshot.data!.isEmpty) {
-                                  return const Column(children: [
-                                    Text('Kelas Harga',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 24,
-                                        )),
-                                    Divider(thickness: 5),
-                                    Center(
-                                      child: Text(
-                                        'Tidak ada data',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            fontSize: 26,
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold,
-                                            fontFamily: 'Acne',
-                                            letterSpacing: 1.5),
-                                      ),
-                                    )
-                                  ]);
-                                }
-                                if (snapshot.hasData) {
-                                  return Column(children: [
-                                    const Text('Kelas Harga',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 24,
-                                        )),
-                                    const Divider(thickness: 5),
-                                    Expanded(
-                                      child: isLoading == false
-                                          ? Container(
-                                              padding: const EdgeInsets.all(0),
-                                              width: 90,
-                                              height: 90,
-                                              child: Lottie.asset(
-                                                  "loadingJSON/loadingV1.json"),
-                                            )
-                                          : ListView.builder(
-                                              itemCount: listKelasHarga
-                                                  .toSet()
-                                                  .toList()
-                                                  .length,
-                                              itemBuilder:
-                                                  (BuildContext context,
-                                                      int index) {
-                                                // ignore: unused_local_variable
-                                                var data =
-                                                    snapshot.data![index];
-                                                return Container(
-                                                  padding:
-                                                      const EdgeInsets.all(0),
-                                                  child: Column(
-                                                    children: [
-                                                      Container(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .symmetric(
-                                                                horizontal: 17),
-                                                        child: ElevatedButton(
-                                                          onPressed: () {
-                                                            setState(() {});
-                                                          },
-                                                          style: ElevatedButton.styleFrom(
-                                                              backgroundColor:
-                                                                  Colors.blue
-                                                                      .shade100,
-                                                              shape: RoundedRectangleBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              50.0))),
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceBetween,
-                                                            children: [
-                                                              // menampilkan list kelas harga di list dan menghilangkan duplikatnya
-                                                              Text(
-                                                                listKelasHarga
-                                                                    .toSet()
-                                                                    .toList()[
-                                                                        index]
-                                                                    .toString(),
-                                                                maxLines: 2,
-                                                                style: const TextStyle(
-                                                                    fontSize:
-                                                                        14,
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold),
-                                                              ),
-                                                              //fungsi menampilkan jumlah kelas harga di list
-                                                              Text(
-                                                                listKelasHarga
-                                                                    .where((element) =>
-                                                                        element ==
-                                                                        listKelasHarga
-                                                                            .toSet()
-                                                                            .toList()[index]
-                                                                            .toString())
-                                                                    .length
-                                                                    .toString(),
-                                                                style: const TextStyle(
-                                                                    fontSize:
-                                                                        14,
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      const Divider(
-                                                        thickness: 1,
-                                                        color: Colors.grey,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                );
-                                              },
-                                            ),
-                                    ),
-                                  ]);
-                                }
-                                return Column(children: [
-                                  const Text('Kelas Harga',
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 24,
-                                      )),
-                                  const Divider(thickness: 5),
-                                  Container(
-                                    padding: const EdgeInsets.all(0),
-                                    width: 90,
-                                    height: 90,
-                                    child: Lottie.asset(
-                                        "loadingJSON/loadingV1.json"),
-                                  )
-                                ]);
-                              })))),
-              //* report Menu Report
-              Align(
-                  alignment: Alignment.bottomLeft,
-                  child: Container(
-                      padding: const EdgeInsets.all(12),
-                      width: 300,
-                      height: 300,
-                      child: Card(
-                          color: Colors.white,
-                          child: FutureBuilder(
-                              future: siklus.text.isEmpty
-                                  ? _getKelasHarga("all",
-                                      sharedPreferences!.getString('nama')!)
-                                  : _getKelasHarga(siklusDesigner,
-                                      sharedPreferences!.getString('nama')!),
-                              builder: (context, snapshot) {
-                                if (snapshot.hasError) {
-                                  return Column(children: [
-                                    const Text('Summary Report',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 24,
-                                        )),
-                                    const Divider(thickness: 5),
-                                    Center(
-                                        child: SizedBox(
-                                      height: 210,
-                                      child: Lottie.asset(
-                                          "loadingJSON/somethingwentwrong.json"),
-                                    ))
-                                  ]);
-                                }
-
-                                if (snapshot.connectionState ==
-                                    ConnectionState.waiting) {
-                                  return Column(children: [
-                                    const Text('Summary Report',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 24,
-                                        )),
-                                    const Divider(thickness: 5),
-                                    Container(
-                                      padding: const EdgeInsets.all(0),
-                                      width: 90,
-                                      height: 90,
-                                      child: Lottie.asset(
-                                          "loadingJSON/loadingV1.json"),
-                                    )
-                                  ]);
-                                }
-                                if (snapshot.data!.isEmpty) {
-                                  return const Column(children: [
-                                    Text('Summary Report',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 24,
-                                        )),
-                                    Divider(thickness: 5),
-                                    Center(
-                                      child: Text(
-                                        'Tidak ada data',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            fontSize: 26,
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold,
-                                            fontFamily: 'Acne',
-                                            letterSpacing: 1.5),
-                                      ),
-                                    )
-                                  ]);
-                                }
-                                if (snapshot.hasData) {
-                                  return Column(children: [
-                                    const Text('Summary Report',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 24,
-                                        )),
-                                    const Divider(thickness: 5),
-                                    Expanded(
-                                        child: isLoading == false
-                                            ? Container(
-                                                padding:
-                                                    const EdgeInsets.all(0),
-                                                width: 90,
-                                                height: 90,
-                                                child: Lottie.asset(
-                                                    "loadingJSON/loadingV1.json"),
-                                              )
-                                            : SingleChildScrollView(
-                                                scrollDirection: Axis.vertical,
-                                                child: Container(
-                                                  padding:
-                                                      const EdgeInsets.all(0),
-                                                  child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    children: [
-                                                      //? SPK
-                                                      Container(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .symmetric(
-                                                                horizontal: 17),
-                                                        child: ElevatedButton(
-                                                          onPressed: () {
-                                                            setState(() {});
-                                                          },
-                                                          style: ElevatedButton.styleFrom(
-                                                              backgroundColor:
-                                                                  Colors.blue
-                                                                      .shade100,
-                                                              shape: RoundedRectangleBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              50.0))),
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceBetween,
-                                                            children: [
-                                                              const Text(
-                                                                'SPK',
-                                                                maxLines: 2,
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        14,
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold),
-                                                              ),
-                                                              //fungsi menampilkan jumlah SESUAI table
-                                                              Text(
-                                                                '$totalSPK',
-                                                                style: const TextStyle(
-                                                                    fontSize:
-                                                                        14,
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ),
-
-                                                      const Padding(
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                                bottom: 0),
-                                                        child: Divider(
-                                                          thickness: 1,
-                                                          color: Colors.grey,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              )),
-                                  ]);
-                                }
-                                return Column(children: [
-                                  const Text('Summary Report',
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 24,
-                                      )),
-                                  const Divider(thickness: 5),
-                                  Container(
-                                    padding: const EdgeInsets.all(0),
-                                    width: 90,
-                                    height: 90,
-                                    child: Lottie.asset(
-                                        "loadingJSON/loadingV1.json"),
-                                  )
-                                ]);
-                              })))),
-            ]),
-          ),
-          //? table list designer
-          isLoading == false
-              ? Center(
-                  child: SizedBox(
-                  width: 150,
-                  height: 150,
-                  child: Lottie.asset("loadingJSON/loadingV2.json"),
-                ))
-              : Container(
-                  padding: const EdgeInsets.all(15),
-                  width: 1300,
-                  child: Theme(
-                    data: ThemeData.light().copyWith(
-                        // cardColor: Theme.of(context).canvasColor),
-                        cardColor: Colors.white,
-                        hoverColor: Colors.grey.shade400,
-                        dividerColor: Colors.grey),
-                    child: PaginatedDataTable(
-                        // ignore: deprecated_member_use
-                        dataRowHeight: 200,
-                        sortColumnIndex: _currentSortColumn,
-                        sortAscending: sort,
-                        rowsPerPage: 10,
-                        columnSpacing: 0,
-                        columns: [
-                          DataColumn(
-                            label: Container(
-                                padding: const EdgeInsets.only(left: 0),
-                                child: const Text(
-                                  "Aksi",
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold),
-                                )),
-                          ),
-                          DataColumn(label: _verticalDivider),
-                          DataColumn(
-                              label: const SizedBox(
-                                  child: Text(
-                                "Kode MDBC",
-                                style: TextStyle(
-                                    fontSize: 15, fontWeight: FontWeight.bold),
-                              )),
-                              onSort: (columnIndex, _) {
-                                setState(() {
-                                  _currentSortColumn = columnIndex;
-                                  if (sort == true) {
-                                    sort = false;
-                                    filterCrm!.sort((a, b) => a.kodeDesignMdbc!
-                                        .toLowerCase()
-                                        .compareTo(
-                                            b.kodeDesignMdbc!.toLowerCase()));
-                                  } else {
-                                    sort = true;
-                                    filterCrm!.sort((a, b) => b.kodeDesignMdbc!
-                                        .toLowerCase()
-                                        .compareTo(
-                                            a.kodeDesignMdbc!.toLowerCase()));
-                                  }
-                                });
-                              }),
-                          DataColumn(label: _verticalDivider),
-                          DataColumn(
-                              label: SizedBox(
-                                  child:
-                                      sharedPreferences!.getString('level') !=
-                                              '1'
-                                          ? const Text(
-                                              "Kode Marketing",
-                                              style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold),
-                                            )
-                                          : const Text(
-                                              "Nama\nDesigner",
-                                              style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold),
-                                            )),
-                              onSort: (columnIndex, _) {
-                                setState(() {
-                                  _currentSortColumn = columnIndex;
-                                  if (sharedPreferences!.getString('level') ==
-                                      '1') {
-                                    if (sort == true) {
-                                      sort = false;
-                                      filterCrm!.sort((a, b) => a.namaDesigner!
-                                          .toLowerCase()
-                                          .compareTo(
-                                              b.namaDesigner!.toLowerCase()));
-                                    } else {
-                                      sort = true;
-                                      filterCrm!.sort((a, b) => b.namaDesigner!
-                                          .toLowerCase()
-                                          .compareTo(
-                                              a.namaDesigner!.toLowerCase()));
-                                    }
-                                  } else {
-                                    if (sort == true) {
-                                      sort = false;
-                                      filterCrm!.sort((a, b) => a.kodeMarketing!
-                                          .toLowerCase()
-                                          .compareTo(
-                                              b.kodeMarketing!.toLowerCase()));
-                                    } else {
-                                      sort = true;
-                                      filterCrm!.sort((a, b) => b.kodeMarketing!
-                                          .toLowerCase()
-                                          .compareTo(
-                                              a.kodeMarketing!.toLowerCase()));
-                                    }
-                                  }
-                                });
-                              }),
-                          DataColumn(label: _verticalDivider),
-                          DataColumn(
-                              label: Container(
-                                  padding: const EdgeInsets.only(left: 35),
-                                  child: const Text(
-                                    "Tema",
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold),
-                                  )),
-                              onSort: (columnIndex, _) {
-                                setState(() {
-                                  _currentSortColumn = columnIndex;
-                                  if (sort == true) {
-                                    sort = false;
-                                    filterCrm!.sort((a, b) => a.tema!
-                                        .toLowerCase()
-                                        .compareTo(b.tema!.toLowerCase()));
-                                  } else {
-                                    sort = true;
-                                    filterCrm!.sort((a, b) => b.tema!
-                                        .toLowerCase()
-                                        .compareTo(a.tema!.toLowerCase()));
-                                  }
-                                });
-                              }),
-                          DataColumn(label: _verticalDivider),
-                          DataColumn(
-                              label: const SizedBox(
-                                  child: Text(
-                                "Jenis Barang",
-                                style: TextStyle(
-                                    fontSize: 15, fontWeight: FontWeight.bold),
-                              )),
-                              onSort: (columnIndex, _) {
-                                setState(() {
-                                  _currentSortColumn = columnIndex;
-                                  if (sort == true) {
-                                    sort = false;
-                                    filterCrm!.sort((a, b) => a.jenisBarang!
-                                        .toLowerCase()
-                                        .compareTo(
-                                            b.jenisBarang!.toLowerCase()));
-                                  } else {
-                                    sort = true;
-                                    filterCrm!.sort((a, b) => b.jenisBarang!
-                                        .toLowerCase()
-                                        .compareTo(
-                                            a.jenisBarang!.toLowerCase()));
-                                  }
-                                });
-                              }),
-                          DataColumn(label: _verticalDivider),
-                          DataColumn(
-                              label: const SizedBox(
-                                  child: Text(
-                                "Harga",
-                                maxLines: 2,
-                                style: TextStyle(
-                                    fontSize: 15, fontWeight: FontWeight.bold),
-                              )),
-                              onSort: (columnIndex, _) {
-                                setState(() {
-                                  _currentSortColumn = columnIndex;
-                                  if (sort == true) {
-                                    // myCrm.sort((a, b) => a['estimasiHarga'].)
-                                    sort = false;
-                                    filterCrm!.sort((a, b) => a.estimasiHarga!
-                                        .compareTo(b.estimasiHarga!));
-                                    // onsortColum(columnIndex, ascending);
-                                  } else {
-                                    sort = true;
-                                    filterCrm!.sort((a, b) => b.estimasiHarga!
-                                        .compareTo(a.estimasiHarga!));
-                                  }
-                                });
-                              }),
-                          DataColumn(label: _verticalDivider),
-                          const DataColumn(
-                            label: SizedBox(
-                                child: Text(
-                              "Kelas\nHarga",
-                              style: TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.bold),
-                            )),
-                          ),
-                          DataColumn(label: _verticalDivider),
-                          DataColumn(
-                            label: Container(
-                                padding: const EdgeInsets.only(left: 30),
-                                child: const Text(
-                                  "Gambar",
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold),
-                                )),
-                          ),
-                        ],
-                        source:
-                            // UserDataTableSource(userData: filterCrm!)),
-                            RowSource(myData: myCrm, count: myCrm!.length)),
-                  ),
-                ),
-        ]);
-  }
-
-  //! dashboard Designer
-  dashboardModeller() {
-    return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.only(),
-                  width: 350,
-                  child: DropdownSearch<String>(
-                    items: const [
-                      "JANUARI",
-                      "FEBRUARI",
-                      "MARET",
-                      "APRIL",
-                      "MEI",
-                      "JUNI",
-                      "JULI",
-                      "AGUSTUS",
-                      "SEPTEMBER",
-                      "OKTOBER",
-                      "NOVEMBER",
-                      "DESEMBER"
-                    ],
-                    onChanged: (item) {
-                      setState(() {
-                        listKelasHarga.clear();
-                        sumHarga.clear();
-
-                        isLoading = false;
-                        siklus.text = item!;
-                        siklusDesigner = siklus.text.toString();
-                        _getData(siklusDesigner,
-                            sharedPreferences!.getString('nama')!);
-                        _getAllData(siklusDesigner,
-                            sharedPreferences!.getString('nama')!);
-                      });
-                      Future.delayed(const Duration(milliseconds: 500))
-                          .then((value) {
-                        setState(() {
-                          isLoading = true;
-                        });
-                      });
-                    },
-                    popupProps: const PopupPropsMultiSelection.modalBottomSheet(
-                      showSelectedItems: true,
-                      showSearchBox: true,
-                    ),
-                    dropdownDecoratorProps: const DropDownDecoratorProps(
-                      textAlign: TextAlign.center,
-                      baseStyle: TextStyle(
-                          fontSize: 16,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold),
-                      dropdownSearchDecoration: InputDecoration(
-                          labelText: "Pilih Siklus",
-                          floatingLabelAlignment: FloatingLabelAlignment.center,
-                          filled: true,
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(12)))),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 30),
-                // //? search anything
-                // Container(
-                //   width: 500,
-                //   height: 45,
-                //   padding: const EdgeInsets.all(0),
-                //   decoration: BoxDecoration(
-                //       border: Border.all(
-                //         color: Colors.grey,
-                //       ),
-                //       borderRadius: BorderRadius.circular(12)),
-                //   child: Align(
-                //     alignment: Alignment.bottomCenter,
-                //     child: TextField(
-                //       textAlign: TextAlign.center,
-                //       controller: controller,
-                //       decoration: const InputDecoration(
-                //           hintText: "Search Anything ..."),
-                //       onChanged: (value) {
-                //         //fungsi search anyting
-                //         myCrm = filterCrm!
-                //             .where((element) =>
-                //                 element.kodeDesignMdbc!
-                //                     .toLowerCase()
-                //                     .contains(value.toLowerCase()) ||
-                //                 element.namaDesigner!
-                //                     .toLowerCase()
-                //                     .contains(value.toLowerCase()) ||
-                //                 element.kodeMarketing!
-                //                     .toLowerCase()
-                //                     .contains(value.toLowerCase()) ||
-                //                 element.kodeMarketing!
-                //                     .toLowerCase()
-                //                     .contains(value.toLowerCase()) ||
-                //                 element.tema!
-                //                     .toLowerCase()
-                //                     .contains(value.toLowerCase()) ||
-                //                 element.jenisBarang!
-                //                     .toLowerCase()
-                //                     .contains(value.toLowerCase()) ||
-                //                 element.estimasiHarga!
-                //                     .toString()
-                //                     .contains(value.toLowerCase()))
-                //             .toList();
-
-                //         setState(() {});
-                //       },
-                //     ),
-                //   ),
-                // ),
-              ],
-            ),
-          ),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                Align(
-                    alignment: Alignment.bottomLeft,
-                    child: Container(
-                        padding: const EdgeInsets.all(12),
-                        width: 300,
-                        height: 300,
-                        child: Card(
-                            color: Colors.white,
-                            child: FutureBuilder(
-                                future: siklus.text.isEmpty
-                                    ? _getData("all",
-                                        sharedPreferences!.getString('nama')!)
-                                    : _getData(siklusDesigner,
-                                        sharedPreferences!.getString('nama')!),
-                                builder: (context, snapshot) {
-                                  if (snapshot.hasError) {
-                                    return Column(children: [
-                                      const Text('Jenis Barang',
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 24,
-                                          )),
-                                      const Divider(thickness: 5),
-                                      Center(
-                                          child: SizedBox(
-                                        width: 250,
-                                        height: 210,
-                                        child: Lottie.asset(
-                                            "loadingJSON/somethingwentwrong.json"),
-                                      ))
-                                    ]);
-                                  }
-
-                                  if (snapshot.connectionState ==
-                                      ConnectionState.waiting) {
-                                    return Column(children: [
-                                      const Text('Jenis Barang',
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 24,
-                                          )),
-                                      const Divider(thickness: 5),
-                                      Container(
-                                        padding: const EdgeInsets.all(0),
-                                        width: 90,
-                                        height: 90,
-                                        child: Lottie.asset(
-                                            "loadingJSON/loadingV1.json"),
-                                      )
-                                    ]);
-                                  }
-                                  if (snapshot.data!.isEmpty) {
-                                    return const Column(children: [
-                                      Text('Jenis Barang',
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 24,
-                                          )),
-                                      Divider(thickness: 5),
-                                      Center(
-                                        child: Text(
-                                          'Tidak ada data',
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                              fontSize: 26,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold,
-                                              fontFamily: 'Acne',
-                                              letterSpacing: 1.5),
-                                        ),
-                                      )
-                                    ]);
-                                  }
-                                  if (snapshot.hasData) {
-                                    return Column(children: [
-                                      const Text('Jenis Barang',
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 24,
-                                          )),
-                                      const Divider(thickness: 5),
-                                      Expanded(
-                                        child: isLoading == false
-                                            ? Container(
-                                                padding:
-                                                    const EdgeInsets.all(0),
-                                                width: 90,
-                                                height: 90,
-                                                child: Lottie.asset(
-                                                    "loadingJSON/loadingV1.json"),
-                                              )
-                                            : ListView.builder(
-                                                itemCount:
-                                                    snapshot.data!.length,
-                                                itemBuilder:
-                                                    (BuildContext context,
-                                                        int index) {
-                                                  var data =
-                                                      snapshot.data![index];
-                                                  return Container(
-                                                    padding:
-                                                        const EdgeInsets.all(0),
-                                                    child: Column(
-                                                      children: [
-                                                        Container(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .symmetric(
-                                                                  horizontal:
-                                                                      17),
-                                                          child: ElevatedButton(
-                                                            onPressed: () {
-                                                              setState(() {});
-                                                            },
-                                                            style: ElevatedButton.styleFrom(
-                                                                backgroundColor:
-                                                                    Colors.blue
-                                                                        .shade100,
-                                                                shape: RoundedRectangleBorder(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            50.0))),
-                                                            child: Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceBetween,
-                                                              children: [
-                                                                Text(
-                                                                  data.jenisBarang
-                                                                      .toString(),
-                                                                  style: const TextStyle(
-                                                                      fontSize:
-                                                                          14,
-                                                                      color: Colors
-                                                                          .black,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold),
-                                                                ),
-                                                                Text(
-                                                                  listJenisBarang!
-                                                                      .where((element) =>
-                                                                          element
-                                                                              .jenisBarang
-                                                                              .toString()
-                                                                              .toLowerCase() ==
-                                                                          data.jenisBarang
-                                                                              .toString()
-                                                                              .toLowerCase())
-                                                                      .toList()
-                                                                      .length
-                                                                      .toString(),
-                                                                  style: const TextStyle(
-                                                                      fontSize:
-                                                                          14,
-                                                                      color: Colors
-                                                                          .black,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        const Divider(
-                                                          thickness: 1,
-                                                          color: Colors.grey,
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  );
-                                                },
-                                              ),
-                                      ),
-                                    ]);
-                                  }
-                                  return Column(children: [
-                                    const Text('Jenis Barang',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 24,
-                                        )),
-                                    const Divider(thickness: 5),
-                                    Container(
-                                      padding: const EdgeInsets.all(0),
-                                      width: 90,
-                                      height: 90,
-                                      child: Lottie.asset(
-                                          "loadingJSON/loadingV1.json"),
-                                    )
-                                  ]);
-                                })))),
-                //* report Menu Report
-                Align(
-                    alignment: Alignment.bottomLeft,
-                    child: Container(
-                        padding: const EdgeInsets.all(12),
-                        width: 300,
-                        height: 300,
-                        child: Card(
-                            color: Colors.white,
-                            child: FutureBuilder(
-                                future: siklus.text.isEmpty
-                                    ? _getKelasHarga("all",
-                                        sharedPreferences!.getString('nama')!)
-                                    : _getKelasHarga(siklusDesigner,
-                                        sharedPreferences!.getString('nama')!),
-                                builder: (context, snapshot) {
-                                  if (snapshot.hasError) {
-                                    return Column(children: [
-                                      const Text('Summary Report',
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 24,
-                                          )),
-                                      const Divider(thickness: 5),
-                                      Center(
-                                          child: SizedBox(
-                                        height: 210,
-                                        child: Lottie.asset(
-                                            "loadingJSON/somethingwentwrong.json"),
-                                      ))
-                                    ]);
-                                  }
-
-                                  if (snapshot.connectionState ==
-                                      ConnectionState.waiting) {
-                                    return Column(children: [
-                                      const Text('Summary Report',
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 24,
-                                          )),
-                                      const Divider(thickness: 5),
-                                      Container(
-                                        padding: const EdgeInsets.all(0),
-                                        width: 90,
-                                        height: 90,
-                                        child: Lottie.asset(
-                                            "loadingJSON/loadingV1.json"),
-                                      )
-                                    ]);
-                                  }
-                                  if (snapshot.data!.isEmpty) {
-                                    return const Column(children: [
-                                      Text('Kelas Harga',
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 24,
-                                          )),
-                                      Divider(thickness: 5),
-                                      Center(
-                                        child: Text(
-                                          'Tidak ada data',
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                              fontSize: 26,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold,
-                                              fontFamily: 'Acne',
-                                              letterSpacing: 1.5),
-                                        ),
-                                      )
-                                    ]);
-                                  }
-                                  if (snapshot.hasData) {
-                                    return Column(children: [
-                                      const Text('Summary Report',
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 24,
-                                          )),
-                                      const Divider(thickness: 5),
-                                      Expanded(
-                                          child: isLoading == false
-                                              ? Container(
-                                                  padding:
-                                                      const EdgeInsets.all(0),
-                                                  width: 90,
-                                                  height: 90,
-                                                  child: Lottie.asset(
-                                                      "loadingJSON/loadingV1.json"),
-                                                )
-                                              : SingleChildScrollView(
-                                                  scrollDirection:
-                                                      Axis.vertical,
-                                                  child: Container(
-                                                    padding:
-                                                        const EdgeInsets.all(0),
-                                                    child: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        //? Total SPK
-                                                        Container(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .symmetric(
-                                                                  horizontal:
-                                                                      17),
-                                                          child: ElevatedButton(
-                                                            onPressed: () {
-                                                              setState(() {});
-                                                            },
-                                                            style: ElevatedButton.styleFrom(
-                                                                backgroundColor:
-                                                                    Colors.blue
-                                                                        .shade100,
-                                                                shape: RoundedRectangleBorder(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            50.0))),
-                                                            child: Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceBetween,
-                                                              children: [
-                                                                const Text(
-                                                                  'TOTAL SPK',
-                                                                  maxLines: 2,
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          18,
-                                                                      color: Colors
-                                                                          .black,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold),
-                                                                ),
-                                                                //fungsi menampilkan jumlah SESUAI table
-                                                                Text(
-                                                                  '$totalSPK',
-                                                                  style: const TextStyle(
-                                                                      fontSize:
-                                                                          18,
-                                                                      color: Colors
-                                                                          .black,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        ),
-
-                                                        const Padding(
-                                                          padding:
-                                                              EdgeInsets.only(
-                                                                  bottom: 0),
-                                                          child: Divider(
-                                                            thickness: 1,
-                                                            color: Colors.grey,
-                                                          ),
-                                                        ),
-                                                        //? SPK PENDING
-                                                        Container(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .symmetric(
-                                                                  horizontal:
-                                                                      17),
-                                                          child: ElevatedButton(
-                                                            onPressed: () {
-                                                              setState(() {});
-                                                            },
-                                                            style: ElevatedButton.styleFrom(
-                                                                backgroundColor:
-                                                                    Colors
-                                                                        .orange,
-                                                                shape: RoundedRectangleBorder(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            50.0))),
-                                                            child: Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceBetween,
-                                                              children: [
-                                                                const Text(
-                                                                  'SPK Pending',
-                                                                  maxLines: 2,
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          14,
-                                                                      color: Colors
-                                                                          .black,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold),
-                                                                ),
-                                                                //fungsi menampilkan jumlah SESUAI table
-                                                                Text(
-                                                                  '${totalSPK - totalSPKSelesai}',
-                                                                  style: const TextStyle(
-                                                                      fontSize:
-                                                                          14,
-                                                                      color: Colors
-                                                                          .black,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        ),
-
-                                                        const Padding(
-                                                          padding:
-                                                              EdgeInsets.only(
-                                                                  bottom: 0),
-                                                          child: Divider(
-                                                            thickness: 1,
-                                                            color: Colors.grey,
-                                                          ),
-                                                        ),
-                                                        //? SPK selesai
-                                                        Container(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .symmetric(
-                                                                  horizontal:
-                                                                      17),
-                                                          child: ElevatedButton(
-                                                            onPressed: () {
-                                                              setState(() {});
-                                                            },
-                                                            style: ElevatedButton.styleFrom(
-                                                                backgroundColor:
-                                                                    Colors
-                                                                        .green,
-                                                                shape: RoundedRectangleBorder(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            50.0))),
-                                                            child: Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceBetween,
-                                                              children: [
-                                                                const Text(
-                                                                  'SPK Selesai',
-                                                                  maxLines: 2,
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          14,
-                                                                      color: Colors
-                                                                          .black,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold),
-                                                                ),
-                                                                //fungsi menampilkan jumlah SESUAI table
-                                                                Text(
-                                                                  '$totalSPKSelesai',
-                                                                  style: const TextStyle(
-                                                                      fontSize:
-                                                                          14,
-                                                                      color: Colors
-                                                                          .black,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        ),
-
-                                                        const Padding(
-                                                          padding:
-                                                              EdgeInsets.only(
-                                                                  bottom: 0),
-                                                          child: Divider(
-                                                            thickness: 1,
-                                                            color: Colors.grey,
-                                                          ),
-                                                        ),
-                                                        //? Point Modeller
-                                                        Container(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .symmetric(
-                                                                  horizontal:
-                                                                      17),
-                                                          child: ElevatedButton(
-                                                            onPressed: () {
-                                                              setState(() {});
-                                                            },
-                                                            style: ElevatedButton.styleFrom(
-                                                                backgroundColor:
-                                                                    Colors.blue
-                                                                        .shade100,
-                                                                shape: RoundedRectangleBorder(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            50.0))),
-                                                            child: Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceBetween,
-                                                              children: [
-                                                                const Text(
-                                                                  'Point Modeller',
-                                                                  maxLines: 2,
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          14,
-                                                                      color: Colors
-                                                                          .black,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold),
-                                                                ),
-                                                                //fungsi menampilkan jumlah SESUAI table
-                                                                Text(
-                                                                  sharedPreferences!
-                                                                              .getString(
-                                                                                  'nama')!
-                                                                              .toString()
-                                                                              .toLowerCase() ==
-                                                                          "arif kurniawan"
-                                                                      ? pointArif
-                                                                          .toStringAsFixed(
-                                                                              2)
-                                                                      : sharedPreferences!.getString('nama')!.toString().toLowerCase() ==
-                                                                              "aris pravidan"
-                                                                          ? pointAris
-                                                                              .toStringAsFixed(2)
-                                                                          : sharedPreferences!.getString('nama')!.toString().toLowerCase() == "fikryansyah"
-                                                                              ? pointFikri.toStringAsFixed(2)
-                                                                              : pointyuse.toStringAsFixed(2),
-                                                                  style: const TextStyle(
-                                                                      fontSize:
-                                                                          14,
-                                                                      color: Colors
-                                                                          .black,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        ),
-
-                                                        const Padding(
-                                                          padding:
-                                                              EdgeInsets.only(
-                                                                  bottom: 0),
-                                                          child: Divider(
-                                                            thickness: 1,
-                                                            color: Colors.grey,
-                                                          ),
-                                                        ),
-                                                        //? berat Modeller//! berat modeller
-                                                        Container(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .symmetric(
-                                                                  horizontal:
-                                                                      17),
-                                                          child: ElevatedButton(
-                                                            onPressed: () {
-                                                              setState(() {});
-                                                            },
-                                                            style: ElevatedButton.styleFrom(
-                                                                backgroundColor:
-                                                                    Colors.blue
-                                                                        .shade100,
-                                                                shape: RoundedRectangleBorder(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            50.0))),
-                                                            child: Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceBetween,
-                                                              children: [
-                                                                const Text(
-                                                                  'Berat Modeller',
-                                                                  maxLines: 2,
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          14,
-                                                                      color: Colors
-                                                                          .black,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold),
-                                                                ),
-                                                                //fungsi menampilkan jumlah SESUAI table
-                                                                Text(
-                                                                  sharedPreferences!
-                                                                              .getString(
-                                                                                  'nama')!
-                                                                              .toString()
-                                                                              .toLowerCase() ==
-                                                                          "arif kurniawan"
-                                                                      ? beratArif
-                                                                          .toStringAsFixed(
-                                                                              3)
-                                                                      : sharedPreferences!.getString('nama')!.toString().toLowerCase() ==
-                                                                              "aris pravidan"
-                                                                          ? beratAris
-                                                                              .toStringAsFixed(3)
-                                                                          : sharedPreferences!.getString('nama')!.toString().toLowerCase() == "fikryansyah"
-                                                                              ? beratFikri.toStringAsFixed(3)
-                                                                              : beratyuse.toStringAsFixed(3),
-                                                                  style: const TextStyle(
-                                                                      fontSize:
-                                                                          14,
-                                                                      color: Colors
-                                                                          .black,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        ),
-
-                                                        const Padding(
-                                                          padding:
-                                                              EdgeInsets.only(
-                                                                  bottom: 0),
-                                                          child: Divider(
-                                                            thickness: 1,
-                                                            color: Colors.grey,
-                                                          ),
-                                                        ),
-                                                        // //? Total harga
-                                                        // Row(
-                                                        //   mainAxisAlignment:
-                                                        //       MainAxisAlignment
-                                                        //           .spaceBetween,
-                                                        //   children: [
-                                                        //     const Text(
-                                                        //       'Total',
-                                                        //       maxLines: 2,
-                                                        //       style: TextStyle(
-                                                        //           fontSize: 14,
-                                                        //           color: Colors
-                                                        //               .black,
-                                                        //           fontWeight:
-                                                        //               FontWeight
-                                                        //                   .bold),
-                                                        //     ),
-                                                        //     //fungsi menampilkan jumlah SESUAI table
-                                                        //     Text(
-                                                        //       'Rp. ${CurrencyFormat.convertToDollar(totalHarga, 0)}',
-                                                        //       style: const TextStyle(
-                                                        //           fontSize: 14,
-                                                        //           color: Colors
-                                                        //               .black,
-                                                        //           fontWeight:
-                                                        //               FontWeight
-                                                        //                   .bold),
-                                                        //     ),
-                                                        //   ],
-                                                        // ),
-
-                                                        // const Padding(
-                                                        //   padding:
-                                                        //       EdgeInsets.only(
-                                                        //           bottom: 10),
-                                                        //   child: Divider(
-                                                        //     thickness: 1,
-                                                        //     color: Colors.grey,
-                                                        //   ),
-                                                        // ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                )),
-                                    ]);
-                                  }
-                                  return Column(children: [
-                                    const Text('Summary Report',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 24,
-                                        )),
-                                    const Divider(thickness: 5),
-                                    Container(
-                                      padding: const EdgeInsets.all(0),
-                                      width: 90,
-                                      height: 90,
-                                      child: Lottie.asset(
-                                          "loadingJSON/loadingV1.json"),
-                                    )
-                                  ]);
-                                })))),
-              ],
-            ),
-          ),
-
-          //? table list modeller
-          isLoading == false
-              ? Center(
-                  child: SizedBox(
-                  width: 150,
-                  height: 150,
-                  child: Lottie.asset("loadingJSON/loadingV2.json"),
-                ))
-              : Container(
-                  padding: const EdgeInsets.all(15),
-                  width: 1300,
-                  child: Theme(
-                    data: ThemeData.light().copyWith(
-                        // cardColor: Theme.of(context).canvasColor),
-                        cardColor: Colors.white,
-                        hoverColor: Colors.grey.shade400,
-                        dividerColor: Colors.grey),
-                    child: PaginatedDataTable(
-                        // ignore: deprecated_member_use
-                        dataRowHeight: 200,
-                        sortColumnIndex: _currentSortColumn,
-                        sortAscending: sort,
-                        rowsPerPage: 10,
-                        columnSpacing: 0,
-                        columns: [
-                          DataColumn(
-                            label: Container(
-                                padding: const EdgeInsets.only(left: 0),
-                                child: const Text(
-                                  "Aksi",
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold),
-                                )),
-                          ),
-                          DataColumn(label: _verticalDivider),
-                          DataColumn(
-                              label: const SizedBox(
-                                  child: Text(
-                                "Kode MDBC",
-                                style: TextStyle(
-                                    fontSize: 15, fontWeight: FontWeight.bold),
-                              )),
-                              onSort: (columnIndex, _) {
-                                setState(() {
-                                  _currentSortColumn = columnIndex;
-                                  if (sort == true) {
-                                    sort = false;
-                                    filterCrm!.sort((a, b) => a.kodeDesignMdbc!
-                                        .toLowerCase()
-                                        .compareTo(
-                                            b.kodeDesignMdbc!.toLowerCase()));
-                                  } else {
-                                    sort = true;
-                                    filterCrm!.sort((a, b) => b.kodeDesignMdbc!
-                                        .toLowerCase()
-                                        .compareTo(
-                                            a.kodeDesignMdbc!.toLowerCase()));
-                                  }
-                                });
-                              }),
-                          DataColumn(label: _verticalDivider),
-                          DataColumn(
-                              label: SizedBox(
-                                  child:
-                                      sharedPreferences!.getString('level') !=
-                                              '1'
-                                          ? const Text(
-                                              "Kode Marketing",
-                                              style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold),
-                                            )
-                                          : const Text(
-                                              "Nama\nDesigner",
-                                              style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold),
-                                            )),
-                              onSort: (columnIndex, _) {
-                                setState(() {
-                                  _currentSortColumn = columnIndex;
-                                  if (sharedPreferences!.getString('level') ==
-                                      '1') {
-                                    if (sort == true) {
-                                      sort = false;
-                                      filterCrm!.sort((a, b) => a.namaDesigner!
-                                          .toLowerCase()
-                                          .compareTo(
-                                              b.namaDesigner!.toLowerCase()));
-                                    } else {
-                                      sort = true;
-                                      filterCrm!.sort((a, b) => b.namaDesigner!
-                                          .toLowerCase()
-                                          .compareTo(
-                                              a.namaDesigner!.toLowerCase()));
-                                    }
-                                  } else {
-                                    if (sort == true) {
-                                      sort = false;
-                                      filterCrm!.sort((a, b) => a.kodeMarketing!
-                                          .toLowerCase()
-                                          .compareTo(
-                                              b.kodeMarketing!.toLowerCase()));
-                                    } else {
-                                      sort = true;
-                                      filterCrm!.sort((a, b) => b.kodeMarketing!
-                                          .toLowerCase()
-                                          .compareTo(
-                                              a.kodeMarketing!.toLowerCase()));
-                                    }
-                                  }
-                                });
-                              }),
-                          DataColumn(label: _verticalDivider),
-                          DataColumn(
-                              label: Container(
-                                  padding: const EdgeInsets.only(left: 35),
-                                  child: const Text(
-                                    "Tema",
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold),
-                                  )),
-                              onSort: (columnIndex, _) {
-                                setState(() {
-                                  _currentSortColumn = columnIndex;
-                                  if (sort == true) {
-                                    sort = false;
-                                    filterCrm!.sort((a, b) => a.tema!
-                                        .toLowerCase()
-                                        .compareTo(b.tema!.toLowerCase()));
-                                  } else {
-                                    sort = true;
-                                    filterCrm!.sort((a, b) => b.tema!
-                                        .toLowerCase()
-                                        .compareTo(a.tema!.toLowerCase()));
-                                  }
-                                });
-                              }),
-                          DataColumn(label: _verticalDivider),
-                          DataColumn(
-                              label: const SizedBox(
-                                  child: Text(
-                                "Jenis Barang",
-                                style: TextStyle(
-                                    fontSize: 15, fontWeight: FontWeight.bold),
-                              )),
-                              onSort: (columnIndex, _) {
-                                setState(() {
-                                  _currentSortColumn = columnIndex;
-                                  if (sort == true) {
-                                    sort = false;
-                                    filterCrm!.sort((a, b) => a.jenisBarang!
-                                        .toLowerCase()
-                                        .compareTo(
-                                            b.jenisBarang!.toLowerCase()));
-                                  } else {
-                                    sort = true;
-                                    filterCrm!.sort((a, b) => b.jenisBarang!
-                                        .toLowerCase()
-                                        .compareTo(
-                                            a.jenisBarang!.toLowerCase()));
-                                  }
-                                });
-                              }),
-                          DataColumn(label: _verticalDivider),
-                          DataColumn(
-                              label: const SizedBox(
-                                  child: Text(
-                                "Harga",
-                                maxLines: 2,
-                                style: TextStyle(
-                                    fontSize: 15, fontWeight: FontWeight.bold),
-                              )),
-                              onSort: (columnIndex, _) {
-                                setState(() {
-                                  _currentSortColumn = columnIndex;
-                                  if (sort == true) {
-                                    // myCrm.sort((a, b) => a['estimasiHarga'].)
-                                    sort = false;
-                                    filterCrm!.sort((a, b) => a.estimasiHarga!
-                                        .compareTo(b.estimasiHarga!));
-                                    // onsortColum(columnIndex, ascending);
-                                  } else {
-                                    sort = true;
-                                    filterCrm!.sort((a, b) => b.estimasiHarga!
-                                        .compareTo(a.estimasiHarga!));
-                                  }
-                                });
-                              }),
-                          DataColumn(label: _verticalDivider),
-                          const DataColumn(
-                            label: SizedBox(
-                                child: Text(
-                              "Kelas\nHarga",
-                              style: TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.bold),
-                            )),
-                          ),
-                          DataColumn(label: _verticalDivider),
-                          DataColumn(
-                            label: Container(
-                                padding: const EdgeInsets.only(left: 30),
-                                child: const Text(
-                                  "Gambar",
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold),
-                                )),
-                          ),
-                        ],
-                        source:
-                            // UserDataTableSource(userData: filterCrm!)),
-                            RowSource(myData: myCrm, count: myCrm!.length)),
-                  ),
-                ),
-        ]);
   }
 
   postSiklus() async {
