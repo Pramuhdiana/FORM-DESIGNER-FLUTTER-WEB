@@ -1,4 +1,4 @@
-import 'package:firebase_core/firebase_core.dart';
+// import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:form_designer/login/my_splash_screen.dart';
@@ -18,7 +18,7 @@ Future<void> main() async {
   // appId: "1:493427708399:web:b9d4abd257d81fa639e61a"
   // };
   // await Firebase.initializeApp(
-  //   options: 
+  //   options:
   // );
   runApp(const MyApp());
 }

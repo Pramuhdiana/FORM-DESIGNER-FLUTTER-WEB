@@ -7,6 +7,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:form_designer/calculatePricing/add_calculate_pricing.dart';
 import 'package:form_designer/global/currency_format.dart';
+import 'package:form_designer/global/global.dart';
 // ignore: unused_import
 import 'package:form_designer/mainScreen/form_screen_by_id.dart';
 import 'package:http/http.dart' as http;
@@ -91,6 +92,7 @@ class _ListCalculatePricingScreenState
           scrollBehavior: CustomScrollBehavior(),
           debugShowCheckedModeBanner: false,
           home: Scaffold(
+              backgroundColor: colorBG,
               // drawer: Drawer1(),
               appBar: AppBar(
                 automaticallyImplyLeading: false,
@@ -638,21 +640,17 @@ class RowSource extends DataTableSource {
                                                       color: Colors.black),
                                                 ),
                                                 Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 15),
-                                                  child: Text(
-                                                            '(${data.caratPcsBatu1} Crt/Pcs)',
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          )
-                                             
-                                                )
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 15),
+                                                    child: Text(
+                                                      '(${data.caratPcsBatu1} Crt/Pcs)',
+                                                      style: const TextStyle(
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.black),
+                                                    ))
                                               ],
                                             ),
                                           ),
@@ -693,21 +691,17 @@ class RowSource extends DataTableSource {
                                                       color: Colors.black),
                                                 ),
                                                 Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 15),
-                                                  child: Text(
-                                                            '(${data.caratPcsBatu2} Crt/Pcs)',
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          )
-                                             
-                                                )
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 15),
+                                                    child: Text(
+                                                      '(${data.caratPcsBatu2} Crt/Pcs)',
+                                                      style: const TextStyle(
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.black),
+                                                    ))
                                               ],
                                             ),
                                           ),
@@ -749,21 +743,17 @@ class RowSource extends DataTableSource {
                                                       color: Colors.black),
                                                 ),
                                                 Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 15),
-                                                  child: Text(
-                                                            '(${data.caratPcsBatu3} Crt/Pcs)',
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          )
-                                             
-                                                )
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 15),
+                                                    child: Text(
+                                                      '(${data.caratPcsBatu3} Crt/Pcs)',
+                                                      style: const TextStyle(
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.black),
+                                                    ))
                                               ],
                                             ),
                                           ),
@@ -805,21 +795,17 @@ class RowSource extends DataTableSource {
                                                       color: Colors.black),
                                                 ),
                                                 Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 15),
-                                                  child: Text(
-                                                            '(${data.caratPcsBatu4} Crt/Pcs)',
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          )
-                                             
-                                                )
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 15),
+                                                    child: Text(
+                                                      '(${data.caratPcsBatu4} Crt/Pcs)',
+                                                      style: const TextStyle(
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.black),
+                                                    ))
                                               ],
                                             ),
                                           ),
@@ -861,21 +847,17 @@ class RowSource extends DataTableSource {
                                                       color: Colors.black),
                                                 ),
                                                 Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 15),
-                                                  child: Text(
-                                                            '(${data.caratPcsBatu5} Crt/Pcs)',
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          )
-                                             
-                                                )
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 15),
+                                                    child: Text(
+                                                      '(${data.caratPcsBatu5} Crt/Pcs)',
+                                                      style: const TextStyle(
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.black),
+                                                    ))
                                               ],
                                             ),
                                           ),
@@ -916,21 +898,17 @@ class RowSource extends DataTableSource {
                                                       color: Colors.black),
                                                 ),
                                                 Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 15),
-                                                  child: Text(
-                                                            '(${data.caratPcsBatu6} Crt/Pcs)',
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          )
-                                             
-                                                )
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 15),
+                                                    child: Text(
+                                                      '(${data.caratPcsBatu6} Crt/Pcs)',
+                                                      style: const TextStyle(
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.black),
+                                                    ))
                                               ],
                                             ),
                                           ),
@@ -970,22 +948,18 @@ class RowSource extends DataTableSource {
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
-                                               Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 15),
-                                                  child: Text(
-                                                            '(${data.caratPcsBatu7} Crt/Pcs)',
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          )
-                                             
-                                                )
+                                                Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 15),
+                                                    child: Text(
+                                                      '(${data.caratPcsBatu7} Crt/Pcs)',
+                                                      style: const TextStyle(
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.black),
+                                                    ))
                                               ],
                                             ),
                                           ),
@@ -1026,21 +1000,17 @@ class RowSource extends DataTableSource {
                                                       color: Colors.black),
                                                 ),
                                                 Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 15),
-                                                  child: Text(
-                                                            '(${data.caratPcsBatu8} Crt/Pcs)',
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          )
-                                             
-                                                )
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 15),
+                                                    child: Text(
+                                                      '(${data.caratPcsBatu8} Crt/Pcs)',
+                                                      style: const TextStyle(
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.black),
+                                                    ))
                                               ],
                                             ),
                                           ),
@@ -1080,22 +1050,18 @@ class RowSource extends DataTableSource {
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
-                                               Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 15),
-                                                  child: Text(
-                                                            '(${data.caratPcsBatu9} Crt/Pcs)',
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          )
-                                             
-                                                )
+                                                Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 15),
+                                                    child: Text(
+                                                      '(${data.caratPcsBatu9} Crt/Pcs)',
+                                                      style: const TextStyle(
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.black),
+                                                    ))
                                               ],
                                             ),
                                           ),
@@ -1135,22 +1101,18 @@ class RowSource extends DataTableSource {
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
-                                               Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 15),
-                                                  child: Text(
-                                                            '(${data.caratPcsBatu10} Crt/Pcs)',
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          )
-                                             
-                                                )
+                                                Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 15),
+                                                    child: Text(
+                                                      '(${data.caratPcsBatu10} Crt/Pcs)',
+                                                      style: const TextStyle(
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.black),
+                                                    ))
                                               ],
                                             ),
                                           ),
@@ -1191,21 +1153,17 @@ class RowSource extends DataTableSource {
                                                       color: Colors.black),
                                                 ),
                                                 Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 15),
-                                                  child: Text(
-                                                            '(${data.caratPcsBatu11} Crt/Pcs)',
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          )
-                                             
-                                                )
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 15),
+                                                    child: Text(
+                                                      '(${data.caratPcsBatu11} Crt/Pcs)',
+                                                      style: const TextStyle(
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.black),
+                                                    ))
                                               ],
                                             ),
                                           ),
@@ -1245,22 +1203,18 @@ class RowSource extends DataTableSource {
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
-                                               Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 15),
-                                                  child: Text(
-                                                            '(${data.caratPcsBatu12} Crt/Pcs)',
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          )
-                                             
-                                                )
+                                                Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 15),
+                                                    child: Text(
+                                                      '(${data.caratPcsBatu12} Crt/Pcs)',
+                                                      style: const TextStyle(
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.black),
+                                                    ))
                                               ],
                                             ),
                                           ),
@@ -1300,22 +1254,18 @@ class RowSource extends DataTableSource {
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
-                                               Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 15),
-                                                  child: Text(
-                                                            '(${data.caratPcsBatu13} Crt/Pcs)',
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          )
-                                             
-                                                )
+                                                Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 15),
+                                                    child: Text(
+                                                      '(${data.caratPcsBatu13} Crt/Pcs)',
+                                                      style: const TextStyle(
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.black),
+                                                    ))
                                               ],
                                             ),
                                           ),
@@ -1355,22 +1305,18 @@ class RowSource extends DataTableSource {
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
-                                               Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 15),
-                                                  child: Text(
-                                                            '(${data.caratPcsBatu14} Crt/Pcs)',
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          )
-                                             
-                                                )
+                                                Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 15),
+                                                    child: Text(
+                                                      '(${data.caratPcsBatu14} Crt/Pcs)',
+                                                      style: const TextStyle(
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.black),
+                                                    ))
                                               ],
                                             ),
                                           ),
@@ -1410,22 +1356,18 @@ class RowSource extends DataTableSource {
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
-                                              Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 15),
-                                                  child: Text(
-                                                            '(${data.caratPcsBatu15} Crt/Pcs)',
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          )
-                                             
-                                                )
+                                                Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 15),
+                                                    child: Text(
+                                                      '(${data.caratPcsBatu15} Crt/Pcs)',
+                                                      style: const TextStyle(
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.black),
+                                                    ))
                                               ],
                                             ),
                                           ),
@@ -1465,22 +1407,18 @@ class RowSource extends DataTableSource {
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
-                                               Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 15),
-                                                  child: Text(
-                                                            '(${data.caratPcsBatu16} Crt/Pcs)',
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          )
-                                             
-                                                )
+                                                Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 15),
+                                                    child: Text(
+                                                      '(${data.caratPcsBatu16} Crt/Pcs)',
+                                                      style: const TextStyle(
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.black),
+                                                    ))
                                               ],
                                             ),
                                           ),
@@ -1520,22 +1458,18 @@ class RowSource extends DataTableSource {
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
-                                               Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 15),
-                                                  child: Text(
-                                                            '(${data.caratPcsBatu17} Crt/Pcs)',
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          )
-                                             
-                                                )
+                                                Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 15),
+                                                    child: Text(
+                                                      '(${data.caratPcsBatu17} Crt/Pcs)',
+                                                      style: const TextStyle(
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.black),
+                                                    ))
                                               ],
                                             ),
                                           ),
@@ -1576,21 +1510,17 @@ class RowSource extends DataTableSource {
                                                       color: Colors.black),
                                                 ),
                                                 Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 15),
-                                                  child: Text(
-                                                            '(${data.caratPcsBatu18} Crt/Pcs)',
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          )
-                                             
-                                                )
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 15),
+                                                    child: Text(
+                                                      '(${data.caratPcsBatu18} Crt/Pcs)',
+                                                      style: const TextStyle(
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.black),
+                                                    ))
                                               ],
                                             ),
                                           ),
@@ -1630,22 +1560,18 @@ class RowSource extends DataTableSource {
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
-                                               Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 15),
-                                                  child: Text(
-                                                            '(${data.caratPcsBatu19} Crt/Pcs)',
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          )
-                                             
-                                                )
+                                                Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 15),
+                                                    child: Text(
+                                                      '(${data.caratPcsBatu19} Crt/Pcs)',
+                                                      style: const TextStyle(
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.black),
+                                                    ))
                                               ],
                                             ),
                                           ),
@@ -1685,22 +1611,18 @@ class RowSource extends DataTableSource {
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
-                                               Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 15),
-                                                  child: Text(
-                                                            '(${data.caratPcsBatu20} Crt/Pcs)',
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          )
-                                             
-                                                )
+                                                Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 15),
+                                                    child: Text(
+                                                      '(${data.caratPcsBatu20} Crt/Pcs)',
+                                                      style: const TextStyle(
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.black),
+                                                    ))
                                               ],
                                             ),
                                           ),
@@ -1740,22 +1662,18 @@ class RowSource extends DataTableSource {
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
-                                               Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 15),
-                                                  child: Text(
-                                                            '(${data.caratPcsBatu21} Crt/Pcs)',
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          )
-                                             
-                                                )
+                                                Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 15),
+                                                    child: Text(
+                                                      '(${data.caratPcsBatu21} Crt/Pcs)',
+                                                      style: const TextStyle(
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.black),
+                                                    ))
                                               ],
                                             ),
                                           ),
@@ -1795,22 +1713,18 @@ class RowSource extends DataTableSource {
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
-                                               Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 15),
-                                                  child: Text(
-                                                            '(${data.caratPcsBatu22} Crt/Pcs)',
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          )
-                                             
-                                                )
+                                                Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 15),
+                                                    child: Text(
+                                                      '(${data.caratPcsBatu22} Crt/Pcs)',
+                                                      style: const TextStyle(
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.black),
+                                                    ))
                                               ],
                                             ),
                                           ),
@@ -1850,22 +1764,18 @@ class RowSource extends DataTableSource {
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
-                                              Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 15),
-                                                  child: Text(
-                                                            '(${data.caratPcsBatu23} Crt/Pcs)',
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          )
-                                             
-                                                )
+                                                Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 15),
+                                                    child: Text(
+                                                      '(${data.caratPcsBatu23} Crt/Pcs)',
+                                                      style: const TextStyle(
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.black),
+                                                    ))
                                               ],
                                             ),
                                           ),
@@ -1905,22 +1815,18 @@ class RowSource extends DataTableSource {
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
-                                              Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 15),
-                                                  child: Text(
-                                                            '(${data.caratPcsBatu24} Crt/Pcs)',
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          )
-                                             
-                                                )
+                                                Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 15),
+                                                    child: Text(
+                                                      '(${data.caratPcsBatu24} Crt/Pcs)',
+                                                      style: const TextStyle(
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.black),
+                                                    ))
                                               ],
                                             ),
                                           ),
@@ -1960,22 +1866,18 @@ class RowSource extends DataTableSource {
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
-                                             Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 15),
-                                                  child: Text(
-                                                            '(${data.caratPcsBatu25} Crt/Pcs)',
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          )
-                                             
-                                                )
+                                                Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 15),
+                                                    child: Text(
+                                                      '(${data.caratPcsBatu25} Crt/Pcs)',
+                                                      style: const TextStyle(
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.black),
+                                                    ))
                                               ],
                                             ),
                                           ),
@@ -2015,22 +1917,18 @@ class RowSource extends DataTableSource {
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
-                                              Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 15),
-                                                  child: Text(
-                                                            '(${data.caratPcsBatu26} Crt/Pcs)',
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          )
-                                             
-                                                )
+                                                Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 15),
+                                                    child: Text(
+                                                      '(${data.caratPcsBatu26} Crt/Pcs)',
+                                                      style: const TextStyle(
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.black),
+                                                    ))
                                               ],
                                             ),
                                           ),
@@ -2070,22 +1968,18 @@ class RowSource extends DataTableSource {
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
-                                               Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 15),
-                                                  child: Text(
-                                                            '(${data.caratPcsBatu27} Crt/Pcs)',
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          )
-                                             
-                                                )
+                                                Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 15),
+                                                    child: Text(
+                                                      '(${data.caratPcsBatu27} Crt/Pcs)',
+                                                      style: const TextStyle(
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.black),
+                                                    ))
                                               ],
                                             ),
                                           ),
@@ -2125,22 +2019,18 @@ class RowSource extends DataTableSource {
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
-                                               Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 15),
-                                                  child: Text(
-                                                            '(${data.caratPcsBatu28} Crt/Pcs)',
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          )
-                                             
-                                                )
+                                                Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 15),
+                                                    child: Text(
+                                                      '(${data.caratPcsBatu28} Crt/Pcs)',
+                                                      style: const TextStyle(
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.black),
+                                                    ))
                                               ],
                                             ),
                                           ),
@@ -2180,22 +2070,18 @@ class RowSource extends DataTableSource {
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
-                                               Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 15),
-                                                  child: Text(
-                                                            '(${data.caratPcsBatu29} Crt/Pcs)',
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          )
-                                             
-                                                )
+                                                Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 15),
+                                                    child: Text(
+                                                      '(${data.caratPcsBatu29} Crt/Pcs)',
+                                                      style: const TextStyle(
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.black),
+                                                    ))
                                               ],
                                             ),
                                           ),
@@ -2236,21 +2122,17 @@ class RowSource extends DataTableSource {
                                                       color: Colors.black),
                                                 ),
                                                 Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 15),
-                                                  child: Text(
-                                                            '(${data.caratPcsBatu30} Crt/Pcs)',
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          )
-                                             
-                                                )
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 15),
+                                                    child: Text(
+                                                      '(${data.caratPcsBatu30} Crt/Pcs)',
+                                                      style: const TextStyle(
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.black),
+                                                    ))
                                               ],
                                             ),
                                           ),
@@ -2290,22 +2172,18 @@ class RowSource extends DataTableSource {
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
-                                               Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 15),
-                                                  child: Text(
-                                                            '(${data.caratPcsBatu31} Crt/Pcs)',
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          )
-                                             
-                                                )
+                                                Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 15),
+                                                    child: Text(
+                                                      '(${data.caratPcsBatu31} Crt/Pcs)',
+                                                      style: const TextStyle(
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.black),
+                                                    ))
                                               ],
                                             ),
                                           ),
@@ -2345,22 +2223,18 @@ class RowSource extends DataTableSource {
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
-                                              Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 15),
-                                                  child: Text(
-                                                            '(${data.caratPcsBatu32} Crt/Pcs)',
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          )
-                                             
-                                                )
+                                                Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 15),
+                                                    child: Text(
+                                                      '(${data.caratPcsBatu32} Crt/Pcs)',
+                                                      style: const TextStyle(
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.black),
+                                                    ))
                                               ],
                                             ),
                                           ),
@@ -2400,22 +2274,18 @@ class RowSource extends DataTableSource {
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
-                                               Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 15),
-                                                  child: Text(
-                                                            '(${data.caratPcsBatu33} Crt/Pcs)',
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          )
-                                             
-                                                )
+                                                Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 15),
+                                                    child: Text(
+                                                      '(${data.caratPcsBatu33} Crt/Pcs)',
+                                                      style: const TextStyle(
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.black),
+                                                    ))
                                               ],
                                             ),
                                           ),
@@ -2455,22 +2325,18 @@ class RowSource extends DataTableSource {
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
-                                               Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 15),
-                                                  child: Text(
-                                                            '(${data.caratPcsBatu34} Crt/Pcs)',
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          )
-                                             
-                                                )
+                                                Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 15),
+                                                    child: Text(
+                                                      '(${data.caratPcsBatu34} Crt/Pcs)',
+                                                      style: const TextStyle(
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.black),
+                                                    ))
                                               ],
                                             ),
                                           ),
@@ -2510,22 +2376,18 @@ class RowSource extends DataTableSource {
                                                           FontWeight.bold,
                                                       color: Colors.black),
                                                 ),
-                                               Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 15),
-                                                  child: Text(
-                                                            '(${data.caratPcsBatu35} Crt/Pcs)',
-                                                            style: const TextStyle(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black),
-                                                          )
-                                             
-                                                )
+                                                Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 15),
+                                                    child: Text(
+                                                      '(${data.caratPcsBatu35} Crt/Pcs)',
+                                                      style: const TextStyle(
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.black),
+                                                    ))
                                               ],
                                             ),
                                           ),

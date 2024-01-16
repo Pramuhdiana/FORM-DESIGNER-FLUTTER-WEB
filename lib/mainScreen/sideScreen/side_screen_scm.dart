@@ -47,6 +47,7 @@ class _MainViewScmState extends State<MainViewScm> {
   ];
   List<Widget> screenEka = [
     const HomeScreen(),
+    const ListDataModellerScreen(),
     const ListDesignerScreen(),
     const ListBatuScreen(),
     const ListKebutuhanBatuScreen(),
@@ -316,7 +317,7 @@ class _MainViewScmState extends State<MainViewScm> {
             }
             //! eka
             else if (sharedPreferences!.getString('role') == '3') {
-              if (index == 5) {
+              if (index == 6) {
                 //! sign out
                 showDialog(
                     context: context,
@@ -703,6 +704,10 @@ class _MainViewScmState extends State<MainViewScm> {
       const SideNavigationBarItem(
         icon: Icons.home,
         label: 'Dashboard',
+      ),
+      const SideNavigationBarItem(
+        icon: Icons.list_alt,
+        label: 'List data modeller',
       ),
       const SideNavigationBarItem(
         icon: Icons.list_alt,

@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:form_designer/global/currency_format.dart';
 import 'package:form_designer/mainScreen/view_photo_screen.dart';
 import 'package:form_designer/model/form_designer_model.dart';
+import 'package:form_designer/model/list_mps_model.dart';
 import 'package:form_designer/produksi/modelProduksi/artist_produksi_model.dart';
 import 'package:form_designer/produksi/modelProduksi/divisi_produksi_model.dart';
 import 'package:http/http.dart' as http;
@@ -38,9 +39,12 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
   TextEditingController controller = TextEditingController();
   bool sort = true;
   int _currentSortColumn = 0;
-  List<FormDesignerModel>? filterCrm;
-  List<FormDesignerModel>? myCrm;
-  List<FormDesignerModel>? myDataProduksi;
+  // List<FormDesignerModel>? filterCrm;
+  // List<FormDesignerModel>? myCrm;
+  // List<FormDesignerModel>? myDataProduksi;
+  List<ListMpsModel>? filterCrm;
+  List<ListMpsModel>? myCrm;
+  List<ListMpsModel>? myDataProduksi;
   final searchController = TextEditingController();
   bool isLoading = false;
   bool isLoadingKeteranganMinggu = false;
@@ -130,14 +134,14 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
     print('get data mps produksi');
     listJenisBarang = [];
     final response = await http.get(Uri.parse(
-        '${ApiConstants.baseUrl}${ApiConstants.getListFormDesignerBySiklus}?siklus=$chooseSiklus'));
+        '${ApiConstants.baseUrl}${ApiConstants.getListMpsBySiklus}?siklus=$chooseSiklus'));
     // Uri.parse(ApiConstants.baseUrl + ApiConstants.getListFormDesigner));
 
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);
 
       var alldata =
-          jsonResponse.map((data) => FormDesignerModel.fromJson(data)).toList();
+          jsonResponse.map((data) => ListMpsModel.fromJson(data)).toList();
       var dataProduksi = alldata.toList();
       alldata.toList();
       listJenisBarang.add('all');
@@ -176,6 +180,56 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
     }
   }
 
+  // _getDataBySiklusProduksi(chooseSiklus, chooseWeek, chooseJenisBarang) async {
+  //   print('get data mps produksi');
+  //   listJenisBarang = [];
+  //   final response = await http.get(Uri.parse(
+  //       '${ApiConstants.baseUrl}${ApiConstants.getListFormDesignerBySiklus}?siklus=$chooseSiklus'));
+  //   // Uri.parse(ApiConstants.baseUrl + ApiConstants.getListFormDesigner));
+
+  //   if (response.statusCode == 200) {
+  //     List jsonResponse = json.decode(response.body);
+
+  //     var alldata =
+  //         jsonResponse.map((data) => FormDesignerModel.fromJson(data)).toList();
+  //     var dataProduksi = alldata.toList();
+  //     alldata.toList();
+  //     listJenisBarang.add('all');
+  //     for (var i = 0; i < dataProduksi.length; i++) {
+  //       listJenisBarang.add(dataProduksi[i].jenisBarang!);
+  //     }
+  //     listJenisBarang = listJenisBarang.toSet().toList();
+
+  //     if (chooseJenisBarang != 'all' && chooseWeek != 'all') {
+  //       var filterbyJenisBarang = alldata.where((element) =>
+  //           element.jenisBarang.toString().toLowerCase() ==
+  //           chooseJenisBarang.toString().toLowerCase());
+  //       var filterbyPilihMinggu = filterbyJenisBarang.where((element) =>
+  //           element.keteranganMinggu.toString().toLowerCase() ==
+  //           chooseWeek.toString().toLowerCase());
+  //       alldata = filterbyPilihMinggu.toList();
+  //     } else if (chooseJenisBarang != 'all') {
+  //       var filterbyJenisBarang = alldata.where((element) =>
+  //           element.jenisBarang.toString().toLowerCase() ==
+  //           chooseJenisBarang.toString().toLowerCase());
+  //       alldata = filterbyJenisBarang.toList();
+  //     } else if (chooseWeek != 'all') {
+  //       var filterbyPilihMinggu = alldata.where((element) =>
+  //           element.keteranganMinggu.toString().toLowerCase() ==
+  //           chooseWeek.toString().toLowerCase());
+  //       alldata = filterbyPilihMinggu.toList();
+  //     } else {}
+
+  //     setState(() {
+  //       myDataProduksi = alldata.toList();
+  //       filterCrm = alldata.toList();
+  //       myCrm = alldata.toList();
+  //     });
+  //   } else {
+  //     throw Exception('Unexpected error occured!');
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -185,6 +239,7 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
           scrollBehavior: CustomScrollBehavior(),
           debugShowCheckedModeBanner: false,
           home: Scaffold(
+            backgroundColor: colorBG,
             // drawer: Drawer1(),
             appBar: AppBar(
               automaticallyImplyLeading: false,
@@ -223,12 +278,12 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
                             element.kodeDesignMdbc!
                                 .toLowerCase()
                                 .contains(value.toLowerCase()) ||
-                            element.namaDesigner!
-                                .toLowerCase()
-                                .contains(value.toLowerCase()) ||
-                            element.kodeDesign!
-                                .toLowerCase()
-                                .contains(value.toLowerCase()) ||
+                            // element.namaDesigner!
+                            //     .toLowerCase()
+                            //     .contains(value.toLowerCase()) ||
+                            // element.kodeDesign!
+                            //     .toLowerCase()
+                            //     .contains(value.toLowerCase()) ||
                             element.kodeMarketing!
                                 .toLowerCase()
                                 .contains(value.toLowerCase()) ||
@@ -259,7 +314,8 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
               //       ))
               // ],
             ),
-            body: sharedPreferences!.getString('level') == '4' || sharedPreferences!.getString('divisi') == 'admin'
+            body: sharedPreferences!.getString('level') == '4' ||
+                    sharedPreferences!.getString('divisi') == 'admin'
                 ? mpsProduksi()
                 : mpsSCM(),
 
@@ -1041,7 +1097,7 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: 26,
-                        color: Colors.blueGrey,
+                        color: Colors.black,
                         fontWeight: FontWeight.bold,
                         fontFamily: 'Acne',
                         letterSpacing: 1.5),
@@ -1200,14 +1256,12 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
                                         _currentSortColumn = columnIndex;
                                         if (sort == true) {
                                           sort = false;
-                                          filterCrm!.sort((a, b) => a
-                                              .photoShoot!
-                                              .compareTo(b.photoShoot!));
+                                          filterCrm!.sort((a, b) =>
+                                              a.posisi!.compareTo(b.posisi!));
                                         } else {
                                           sort = true;
-                                          filterCrm!.sort((a, b) => b
-                                              .photoShoot!
-                                              .compareTo(a.photoShoot!));
+                                          filterCrm!.sort((a, b) =>
+                                              b.posisi!.compareTo(a.posisi!));
                                         }
                                       });
                                     }),
@@ -3246,12 +3300,20 @@ class RowSourceProduksi extends DataTableSource {
       DataCell(Builder(builder: (context) {
         // String? posisi = '';
         return Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text('${data.posisi}\n${data.artist}'),
-            sharedPreferences!.getString('level') == '4' || sharedPreferences!.getString('divisi') == 'admin'
-                ? 
-                IconButton(
+            Padding(
+              padding: const EdgeInsets.only(top: 63),
+              child: Column(
+                children: [
+                  Text('${data.posisi}'),
+                  Text('${data.artist}'),
+                ],
+              ),
+            ),
+            sharedPreferences!.getString('level') == '4' ||
+                    sharedPreferences!.getString('divisi') == 'admin'
+                ? IconButton(
                     onPressed: () {
                       showDialog(
                           context: context,
@@ -3467,6 +3529,7 @@ class RowSourceProduksi extends DataTableSource {
                     },
                     icon: const Icon(
                       Icons.change_circle,
+                      color: Colors.green,
                     ))
                 : const SizedBox(),
           ],
@@ -3475,9 +3538,165 @@ class RowSourceProduksi extends DataTableSource {
       DataCell(_verticalDivider),
       //status batu
       DataCell(
-        Padding(
-            padding: const EdgeInsets.all(0),
-            child: Text(data.keteranganStatusBatu)),
+        Builder(builder: (context) {
+          return Padding(
+              padding: const EdgeInsets.all(0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(data.keteranganStatusBatu),
+                  Stack(
+                    clipBehavior: Clip.none, //agar tidak menghalangi object
+                    children: [
+                      //tambahan icon ADD
+                      Positioned(
+                        right: -5.0,
+                        top: -3.0,
+                        child: InkResponse(
+                          onTap: () {
+                            // Navigator.of(context).pop();
+                          },
+                          child: const Icon(
+                            Icons.add_circle_outline,
+                            color: Colors.green,
+                            size: 20,
+                          ),
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8)),
+                                    content: SizedBox(
+                                        height: 250,
+                                        child: SingleChildScrollView(
+                                            scrollDirection: Axis.vertical,
+                                            child: Column(children: [
+                                              const Text(
+                                                'Pilih Status Batu',
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 18,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              Container(
+                                                padding: const EdgeInsets.only(
+                                                    top: 15),
+                                                child: ElevatedButton(
+                                                    style: ElevatedButton.styleFrom(
+                                                        backgroundColor:
+                                                            Colors.blue,
+                                                        shape: RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        50.0))),
+                                                    onPressed: () async {
+                                                      // await postKeteranganMinggu(
+                                                      //     data.id, 'WEEK 1');
+                                                      // onRowPressed();
+                                                      Navigator.pop(context);
+                                                      showSimpleNotification(
+                                                        const Text(
+                                                            'Pemilihan Status Batu Berhasil'),
+                                                        background:
+                                                            Colors.green,
+                                                        duration:
+                                                            const Duration(
+                                                                seconds: 1),
+                                                      );
+                                                    },
+                                                    child: const Text(
+                                                      "Ecer",
+                                                      style: TextStyle(
+                                                        fontSize: 16,
+                                                      ),
+                                                    )),
+                                              ),
+                                              Container(
+                                                padding: const EdgeInsets.only(
+                                                    top: 15),
+                                                child: ElevatedButton(
+                                                    style: ElevatedButton.styleFrom(
+                                                        backgroundColor:
+                                                            Colors.blue,
+                                                        shape: RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        50.0))),
+                                                    onPressed: () async {
+                                                      // await postKeteranganMinggu(
+                                                      //     data.id, 'WEEK 2');
+                                                      // onRowPressed();
+                                                      Navigator.pop(context);
+                                                      showSimpleNotification(
+                                                        const Text(
+                                                            'Pemilihan Status Batu Berhasil'),
+                                                        background:
+                                                            Colors.green,
+                                                        duration:
+                                                            const Duration(
+                                                                seconds: 1),
+                                                      );
+                                                    },
+                                                    child: const Text(
+                                                      "Complete",
+                                                      style: TextStyle(
+                                                        fontSize: 16,
+                                                      ),
+                                                    )),
+                                              ),
+                                              Container(
+                                                padding: const EdgeInsets.only(
+                                                    top: 15),
+                                                child: ElevatedButton(
+                                                    style: ElevatedButton.styleFrom(
+                                                        backgroundColor:
+                                                            Colors.blue,
+                                                        shape: RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        50.0))),
+                                                    onPressed: () async {
+                                                      // await postKeteranganMinggu(
+                                                      //     data.id, 'WEEK 3');
+                                                      // onRowPressed();
+                                                      Navigator.pop(context);
+                                                      showSimpleNotification(
+                                                        const Text(
+                                                            'Pemilihan Status Batu Berhasil'),
+                                                        background:
+                                                            Colors.green,
+                                                        duration:
+                                                            const Duration(
+                                                                seconds: 1),
+                                                      );
+                                                    },
+                                                    child: const Text(
+                                                      "Tidak Complete",
+                                                      style: TextStyle(
+                                                        fontSize: 16,
+                                                      ),
+                                                    )),
+                                              ),
+                                            ]))));
+                              });
+                        },
+                        icon: const Icon(Icons.chat_bubble_outline_rounded),
+                        color: Colors.green,
+                      ),
+                    ],
+                  )
+                ],
+              ));
+        }),
       ),
       DataCell(_verticalDivider),
       //keterangan batu
@@ -3506,11 +3725,16 @@ class RowSourceProduksi extends DataTableSource {
       DataCell(
         Container(
             padding: const EdgeInsets.all(0),
-            child: Text(
-              CurrencyFormat.convertToIdr(
-                  ((data.estimasiHarga * 0.37) * 11500), 0),
-              maxLines: 2,
-            )),
+            child: data.brand.toString().toLowerCase() == 'parva'
+                ? Text(
+                    CurrencyFormat.convertToIdr(
+                        ((data.estimasiHarga * 0.37) * 11500), 0),
+                    maxLines: 2,
+                  )
+                : Text(
+                    CurrencyFormat.convertToIdr(((data.estimasiHarga)), 0),
+                    maxLines: 2,
+                  )),
       ),
       DataCell(_verticalDivider),
       //kelas harga

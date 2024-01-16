@@ -18,6 +18,7 @@ class FormPrModel {
   String? totalItem;
   String? totalQty;
   String? totalBerat;
+  String? status;
 
   FormPrModel({
     this.id,
@@ -28,6 +29,7 @@ class FormPrModel {
     this.totalItem,
     this.totalQty,
     this.totalBerat,
+    this.status,
   });
 
   // ignore: avoid_types_as_parameter_names
@@ -40,6 +42,7 @@ class FormPrModel {
         totalItem: json["total_item"].toString(),
         totalQty: json["total_qty"].toString(),
         totalBerat: json["total_berat"].toString(),
+        status: json["status"].toString(),
       );
 
   Map<String, dynamic> toJson() => {
@@ -51,5 +54,6 @@ class FormPrModel {
         "total_item": totalItem,
         "total_qty": totalQty,
         "total_berat": totalBerat,
+        "total_berstatusat": status,
       };
 }

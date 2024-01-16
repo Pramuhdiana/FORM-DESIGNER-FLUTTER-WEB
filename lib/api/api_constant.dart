@@ -41,7 +41,8 @@ class ApiConstants {
   static String getDataListItem = 'spk/list_item.php';
   static String getFormPR = 'spk/get_form_pr.php';
   static String getListFormPR = 'spk/get_list_form_pr.php';
-
+  static String getListMps = 'spk/get_list_mps.php';
+  static String getListMpsBySiklus = 'spk/get_list_mps_by_siklus.php';
 
   static String postDataBatu = 'spk/create_batu.php';
   static String postLogin = 'spk/login.php';

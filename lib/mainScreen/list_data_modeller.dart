@@ -115,6 +115,7 @@ class _ListDataModellerScreenState extends State<ListDataModellerScreen> {
       // ignore: null_check_always_fails
       onWillPop: () async => null!,
       child: Scaffold(
+        backgroundColor: colorBG,
         // drawer: Drawer1(),
         appBar: AppBar(
           automaticallyImplyLeading: false,

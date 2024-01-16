@@ -578,6 +578,7 @@ class _ListKebutuhanBatuScreenState extends State<ListKebutuhanBatuScreen> {
       // ignore: null_check_always_fails
       onWillPop: () async => null!,
       child: Scaffold(
+        backgroundColor: colorBG,
         // drawer: Drawer1(),
         appBar: AppBar(
           automaticallyImplyLeading: false,
@@ -696,7 +697,7 @@ class _ListKebutuhanBatuScreenState extends State<ListKebutuhanBatuScreen> {
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               fontSize: 26,
-                              color: Colors.blueGrey,
+                              color: Colors.black,
                               fontWeight: FontWeight.bold,
                               fontFamily: 'Acne',
                               letterSpacing: 1.5),

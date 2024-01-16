@@ -153,6 +153,7 @@ class _ListBatuScreenState extends State<ListBatuScreen> {
       // ignore: null_check_always_fails
       onWillPop: () async => null!,
       child: Scaffold(
+        backgroundColor: colorBG,
         // drawer: Drawer1(),
         appBar: _switchValue != true
             ? AppBar(

@@ -11,7 +11,7 @@ import 'package:http/http.dart' as http;
 // ignore: depend_on_referenced_packages
 import 'package:image/image.dart' as img;
 
-class ExcelScreen {
+class ExcelAdmin {
   List<FormDesignerModel>? myData;
   List<String> listAllBatu = [];
   List<int> listAllQtyBatu = [];
@@ -1152,12 +1152,8 @@ class ExcelScreen {
       //? gambar
       var gambar = sheet
           .cell(CellIndex.indexByColumnRow(columnIndex: 85, rowIndex: row + 1));
-      // gambar.value = getImage(data.imageUrl!);
-
-      // var imageData = await getImage(data.imageUrl!);
-      // ignore: unnecessary_null_comparison
-      gambar.value = await getImage(data.imageUrl!);
-      // gambar.value = Image(FileImage(File.fromRawPath(imageData)));
+      gambar.value = ApiConstants.baseUrlImage + data.imageUrl!;
+      gambar.setFormula('=HYPERLINK("${gambar.value}","Klik Detail gambar")');
     }
 
     excel.rename("mySheet", "result");

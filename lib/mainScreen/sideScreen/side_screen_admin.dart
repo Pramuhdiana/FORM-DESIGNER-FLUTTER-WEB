@@ -138,7 +138,7 @@ class _MainViewAdminState extends State<MainViewAdmin> {
               icon: Icons.developer_mode,
               label: 'Dashboard',
             ),
-               SideNavigationBarItem(
+            SideNavigationBarItem(
               icon: Icons.developer_mode,
               label: 'List Data Modeller',
             ),
@@ -146,59 +146,59 @@ class _MainViewAdminState extends State<MainViewAdmin> {
               icon: Icons.developer_mode,
               label: 'List Batu',
             ),
-             SideNavigationBarItem(
+            SideNavigationBarItem(
               icon: Icons.developer_mode,
               label: 'List Designer',
             ),
-             SideNavigationBarItem(
+            SideNavigationBarItem(
               icon: Icons.developer_mode,
               label: 'Calculator',
             ),
-             SideNavigationBarItem(
+            SideNavigationBarItem(
               icon: Icons.developer_mode,
               label: 'Kebutuhan Batu',
             ),
-             SideNavigationBarItem(
+            SideNavigationBarItem(
               icon: Icons.developer_mode,
               label: 'Status Approval',
             ),
-             SideNavigationBarItem(
+            SideNavigationBarItem(
               icon: Icons.developer_mode,
               label: 'MPS',
             ),
-             SideNavigationBarItem(
+            SideNavigationBarItem(
               icon: Icons.developer_mode,
               label: 'Form PR Pembelian',
             ),
-              SideNavigationBarItem(
+            SideNavigationBarItem(
               icon: Icons.developer_mode,
               label: 'Form PR QC',
             ),
-             SideNavigationBarItem(
+            SideNavigationBarItem(
               icon: Icons.developer_mode,
               label: 'Monthly Meeting SCM',
             ),
-             SideNavigationBarItem(
+            SideNavigationBarItem(
               icon: Icons.developer_mode,
               label: 'Report Manufactur',
             ),
-             SideNavigationBarItem(
+            SideNavigationBarItem(
               icon: Icons.developer_mode,
               label: 'Dashboard Control',
             ),
-             SideNavigationBarItem(
+            SideNavigationBarItem(
               icon: Icons.developer_mode,
               label: 'Daily Produksi',
             ),
-             SideNavigationBarItem(
+            SideNavigationBarItem(
               icon: Icons.developer_mode,
               label: 'SUM Susut',
             ),
-             SideNavigationBarItem(
+            SideNavigationBarItem(
               icon: Icons.developer_mode,
               label: 'SUM Pasang Batu',
             ),
-             SideNavigationBarItem(
+            SideNavigationBarItem(
               icon: Icons.developer_mode,
               label: 'SUM Produktivitas',
             ),
@@ -209,7 +209,8 @@ class _MainViewAdminState extends State<MainViewAdmin> {
           ],
 
           onTap: (index) {
-            if (index == views.length){
+            print('$index = ${views.length - 1}');
+            if (index == views.length - 1) {
               showDialog(
                   context: context,
                   builder: (BuildContext context) {
@@ -308,7 +309,7 @@ class _MainViewAdminState extends State<MainViewAdmin> {
 
   //screen mobile
   screenMobile() {
-       String greeting() {
+    String greeting() {
       var hour = DateTime.now().hour;
       if (hour < 12) {
         return 'Pagi';
@@ -362,7 +363,7 @@ class _MainViewAdminState extends State<MainViewAdmin> {
               icon: Icons.developer_mode,
               label: 'Dashboard',
             ),
-             SideNavigationBarItem(
+            SideNavigationBarItem(
               icon: Icons.developer_mode,
               label: 'List Data Modeller',
             ),
@@ -370,55 +371,55 @@ class _MainViewAdminState extends State<MainViewAdmin> {
               icon: Icons.developer_mode,
               label: 'List Batu',
             ),
-             SideNavigationBarItem(
+            SideNavigationBarItem(
               icon: Icons.developer_mode,
               label: 'List Designer',
             ),
-             SideNavigationBarItem(
+            SideNavigationBarItem(
               icon: Icons.developer_mode,
               label: 'Calculator',
             ),
-             SideNavigationBarItem(
+            SideNavigationBarItem(
               icon: Icons.developer_mode,
               label: 'Kebutuhan Batu',
             ),
-             SideNavigationBarItem(
+            SideNavigationBarItem(
               icon: Icons.developer_mode,
               label: 'Status Approval',
             ),
-             SideNavigationBarItem(
+            SideNavigationBarItem(
               icon: Icons.developer_mode,
               label: 'MPS',
             ),
-             SideNavigationBarItem(
+            SideNavigationBarItem(
               icon: Icons.developer_mode,
               label: 'Form PR',
             ),
-             SideNavigationBarItem(
+            SideNavigationBarItem(
               icon: Icons.developer_mode,
               label: 'Monthly Meeting SCM',
             ),
-             SideNavigationBarItem(
+            SideNavigationBarItem(
               icon: Icons.developer_mode,
               label: 'Report Manufactur',
             ),
-             SideNavigationBarItem(
+            SideNavigationBarItem(
               icon: Icons.developer_mode,
               label: 'Dashboard Control',
             ),
-             SideNavigationBarItem(
+            SideNavigationBarItem(
               icon: Icons.developer_mode,
               label: 'Daily Produksi',
             ),
-             SideNavigationBarItem(
+            SideNavigationBarItem(
               icon: Icons.developer_mode,
               label: 'SUM Susut',
             ),
-             SideNavigationBarItem(
+            SideNavigationBarItem(
               icon: Icons.developer_mode,
               label: 'SUM Pasang Batu',
             ),
-             SideNavigationBarItem(
+            SideNavigationBarItem(
               icon: Icons.developer_mode,
               label: 'SUM Produktivitas',
             ),

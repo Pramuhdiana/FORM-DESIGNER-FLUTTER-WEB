@@ -171,6 +171,7 @@ class _ListDesignerScreenState extends State<ListDesignerScreen> {
           scrollBehavior: CustomScrollBehavior(),
           debugShowCheckedModeBanner: false,
           home: Scaffold(
+            backgroundColor: colorBG,
             // drawer: Drawer1(),
             appBar: AppBar(
               automaticallyImplyLeading: false,

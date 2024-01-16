@@ -36,6 +36,7 @@ class FormScreen extends StatefulWidget {
 }
 
 class _FormScreenState extends State<FormScreen> {
+  Color white = Colors.white;
   // ignore: unused_field, prefer_final_fields
   List<PlatformFile>? _paths;
   List pemakaianBatu = [];
@@ -2156,6 +2157,7 @@ class _FormScreenState extends State<FormScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 209, 202, 202),
       appBar: AppBar(
         backgroundColor: Colors.blue,
         title: const Text(
@@ -2164,7 +2166,6 @@ class _FormScreenState extends State<FormScreen> {
         ),
         centerTitle: true,
       ),
-      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: SingleChildScrollView(
@@ -2596,6 +2597,8 @@ class _FormScreenState extends State<FormScreen> {
                     textInputAction: TextInputAction.next,
                     controller: kodeDesignMdbc,
                     decoration: InputDecoration(
+                      filled: true,
+                      fillColor: white,
                       labelText: "Kode Design MDBC",
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5.0)),
@@ -2622,6 +2625,8 @@ class _FormScreenState extends State<FormScreen> {
                     controller: namaDesigner,
                     onChanged: (value) {},
                     decoration: InputDecoration(
+                      filled: true,
+                      fillColor: white,
                       labelText: "Nama Designer",
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5.0)),
@@ -2646,6 +2651,8 @@ class _FormScreenState extends State<FormScreen> {
                     textInputAction: TextInputAction.next,
                     controller: namaModeller,
                     decoration: InputDecoration(
+                      filled: true,
+                      fillColor: white,
                       labelText: "Nama Modeller",
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5.0)),
@@ -2671,6 +2678,8 @@ class _FormScreenState extends State<FormScreen> {
                       textInputAction: TextInputAction.next,
                       controller: kodeMarketing,
                       decoration: InputDecoration(
+                        filled: true,
+                        fillColor: white,
                         labelText: "Kode Marketing",
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5.0)),
@@ -2735,6 +2744,8 @@ class _FormScreenState extends State<FormScreen> {
                       textInputAction: TextInputAction.next,
                       controller: kodeDesign,
                       decoration: InputDecoration(
+                        filled: true,
+                        fillColor: white,
                         // hintText: "example: Cahaya Sanivokasi",
                         labelText: "Kode Design",
                         border: OutlineInputBorder(
@@ -2762,6 +2773,8 @@ class _FormScreenState extends State<FormScreen> {
                       textInputAction: TextInputAction.next,
                       controller: kodeProduksi,
                       decoration: InputDecoration(
+                        filled: true,
+                        fillColor: white,
                         // hintText: "example: Cahaya Sanivokasi",
                         labelText: "Kode Produksi",
                         border: OutlineInputBorder(
@@ -2815,6 +2828,8 @@ class _FormScreenState extends State<FormScreen> {
                       textInputAction: TextInputAction.next,
                       controller: tema,
                       decoration: InputDecoration(
+                        filled: true,
+                        fillColor: white,
                         // hintText: "example: Cahaya Sanivokasi",
                         labelText: "Tema",
                         border: OutlineInputBorder(
@@ -2856,8 +2871,7 @@ class _FormScreenState extends State<FormScreen> {
                     height: 400,
                     padding: const EdgeInsets.only(top: 18),
                     decoration: BoxDecoration(
-                        color: Colors.grey.shade200,
-                        borderRadius: BorderRadius.circular(10)),
+                        color: white, borderRadius: BorderRadius.circular(10)),
                   ),
             Padding(
               padding: const EdgeInsets.only(top: 18),
@@ -2910,6 +2924,8 @@ class _FormScreenState extends State<FormScreen> {
                             textInputAction: TextInputAction.next,
                             controller: qtyRantai,
                             decoration: InputDecoration(
+                              filled: true,
+                              fillColor: white,
                               // hintText: "example: Cahaya Sanivokasi",
                               labelText: "Qty",
                               border: OutlineInputBorder(
@@ -2930,6 +2946,8 @@ class _FormScreenState extends State<FormScreen> {
                             textInputAction: TextInputAction.next,
                             controller: stokRantai,
                             decoration: InputDecoration(
+                              filled: true,
+                              fillColor: white,
                               // hintText: "example: Cahaya Sanivokasi",
                               labelText: "Stok",
                               border: OutlineInputBorder(
@@ -3024,6 +3042,8 @@ class _FormScreenState extends State<FormScreen> {
                             textInputAction: TextInputAction.next,
                             controller: qtyLain2,
                             decoration: InputDecoration(
+                              filled: true,
+                              fillColor: white,
                               // hintText: "example: Cahaya Sanivokasi",
                               labelText: "Qty",
                               border: OutlineInputBorder(
@@ -3044,6 +3064,8 @@ class _FormScreenState extends State<FormScreen> {
                             textInputAction: TextInputAction.next,
                             controller: stokLain2,
                             decoration: InputDecoration(
+                              filled: true,
+                              fillColor: white,
                               // hintText: "example: Cahaya Sanivokasi",
                               labelText: "Stok",
                               border: OutlineInputBorder(
@@ -3128,6 +3150,8 @@ class _FormScreenState extends State<FormScreen> {
                             textInputAction: TextInputAction.next,
                             controller: qtyEarnut,
                             decoration: InputDecoration(
+                              filled: true,
+                              fillColor: white,
                               // hintText: "example: Cahaya Sanivokasi",
                               labelText: "Qty",
                               border: OutlineInputBorder(
@@ -3148,6 +3172,8 @@ class _FormScreenState extends State<FormScreen> {
                             textInputAction: TextInputAction.next,
                             controller: stokEarnut,
                             decoration: InputDecoration(
+                              filled: true,
+                              fillColor: white,
                               // hintText: "example: Cahaya Sanivokasi",
                               labelText: "Stok",
                               border: OutlineInputBorder(
@@ -3202,6 +3228,8 @@ class _FormScreenState extends State<FormScreen> {
                             textInputAction: TextInputAction.next,
                             controller: panjangRantai,
                             decoration: InputDecoration(
+                              filled: true,
+                              fillColor: white,
                               // hintText: "example: Cahaya Sanivokasi",
                               labelText: "Panjang Rantai",
                               border: OutlineInputBorder(
@@ -3224,6 +3252,8 @@ class _FormScreenState extends State<FormScreen> {
                       textInputAction: TextInputAction.next,
                       controller: photoShoot,
                       decoration: InputDecoration(
+                        filled: true,
+                        fillColor: white,
                         // hintText: "example: Cahaya Sanivokasi",
                         labelText: "Photo Shoot",
                         border: OutlineInputBorder(
@@ -3255,6 +3285,8 @@ class _FormScreenState extends State<FormScreen> {
                             textInputAction: TextInputAction.next,
                             controller: customKomponen,
                             decoration: InputDecoration(
+                              filled: true,
+                              fillColor: white,
                               // hintText: "example: Cahaya Sanivokasi",
                               labelText: "Custom Komponen",
                               border: OutlineInputBorder(
@@ -3274,6 +3306,8 @@ class _FormScreenState extends State<FormScreen> {
                             textInputAction: TextInputAction.next,
                             controller: qtyCustomKomponen,
                             decoration: InputDecoration(
+                              filled: true,
+                              fillColor: white,
                               // hintText: "example: Cahaya Sanivokasi",
                               labelText: "Qty",
                               border: OutlineInputBorder(
@@ -3294,6 +3328,8 @@ class _FormScreenState extends State<FormScreen> {
                             textInputAction: TextInputAction.next,
                             controller: stokCustomKomponen,
                             decoration: InputDecoration(
+                              filled: true,
+                              fillColor: white,
                               // hintText: "example: Cahaya Sanivokasi",
                               labelText: "Stok",
                               border: OutlineInputBorder(
@@ -3348,6 +3384,8 @@ class _FormScreenState extends State<FormScreen> {
                         });
                       },
                       decoration: InputDecoration(
+                        filled: true,
+                        fillColor: white,
                         // hintText: "example: Cahaya Sanivokasi",
                         labelText: "Berat Emas",
                         border: OutlineInputBorder(
@@ -3368,6 +3406,8 @@ class _FormScreenState extends State<FormScreen> {
                       textInputAction: TextInputAction.next,
                       // controller: estimasiHarga,
                       decoration: InputDecoration(
+                        filled: true,
+                        fillColor: white,
                         label: Text(
                           brand.text == "BELI BERLIAN"
                               ? 'Rp. ${CurrencyFormat.convertToDollar(totalPriceBeliBerlian, 0)}'
@@ -3392,6 +3432,8 @@ class _FormScreenState extends State<FormScreen> {
                       textInputAction: TextInputAction.next,
                       controller: ringSize,
                       decoration: InputDecoration(
+                        filled: true,
+                        fillColor: white,
                         // hintText: "example: Cahaya Sanivokasi",
                         labelText: "Ring Size",
                         border: OutlineInputBorder(
@@ -3407,6 +3449,8 @@ class _FormScreenState extends State<FormScreen> {
   }
 
   Widget _bagianTengah() {
+    // Color white = Colors.white;
+
     //bagian tengah
     return Container(
         padding: const EdgeInsets.only(left: 5, top: 0),
@@ -3517,6 +3561,8 @@ class _FormScreenState extends State<FormScreen> {
                                               setState(() {});
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Ukuran'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -3542,6 +3588,8 @@ class _FormScreenState extends State<FormScreen> {
                                         });
                                       },
                                       decoration: InputDecoration(
+                                        filled: true,
+                                        fillColor: white,
                                         label: const Text('Qty'),
                                         border: OutlineInputBorder(
                                             borderRadius:
@@ -3561,6 +3609,8 @@ class _FormScreenState extends State<FormScreen> {
                                       textInputAction: TextInputAction.next,
                                       controller: stokBatu1,
                                       decoration: InputDecoration(
+                                        filled: true,
+                                        fillColor: white,
                                         label: const Text(
                                           'Stok',
                                           style: TextStyle(
@@ -3679,6 +3729,8 @@ class _FormScreenState extends State<FormScreen> {
                                         });
                                       },
                                       decoration: InputDecoration(
+                                        filled: true,
+                                        fillColor: white,
                                         label: const Text('Carat / Pcs'),
                                         border: OutlineInputBorder(
                                             borderRadius:
@@ -3799,6 +3851,8 @@ class _FormScreenState extends State<FormScreen> {
                                                     setState(() {});
                                                   },
                                                   decoration: InputDecoration(
+                                                    filled: true,
+                                                    fillColor: white,
                                                     label: const Text('Ukuran'),
                                                     border: OutlineInputBorder(
                                                         borderRadius:
@@ -3825,6 +3879,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -3846,6 +3902,8 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu2,
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -3980,6 +4038,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -4099,6 +4159,8 @@ class _FormScreenState extends State<FormScreen> {
                                                     setState(() {});
                                                   },
                                                   decoration: InputDecoration(
+                                                    filled: true,
+                                                    fillColor: white,
                                                     label: const Text('Ukuran'),
                                                     border: OutlineInputBorder(
                                                         borderRadius:
@@ -4125,6 +4187,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -4146,6 +4210,8 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu3,
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -4280,6 +4346,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -4399,6 +4467,8 @@ class _FormScreenState extends State<FormScreen> {
                                                     setState(() {});
                                                   },
                                                   decoration: InputDecoration(
+                                                    filled: true,
+                                                    fillColor: white,
                                                     label: const Text('Ukuran'),
                                                     border: OutlineInputBorder(
                                                         borderRadius:
@@ -4425,6 +4495,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -4446,6 +4518,8 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu4,
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -4580,6 +4654,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -4699,6 +4775,8 @@ class _FormScreenState extends State<FormScreen> {
                                                     setState(() {});
                                                   },
                                                   decoration: InputDecoration(
+                                                    filled: true,
+                                                    fillColor: white,
                                                     label: const Text('Ukuran'),
                                                     border: OutlineInputBorder(
                                                         borderRadius:
@@ -4725,6 +4803,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -4746,6 +4826,8 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu5,
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -4880,6 +4962,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -4999,6 +5083,8 @@ class _FormScreenState extends State<FormScreen> {
                                                     setState(() {});
                                                   },
                                                   decoration: InputDecoration(
+                                                    filled: true,
+                                                    fillColor: white,
                                                     label: const Text('Ukuran'),
                                                     border: OutlineInputBorder(
                                                         borderRadius:
@@ -5025,6 +5111,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -5046,6 +5134,8 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu6,
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -5180,6 +5270,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -5299,6 +5391,8 @@ class _FormScreenState extends State<FormScreen> {
                                                     setState(() {});
                                                   },
                                                   decoration: InputDecoration(
+                                                    filled: true,
+                                                    fillColor: white,
                                                     label: const Text('Ukuran'),
                                                     border: OutlineInputBorder(
                                                         borderRadius:
@@ -5325,6 +5419,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -5346,6 +5442,8 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu7,
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -5480,6 +5578,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -5599,6 +5699,8 @@ class _FormScreenState extends State<FormScreen> {
                                                     setState(() {});
                                                   },
                                                   decoration: InputDecoration(
+                                                    filled: true,
+                                                    fillColor: white,
                                                     label: const Text('Ukuran'),
                                                     border: OutlineInputBorder(
                                                         borderRadius:
@@ -5625,6 +5727,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -5646,6 +5750,8 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu8,
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -5780,6 +5886,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -5899,6 +6007,8 @@ class _FormScreenState extends State<FormScreen> {
                                                     setState(() {});
                                                   },
                                                   decoration: InputDecoration(
+                                                    filled: true,
+                                                    fillColor: white,
                                                     label: const Text('Ukuran'),
                                                     border: OutlineInputBorder(
                                                         borderRadius:
@@ -5925,6 +6035,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -5946,6 +6058,8 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu9,
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -6080,6 +6194,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -6199,6 +6315,8 @@ class _FormScreenState extends State<FormScreen> {
                                                     setState(() {});
                                                   },
                                                   decoration: InputDecoration(
+                                                    filled: true,
+                                                    fillColor: white,
                                                     label: const Text('Ukuran'),
                                                     border: OutlineInputBorder(
                                                         borderRadius:
@@ -6226,6 +6344,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -6247,6 +6367,8 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu10,
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -6381,6 +6503,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -6500,6 +6624,8 @@ class _FormScreenState extends State<FormScreen> {
                                                     setState(() {});
                                                   },
                                                   decoration: InputDecoration(
+                                                    filled: true,
+                                                    fillColor: white,
                                                     label: const Text('Ukuran'),
                                                     border: OutlineInputBorder(
                                                         borderRadius:
@@ -6527,6 +6653,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -6548,6 +6676,8 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu11,
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -6682,6 +6812,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -6801,6 +6933,8 @@ class _FormScreenState extends State<FormScreen> {
                                                     setState(() {});
                                                   },
                                                   decoration: InputDecoration(
+                                                    filled: true,
+                                                    fillColor: white,
                                                     label: const Text('Ukuran'),
                                                     border: OutlineInputBorder(
                                                         borderRadius:
@@ -6828,6 +6962,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -6849,6 +6985,8 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu12,
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -6983,6 +7121,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -7102,6 +7242,8 @@ class _FormScreenState extends State<FormScreen> {
                                                     setState(() {});
                                                   },
                                                   decoration: InputDecoration(
+                                                    filled: true,
+                                                    fillColor: white,
                                                     label: const Text('Ukuran'),
                                                     border: OutlineInputBorder(
                                                         borderRadius:
@@ -7129,6 +7271,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -7150,6 +7294,8 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu13,
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -7284,6 +7430,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -7403,6 +7551,8 @@ class _FormScreenState extends State<FormScreen> {
                                                     setState(() {});
                                                   },
                                                   decoration: InputDecoration(
+                                                    filled: true,
+                                                    fillColor: white,
                                                     label: const Text('Ukuran'),
                                                     border: OutlineInputBorder(
                                                         borderRadius:
@@ -7430,6 +7580,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -7451,6 +7603,8 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu14,
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -7585,6 +7739,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -7704,6 +7860,8 @@ class _FormScreenState extends State<FormScreen> {
                                                     setState(() {});
                                                   },
                                                   decoration: InputDecoration(
+                                                    filled: true,
+                                                    fillColor: white,
                                                     label: const Text('Ukuran'),
                                                     border: OutlineInputBorder(
                                                         borderRadius:
@@ -7731,6 +7889,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -7752,6 +7912,8 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu15,
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -7886,6 +8048,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -8005,6 +8169,8 @@ class _FormScreenState extends State<FormScreen> {
                                                     setState(() {});
                                                   },
                                                   decoration: InputDecoration(
+                                                    filled: true,
+                                                    fillColor: white,
                                                     label: const Text('Ukuran'),
                                                     border: OutlineInputBorder(
                                                         borderRadius:
@@ -8032,6 +8198,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -8053,6 +8221,8 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu16,
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -8187,6 +8357,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -8306,6 +8478,8 @@ class _FormScreenState extends State<FormScreen> {
                                                     setState(() {});
                                                   },
                                                   decoration: InputDecoration(
+                                                    filled: true,
+                                                    fillColor: white,
                                                     label: const Text('Ukuran'),
                                                     border: OutlineInputBorder(
                                                         borderRadius:
@@ -8333,6 +8507,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -8354,6 +8530,8 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu17,
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -8488,6 +8666,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -8607,6 +8787,8 @@ class _FormScreenState extends State<FormScreen> {
                                                     setState(() {});
                                                   },
                                                   decoration: InputDecoration(
+                                                    filled: true,
+                                                    fillColor: white,
                                                     label: const Text('Ukuran'),
                                                     border: OutlineInputBorder(
                                                         borderRadius:
@@ -8634,6 +8816,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -8655,6 +8839,8 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu18,
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -8789,6 +8975,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -8908,6 +9096,8 @@ class _FormScreenState extends State<FormScreen> {
                                                     setState(() {});
                                                   },
                                                   decoration: InputDecoration(
+                                                    filled: true,
+                                                    fillColor: white,
                                                     label: const Text('Ukuran'),
                                                     border: OutlineInputBorder(
                                                         borderRadius:
@@ -8935,6 +9125,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -8956,6 +9148,8 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu19,
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -9090,6 +9284,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -9209,6 +9405,8 @@ class _FormScreenState extends State<FormScreen> {
                                                     setState(() {});
                                                   },
                                                   decoration: InputDecoration(
+                                                    filled: true,
+                                                    fillColor: white,
                                                     label: const Text('Ukuran'),
                                                     border: OutlineInputBorder(
                                                         borderRadius:
@@ -9236,6 +9434,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -9257,6 +9457,8 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu20,
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -9391,6 +9593,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -9510,6 +9714,8 @@ class _FormScreenState extends State<FormScreen> {
                                                     setState(() {});
                                                   },
                                                   decoration: InputDecoration(
+                                                    filled: true,
+                                                    fillColor: white,
                                                     label: const Text('Ukuran'),
                                                     border: OutlineInputBorder(
                                                         borderRadius:
@@ -9537,6 +9743,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -9558,6 +9766,8 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu21,
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -9692,6 +9902,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -9811,6 +10023,8 @@ class _FormScreenState extends State<FormScreen> {
                                                     setState(() {});
                                                   },
                                                   decoration: InputDecoration(
+                                                    filled: true,
+                                                    fillColor: white,
                                                     label: const Text('Ukuran'),
                                                     border: OutlineInputBorder(
                                                         borderRadius:
@@ -9838,6 +10052,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -9859,6 +10075,8 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu22,
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -9993,6 +10211,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -10112,6 +10332,8 @@ class _FormScreenState extends State<FormScreen> {
                                                     setState(() {});
                                                   },
                                                   decoration: InputDecoration(
+                                                    filled: true,
+                                                    fillColor: white,
                                                     label: const Text('Ukuran'),
                                                     border: OutlineInputBorder(
                                                         borderRadius:
@@ -10139,6 +10361,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -10160,6 +10384,8 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu23,
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -10294,6 +10520,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -10413,6 +10641,8 @@ class _FormScreenState extends State<FormScreen> {
                                                     setState(() {});
                                                   },
                                                   decoration: InputDecoration(
+                                                    filled: true,
+                                                    fillColor: white,
                                                     label: const Text('Ukuran'),
                                                     border: OutlineInputBorder(
                                                         borderRadius:
@@ -10440,6 +10670,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -10461,6 +10693,8 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu24,
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -10595,6 +10829,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -10714,6 +10950,8 @@ class _FormScreenState extends State<FormScreen> {
                                                     setState(() {});
                                                   },
                                                   decoration: InputDecoration(
+                                                    filled: true,
+                                                    fillColor: white,
                                                     label: const Text('Ukuran'),
                                                     border: OutlineInputBorder(
                                                         borderRadius:
@@ -10741,6 +10979,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -10762,6 +11002,8 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu25,
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -10896,6 +11138,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -11015,6 +11259,8 @@ class _FormScreenState extends State<FormScreen> {
                                                     setState(() {});
                                                   },
                                                   decoration: InputDecoration(
+                                                    filled: true,
+                                                    fillColor: white,
                                                     label: const Text('Ukuran'),
                                                     border: OutlineInputBorder(
                                                         borderRadius:
@@ -11042,6 +11288,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -11063,6 +11311,8 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu26,
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -11197,6 +11447,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -11316,6 +11568,8 @@ class _FormScreenState extends State<FormScreen> {
                                                     setState(() {});
                                                   },
                                                   decoration: InputDecoration(
+                                                    filled: true,
+                                                    fillColor: white,
                                                     label: const Text('Ukuran'),
                                                     border: OutlineInputBorder(
                                                         borderRadius:
@@ -11343,6 +11597,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -11364,6 +11620,8 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu27,
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -11498,6 +11756,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -11617,6 +11877,8 @@ class _FormScreenState extends State<FormScreen> {
                                                     setState(() {});
                                                   },
                                                   decoration: InputDecoration(
+                                                    filled: true,
+                                                    fillColor: white,
                                                     label: const Text('Ukuran'),
                                                     border: OutlineInputBorder(
                                                         borderRadius:
@@ -11644,6 +11906,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -11665,6 +11929,8 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu28,
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -11799,6 +12065,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -11918,6 +12186,8 @@ class _FormScreenState extends State<FormScreen> {
                                                     setState(() {});
                                                   },
                                                   decoration: InputDecoration(
+                                                    filled: true,
+                                                    fillColor: white,
                                                     label: const Text('Ukuran'),
                                                     border: OutlineInputBorder(
                                                         borderRadius:
@@ -11945,6 +12215,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -11966,6 +12238,8 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu29,
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -12100,6 +12374,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -12219,6 +12495,8 @@ class _FormScreenState extends State<FormScreen> {
                                                     setState(() {});
                                                   },
                                                   decoration: InputDecoration(
+                                                    filled: true,
+                                                    fillColor: white,
                                                     label: const Text('Ukuran'),
                                                     border: OutlineInputBorder(
                                                         borderRadius:
@@ -12246,6 +12524,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -12267,6 +12547,8 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu30,
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -12401,6 +12683,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -12520,6 +12804,8 @@ class _FormScreenState extends State<FormScreen> {
                                                     setState(() {});
                                                   },
                                                   decoration: InputDecoration(
+                                                    filled: true,
+                                                    fillColor: white,
                                                     label: const Text('Ukuran'),
                                                     border: OutlineInputBorder(
                                                         borderRadius:
@@ -12547,6 +12833,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -12568,6 +12856,8 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu31,
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -12702,6 +12992,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -12821,6 +13113,8 @@ class _FormScreenState extends State<FormScreen> {
                                                     setState(() {});
                                                   },
                                                   decoration: InputDecoration(
+                                                    filled: true,
+                                                    fillColor: white,
                                                     label: const Text('Ukuran'),
                                                     border: OutlineInputBorder(
                                                         borderRadius:
@@ -12848,6 +13142,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -12869,6 +13165,8 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu32,
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -13003,6 +13301,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -13122,6 +13422,8 @@ class _FormScreenState extends State<FormScreen> {
                                                     setState(() {});
                                                   },
                                                   decoration: InputDecoration(
+                                                    filled: true,
+                                                    fillColor: white,
                                                     label: const Text('Ukuran'),
                                                     border: OutlineInputBorder(
                                                         borderRadius:
@@ -13149,6 +13451,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -13170,6 +13474,8 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu33,
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -13304,6 +13610,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -13423,6 +13731,8 @@ class _FormScreenState extends State<FormScreen> {
                                                     setState(() {});
                                                   },
                                                   decoration: InputDecoration(
+                                                    filled: true,
+                                                    fillColor: white,
                                                     label: const Text('Ukuran'),
                                                     border: OutlineInputBorder(
                                                         borderRadius:
@@ -13450,6 +13760,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -13471,6 +13783,8 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu34,
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -13605,6 +13919,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -13724,6 +14040,8 @@ class _FormScreenState extends State<FormScreen> {
                                                     setState(() {});
                                                   },
                                                   decoration: InputDecoration(
+                                                    filled: true,
+                                                    fillColor: white,
                                                     label: const Text('Ukuran'),
                                                     border: OutlineInputBorder(
                                                         borderRadius:
@@ -13751,6 +14069,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Qty'),
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -13772,6 +14092,8 @@ class _FormScreenState extends State<FormScreen> {
                                                 TextInputAction.next,
                                             controller: stokBatu35,
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text(
                                                 'Stok',
                                                 style: TextStyle(
@@ -13906,6 +14228,8 @@ class _FormScreenState extends State<FormScreen> {
                                               });
                                             },
                                             decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: white,
                                               label: const Text('Carat / Pcs'),
                                               border: OutlineInputBorder(
                                                   borderRadius:

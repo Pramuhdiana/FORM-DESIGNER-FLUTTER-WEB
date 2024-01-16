@@ -739,10 +739,11 @@ class _DashboardControlState extends State<DashboardControl> {
     var h = 400.0;
     var w = 600.0;
     return Container(
+      color: Colors.white,
       padding: const EdgeInsets.all(5),
-      decoration: BoxDecoration(
-        border: Border.all(width: 5, color: colorDasar),
-      ),
+      // decoration: BoxDecoration(
+      //   border: Border.all(width: 5, color: colorDasar),
+      // ),
       child: Column(
         children: [
           Row(
