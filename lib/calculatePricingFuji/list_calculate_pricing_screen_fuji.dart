@@ -448,10 +448,21 @@ class RowSource extends DataTableSource {
                 child: Text(data.id.toString())),
             IconButton(
                 onPressed: () {
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
+                showGeneralDialog(
+              transitionDuration: const Duration(milliseconds: 200),
+              barrierDismissible: true,
+              barrierLabel: '',
+              context: context,
+              pageBuilder: (context, animation1, animation2) {
+                return const Text('');
+              },
+              barrierColor: Colors.black.withOpacity(0.5),
+              transitionBuilder: (context, a1, a2, widget) {
+                return Transform.scale(
+                    scale: a1.value,
+                    child: Opacity(
+                        opacity: a1.value,
+                        child: AlertDialog(
                           content: Stack(
                             clipBehavior: Clip.none,
                             children: <Widget>[
@@ -3197,8 +3208,8 @@ class RowSource extends DataTableSource {
                               ),
                             ],
                           ),
-                        );
-                      });
+                        )
+            ));});
                 },
                 icon: const Icon(
                   Icons.remove_red_eye_outlined,

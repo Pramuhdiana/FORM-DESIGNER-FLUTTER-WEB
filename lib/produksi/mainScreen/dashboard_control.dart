@@ -92,6 +92,7 @@ class _DashboardControlState extends State<DashboardControl> {
   bool isPasangBatuClick = false;
   String? pilihArtistFinishing;
   String? pilihArtistPasangBatu;
+  String? pilihProsesAwal;
   String? pilihArtistPolishing;
   String? pilihArtistStell;
   List<ListMpsModel>? _listFinishing;
@@ -211,10 +212,19 @@ class _DashboardControlState extends State<DashboardControl> {
           });
   }
 
-  void handleClickPrintingResin() {
+  void handleClickProsesAwal(divisi) {
+     divisi == ''
+        ? setState(() {
+            isPrintingResinClick = !isPrintingResinClick;
+            pilihProsesAwal = null;
+
+          })
+        :
     setState(() {
       isPrintingResinClick = !isPrintingResinClick;
-      _getAllDataPrintingResin();
+            pilihProsesAwal = divisi;
+
+      _getAllDataProsesAwal(divisi);
     });
   }
 
@@ -267,11 +277,11 @@ class _DashboardControlState extends State<DashboardControl> {
     });
   }
 
-  void _getAllDataPrintingResin() async {
+  void _getAllDataProsesAwal(divisi) async {
     setState(() {
       isLoadingPrintingResin = true;
     });
-    await getDataTableDivisi('printing resin');
+    await getDataTableDivisi(divisi);
     setState(() {
       isLoadingPrintingResin = false;
     });
@@ -826,8 +836,9 @@ class _DashboardControlState extends State<DashboardControl> {
     var h = 400.0;
     var w = 600.0;
     return Container(
+            // color: colorBG,
       color: Colors.white,
-      padding: const EdgeInsets.all(5),
+      padding: const EdgeInsets.all(2),
       // decoration: BoxDecoration(
       //   border: Border.all(width: 5, color: colorDasar),
       // ),
@@ -845,39 +856,49 @@ class _DashboardControlState extends State<DashboardControl> {
                         children: [
                           Container(
                               padding: EdgeInsets.only(left: 20, top: 25),
-                              child: Text(
-                                'Printing Resin',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold),
+                              child: Row(
+                                children: [
+                                   InkWell(
+                                onTap: () {
+                                  handleClickProsesAwal('');
+                                },
+                                child: SizedBox(
+                                  width: 50,
+                                  child: Lottie.asset(
+                                      "loadingJSON/backbutton.json",
+                                      fit: BoxFit.cover),
+                                ),
+                              ),
+                                  Text(
+                                    '$pilihProsesAwal',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
                               )),
-                          dataTablePrintingResin(),
+                                isLoadingPrintingResin == true
+                                      ? Container(
+                                          padding: const EdgeInsets.all(5),
+                                          width: 90,
+                                          height: 90,
+                                          child: Lottie.asset(
+                                              "loadingJSON/loadingV1.json"),
+                                        )
+                                      : SingleChildScrollView(
+                                          scrollDirection: Axis.horizontal,
+                                          child: Container(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 5),
+                                            child: dataTablePrintingResin(),
+                                          )),
+                          
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 50),
                             child: Divider(color: Colors.white, thickness: 2),
                           ),
-                          InkWell(
-                            onTap: () {},
-                            child: Container(
-                              padding: EdgeInsets.only(bottom: 5),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: const [
-                                  Text(
-                                    '',
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 18),
-                                  ),
-                                  Icon(
-                                    Icons.arrow_forward,
-                                    color: Colors.white,
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
+                       
                         ],
                       ),
                     )
@@ -901,27 +922,7 @@ class _DashboardControlState extends State<DashboardControl> {
                             padding: const EdgeInsets.symmetric(horizontal: 50),
                             child: Divider(color: Colors.white, thickness: 2),
                           ),
-                          InkWell(
-                            onTap: () {},
-                            child: Container(
-                              padding: EdgeInsets.only(bottom: 5),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: const [
-                                  Text(
-                                    'See Detailed Report',
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 18),
-                                  ),
-                                  Icon(
-                                    Icons.arrow_forward,
-                                    color: Colors.white,
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
+                         
                         ],
                       ),
                     ),
@@ -2607,8 +2608,8 @@ class _DashboardControlState extends State<DashboardControl> {
 
         onPointTap: (event) {
           var i = event.dataPoints![event.pointIndex!].x;
-          i.toString().toLowerCase() == 'printing resin'
-              ? handleClickPrintingResin()
+          i.toString().toLowerCase() == 'printing resin' || i.toString().toLowerCase() == 'finishing resin' 
+              ? handleClickProsesAwal(i)
               : showSimpleNotification(
                   Text('tap $i oke'),
                   background: Colors.green,

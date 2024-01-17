@@ -141,11 +141,21 @@ class _MySplashScreenState extends State<MySplashScreen> {
   }
 
   dialogBox() {
-    return showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return AlertDialog(
+    return  showGeneralDialog(
+              transitionDuration: const Duration(milliseconds: 200),
+              barrierDismissible: true,
+              barrierLabel: '',
+              context: context,
+              pageBuilder: (context, animation1, animation2) {
+                return const Text('');
+              },
+              barrierColor: Colors.black.withOpacity(0.5),
+              transitionBuilder: (context, a1, a2, widget) {
+                return Transform.scale(
+                    scale: a1.value,
+                    child: Opacity(
+                        opacity: a1.value,
+                        child: AlertDialog(
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
             title: const Text('Please choose aplikasi'),
@@ -186,7 +196,7 @@ class _MySplashScreenState extends State<MySplashScreen> {
                 ],
               ),
             ),
-          );
-        });
+          )
+       )); });
   }
 }
