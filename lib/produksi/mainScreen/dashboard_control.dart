@@ -42,6 +42,7 @@ class _DashboardControlState extends State<DashboardControl> {
   final searchController = TextEditingController();
   bool isLoading = false;
   bool isLoadingFinishing = false;
+  bool isLoadingPrintingResin = false;
   bool isLoadingPasangBatu = false;
   bool isLoadingPolishing = false;
   bool isLoadingStell = false;
@@ -56,6 +57,7 @@ class _DashboardControlState extends State<DashboardControl> {
   TooltipBehavior? _tooltipBehaviorPolishing;
   TooltipBehavior? _tooltipBehaviorPasangBatu;
   List<ChartData>? chartDataPrintResin;
+  List<ChartData>? chartDataFinishingResin;
   List<ChartData>? chartDataCasting;
   List<ChartData>? chartDataFinishing;
   List<ChartData>? chartDataPolishing;
@@ -66,6 +68,8 @@ class _DashboardControlState extends State<DashboardControl> {
   //! varaible
   List<String> artistPrintingResin = [];
   List<num> qtyArtistPrintingResin = [];
+  List<String> artistFinishingResin = [];
+  List<num> qtyArtistFinishingResin = [];
   List<String> artistFinishing = [];
   List<num> qtyArtistFinishing = [];
   List<String> artistStell = [];
@@ -83,6 +87,7 @@ class _DashboardControlState extends State<DashboardControl> {
   //? end variable
   int isPolishing = 0;
   int isStell = 0;
+  bool isPrintingResinClick = false;
   bool isFinishingClick = false;
   bool isPasangBatuClick = false;
   String? pilihArtistFinishing;
@@ -90,6 +95,7 @@ class _DashboardControlState extends State<DashboardControl> {
   String? pilihArtistPolishing;
   String? pilihArtistStell;
   List<ListMpsModel>? _listFinishing;
+  List<ListMpsModel>? _listByDivisi;
   List<ListMpsModel>? _listPolishing;
   List<ListMpsModel>? _listPasangBatu;
   List<ListMpsModel>? _listStell;
@@ -185,12 +191,7 @@ class _DashboardControlState extends State<DashboardControl> {
     octBrj = 0;
     novBrj = 140;
     decBrj = 150;
-    chartDataPrintResin = <ChartData>[
-      ChartData(xValue: 'Asrori', secondSeriesYValue: 2),
-      ChartData(xValue: 'Budi', secondSeriesYValue: 9),
-      ChartData(xValue: 'Khoer', secondSeriesYValue: 7),
-      ChartData(xValue: 'Abdul', secondSeriesYValue: 4),
-    ];
+
     chartDataCasting = <ChartData>[
       ChartData(xValue: 'Fachri', secondSeriesYValue: 12),
       ChartData(xValue: 'Budi', secondSeriesYValue: 5),
@@ -208,6 +209,13 @@ class _DashboardControlState extends State<DashboardControl> {
             pilihArtistFinishing = artist;
             _getAllDataFinishing(pilihArtistFinishing);
           });
+  }
+
+  void handleClickPrintingResin() {
+    setState(() {
+      isPrintingResinClick = !isPrintingResinClick;
+      _getAllDataPrintingResin();
+    });
   }
 
   void handleClickPasangBatu(artist) {
@@ -259,6 +267,16 @@ class _DashboardControlState extends State<DashboardControl> {
     });
   }
 
+  void _getAllDataPrintingResin() async {
+    setState(() {
+      isLoadingPrintingResin = true;
+    });
+    await getDataTableDivisi('printing resin');
+    setState(() {
+      isLoadingPrintingResin = false;
+    });
+  }
+
   void _getAllDataPasangBatu(artist) async {
     setState(() {
       isLoadingPasangBatu = true;
@@ -301,12 +319,37 @@ class _DashboardControlState extends State<DashboardControl> {
     print(artistPrintingResin);
     print('end tes');
     //! looping list lebih simple
-    chartDataPrintResin = [
-      for (var i = 0; i < artistPrintingResin.length; i++)
-        ChartData(
-            xValue: artistPrintingResin[i],
-            secondSeriesYValue: qtyArtistPrintingResin[i])
+    chartDataPrintResin = <ChartData>[
+      ChartData(
+        x: 'PRINTING RESIN',
+        xValue: qtyArtistPrintingResin[0],
+      ),
+      ChartData(
+        x: 'FINISHING RESIN',
+        xValue: qtyArtistFinishingResin[0],
+      ),
+      ChartData(
+        x: 'CASTING',
+        xValue: qtyArtistCasting[0],
+      ),
+      // ChartData(
+      //   y: artistFinishingResin[0],
+      //   yValue: qtyArtistFinishingResin[0],
+      // ),
+      // ChartData(
+      //   z: artistCasting[0],
+      //   zValue: qtyArtistCasting[0],
+      // ),
     ];
+    // chartDataFinishingResin = [
+    //   for (var i = 0; i < artistFinishingResin.length; i++)
+    //     ChartData(
+    //         y: artistFinishingResin[i], yValue: qtyArtistFinishingResin[i])
+    // ];
+    // chartDataCasting = [
+    //   for (var i = 0; i < artistCasting.length; i++)
+    //     ChartData(z: artistCasting[i], zValue: qtyArtistCasting[i])
+    // ];
     chartDataFinishing = [
       for (var i = 0; i < artistFinishing.length; i++)
         ChartData(
@@ -317,11 +360,11 @@ class _DashboardControlState extends State<DashboardControl> {
       for (var i = 0; i < artistStell.length; i++)
         ChartData(xValue: artistStell[i], secondSeriesYValue: qtyArtistStell[i])
     ];
-    chartDataCasting = [
-      for (var i = 0; i < artistCasting.length; i++)
-        ChartData(
-            xValue: artistCasting[i], secondSeriesYValue: qtyArtistCasting[i])
-    ];
+    // chartDataCasting = [
+    //   for (var i = 0; i < artistCasting.length; i++)
+    //     ChartData(
+    //         xValue: artistCasting[i], secondSeriesYValue: qtyArtistCasting[i])
+    // ];
 
     chartDataPolishing = [
       for (var i = 0; i < artistPolishing.length; i++)
@@ -361,7 +404,9 @@ class _DashboardControlState extends State<DashboardControl> {
   _getName(month) async {
     print('get nama on');
     artistPrintingResin = [];
+    artistFinishingResin = [];
     List<String> dummyArtistPrintingResin = [];
+    List<String> dummyArtistFinishingResin = [];
     artistFinishing = [];
     List<String> dummyArtistFinishing = [];
     artistStell = [];
@@ -379,8 +424,8 @@ class _DashboardControlState extends State<DashboardControl> {
 
     // final response = await http.get(
     //     Uri.parse(ApiConstants.baseUrl + ApiConstants.getListFormDesigner));
-final response = await http.get(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.getListMps));
+    final response = await http
+        .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getListMps));
     print(response.statusCode);
     print(response.body);
     if (response.statusCode == 200) {
@@ -388,7 +433,7 @@ final response = await http.get(
 
       // var allData =
       //     jsonResponse.map((data) => FormDesignerModel.fromJson(data)).toList();
- var allData =
+      var allData =
           jsonResponse.map((data) => ListMpsModel.fromJson(data)).toList();
 
       //! printing resin
@@ -409,6 +454,25 @@ final response = await http.get(
         qtyArtistPrintingResin.add(count);
       }
       //? end function PrintingResin
+
+      //! Finishing resin
+      var filterByFinishingResin = allData
+          .where((element) =>
+              element.posisi.toString().toLowerCase() == 'finishing resin')
+          .toList();
+
+      //! looping list lebih simple
+      for (var item in filterByFinishingResin) {
+        dummyArtistFinishingResin.add(item.artist!);
+      }
+      artistFinishingResin = dummyArtistFinishingResin.toSet().toList();
+      for (var i = 0; i < artistFinishingResin.length; i++) {
+        int count = dummyArtistFinishingResin
+            .where((artist) => artist == artistFinishingResin[i])
+            .length;
+        qtyArtistFinishingResin.add(count);
+      }
+      //? end function FinishingResin
 
       //! finishing
       var filterByFinishing = allData
@@ -584,8 +648,8 @@ final response = await http.get(
 
   getDataTable(artist) async {
     print('get data divisi on');
-    final response = await http.get(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.getListMps));
+    final response = await http
+        .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getListMps));
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);
       var allData =
@@ -604,10 +668,29 @@ final response = await http.get(
     } else {}
   }
 
+  getDataTableDivisi(divisi) async {
+    print('get data divisi on');
+    final response = await http
+        .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getListMps));
+    if (response.statusCode == 200) {
+      List jsonResponse = json.decode(response.body);
+      var allData =
+          jsonResponse.map((data) => ListMpsModel.fromJson(data)).toList();
+      //! divisi
+      var filterByDivisi = allData
+          .where((element) =>
+              element.posisi.toString().toLowerCase() ==
+              divisi.toString().toLowerCase())
+          .toList();
+
+      _listByDivisi = filterByDivisi;
+    } else {}
+  }
+
   getDataTablePasangBatu(artist) async {
     print('get data divisi on');
-    final response = await http.get(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.getListMps));
+    final response = await http
+        .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getListMps));
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);
       var allData =
@@ -628,8 +711,8 @@ final response = await http.get(
 
   getDataTablePolishing(artist) async {
     print('get data divisi on');
-    final response = await http.get(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.getListMps));
+    final response = await http
+        .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getListMps));
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);
       var allData =
@@ -651,8 +734,8 @@ final response = await http.get(
 
   getDataTableStell(artist) async {
     print('get data divisi on');
-    final response = await http.get(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.getListMps));
+    final response = await http
+        .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getListMps));
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);
       var allData =
@@ -753,94 +836,140 @@ final response = await http.get(
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                height: h,
-                width: w,
-                color: colorCard1,
-                child: Column(
-                  children: [
-                    Container(
-                        padding: EdgeInsets.only(left: 20, top: 25),
-                        child: Text(
-                          'Printing Resin',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold),
-                        )),
-                    chartPrintingResin(),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 50),
-                      child: Divider(color: Colors.white, thickness: 2),
-                    ),
-                    InkWell(
-                      onTap: () {},
-                      child: Container(
-                        padding: EdgeInsets.only(bottom: 5),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: const [
-                            Text(
-                              'See Detailed Report',
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 18),
+              isPrintingResinClick == true
+                  ? Container(
+                      height: h,
+                      width: w + w + 20,
+                      color: colorCard1,
+                      child: Column(
+                        children: [
+                          Container(
+                              padding: EdgeInsets.only(left: 20, top: 25),
+                              child: Text(
+                                'Printing Resin',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold),
+                              )),
+                          dataTablePrintingResin(),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 50),
+                            child: Divider(color: Colors.white, thickness: 2),
+                          ),
+                          InkWell(
+                            onTap: () {},
+                            child: Container(
+                              padding: EdgeInsets.only(bottom: 5),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: const [
+                                  Text(
+                                    '',
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 18),
+                                  ),
+                                  Icon(
+                                    Icons.arrow_forward,
+                                    color: Colors.white,
+                                  )
+                                ],
+                              ),
                             ),
-                            Icon(
-                              Icons.arrow_forward,
-                              color: Colors.white,
-                            )
-                          ],
-                        ),
+                          ),
+                        ],
+                      ),
+                    )
+                  : Container(
+                      height: h,
+                      width: w + w + 20,
+                      color: colorCard1,
+                      child: Column(
+                        children: [
+                          Container(
+                              padding: EdgeInsets.only(left: 20, top: 25),
+                              child: Text(
+                                'Proses Awal',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold),
+                              )),
+                          chartPrintingResin(),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 50),
+                            child: Divider(color: Colors.white, thickness: 2),
+                          ),
+                          InkWell(
+                            onTap: () {},
+                            child: Container(
+                              padding: EdgeInsets.only(bottom: 5),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: const [
+                                  Text(
+                                    'See Detailed Report',
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 18),
+                                  ),
+                                  Icon(
+                                    Icons.arrow_forward,
+                                    color: Colors.white,
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
-              ),
-              SizedBox(width: 10),
-              Container(
-                height: h,
-                width: w,
-                color: colorCard2,
-                child: Column(
-                  children: [
-                    Container(
-                        padding: EdgeInsets.only(left: 20, top: 25),
-                        child: Text(
-                          'Casting',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold),
-                        )),
-                    chartCasting(),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 50),
-                      child: Divider(color: Colors.white, thickness: 2),
-                    ),
-                    InkWell(
-                      onTap: () {},
-                      child: Container(
-                        padding: EdgeInsets.only(bottom: 5),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: const [
-                            Text(
-                              'See Detailed Report',
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 18),
-                            ),
-                            Icon(
-                              Icons.arrow_forward,
-                              color: Colors.white,
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(width: 10),
+              // SizedBox(width: 10),
+              // Container(
+              //   height: h,
+              //   width: w,
+              //   color: colorCard2,
+              //   child: Column(
+              //     children: [
+              //       Container(
+              //           padding: EdgeInsets.only(left: 20, top: 25),
+              //           child: Text(
+              //             'Casting',
+              //             style: TextStyle(
+              //                 color: Colors.white,
+              //                 fontSize: 20,
+              //                 fontWeight: FontWeight.bold),
+              //           )),
+              //       chartCasting(),
+              //       Padding(
+              //         padding: const EdgeInsets.symmetric(horizontal: 50),
+              //         child: Divider(color: Colors.white, thickness: 2),
+              //       ),
+              //       InkWell(
+              //         onTap: () {},
+              //         child: Container(
+              //           padding: EdgeInsets.only(bottom: 5),
+              //           child: Row(
+              //             mainAxisAlignment: MainAxisAlignment.spaceAround,
+              //             children: const [
+              //               Text(
+              //                 'See Detailed Report',
+              //                 style:
+              //                     TextStyle(color: Colors.white, fontSize: 18),
+              //               ),
+              //               Icon(
+              //                 Icons.arrow_forward,
+              //                 color: Colors.white,
+              //               )
+              //             ],
+              //           ),
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
+              // SizedBox(width: 10),
             ],
           ),
           SizedBox(height: 15),
@@ -1420,7 +1549,8 @@ final response = await http.get(
                                 width: 150,
                               ),
                               Container(
-                                width: MediaQuery.of(context).size.width * 0.2, //?
+                                width:
+                                    MediaQuery.of(context).size.width * 0.2, //?
                                 padding: const EdgeInsets.only(
                                     top: 5, left: 10, right: 10),
                                 child: DecoratedBox(
@@ -1807,8 +1937,7 @@ final response = await http.get(
           // maximumLabelWidth: 50,
           axisLine: const AxisLine(width: 0),
           majorGridLines: const MajorGridLines(width: 0),
-          majorTickLines: const MajorTickLines(size: 0),
-          labelIntersectAction: AxisLabelIntersectAction.wrap),
+          majorTickLines: const MajorTickLines(size: 0)),
 
       //? Y axis as numeric axis placed here. ATAS
       primaryYAxis: NumericAxis(
@@ -1854,6 +1983,22 @@ final response = await http.get(
       series: getDataFinishing(),
       tooltipBehavior: _tooltipBehaviorFinishing,
     ));
+  }
+
+  dataTablePrintingResin() {
+    return DataTable(
+        headingTextStyle:
+            const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+        headingRowColor:
+            MaterialStateProperty.resolveWith((states) => Colors.black54),
+        dataRowColor:
+            MaterialStateProperty.resolveWith((states) => Colors.white),
+        columnSpacing: 0,
+        headingRowHeight: 50,
+        // dataRowMaxHeight: 50,
+        columns: columnsDataFinishing(),
+        border: TableBorder.all(),
+        rows: rowsDataFinishing(_listByDivisi, _listByDivisi!.length));
   }
 
   dataTableFinishing() {
@@ -2439,7 +2584,7 @@ final response = await http.get(
 
   List<ColumnSeries<ChartData, dynamic>> getDataPrintingResin() {
     return <ColumnSeries<ChartData, dynamic>>[
-      //! first series named "RELEASE".
+      //! tabel printing resin.
       ColumnSeries<ChartData, dynamic>(
         dataLabelSettings:
             const DataLabelSettings(isVisible: true, offset: Offset(0, -5)
@@ -2449,18 +2594,72 @@ final response = await http.get(
         dataSource: chartDataPrintResin!,
         onCreateShader: (ShaderDetails details) {
           return ui.Gradient.linear(
-              details.rect.topCenter,
-              details.rect.bottomCenter,
+              details.rect.topLeft,
+              details.rect.bottomLeft,
               const <Color>[Colors.red, Colors.orange, Colors.yellow],
               <double>[0.3, 0.6, 0.9]);
         },
         color: Color.fromARGB(255, 45, 45, 43),
-        name: 'SPK',
+        // name: 'PRINTING CASTING',
         width: 0.8,
-        xValueMapper: (ChartData sales, _) => sales.xValue,
-        yValueMapper: (ChartData sales, _) => sales.secondSeriesYValue,
-        onPointTap: (event) {},
+        xValueMapper: (ChartData sales, _) => sales.x,
+        yValueMapper: (ChartData sales, _) => sales.xValue,
+
+        onPointTap: (event) {
+          var i = event.dataPoints![event.pointIndex!].x;
+          i.toString().toLowerCase() == 'printing resin'
+              ? handleClickPrintingResin()
+              : showSimpleNotification(
+                  Text('tap $i oke'),
+                  background: Colors.green,
+                  duration: const Duration(seconds: 1),
+                );
+        },
       ),
+      // //! tabel finishing resin.
+      // ColumnSeries<ChartData, dynamic>(
+      //   dataLabelSettings:
+      //       const DataLabelSettings(isVisible: true, offset: Offset(0, -5)
+      //           // labelAlignment: ChartDataLabelAlignment
+      //           //     .middle
+      //           ), //? ini untuk label di dalam diagram
+      //   dataSource: chartDataPrintResin!,
+      //   onCreateShader: (ShaderDetails details) {
+      //     return ui.Gradient.linear(
+      //         details.rect.topCenter,
+      //         details.rect.bottomCenter,
+      //         const <Color>[Colors.red, Colors.orange, Colors.yellow],
+      //         <double>[0.3, 0.6, 0.9]);
+      //   },
+      //   color: Color.fromARGB(255, 45, 45, 43),
+      //   name: 'FINISHING RESIN',
+      //   width: 1,
+      //   xValueMapper: (ChartData sales, _) => sales.y,
+      //   yValueMapper: (ChartData sales, _) => sales.yValue,
+      //   onPointTap: (event) {},
+      // ),
+      // //! tabel casting.
+      // ColumnSeries<ChartData, dynamic>(
+      //   dataLabelSettings:
+      //       const DataLabelSettings(isVisible: true, offset: Offset(0, -5)
+      //           // labelAlignment: ChartDataLabelAlignment
+      //           //     .middle
+      //           ), //? ini untuk label di dalam diagram
+      //   dataSource: chartDataPrintResin!,
+      //   onCreateShader: (ShaderDetails details) {
+      //     return ui.Gradient.linear(
+      //         details.rect.topRight,
+      //         details.rect.bottomRight,
+      //         const <Color>[Colors.red, Colors.orange, Colors.yellow],
+      //         <double>[0.3, 0.6, 0.9]);
+      //   },
+      //   color: Color.fromARGB(255, 45, 45, 43),
+      //   name: 'CASTING',
+      //   width: 1,
+      //   xValueMapper: (ChartData sales, _) => sales.z,
+      //   yValueMapper: (ChartData sales, _) => sales.zValue,
+      //   onPointTap: (event) {},
+      // ),
     ];
   }
 
@@ -2713,13 +2912,16 @@ class SalesData {
 /// Chart Sales Data
 class BrjData {
   /// Holds the datapoint values like x, y, etc.,
-  BrjData(this.x, this.y, [this.date, this.color]);
+  BrjData(this.x, this.y, this.z, [this.date, this.color]);
 
   /// X value of the data point
   final dynamic x;
 
   /// y value of the data point
   final dynamic y;
+
+  /// z value of the data point
+  final dynamic z;
 
   /// color value of the data point
   final Color? color;
@@ -2734,8 +2936,10 @@ class ChartData {
   ChartData(
       {this.x,
       this.y,
+      this.z,
       this.xValue,
       this.yValue,
+      this.zValue,
       this.secondSeriesYValue,
       this.thirdSeriesYValue,
       this.pointColor,
@@ -2751,13 +2955,19 @@ class ChartData {
   final dynamic x;
 
   /// Holds y value of the datapoint
-  final num? y;
+  final dynamic y;
+
+  /// Holds z value of the datapoint
+  final dynamic z;
 
   /// Holds x value of the datapoint
   final dynamic xValue;
 
   /// Holds y value of the datapoint
   final num? yValue;
+
+  /// Holds z value of the datapoint
+  final num? zValue;
 
   /// Holds y value of the datapoint(for 2nd series)
   final num? secondSeriesYValue;

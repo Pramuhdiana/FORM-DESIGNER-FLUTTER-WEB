@@ -929,7 +929,7 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          padding: const EdgeInsets.only(top: 26,left: 20),
+          padding: const EdgeInsets.only(top: 26, left: 20),
           child: const Text(
             'Master Planning Siklus',
             style: TextStyle(
@@ -1381,15 +1381,13 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
                                         _currentSortColumn = columnIndex;
                                         if (sort == true) {
                                           sort = false;
-                                          filterDataProduksi!.sort((a, b) => a.tema!
-                                              .toLowerCase()
-                                              .compareTo(
+                                          filterDataProduksi!.sort((a, b) =>
+                                              a.tema!.toLowerCase().compareTo(
                                                   b.tema!.toLowerCase()));
                                         } else {
                                           sort = true;
-                                          filterDataProduksi!.sort((a, b) => b.tema!
-                                              .toLowerCase()
-                                              .compareTo(
+                                          filterDataProduksi!.sort((a, b) =>
+                                              b.tema!.toLowerCase().compareTo(
                                                   a.tema!.toLowerCase()));
                                         }
                                       });
@@ -3295,9 +3293,7 @@ class RowSourceProduksi extends DataTableSource {
                                     imageUrl: data.imageUrl),
                               )));
                 },
-                child:
-                
-                 Image.network(
+                child: Image.network(
                   ApiConstants.baseUrlImage + data.imageUrl!,
                   fit: BoxFit.cover,
                 ),
@@ -3386,170 +3382,352 @@ class RowSourceProduksi extends DataTableSource {
                                                           BorderRadius.circular(
                                                               50.0))),
                                               onPressed: () async {
+                                                print('tap ke : $j');
                                                 Navigator.pop(context);
-                                                showDialog(
-                                                    context: context,
-                                                    builder:
-                                                        (BuildContext context) {
-                                                      return AlertDialog(
-                                                        shape:
-                                                            RoundedRectangleBorder(
+                                                if (j == 0 || j == 1) {
+                                                  await postPosisi(
+                                                    data.id,
+                                                    "${listDivisi[j]}",
+                                                    "${listDivisi[j]}",
+                                                  );
+                                                  onRowPressed();
+
+                                                  await postHistory(
+                                                    data.kodeDesignMdbc,
+                                                    data.kodeMarketing,
+                                                    "${listDivisi[j]}",
+                                                    "${listDivisi[j]}",
+                                                  );
+                                                  showSimpleNotification(
+                                                    const Text(
+                                                        'Posisi berhasil di simpan'),
+                                                    background: Colors.green,
+                                                    duration: const Duration(
+                                                        seconds: 1),
+                                                  );
+                                                } else if (j == 2) {
+                                                  showDialog(
+                                                      context: context,
+                                                      builder: (BuildContext
+                                                          context) {
+                                                        return AlertDialog(
+                                                            shape: RoundedRectangleBorder(
                                                                 borderRadius:
                                                                     BorderRadius
                                                                         .circular(
                                                                             8)),
-                                                        content: SizedBox(
-                                                          height: 500,
-                                                          child:
-                                                              SingleChildScrollView(
-                                                            scrollDirection:
-                                                                Axis.vertical,
-                                                            child: Column(
-                                                              children: [
-                                                                // SizedBox(
-                                                                //   child: Lottie.asset(
-                                                                //       "loadingJSON/backbutton.json",
-                                                                //       fit: BoxFit
-                                                                //           .cover),
-                                                                // ),
-                                                                Text(
-                                                                  'Pilih Artist ${listDivisi[j]}',
-                                                                  style: const TextStyle(
-                                                                      color: Colors
-                                                                          .black,
-                                                                      fontSize:
-                                                                          18,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold),
-                                                                ),
+                                                            content: SizedBox(
+                                                                height: 250,
+                                                                child:
+                                                                    SingleChildScrollView(
+                                                                        scrollDirection:
+                                                                            Axis
+                                                                                .vertical,
+                                                                        child:
+                                                                            Column(children: [
+                                                                          const Text(
+                                                                            'Pilih Minggu Ke -',
+                                                                            style: TextStyle(
+                                                                                color: Colors.black,
+                                                                                fontSize: 18,
+                                                                                fontWeight: FontWeight.bold),
+                                                                          ),
+                                                                          Container(
+                                                                            padding:
+                                                                                const EdgeInsets.only(top: 15),
+                                                                            child: ElevatedButton(
+                                                                                style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
+                                                                                onPressed: () async {
+                                                                                  await postPosisi(
+                                                                                    data.id,
+                                                                                    "${listDivisi[j]}",
+                                                                                    "W1",
+                                                                                  );
+                                                                                  onRowPressed();
 
-                                                                //! loopimg
-                                                                for (var i = 0;
-                                                                    i <
-                                                                        listArtist
-                                                                            .length;
-                                                                    i++)
-                                                                  // FutureBuilder(
-                                                                  //   future: _getListArtist(
-                                                                  //       '${listDivisi[j]}'),
-                                                                  //   builder: (context,
-                                                                  //       snapshot) {
-                                                                  //     if (snapshot
-                                                                  //         .hasData) {
-                                                                  //       return Container(
-                                                                  //         padding: const EdgeInsets
-                                                                  //             .only(
-                                                                  //             top:
-                                                                  //                 15),
-                                                                  //         child: ElevatedButton(
-                                                                  //             // style: ElevatedButton.styleFrom(backgroundColor: colorDasar, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
-                                                                  //             style: ButtonStyle(
-                                                                  //               backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                                                                  //                 (Set<MaterialState> states) {
-                                                                  //                   if (states.contains(MaterialState.hovered)) {
-                                                                  //                     // Saat tombol di-hover, atur warna latar belakang yang berbeda di sini
-                                                                  //                     return Colors.red; // Ganti dengan warna yang diinginkan
-                                                                  //                   }
-                                                                  //                   // Warna latar belakang saat tidak di-hover
-                                                                  //                   return colorDasar; // Ganti dengan warna yang diinginkan
-                                                                  //                 },
-                                                                  //               ),
-                                                                  //             ),
-                                                                  //             onPressed: () async {
-                                                                  //               await postPosisi(
-                                                                  //                 data.id,
-                                                                  //                 "${listDivisi[j]}",
-                                                                  //                 listArtist[i],
-                                                                  //               );
-                                                                  //               onRowPressed();
+                                                                                  await postHistory(
+                                                                                    data.kodeDesignMdbc,
+                                                                                    data.kodeMarketing,
+                                                                                    "${listDivisi[j]}",
+                                                                                    "W1",
+                                                                                  );
+                                                                                  onRowPressed();
+                                                                                  Navigator.pop(context);
+                                                                                  showSimpleNotification(
+                                                                                    const Text('Pemilihan Posisi Berhasil'),
+                                                                                    background: Colors.green,
+                                                                                    duration: const Duration(seconds: 1),
+                                                                                  );
+                                                                                },
+                                                                                child: const Text(
+                                                                                  "WEEK 1",
+                                                                                  style: TextStyle(
+                                                                                    fontSize: 16,
+                                                                                  ),
+                                                                                )),
+                                                                          ),
+                                                                          Container(
+                                                                            padding:
+                                                                                const EdgeInsets.only(top: 15),
+                                                                            child: ElevatedButton(
+                                                                                style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
+                                                                                onPressed: () async {
+                                                                                  await postPosisi(
+                                                                                    data.id,
+                                                                                    "${listDivisi[j]}",
+                                                                                    "W2",
+                                                                                  );
+                                                                                  onRowPressed();
 
-                                                                  //               await postHistory(
-                                                                  //                 data.kodeDesignMdbc,
-                                                                  //                 data.kodeMarketing,
-                                                                  //                 "${listDivisi[j]}",
-                                                                  //                 listArtist[i],
-                                                                  //               );
-                                                                  //               Navigator.pop(context);
-                                                                  //               showSimpleNotification(
-                                                                  //                 const Text('Menambahkan posisi dan artist berhasil'),
-                                                                  //                 background: Colors.green,
-                                                                  //                 duration: const Duration(seconds: 1),
-                                                                  //               );
-                                                                  //             },
-                                                                  //             child: Text(
-                                                                  //               data.toString(),
-                                                                  //               style: const TextStyle(
-                                                                  //                 fontSize: 16,
-                                                                  //               ),
-                                                                  //             )),
-                                                                  //       );
-                                                                  //     } else {
-                                                                  //       return const CircularProgressIndicator();
-                                                                  //     }
-                                                                  //   },
+                                                                                  await postHistory(
+                                                                                    data.kodeDesignMdbc,
+                                                                                    data.kodeMarketing,
+                                                                                    "${listDivisi[j]}",
+                                                                                    "W2",
+                                                                                  );
+                                                                                  onRowPressed();
+                                                                                  Navigator.pop(context);
+                                                                                  showSimpleNotification(
+                                                                                    const Text('Pemilihan Posisi Berhasil'),
+                                                                                    background: Colors.green,
+                                                                                    duration: const Duration(seconds: 1),
+                                                                                  );
+                                                                                },
+                                                                                child: const Text(
+                                                                                  "WEEK 2",
+                                                                                  style: TextStyle(
+                                                                                    fontSize: 16,
+                                                                                  ),
+                                                                                )),
+                                                                          ),
+                                                                          Container(
+                                                                            padding:
+                                                                                const EdgeInsets.only(top: 15),
+                                                                            child: ElevatedButton(
+                                                                                style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
+                                                                                onPressed: () async {
+                                                                                  await postPosisi(
+                                                                                    data.id,
+                                                                                    "${listDivisi[j]}",
+                                                                                    "W3",
+                                                                                  );
+                                                                                  onRowPressed();
+
+                                                                                  await postHistory(
+                                                                                    data.kodeDesignMdbc,
+                                                                                    data.kodeMarketing,
+                                                                                    "${listDivisi[j]}",
+                                                                                    "W3",
+                                                                                  );
+                                                                                  onRowPressed();
+                                                                                  Navigator.pop(context);
+                                                                                  showSimpleNotification(
+                                                                                    const Text('Pemilihan Posisi Berhasil'),
+                                                                                    background: Colors.green,
+                                                                                    duration: const Duration(seconds: 1),
+                                                                                  );
+                                                                                },
+                                                                                child: const Text(
+                                                                                  "WEEK 3",
+                                                                                  style: TextStyle(
+                                                                                    fontSize: 16,
+                                                                                  ),
+                                                                                )),
+                                                                          ),
+                                                                          Container(
+                                                                            padding:
+                                                                                const EdgeInsets.only(top: 15),
+                                                                            child: ElevatedButton(
+                                                                                style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
+                                                                                onPressed: () async {
+                                                                                  await postPosisi(
+                                                                                    data.id,
+                                                                                    "${listDivisi[j]}",
+                                                                                    "W4",
+                                                                                  );
+                                                                                  onRowPressed();
+
+                                                                                  await postHistory(
+                                                                                    data.kodeDesignMdbc,
+                                                                                    data.kodeMarketing,
+                                                                                    "${listDivisi[j]}",
+                                                                                    "W4",
+                                                                                  );
+                                                                                  onRowPressed();
+                                                                                  Navigator.pop(context);
+                                                                                  showSimpleNotification(
+                                                                                    const Text('Pemilihan Posisi Berhasil'),
+                                                                                    background: Colors.green,
+                                                                                    duration: const Duration(seconds: 1),
+                                                                                  );
+                                                                                },
+                                                                                child: const Text(
+                                                                                  "WEEK 4",
+                                                                                  style: TextStyle(
+                                                                                    fontSize: 16,
+                                                                                  ),
+                                                                                )),
+                                                                          ),
+                                                                        ]))));
+                                                      });
+                                                } else {
+                                                  showDialog(
+                                                      context: context,
+                                                      builder: (BuildContext
+                                                          context) {
+                                                        return AlertDialog(
+                                                          shape: RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8)),
+                                                          content: SizedBox(
+                                                            height: 500,
+                                                            child:
+                                                                SingleChildScrollView(
+                                                              scrollDirection:
+                                                                  Axis.vertical,
+                                                              child: Column(
+                                                                children: [
+                                                                  // SizedBox(
+                                                                  //   child: Lottie.asset(
+                                                                  //       "loadingJSON/backbutton.json",
+                                                                  //       fit: BoxFit
+                                                                  //           .cover),
                                                                   // ),
-                                                                  Container(
-                                                                    padding: const EdgeInsets
-                                                                        .only(
-                                                                        top:
-                                                                            15),
-                                                                    child: ElevatedButton(
-                                                                        // style: ElevatedButton.styleFrom(backgroundColor: colorDasar, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
-                                                                        style: ButtonStyle(
-                                                                          backgroundColor:
-                                                                              MaterialStateProperty.resolveWith<Color>(
-                                                                            (Set<MaterialState>
-                                                                                states) {
-                                                                              if (states.contains(MaterialState.hovered)) {
-                                                                                // Saat tombol di-hover, atur warna latar belakang yang berbeda di sini
-                                                                                return Colors.red; // Ganti dengan warna yang diinginkan
-                                                                              }
-                                                                              // Warna latar belakang saat tidak di-hover
-                                                                              return colorDasar; // Ganti dengan warna yang diinginkan
-                                                                            },
-                                                                          ),
-                                                                        ),
-                                                                        onPressed: () async {
-                                                                          await postPosisi(
-                                                                            data.id,
-                                                                            "${listDivisi[j]}",
-                                                                            listArtist[i],
-                                                                          );
-                                                                          onRowPressed();
-
-                                                                          await postHistory(
-                                                                            data.kodeDesignMdbc,
-                                                                            data.kodeMarketing,
-                                                                            "${listDivisi[j]}",
-                                                                            listArtist[i],
-                                                                          );
-                                                                          Navigator.pop(
-                                                                              context);
-                                                                          showSimpleNotification(
-                                                                            const Text('Menambahkan posisi dan artist berhasil'),
-                                                                            background:
-                                                                                Colors.green,
-                                                                            duration:
-                                                                                const Duration(seconds: 1),
-                                                                          );
-                                                                        },
-                                                                        child: Text(
-                                                                          listArtist[
-                                                                              i],
-                                                                          style:
-                                                                              const TextStyle(
-                                                                            fontSize:
-                                                                                16,
-                                                                          ),
-                                                                        )),
+                                                                  Text(
+                                                                    'Pilih Artist ${listDivisi[j]}',
+                                                                    style: const TextStyle(
+                                                                        color: Colors
+                                                                            .black,
+                                                                        fontSize:
+                                                                            18,
+                                                                        fontWeight:
+                                                                            FontWeight.bold),
                                                                   ),
-                                                              ],
+
+                                                                  //! loopimg
+                                                                  for (var i =
+                                                                          0;
+                                                                      i <
+                                                                          listArtist
+                                                                              .length;
+                                                                      i++)
+                                                                    // FutureBuilder(
+                                                                    //   future: _getListArtist(
+                                                                    //       '${listDivisi[j]}'),
+                                                                    //   builder: (context,
+                                                                    //       snapshot) {
+                                                                    //     if (snapshot
+                                                                    //         .hasData) {
+                                                                    //       return Container(
+                                                                    //         padding: const EdgeInsets
+                                                                    //             .only(
+                                                                    //             top:
+                                                                    //                 15),
+                                                                    //         child: ElevatedButton(
+                                                                    //             // style: ElevatedButton.styleFrom(backgroundColor: colorDasar, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
+                                                                    //             style: ButtonStyle(
+                                                                    //               backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                                                                    //                 (Set<MaterialState> states) {
+                                                                    //                   if (states.contains(MaterialState.hovered)) {
+                                                                    //                     // Saat tombol di-hover, atur warna latar belakang yang berbeda di sini
+                                                                    //                     return Colors.red; // Ganti dengan warna yang diinginkan
+                                                                    //                   }
+                                                                    //                   // Warna latar belakang saat tidak di-hover
+                                                                    //                   return colorDasar; // Ganti dengan warna yang diinginkan
+                                                                    //                 },
+                                                                    //               ),
+                                                                    //             ),
+                                                                    //             onPressed: () async {
+                                                                    //               await postPosisi(
+                                                                    //                 data.id,
+                                                                    //                 "${listDivisi[j]}",
+                                                                    //                 listArtist[i],
+                                                                    //               );
+                                                                    //               onRowPressed();
+
+                                                                    //               await postHistory(
+                                                                    //                 data.kodeDesignMdbc,
+                                                                    //                 data.kodeMarketing,
+                                                                    //                 "${listDivisi[j]}",
+                                                                    //                 listArtist[i],
+                                                                    //               );
+                                                                    //               Navigator.pop(context);
+                                                                    //               showSimpleNotification(
+                                                                    //                 const Text('Menambahkan posisi dan artist berhasil'),
+                                                                    //                 background: Colors.green,
+                                                                    //                 duration: const Duration(seconds: 1),
+                                                                    //               );
+                                                                    //             },
+                                                                    //             child: Text(
+                                                                    //               data.toString(),
+                                                                    //               style: const TextStyle(
+                                                                    //                 fontSize: 16,
+                                                                    //               ),
+                                                                    //             )),
+                                                                    //       );
+                                                                    //     } else {
+                                                                    //       return const CircularProgressIndicator();
+                                                                    //     }
+                                                                    //   },
+                                                                    // ),
+                                                                    Container(
+                                                                      padding: const EdgeInsets
+                                                                          .only(
+                                                                          top:
+                                                                              15),
+                                                                      child: ElevatedButton(
+                                                                          // style: ElevatedButton.styleFrom(backgroundColor: colorDasar, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
+                                                                          style: ButtonStyle(
+                                                                            backgroundColor:
+                                                                                MaterialStateProperty.resolveWith<Color>(
+                                                                              (Set<MaterialState> states) {
+                                                                                if (states.contains(MaterialState.hovered)) {
+                                                                                  // Saat tombol di-hover, atur warna latar belakang yang berbeda di sini
+                                                                                  return Colors.red; // Ganti dengan warna yang diinginkan
+                                                                                }
+                                                                                // Warna latar belakang saat tidak di-hover
+                                                                                return colorDasar; // Ganti dengan warna yang diinginkan
+                                                                              },
+                                                                            ),
+                                                                          ),
+                                                                          onPressed: () async {
+                                                                            await postPosisi(
+                                                                              data.id,
+                                                                              "${listDivisi[j]}",
+                                                                              listArtist[i],
+                                                                            );
+                                                                            onRowPressed();
+
+                                                                            await postHistory(
+                                                                              data.kodeDesignMdbc,
+                                                                              data.kodeMarketing,
+                                                                              "${listDivisi[j]}",
+                                                                              listArtist[i],
+                                                                            );
+                                                                            Navigator.pop(context);
+                                                                            showSimpleNotification(
+                                                                              const Text('Menambahkan posisi dan artist berhasil'),
+                                                                              background: Colors.green,
+                                                                              duration: const Duration(seconds: 1),
+                                                                            );
+                                                                          },
+                                                                          child: Text(
+                                                                            listArtist[i],
+                                                                            style:
+                                                                                const TextStyle(
+                                                                              fontSize: 16,
+                                                                            ),
+                                                                          )),
+                                                                    ),
+                                                                ],
+                                                              ),
                                                             ),
                                                           ),
-                                                        ),
-                                                      );
-                                                    });
+                                                        );
+                                                      });
+                                                }
                                               },
                                               child: Text(
                                                 "${listDivisi[j]}",
@@ -3670,7 +3848,8 @@ class RowSourceProduksi extends DataTableSource {
                                                                         50.0))),
                                                     onPressed: () async {
                                                       await postKeteranganStatusBatu(
-                                                          data.id, 'KOMPLIT BATU');
+                                                          data.id,
+                                                          'KOMPLIT BATU');
                                                       onRowPressed();
                                                       Navigator.pop(context);
                                                       showSimpleNotification(
@@ -3704,7 +3883,8 @@ class RowSourceProduksi extends DataTableSource {
                                                                         50.0))),
                                                     onPressed: () async {
                                                       await postKeteranganStatusBatu(
-                                                          data.id, 'BELUM KOMPLIT');
+                                                          data.id,
+                                                          'BELUM KOMPLIT');
                                                       onRowPressed();
                                                       Navigator.pop(context);
                                                       showSimpleNotification(
@@ -3832,8 +4012,9 @@ class RowSourceProduksi extends DataTableSource {
                                                                     .circular(
                                                                         50.0))),
                                                     onPressed: () async {
-                                                     await postKeteranganStatusAcc(
-                                                          data.id, 'KOMPLIT ACC');
+                                                      await postKeteranganStatusAcc(
+                                                          data.id,
+                                                          'KOMPLIT ACC');
                                                       onRowPressed();
                                                       Navigator.pop(context);
                                                       showSimpleNotification(
@@ -3867,7 +4048,8 @@ class RowSourceProduksi extends DataTableSource {
                                                                         50.0))),
                                                     onPressed: () async {
                                                       await postKeteranganStatusAcc(
-                                                          data.id, 'BELUM KOMPLIT');
+                                                          data.id,
+                                                          'BELUM KOMPLIT');
                                                       onRowPressed();
                                                       Navigator.pop(context);
                                                       showSimpleNotification(
