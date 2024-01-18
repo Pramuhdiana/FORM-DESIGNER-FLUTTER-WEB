@@ -94,7 +94,6 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
     _getList('all');
     _getListDivisi();
     _getListSubDivisi();
-
   }
 
   _getList(divisi) async {
@@ -137,22 +136,31 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
       //     divisi.toString().toLowerCase());
 
       // alldata = filterByDivisi.toList();
-      for (var i = 0; i < alldata.length; i++) {
-        listDivisi.add(alldata[i].divisi!);
-        listIdDivisi.add(i);
-        
+      if (sharedPreferences!.getString('role') == '1' ||
+          sharedPreferences!.getString('divisi') == 'admin') {
+        for (var i = 0; i < alldata.length; i++) {
+          listDivisi.add(alldata[i].divisi!);
+          listIdDivisi.add(i);
+        }
+      } else {
+        for (var i = 0; i < alldata.length; i++) {
+          if (alldata[i].role == sharedPreferences!.getString('role')) {
+            listDivisi.add(alldata[i].divisi!);
+            listIdDivisi.add(i);
+          } else {}
+        }
       }
     } else {
       throw Exception('Unexpected error occured!');
     }
   }
 
-   _getListSubDivisi() async {
-  listSubDivisiArtistFinishing = [];
-  listSubDivisiArtistPolishing = [];
-  listSubDivisiArtistStell = [];
-  listSubDivisiArtistPasangBatu = [];
-  final response = await http
+  _getListSubDivisi() async {
+    listSubDivisiArtistFinishing = [];
+    listSubDivisiArtistPolishing = [];
+    listSubDivisiArtistStell = [];
+    listSubDivisiArtistPasangBatu = [];
+    final response = await http
         .get(Uri.parse('${ApiConstants.baseUrl}${ApiConstants.getListArtist}'));
 
     if (response.statusCode == 200) {
@@ -165,23 +173,23 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
       //     element.divisi.toString().toLowerCase() ==
       //     'finishing').toList();
       for (var i = 0; i < alldata.length; i++) {
-
-        if(alldata[i].divisi.toString().toLowerCase() == 'finishing')
-        {
-        listSubDivisiArtistFinishing.add(alldata[i].nama);
-        } else if(alldata[i].divisi.toString().toLowerCase() == 'poleshing 1' || alldata[i].nama.toString().toLowerCase() == 'poleshing 2'){
-        listSubDivisiArtistPolishing.add(alldata[i].nama);
-        } else if(alldata[i].divisi.toString().toLowerCase() == 'stell rangka 1' || alldata[i].nama.toString().toLowerCase() == 'stell rangka 2'){
-        listSubDivisiArtistStell.add(alldata[i].nama);
+        if (alldata[i].divisi.toString().toLowerCase() == 'finishing') {
+          listSubDivisiArtistFinishing.add(alldata[i].nama);
+        } else if (alldata[i].divisi.toString().toLowerCase() ==
+                'poleshing 1' ||
+            alldata[i].nama.toString().toLowerCase() == 'poleshing 2') {
+          listSubDivisiArtistPolishing.add(alldata[i].nama);
+        } else if (alldata[i].divisi.toString().toLowerCase() ==
+                'stell rangka 1' ||
+            alldata[i].nama.toString().toLowerCase() == 'stell rangka 2') {
+          listSubDivisiArtistStell.add(alldata[i].nama);
         } else {
-        listSubDivisiArtistPasangBatu.add(alldata[i].nama);
+          listSubDivisiArtistPasangBatu.add(alldata[i].nama);
         }
       }
-      
     } else {
       throw Exception('Unexpected error occured!');
     }
-
   }
 
   _getDataBySiklusProduksi(chooseSiklus, chooseWeek, chooseJenisBarang) async {
@@ -349,18 +357,16 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
                             element.jenisBarang!
                                 .toLowerCase()
                                 .contains(value.toLowerCase()) ||
-
-  element.keteranganBatu!
+                            element.keteranganBatu!
                                 .toLowerCase()
                                 .contains(value.toLowerCase()) ||
-
-  element.keteranganStatusBatu!
+                            element.keteranganStatusBatu!
                                 .toLowerCase()
                                 .contains(value.toLowerCase()) ||
-  element.artist!
+                            element.artist!
                                 .toLowerCase()
                                 .contains(value.toLowerCase()) ||
-  element.keteranganStatusAcc!
+                            element.keteranganStatusAcc!
                                 .toLowerCase()
                                 .contains(value.toLowerCase()) ||
                             element.estimasiHarga!
@@ -384,7 +390,7 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
               //       ))
               // ],
             ),
-            body: sharedPreferences!.getString('level') == '4' ||
+            body: sharedPreferences!.getString('divisi') == 'produksi' ||
                     sharedPreferences!.getString('divisi') == 'admin'
                 ? mpsProduksi()
                 : mpsSCM(),
@@ -1031,7 +1037,7 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
                     print(siklusDesigner);
                     await _getDataBySiklusProduksi(
                         siklusDesigner, pilihWeek, pilihJenisBarang);
-                        await _getListSubDivisi();
+                    await _getListSubDivisi();
                     setState(() {
                       isLoading = true;
                     });
@@ -1576,15 +1582,19 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
                                   onRowPressed: () {
                                     refresh();
                                   }, //! mengirim data untuk me refresh state
-                                  
+
                                   listArtist: listArtist,
                                   listDivisi: listDivisi,
                                   myData: myDataProduksi,
                                   count: myDataProduksi!.length,
-                                  listSubDivisiArtistFinishing: listSubDivisiArtistFinishing,
-                                  listSubDivisiArtistPolishing: listSubDivisiArtistPolishing,
-                                  listSubDivisiArtistStell: listSubDivisiArtistStell,
-                                  listSubDivisiArtistPasangBatu: listSubDivisiArtistPasangBatu,
+                                  listSubDivisiArtistFinishing:
+                                      listSubDivisiArtistFinishing,
+                                  listSubDivisiArtistPolishing:
+                                      listSubDivisiArtistPolishing,
+                                  listSubDivisiArtistStell:
+                                      listSubDivisiArtistStell,
+                                  listSubDivisiArtistPasangBatu:
+                                      listSubDivisiArtistPasangBatu,
                                   siklus: siklusDesigner)),
                         ),
                       ),
@@ -3123,27 +3133,42 @@ class RowSourceProduksi extends DataTableSource {
     required this.onRowPressed,
     required this.listArtist,
     required this.listDivisi,
-     required this.listSubDivisiArtistFinishing,
-  required this.listSubDivisiArtistPolishing,
-  required this.listSubDivisiArtistStell,
-  required this.listSubDivisiArtistPasangBatu,
+    required this.listSubDivisiArtistFinishing,
+    required this.listSubDivisiArtistPolishing,
+    required this.listSubDivisiArtistStell,
+    required this.listSubDivisiArtistPasangBatu,
   });
 
-  
   @override
   DataRow? getRow(int index) {
     if (index < rowCount) {
       return recentFileDataRow(
-          myData![index], index, siklus, listArtist, listDivisi,listSubDivisiArtistFinishing,listSubDivisiArtistPolishing,listSubDivisiArtistStell,listSubDivisiArtistPasangBatu);
+          myData![index],
+          index,
+          siklus,
+          listArtist,
+          listDivisi,
+          listSubDivisiArtistFinishing,
+          listSubDivisiArtistPolishing,
+          listSubDivisiArtistStell,
+          listSubDivisiArtistPasangBatu);
     } else {
       return null;
     }
   }
 
   DataRow recentFileDataRow(
-      var data, var i, var siklus, var listArtist, var listDivisi, var listSubDivisiArtistFinishing, var listSubDivisiArtistPolishing, var listSubDivisiArtistStell, var listSubDivisiArtistPasangBatu) {
+      var data,
+      var i,
+      var siklus,
+      var listArtist,
+      var listDivisi,
+      var listSubDivisiArtistFinishing,
+      var listSubDivisiArtistPolishing,
+      var listSubDivisiArtistStell,
+      var listSubDivisiArtistPasangBatu) {
     // ignore: prefer_interpolation_to_compose_strings
-  
+
     return DataRow(cells: [
       //No
       DataCell(
@@ -3172,193 +3197,179 @@ class RowSourceProduksi extends DataTableSource {
                     clipBehavior: Clip.none, //agar tidak menghalangi object
                     children: [
                       //tambahan icon ADD
-                      Positioned(
-                        right: -5.0,
-                        top: -3.0,
-                        child: InkResponse(
-                          onTap: () {
-                            // Navigator.of(context).pop();
-                          },
-                          child: const Icon(
-                            Icons.add_circle_outline,
-                            color: Colors.green,
-                            size: 20,
-                          ),
-                        ),
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          showGeneralDialog(
-              transitionDuration: const Duration(milliseconds: 200),
-              barrierDismissible: true,
-              barrierLabel: '',
-              context: context,
-              pageBuilder: (context, animation1, animation2) {
-                return const Text('');
-              },
-              barrierColor: Colors.black.withOpacity(0.5),
-              transitionBuilder: (context, a1, a2, widget) {
-                return Transform.scale(
-                    scale: a1.value,
-                    child: Opacity(
-                        opacity: a1.value,
-                        child: AlertDialog(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(8)),
-                                    content: SizedBox(
-                                        child: SingleChildScrollView(
-                                            scrollDirection: Axis.vertical,
-                                            child: Column(children: [
-                                              const Text(
-                                                'Pilih Waktu',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 18,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                              Container(
-                                                padding: const EdgeInsets.only(
-                                                    top: 15),
-                                                child: ElevatedButton(
-                                                    style: ElevatedButton.styleFrom(
-                                                        backgroundColor:
-                                                            Colors.blue,
-                                                      shape: RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        50.0))),
-                                                    onPressed: () async {
-                                                      await postKeteranganMinggu(
-                                                          data.id, 'WEEK 1');
-                                                      onRowPressed();
-                                                      Navigator.pop(context);
-                                                      showSimpleNotification(
-                                                        const Text(
-                                                            'Pemilihan Waktu Berhasil'),
-                                                        background:
-                                                            Colors.green,
-                                                        duration:
-                                                            const Duration(
-                                                                seconds: 1),
-                                                      );
-                                                    },
-                                                    child: const Text(
-                                                      "WEEK 1",
-                                                      style: TextStyle(
-                                                        fontSize: 16,
-                                                      ),
-                                                    )),
-                                              ),
-                                              Container(
-                                                padding: const EdgeInsets.only(
-                                                    top: 15),
-                                                child: ElevatedButton(
-                                                    style: ElevatedButton.styleFrom(
-                                                        backgroundColor:
-                                                            Colors.blue,
-                                                        shape: RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        50.0))),
-                                                    onPressed: () async {
-                                                      await postKeteranganMinggu(
-                                                          data.id, 'WEEK 2');
-                                                      onRowPressed();
-                                                      Navigator.pop(context);
-                                                      showSimpleNotification(
-                                                        const Text(
-                                                            'Pemilihan Waktu Berhasil'),
-                                                        background:
-                                                            Colors.green,
-                                                        duration:
-                                                            const Duration(
-                                                                seconds: 1),
-                                                      );
-                                                    },
-                                                    child: const Text(
-                                                      "WEEK 2",
-                                                      style: TextStyle(
-                                                        fontSize: 16,
-                                                      ),
-                                                    )),
-                                              ),
-                                              Container(
-                                                padding: const EdgeInsets.only(
-                                                    top: 15),
-                                                child: ElevatedButton(
-                                                    style: ElevatedButton.styleFrom(
-                                                        backgroundColor:
-                                                            Colors.blue,
-                                                        shape: RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        50.0))),
-                                                    onPressed: () async {
-                                                      await postKeteranganMinggu(
-                                                          data.id, 'WEEK 3');
-                                                      onRowPressed();
-                                                      Navigator.pop(context);
-                                                      showSimpleNotification(
-                                                        const Text(
-                                                            'Pemilihan Waktu Berhasil'),
-                                                        background:
-                                                            Colors.green,
-                                                        duration:
-                                                            const Duration(
-                                                                seconds: 1),
-                                                      );
-                                                    },
-                                                    child: const Text(
-                                                      "WEEK 3",
-                                                      style: TextStyle(
-                                                        fontSize: 16,
-                                                      ),
-                                                    )),
-                                              ),
-                                              Container(
-                                                padding: const EdgeInsets.only(
-                                                    top: 15),
-                                                child: ElevatedButton(
-                                                    style: ElevatedButton.styleFrom(
-                                                        backgroundColor:
-                                                            Colors.blue,
-                                                        shape: RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        50.0))),
-                                                    onPressed: () async {
-                                                      await postKeteranganMinggu(
-                                                          data.id, 'WEEK 4');
-                                                      onRowPressed();
-                                                      Navigator.pop(context);
-                                                      showSimpleNotification(
-                                                        const Text(
-                                                            'Pemilihan Waktu Berhasil'),
-                                                        background:
-                                                            Colors.green,
-                                                        duration:
-                                                            const Duration(
-                                                                seconds: 1),
-                                                      );
-                                                    },
-                                                    child: const Text(
-                                                      "WEEK 4",
-                                                      style: TextStyle(
-                                                        fontSize: 16,
-                                                      ),
-                                                    )),
-                                              ),
-                                            ]))))
-                             ));});
-                        },
-                        icon: const Icon(Icons.calendar_today_outlined),
-                        color: Colors.green,
-                      ),
+                      sharedPreferences!.getString('role') == '1' ||
+                              sharedPreferences!.getString('role') == '2' ||
+                              sharedPreferences!.getString('divisi') == 'admin'
+                          ? Positioned(
+                              right: -5.0,
+                              top: -3.0,
+                              child: InkResponse(
+                                onTap: () {
+                                  // Navigator.of(context).pop();
+                                },
+                                child: const Icon(
+                                  Icons.add_circle_outline,
+                                  color: Colors.green,
+                                  size: 20,
+                                ),
+                              ),
+                            )
+                          : const SizedBox(),
+                      sharedPreferences!.getString('role') == '1' ||
+                              sharedPreferences!.getString('role') == '2' ||
+                              sharedPreferences!.getString('divisi') == 'admin'
+                          ? IconButton(
+                              onPressed: () {
+                                showGeneralDialog(
+                                    transitionDuration:
+                                        const Duration(milliseconds: 200),
+                                    barrierDismissible: true,
+                                    barrierLabel: '',
+                                    context: context,
+                                    pageBuilder:
+                                        (context, animation1, animation2) {
+                                      return const Text('');
+                                    },
+                                    barrierColor: Colors.black.withOpacity(0.5),
+                                    transitionBuilder:
+                                        (context, a1, a2, widget) {
+                                      return Transform.scale(
+                                          scale: a1.value,
+                                          child: Opacity(
+                                              opacity: a1.value,
+                                              child: AlertDialog(
+                                                  shape: RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8)),
+                                                  content: SizedBox(
+                                                      child:
+                                                          SingleChildScrollView(
+                                                              scrollDirection:
+                                                                  Axis.vertical,
+                                                              child: Column(
+                                                                  children: [
+                                                                    const Text(
+                                                                      'Pilih Waktu',
+                                                                      style: TextStyle(
+                                                                          color: Colors
+                                                                              .black,
+                                                                          fontSize:
+                                                                              18,
+                                                                          fontWeight:
+                                                                              FontWeight.bold),
+                                                                    ),
+                                                                    Container(
+                                                                      padding: const EdgeInsets
+                                                                          .only(
+                                                                          top:
+                                                                              15),
+                                                                      child: ElevatedButton(
+                                                                          style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
+                                                                          onPressed: () async {
+                                                                            await postKeteranganMinggu(data.id,
+                                                                                'WEEK 1');
+                                                                            onRowPressed();
+                                                                            Navigator.pop(context);
+                                                                            showSimpleNotification(
+                                                                              const Text('Pemilihan Waktu Berhasil'),
+                                                                              background: Colors.green,
+                                                                              duration: const Duration(seconds: 1),
+                                                                            );
+                                                                          },
+                                                                          child: const Text(
+                                                                            "WEEK 1",
+                                                                            style:
+                                                                                TextStyle(
+                                                                              fontSize: 16,
+                                                                            ),
+                                                                          )),
+                                                                    ),
+                                                                    Container(
+                                                                      padding: const EdgeInsets
+                                                                          .only(
+                                                                          top:
+                                                                              15),
+                                                                      child: ElevatedButton(
+                                                                          style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
+                                                                          onPressed: () async {
+                                                                            await postKeteranganMinggu(data.id,
+                                                                                'WEEK 2');
+                                                                            onRowPressed();
+                                                                            Navigator.pop(context);
+                                                                            showSimpleNotification(
+                                                                              const Text('Pemilihan Waktu Berhasil'),
+                                                                              background: Colors.green,
+                                                                              duration: const Duration(seconds: 1),
+                                                                            );
+                                                                          },
+                                                                          child: const Text(
+                                                                            "WEEK 2",
+                                                                            style:
+                                                                                TextStyle(
+                                                                              fontSize: 16,
+                                                                            ),
+                                                                          )),
+                                                                    ),
+                                                                    Container(
+                                                                      padding: const EdgeInsets
+                                                                          .only(
+                                                                          top:
+                                                                              15),
+                                                                      child: ElevatedButton(
+                                                                          style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
+                                                                          onPressed: () async {
+                                                                            await postKeteranganMinggu(data.id,
+                                                                                'WEEK 3');
+                                                                            onRowPressed();
+                                                                            Navigator.pop(context);
+                                                                            showSimpleNotification(
+                                                                              const Text('Pemilihan Waktu Berhasil'),
+                                                                              background: Colors.green,
+                                                                              duration: const Duration(seconds: 1),
+                                                                            );
+                                                                          },
+                                                                          child: const Text(
+                                                                            "WEEK 3",
+                                                                            style:
+                                                                                TextStyle(
+                                                                              fontSize: 16,
+                                                                            ),
+                                                                          )),
+                                                                    ),
+                                                                    Container(
+                                                                      padding: const EdgeInsets
+                                                                          .only(
+                                                                          top:
+                                                                              15),
+                                                                      child: ElevatedButton(
+                                                                          style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
+                                                                          onPressed: () async {
+                                                                            await postKeteranganMinggu(data.id,
+                                                                                'WEEK 4');
+                                                                            onRowPressed();
+                                                                            Navigator.pop(context);
+                                                                            showSimpleNotification(
+                                                                              const Text('Pemilihan Waktu Berhasil'),
+                                                                              background: Colors.green,
+                                                                              duration: const Duration(seconds: 1),
+                                                                            );
+                                                                          },
+                                                                          child: const Text(
+                                                                            "WEEK 4",
+                                                                            style:
+                                                                                TextStyle(
+                                                                              fontSize: 16,
+                                                                            ),
+                                                                          )),
+                                                                    ),
+                                                                  ]))))));
+                                    });
+                              },
+                              icon: const Icon(Icons.calendar_today_outlined),
+                              color: Colors.green,
+                            )
+                          : const SizedBox(),
                     ],
                   )
                 ],
@@ -3436,903 +3447,898 @@ class RowSourceProduksi extends DataTableSource {
                 ],
               ),
             ),
-            sharedPreferences!.getString('level') == '4' ||
-                    sharedPreferences!.getString('divisi') == 'admin'
-                ? IconButton(
-                    onPressed: () {
-                                                print('tap ke : ${data.posisi}');
-                      int idPosisi = data.posisi.toString().toLowerCase() == 'printing resin'
-                      ? 0
-                      : data.posisi.toString().toLowerCase() == 'finishing resin'
-                      ? 1
-                      : data.posisi.toString().toLowerCase() == 'casting'
-                      ? 2
-                      :data.posisi.toString().toLowerCase() == 'finishing'
-                      ? 3
-                      :data.posisi.toString().toLowerCase() == 'polishing 1'
-                      ? 4
-                      :data.posisi.toString().toLowerCase() == 'stell 1'
-                      ? 5
-                      :data.posisi.toString().toLowerCase() == 'pasang batu'
-                      ? 6
-                      :data.posisi.toString().toLowerCase() == 'stell 2'
-                      ? 7
-                      :data.posisi.toString().toLowerCase() == 'polishing 2'
-                      ? 8
-                      :data.posisi.toString().toLowerCase() == 'brj'
-                      ? 9
-                      :-1;
-                      showGeneralDialog(
-              transitionDuration: const Duration(milliseconds: 200),
-              barrierDismissible: true,
-              barrierLabel: '',
-              context: context,
-              pageBuilder: (context, animation1, animation2) {
-                return const Text('');
-              },
-              barrierColor: Colors.black.withOpacity(0.5),
-              transitionBuilder: (context, a1, a2, widget) {
-                return Transform.scale(
-                    scale: a1.value,
-                    child: Opacity(
-                        opacity: a1.value,
-                        child: AlertDialog(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8)),
-                              content: SizedBox(
-                                child: SingleChildScrollView(
-                                  scrollDirection: Axis.vertical,
-                                  child: Column(
-                                    children: [
-                                      const Text(
-                                        'Pilih Posisi Divisi',
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      for (var j = 0;
-                                          j < listDivisi.length;
-                                          j++)
-                                        Container(
-                                          padding:
-                                              const EdgeInsets.only(top: 15),
-                                          child: ElevatedButton(
-                                              style: ElevatedButton.styleFrom(
-                                                  backgroundColor: Colors.blue,
-                                                  shape: RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              50.0))),
-                                              onPressed: () async {
-                                                print('tap ke : $j');
-                                                if(j < idPosisi){
-                                                  //! function back posisi
-                                                  showSimpleNotification(
-                                                        const Text(
-                                                            'Alert Back Posisi'),
-                                                        background:
-                                                            Colors.red,
-                                                        duration:
-                                                            const Duration(
-                                                                seconds: 1),
-                                                      );
-                                                       Navigator.pop(context);
-                                                       if (j == 0 || j == 1 || j == 9) {
-                                                  await postPosisi(
-                                                    data.id,
-                                                    "${listDivisi[j]}",
-                                                    "${listDivisi[j]}",
-                                                  );
-                                                  onRowPressed();
+            sharedPreferences!.getString('nama') == 'Tri Sartika Rahayu'
+                ? const SizedBox()
+                : sharedPreferences!.getString('divisi') == 'produksi' ||
+                        sharedPreferences!.getString('divisi') == 'admin'
+                    ? IconButton(
+                        onPressed: () {
+                          print('tap ke : ${data.posisi}');
+                          int idPosisi = data.posisi.toString().toLowerCase() ==
+                                  'printing resin'
+                              ? 0
+                              : data.posisi.toString().toLowerCase() ==
+                                      'finishing resin'
+                                  ? 1
+                                  : data.posisi.toString().toLowerCase() ==
+                                          'casting'
+                                      ? 2
+                                      : data.posisi.toString().toLowerCase() ==
+                                              'finishing'
+                                          ? 3
+                                          : data.posisi
+                                                      .toString()
+                                                      .toLowerCase() ==
+                                                  'polishing 1'
+                                              ? 4
+                                              : data.posisi
+                                                          .toString()
+                                                          .toLowerCase() ==
+                                                      'stell 1'
+                                                  ? 5
+                                                  : data.posisi
+                                                              .toString()
+                                                              .toLowerCase() ==
+                                                          'pasang batu'
+                                                      ? 6
+                                                      : data.posisi
+                                                                  .toString()
+                                                                  .toLowerCase() ==
+                                                              'stell 2'
+                                                          ? 7
+                                                          : data.posisi
+                                                                      .toString()
+                                                                      .toLowerCase() ==
+                                                                  'polishing 2'
+                                                              ? 8
+                                                              : data.posisi
+                                                                          .toString()
+                                                                          .toLowerCase() ==
+                                                                      'brj'
+                                                                  ? 9
+                                                                  : -1;
+                          showGeneralDialog(
+                              transitionDuration:
+                                  const Duration(milliseconds: 200),
+                              barrierDismissible: true,
+                              barrierLabel: '',
+                              context: context,
+                              pageBuilder: (context, animation1, animation2) {
+                                return const Text('');
+                              },
+                              barrierColor: Colors.black.withOpacity(0.5),
+                              transitionBuilder: (context, a1, a2, widget) {
+                                return Transform.scale(
+                                    scale: a1.value,
+                                    child: Opacity(
+                                        opacity: a1.value,
+                                        child: AlertDialog(
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(8)),
+                                          content: SizedBox(
+                                            child: SingleChildScrollView(
+                                              scrollDirection: Axis.vertical,
+                                              child: Column(
+                                                children: [
+                                                  const Text(
+                                                    'Pilih Posisi Divisi',
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 18,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                  for (var j = 0;
+                                                      j < listDivisi.length;
+                                                      j++)
+                                                    Container(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              top: 15),
+                                                      child: ElevatedButton(
+                                                          style: ElevatedButton.styleFrom(
+                                                              backgroundColor:
+                                                                  Colors.blue,
+                                                              shape: RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              50.0))),
+                                                          onPressed: () async {
+                                                            print(
+                                                                'tap ke : $j');
+                                                            if (j < idPosisi) {
+                                                              //! function back posisi
+                                                              showSimpleNotification(
+                                                                const Text(
+                                                                    'Alert Back Posisi'),
+                                                                background:
+                                                                    Colors.red,
+                                                                duration:
+                                                                    const Duration(
+                                                                        seconds:
+                                                                            1),
+                                                              );
+                                                              Navigator.pop(
+                                                                  context);
+                                                              if (j == 0 ||
+                                                                  j == 1 ||
+                                                                  j == 9) {
+                                                                await postPosisi(
+                                                                  data.id,
+                                                                  "${listDivisi[j]}",
+                                                                  "${listDivisi[j]}",
+                                                                );
+                                                                onRowPressed();
 
-                                                  await postHistory(
-                                                    data.kodeDesignMdbc,
-                                                    data.kodeMarketing,
-                                                    "${listDivisi[j]}",
-                                                    "${listDivisi[j]}",
-                                                  );
-                                                  showSimpleNotification(
-                                                    const Text(
-                                                        'Posisi berhasil di simpan'),
-                                                    background: Colors.green,
-                                                    duration: const Duration(
-                                                        seconds: 1),
-                                                  );
-                                                } else if (j == 2) {
-                                                  //! pop up untuk keterangan atau alasan
-                                                  //! function back posisi
-                                                  
-                                                 showGeneralDialog(
-                                                  transitionDuration: const Duration(milliseconds: 200),
-                                                      barrierDismissible: true,
-                                                      barrierLabel: '',
-                                                      context: context,
-                                                      pageBuilder: (context, animation1, animation2) {
-                                                        return const Text('');
-                                                      },
-                                                      barrierColor: Colors.red.withOpacity(0.8),
-                                                      transitionBuilder: (context, a1, a2, widget) {
-                                                      return Transform.scale(
-                                                       scale: a1.value,
-                                                     child: Opacity(
-                                                      opacity: a1.value,
-                                                      child: AlertDialog(
-                                                            shape: RoundedRectangleBorder(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            8)),
-                                                            content: SizedBox(
-                                                                child:
-                                                                    SingleChildScrollView(
-                                                                        scrollDirection:
-                                                                            Axis
-                                                                                .vertical,
-                                                                        child:
-                                                                            Column(children: [
-                                                                          const Text(
-                                                                            'Pilih Minggu Ke -',
-                                                                            style: TextStyle(
-                                                                                color: Colors.black,
-                                                                                fontSize: 18,
-                                                                                fontWeight: FontWeight.bold),
-                                                                          ),
-                                                                          Container(
-                                                                            padding:
-                                                                                const EdgeInsets.only(top: 15),
-                                                                            child: ElevatedButton(
-                                                                                style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
-                                                                                onPressed: () async {
-                                                      Navigator.pop(context);
-                                                                                  showGeneralDialog(
-                                                                    transitionDuration: const Duration(milliseconds: 200),
-                                                                    barrierDismissible: false,
-                                                                    barrierLabel: '',
-                                                                    context: context,
-                                                                    pageBuilder: (context, animation1, animation2) {
-                                                                      return const Text('');
+                                                                await postHistory(
+                                                                  data.kodeDesignMdbc,
+                                                                  data.kodeMarketing,
+                                                                  "${listDivisi[j]}",
+                                                                  "${listDivisi[j]}",
+                                                                );
+                                                                showSimpleNotification(
+                                                                  const Text(
+                                                                      'Posisi berhasil di simpan'),
+                                                                  background:
+                                                                      Colors
+                                                                          .green,
+                                                                  duration:
+                                                                      const Duration(
+                                                                          seconds:
+                                                                              1),
+                                                                );
+                                                              } else if (j ==
+                                                                  2) {
+                                                                //! pop up untuk keterangan atau alasan
+                                                                //! function back posisi
+
+                                                                showGeneralDialog(
+                                                                    transitionDuration:
+                                                                        const Duration(
+                                                                            milliseconds:
+                                                                                200),
+                                                                    barrierDismissible:
+                                                                        true,
+                                                                    barrierLabel:
+                                                                        '',
+                                                                    context:
+                                                                        context,
+                                                                    pageBuilder:
+                                                                        (context,
+                                                                            animation1,
+                                                                            animation2) {
+                                                                      return const Text(
+                                                                          '');
                                                                     },
-                                                                    barrierColor: Colors.red.withOpacity(0.8),
-                                                                    transitionBuilder: (context, a1, a2, widget) {
-                                                        TextEditingController keterangan = TextEditingController();
-                                                          RoundedLoadingButtonController btnController =
-                                                                                  RoundedLoadingButtonController();
-                                                                              final formKey = GlobalKey<FormState>();
+                                                                    barrierColor: Colors
+                                                                        .red
+                                                                        .withOpacity(
+                                                                            0.8),
+                                                                    transitionBuilder:
+                                                                        (context,
+                                                                            a1,
+                                                                            a2,
+                                                                            widget) {
+                                                                      return Transform.scale(
+                                                                          scale: a1.value,
+                                                                          child: Opacity(
+                                                                              opacity: a1.value,
+                                                                              child: AlertDialog(
+                                                                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                                                                                  content: SizedBox(
+                                                                                      child: SingleChildScrollView(
+                                                                                          scrollDirection: Axis.vertical,
+                                                                                          child: Column(children: [
+                                                                                            const Text(
+                                                                                              'Pilih Minggu Ke -',
+                                                                                              style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
+                                                                                            ),
+                                                                                            Container(
+                                                                                              padding: const EdgeInsets.only(top: 15),
+                                                                                              child: ElevatedButton(
+                                                                                                  style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
+                                                                                                  onPressed: () async {
+                                                                                                    Navigator.pop(context);
+                                                                                                    showGeneralDialog(
+                                                                                                        transitionDuration: const Duration(milliseconds: 200),
+                                                                                                        barrierDismissible: false,
+                                                                                                        barrierLabel: '',
+                                                                                                        context: context,
+                                                                                                        pageBuilder: (context, animation1, animation2) {
+                                                                                                          return const Text('');
+                                                                                                        },
+                                                                                                        barrierColor: Colors.red.withOpacity(0.8),
+                                                                                                        transitionBuilder: (context, a1, a2, widget) {
+                                                                                                          TextEditingController keterangan = TextEditingController();
+                                                                                                          RoundedLoadingButtonController btnController = RoundedLoadingButtonController();
+                                                                                                          final formKey = GlobalKey<FormState>();
 
-                                                                  return Transform.scale(
-                                                                      scale: a1.value,
-                                                                      child: Opacity(
-                                                                          opacity: a1.value,
-                                                                          child: AlertDialog(
-                                                            shape: RoundedRectangleBorder(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            8)),
-                                                            content: SizedBox(
-                                                                child:
-                                                                    SingleChildScrollView(
-                                                                        scrollDirection:
-                                                                            Axis
-                                                                                .vertical,
-                                                                        child:
-                                                                            Column(
-                                                                              children: [
-                                                                          const Text(
-                                                                            'Alasan / Keterangan',
-                                                                            style: TextStyle(
-                                                                                color: Colors.black,
-                                                                                fontSize: 18,
-                                                                                fontWeight: FontWeight.bold),
-                                                                          ),
-                                                                          const SizedBox(height: 40),
-                                                                           Container(
-                    padding: const EdgeInsets.only(right: 5),
-                    width: 250,
-                    child: TextField(
-                      // textInputAction: TextInputAction.next,
-                      keyboardType: TextInputType.multiline,
-                      onChanged: (reportinput) {},
-                      maxLines: 5, //or null
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          labelText: "Keterangan",
-                          hintText: "Keterangan"),
+                                                                                                          return Transform.scale(
+                                                                                                              scale: a1.value,
+                                                                                                              child: Opacity(
+                                                                                                                  opacity: a1.value,
+                                                                                                                  child: AlertDialog(
+                                                                                                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                                                                                                                      content: SizedBox(
+                                                                                                                          child: SingleChildScrollView(
+                                                                                                                              scrollDirection: Axis.vertical,
+                                                                                                                              child: Column(children: [
+                                                                                                                                const Text(
+                                                                                                                                  'Alasan / Keterangan',
+                                                                                                                                  style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
+                                                                                                                                ),
+                                                                                                                                const SizedBox(height: 40),
+                                                                                                                                Container(
+                                                                                                                                  padding: const EdgeInsets.only(right: 5),
+                                                                                                                                  width: 250,
+                                                                                                                                  child: TextField(
+                                                                                                                                    // textInputAction: TextInputAction.next,
+                                                                                                                                    keyboardType: TextInputType.multiline,
+                                                                                                                                    onChanged: (reportinput) {},
+                                                                                                                                    maxLines: 5, //or null
+                                                                                                                                    decoration: InputDecoration(
+                                                                                                                                        border: OutlineInputBorder(
+                                                                                                                                          borderRadius: BorderRadius.circular(10.0),
+                                                                                                                                        ),
+                                                                                                                                        labelText: "Keterangan",
+                                                                                                                                        hintText: "Keterangan"),
 
-                      controller: keterangan,
-                    ),
-                  ),
-                                                                          
-                                                            SizedBox(
-                                                              width:250,
-                                                              child: CustomLoadingButton(
-                                                                  controller:
-                                                                      btnController,
-                                                                  child: const Text(
-                                                                      "Simpan"),
-                                                                  onPressed:
-                                                                      () async {
-                                                                    if (formKey
-                                                                        .currentState!
-                                                                        .validate()) {
-                                                                      formKey
-                                                                          .currentState!
-                                                                          .save();
-                                                                      Future.delayed(const Duration(
-                                                                              milliseconds:
-                                                                                  10))
-                                                                          .then(
-                                                                              (value) async {
-                                                                        btnController
-                                                                            .success();
-                                                                      
-                                                                        Future.delayed(const Duration(
-                                                                                milliseconds:
-                                                                                    10))
-                                                                            .then(
-                                                                                (value) {
-                                                                          btnController
-                                                                              .reset(); //reset
-                                                                         
-                                                                        });
-                                                                     
-                                                                      });
-                                                                    } else {
-                                                                      btnController
-                                                                          .error();
-                                                                      Future.delayed(const Duration(
-                                                                              seconds:
-                                                                                  1))
-                                                                          .then(
-                                                                              (value) {
-                                                                        btnController
-                                                                            .reset(); //reset
-                                                                      });
-                                                                    }
-                                                                  }),
+                                                                                                                                    controller: keterangan,
+                                                                                                                                  ),
+                                                                                                                                ),
+                                                                                                                                SizedBox(
+                                                                                                                                  width: 250,
+                                                                                                                                  child: CustomLoadingButton(
+                                                                                                                                      controller: btnController,
+                                                                                                                                      child: const Text("Simpan"),
+                                                                                                                                      onPressed: () async {
+                                                                                                                                        if (formKey.currentState!.validate()) {
+                                                                                                                                          formKey.currentState!.save();
+                                                                                                                                          Future.delayed(const Duration(milliseconds: 10)).then((value) async {
+                                                                                                                                            btnController.success();
+
+                                                                                                                                            Future.delayed(const Duration(milliseconds: 10)).then((value) {
+                                                                                                                                              btnController.reset(); //reset
+                                                                                                                                            });
+                                                                                                                                          });
+                                                                                                                                        } else {
+                                                                                                                                          btnController.error();
+                                                                                                                                          Future.delayed(const Duration(seconds: 1)).then((value) {
+                                                                                                                                            btnController.reset(); //reset
+                                                                                                                                          });
+                                                                                                                                        }
+                                                                                                                                      }),
+                                                                                                                                ),
+                                                                                                                                Container(
+                                                                                                                                  width: 250,
+                                                                                                                                  padding: const EdgeInsets.only(top: 15),
+                                                                                                                                  child: ElevatedButton(
+                                                                                                                                      style: ElevatedButton.styleFrom(backgroundColor: Colors.red, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
+                                                                                                                                      onPressed: () async {
+                                                                                                                                        Navigator.pop(context);
+                                                                                                                                      },
+                                                                                                                                      child: const Text(
+                                                                                                                                        "Batal",
+                                                                                                                                        style: TextStyle(
+                                                                                                                                          fontSize: 16,
+                                                                                                                                        ),
+                                                                                                                                      )),
+                                                                                                                                ),
+                                                                                                                              ]))))));
+                                                                                                        });
+                                                                                                    // await postPosisi(
+                                                                                                    //   data.id,
+                                                                                                    //   "${listDivisi[j]}",
+                                                                                                    //   "W1",
+                                                                                                    // );
+
+                                                                                                    // await postHistory(
+                                                                                                    //   data.kodeDesignMdbc,
+                                                                                                    //   data.kodeMarketing,
+                                                                                                    //   "${listDivisi[j]}",
+                                                                                                    //   "W1",
+                                                                                                    // );
+                                                                                                    // onRowPressed();
+                                                                                                    // Navigator.pop(context);
+                                                                                                    // showSimpleNotification(
+                                                                                                    //   const Text('Pemilihan Posisi Berhasil'),
+                                                                                                    //   background: Colors.green,
+                                                                                                    //   duration: const Duration(seconds: 1),
+                                                                                                    // );
+                                                                                                  },
+                                                                                                  child: const Text(
+                                                                                                    "WEEK 1",
+                                                                                                    style: TextStyle(
+                                                                                                      fontSize: 16,
+                                                                                                    ),
+                                                                                                  )),
+                                                                                            ),
+                                                                                            Container(
+                                                                                              padding: const EdgeInsets.only(top: 15),
+                                                                                              child: ElevatedButton(
+                                                                                                  style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
+                                                                                                  onPressed: () async {
+                                                                                                    await postPosisi(
+                                                                                                      data.id,
+                                                                                                      "${listDivisi[j]}",
+                                                                                                      "W2",
+                                                                                                    );
+                                                                                                    onRowPressed();
+
+                                                                                                    await postHistory(
+                                                                                                      data.kodeDesignMdbc,
+                                                                                                      data.kodeMarketing,
+                                                                                                      "${listDivisi[j]}",
+                                                                                                      "W2",
+                                                                                                    );
+                                                                                                    onRowPressed();
+                                                                                                    Navigator.pop(context);
+                                                                                                    showSimpleNotification(
+                                                                                                      const Text('Pemilihan Posisi Berhasil'),
+                                                                                                      background: Colors.green,
+                                                                                                      duration: const Duration(seconds: 1),
+                                                                                                    );
+                                                                                                  },
+                                                                                                  child: const Text(
+                                                                                                    "WEEK 2",
+                                                                                                    style: TextStyle(
+                                                                                                      fontSize: 16,
+                                                                                                    ),
+                                                                                                  )),
+                                                                                            ),
+                                                                                            Container(
+                                                                                              padding: const EdgeInsets.only(top: 15),
+                                                                                              child: ElevatedButton(
+                                                                                                  style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
+                                                                                                  onPressed: () async {
+                                                                                                    await postPosisi(
+                                                                                                      data.id,
+                                                                                                      "${listDivisi[j]}",
+                                                                                                      "W3",
+                                                                                                    );
+                                                                                                    onRowPressed();
+
+                                                                                                    await postHistory(
+                                                                                                      data.kodeDesignMdbc,
+                                                                                                      data.kodeMarketing,
+                                                                                                      "${listDivisi[j]}",
+                                                                                                      "W3",
+                                                                                                    );
+                                                                                                    onRowPressed();
+                                                                                                    Navigator.pop(context);
+                                                                                                    showSimpleNotification(
+                                                                                                      const Text('Pemilihan Posisi Berhasil'),
+                                                                                                      background: Colors.green,
+                                                                                                      duration: const Duration(seconds: 1),
+                                                                                                    );
+                                                                                                  },
+                                                                                                  child: const Text(
+                                                                                                    "WEEK 3",
+                                                                                                    style: TextStyle(
+                                                                                                      fontSize: 16,
+                                                                                                    ),
+                                                                                                  )),
+                                                                                            ),
+                                                                                            Container(
+                                                                                              padding: const EdgeInsets.only(top: 15),
+                                                                                              child: ElevatedButton(
+                                                                                                  style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
+                                                                                                  onPressed: () async {
+                                                                                                    await postPosisi(
+                                                                                                      data.id,
+                                                                                                      "${listDivisi[j]}",
+                                                                                                      "W4",
+                                                                                                    );
+                                                                                                    onRowPressed();
+
+                                                                                                    await postHistory(
+                                                                                                      data.kodeDesignMdbc,
+                                                                                                      data.kodeMarketing,
+                                                                                                      "${listDivisi[j]}",
+                                                                                                      "W4",
+                                                                                                    );
+                                                                                                    onRowPressed();
+                                                                                                    Navigator.pop(context);
+                                                                                                    showSimpleNotification(
+                                                                                                      const Text('Pemilihan Posisi Berhasil'),
+                                                                                                      background: Colors.green,
+                                                                                                      duration: const Duration(seconds: 1),
+                                                                                                    );
+                                                                                                  },
+                                                                                                  child: const Text(
+                                                                                                    "WEEK 4",
+                                                                                                    style: TextStyle(
+                                                                                                      fontSize: 16,
+                                                                                                    ),
+                                                                                                  )),
+                                                                                            ),
+                                                                                          ]))))));
+                                                                    });
+                                                              } else {
+                                                                showGeneralDialog(
+                                                                    transitionDuration:
+                                                                        const Duration(
+                                                                            milliseconds:
+                                                                                200),
+                                                                    barrierDismissible:
+                                                                        true,
+                                                                    barrierLabel:
+                                                                        '',
+                                                                    context:
+                                                                        context,
+                                                                    pageBuilder:
+                                                                        (context,
+                                                                            animation1,
+                                                                            animation2) {
+                                                                      return const Text(
+                                                                          '');
+                                                                    },
+                                                                    barrierColor: Colors
+                                                                        .red
+                                                                        .withOpacity(
+                                                                            0.8),
+                                                                    transitionBuilder:
+                                                                        (context,
+                                                                            a1,
+                                                                            a2,
+                                                                            widget) {
+                                                                      return Transform.scale(
+                                                                          scale: a1.value,
+                                                                          child: Opacity(
+                                                                              opacity: a1.value,
+                                                                              child: AlertDialog(
+                                                                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                                                                                content: SizedBox(
+                                                                                  child: SingleChildScrollView(
+                                                                                    scrollDirection: Axis.vertical,
+                                                                                    child: Column(
+                                                                                      children: [
+                                                                                        // SizedBox(
+                                                                                        //   child: Lottie.asset(
+                                                                                        //       "loadingJSON/backbutton.json",
+                                                                                        //       fit: BoxFit
+                                                                                        //           .cover),
+                                                                                        // ),
+                                                                                        Text(
+                                                                                          'Pilih Artist ${listDivisi[j]}',
+                                                                                          style: const TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
+                                                                                        ),
+
+                                                                                        //! loopimg
+                                                                                        for (var i = 0;
+                                                                                            j == 3
+                                                                                                ? i < listSubDivisiArtistFinishing.length
+                                                                                                : j == 4 || j == 8
+                                                                                                    ? i < listSubDivisiArtistPolishing.length
+                                                                                                    : j == 5 || j == 7
+                                                                                                        ? i < listSubDivisiArtistStell.length
+                                                                                                        : i < listSubDivisiArtistPasangBatu.length;
+                                                                                            i++)
+                                                                                          Container(
+                                                                                            padding: const EdgeInsets.only(top: 15),
+                                                                                            child: ElevatedButton(
+                                                                                                // style: ElevatedButton.styleFrom(backgroundColor: colorDasar, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
+                                                                                                style: ButtonStyle(
+                                                                                                  backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                                                                                                    (Set<MaterialState> states) {
+                                                                                                      if (states.contains(MaterialState.hovered)) {
+                                                                                                        // Saat tombol di-hover, atur warna latar belakang yang berbeda di sini
+                                                                                                        return Colors.red; // Ganti dengan warna yang diinginkan
+                                                                                                      }
+                                                                                                      // Warna latar belakang saat tidak di-hover
+                                                                                                      return colorDasar; // Ganti dengan warna yang diinginkan
+                                                                                                    },
+                                                                                                  ),
+                                                                                                ),
+                                                                                                onPressed: () async {
+                                                                                                  await postPosisi(
+                                                                                                    data.id,
+                                                                                                    "${listDivisi[j]}",
+                                                                                                    j == 3
+                                                                                                        ? listSubDivisiArtistFinishing[i]
+                                                                                                        : j == 4 || j == 8
+                                                                                                            ? listSubDivisiArtistPolishing[i]
+                                                                                                            : j == 5 || j == 7
+                                                                                                                ? listSubDivisiArtistStell[i]
+                                                                                                                : listSubDivisiArtistPasangBatu[i],
+                                                                                                  );
+                                                                                                  onRowPressed();
+
+                                                                                                  await postHistory(
+                                                                                                    data.kodeDesignMdbc,
+                                                                                                    data.kodeMarketing,
+                                                                                                    "${listDivisi[j]}",
+                                                                                                    j == 3
+                                                                                                        ? listSubDivisiArtistFinishing[i]
+                                                                                                        : j == 4 || j == 8
+                                                                                                            ? listSubDivisiArtistPolishing[i]
+                                                                                                            : j == 5 || j == 7
+                                                                                                                ? listSubDivisiArtistStell[i]
+                                                                                                                : listSubDivisiArtistPasangBatu[i],
+                                                                                                  );
+                                                                                                  Navigator.pop(context);
+                                                                                                  showSimpleNotification(
+                                                                                                    const Text('Menambahkan posisi dan artist berhasil'),
+                                                                                                    background: Colors.green,
+                                                                                                    duration: const Duration(seconds: 1),
+                                                                                                  );
+                                                                                                },
+                                                                                                child: Text(
+                                                                                                  j == 3
+                                                                                                      ? listSubDivisiArtistFinishing[i]
+                                                                                                      : j == 4 || j == 8
+                                                                                                          ? listSubDivisiArtistPolishing[i]
+                                                                                                          : j == 5 || j == 7
+                                                                                                              ? listSubDivisiArtistStell[i]
+                                                                                                              : listSubDivisiArtistPasangBatu[i],
+                                                                                                  style: const TextStyle(
+                                                                                                    fontSize: 16,
+                                                                                                  ),
+                                                                                                )),
+                                                                                          ),
+                                                                                      ],
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                              )));
+                                                                    });
+                                                              }
+                                                            } else {
+                                                              Navigator.pop(
+                                                                  context);
+                                                              if (j == 0 ||
+                                                                  j == 1 ||
+                                                                  j == 9) {
+                                                                await postPosisi(
+                                                                  data.id,
+                                                                  "${listDivisi[j]}",
+                                                                  "${listDivisi[j]}",
+                                                                );
+                                                                onRowPressed();
+
+                                                                await postHistory(
+                                                                  data.kodeDesignMdbc,
+                                                                  data.kodeMarketing,
+                                                                  "${listDivisi[j]}",
+                                                                  "${listDivisi[j]}",
+                                                                );
+                                                                showSimpleNotification(
+                                                                  const Text(
+                                                                      'Posisi berhasil di simpan'),
+                                                                  background:
+                                                                      Colors
+                                                                          .green,
+                                                                  duration:
+                                                                      const Duration(
+                                                                          seconds:
+                                                                              1),
+                                                                );
+                                                              } else if (j ==
+                                                                  2) {
+                                                                showGeneralDialog(
+                                                                    transitionDuration: const Duration(
+                                                                        milliseconds:
+                                                                            200),
+                                                                    barrierDismissible:
+                                                                        true,
+                                                                    barrierLabel:
+                                                                        '',
+                                                                    context:
+                                                                        context,
+                                                                    pageBuilder: (context,
+                                                                        animation1,
+                                                                        animation2) {
+                                                                      return const Text(
+                                                                          '');
+                                                                    },
+                                                                    barrierColor: Colors
+                                                                        .black
+                                                                        .withOpacity(
+                                                                            0.5),
+                                                                    transitionBuilder:
+                                                                        (context,
+                                                                            a1,
+                                                                            a2,
+                                                                            widget) {
+                                                                      return Transform.scale(
+                                                                          scale: a1.value,
+                                                                          child: Opacity(
+                                                                              opacity: a1.value,
+                                                                              child: AlertDialog(
+                                                                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                                                                                  content: SizedBox(
+                                                                                      child: SingleChildScrollView(
+                                                                                          scrollDirection: Axis.vertical,
+                                                                                          child: Column(children: [
+                                                                                            const Text(
+                                                                                              'Pilih Minggu Ke -',
+                                                                                              style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
+                                                                                            ),
+                                                                                            Container(
+                                                                                              padding: const EdgeInsets.only(top: 15),
+                                                                                              child: ElevatedButton(
+                                                                                                  style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
+                                                                                                  onPressed: () async {
+                                                                                                    await postPosisi(
+                                                                                                      data.id,
+                                                                                                      "${listDivisi[j]}",
+                                                                                                      "W1",
+                                                                                                    );
+                                                                                                    onRowPressed();
+
+                                                                                                    await postHistory(
+                                                                                                      data.kodeDesignMdbc,
+                                                                                                      data.kodeMarketing,
+                                                                                                      "${listDivisi[j]}",
+                                                                                                      "W1",
+                                                                                                    );
+                                                                                                    onRowPressed();
+                                                                                                    Navigator.pop(context);
+                                                                                                    showSimpleNotification(
+                                                                                                      const Text('Pemilihan Posisi Berhasil'),
+                                                                                                      background: Colors.green,
+                                                                                                      duration: const Duration(seconds: 1),
+                                                                                                    );
+                                                                                                  },
+                                                                                                  child: const Text(
+                                                                                                    "WEEK 1",
+                                                                                                    style: TextStyle(
+                                                                                                      fontSize: 16,
+                                                                                                    ),
+                                                                                                  )),
+                                                                                            ),
+                                                                                            Container(
+                                                                                              padding: const EdgeInsets.only(top: 15),
+                                                                                              child: ElevatedButton(
+                                                                                                  style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
+                                                                                                  onPressed: () async {
+                                                                                                    await postPosisi(
+                                                                                                      data.id,
+                                                                                                      "${listDivisi[j]}",
+                                                                                                      "W2",
+                                                                                                    );
+                                                                                                    onRowPressed();
+
+                                                                                                    await postHistory(
+                                                                                                      data.kodeDesignMdbc,
+                                                                                                      data.kodeMarketing,
+                                                                                                      "${listDivisi[j]}",
+                                                                                                      "W2",
+                                                                                                    );
+                                                                                                    onRowPressed();
+                                                                                                    Navigator.pop(context);
+                                                                                                    showSimpleNotification(
+                                                                                                      const Text('Pemilihan Posisi Berhasil'),
+                                                                                                      background: Colors.green,
+                                                                                                      duration: const Duration(seconds: 1),
+                                                                                                    );
+                                                                                                  },
+                                                                                                  child: const Text(
+                                                                                                    "WEEK 2",
+                                                                                                    style: TextStyle(
+                                                                                                      fontSize: 16,
+                                                                                                    ),
+                                                                                                  )),
+                                                                                            ),
+                                                                                            Container(
+                                                                                              padding: const EdgeInsets.only(top: 15),
+                                                                                              child: ElevatedButton(
+                                                                                                  style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
+                                                                                                  onPressed: () async {
+                                                                                                    await postPosisi(
+                                                                                                      data.id,
+                                                                                                      "${listDivisi[j]}",
+                                                                                                      "W3",
+                                                                                                    );
+                                                                                                    onRowPressed();
+
+                                                                                                    await postHistory(
+                                                                                                      data.kodeDesignMdbc,
+                                                                                                      data.kodeMarketing,
+                                                                                                      "${listDivisi[j]}",
+                                                                                                      "W3",
+                                                                                                    );
+                                                                                                    onRowPressed();
+                                                                                                    Navigator.pop(context);
+                                                                                                    showSimpleNotification(
+                                                                                                      const Text('Pemilihan Posisi Berhasil'),
+                                                                                                      background: Colors.green,
+                                                                                                      duration: const Duration(seconds: 1),
+                                                                                                    );
+                                                                                                  },
+                                                                                                  child: const Text(
+                                                                                                    "WEEK 3",
+                                                                                                    style: TextStyle(
+                                                                                                      fontSize: 16,
+                                                                                                    ),
+                                                                                                  )),
+                                                                                            ),
+                                                                                            Container(
+                                                                                              padding: const EdgeInsets.only(top: 15),
+                                                                                              child: ElevatedButton(
+                                                                                                  style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
+                                                                                                  onPressed: () async {
+                                                                                                    await postPosisi(
+                                                                                                      data.id,
+                                                                                                      "${listDivisi[j]}",
+                                                                                                      "W4",
+                                                                                                    );
+                                                                                                    onRowPressed();
+
+                                                                                                    await postHistory(
+                                                                                                      data.kodeDesignMdbc,
+                                                                                                      data.kodeMarketing,
+                                                                                                      "${listDivisi[j]}",
+                                                                                                      "W4",
+                                                                                                    );
+                                                                                                    onRowPressed();
+                                                                                                    Navigator.pop(context);
+                                                                                                    showSimpleNotification(
+                                                                                                      const Text('Pemilihan Posisi Berhasil'),
+                                                                                                      background: Colors.green,
+                                                                                                      duration: const Duration(seconds: 1),
+                                                                                                    );
+                                                                                                  },
+                                                                                                  child: const Text(
+                                                                                                    "WEEK 4",
+                                                                                                    style: TextStyle(
+                                                                                                      fontSize: 16,
+                                                                                                    ),
+                                                                                                  )),
+                                                                                            ),
+                                                                                          ]))))));
+                                                                    });
+                                                              } else {
+                                                                showGeneralDialog(
+                                                                    transitionDuration: const Duration(
+                                                                        milliseconds:
+                                                                            200),
+                                                                    barrierDismissible:
+                                                                        true,
+                                                                    barrierLabel:
+                                                                        '',
+                                                                    context:
+                                                                        context,
+                                                                    pageBuilder: (context,
+                                                                        animation1,
+                                                                        animation2) {
+                                                                      return const Text(
+                                                                          '');
+                                                                    },
+                                                                    barrierColor: Colors
+                                                                        .black
+                                                                        .withOpacity(
+                                                                            0.5),
+                                                                    transitionBuilder:
+                                                                        (context,
+                                                                            a1,
+                                                                            a2,
+                                                                            widget) {
+                                                                      return Transform.scale(
+                                                                          scale: a1.value,
+                                                                          child: Opacity(
+                                                                              opacity: a1.value,
+                                                                              child: AlertDialog(
+                                                                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                                                                                content: SizedBox(
+                                                                                  child: SingleChildScrollView(
+                                                                                    scrollDirection: Axis.vertical,
+                                                                                    child: Column(
+                                                                                      children: [
+                                                                                        // SizedBox(
+                                                                                        //   child: Lottie.asset(
+                                                                                        //       "loadingJSON/backbutton.json",
+                                                                                        //       fit: BoxFit
+                                                                                        //           .cover),
+                                                                                        // ),
+                                                                                        Text(
+                                                                                          'Pilih Artist ${listDivisi[j]}',
+                                                                                          style: const TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
+                                                                                        ),
+
+                                                                                        //! loopimg
+                                                                                        for (var i = 0;
+                                                                                            j == 3
+                                                                                                ? i < listSubDivisiArtistFinishing.length
+                                                                                                : j == 4 || j == 8
+                                                                                                    ? i < listSubDivisiArtistPolishing.length
+                                                                                                    : j == 5 || j == 7
+                                                                                                        ? i < listSubDivisiArtistStell.length
+                                                                                                        : i < listSubDivisiArtistPasangBatu.length;
+                                                                                            i++)
+                                                                                          Container(
+                                                                                            padding: const EdgeInsets.only(top: 15),
+                                                                                            child: ElevatedButton(
+                                                                                                // style: ElevatedButton.styleFrom(backgroundColor: colorDasar, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
+                                                                                                style: ButtonStyle(
+                                                                                                  backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                                                                                                    (Set<MaterialState> states) {
+                                                                                                      if (states.contains(MaterialState.hovered)) {
+                                                                                                        // Saat tombol di-hover, atur warna latar belakang yang berbeda di sini
+                                                                                                        return Colors.red; // Ganti dengan warna yang diinginkan
+                                                                                                      }
+                                                                                                      // Warna latar belakang saat tidak di-hover
+                                                                                                      return colorDasar; // Ganti dengan warna yang diinginkan
+                                                                                                    },
+                                                                                                  ),
+                                                                                                ),
+                                                                                                onPressed: () async {
+                                                                                                  await postPosisi(
+                                                                                                    data.id,
+                                                                                                    "${listDivisi[j]}",
+                                                                                                    j == 3
+                                                                                                        ? listSubDivisiArtistFinishing[i]
+                                                                                                        : j == 4 || j == 8
+                                                                                                            ? listSubDivisiArtistPolishing[i]
+                                                                                                            : j == 5 || j == 7
+                                                                                                                ? listSubDivisiArtistStell[i]
+                                                                                                                : listSubDivisiArtistPasangBatu[i],
+                                                                                                  );
+                                                                                                  onRowPressed();
+
+                                                                                                  await postHistory(
+                                                                                                    data.kodeDesignMdbc,
+                                                                                                    data.kodeMarketing,
+                                                                                                    "${listDivisi[j]}",
+                                                                                                    j == 3
+                                                                                                        ? listSubDivisiArtistFinishing[i]
+                                                                                                        : j == 4 || j == 8
+                                                                                                            ? listSubDivisiArtistPolishing[i]
+                                                                                                            : j == 5 || j == 7
+                                                                                                                ? listSubDivisiArtistStell[i]
+                                                                                                                : listSubDivisiArtistPasangBatu[i],
+                                                                                                  );
+                                                                                                  Navigator.pop(context);
+                                                                                                  showSimpleNotification(
+                                                                                                    const Text('Menambahkan posisi dan artist berhasil'),
+                                                                                                    background: Colors.green,
+                                                                                                    duration: const Duration(seconds: 1),
+                                                                                                  );
+                                                                                                },
+                                                                                                child: Text(
+                                                                                                  j == 3
+                                                                                                      ? listSubDivisiArtistFinishing[i]
+                                                                                                      : j == 4 || j == 8
+                                                                                                          ? listSubDivisiArtistPolishing[i]
+                                                                                                          : j == 5 || j == 7
+                                                                                                              ? listSubDivisiArtistStell[i]
+                                                                                                              : listSubDivisiArtistPasangBatu[i],
+                                                                                                  style: const TextStyle(
+                                                                                                    fontSize: 16,
+                                                                                                  ),
+                                                                                                )),
+                                                                                          ),
+                                                                                      ],
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                              )));
+                                                                    });
+                                                              }
+                                                            }
+                                                          },
+                                                          child: Text(
+                                                            "${listDivisi[j]}",
+                                                            style:
+                                                                const TextStyle(
+                                                              fontSize: 16,
                                                             ),
-                                                     
-                                                                                 Container(
-                                                                                    width: 250,
-                                                padding: const EdgeInsets.only(
-                                                    top: 15),
-                                                child: ElevatedButton(
-                                                    style: ElevatedButton.styleFrom(
-                                                        backgroundColor:
-                                                            Colors.red,
-                                                      shape: RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        50.0))),
-                                                    onPressed: () async {
-                                                      Navigator.pop(context);
-                                                    },
-                                                     child: const Text(
-                                                      "Batal",
-                                                      style: TextStyle(
-                                                        fontSize: 16,
-                                                      ),
-                                                    )),
+                                                          )),
+                                                    ),
+                                                ],
                                               ),
-                                                                                 
-                                                                                
-                                                                                ]))))));});
-                                                                                  // await postPosisi(
-                                                                                  //   data.id,
-                                                                                  //   "${listDivisi[j]}",
-                                                                                  //   "W1",
-                                                                                  // );
-
-                                                                                  // await postHistory(
-                                                                                  //   data.kodeDesignMdbc,
-                                                                                  //   data.kodeMarketing,
-                                                                                  //   "${listDivisi[j]}",
-                                                                                  //   "W1",
-                                                                                  // );
-                                                                                  // onRowPressed();
-                                                                                  // Navigator.pop(context);
-                                                                                  // showSimpleNotification(
-                                                                                  //   const Text('Pemilihan Posisi Berhasil'),
-                                                                                  //   background: Colors.green,
-                                                                                  //   duration: const Duration(seconds: 1),
-                                                                                  // );
-                                                                                },
-                                                                                child: const Text(
-                                                                                  "WEEK 1",
-                                                                                  style: TextStyle(
-                                                                                    fontSize: 16,
-                                                                                  ),
-                                                                                )),
-                                                                          ),
-                                                                          Container(
-                                                                            padding:
-                                                                                const EdgeInsets.only(top: 15),
-                                                                            child: ElevatedButton(
-                                                                                style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
-                                                                                onPressed: () async {
-                                                                                  await postPosisi(
-                                                                                    data.id,
-                                                                                    "${listDivisi[j]}",
-                                                                                    "W2",
-                                                                                  );
-                                                                                  onRowPressed();
-
-                                                                                  await postHistory(
-                                                                                    data.kodeDesignMdbc,
-                                                                                    data.kodeMarketing,
-                                                                                    "${listDivisi[j]}",
-                                                                                    "W2",
-                                                                                  );
-                                                                                  onRowPressed();
-                                                                                  Navigator.pop(context);
-                                                                                  showSimpleNotification(
-                                                                                    const Text('Pemilihan Posisi Berhasil'),
-                                                                                    background: Colors.green,
-                                                                                    duration: const Duration(seconds: 1),
-                                                                                  );
-                                                                                },
-                                                                                child: const Text(
-                                                                                  "WEEK 2",
-                                                                                  style: TextStyle(
-                                                                                    fontSize: 16,
-                                                                                  ),
-                                                                                )),
-                                                                          ),
-                                                                          Container(
-                                                                            padding:
-                                                                                const EdgeInsets.only(top: 15),
-                                                                            child: ElevatedButton(
-                                                                                style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
-                                                                                onPressed: () async {
-                                                                                  await postPosisi(
-                                                                                    data.id,
-                                                                                    "${listDivisi[j]}",
-                                                                                    "W3",
-                                                                                  );
-                                                                                  onRowPressed();
-
-                                                                                  await postHistory(
-                                                                                    data.kodeDesignMdbc,
-                                                                                    data.kodeMarketing,
-                                                                                    "${listDivisi[j]}",
-                                                                                    "W3",
-                                                                                  );
-                                                                                  onRowPressed();
-                                                                                  Navigator.pop(context);
-                                                                                  showSimpleNotification(
-                                                                                    const Text('Pemilihan Posisi Berhasil'),
-                                                                                    background: Colors.green,
-                                                                                    duration: const Duration(seconds: 1),
-                                                                                  );
-                                                                                },
-                                                                                child: const Text(
-                                                                                  "WEEK 3",
-                                                                                  style: TextStyle(
-                                                                                    fontSize: 16,
-                                                                                  ),
-                                                                                )),
-                                                                          ),
-                                                                          Container(
-                                                                            padding:
-                                                                                const EdgeInsets.only(top: 15),
-                                                                            child: ElevatedButton(
-                                                                                style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
-                                                                                onPressed: () async {
-                                                                                  await postPosisi(
-                                                                                    data.id,
-                                                                                    "${listDivisi[j]}",
-                                                                                    "W4",
-                                                                                  );
-                                                                                  onRowPressed();
-
-                                                                                  await postHistory(
-                                                                                    data.kodeDesignMdbc,
-                                                                                    data.kodeMarketing,
-                                                                                    "${listDivisi[j]}",
-                                                                                    "W4",
-                                                                                  );
-                                                                                  onRowPressed();
-                                                                                  Navigator.pop(context);
-                                                                                  showSimpleNotification(
-                                                                                    const Text('Pemilihan Posisi Berhasil'),
-                                                                                    background: Colors.green,
-                                                                                    duration: const Duration(seconds: 1),
-                                                                                  );
-                                                                                },
-                                                                                child: const Text(
-                                                                                  "WEEK 4",
-                                                                                  style: TextStyle(
-                                                                                    fontSize: 16,
-                                                                                  ),
-                                                                                )),
-                                                                          ),
-                                                                        ]))))
-                                           ));});
-                                                } else{
-                                                  showGeneralDialog(
-              transitionDuration: const Duration(milliseconds: 200),
-              barrierDismissible: true,
-              barrierLabel: '',
-              context: context,
-              pageBuilder: (context, animation1, animation2) {
-                return const Text('');
-              },
-              barrierColor: Colors.red.withOpacity(0.8),
-              transitionBuilder: (context, a1, a2, widget) {
-                return Transform.scale(
-                    scale: a1.value,
-                    child: Opacity(
-                        opacity: a1.value,
-                        child: AlertDialog(
-                                                          shape: RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          8)),
-                                                          content: SizedBox(
-                                                            child:
-                                                                SingleChildScrollView(
-                                                              scrollDirection:
-                                                                  Axis.vertical,
-                                                              child: Column(
-                                                                children: [
-                                                                  // SizedBox(
-                                                                  //   child: Lottie.asset(
-                                                                  //       "loadingJSON/backbutton.json",
-                                                                  //       fit: BoxFit
-                                                                  //           .cover),
-                                                                  // ),
-                                                                  Text(
-                                                                    'Pilih Artist ${listDivisi[j]}',
-                                                                    style: const TextStyle(
-                                                                        color: Colors
-                                                                            .black,
-                                                                        fontSize:
-                                                                            18,
-                                                                        fontWeight:
-                                                                            FontWeight.bold),
-                                                                  ),
-                                                                
-                                                                  //! loopimg
-                                                                  for (var i =
-                                                                          0;
-                                                                      
-                                                                          j == 3 
-                                                                          ? i < listSubDivisiArtistFinishing.length 
-                                                                          : j == 4 || j == 8
-                                                                          ? i < listSubDivisiArtistPolishing.length 
-                                                                          : j == 5 || j == 7
-                                                                          ? i < listSubDivisiArtistStell.length 
-                                                                          : i < listSubDivisiArtistPasangBatu.length;
-                                                                      i++)
-                                                                    Container(
-                                                                      padding: const EdgeInsets
-                                                                          .only(
-                                                                          top:
-                                                                              15),
-                                                                      child: ElevatedButton(
-                                                                          // style: ElevatedButton.styleFrom(backgroundColor: colorDasar, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
-                                                                          style: ButtonStyle(
-                                                                            backgroundColor:
-                                                                                MaterialStateProperty.resolveWith<Color>(
-                                                                              (Set<MaterialState> states) {
-                                                                                if (states.contains(MaterialState.hovered)) {
-                                                                                  // Saat tombol di-hover, atur warna latar belakang yang berbeda di sini
-                                                                                  return Colors.red; // Ganti dengan warna yang diinginkan
-                                                                                }
-                                                                                // Warna latar belakang saat tidak di-hover
-                                                                                return colorDasar; // Ganti dengan warna yang diinginkan
-                                                                              },
-                                                                            ),
-                                                                          ),
-                                                                          onPressed: () async {
-                                                                            await postPosisi(
-                                                                              data.id,
-                                                                              "${listDivisi[j]}",
-                                                                              j == 3 
-                                                                          ? listSubDivisiArtistFinishing[i]
-                                                                          : j == 4 || j == 8
-                                                                          ? listSubDivisiArtistPolishing[i]
-                                                                          : j == 5 || j == 7
-                                                                          ? listSubDivisiArtistStell[i] 
-                                                                          :listSubDivisiArtistPasangBatu[i],
-                                                                            );
-                                                                            onRowPressed();
-
-                                                                            await postHistory(
-                                                                              data.kodeDesignMdbc,
-                                                                              data.kodeMarketing,
-                                                                              "${listDivisi[j]}",
-                                                                              j == 3 
-                                                                          ? listSubDivisiArtistFinishing[i]
-                                                                          : j == 4 || j == 8
-                                                                          ? listSubDivisiArtistPolishing[i]
-                                                                          : j == 5 || j == 7
-                                                                          ? listSubDivisiArtistStell[i] 
-                                                                          :listSubDivisiArtistPasangBatu[i],
-                                                                            );
-                                                                            Navigator.pop(context);
-                                                                            showSimpleNotification(
-                                                                              const Text('Menambahkan posisi dan artist berhasil'),
-                                                                              background: Colors.green,
-                                                                              duration: const Duration(seconds: 1),
-                                                                            );
-                                                                          },
-                                                                          child: Text(
-                                                                            j == 3 
-                                                                          ? listSubDivisiArtistFinishing[i]
-                                                                          : j == 4 || j == 8
-                                                                          ? listSubDivisiArtistPolishing[i]
-                                                                          : j == 5 || j == 7
-                                                                          ? listSubDivisiArtistStell[i] 
-                                                                          :listSubDivisiArtistPasangBatu[i],
-                                                                            style:
-                                                                                const TextStyle(
-                                                                              fontSize: 16,
-                                                                            ),
-                                                                          )),
-                                                                    ),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        )
-                                            ));  });
-                                                }
-                                              
-                                                } else {
-                                                Navigator.pop(context);
-                                                if (j == 0 || j == 1 || j == 9) {
-                                                  await postPosisi(
-                                                    data.id,
-                                                    "${listDivisi[j]}",
-                                                    "${listDivisi[j]}",
-                                                  );
-                                                  onRowPressed();
-
-                                                  await postHistory(
-                                                    data.kodeDesignMdbc,
-                                                    data.kodeMarketing,
-                                                    "${listDivisi[j]}",
-                                                    "${listDivisi[j]}",
-                                                  );
-                                                  showSimpleNotification(
-                                                    const Text(
-                                                        'Posisi berhasil di simpan'),
-                                                    background: Colors.green,
-                                                    duration: const Duration(
-                                                        seconds: 1),
-                                                  );
-                                                } else if (j == 2) {
-                                                 showGeneralDialog(
-              transitionDuration: const Duration(milliseconds: 200),
-              barrierDismissible: true,
-              barrierLabel: '',
-              context: context,
-              pageBuilder: (context, animation1, animation2) {
-                return const Text('');
-              },
-              barrierColor: Colors.black.withOpacity(0.5),
-              transitionBuilder: (context, a1, a2, widget) {
-                return Transform.scale(
-                    scale: a1.value,
-                    child: Opacity(
-                        opacity: a1.value,
-                        child: AlertDialog(
-                                                            shape: RoundedRectangleBorder(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            8)),
-                                                            content: SizedBox(
-                                                                child:
-                                                                    SingleChildScrollView(
-                                                                        scrollDirection:
-                                                                            Axis
-                                                                                .vertical,
-                                                                        child:
-                                                                            Column(children: [
-                                                                          const Text(
-                                                                            'Pilih Minggu Ke -',
-                                                                            style: TextStyle(
-                                                                                color: Colors.black,
-                                                                                fontSize: 18,
-                                                                                fontWeight: FontWeight.bold),
-                                                                          ),
-                                                                          Container(
-                                                                            padding:
-                                                                                const EdgeInsets.only(top: 15),
-                                                                            child: ElevatedButton(
-                                                                                style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
-                                                                                onPressed: () async {
-                                                                                  await postPosisi(
-                                                                                    data.id,
-                                                                                    "${listDivisi[j]}",
-                                                                                    "W1",
-                                                                                  );
-                                                                                  onRowPressed();
-
-                                                                                  await postHistory(
-                                                                                    data.kodeDesignMdbc,
-                                                                                    data.kodeMarketing,
-                                                                                    "${listDivisi[j]}",
-                                                                                    "W1",
-                                                                                  );
-                                                                                  onRowPressed();
-                                                                                  Navigator.pop(context);
-                                                                                  showSimpleNotification(
-                                                                                    const Text('Pemilihan Posisi Berhasil'),
-                                                                                    background: Colors.green,
-                                                                                    duration: const Duration(seconds: 1),
-                                                                                  );
-                                                                                },
-                                                                                child: const Text(
-                                                                                  "WEEK 1",
-                                                                                  style: TextStyle(
-                                                                                    fontSize: 16,
-                                                                                  ),
-                                                                                )),
-                                                                          ),
-                                                                          Container(
-                                                                            padding:
-                                                                                const EdgeInsets.only(top: 15),
-                                                                            child: ElevatedButton(
-                                                                                style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
-                                                                                onPressed: () async {
-                                                                                  await postPosisi(
-                                                                                    data.id,
-                                                                                    "${listDivisi[j]}",
-                                                                                    "W2",
-                                                                                  );
-                                                                                  onRowPressed();
-
-                                                                                  await postHistory(
-                                                                                    data.kodeDesignMdbc,
-                                                                                    data.kodeMarketing,
-                                                                                    "${listDivisi[j]}",
-                                                                                    "W2",
-                                                                                  );
-                                                                                  onRowPressed();
-                                                                                  Navigator.pop(context);
-                                                                                  showSimpleNotification(
-                                                                                    const Text('Pemilihan Posisi Berhasil'),
-                                                                                    background: Colors.green,
-                                                                                    duration: const Duration(seconds: 1),
-                                                                                  );
-                                                                                },
-                                                                                child: const Text(
-                                                                                  "WEEK 2",
-                                                                                  style: TextStyle(
-                                                                                    fontSize: 16,
-                                                                                  ),
-                                                                                )),
-                                                                          ),
-                                                                          Container(
-                                                                            padding:
-                                                                                const EdgeInsets.only(top: 15),
-                                                                            child: ElevatedButton(
-                                                                                style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
-                                                                                onPressed: () async {
-                                                                                  await postPosisi(
-                                                                                    data.id,
-                                                                                    "${listDivisi[j]}",
-                                                                                    "W3",
-                                                                                  );
-                                                                                  onRowPressed();
-
-                                                                                  await postHistory(
-                                                                                    data.kodeDesignMdbc,
-                                                                                    data.kodeMarketing,
-                                                                                    "${listDivisi[j]}",
-                                                                                    "W3",
-                                                                                  );
-                                                                                  onRowPressed();
-                                                                                  Navigator.pop(context);
-                                                                                  showSimpleNotification(
-                                                                                    const Text('Pemilihan Posisi Berhasil'),
-                                                                                    background: Colors.green,
-                                                                                    duration: const Duration(seconds: 1),
-                                                                                  );
-                                                                                },
-                                                                                child: const Text(
-                                                                                  "WEEK 3",
-                                                                                  style: TextStyle(
-                                                                                    fontSize: 16,
-                                                                                  ),
-                                                                                )),
-                                                                          ),
-                                                                          Container(
-                                                                            padding:
-                                                                                const EdgeInsets.only(top: 15),
-                                                                            child: ElevatedButton(
-                                                                                style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
-                                                                                onPressed: () async {
-                                                                                  await postPosisi(
-                                                                                    data.id,
-                                                                                    "${listDivisi[j]}",
-                                                                                    "W4",
-                                                                                  );
-                                                                                  onRowPressed();
-
-                                                                                  await postHistory(
-                                                                                    data.kodeDesignMdbc,
-                                                                                    data.kodeMarketing,
-                                                                                    "${listDivisi[j]}",
-                                                                                    "W4",
-                                                                                  );
-                                                                                  onRowPressed();
-                                                                                  Navigator.pop(context);
-                                                                                  showSimpleNotification(
-                                                                                    const Text('Pemilihan Posisi Berhasil'),
-                                                                                    background: Colors.green,
-                                                                                    duration: const Duration(seconds: 1),
-                                                                                  );
-                                                                                },
-                                                                                child: const Text(
-                                                                                  "WEEK 4",
-                                                                                  style: TextStyle(
-                                                                                    fontSize: 16,
-                                                                                  ),
-                                                                                )),
-                                                                          ),
-                                                                        ]))))
-                                           ));});
-                                                } else{
-                                                  showGeneralDialog(
-              transitionDuration: const Duration(milliseconds: 200),
-              barrierDismissible: true,
-              barrierLabel: '',
-              context: context,
-              pageBuilder: (context, animation1, animation2) {
-                return const Text('');
-              },
-              barrierColor: Colors.black.withOpacity(0.5),
-              transitionBuilder: (context, a1, a2, widget) {
-                return Transform.scale(
-                    scale: a1.value,
-                    child: Opacity(
-                        opacity: a1.value,
-                        child: AlertDialog(
-                                                          shape: RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          8)),
-                                                          content: SizedBox(
-                                                            child:
-                                                                SingleChildScrollView(
-                                                              scrollDirection:
-                                                                  Axis.vertical,
-                                                              child: Column(
-                                                                children: [
-                                                                  // SizedBox(
-                                                                  //   child: Lottie.asset(
-                                                                  //       "loadingJSON/backbutton.json",
-                                                                  //       fit: BoxFit
-                                                                  //           .cover),
-                                                                  // ),
-                                                                  Text(
-                                                                    'Pilih Artist ${listDivisi[j]}',
-                                                                    style: const TextStyle(
-                                                                        color: Colors
-                                                                            .black,
-                                                                        fontSize:
-                                                                            18,
-                                                                        fontWeight:
-                                                                            FontWeight.bold),
-                                                                  ),
-                                                                
-                                                                  //! loopimg
-                                                                  for (var i =
-                                                                          0;
-                                                                      
-                                                                          j == 3 
-                                                                          ? i < listSubDivisiArtistFinishing.length 
-                                                                          : j == 4 || j == 8
-                                                                          ? i < listSubDivisiArtistPolishing.length 
-                                                                          : j == 5 || j == 7
-                                                                          ? i < listSubDivisiArtistStell.length 
-                                                                          : i < listSubDivisiArtistPasangBatu.length;
-                                                                      i++)
-                                                                    Container(
-                                                                      padding: const EdgeInsets
-                                                                          .only(
-                                                                          top:
-                                                                              15),
-                                                                      child: ElevatedButton(
-                                                                          // style: ElevatedButton.styleFrom(backgroundColor: colorDasar, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
-                                                                          style: ButtonStyle(
-                                                                            backgroundColor:
-                                                                                MaterialStateProperty.resolveWith<Color>(
-                                                                              (Set<MaterialState> states) {
-                                                                                if (states.contains(MaterialState.hovered)) {
-                                                                                  // Saat tombol di-hover, atur warna latar belakang yang berbeda di sini
-                                                                                  return Colors.red; // Ganti dengan warna yang diinginkan
-                                                                                }
-                                                                                // Warna latar belakang saat tidak di-hover
-                                                                                return colorDasar; // Ganti dengan warna yang diinginkan
-                                                                              },
-                                                                            ),
-                                                                          ),
-                                                                          onPressed: () async {
-                                                                            await postPosisi(
-                                                                              data.id,
-                                                                              "${listDivisi[j]}",
-                                                                              j == 3 
-                                                                          ? listSubDivisiArtistFinishing[i]
-                                                                          : j == 4 || j == 8
-                                                                          ? listSubDivisiArtistPolishing[i]
-                                                                          : j == 5 || j == 7
-                                                                          ? listSubDivisiArtistStell[i] 
-                                                                          :listSubDivisiArtistPasangBatu[i],
-                                                                            );
-                                                                            onRowPressed();
-
-                                                                            await postHistory(
-                                                                              data.kodeDesignMdbc,
-                                                                              data.kodeMarketing,
-                                                                              "${listDivisi[j]}",
-                                                                              j == 3 
-                                                                          ? listSubDivisiArtistFinishing[i]
-                                                                          : j == 4 || j == 8
-                                                                          ? listSubDivisiArtistPolishing[i]
-                                                                          : j == 5 || j == 7
-                                                                          ? listSubDivisiArtistStell[i] 
-                                                                          :listSubDivisiArtistPasangBatu[i],
-                                                                            );
-                                                                            Navigator.pop(context);
-                                                                            showSimpleNotification(
-                                                                              const Text('Menambahkan posisi dan artist berhasil'),
-                                                                              background: Colors.green,
-                                                                              duration: const Duration(seconds: 1),
-                                                                            );
-                                                                          },
-                                                                          child: Text(
-                                                                            j == 3 
-                                                                          ? listSubDivisiArtistFinishing[i]
-                                                                          : j == 4 || j == 8
-                                                                          ? listSubDivisiArtistPolishing[i]
-                                                                          : j == 5 || j == 7
-                                                                          ? listSubDivisiArtistStell[i] 
-                                                                          :listSubDivisiArtistPasangBatu[i],
-                                                                            style:
-                                                                                const TextStyle(
-                                                                              fontSize: 16,
-                                                                            ),
-                                                                          )),
-                                                                    ),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        )
-                                            ));  });
-                                                }
-                                              }
-                                              },
-                                              child: Text(
-                                                "${listDivisi[j]}",
-                                                style: const TextStyle(
-                                                  fontSize: 16,
-                                                ),
-                                              )),
-                                        ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            )
-                ));});
-                    },
-                    icon: const Icon(
-                      Icons.change_circle,
-                      color: Colors.green,
-                    ))
-                : const SizedBox(),
+                                            ),
+                                          ),
+                                        )));
+                              });
+                        },
+                        icon: const Icon(
+                          Icons.change_circle,
+                          color: Colors.green,
+                        ))
+                    : const SizedBox(),
           ],
         );
       })),
@@ -4350,161 +4356,154 @@ class RowSourceProduksi extends DataTableSource {
                     clipBehavior: Clip.none, //agar tidak menghalangi object
                     children: [
                       //tambahan icon ADD
-                      Positioned(
-                        right: -5.0,
-                        top: -3.0,
-                        child: InkResponse(
-                          onTap: () {
-                            // Navigator.of(context).pop();
-                          },
-                          child: const Icon(
-                            Icons.add_circle_outline,
-                            color: Colors.green,
-                            size: 20,
-                          ),
-                        ),
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          showGeneralDialog(
-              transitionDuration: const Duration(milliseconds: 200),
-              barrierDismissible: true,
-              barrierLabel: '',
-              context: context,
-              pageBuilder: (context, animation1, animation2) {
-                return const Text('');
-              },
-              barrierColor: Colors.black.withOpacity(0.5),
-              transitionBuilder: (context, a1, a2, widget) {
-                return Transform.scale(
-                    scale: a1.value,
-                    child: Opacity(
-                        opacity: a1.value,
-                        child: AlertDialog(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(8)),
-                                    content: SizedBox(
-                                        child: SingleChildScrollView(
-                                            scrollDirection: Axis.vertical,
-                                            child: Column(children: [
-                                              const Text(
-                                                'Pilih Status Batu',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 18,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                              Container(
-                                                padding: const EdgeInsets.only(
-                                                    top: 15),
-                                                child: ElevatedButton(
-                                                    style: ElevatedButton.styleFrom(
-                                                        backgroundColor:
-                                                            Colors.blue,
-                                                        shape: RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        50.0))),
-                                                    onPressed: () async {
-                                                      await postKeteranganStatusBatu(
-                                                          data.id, 'ECER');
-                                                      onRowPressed();
-                                                      Navigator.pop(context);
-                                                      showSimpleNotification(
-                                                        const Text(
-                                                            'Pemilihan Status Batu Berhasil'),
-                                                        background:
-                                                            Colors.green,
-                                                        duration:
-                                                            const Duration(
-                                                                seconds: 1),
-                                                      );
-                                                    },
-                                                    child: const Text(
-                                                      "ECER",
-                                                      style: TextStyle(
-                                                        fontSize: 16,
-                                                      ),
-                                                    )),
-                                              ),
-                                              Container(
-                                                padding: const EdgeInsets.only(
-                                                    top: 15),
-                                                child: ElevatedButton(
-                                                    style: ElevatedButton.styleFrom(
-                                                        backgroundColor:
-                                                            Colors.blue,
-                                                        shape: RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        50.0))),
-                                                    onPressed: () async {
-                                                      await postKeteranganStatusBatu(
-                                                          data.id,
-                                                          'KOMPLIT BATU');
-                                                      onRowPressed();
-                                                      Navigator.pop(context);
-                                                      showSimpleNotification(
-                                                        const Text(
-                                                            'Pemilihan Status Batu Berhasil'),
-                                                        background:
-                                                            Colors.green,
-                                                        duration:
-                                                            const Duration(
-                                                                seconds: 1),
-                                                      );
-                                                    },
-                                                    child: const Text(
-                                                      "KOMPLIT BATU",
-                                                      style: TextStyle(
-                                                        fontSize: 16,
-                                                      ),
-                                                    )),
-                                              ),
-                                              Container(
-                                                padding: const EdgeInsets.only(
-                                                    top: 15),
-                                                child: ElevatedButton(
-                                                    style: ElevatedButton.styleFrom(
-                                                        backgroundColor:
-                                                            Colors.blue,
-                                                        shape: RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        50.0))),
-                                                    onPressed: () async {
-                                                      await postKeteranganStatusBatu(
-                                                          data.id,
-                                                          'BELUM KOMPLIT');
-                                                      onRowPressed();
-                                                      Navigator.pop(context);
-                                                      showSimpleNotification(
-                                                        const Text(
-                                                            'Pemilihan Status Batu Berhasil'),
-                                                        background:
-                                                            Colors.green,
-                                                        duration:
-                                                            const Duration(
-                                                                seconds: 1),
-                                                      );
-                                                    },
-                                                    child: const Text(
-                                                      "BELUM KOMPLIT",
-                                                      style: TextStyle(
-                                                        fontSize: 16,
-                                                      ),
-                                                    )),
-                                              ),
-                                            ]))))
-                      ));});
-                        },
-                        icon: const Icon(Icons.chat_bubble_outline_rounded),
-                        color: Colors.green,
-                      ),
+                      sharedPreferences!.getString('role') == '1' ||
+                              sharedPreferences!.getString('role') == '2' ||
+                              sharedPreferences!.getString('divisi') == 'admin'
+                          ? Positioned(
+                              right: -5.0,
+                              top: -3.0,
+                              child: InkResponse(
+                                onTap: () {
+                                  // Navigator.of(context).pop();
+                                },
+                                child: const Icon(
+                                  Icons.add_circle_outline,
+                                  color: Colors.green,
+                                  size: 20,
+                                ),
+                              ),
+                            )
+                          : const SizedBox(),
+                      sharedPreferences!.getString('role') == '1' ||
+                              sharedPreferences!.getString('role') == '2' ||
+                              sharedPreferences!.getString('divisi') == 'admin'
+                          ? IconButton(
+                              onPressed: () {
+                                showGeneralDialog(
+                                    transitionDuration:
+                                        const Duration(milliseconds: 200),
+                                    barrierDismissible: true,
+                                    barrierLabel: '',
+                                    context: context,
+                                    pageBuilder:
+                                        (context, animation1, animation2) {
+                                      return const Text('');
+                                    },
+                                    barrierColor: Colors.black.withOpacity(0.5),
+                                    transitionBuilder:
+                                        (context, a1, a2, widget) {
+                                      return Transform.scale(
+                                          scale: a1.value,
+                                          child: Opacity(
+                                              opacity: a1.value,
+                                              child: AlertDialog(
+                                                  shape: RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8)),
+                                                  content: SizedBox(
+                                                      child:
+                                                          SingleChildScrollView(
+                                                              scrollDirection:
+                                                                  Axis.vertical,
+                                                              child: Column(
+                                                                  children: [
+                                                                    const Text(
+                                                                      'Pilih Status Batu',
+                                                                      style: TextStyle(
+                                                                          color: Colors
+                                                                              .black,
+                                                                          fontSize:
+                                                                              18,
+                                                                          fontWeight:
+                                                                              FontWeight.bold),
+                                                                    ),
+                                                                    Container(
+                                                                      padding: const EdgeInsets
+                                                                          .only(
+                                                                          top:
+                                                                              15),
+                                                                      child: ElevatedButton(
+                                                                          style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
+                                                                          onPressed: () async {
+                                                                            await postKeteranganStatusBatu(data.id,
+                                                                                'ECER');
+                                                                            onRowPressed();
+                                                                            Navigator.pop(context);
+                                                                            showSimpleNotification(
+                                                                              const Text('Pemilihan Status Batu Berhasil'),
+                                                                              background: Colors.green,
+                                                                              duration: const Duration(seconds: 1),
+                                                                            );
+                                                                          },
+                                                                          child: const Text(
+                                                                            "ECER",
+                                                                            style:
+                                                                                TextStyle(
+                                                                              fontSize: 16,
+                                                                            ),
+                                                                          )),
+                                                                    ),
+                                                                    Container(
+                                                                      padding: const EdgeInsets
+                                                                          .only(
+                                                                          top:
+                                                                              15),
+                                                                      child: ElevatedButton(
+                                                                          style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
+                                                                          onPressed: () async {
+                                                                            await postKeteranganStatusBatu(data.id,
+                                                                                'KOMPLIT BATU');
+                                                                            onRowPressed();
+                                                                            Navigator.pop(context);
+                                                                            showSimpleNotification(
+                                                                              const Text('Pemilihan Status Batu Berhasil'),
+                                                                              background: Colors.green,
+                                                                              duration: const Duration(seconds: 1),
+                                                                            );
+                                                                          },
+                                                                          child: const Text(
+                                                                            "KOMPLIT BATU",
+                                                                            style:
+                                                                                TextStyle(
+                                                                              fontSize: 16,
+                                                                            ),
+                                                                          )),
+                                                                    ),
+                                                                    Container(
+                                                                      padding: const EdgeInsets
+                                                                          .only(
+                                                                          top:
+                                                                              15),
+                                                                      child: ElevatedButton(
+                                                                          style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
+                                                                          onPressed: () async {
+                                                                            await postKeteranganStatusBatu(data.id,
+                                                                                'BELUM KOMPLIT');
+                                                                            onRowPressed();
+                                                                            Navigator.pop(context);
+                                                                            showSimpleNotification(
+                                                                              const Text('Pemilihan Status Batu Berhasil'),
+                                                                              background: Colors.green,
+                                                                              duration: const Duration(seconds: 1),
+                                                                            );
+                                                                          },
+                                                                          child: const Text(
+                                                                            "BELUM KOMPLIT",
+                                                                            style:
+                                                                                TextStyle(
+                                                                              fontSize: 16,
+                                                                            ),
+                                                                          )),
+                                                                    ),
+                                                                  ]))))));
+                                    });
+                              },
+                              icon:
+                                  const Icon(Icons.chat_bubble_outline_rounded),
+                              color: Colors.green,
+                            )
+                          : const SizedBox(),
                     ],
                   )
                 ],
@@ -4525,161 +4524,153 @@ class RowSourceProduksi extends DataTableSource {
                     clipBehavior: Clip.none, //agar tidak menghalangi object
                     children: [
                       //tambahan icon ADD
-                      Positioned(
-                        right: -5.0,
-                        top: -3.0,
-                        child: InkResponse(
-                          onTap: () {
-                            // Navigator.of(context).pop();
-                          },
-                          child: const Icon(
-                            Icons.add_circle_outline,
-                            color: Colors.green,
-                            size: 20,
-                          ),
-                        ),
-                      ),
-                      IconButton(
-                        onPressed: () {
-                        showGeneralDialog(
-              transitionDuration: const Duration(milliseconds: 200),
-              barrierDismissible: true,
-              barrierLabel: '',
-              context: context,
-              pageBuilder: (context, animation1, animation2) {
-                return const Text('');
-              },
-              barrierColor: Colors.black.withOpacity(0.5),
-              transitionBuilder: (context, a1, a2, widget) {
-                return Transform.scale(
-                    scale: a1.value,
-                    child: Opacity(
-                        opacity: a1.value,
-                        child: AlertDialog(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(8)),
-                                    content: SizedBox(
-                                        child: SingleChildScrollView(
-                                            scrollDirection: Axis.vertical,
-                                            child: Column(children: [
-                                              const Text(
-                                                'Pilih Status Acc',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 18,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                              Container(
-                                                padding: const EdgeInsets.only(
-                                                    top: 15),
-                                                child: ElevatedButton(
-                                                    style: ElevatedButton.styleFrom(
-                                                        backgroundColor:
-                                                            Colors.blue,
-                                                        shape: RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        50.0))),
-                                                    onPressed: () async {
-                                                      await postKeteranganStatusAcc(
-                                                          data.id, 'Tidak Ada');
-                                                      onRowPressed();
-                                                      Navigator.pop(context);
-                                                      showSimpleNotification(
-                                                        const Text(
-                                                            'Pemilihan Status Batu Berhasil'),
-                                                        background:
-                                                            Colors.green,
-                                                        duration:
-                                                            const Duration(
-                                                                seconds: 1),
-                                                      );
-                                                    },
-                                                    child: const Text(
-                                                      "Tidak Ada",
-                                                      style: TextStyle(
-                                                        fontSize: 16,
-                                                      ),
-                                                    )),
-                                              ),
-                                              Container(
-                                                padding: const EdgeInsets.only(
-                                                    top: 15),
-                                                child: ElevatedButton(
-                                                    style: ElevatedButton.styleFrom(
-                                                        backgroundColor:
-                                                            Colors.blue,
-                                                        shape: RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        50.0))),
-                                                    onPressed: () async {
-                                                      await postKeteranganStatusAcc(
-                                                          data.id,
-                                                          'KOMPLIT ACC');
-                                                      onRowPressed();
-                                                      Navigator.pop(context);
-                                                      showSimpleNotification(
-                                                        const Text(
-                                                            'Pemilihan Status Acc Berhasil'),
-                                                        background:
-                                                            Colors.green,
-                                                        duration:
-                                                            const Duration(
-                                                                seconds: 1),
-                                                      );
-                                                    },
-                                                    child: const Text(
-                                                      "KOMPLIT ACC",
-                                                      style: TextStyle(
-                                                        fontSize: 16,
-                                                      ),
-                                                    )),
-                                              ),
-                                              Container(
-                                                padding: const EdgeInsets.only(
-                                                    top: 15),
-                                                child: ElevatedButton(
-                                                    style: ElevatedButton.styleFrom(
-                                                        backgroundColor:
-                                                            Colors.blue,
-                                                        shape: RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        50.0))),
-                                                    onPressed: () async {
-                                                      await postKeteranganStatusAcc(
-                                                          data.id,
-                                                          'BELUM KOMPLIT');
-                                                      onRowPressed();
-                                                      Navigator.pop(context);
-                                                      showSimpleNotification(
-                                                        const Text(
-                                                            'Pemilihan Status Acc Berhasil'),
-                                                        background:
-                                                            Colors.green,
-                                                        duration:
-                                                            const Duration(
-                                                                seconds: 1),
-                                                      );
-                                                    },
-                                                    child: const Text(
-                                                      "BELUM KOMPLIT",
-                                                      style: TextStyle(
-                                                        fontSize: 16,
-                                                      ),
-                                                    )),
-                                              ),
-                                            ]))))
-                      ));});
-                        },
-                        icon: const Icon(Icons.toll_outlined),
-                        color: Colors.green,
-                      ),
+                      sharedPreferences!.getString('role') == '1' ||
+                              sharedPreferences!.getString('role') == '2' ||
+                              sharedPreferences!.getString('divisi') == 'admin'
+                          ? Positioned(
+                              right: -5.0,
+                              top: -3.0,
+                              child: InkResponse(
+                                onTap: () {
+                                  // Navigator.of(context).pop();
+                                },
+                                child: const Icon(
+                                  Icons.add_circle_outline,
+                                  color: Colors.green,
+                                  size: 20,
+                                ),
+                              ),
+                            )
+                          : const SizedBox(),
+                      sharedPreferences!.getString('role') == '1' ||
+                              sharedPreferences!.getString('role') == '2' ||
+                              sharedPreferences!.getString('divisi') == 'admin'
+                          ? IconButton(
+                              onPressed: () {
+                                showGeneralDialog(
+                                    transitionDuration:
+                                        const Duration(milliseconds: 200),
+                                    barrierDismissible: true,
+                                    barrierLabel: '',
+                                    context: context,
+                                    pageBuilder:
+                                        (context, animation1, animation2) {
+                                      return const Text('');
+                                    },
+                                    barrierColor: Colors.black.withOpacity(0.5),
+                                    transitionBuilder:
+                                        (context, a1, a2, widget) {
+                                      return Transform.scale(
+                                          scale: a1.value,
+                                          child: Opacity(
+                                              opacity: a1.value,
+                                              child: AlertDialog(
+                                                  shape: RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8)),
+                                                  content: SizedBox(
+                                                      child:
+                                                          SingleChildScrollView(
+                                                              scrollDirection:
+                                                                  Axis.vertical,
+                                                              child: Column(
+                                                                  children: [
+                                                                    const Text(
+                                                                      'Pilih Status Acc',
+                                                                      style: TextStyle(
+                                                                          color: Colors
+                                                                              .black,
+                                                                          fontSize:
+                                                                              18,
+                                                                          fontWeight:
+                                                                              FontWeight.bold),
+                                                                    ),
+                                                                    Container(
+                                                                      padding: const EdgeInsets
+                                                                          .only(
+                                                                          top:
+                                                                              15),
+                                                                      child: ElevatedButton(
+                                                                          style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
+                                                                          onPressed: () async {
+                                                                            await postKeteranganStatusAcc(data.id,
+                                                                                'Tidak Ada');
+                                                                            onRowPressed();
+                                                                            Navigator.pop(context);
+                                                                            showSimpleNotification(
+                                                                              const Text('Pemilihan Status Batu Berhasil'),
+                                                                              background: Colors.green,
+                                                                              duration: const Duration(seconds: 1),
+                                                                            );
+                                                                          },
+                                                                          child: const Text(
+                                                                            "Tidak Ada",
+                                                                            style:
+                                                                                TextStyle(
+                                                                              fontSize: 16,
+                                                                            ),
+                                                                          )),
+                                                                    ),
+                                                                    Container(
+                                                                      padding: const EdgeInsets
+                                                                          .only(
+                                                                          top:
+                                                                              15),
+                                                                      child: ElevatedButton(
+                                                                          style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
+                                                                          onPressed: () async {
+                                                                            await postKeteranganStatusAcc(data.id,
+                                                                                'KOMPLIT ACC');
+                                                                            onRowPressed();
+                                                                            Navigator.pop(context);
+                                                                            showSimpleNotification(
+                                                                              const Text('Pemilihan Status Acc Berhasil'),
+                                                                              background: Colors.green,
+                                                                              duration: const Duration(seconds: 1),
+                                                                            );
+                                                                          },
+                                                                          child: const Text(
+                                                                            "KOMPLIT ACC",
+                                                                            style:
+                                                                                TextStyle(
+                                                                              fontSize: 16,
+                                                                            ),
+                                                                          )),
+                                                                    ),
+                                                                    Container(
+                                                                      padding: const EdgeInsets
+                                                                          .only(
+                                                                          top:
+                                                                              15),
+                                                                      child: ElevatedButton(
+                                                                          style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
+                                                                          onPressed: () async {
+                                                                            await postKeteranganStatusAcc(data.id,
+                                                                                'BELUM KOMPLIT');
+                                                                            onRowPressed();
+                                                                            Navigator.pop(context);
+                                                                            showSimpleNotification(
+                                                                              const Text('Pemilihan Status Acc Berhasil'),
+                                                                              background: Colors.green,
+                                                                              duration: const Duration(seconds: 1),
+                                                                            );
+                                                                          },
+                                                                          child: const Text(
+                                                                            "BELUM KOMPLIT",
+                                                                            style:
+                                                                                TextStyle(
+                                                                              fontSize: 16,
+                                                                            ),
+                                                                          )),
+                                                                    ),
+                                                                  ]))))));
+                                    });
+                              },
+                              icon: const Icon(Icons.toll_outlined),
+                              color: Colors.green,
+                            )
+                          : const SizedBox()
                     ],
                   )
                 ],

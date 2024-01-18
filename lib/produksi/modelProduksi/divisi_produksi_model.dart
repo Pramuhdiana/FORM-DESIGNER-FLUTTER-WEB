@@ -3,16 +3,19 @@
 class DivisiProduksiModel {
   final int id;
   final String? divisi;
+  final String? role;
 
   DivisiProduksiModel({
     required this.id,
     this.divisi,
+    this.role,
   });
 
   factory DivisiProduksiModel.fromJson(Map<String, dynamic> json) {
     return DivisiProduksiModel(
       id: json["id"],
       divisi: json["divisi"] ?? '',
+      role: json["role"] ?? '',
     );
   }
 
@@ -24,5 +27,4 @@ class DivisiProduksiModel {
   bool isEqual(DivisiProduksiModel model) {
     return this.id == model.id;
   }
-
 }

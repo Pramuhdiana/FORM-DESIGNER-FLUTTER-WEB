@@ -213,19 +213,17 @@ class _DashboardControlState extends State<DashboardControl> {
   }
 
   void handleClickProsesAwal(divisi) {
-     divisi == ''
+    divisi == ''
         ? setState(() {
             isPrintingResinClick = !isPrintingResinClick;
             pilihProsesAwal = null;
-
           })
-        :
-    setState(() {
-      isPrintingResinClick = !isPrintingResinClick;
+        : setState(() {
+            isPrintingResinClick = !isPrintingResinClick;
             pilihProsesAwal = divisi;
 
-      _getAllDataProsesAwal(divisi);
-    });
+            _getAllDataProsesAwal(divisi);
+          });
   }
 
   void handleClickPasangBatu(artist) {
@@ -325,9 +323,6 @@ class _DashboardControlState extends State<DashboardControl> {
     // await _getSpk(month);
     // await _getPoint(month);
     // await _getBeratAsal(month);
-    print('tes');
-    print(artistPrintingResin);
-    print('end tes');
     //! looping list lebih simple
     chartDataPrintResin = <ChartData>[
       ChartData(
@@ -342,24 +337,7 @@ class _DashboardControlState extends State<DashboardControl> {
         x: 'CASTING',
         xValue: qtyArtistCasting[0],
       ),
-      // ChartData(
-      //   y: artistFinishingResin[0],
-      //   yValue: qtyArtistFinishingResin[0],
-      // ),
-      // ChartData(
-      //   z: artistCasting[0],
-      //   zValue: qtyArtistCasting[0],
-      // ),
     ];
-    // chartDataFinishingResin = [
-    //   for (var i = 0; i < artistFinishingResin.length; i++)
-    //     ChartData(
-    //         y: artistFinishingResin[i], yValue: qtyArtistFinishingResin[i])
-    // ];
-    // chartDataCasting = [
-    //   for (var i = 0; i < artistCasting.length; i++)
-    //     ChartData(z: artistCasting[i], zValue: qtyArtistCasting[i])
-    // ];
     chartDataFinishing = [
       for (var i = 0; i < artistFinishing.length; i++)
         ChartData(
@@ -836,7 +814,7 @@ class _DashboardControlState extends State<DashboardControl> {
     var h = 400.0;
     var w = 600.0;
     return Container(
-            // color: colorBG,
+      // color: colorBG,
       color: Colors.white,
       padding: const EdgeInsets.all(2),
       // decoration: BoxDecoration(
@@ -858,17 +836,17 @@ class _DashboardControlState extends State<DashboardControl> {
                               padding: EdgeInsets.only(left: 20, top: 25),
                               child: Row(
                                 children: [
-                                   InkWell(
-                                onTap: () {
-                                  handleClickProsesAwal('');
-                                },
-                                child: SizedBox(
-                                  width: 50,
-                                  child: Lottie.asset(
-                                      "loadingJSON/backbutton.json",
-                                      fit: BoxFit.cover),
-                                ),
-                              ),
+                                  InkWell(
+                                    onTap: () {
+                                      handleClickProsesAwal('');
+                                    },
+                                    child: SizedBox(
+                                      width: 50,
+                                      child: Lottie.asset(
+                                          "loadingJSON/backbutton.json",
+                                          fit: BoxFit.cover),
+                                    ),
+                                  ),
                                   Text(
                                     '$pilihProsesAwal',
                                     style: TextStyle(
@@ -878,27 +856,25 @@ class _DashboardControlState extends State<DashboardControl> {
                                   ),
                                 ],
                               )),
-                                isLoadingPrintingResin == true
-                                      ? Container(
-                                          padding: const EdgeInsets.all(5),
-                                          width: 90,
-                                          height: 90,
-                                          child: Lottie.asset(
-                                              "loadingJSON/loadingV1.json"),
-                                        )
-                                      : SingleChildScrollView(
-                                          scrollDirection: Axis.horizontal,
-                                          child: Container(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 5),
-                                            child: dataTablePrintingResin(),
-                                          )),
-                          
+                          isLoadingPrintingResin == true
+                              ? Container(
+                                  padding: const EdgeInsets.all(5),
+                                  width: 90,
+                                  height: 90,
+                                  child: Lottie.asset(
+                                      "loadingJSON/loadingV1.json"),
+                                )
+                              : SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Container(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 5),
+                                    child: dataTablePrintingResin(),
+                                  )),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 50),
                             child: Divider(color: Colors.white, thickness: 2),
                           ),
-                       
                         ],
                       ),
                     )
@@ -922,7 +898,6 @@ class _DashboardControlState extends State<DashboardControl> {
                             padding: const EdgeInsets.symmetric(horizontal: 50),
                             child: Divider(color: Colors.white, thickness: 2),
                           ),
-                         
                         ],
                       ),
                     ),
@@ -2608,7 +2583,8 @@ class _DashboardControlState extends State<DashboardControl> {
 
         onPointTap: (event) {
           var i = event.dataPoints![event.pointIndex!].x;
-          i.toString().toLowerCase() == 'printing resin' || i.toString().toLowerCase() == 'finishing resin' 
+          i.toString().toLowerCase() == 'printing resin' ||
+                  i.toString().toLowerCase() == 'finishing resin'
               ? handleClickProsesAwal(i)
               : showSimpleNotification(
                   Text('tap $i oke'),
