@@ -15,6 +15,7 @@ import 'package:lottie/lottie.dart';
 // ignore: unused_import
 import 'package:overlay_support/overlay_support.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:intl/intl.dart';
 
 class DashboardControl extends StatefulWidget {
   const DashboardControl({super.key});
@@ -59,23 +60,32 @@ class _DashboardControlState extends State<DashboardControl> {
   List<ChartData>? chartDataPrintResin;
   List<ChartData>? chartDataFinishingResin;
   List<ChartData>? chartDataCasting;
-  List<ChartData>? chartDataFinishing;
+  List<ChartData>? chartDataArtistFinishing;
+  List<ChartData>? chartDataFinishingAwal;
   List<ChartData>? chartDataPolishing;
+  List<ChartData>? chartDataPolishingAwal;
   List<ChartData>? chartDataPolishingLevel2;
+  List<ChartData>? chartDataStokPolishingLevel2;
   List<ChartData>? chartDataStell;
+  List<ChartData>? chartDataStellAwal;
   List<ChartData>? chartDataStellLevel2;
+  List<ChartData>? chartDataStokStellLevel2;
   List<ChartData>? chartDataPasangBatu;
+  List<ChartData>? chartDataWipPasangBatu;
+
   //! varaible
   List<String> artistPrintingResin = [];
-  List<num> qtyArtistPrintingResin = [];
+  int qtyArtistPrintingResin = 0;
   List<String> artistFinishingResin = [];
-  List<num> qtyArtistFinishingResin = [];
+  int qtyArtistFinishingResin = 0;
   List<String> artistFinishing = [];
   List<num> qtyArtistFinishing = [];
   List<String> artistStell = [];
   List<num> qtyArtistStell = [];
   List<String> artistCasting = [];
   List<num> qtyArtistCasting = [];
+  int qtyWipCasting = 0;
+
   List<String> artistPolishing = [];
   List<num> qtyArtistPolishing = [];
   List<num> qtyArtistPolishing1 = [];
@@ -85,11 +95,17 @@ class _DashboardControlState extends State<DashboardControl> {
   List<String> artistPasangBatu = [];
   List<num> qtyArtistPasangBatu = [];
   //? end variable
-  int isPolishing = 0;
-  int isStell = 0;
+  int isPolishing = -1;
+  int isStell = -1;
   bool isPrintingResinClick = false;
   bool isFinishingClick = false;
+  bool isWipFinishingClick = false;
+  bool isWipPolishingClick = false;
+  bool isStokPolishingClick = false;
+  bool isStokStellClick = false;
+
   bool isPasangBatuClick = false;
+  bool isWipPasangBatuClick = false;
   String? pilihArtistFinishing;
   String? pilihArtistPasangBatu;
   String? pilihProsesAwal;
@@ -143,6 +159,17 @@ class _DashboardControlState extends State<DashboardControl> {
   int novBrj = 0;
   int decBrj = 0;
 
+  //? variable awal diagram
+  int qtyStokFinishing =0;
+  int qtyWipFinishing =0;
+  int qtyStokPolishing =0;
+  int qtyWipPolishing =0;
+  int qtyStokPasangBatu =0;
+  int qtyWipPasangBatu =0;
+  int qtyStokStell =0;
+  int qtyWipStell =0;
+  //! end variable diagram awal
+
   @override
   initState() {
     super.initState();
@@ -165,7 +192,9 @@ class _DashboardControlState extends State<DashboardControl> {
         enable: true, format: 'Total: point.y', canShowMarker: true);
 
     // var now = DateTime.now();
-    nowSiklus = sharedPreferences!.getString('siklus')!;
+     var now = DateTime.now();
+    String month = DateFormat('MMMM', 'id').format(now);
+    nowSiklus = month;
     _getAllData("all");
 
 // janRelease = 150;
@@ -211,6 +240,20 @@ class _DashboardControlState extends State<DashboardControl> {
             _getAllDataFinishing(pilihArtistFinishing);
           });
   }
+  void handleClickWipFinishing(artist) {
+    artist == ''
+        ? setState(() {
+            isWipFinishingClick = !isWipFinishingClick;
+            pilihArtistFinishing = null;
+          })
+        : setState(() {
+            isWipFinishingClick = !isWipFinishingClick;
+            pilihArtistFinishing = artist;
+            _getAllDataFinishing(pilihArtistFinishing);
+          });
+  }
+
+  
 
   void handleClickProsesAwal(divisi) {
     divisi == ''
@@ -226,8 +269,21 @@ class _DashboardControlState extends State<DashboardControl> {
           });
   }
 
-  void handleClickPasangBatu(artist) {
+  void handleClickWipPasangBatu(artist) {
     artist == ''
+        ? setState(() {
+            isWipPasangBatuClick = !isWipPasangBatuClick;
+            pilihArtistPasangBatu = null;
+          })
+        : setState(() {
+            isWipPasangBatuClick = !isWipPasangBatuClick;
+            pilihArtistPasangBatu = artist;
+            _getAllDataPasangBatu(pilihArtistPasangBatu);
+          });
+  }
+
+  void handleClickPasangBatu(artist) {
+ artist == ''
         ? setState(() {
             isPasangBatuClick = !isPasangBatuClick;
             pilihArtistPasangBatu = null;
@@ -327,27 +383,50 @@ class _DashboardControlState extends State<DashboardControl> {
     chartDataPrintResin = <ChartData>[
       ChartData(
         x: 'PRINTING RESIN',
-        xValue: qtyArtistPrintingResin[0],
+        xValue: qtyArtistPrintingResin,
       ),
       ChartData(
         x: 'FINISHING RESIN',
-        xValue: qtyArtistFinishingResin[0],
+        xValue: qtyArtistFinishingResin,
       ),
       ChartData(
         x: 'CASTING',
-        xValue: qtyArtistCasting[0],
+        xValue: qtyWipCasting,
       ),
     ];
-    chartDataFinishing = [
+    chartDataArtistFinishing = [
       for (var i = 0; i < artistFinishing.length; i++)
-        ChartData(
+      artistFinishing[i].toString().toLowerCase() == 'stok' 
+      ? ChartData()
+      :  ChartData(
             xValue: artistFinishing[i],
             secondSeriesYValue: qtyArtistFinishing[i])
     ];
+     chartDataFinishingAwal = [
+        ChartData(
+            xValue: 'STOK',
+            secondSeriesYValue: qtyStokFinishing),
+              ChartData(
+            xValue: 'WIP',
+            secondSeriesYValue: qtyWipFinishing)
+    ];
     chartDataStell = [
       for (var i = 0; i < artistStell.length; i++)
+      artistStell[i].toString().toLowerCase() == 'stok'
+       ? ChartData()
+      :  
         ChartData(xValue: artistStell[i], secondSeriesYValue: qtyArtistStell[i])
     ];
+     chartDataStellAwal = [
+          ChartData(
+            xValue: 'STOK',
+            secondSeriesYValue: qtyStokStell),
+              ChartData(
+            xValue: 'WIP',
+            secondSeriesYValue: qtyWipStell)
+    ];
+
+
     // chartDataCasting = [
     //   for (var i = 0; i < artistCasting.length; i++)
     //     ChartData(
@@ -356,20 +435,62 @@ class _DashboardControlState extends State<DashboardControl> {
 
     chartDataPolishing = [
       for (var i = 0; i < artistPolishing.length; i++)
-        ChartData(
+      artistPolishing[i].toString().toLowerCase() == 'stok' 
+      ? ChartData()
+      :   ChartData(
             xValue: artistPolishing[i],
             secondSeriesYValue: qtyArtistPolishing[i])
     ];
-    chartDataPolishingLevel2 = [
+    chartDataPolishingAwal = [
+        ChartData(
+            xValue: 'STOK',
+            secondSeriesYValue: qtyStokPolishing),
+              ChartData(
+            xValue: 'WIP',
+            secondSeriesYValue: qtyWipPolishing)
+    ];
+  
+chartDataStokPolishingLevel2 = [
       for (var i = 0; i < artistPolishing.length; i++)
+       artistPolishing[i].toString().toLowerCase() != 'stok' 
+      ? ChartData()
+      : 
         ChartData(
             xValue: artistPolishing[i],
             secondSeriesYValue: qtyArtistPolishing2[i],
             yValue: qtyArtistPolishing1[i])
     ];
 
+   
+  
+ chartDataPolishingLevel2 = [
+      for (var i = 0; i < artistPolishing.length; i++)
+       artistPolishing[i].toString().toLowerCase() == 'stok' 
+      ? ChartData()
+      : 
+        ChartData(
+            xValue: artistPolishing[i],
+            secondSeriesYValue: qtyArtistPolishing2[i],
+            yValue: qtyArtistPolishing1[i])
+    ];
+   
+
     chartDataStellLevel2 = [
       for (var i = 0; i < artistStell.length; i++)
+        artistPolishing[i].toString().toLowerCase() == 'stok' 
+      ? ChartData()
+      : 
+        ChartData(
+            xValue: artistStell[i],
+            secondSeriesYValue: qtyArtistStell2[i],
+            yValue: qtyArtistStell1[i])
+    ];
+
+     chartDataStokStellLevel2 = [
+      for (var i = 0; i < artistStell.length; i++)
+       artistStell[i].toString().toLowerCase() != 'stok' 
+      ? ChartData()
+      : 
         ChartData(
             xValue: artistStell[i],
             secondSeriesYValue: qtyArtistStell2[i],
@@ -378,10 +499,26 @@ class _DashboardControlState extends State<DashboardControl> {
 
     chartDataPasangBatu = [
       for (var i = 0; i < artistPasangBatu.length; i++)
+       artistPasangBatu[i].toString().toLowerCase() == 'stok' 
+      ? ChartData(
+       xValue: '-'
+      )
+      : 
         ChartData(
             xValue: artistPasangBatu[i],
             secondSeriesYValue: qtyArtistPasangBatu[i],
             text: '${artistPasangBatu[i]} \n ${qtyArtistPasangBatu[i]}')
+    ];
+    chartDataWipPasangBatu = [
+        ChartData(
+            xValue: 'STOK',
+            secondSeriesYValue: qtyStokPasangBatu,
+            text: 'STOK \n $qtyStokPasangBatu'),
+               ChartData(
+            xValue: 'WIP',
+            secondSeriesYValue: qtyWipPasangBatu,
+            text: 'WIP \n $qtyWipPasangBatu'),
+            
     ];
 
     setState(() {
@@ -439,7 +576,7 @@ class _DashboardControlState extends State<DashboardControl> {
         int count = dummyArtistPrintingResin
             .where((artist) => artist == artistPrintingResin[i])
             .length;
-        qtyArtistPrintingResin.add(count);
+        qtyArtistPrintingResin = count;
       }
       //? end function PrintingResin
 
@@ -458,7 +595,7 @@ class _DashboardControlState extends State<DashboardControl> {
         int count = dummyArtistFinishingResin
             .where((artist) => artist == artistFinishingResin[i])
             .length;
-        qtyArtistFinishingResin.add(count);
+        qtyArtistFinishingResin = count;
       }
       //? end function FinishingResin
 
@@ -474,11 +611,24 @@ class _DashboardControlState extends State<DashboardControl> {
         dummyArtistFinishing.add(item.artist!);
       }
       artistFinishing = dummyArtistFinishing.toSet().toList();
+
       for (var i = 0; i < artistFinishing.length; i++) {
-        int count = dummyArtistFinishing
+         int count = dummyArtistFinishing
             .where((artist) => artist == artistFinishing[i])
             .length;
         qtyArtistFinishing.add(count);
+           
+              int countStok = dummyArtistFinishing
+            .where((artist) => artist.toString().toLowerCase() == 'stok')
+            .length;
+ qtyStokFinishing = countStok;
+          
+                 int countWip = dummyArtistFinishing
+            .where((artist) => artist.toString().toLowerCase() != 'stok')
+            .length;
+ qtyWipFinishing = countWip;
+            
+      
       }
       //? end function Finishing
 
@@ -498,6 +648,15 @@ class _DashboardControlState extends State<DashboardControl> {
         int count =
             dummyArtistStell.where((artist) => artist == artistStell[i]).length;
         qtyArtistStell.add(count);
+             int countStok = dummyArtistStell
+            .where((artist) => artist.toString().toLowerCase() == 'stok')
+            .length;
+ qtyStokStell = countStok;
+          
+                 int countWip = dummyArtistStell
+            .where((artist) => artist.toString().toLowerCase() != 'stok')
+            .length;
+ qtyWipStell = countWip;
       }
       //? end function Stell
 
@@ -518,6 +677,7 @@ class _DashboardControlState extends State<DashboardControl> {
             .where((artist) => artist == artistCasting[i])
             .length;
         qtyArtistCasting.add(count);
+        qtyWipCasting = count;
       }
       //? end function Casting
 
@@ -538,6 +698,16 @@ class _DashboardControlState extends State<DashboardControl> {
             .where((artist) => artist == artistPolishing[i])
             .length;
         qtyArtistPolishing.add(count);
+
+              int countStok = dummyArtistPolishing
+            .where((artist) => artist.toString().toLowerCase() == 'stok')
+            .length;
+ qtyStokPolishing = countStok;
+          
+                 int countWip = dummyArtistPolishing
+            .where((artist) => artist.toString().toLowerCase() != 'stok')
+            .length;
+ qtyWipPolishing = countWip;
       }
       //? end function Polishing
 
@@ -629,6 +799,15 @@ class _DashboardControlState extends State<DashboardControl> {
             .where((artist) => artist == artistPasangBatu[i])
             .length;
         qtyArtistPasangBatu.add(count);
+           int countStok = dummyArtistPasangBatu
+            .where((artist) => artist.toString().toLowerCase() == 'stok')
+            .length;
+        qtyStokPasangBatu = countStok;
+           int countWip = dummyArtistPasangBatu
+            .where((artist) => artist.toString().toLowerCase() != 'stok')
+            .length;
+        qtyWipPasangBatu = countWip;
+
       }
       //? end function PasangBatu
     } else {}
@@ -770,6 +949,15 @@ class _DashboardControlState extends State<DashboardControl> {
               automaticallyImplyLeading: false,
               backgroundColor: Colors.white,
               leadingWidth: 320,
+              leading: 
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "Bulan Saat Ini : $nowSiklus",
+                        style:
+                            const TextStyle(fontSize: 20, color: Colors.black),
+                      ),
+                    ),
               elevation: 0,
             ),
             body: isLoading == true
@@ -812,10 +1000,12 @@ class _DashboardControlState extends State<DashboardControl> {
   //! dashboard produksi
   dashboardProduksi() {
     var h = 400.0;
-    var w = 600.0;
+    var w = 600.00
+;
     return Container(
       // color: colorBG,
       color: Colors.white,
+      // width: MediaQuery.of(context).size.width * 0.90,
       padding: const EdgeInsets.all(2),
       // decoration: BoxDecoration(
       //   border: Border.all(width: 5, color: colorDasar),
@@ -828,12 +1018,12 @@ class _DashboardControlState extends State<DashboardControl> {
               isPrintingResinClick == true
                   ? Container(
                       height: h,
-                      width: w + w + 20,
+                      width: w + w + 10,
                       color: colorCard1,
                       child: Column(
                         children: [
                           Container(
-                              padding: EdgeInsets.only(left: 20, top: 25),
+                              padding: EdgeInsets.only(left: 0, top: 25),
                               child: Row(
                                 children: [
                                   InkWell(
@@ -880,12 +1070,12 @@ class _DashboardControlState extends State<DashboardControl> {
                     )
                   : Container(
                       height: h,
-                      width: w + w + 20,
+                      width: w + w + 10,
                       color: colorCard1,
                       child: Column(
                         children: [
                           Container(
-                              padding: EdgeInsets.only(left: 20, top: 25),
+                              padding: EdgeInsets.only(left: 0, top: 25),
                               child: Text(
                                 'Proses Awal',
                                 style: TextStyle(
@@ -901,51 +1091,7 @@ class _DashboardControlState extends State<DashboardControl> {
                         ],
                       ),
                     ),
-              // SizedBox(width: 10),
-              // Container(
-              //   height: h,
-              //   width: w,
-              //   color: colorCard2,
-              //   child: Column(
-              //     children: [
-              //       Container(
-              //           padding: EdgeInsets.only(left: 20, top: 25),
-              //           child: Text(
-              //             'Casting',
-              //             style: TextStyle(
-              //                 color: Colors.white,
-              //                 fontSize: 20,
-              //                 fontWeight: FontWeight.bold),
-              //           )),
-              //       chartCasting(),
-              //       Padding(
-              //         padding: const EdgeInsets.symmetric(horizontal: 50),
-              //         child: Divider(color: Colors.white, thickness: 2),
-              //       ),
-              //       InkWell(
-              //         onTap: () {},
-              //         child: Container(
-              //           padding: EdgeInsets.only(bottom: 5),
-              //           child: Row(
-              //             mainAxisAlignment: MainAxisAlignment.spaceAround,
-              //             children: const [
-              //               Text(
-              //                 'See Detailed Report',
-              //                 style:
-              //                     TextStyle(color: Colors.white, fontSize: 18),
-              //               ),
-              //               Icon(
-              //                 Icons.arrow_forward,
-              //                 color: Colors.white,
-              //               )
-              //             ],
-              //           ),
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // ),
-              // SizedBox(width: 10),
+            
             ],
           ),
           SizedBox(height: 15),
@@ -964,7 +1110,7 @@ class _DashboardControlState extends State<DashboardControl> {
                             children: [
                               InkWell(
                                 onTap: () {
-                                  _onTapLevelBackPolishing();
+                                  _onTapLevelBackPolishing('1');
                                 },
                                 child: SizedBox(
                                   width: 50,
@@ -973,8 +1119,15 @@ class _DashboardControlState extends State<DashboardControl> {
                                       fit: BoxFit.cover),
                                 ),
                               ),
-                              SizedBox(
+                            SizedBox(
                                 width: 150,
+                                child:  Text(
+                                'Table Polishing',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold),
+                              ),
                               ),
                               Container(
                                 width: MediaQuery.of(context).size.width * 0.2,
@@ -1108,7 +1261,7 @@ class _DashboardControlState extends State<DashboardControl> {
                                 children: [
                                   InkWell(
                                     onTap: () {
-                                      _onTapLevelBackPolishing();
+                                      _onTapLevelBackPolishing('');
                                     },
                                     child: SizedBox(
                                       width: 50,
@@ -1132,6 +1285,9 @@ class _DashboardControlState extends State<DashboardControl> {
                                       )),
                                 ],
                               ),
+                              isStokPolishingClick == true
+                              ? chartStokPolishingLevel2()
+                              :
                               chartPolishingLevel2(),
                               Padding(
                                 padding:
@@ -1165,21 +1321,41 @@ class _DashboardControlState extends State<DashboardControl> {
                             ],
                           ),
                         )
-                      : Container(
+                      : isPolishing == 0
+                      ? Container(
                           height: h,
                           width: w,
                           color: colorCard2,
                           child: Column(
                             children: [
-                              Container(
-                                  padding: EdgeInsets.only(left: 20, top: 25),
-                                  child: Text(
-                                    'Polishing',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold),
-                                  )),
+                              Row(
+                                children: [
+                                    InkWell(
+                                onTap: () {
+                                  _onTapLevelBackPolishing('1');
+                                },
+
+                                child: SizedBox(
+                                  width: 50,
+                                  child: Lottie.asset(
+                                      "loadingJSON/backbutton.json",
+                                      fit: BoxFit.cover),
+                                ),
+                              ),
+                                
+                                   SizedBox(
+                                width: 150),
+                                  Container(
+                                   
+                                      child: Text(
+                                        'Wip Polishing',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold),
+                                      )),
+                                ],
+                              ),
                               chartPolishing(),
                               Padding(
                                 padding:
@@ -1212,6 +1388,33 @@ class _DashboardControlState extends State<DashboardControl> {
                               ),
                             ],
                           ),
+                        )
+             
+                      : Container(
+                          height: h,
+                          width: w,
+                          color: colorCard2,
+                          child: Column(
+                            children: [
+                              Container(
+                                  padding: EdgeInsets.only(left: 20, top: 25),
+                                  child: Text(
+                                    'Polishing',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
+                                  )),
+                              chartPolishingAwal(),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 50),
+                                child:
+                                    Divider(color: Colors.white, thickness: 2),
+                              ),
+                             
+                            ],
+                          ),
                         ),
               SizedBox(width: 10),
               Row(
@@ -1230,7 +1433,7 @@ class _DashboardControlState extends State<DashboardControl> {
                                 children: [
                                   InkWell(
                                     onTap: () {
-                                      _onTapLevelBackStell();
+                                      _onTapLevelBackStell('1');
                                     },
                                     child: SizedBox(
                                       width: 50,
@@ -1239,9 +1442,16 @@ class _DashboardControlState extends State<DashboardControl> {
                                           fit: BoxFit.cover),
                                     ),
                                   ),
-                                  SizedBox(
-                                    width: 150,
-                                  ),
+                                 SizedBox(
+                                width: 150,
+                                child:  Text(
+                                'Table Stell',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              ),
                                   Container(
                                     width:
                                         MediaQuery.of(context).size.width * 0.2,
@@ -1383,7 +1593,7 @@ class _DashboardControlState extends State<DashboardControl> {
                                     children: [
                                       InkWell(
                                         onTap: () {
-                                          _onTapLevelBackStell();
+                                          _onTapLevelBackStell('');
                                         },
                                         child: SizedBox(
                                           width: 50,
@@ -1407,6 +1617,9 @@ class _DashboardControlState extends State<DashboardControl> {
                                           )),
                                     ],
                                   ),
+                                   isStokStellClick == true
+                                   ?chartStokStellLevel2()
+                                   :
                                   chartStellLevel2(),
                                   Padding(
                                     padding: const EdgeInsets.symmetric(
@@ -1441,6 +1654,74 @@ class _DashboardControlState extends State<DashboardControl> {
                                 ],
                               ),
                             )
+                          : isStell == 0
+                          ? Container(
+                              height: h,
+                              width: w,
+                              color: colorCard1,
+                              child: Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      InkWell(
+                                onTap: () {
+                                  _onTapLevelBackStell('1');
+                                },
+                                child: SizedBox(
+                                  width: 50,
+                                  child: Lottie.asset(
+                                      "loadingJSON/backbutton.json",
+                                      fit: BoxFit.cover),
+                                ),
+                              ),
+                                SizedBox(
+                                width: 150),
+                                      Container(
+                                         
+                                          child: Text(
+                                            'Wip Stell Rangka',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold),
+                                          )),
+                                    ],
+                                  ),
+                                  chartStell(),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 50),
+                                    child: Divider(
+                                        color: Colors.white, thickness: 2),
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      _onTapLevelGoStell('');
+                                    },
+                                    child: Container(
+                                      padding: EdgeInsets.only(bottom: 5),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: const [
+                                          Text(
+                                            'See Detailed Report',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 18),
+                                          ),
+                                          Icon(
+                                            Icons.arrow_forward,
+                                            color: Colors.white,
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+              
                           : Container(
                               height: h,
                               width: w,
@@ -1457,7 +1738,7 @@ class _DashboardControlState extends State<DashboardControl> {
                                             fontSize: 20,
                                             fontWeight: FontWeight.bold),
                                       )),
-                                  chartStell(),
+                                  chartStellAwal(),
                                   Padding(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 50),
@@ -1500,7 +1781,7 @@ class _DashboardControlState extends State<DashboardControl> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              isFinishingClick == true
+             isFinishingClick == true
                   ? Container(
                       height: h,
                       width: w,
@@ -1523,6 +1804,13 @@ class _DashboardControlState extends State<DashboardControl> {
                               ),
                               SizedBox(
                                 width: 150,
+                                child:  Text(
+                                'Table Finishing',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold),
+                              ),
                               ),
                               Container(
                                 width:
@@ -1649,21 +1937,40 @@ class _DashboardControlState extends State<DashboardControl> {
                         ],
                       ),
                     )
-                  : Container(
+                  :  isWipFinishingClick == true
+              ? Container(
                       height: h,
                       width: w,
                       color: colorCard1,
                       child: Column(
                         children: [
-                          Container(
-                              padding: EdgeInsets.only(left: 20, top: 25),
-                              child: Text(
-                                'Finishing',
+                          Row(
+                            children: [
+                               InkWell(
+                                onTap: () {
+                                  handleClickWipFinishing('');
+                                },
+
+                                child: SizedBox(
+                                  width: 50,
+                                  child: Lottie.asset(
+                                      "loadingJSON/backbutton.json",
+                                      fit: BoxFit.cover),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 150),
+                                Text(
+                                'Wip Finishing',
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold),
-                              )),
+                              ),
+                              
+                           
+                            ],
+                          ),
                           chartFinishing(),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 50),
@@ -1694,6 +2001,31 @@ class _DashboardControlState extends State<DashboardControl> {
                           ),
                         ],
                       ),
+                    )
+             :
+              Container(
+                      height: h,
+                      width: w,
+                      color: colorCard1,
+                      child: Column(
+                        children: [
+                          Container(
+                              padding: EdgeInsets.only(left: 20, top: 25),
+                              child: Text(
+                                'Finishing',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold),
+                              )),
+                          chartFinishingLevel1(),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 50),
+                            child: Divider(color: Colors.white, thickness: 2),
+                          ),
+                        
+                        ],
+                      ),
                     ),
               SizedBox(width: 10),
               isPasangBatuClick == true
@@ -1717,8 +2049,15 @@ class _DashboardControlState extends State<DashboardControl> {
                                       fit: BoxFit.cover),
                                 ),
                               ),
-                              SizedBox(
+                             SizedBox(
                                 width: 150,
+                                child:  Text(
+                                'Table Pasang Batu',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold),
+                              ),
                               ),
                               Container(
                                 width: MediaQuery.of(context).size.width * 0.2,
@@ -1844,21 +2183,38 @@ class _DashboardControlState extends State<DashboardControl> {
                         ],
                       ),
                     )
-                  : Container(
+                  : isWipPasangBatuClick == true
+              ? Container(
                       height: h,
                       width: w,
                       color: colorCard2,
                       child: Column(
                         children: [
-                          Container(
-                              padding: EdgeInsets.only(left: 20, top: 25),
-                              child: Text(
-                                'Pasang Batu',
+                          Row(
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  handleClickWipPasangBatu('');
+                                },
+
+                                child: SizedBox(
+                                  width: 50,
+                                  child: Lottie.asset(
+                                      "loadingJSON/backbutton.json",
+                                      fit: BoxFit.cover),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 250,),
+                                Text(
+                                'Wip Pasang Batu',
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold),
-                              )),
+                              ),
+                            ],
+                          ),
                           chartPasangBatuPie(),
                           // chartPasangBatu(),
 
@@ -1891,7 +2247,31 @@ class _DashboardControlState extends State<DashboardControl> {
                           ),
                         ],
                       ),
+                    )
+              : Container(
+                      height: h,
+                      width: w,
+                      color: colorCard2,
+                      child: Column(
+                        children: [
+                          Container(
+                              padding: EdgeInsets.only(left: 20, top: 25),
+                              child: Text(
+                                'Pasang Batu',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold),
+                              )),
+                          chartWipPasangBatuPie(),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 50),
+                            child: Divider(color: Colors.white, thickness: 2),
+                          ),
+                        ],
+                      ),
                     ),
+            
               SizedBox(width: 10),
             ],
           ),
@@ -1957,6 +2337,36 @@ class _DashboardControlState extends State<DashboardControl> {
               TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           majorTickLines: const MajorTickLines(color: Colors.transparent)),
       series: getDataFinishing(),
+      tooltipBehavior: _tooltipBehaviorFinishing,
+    ));
+  }
+
+  chartFinishingLevel1() {
+    return Container(
+        child: SfCartesianChart(
+      plotAreaBorderWidth: 0,
+      // legend: Legend(isVisible: true, position: LegendPosition.top),
+
+      //! X axis as CategoryAxis axis placed here. BAWAH
+      primaryXAxis: CategoryAxis(
+          labelStyle:
+              TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          // maximumLabelWidth: 50,
+          axisLine: const AxisLine(width: 0),
+          majorGridLines: const MajorGridLines(width: 0),
+          majorTickLines: const MajorTickLines(size: 0),
+          labelIntersectAction: AxisLabelIntersectAction.wrap),
+
+      //? Y axis as numeric axis placed here. ATAS
+      primaryYAxis: NumericAxis(
+          labelFormat: '{value}',
+          // title: AxisTitle(text: 'Total'),
+          minimum: 0,
+          axisLine: const AxisLine(width: 0),
+          labelStyle:
+              TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          majorTickLines: const MajorTickLines(color: Colors.transparent)),
+      series: getDataFinishingLevel1(),
       tooltipBehavior: _tooltipBehaviorFinishing,
     ));
   }
@@ -2352,6 +2762,37 @@ class _DashboardControlState extends State<DashboardControl> {
     ));
   }
 
+
+  chartStellAwal() {
+    return Container(
+        child: SfCartesianChart(
+      plotAreaBorderWidth: 0,
+      // legend: Legend(isVisible: true, position: LegendPosition.top),
+
+      //! X axis as CategoryAxis axis placed here. BAWAH
+      primaryXAxis: CategoryAxis(
+          labelStyle:
+              TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          // maximumLabelWidth: 50,
+          axisLine: const AxisLine(width: 0),
+          majorGridLines: const MajorGridLines(width: 0),
+          majorTickLines: const MajorTickLines(size: 0),
+          labelIntersectAction: AxisLabelIntersectAction.wrap),
+
+      //? Y axis as numeric axis placed here. ATAS
+      primaryYAxis: NumericAxis(
+          labelFormat: '{value}',
+          // title: AxisTitle(text: 'Total'),
+          minimum: 0,
+          axisLine: const AxisLine(width: 0),
+          labelStyle:
+              TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          majorTickLines: const MajorTickLines(color: Colors.transparent)),
+      series: getDataStellAwal(),
+      tooltipBehavior: _tooltipBehaviorStell,
+    ));
+  }
+
   chartCasting() {
     return Container(
         child: SfCartesianChart(
@@ -2421,6 +2862,43 @@ class _DashboardControlState extends State<DashboardControl> {
     ));
   }
 
+  chartWipPasangBatuPie() {
+    return Container(
+        child: SfCircularChart(
+      legend: Legend(isVisible: true),
+      series: _getRadiusPieSeriesWIP(),
+      tooltipBehavior: TooltipBehavior(enable: true),
+    ));
+  }
+
+chartPolishingAwal() {
+    return Container(
+        child: SfCartesianChart(
+      plotAreaBorderWidth: 0,
+      //! X axis as CategoryAxis axis placed here. BAWAH
+      primaryXAxis: CategoryAxis(
+          labelStyle:
+              TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          // maximumLabelWidth: 50,
+          axisLine: const AxisLine(width: 0),
+          majorGridLines: const MajorGridLines(width: 0),
+          majorTickLines: const MajorTickLines(size: 0),
+          labelIntersectAction: AxisLabelIntersectAction.wrap),
+
+      //? Y axis as numeric axis placed here. ATAS
+      primaryYAxis: NumericAxis(
+          labelFormat: '{value}',
+          // title: AxisTitle(text: 'Total'),
+          minimum: 0,
+          axisLine: const AxisLine(width: 0),
+          labelStyle:
+              TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          majorTickLines: const MajorTickLines(color: Colors.transparent)),
+      series: getDataPolishingAwal(),
+      tooltipBehavior: _tooltipBehaviorPolishing,
+    ));
+  }
+
   chartPolishing() {
     return Container(
         child: SfCartesianChart(
@@ -2478,6 +2956,36 @@ class _DashboardControlState extends State<DashboardControl> {
     ));
   }
 
+
+  chartStokPolishingLevel2() {
+    return Container(
+        child: SfCartesianChart(
+      plotAreaBorderWidth: 0,
+      legend: Legend(isVisible: true, position: LegendPosition.top),
+      //! X axis as CategoryAxis axis placed here. BAWAH
+      primaryXAxis: CategoryAxis(
+          labelStyle:
+              TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          // maximumLabelWidth: 50,
+          axisLine: const AxisLine(width: 0),
+          majorGridLines: const MajorGridLines(width: 0),
+          majorTickLines: const MajorTickLines(size: 0),
+          labelIntersectAction: AxisLabelIntersectAction.wrap),
+
+      //? Y axis as numeric axis placed here. ATAS
+      primaryYAxis: NumericAxis(
+          labelFormat: '{value}',
+          // title: AxisTitle(text: 'Total'),
+          minimum: 0,
+          axisLine: const AxisLine(width: 0),
+          labelStyle:
+              TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          majorTickLines: const MajorTickLines(color: Colors.transparent)),
+      series: getDataStokPolishingLevel2(),
+      tooltipBehavior: _tooltipBehaviorPolishing,
+    ));
+  }
+
   chartStellLevel2() {
     return Container(
         child: SfCartesianChart(
@@ -2507,6 +3015,35 @@ class _DashboardControlState extends State<DashboardControl> {
     ));
   }
 
+  chartStokStellLevel2() {
+    return Container(
+        child: SfCartesianChart(
+      plotAreaBorderWidth: 0,
+      legend: Legend(isVisible: true, position: LegendPosition.top),
+      //! X axis as CategoryAxis axis placed here. BAWAH
+      primaryXAxis: CategoryAxis(
+          labelStyle:
+              TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          // maximumLabelWidth: 50,
+          axisLine: const AxisLine(width: 0),
+          majorGridLines: const MajorGridLines(width: 0),
+          majorTickLines: const MajorTickLines(size: 0),
+          labelIntersectAction: AxisLabelIntersectAction.wrap),
+
+      //? Y axis as numeric axis placed here. ATAS
+      primaryYAxis: NumericAxis(
+          labelFormat: '{value}',
+          // title: AxisTitle(text: 'Total'),
+          minimum: 0,
+          axisLine: const AxisLine(width: 0),
+          labelStyle:
+              TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          majorTickLines: const MajorTickLines(color: Colors.transparent)),
+      series: getDataStokStellLevel2(),
+      tooltipBehavior: _tooltipBehaviorStell,
+    ));
+  }
+
   postSiklus() async {
     Map<String, String> body = {
       'id': '1',
@@ -2521,10 +3058,27 @@ class _DashboardControlState extends State<DashboardControl> {
   void _onTapLevelGoPolishing(artist) {
     artist == ''
         ? setState(() {
+          print('go polishing');
             isPolishing += 1;
             pilihArtistPolishing = null;
           })
+        : artist.toString().toLowerCase() == 'stok2'
+        ? setState(() {
+          print('masuk stok 2 polishing');
+            isPolishing = 2;
+            pilihArtistPolishing = 'STOK';
+            _getAllDataPolishing(pilihArtistPolishing);
+          })
+        :artist.toString().toLowerCase() == 'stok'
+        ? setState(() {
+          print('masuk stok polishing');
+            // isStokPolishingClick = true;
+            isPolishing = 1;
+            pilihArtistPolishing = artist;
+            _getAllDataPolishing(pilihArtistPolishing);
+          })
         : setState(() {
+          print('go polishing');
             isPolishing += 1;
             pilihArtistPolishing = artist;
             _getAllDataPolishing(pilihArtistPolishing);
@@ -2537,22 +3091,60 @@ class _DashboardControlState extends State<DashboardControl> {
             isStell += 1;
             pilihArtistStell = null;
           })
-        : setState(() {
+        : artist.toString().toLowerCase() == 'stok2'
+        ? setState(() {
+            isStell = 2;
+            pilihArtistStell = 'STOK';
+            _getAllDataStell(pilihArtistStell);
+          })
+        :artist.toString().toLowerCase() == 'stok'
+        ? setState(() {
+            isStell = 1;
+            pilihArtistStell = artist;
+            isStokStellClick = true;
+            _getAllDataStell(pilihArtistStell);
+          })
+        :  setState(() {
             isStell += 1;
             pilihArtistStell = artist;
             _getAllDataStell(pilihArtistStell);
           });
   }
 
-  void _onTapLevelBackPolishing() {
+  void _onTapLevelBackPolishing(String status) {
+    status == '1'
+    ? setState(() {
+      isPolishing -= 1;
+      pilihArtistPolishing = null;
+    })
+    :
+    isStokPolishingClick == true
+    ? setState(() {
+      print('is stok true -- is polishing ke awal');
+      isPolishing = -1;
+      pilihArtistPolishing = null;
+    })
+    :
     setState(() {
+      print('is stok false -- back polishing');
+
       isPolishing -= 1;
       pilihArtistPolishing = null;
     });
   }
 
-  void _onTapLevelBackStell() {
-    setState(() {
+  void _onTapLevelBackStell(status) {
+    status == '1'
+    ? setState(() {
+      isStell -= 1;
+      pilihArtistStell = null;
+    })
+    : isStokStellClick == true
+    ? setState(() {
+      isStell = -1;
+      pilihArtistStell = null;
+    })
+    : setState(() {
       isStell -= 1;
       pilihArtistStell = null;
     });
@@ -2648,7 +3240,41 @@ class _DashboardControlState extends State<DashboardControl> {
                 // labelAlignment: ChartDataLabelAlignment
                 //     .middle
                 ), //? ini untuk label di dalam diagram
-        dataSource: chartDataFinishing!,
+        dataSource: chartDataArtistFinishing!,
+        onCreateShader: (ShaderDetails details) {
+          return ui.Gradient.linear(
+              details.rect.topCenter,
+              details.rect.bottomCenter,
+              const <Color>[Colors.red, Colors.orange, Colors.yellow],
+              <double>[0.3, 0.6, 0.9]);
+        },
+        color: Color.fromARGB(255, 45, 45, 43),
+        name: 'SPK',
+        width: 0.8,
+        xValueMapper: (ChartData sales, _) => sales.xValue,
+        yValueMapper: (ChartData sales, _) => sales.secondSeriesYValue,
+        onPointTap: (event) {
+          var i = event.dataPoints![event.pointIndex!-1].x;
+          // showSimpleNotification(
+          //   Text('$i'),
+          //   background: Colors.green,
+          //   duration: const Duration(seconds: 1),
+          // );
+          handleClickFinishing(i);
+        },
+      ),
+    ];
+  }
+
+  List<ColumnSeries<ChartData, dynamic>> getDataFinishingLevel1() {
+    return <ColumnSeries<ChartData, dynamic>>[
+      ColumnSeries<ChartData, dynamic>(
+        dataLabelSettings:
+            const DataLabelSettings(isVisible: true, offset: Offset(0, -5)
+                // labelAlignment: ChartDataLabelAlignment
+                //     .middle
+                ), //? ini untuk label di dalam diagram
+        dataSource: chartDataFinishingAwal!,
         onCreateShader: (ShaderDetails details) {
           return ui.Gradient.linear(
               details.rect.topCenter,
@@ -2663,12 +3289,11 @@ class _DashboardControlState extends State<DashboardControl> {
         yValueMapper: (ChartData sales, _) => sales.secondSeriesYValue,
         onPointTap: (event) {
           var i = event.dataPoints![event.pointIndex!].x;
-          // showSimpleNotification(
-          //   Text('$i'),
-          //   background: Colors.green,
-          //   duration: const Duration(seconds: 1),
-          // );
-          handleClickFinishing(i);
+          i.toString().toLowerCase() =='stok'
+          ? 
+          handleClickFinishing(i)
+          :
+          handleClickWipFinishing('');
         },
       ),
     ];
@@ -2699,6 +3324,42 @@ class _DashboardControlState extends State<DashboardControl> {
           var i = event.dataPoints![event.pointIndex!].x;
 
           _onTapLevelGoStell(i);
+        },
+      ),
+    ];
+  }
+  List<ColumnSeries<ChartData, dynamic>> getDataStellAwal() {
+    return <ColumnSeries<ChartData, dynamic>>[
+      ColumnSeries<ChartData, dynamic>(
+        dataLabelSettings:
+            const DataLabelSettings(isVisible: true, offset: Offset(0, -5)
+                // labelAlignment: ChartDataLabelAlignment
+                //     .middle
+                ), //? ini untuk label di dalam diagram
+        dataSource: chartDataStellAwal!,
+        onCreateShader: (ShaderDetails details) {
+          return ui.Gradient.linear(
+              details.rect.topCenter,
+              details.rect.bottomCenter,
+              const <Color>[Colors.red, Colors.orange, Colors.yellow],
+              <double>[0.3, 0.6, 0.9]);
+        },
+        color: Color.fromARGB(255, 45, 45, 43),
+        name: 'SPK',
+        width: 0.8,
+        xValueMapper: (ChartData sales, _) => sales.xValue,
+        yValueMapper: (ChartData sales, _) => sales.secondSeriesYValue,
+        onPointTap: (event) {
+          var i = event.dataPoints![event.pointIndex!].x;
+            if(i.toString().toLowerCase() == 'stok')
+          {
+          isStokPolishingClick = true;
+          _onTapLevelGoStell(i);
+
+          } else {
+    isStokPolishingClick = false;
+          _onTapLevelGoStell(i);
+          }
         },
       ),
     ];
@@ -2772,6 +3433,63 @@ class _DashboardControlState extends State<DashboardControl> {
     ];
   }
 
+  List<PieSeries<ChartData, String>> _getRadiusPieSeriesWIP() {
+    return <PieSeries<ChartData, String>>[
+      PieSeries<ChartData, String>(
+          onPointTap: (event) {
+            var i = event.dataPoints![event.pointIndex!].x;
+            i.toString().toLowerCase() == 'stok'
+            ? handleClickPasangBatu(i)
+            : handleClickWipPasangBatu('');
+          },
+          explode: true,
+          explodeIndex: 0,
+          explodeOffset: '30%',
+          dataSource: chartDataWipPasangBatu!,
+          xValueMapper: (ChartData data, _) => data.xValue as String,
+          yValueMapper: (ChartData data, _) => data.secondSeriesYValue,
+          dataLabelMapper: (ChartData data, _) => data.text,
+          startAngle: 100,
+          endAngle: 100,
+          // pointRadiusMapper: (ChartData data, _) =>
+          //     data.secondSeriesYValue as String,
+          // pointRadiusMapper: (ChartData data, _) => data.text,
+          dataLabelSettings: const DataLabelSettings(
+              isVisible: true, labelPosition: ChartDataLabelPosition.outside))
+    ];
+  }
+
+List<ColumnSeries<ChartData, dynamic>> getDataPolishingAwal() {
+    return <ColumnSeries<ChartData, dynamic>>[
+      //! first series named "RELEASE".
+      ColumnSeries<ChartData, dynamic>(
+        dataLabelSettings: const DataLabelSettings(isVisible: true
+            // labelAlignment: ChartDataLabelAlignment
+            //     .middle
+            ), //? ini untuk label di dalam diagram
+        dataSource: chartDataPolishingAwal!,
+        pointColorMapper: (ChartData sales, _) =>
+            _getPointColor(sales.secondSeriesYValue),
+        name: 'SPK',
+        width: 0.8,
+        xValueMapper: (ChartData sales, _) => sales.xValue,
+        yValueMapper: (ChartData sales, _) => sales.secondSeriesYValue,
+        onPointTap: (event) {
+          var i = event.dataPoints![event.pointIndex!].x;
+          if(i.toString().toLowerCase() == 'stok')
+          {
+          isStokPolishingClick = true;
+          _onTapLevelGoPolishing(i);
+
+          } else {
+    isStokPolishingClick = false;
+          _onTapLevelGoPolishing(i);
+          }
+        },
+      ),
+    ];
+  }
+
   List<ColumnSeries<ChartData, dynamic>> getDataPolishing() {
     return <ColumnSeries<ChartData, dynamic>>[
       //! first series named "RELEASE".
@@ -2833,6 +3551,43 @@ class _DashboardControlState extends State<DashboardControl> {
       ),
     ];
   }
+  List<ColumnSeries<ChartData, dynamic>> getDataStokPolishingLevel2() {
+    return <ColumnSeries<ChartData, dynamic>>[
+      ColumnSeries<ChartData, dynamic>(
+        dataLabelSettings: const DataLabelSettings(
+          isVisible: true,
+        ),
+        dataSource: chartDataStokPolishingLevel2!,
+        // pointColorMapper: (ChartData sales, _) =>
+        //     _getPointColor(sales.secondSeriesYValue),
+        color: const Color.fromRGBO(237, 221, 76, 1),
+        name: 'POLISHING 1',
+        width: 0.8,
+        xValueMapper: (ChartData sales, _) => sales.xValue,
+        yValueMapper: (ChartData sales, _) => sales.yValue,
+        onPointTap: (event) {
+          _onTapLevelGoPolishing('stok2');
+        },
+      ),
+      ColumnSeries<ChartData, dynamic>(
+        dataLabelSettings: const DataLabelSettings(isVisible: true
+            // labelAlignment: ChartDataLabelAlignment
+            //     .middle
+            ), //? ini untuk label di dalam diagram
+        dataSource: chartDataStokPolishingLevel2!,
+        // pointColorMapper: (ChartData sales, _) =>
+        //     _getPointColor(sales.secondSeriesYValue),
+        color: const Color.fromRGBO(2, 109, 213, 1),
+        name: 'POLISHING 2',
+        width: 0.8,
+        xValueMapper: (ChartData sales, _) => sales.xValue,
+        yValueMapper: (ChartData sales, _) => sales.secondSeriesYValue,
+        onPointTap: (event) {
+          _onTapLevelGoPolishing('stok2');
+        },
+      ),
+    ];
+  }
 
   List<ColumnSeries<ChartData, dynamic>> getDataStellLevel2() {
     return <ColumnSeries<ChartData, dynamic>>[
@@ -2869,6 +3624,44 @@ class _DashboardControlState extends State<DashboardControl> {
         onPointTap: (event) {
           var i = event.dataPoints![event.pointIndex!].x;
           _onTapLevelGoStell(i);
+        },
+      ),
+    ];
+  }
+
+   List<ColumnSeries<ChartData, dynamic>> getDataStokStellLevel2() {
+    return <ColumnSeries<ChartData, dynamic>>[
+      ColumnSeries<ChartData, dynamic>(
+        dataLabelSettings: const DataLabelSettings(
+          isVisible: true,
+        ),
+        dataSource: chartDataStokStellLevel2!,
+        // pointColorMapper: (ChartData sales, _) =>
+        //     _getPointColor(sales.secondSeriesYValue),
+        color: const Color.fromRGBO(237, 221, 76, 1),
+        name: 'STELL RANGKA 1',
+        width: 0.8,
+        xValueMapper: (ChartData sales, _) => sales.xValue,
+        yValueMapper: (ChartData sales, _) => sales.yValue,
+        onPointTap: (event) {
+          _onTapLevelGoStell('stok2');
+        },
+      ),
+      ColumnSeries<ChartData, dynamic>(
+        dataLabelSettings: const DataLabelSettings(isVisible: true
+            // labelAlignment: ChartDataLabelAlignment
+            //     .middle
+            ), //? ini untuk label di dalam diagram
+        dataSource: chartDataStokStellLevel2!,
+        // pointColorMapper: (ChartData sales, _) =>
+        //     _getPointColor(sales.secondSeriesYValue),
+        color: const Color.fromRGBO(2, 109, 213, 1),
+        name: 'Stell Rangka 2',
+        width: 0.8,
+        xValueMapper: (ChartData sales, _) => sales.xValue,
+        yValueMapper: (ChartData sales, _) => sales.secondSeriesYValue,
+        onPointTap: (event) {
+          _onTapLevelGoStell('stok2');
         },
       ),
     ];
