@@ -160,14 +160,14 @@ class _DashboardControlState extends State<DashboardControl> {
   int decBrj = 0;
 
   //? variable awal diagram
-  int qtyStokFinishing =0;
-  int qtyWipFinishing =0;
-  int qtyStokPolishing =0;
-  int qtyWipPolishing =0;
-  int qtyStokPasangBatu =0;
-  int qtyWipPasangBatu =0;
-  int qtyStokStell =0;
-  int qtyWipStell =0;
+  int qtyStokFinishing = 0;
+  int qtyWipFinishing = 0;
+  int qtyStokPolishing = 0;
+  int qtyWipPolishing = 0;
+  int qtyStokPasangBatu = 0;
+  int qtyWipPasangBatu = 0;
+  int qtyStokStell = 0;
+  int qtyWipStell = 0;
   //! end variable diagram awal
 
   @override
@@ -192,7 +192,7 @@ class _DashboardControlState extends State<DashboardControl> {
         enable: true, format: 'Total: point.y', canShowMarker: true);
 
     // var now = DateTime.now();
-     var now = DateTime.now();
+    var now = DateTime.now();
     String month = DateFormat('MMMM', 'id').format(now);
     nowSiklus = month;
     _getAllData("all");
@@ -240,6 +240,7 @@ class _DashboardControlState extends State<DashboardControl> {
             _getAllDataFinishing(pilihArtistFinishing);
           });
   }
+
   void handleClickWipFinishing(artist) {
     artist == ''
         ? setState(() {
@@ -252,8 +253,6 @@ class _DashboardControlState extends State<DashboardControl> {
             _getAllDataFinishing(pilihArtistFinishing);
           });
   }
-
-  
 
   void handleClickProsesAwal(divisi) {
     divisi == ''
@@ -283,7 +282,7 @@ class _DashboardControlState extends State<DashboardControl> {
   }
 
   void handleClickPasangBatu(artist) {
- artist == ''
+    artist == ''
         ? setState(() {
             isPasangBatuClick = !isPasangBatuClick;
             pilihArtistPasangBatu = null;
@@ -396,36 +395,27 @@ class _DashboardControlState extends State<DashboardControl> {
     ];
     chartDataArtistFinishing = [
       for (var i = 0; i < artistFinishing.length; i++)
-      artistFinishing[i].toString().toLowerCase() == 'stok' 
-      ? ChartData()
-      :  ChartData(
-            xValue: artistFinishing[i],
-            secondSeriesYValue: qtyArtistFinishing[i])
+        artistFinishing[i].toString().toLowerCase() == 'stok'
+            ? ChartData()
+            : ChartData(
+                xValue: artistFinishing[i],
+                secondSeriesYValue: qtyArtistFinishing[i])
     ];
-     chartDataFinishingAwal = [
-        ChartData(
-            xValue: 'STOK',
-            secondSeriesYValue: qtyStokFinishing),
-              ChartData(
-            xValue: 'WIP',
-            secondSeriesYValue: qtyWipFinishing)
+    chartDataFinishingAwal = [
+      ChartData(xValue: 'STOK', secondSeriesYValue: qtyStokFinishing),
+      ChartData(xValue: 'WIP', secondSeriesYValue: qtyWipFinishing)
     ];
     chartDataStell = [
       for (var i = 0; i < artistStell.length; i++)
-      artistStell[i].toString().toLowerCase() == 'stok'
-       ? ChartData()
-      :  
-        ChartData(xValue: artistStell[i], secondSeriesYValue: qtyArtistStell[i])
+        artistStell[i].toString().toLowerCase() == 'stok'
+            ? ChartData()
+            : ChartData(
+                xValue: artistStell[i], secondSeriesYValue: qtyArtistStell[i])
     ];
-     chartDataStellAwal = [
-          ChartData(
-            xValue: 'STOK',
-            secondSeriesYValue: qtyStokStell),
-              ChartData(
-            xValue: 'WIP',
-            secondSeriesYValue: qtyWipStell)
+    chartDataStellAwal = [
+      ChartData(xValue: 'STOK', secondSeriesYValue: qtyStokStell),
+      ChartData(xValue: 'WIP', secondSeriesYValue: qtyWipStell)
     ];
-
 
     // chartDataCasting = [
     //   for (var i = 0; i < artistCasting.length; i++)
@@ -435,90 +425,75 @@ class _DashboardControlState extends State<DashboardControl> {
 
     chartDataPolishing = [
       for (var i = 0; i < artistPolishing.length; i++)
-      artistPolishing[i].toString().toLowerCase() == 'stok' 
-      ? ChartData()
-      :   ChartData(
-            xValue: artistPolishing[i],
-            secondSeriesYValue: qtyArtistPolishing[i])
+        artistPolishing[i].toString().toLowerCase() == 'stok'
+            ? ChartData()
+            : ChartData(
+                xValue: artistPolishing[i],
+                secondSeriesYValue: qtyArtistPolishing[i])
     ];
     chartDataPolishingAwal = [
-        ChartData(
-            xValue: 'STOK',
-            secondSeriesYValue: qtyStokPolishing),
-              ChartData(
-            xValue: 'WIP',
-            secondSeriesYValue: qtyWipPolishing)
-    ];
-  
-chartDataStokPolishingLevel2 = [
-      for (var i = 0; i < artistPolishing.length; i++)
-       artistPolishing[i].toString().toLowerCase() != 'stok' 
-      ? ChartData()
-      : 
-        ChartData(
-            xValue: artistPolishing[i],
-            secondSeriesYValue: qtyArtistPolishing2[i],
-            yValue: qtyArtistPolishing1[i])
+      ChartData(xValue: 'STOK', secondSeriesYValue: qtyStokPolishing),
+      ChartData(xValue: 'WIP', secondSeriesYValue: qtyWipPolishing)
     ];
 
-   
-  
- chartDataPolishingLevel2 = [
+    chartDataStokPolishingLevel2 = [
       for (var i = 0; i < artistPolishing.length; i++)
-       artistPolishing[i].toString().toLowerCase() == 'stok' 
-      ? ChartData()
-      : 
-        ChartData(
-            xValue: artistPolishing[i],
-            secondSeriesYValue: qtyArtistPolishing2[i],
-            yValue: qtyArtistPolishing1[i])
+        artistPolishing[i].toString().toLowerCase() != 'stok'
+            ? ChartData()
+            : ChartData(
+                xValue: artistPolishing[i],
+                secondSeriesYValue: qtyArtistPolishing2[i],
+                yValue: qtyArtistPolishing1[i])
     ];
-   
+
+    chartDataPolishingLevel2 = [
+      for (var i = 0; i < artistPolishing.length; i++)
+        artistPolishing[i].toString().toLowerCase() == 'stok'
+            ? ChartData()
+            : ChartData(
+                xValue: artistPolishing[i],
+                secondSeriesYValue: qtyArtistPolishing2[i],
+                yValue: qtyArtistPolishing1[i])
+    ];
 
     chartDataStellLevel2 = [
       for (var i = 0; i < artistStell.length; i++)
-        artistPolishing[i].toString().toLowerCase() == 'stok' 
-      ? ChartData()
-      : 
-        ChartData(
-            xValue: artistStell[i],
-            secondSeriesYValue: qtyArtistStell2[i],
-            yValue: qtyArtistStell1[i])
+        artistPolishing[i].toString().toLowerCase() == 'stok'
+            ? ChartData()
+            : ChartData(
+                xValue: artistStell[i],
+                secondSeriesYValue: qtyArtistStell2[i],
+                yValue: qtyArtistStell1[i])
     ];
 
-     chartDataStokStellLevel2 = [
+    chartDataStokStellLevel2 = [
       for (var i = 0; i < artistStell.length; i++)
-       artistStell[i].toString().toLowerCase() != 'stok' 
-      ? ChartData()
-      : 
-        ChartData(
-            xValue: artistStell[i],
-            secondSeriesYValue: qtyArtistStell2[i],
-            yValue: qtyArtistStell1[i])
+        artistStell[i].toString().toLowerCase() != 'stok'
+            ? ChartData()
+            : ChartData(
+                xValue: artistStell[i],
+                secondSeriesYValue: qtyArtistStell2[i],
+                yValue: qtyArtistStell1[i])
     ];
 
     chartDataPasangBatu = [
       for (var i = 0; i < artistPasangBatu.length; i++)
-       artistPasangBatu[i].toString().toLowerCase() == 'stok' 
-      ? ChartData(
-       xValue: '-'
-      )
-      : 
-        ChartData(
-            xValue: artistPasangBatu[i],
-            secondSeriesYValue: qtyArtistPasangBatu[i],
-            text: '${artistPasangBatu[i]} \n ${qtyArtistPasangBatu[i]}')
+        artistPasangBatu[i].toString().toLowerCase() == 'stok'
+            ? ChartData(xValue: '-')
+            : ChartData(
+                xValue: artistPasangBatu[i],
+                secondSeriesYValue: qtyArtistPasangBatu[i],
+                text: '${artistPasangBatu[i]} \n ${qtyArtistPasangBatu[i]}')
     ];
     chartDataWipPasangBatu = [
-        ChartData(
-            xValue: 'STOK',
-            secondSeriesYValue: qtyStokPasangBatu,
-            text: 'STOK \n $qtyStokPasangBatu'),
-               ChartData(
-            xValue: 'WIP',
-            secondSeriesYValue: qtyWipPasangBatu,
-            text: 'WIP \n $qtyWipPasangBatu'),
-            
+      ChartData(
+          xValue: 'STOK',
+          secondSeriesYValue: qtyStokPasangBatu,
+          text: 'STOK \n $qtyStokPasangBatu'),
+      ChartData(
+          xValue: 'WIP',
+          secondSeriesYValue: qtyWipPasangBatu,
+          text: 'WIP \n $qtyWipPasangBatu'),
     ];
 
     setState(() {
@@ -613,22 +588,20 @@ chartDataStokPolishingLevel2 = [
       artistFinishing = dummyArtistFinishing.toSet().toList();
 
       for (var i = 0; i < artistFinishing.length; i++) {
-         int count = dummyArtistFinishing
+        int count = dummyArtistFinishing
             .where((artist) => artist == artistFinishing[i])
             .length;
         qtyArtistFinishing.add(count);
-           
-              int countStok = dummyArtistFinishing
+
+        int countStok = dummyArtistFinishing
             .where((artist) => artist.toString().toLowerCase() == 'stok')
             .length;
- qtyStokFinishing = countStok;
-          
-                 int countWip = dummyArtistFinishing
+        qtyStokFinishing = countStok;
+
+        int countWip = dummyArtistFinishing
             .where((artist) => artist.toString().toLowerCase() != 'stok')
             .length;
- qtyWipFinishing = countWip;
-            
-      
+        qtyWipFinishing = countWip;
       }
       //? end function Finishing
 
@@ -648,15 +621,15 @@ chartDataStokPolishingLevel2 = [
         int count =
             dummyArtistStell.where((artist) => artist == artistStell[i]).length;
         qtyArtistStell.add(count);
-             int countStok = dummyArtistStell
+        int countStok = dummyArtistStell
             .where((artist) => artist.toString().toLowerCase() == 'stok')
             .length;
- qtyStokStell = countStok;
-          
-                 int countWip = dummyArtistStell
+        qtyStokStell = countStok;
+
+        int countWip = dummyArtistStell
             .where((artist) => artist.toString().toLowerCase() != 'stok')
             .length;
- qtyWipStell = countWip;
+        qtyWipStell = countWip;
       }
       //? end function Stell
 
@@ -699,15 +672,15 @@ chartDataStokPolishingLevel2 = [
             .length;
         qtyArtistPolishing.add(count);
 
-              int countStok = dummyArtistPolishing
+        int countStok = dummyArtistPolishing
             .where((artist) => artist.toString().toLowerCase() == 'stok')
             .length;
- qtyStokPolishing = countStok;
-          
-                 int countWip = dummyArtistPolishing
+        qtyStokPolishing = countStok;
+
+        int countWip = dummyArtistPolishing
             .where((artist) => artist.toString().toLowerCase() != 'stok')
             .length;
- qtyWipPolishing = countWip;
+        qtyWipPolishing = countWip;
       }
       //? end function Polishing
 
@@ -799,15 +772,14 @@ chartDataStokPolishingLevel2 = [
             .where((artist) => artist == artistPasangBatu[i])
             .length;
         qtyArtistPasangBatu.add(count);
-           int countStok = dummyArtistPasangBatu
+        int countStok = dummyArtistPasangBatu
             .where((artist) => artist.toString().toLowerCase() == 'stok')
             .length;
         qtyStokPasangBatu = countStok;
-           int countWip = dummyArtistPasangBatu
+        int countWip = dummyArtistPasangBatu
             .where((artist) => artist.toString().toLowerCase() != 'stok')
             .length;
         qtyWipPasangBatu = countWip;
-
       }
       //? end function PasangBatu
     } else {}
@@ -949,15 +921,13 @@ chartDataStokPolishingLevel2 = [
               automaticallyImplyLeading: false,
               backgroundColor: Colors.white,
               leadingWidth: 320,
-              leading: 
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        "Bulan Saat Ini : $nowSiklus",
-                        style:
-                            const TextStyle(fontSize: 20, color: Colors.black),
-                      ),
-                    ),
+              leading: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "Bulan Saat Ini : $nowSiklus",
+                  style: const TextStyle(fontSize: 20, color: Colors.black),
+                ),
+              ),
               elevation: 0,
             ),
             body: isLoading == true
@@ -1000,8 +970,7 @@ chartDataStokPolishingLevel2 = [
   //! dashboard produksi
   dashboardProduksi() {
     var h = 400.0;
-    var w = 600.00
-;
+    var w = 600.00;
     return Container(
       // color: colorBG,
       color: Colors.white,
@@ -1091,7 +1060,6 @@ chartDataStokPolishingLevel2 = [
                         ],
                       ),
                     ),
-            
             ],
           ),
           SizedBox(height: 15),
@@ -1119,15 +1087,15 @@ chartDataStokPolishingLevel2 = [
                                       fit: BoxFit.cover),
                                 ),
                               ),
-                            SizedBox(
+                              SizedBox(
                                 width: 150,
-                                child:  Text(
-                                'Table Polishing',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold),
-                              ),
+                                child: Text(
+                                  'Table Polishing',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                ),
                               ),
                               Container(
                                 width: MediaQuery.of(context).size.width * 0.2,
@@ -1286,9 +1254,8 @@ chartDataStokPolishingLevel2 = [
                                 ],
                               ),
                               isStokPolishingClick == true
-                              ? chartStokPolishingLevel2()
-                              :
-                              chartPolishingLevel2(),
+                                  ? chartStokPolishingLevel2()
+                                  : chartPolishingLevel2(),
                               Padding(
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 50),
@@ -1322,100 +1289,96 @@ chartDataStokPolishingLevel2 = [
                           ),
                         )
                       : isPolishing == 0
-                      ? Container(
-                          height: h,
-                          width: w,
-                          color: colorCard2,
-                          child: Column(
-                            children: [
-                              Row(
+                          ? Container(
+                              height: h,
+                              width: w,
+                              color: colorCard2,
+                              child: Column(
                                 children: [
-                                    InkWell(
-                                onTap: () {
-                                  _onTapLevelBackPolishing('1');
-                                },
-
-                                child: SizedBox(
-                                  width: 50,
-                                  child: Lottie.asset(
-                                      "loadingJSON/backbutton.json",
-                                      fit: BoxFit.cover),
-                                ),
-                              ),
-                                
-                                   SizedBox(
-                                width: 150),
-                                  Container(
-                                   
-                                      child: Text(
+                                  Row(
+                                    children: [
+                                      InkWell(
+                                        onTap: () {
+                                          _onTapLevelBackPolishing('1');
+                                        },
+                                        child: SizedBox(
+                                          width: 50,
+                                          child: Lottie.asset(
+                                              "loadingJSON/backbutton.json",
+                                              fit: BoxFit.cover),
+                                        ),
+                                      ),
+                                      SizedBox(width: 150),
+                                      Container(
+                                          child: Text(
                                         'Wip Polishing',
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 20,
                                             fontWeight: FontWeight.bold),
                                       )),
-                                ],
-                              ),
-                              chartPolishing(),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 50),
-                                child:
-                                    Divider(color: Colors.white, thickness: 2),
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  _onTapLevelGoPolishing('');
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.only(bottom: 5),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: const [
-                                      Text(
-                                        'See Detailed Report',
-                                        style: TextStyle(
-                                            color: Colors.white, fontSize: 18),
-                                      ),
-                                      Icon(
-                                        Icons.arrow_forward,
-                                        color: Colors.white,
-                                      )
                                     ],
                                   ),
-                                ),
+                                  chartPolishing(),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 50),
+                                    child: Divider(
+                                        color: Colors.white, thickness: 2),
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      _onTapLevelGoPolishing('');
+                                    },
+                                    child: Container(
+                                      padding: EdgeInsets.only(bottom: 5),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: const [
+                                          Text(
+                                            'See Detailed Report',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 18),
+                                          ),
+                                          Icon(
+                                            Icons.arrow_forward,
+                                            color: Colors.white,
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                        )
-             
-                      : Container(
-                          height: h,
-                          width: w,
-                          color: colorCard2,
-                          child: Column(
-                            children: [
-                              Container(
-                                  padding: EdgeInsets.only(left: 20, top: 25),
-                                  child: Text(
-                                    'Polishing',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold),
-                                  )),
-                              chartPolishingAwal(),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 50),
-                                child:
-                                    Divider(color: Colors.white, thickness: 2),
+                            )
+                          : Container(
+                              height: h,
+                              width: w,
+                              color: colorCard2,
+                              child: Column(
+                                children: [
+                                  Container(
+                                      padding:
+                                          EdgeInsets.only(left: 20, top: 25),
+                                      child: Text(
+                                        'Polishing',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold),
+                                      )),
+                                  chartPolishingAwal(),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 50),
+                                    child: Divider(
+                                        color: Colors.white, thickness: 2),
+                                  ),
+                                ],
                               ),
-                             
-                            ],
-                          ),
-                        ),
+                            ),
               SizedBox(width: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1442,16 +1405,16 @@ chartDataStokPolishingLevel2 = [
                                           fit: BoxFit.cover),
                                     ),
                                   ),
-                                 SizedBox(
-                                width: 150,
-                                child:  Text(
-                                'Table Stell',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              ),
+                                  SizedBox(
+                                    width: 150,
+                                    child: Text(
+                                      'Table Stell',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
                                   Container(
                                     width:
                                         MediaQuery.of(context).size.width * 0.2,
@@ -1617,10 +1580,9 @@ chartDataStokPolishingLevel2 = [
                                           )),
                                     ],
                                   ),
-                                   isStokStellClick == true
-                                   ?chartStokStellLevel2()
-                                   :
-                                  chartStellLevel2(),
+                                  isStokStellClick == true
+                                      ? chartStokStellLevel2()
+                                      : chartStellLevel2(),
                                   Padding(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 50),
@@ -1655,123 +1617,120 @@ chartDataStokPolishingLevel2 = [
                               ),
                             )
                           : isStell == 0
-                          ? Container(
-                              height: h,
-                              width: w,
-                              color: colorCard1,
-                              child: Column(
-                                children: [
-                                  Row(
+                              ? Container(
+                                  height: h,
+                                  width: w,
+                                  color: colorCard1,
+                                  child: Column(
                                     children: [
-                                      InkWell(
-                                onTap: () {
-                                  _onTapLevelBackStell('1');
-                                },
-                                child: SizedBox(
-                                  width: 50,
-                                  child: Lottie.asset(
-                                      "loadingJSON/backbutton.json",
-                                      fit: BoxFit.cover),
-                                ),
-                              ),
-                                SizedBox(
-                                width: 150),
-                                      Container(
-                                         
-                                          child: Text(
+                                      Row(
+                                        children: [
+                                          InkWell(
+                                            onTap: () {
+                                              _onTapLevelBackStell('1');
+                                            },
+                                            child: SizedBox(
+                                              width: 50,
+                                              child: Lottie.asset(
+                                                  "loadingJSON/backbutton.json",
+                                                  fit: BoxFit.cover),
+                                            ),
+                                          ),
+                                          SizedBox(width: 150),
+                                          Container(
+                                              child: Text(
                                             'Wip Stell Rangka',
                                             style: TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 20,
                                                 fontWeight: FontWeight.bold),
                                           )),
+                                        ],
+                                      ),
+                                      chartStell(),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 50),
+                                        child: Divider(
+                                            color: Colors.white, thickness: 2),
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          _onTapLevelGoStell('');
+                                        },
+                                        child: Container(
+                                          padding: EdgeInsets.only(bottom: 5),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: const [
+                                              Text(
+                                                'See Detailed Report',
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 18),
+                                              ),
+                                              Icon(
+                                                Icons.arrow_forward,
+                                                color: Colors.white,
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ),
                                     ],
                                   ),
-                                  chartStell(),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 50),
-                                    child: Divider(
-                                        color: Colors.white, thickness: 2),
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      _onTapLevelGoStell('');
-                                    },
-                                    child: Container(
-                                      padding: EdgeInsets.only(bottom: 5),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        children: const [
-                                          Text(
-                                            'See Detailed Report',
+                                )
+                              : Container(
+                                  height: h,
+                                  width: w,
+                                  color: colorCard1,
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                          padding: EdgeInsets.only(
+                                              left: 20, top: 25),
+                                          child: Text(
+                                            'Stell Rangka',
                                             style: TextStyle(
                                                 color: Colors.white,
-                                                fontSize: 18),
-                                          ),
-                                          Icon(
-                                            Icons.arrow_forward,
-                                            color: Colors.white,
-                                          )
-                                        ],
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold),
+                                          )),
+                                      chartStellAwal(),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 50),
+                                        child: Divider(
+                                            color: Colors.white, thickness: 2),
                                       ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            )
-              
-                          : Container(
-                              height: h,
-                              width: w,
-                              color: colorCard1,
-                              child: Column(
-                                children: [
-                                  Container(
-                                      padding:
-                                          EdgeInsets.only(left: 20, top: 25),
-                                      child: Text(
-                                        'Stell Rangka',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                  chartStellAwal(),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 50),
-                                    child: Divider(
-                                        color: Colors.white, thickness: 2),
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      _onTapLevelGoStell('');
-                                    },
-                                    child: Container(
-                                      padding: EdgeInsets.only(bottom: 5),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        children: const [
-                                          Text(
-                                            'See Detailed Report',
-                                            style: TextStyle(
+                                      InkWell(
+                                        onTap: () {
+                                          _onTapLevelGoStell('');
+                                        },
+                                        child: Container(
+                                          padding: EdgeInsets.only(bottom: 5),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: const [
+                                              Text(
+                                                'See Detailed Report',
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 18),
+                                              ),
+                                              Icon(
+                                                Icons.arrow_forward,
                                                 color: Colors.white,
-                                                fontSize: 18),
+                                              )
+                                            ],
                                           ),
-                                          Icon(
-                                            Icons.arrow_forward,
-                                            color: Colors.white,
-                                          )
-                                        ],
+                                        ),
                                       ),
-                                    ),
+                                    ],
                                   ),
-                                ],
-                              ),
-                            ),
+                                ),
                 ],
               ),
               SizedBox(width: 10),
@@ -1781,7 +1740,7 @@ chartDataStokPolishingLevel2 = [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-             isFinishingClick == true
+              isFinishingClick == true
                   ? Container(
                       height: h,
                       width: w,
@@ -1804,13 +1763,13 @@ chartDataStokPolishingLevel2 = [
                               ),
                               SizedBox(
                                 width: 150,
-                                child:  Text(
-                                'Table Finishing',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold),
-                              ),
+                                child: Text(
+                                  'Table Finishing',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                ),
                               ),
                               Container(
                                 width:
@@ -1937,96 +1896,94 @@ chartDataStokPolishingLevel2 = [
                         ],
                       ),
                     )
-                  :  isWipFinishingClick == true
-              ? Container(
-                      height: h,
-                      width: w,
-                      color: colorCard1,
-                      child: Column(
-                        children: [
-                          Row(
+                  : isWipFinishingClick == true
+                      ? Container(
+                          height: h,
+                          width: w,
+                          color: colorCard1,
+                          child: Column(
                             children: [
-                               InkWell(
-                                onTap: () {
-                                  handleClickWipFinishing('');
-                                },
-
-                                child: SizedBox(
-                                  width: 50,
-                                  child: Lottie.asset(
-                                      "loadingJSON/backbutton.json",
-                                      fit: BoxFit.cover),
-                                ),
-                              ),
-                              SizedBox(
-                                width: 150),
-                                Text(
-                                'Wip Finishing',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              
-                           
-                            ],
-                          ),
-                          chartFinishing(),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 50),
-                            child: Divider(color: Colors.white, thickness: 2),
-                          ),
-                          InkWell(
-                            onTap: () {
-                              handleClickFinishing('');
-                            },
-                            child: Container(
-                              padding: EdgeInsets.only(bottom: 5),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: const [
-                                  Text(
-                                    'See Detailed Report',
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 18),
+                              Row(
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+                                      handleClickWipFinishing('');
+                                    },
+                                    child: SizedBox(
+                                      width: 50,
+                                      child: Lottie.asset(
+                                          "loadingJSON/backbutton.json",
+                                          fit: BoxFit.cover),
+                                    ),
                                   ),
-                                  Icon(
-                                    Icons.arrow_forward,
-                                    color: Colors.white,
-                                  )
+                                  SizedBox(width: 150),
+                                  Text(
+                                    'Wip Finishing',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
+                                  ),
                                 ],
                               ),
-                            ),
+                              chartFinishing(),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 50),
+                                child:
+                                    Divider(color: Colors.white, thickness: 2),
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  handleClickFinishing('');
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.only(bottom: 5),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: const [
+                                      Text(
+                                        'See Detailed Report',
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 18),
+                                      ),
+                                      Icon(
+                                        Icons.arrow_forward,
+                                        color: Colors.white,
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    )
-             :
-              Container(
-                      height: h,
-                      width: w,
-                      color: colorCard1,
-                      child: Column(
-                        children: [
-                          Container(
-                              padding: EdgeInsets.only(left: 20, top: 25),
-                              child: Text(
-                                'Finishing',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold),
-                              )),
-                          chartFinishingLevel1(),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 50),
-                            child: Divider(color: Colors.white, thickness: 2),
+                        )
+                      : Container(
+                          height: h,
+                          width: w,
+                          color: colorCard1,
+                          child: Column(
+                            children: [
+                              Container(
+                                  padding: EdgeInsets.only(left: 20, top: 25),
+                                  child: Text(
+                                    'Finishing',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
+                                  )),
+                              chartFinishingLevel1(),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 50),
+                                child:
+                                    Divider(color: Colors.white, thickness: 2),
+                              ),
+                            ],
                           ),
-                        
-                        ],
-                      ),
-                    ),
+                        ),
               SizedBox(width: 10),
               isPasangBatuClick == true
                   ? Container(
@@ -2049,15 +2006,15 @@ chartDataStokPolishingLevel2 = [
                                       fit: BoxFit.cover),
                                 ),
                               ),
-                             SizedBox(
+                              SizedBox(
                                 width: 150,
-                                child:  Text(
-                                'Table Pasang Batu',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold),
-                              ),
+                                child: Text(
+                                  'Table Pasang Batu',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                ),
                               ),
                               Container(
                                 width: MediaQuery.of(context).size.width * 0.2,
@@ -2184,94 +2141,97 @@ chartDataStokPolishingLevel2 = [
                       ),
                     )
                   : isWipPasangBatuClick == true
-              ? Container(
-                      height: h,
-                      width: w,
-                      color: colorCard2,
-                      child: Column(
-                        children: [
-                          Row(
+                      ? Container(
+                          height: h,
+                          width: w,
+                          color: colorCard2,
+                          child: Column(
                             children: [
+                              Row(
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+                                      handleClickWipPasangBatu('');
+                                    },
+                                    child: SizedBox(
+                                      width: 50,
+                                      child: Lottie.asset(
+                                          "loadingJSON/backbutton.json",
+                                          fit: BoxFit.cover),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 250,
+                                  ),
+                                  Text(
+                                    'Wip Pasang Batu',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
+                              chartPasangBatuPie(),
+                              // chartPasangBatu(),
+
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 50),
+                                child:
+                                    Divider(color: Colors.white, thickness: 2),
+                              ),
                               InkWell(
                                 onTap: () {
-                                  handleClickWipPasangBatu('');
+                                  handleClickPasangBatu('');
                                 },
-
-                                child: SizedBox(
-                                  width: 50,
-                                  child: Lottie.asset(
-                                      "loadingJSON/backbutton.json",
-                                      fit: BoxFit.cover),
+                                child: Container(
+                                  padding: EdgeInsets.only(bottom: 5),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: const [
+                                      Text(
+                                        'See Detailed Report',
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 18),
+                                      ),
+                                      Icon(
+                                        Icons.arrow_forward,
+                                        color: Colors.white,
+                                      )
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              SizedBox(
-                                width: 250,),
-                                Text(
-                                'Wip Pasang Batu',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold),
                               ),
                             ],
                           ),
-                          chartPasangBatuPie(),
-                          // chartPasangBatu(),
-
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 50),
-                            child: Divider(color: Colors.white, thickness: 2),
-                          ),
-                          InkWell(
-                            onTap: () {
-                              handleClickPasangBatu('');
-                            },
-                            child: Container(
-                              padding: EdgeInsets.only(bottom: 5),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: const [
-                                  Text(
-                                    'See Detailed Report',
+                        )
+                      : Container(
+                          height: h,
+                          width: w,
+                          color: colorCard2,
+                          child: Column(
+                            children: [
+                              Container(
+                                  padding: EdgeInsets.only(left: 20, top: 25),
+                                  child: Text(
+                                    'Pasang Batu',
                                     style: TextStyle(
-                                        color: Colors.white, fontSize: 18),
-                                  ),
-                                  Icon(
-                                    Icons.arrow_forward,
-                                    color: Colors.white,
-                                  )
-                                ],
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
+                                  )),
+                              chartWipPasangBatuPie(),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 50),
+                                child:
+                                    Divider(color: Colors.white, thickness: 2),
                               ),
-                            ),
+                            ],
                           ),
-                        ],
-                      ),
-                    )
-              : Container(
-                      height: h,
-                      width: w,
-                      color: colorCard2,
-                      child: Column(
-                        children: [
-                          Container(
-                              padding: EdgeInsets.only(left: 20, top: 25),
-                              child: Text(
-                                'Pasang Batu',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold),
-                              )),
-                          chartWipPasangBatuPie(),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 50),
-                            child: Divider(color: Colors.white, thickness: 2),
-                          ),
-                        ],
-                      ),
-                    ),
-            
+                        ),
               SizedBox(width: 10),
             ],
           ),
@@ -2468,7 +2428,7 @@ chartDataStokPolishingLevel2 = [
       DataColumn(
           label: Container(
               padding: const EdgeInsets.all(5),
-              child: const Center(child: Text('TEMA')))),
+              child: const Center(child: Text('STATUS\nBATU')))),
       DataColumn(
           label: Container(
               padding: const EdgeInsets.all(5),
@@ -2477,6 +2437,10 @@ chartDataStokPolishingLevel2 = [
           label: Container(
               padding: const EdgeInsets.all(5),
               child: const Center(child: Text('KETERANGAN\nBATU')))),
+      DataColumn(
+          label: Container(
+              padding: const EdgeInsets.all(5),
+              child: const Center(child: Text('TEMA')))),
     ];
   }
 
@@ -2501,7 +2465,7 @@ chartDataStokPolishingLevel2 = [
       DataColumn(
           label: Container(
               padding: const EdgeInsets.all(5),
-              child: const Center(child: Text('TEMA')))),
+              child: const Center(child: Text('STATUS\nBATU')))),
       DataColumn(
           label: Container(
               padding: const EdgeInsets.all(5),
@@ -2510,6 +2474,10 @@ chartDataStokPolishingLevel2 = [
           label: Container(
               padding: const EdgeInsets.all(5),
               child: const Center(child: Text('KETERANGAN\nBATU')))),
+      DataColumn(
+          label: Container(
+              padding: const EdgeInsets.all(5),
+              child: const Center(child: Text('TEMA')))),
     ];
   }
 
@@ -2547,7 +2515,7 @@ chartDataStokPolishingLevel2 = [
               child: Center(child: Text(data[i].kodeMarketing.toString())))),
           DataCell(Container(
               padding: const EdgeInsets.all(5),
-              child: Center(child: Text(data[i].tema.toString())))),
+              child: Center(child: Text(data[i].keteranganBatu.toString())))),
           DataCell(Container(
               padding: const EdgeInsets.all(5),
               child: Center(
@@ -2617,6 +2585,9 @@ chartDataStokPolishingLevel2 = [
               padding: const EdgeInsets.all(5),
               child: Center(
                   child: Text(data[i].keteranganStatusBatu.toString())))),
+          DataCell(Container(
+              padding: const EdgeInsets.all(5),
+              child: Center(child: Text(data[i].tema.toString())))),
         ]),
     ];
   }
@@ -2658,7 +2629,7 @@ chartDataStokPolishingLevel2 = [
               child: Center(child: Text(data[i].kodeMarketing.toString())))),
           DataCell(Container(
               padding: const EdgeInsets.all(5),
-              child: Center(child: Text(data[i].tema.toString())))),
+              child: Center(child: Text(data[i].keteranganBatu.toString())))),
           DataCell(Container(
               padding: const EdgeInsets.all(0),
               child: Center(
@@ -2728,6 +2699,9 @@ chartDataStokPolishingLevel2 = [
               padding: const EdgeInsets.all(0),
               child: Center(
                   child: Text(data[i].keteranganStatusBatu.toString())))),
+          DataCell(Container(
+              padding: const EdgeInsets.all(5),
+              child: Center(child: Text(data[i].tema.toString())))),
         ]),
     ];
   }
@@ -2761,7 +2735,6 @@ chartDataStokPolishingLevel2 = [
       tooltipBehavior: _tooltipBehaviorStell,
     ));
   }
-
 
   chartStellAwal() {
     return Container(
@@ -2871,7 +2844,7 @@ chartDataStokPolishingLevel2 = [
     ));
   }
 
-chartPolishingAwal() {
+  chartPolishingAwal() {
     return Container(
         child: SfCartesianChart(
       plotAreaBorderWidth: 0,
@@ -2955,7 +2928,6 @@ chartPolishingAwal() {
       tooltipBehavior: _tooltipBehaviorPolishing,
     ));
   }
-
 
   chartStokPolishingLevel2() {
     return Container(
@@ -3058,31 +3030,31 @@ chartPolishingAwal() {
   void _onTapLevelGoPolishing(artist) {
     artist == ''
         ? setState(() {
-          print('go polishing');
+            print('go polishing');
             isPolishing += 1;
             pilihArtistPolishing = null;
           })
         : artist.toString().toLowerCase() == 'stok2'
-        ? setState(() {
-          print('masuk stok 2 polishing');
-            isPolishing = 2;
-            pilihArtistPolishing = 'STOK';
-            _getAllDataPolishing(pilihArtistPolishing);
-          })
-        :artist.toString().toLowerCase() == 'stok'
-        ? setState(() {
-          print('masuk stok polishing');
-            // isStokPolishingClick = true;
-            isPolishing = 1;
-            pilihArtistPolishing = artist;
-            _getAllDataPolishing(pilihArtistPolishing);
-          })
-        : setState(() {
-          print('go polishing');
-            isPolishing += 1;
-            pilihArtistPolishing = artist;
-            _getAllDataPolishing(pilihArtistPolishing);
-          });
+            ? setState(() {
+                print('masuk stok 2 polishing');
+                isPolishing = 2;
+                pilihArtistPolishing = 'STOK';
+                _getAllDataPolishing(pilihArtistPolishing);
+              })
+            : artist.toString().toLowerCase() == 'stok'
+                ? setState(() {
+                    print('masuk stok polishing');
+                    // isStokPolishingClick = true;
+                    isPolishing = 1;
+                    pilihArtistPolishing = artist;
+                    _getAllDataPolishing(pilihArtistPolishing);
+                  })
+                : setState(() {
+                    print('go polishing');
+                    isPolishing += 1;
+                    pilihArtistPolishing = artist;
+                    _getAllDataPolishing(pilihArtistPolishing);
+                  });
   }
 
   void _onTapLevelGoStell(artist) {
@@ -3092,62 +3064,59 @@ chartPolishingAwal() {
             pilihArtistStell = null;
           })
         : artist.toString().toLowerCase() == 'stok2'
-        ? setState(() {
-            isStell = 2;
-            pilihArtistStell = 'STOK';
-            _getAllDataStell(pilihArtistStell);
-          })
-        :artist.toString().toLowerCase() == 'stok'
-        ? setState(() {
-            isStell = 1;
-            pilihArtistStell = artist;
-            isStokStellClick = true;
-            _getAllDataStell(pilihArtistStell);
-          })
-        :  setState(() {
-            isStell += 1;
-            pilihArtistStell = artist;
-            _getAllDataStell(pilihArtistStell);
-          });
+            ? setState(() {
+                isStell = 2;
+                pilihArtistStell = 'STOK';
+                _getAllDataStell(pilihArtistStell);
+              })
+            : artist.toString().toLowerCase() == 'stok'
+                ? setState(() {
+                    isStell = 1;
+                    pilihArtistStell = artist;
+                    _getAllDataStell(pilihArtistStell);
+                  })
+                : setState(() {
+                    isStell += 1;
+                    pilihArtistStell = artist;
+                    _getAllDataStell(pilihArtistStell);
+                  });
   }
 
   void _onTapLevelBackPolishing(String status) {
     status == '1'
-    ? setState(() {
-      isPolishing -= 1;
-      pilihArtistPolishing = null;
-    })
-    :
-    isStokPolishingClick == true
-    ? setState(() {
-      print('is stok true -- is polishing ke awal');
-      isPolishing = -1;
-      pilihArtistPolishing = null;
-    })
-    :
-    setState(() {
-      print('is stok false -- back polishing');
+        ? setState(() {
+            isPolishing -= 1;
+            pilihArtistPolishing = null;
+          })
+        : isStokPolishingClick == true
+            ? setState(() {
+                print('is stok true -- is polishing ke awal');
+                isPolishing = -1;
+                pilihArtistPolishing = null;
+              })
+            : setState(() {
+                print('is stok false -- back polishing');
 
-      isPolishing -= 1;
-      pilihArtistPolishing = null;
-    });
+                isPolishing -= 1;
+                pilihArtistPolishing = null;
+              });
   }
 
   void _onTapLevelBackStell(status) {
     status == '1'
-    ? setState(() {
-      isStell -= 1;
-      pilihArtistStell = null;
-    })
-    : isStokStellClick == true
-    ? setState(() {
-      isStell = -1;
-      pilihArtistStell = null;
-    })
-    : setState(() {
-      isStell -= 1;
-      pilihArtistStell = null;
-    });
+        ? setState(() {
+            isStell -= 1;
+            pilihArtistStell = null;
+          })
+        : isStokStellClick == true
+            ? setState(() {
+                isStell = -1;
+                pilihArtistStell = null;
+              })
+            : setState(() {
+                isStell -= 1;
+                pilihArtistStell = null;
+              });
   }
 
   List<ColumnSeries<ChartData, dynamic>> getDataPrintingResin() {
@@ -3254,7 +3223,7 @@ chartPolishingAwal() {
         xValueMapper: (ChartData sales, _) => sales.xValue,
         yValueMapper: (ChartData sales, _) => sales.secondSeriesYValue,
         onPointTap: (event) {
-          var i = event.dataPoints![event.pointIndex!-1].x;
+          var i = event.dataPoints![event.pointIndex! - 1].x;
           // showSimpleNotification(
           //   Text('$i'),
           //   background: Colors.green,
@@ -3289,11 +3258,9 @@ chartPolishingAwal() {
         yValueMapper: (ChartData sales, _) => sales.secondSeriesYValue,
         onPointTap: (event) {
           var i = event.dataPoints![event.pointIndex!].x;
-          i.toString().toLowerCase() =='stok'
-          ? 
-          handleClickFinishing(i)
-          :
-          handleClickWipFinishing('');
+          i.toString().toLowerCase() == 'stok'
+              ? handleClickFinishing(i)
+              : handleClickWipFinishing('');
         },
       ),
     ];
@@ -3328,6 +3295,7 @@ chartPolishingAwal() {
       ),
     ];
   }
+
   List<ColumnSeries<ChartData, dynamic>> getDataStellAwal() {
     return <ColumnSeries<ChartData, dynamic>>[
       ColumnSeries<ChartData, dynamic>(
@@ -3351,14 +3319,12 @@ chartPolishingAwal() {
         yValueMapper: (ChartData sales, _) => sales.secondSeriesYValue,
         onPointTap: (event) {
           var i = event.dataPoints![event.pointIndex!].x;
-            if(i.toString().toLowerCase() == 'stok')
-          {
-          isStokPolishingClick = true;
-          _onTapLevelGoStell(i);
-
+          if (i.toString().toLowerCase() == 'stok') {
+            isStokStellClick = true;
+            _onTapLevelGoStell(i);
           } else {
-    isStokPolishingClick = false;
-          _onTapLevelGoStell(i);
+            isStokStellClick = false;
+            _onTapLevelGoStell(i);
           }
         },
       ),
@@ -3439,8 +3405,8 @@ chartPolishingAwal() {
           onPointTap: (event) {
             var i = event.dataPoints![event.pointIndex!].x;
             i.toString().toLowerCase() == 'stok'
-            ? handleClickPasangBatu(i)
-            : handleClickWipPasangBatu('');
+                ? handleClickPasangBatu(i)
+                : handleClickWipPasangBatu('');
           },
           explode: true,
           explodeIndex: 0,
@@ -3459,7 +3425,7 @@ chartPolishingAwal() {
     ];
   }
 
-List<ColumnSeries<ChartData, dynamic>> getDataPolishingAwal() {
+  List<ColumnSeries<ChartData, dynamic>> getDataPolishingAwal() {
     return <ColumnSeries<ChartData, dynamic>>[
       //! first series named "RELEASE".
       ColumnSeries<ChartData, dynamic>(
@@ -3476,14 +3442,12 @@ List<ColumnSeries<ChartData, dynamic>> getDataPolishingAwal() {
         yValueMapper: (ChartData sales, _) => sales.secondSeriesYValue,
         onPointTap: (event) {
           var i = event.dataPoints![event.pointIndex!].x;
-          if(i.toString().toLowerCase() == 'stok')
-          {
-          isStokPolishingClick = true;
-          _onTapLevelGoPolishing(i);
-
+          if (i.toString().toLowerCase() == 'stok') {
+            isStokPolishingClick = true;
+            _onTapLevelGoPolishing(i);
           } else {
-    isStokPolishingClick = false;
-          _onTapLevelGoPolishing(i);
+            isStokPolishingClick = false;
+            _onTapLevelGoPolishing(i);
           }
         },
       ),
@@ -3551,6 +3515,7 @@ List<ColumnSeries<ChartData, dynamic>> getDataPolishingAwal() {
       ),
     ];
   }
+
   List<ColumnSeries<ChartData, dynamic>> getDataStokPolishingLevel2() {
     return <ColumnSeries<ChartData, dynamic>>[
       ColumnSeries<ChartData, dynamic>(
@@ -3629,7 +3594,7 @@ List<ColumnSeries<ChartData, dynamic>> getDataPolishingAwal() {
     ];
   }
 
-   List<ColumnSeries<ChartData, dynamic>> getDataStokStellLevel2() {
+  List<ColumnSeries<ChartData, dynamic>> getDataStokStellLevel2() {
     return <ColumnSeries<ChartData, dynamic>>[
       ColumnSeries<ChartData, dynamic>(
         dataLabelSettings: const DataLabelSettings(
