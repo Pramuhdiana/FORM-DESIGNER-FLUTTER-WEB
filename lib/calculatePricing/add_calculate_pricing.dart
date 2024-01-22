@@ -1099,24 +1099,19 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
     } else {
       var output =
           total.round().toString()[total.round().toString().length - 1];
-
+    print('ini output $output');
       if (int.parse(output) >= 1 && int.parse(output) <= 4) {
         setState(() {
           postLabour = totalLabourTanpaUp.round();
           postEmas = totalEmasTanpaUp.round();
           postDiamond = totalDiamondTanpaUp.round();
-          print(upEmasParva);
-          print(doubleBeratEmas);
-          print(presentaseEmas);
-          print(hargaEmas);
-          print(kursParva);
           print('perhitungan parva A');
+          print('ini total $total');
           print(
               'Labour : Rp. ${CurrencyFormat.convertToDollar(totalLabour, 0)}');
           print('Emas : Rp. ${CurrencyFormat.convertToDollar(totalEmas, 0)}');
           print(
               'Diamond : Rp. ${CurrencyFormat.convertToDollar(totalDiamond, 0)}');
-
           total = (total + (5 - int.parse(output)));
           estimasiHarga.text = total.round().toString();
         });
@@ -1126,17 +1121,32 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
           postEmas = totalEmasTanpaUp.round();
           postDiamond = totalDiamondTanpaUp.round();
           print('perhitungan parva B');
+          print('ini total $total');
+         print(
+              'Labour : Rp. ${CurrencyFormat.convertToDollar(totalLabour, 0)}');
+          print('Emas : Rp. ${CurrencyFormat.convertToDollar(totalEmas, 0)}');
+          print(
+              'Diamond : Rp. ${CurrencyFormat.convertToDollar(totalDiamond, 0)}');
+          total = (total + (10 - int.parse(output)));
+          estimasiHarga.text = total.round().toString();
+        });
+      } else {
+      setState(() {
+          postLabour = totalLabourTanpaUp.round();
+          postEmas = totalEmasTanpaUp.round();
+          postDiamond = totalDiamondTanpaUp.round();
+          print('perhitungan parva');
+          print('ini total $total');
           print(
               'Labour : Rp. ${CurrencyFormat.convertToDollar(totalLabour, 0)}');
           print('Emas : Rp. ${CurrencyFormat.convertToDollar(totalEmas, 0)}');
           print(
               'Diamond : Rp. ${CurrencyFormat.convertToDollar(totalDiamond, 0)}');
-
-          total = (total + (10 - int.parse(output)));
-
           estimasiHarga.text = total.round().toString();
         });
+
       }
+          print('harganya ${estimasiHarga.text}');
       return total;
     }
   }
@@ -2147,6 +2157,26 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
 
           estimasiHarga.text = total.round().toString();
         });
+      } else {
+        setState(() {
+          postLabour = totalLabourTanpaUp.round();
+          postEmas = totalEmasTanpaUp.round();
+          postDiamond = totalDiamondTanpaUp.round();
+          print(upEmasMetier);
+          print(doubleBeratEmas);
+          print(presentaseEmas);
+          print(hargaEmas);
+          print(kursMetier);
+          print('perhitungan Metier');
+          print(
+              'Labour : Rp. ${CurrencyFormat.convertToDollar(totalLabour, 0)}');
+          print('Emas : Rp. ${CurrencyFormat.convertToDollar(totalEmas, 0)}');
+          print(
+              'Diamond : Rp. ${CurrencyFormat.convertToDollar(totalDiamond, 0)}');
+
+          estimasiHarga.text = total.round().toString();
+        });
+
       }
       return total;
     }
@@ -13568,6 +13598,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
       priceAfterDiskon = (int.parse(estimasiHarga.text) / 0.75 );
     }
     print('ini pr : $pricePerCarat & $priceAfterDiskon');
+    print('harga ${estimasiHarga.text}');
     Map<String, String> body = {
       'namaDesigner': '(N) ${namaDesigner.text}',
       'namaToko': namaToko.text,
@@ -13699,467 +13730,7 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
     print(response.statusCode);
   }
 
-  postApiQtyBatu1() async {
-    var resultBatu1 =
-        (int.parse(stokBatu1.text) - int.parse(qtyBatu1.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu1.toString(),
-      'qty': resultBatu1,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu2() async {
-    var resultBatu2 =
-        (int.parse(stokBatu2.text) - int.parse(qtyBatu2.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu2.toString(),
-      'qty': resultBatu2,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu3() async {
-    var resultBatu3 =
-        (int.parse(stokBatu3.text) - int.parse(qtyBatu3.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu3.toString(),
-      'qty': resultBatu3,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu4() async {
-    var resultBatu4 =
-        (int.parse(stokBatu4.text) - int.parse(qtyBatu4.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu4.toString(),
-      'qty': resultBatu4,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu5() async {
-    var resultBatu5 =
-        (int.parse(stokBatu5.text) - int.parse(qtyBatu5.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu5.toString(),
-      'qty': resultBatu5,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu6() async {
-    var resultBatu6 =
-        (int.parse(stokBatu6.text) - int.parse(qtyBatu6.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu6.toString(),
-      'qty': resultBatu6,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu7() async {
-    var resultBatu7 =
-        (int.parse(stokBatu7.text) - int.parse(qtyBatu7.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu7.toString(),
-      'qty': resultBatu7,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu8() async {
-    var resultBatu8 =
-        (int.parse(stokBatu8.text) - int.parse(qtyBatu8.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu8.toString(),
-      'qty': resultBatu8,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu9() async {
-    var resultBatu9 =
-        (int.parse(stokBatu9.text) - int.parse(qtyBatu9.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu9.toString(),
-      'qty': resultBatu9,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu10() async {
-    var resultBatu10 =
-        (int.parse(stokBatu10.text) - int.parse(qtyBatu10.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu10.toString(),
-      'qty': resultBatu10,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu11() async {
-    var resultBatu11 =
-        (int.parse(stokBatu11.text) - int.parse(qtyBatu11.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu11.toString(),
-      'qty': resultBatu11,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu12() async {
-    var resultBatu12 =
-        (int.parse(stokBatu12.text) - int.parse(qtyBatu12.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu12.toString(),
-      'qty': resultBatu12,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu13() async {
-    var resultBatu13 =
-        (int.parse(stokBatu13.text) - int.parse(qtyBatu13.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu13.toString(),
-      'qty': resultBatu13,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu14() async {
-    var resultBatu14 =
-        (int.parse(stokBatu14.text) - int.parse(qtyBatu14.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu14.toString(),
-      'qty': resultBatu14,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu15() async {
-    var resultBatu15 =
-        (int.parse(stokBatu15.text) - int.parse(qtyBatu15.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu15.toString(),
-      'qty': resultBatu15,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu16() async {
-    var resultBatu16 =
-        (int.parse(stokBatu16.text) - int.parse(qtyBatu16.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu16.toString(),
-      'qty': resultBatu16,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu17() async {
-    var resultBatu17 =
-        (int.parse(stokBatu17.text) - int.parse(qtyBatu17.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu17.toString(),
-      'qty': resultBatu17,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu18() async {
-    var resultBatu18 =
-        (int.parse(stokBatu18.text) - int.parse(qtyBatu18.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu18.toString(),
-      'qty': resultBatu18,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu19() async {
-    var resultBatu19 =
-        (int.parse(stokBatu19.text) - int.parse(qtyBatu19.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu19.toString(),
-      'qty': resultBatu19,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu20() async {
-    var resultBatu20 =
-        (int.parse(stokBatu20.text) - int.parse(qtyBatu20.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu20.toString(),
-      'qty': resultBatu20,
-    };
-
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu21() async {
-    var resultBatu21 =
-        (int.parse(stokBatu21.text) - int.parse(qtyBatu21.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu21.toString(),
-      'qty': resultBatu21,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu22() async {
-    var resultBatu22 =
-        (int.parse(stokBatu22.text) - int.parse(qtyBatu22.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu22.toString(),
-      'qty': resultBatu22,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu23() async {
-    var resultBatu23 =
-        (int.parse(stokBatu23.text) - int.parse(qtyBatu23.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu23.toString(),
-      'qty': resultBatu23,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu24() async {
-    var resultBatu24 =
-        (int.parse(stokBatu24.text) - int.parse(qtyBatu24.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu24.toString(),
-      'qty': resultBatu24,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu25() async {
-    var resultBatu25 =
-        (int.parse(stokBatu25.text) - int.parse(qtyBatu25.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu25.toString(),
-      'qty': resultBatu25,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu26() async {
-    var resultBatu26 =
-        (int.parse(stokBatu26.text) - int.parse(qtyBatu26.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu26.toString(),
-      'qty': resultBatu26,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu27() async {
-    var resultBatu27 =
-        (int.parse(stokBatu27.text) - int.parse(qtyBatu27.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu27.toString(),
-      'qty': resultBatu27,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu28() async {
-    var resultBatu28 =
-        (int.parse(stokBatu28.text) - int.parse(qtyBatu28.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu28.toString(),
-      'qty': resultBatu28,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu29() async {
-    var resultBatu29 =
-        (int.parse(stokBatu29.text) - int.parse(qtyBatu29.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu29.toString(),
-      'qty': resultBatu29,
-    };
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu30() async {
-    var resultBatu30 =
-        (int.parse(stokBatu30.text) - int.parse(qtyBatu30.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu30.toString(),
-      'qty': resultBatu30,
-    };
-
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu31() async {
-    var resultBatu31 =
-        (int.parse(stokBatu31.text) - int.parse(qtyBatu31.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu31.toString(),
-      'qty': resultBatu31,
-    };
-
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu32() async {
-    var resultBatu32 =
-        (int.parse(stokBatu32.text) - int.parse(qtyBatu32.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu32.toString(),
-      'qty': resultBatu32,
-    };
-
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu33() async {
-    var resultBatu33 =
-        (int.parse(stokBatu33.text) - int.parse(qtyBatu33.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu33.toString(),
-      'qty': resultBatu33,
-    };
-
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu34() async {
-    var resultBatu34 =
-        (int.parse(stokBatu34.text) - int.parse(qtyBatu34.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu34.toString(),
-      'qty': resultBatu34,
-    };
-
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
-
-  postApiQtyBatu35() async {
-    var resultBatu35 =
-        (int.parse(stokBatu35.text) - int.parse(qtyBatu35.text)).toString();
-    Map<String, String> body = {
-      'id': idBatu35.toString(),
-      'qty': resultBatu35,
-    };
-
-    final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postUpdateDataBatu),
-        body: body);
-    print(response.body);
-  }
+  
 
   Future<List<BatuModel2024>> getData(filter) async {
     // 'http://54.179.58.215:8080/api/indexcustomer',
