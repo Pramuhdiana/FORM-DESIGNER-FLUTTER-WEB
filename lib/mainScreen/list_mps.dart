@@ -138,7 +138,7 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
       // alldata = filterByDivisi.toList();
       if (sharedPreferences!.getString('role') == '1' ||
           sharedPreferences!.getString('divisi') == 'admin') {
-        for (var i = 0; i < alldata.length; i++) {
+        for (var i = 2; i < alldata.length; i++) {
           listDivisi.add(alldata[i].divisi!);
           listIdDivisi.add(i);
         }
@@ -204,6 +204,51 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
 
       var alldata =
           jsonResponse.map((data) => ListMpsModel.fromJson(data)).toList();
+      if (sharedPreferences!.getString('divisi') == 'admin' ||
+          sharedPreferences!.getString('divisi') == 'produksi') {
+        //! function admin dan head produksi
+        if (sharedPreferences!.getString('role') == '1' ||
+            sharedPreferences!.getString('role') == '2' ||
+            sharedPreferences!.getString('divisi') == 'admin') {
+        }
+        //! function produksi role 3
+        else if (sharedPreferences!.getString('role') == '3') {
+          for (var i = 0; i < listDivisi.length; i++) {
+            print(listDivisi[i]);
+          }
+          var filterByPosisi = alldata
+              .where((element) =>
+                  element.posisi.toString().toLowerCase() ==
+                      listDivisi[0].toString().toLowerCase() ||
+                  element.posisi.toString().toLowerCase() ==
+                      listDivisi[1].toString().toLowerCase() ||
+                  element.posisi.toString().toLowerCase() ==
+                      listDivisi[1].toString().toLowerCase() ||
+                  element.posisi.toString().toLowerCase() ==
+                      listDivisi[2].toString().toLowerCase() ||
+                  element.posisi.toString().toLowerCase() == 'orul dari sisi')
+              .toList();
+          alldata = filterByPosisi.toList();
+        } else if (sharedPreferences!.getString('role') == '4') {
+          for (var i = 0; i < listDivisi.length; i++) {
+            print(listDivisi[i]);
+          }
+          var filterByPosisi = alldata
+              .where((element) =>
+                  element.posisi.toString().toLowerCase() ==
+                      listDivisi[0].toString().toLowerCase() ||
+                  element.posisi.toString().toLowerCase() ==
+                      listDivisi[1].toString().toLowerCase() ||
+                  element.posisi.toString().toLowerCase() ==
+                      listDivisi[1].toString().toLowerCase() ||
+                  element.posisi.toString().toLowerCase() ==
+                      listDivisi[2].toString().toLowerCase() ||
+                  element.posisi.toString().toLowerCase() == 'orul')
+              .toList();
+          alldata = filterByPosisi.toList();
+        } else {}
+      } else {}
+
       var dataProduksi = alldata.toList();
       alldata.toList();
       listJenisBarang.add('all');
@@ -1191,8 +1236,6 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
                     child: Lottie.asset("loadingJSON/loadingV1.json"),
                   )))
                 : Expanded(
-                    // child: SingleChildScrollView(
-                    //   scrollDirection: Axis.vertical,
                     child: ListView(children: [
                       Container(
                         padding: const EdgeInsets.all(15),
@@ -3539,7 +3582,14 @@ class RowSourceProduksi extends DataTableSource {
                                                       child: ElevatedButton(
                                                           style: ElevatedButton.styleFrom(
                                                               backgroundColor:
-                                                                  Colors.blue,
+                                                                  listDivisi[j]
+                                                                              .toString()
+                                                                              .toLowerCase() ==
+                                                                          'orul'
+                                                                      ? Colors
+                                                                          .red
+                                                                      : Colors
+                                                                          .blue,
                                                               shape: RoundedRectangleBorder(
                                                                   borderRadius:
                                                                       BorderRadius
@@ -3562,8 +3612,147 @@ class RowSourceProduksi extends DataTableSource {
                                                               );
                                                               Navigator.pop(
                                                                   context);
-                                                              if (j == 0 ||
-                                                                  j == 1 ||
+                                                              if (j == 0) {
+                                                                //! pop up untuk keterangan atau alasan ORUL
+                                                                //! function back posisi
+                                                                showGeneralDialog(
+                                                                    transitionDuration:
+                                                                        const Duration(
+                                                                            milliseconds:
+                                                                                200),
+                                                                    barrierDismissible:
+                                                                        false,
+                                                                    barrierLabel:
+                                                                        '',
+                                                                    context:
+                                                                        context,
+                                                                    pageBuilder:
+                                                                        (context,
+                                                                            animation1,
+                                                                            animation2) {
+                                                                      return const Text(
+                                                                          '');
+                                                                    },
+                                                                    barrierColor: Colors
+                                                                        .red
+                                                                        .withOpacity(
+                                                                            0.8),
+                                                                    transitionBuilder:
+                                                                        (context,
+                                                                            a1,
+                                                                            a2,
+                                                                            widget) {
+                                                                      TextEditingController
+                                                                          keterangan =
+                                                                          TextEditingController();
+                                                                      RoundedLoadingButtonController
+                                                                          btnController =
+                                                                          RoundedLoadingButtonController();
+                                                                      final formKey =
+                                                                          GlobalKey<
+                                                                              FormState>();
+
+                                                                      return Transform.scale(
+                                                                          scale: a1.value,
+                                                                          child: Opacity(
+                                                                              opacity: a1.value,
+                                                                              child: AlertDialog(
+                                                                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                                                                                  content: SizedBox(
+                                                                                      child: SingleChildScrollView(
+                                                                                          scrollDirection: Axis.vertical,
+                                                                                          child: Form(
+                                                                                            key: formKey,
+                                                                                            child: Column(children: [
+                                                                                              const Text(
+                                                                                                'Alasan / Keterangan ORUL',
+                                                                                                style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
+                                                                                              ),
+                                                                                              const SizedBox(height: 40),
+                                                                                              Container(
+                                                                                                padding: const EdgeInsets.only(right: 5),
+                                                                                                width: 250,
+                                                                                                child: TextFormField(
+                                                                                                  // textInputAction: TextInputAction.next,
+                                                                                                  keyboardType: TextInputType.multiline,
+                                                                                                  onChanged: (reportinput) {},
+                                                                                                  maxLines: 5, //or null
+                                                                                                  decoration: InputDecoration(
+                                                                                                      border: OutlineInputBorder(
+                                                                                                        borderRadius: BorderRadius.circular(10.0),
+                                                                                                      ),
+                                                                                                      labelText: "Keterangan",
+                                                                                                      hintText: "Keterangan"),
+                                                                                                  validator: (value) {
+                                                                                                    if (value!.isEmpty) {
+                                                                                                      return 'Wajib diisi *';
+                                                                                                    }
+                                                                                                    return null;
+                                                                                                  },
+                                                                                                  controller: keterangan,
+                                                                                                ),
+                                                                                              ),
+                                                                                              SizedBox(
+                                                                                                width: 250,
+                                                                                                child: CustomLoadingButton(
+                                                                                                    controller: btnController,
+                                                                                                    child: const Text("Simpan"),
+                                                                                                    onPressed: () async {
+                                                                                                      if (formKey.currentState!.validate()) {
+                                                                                                        print('validasi ok');
+                                                                                                        formKey.currentState!.save();
+                                                                                                        Future.delayed(const Duration(milliseconds: 10)).then((value) async {
+                                                                                                          btnController.success();
+                                                                                                          await postOrulReparasi(data.id, "${listDivisi[j]}", '', 'orul', '${data.posisi} => ${listDivisi[j]} : ${keterangan.text}');
+
+                                                                                                          await postHistory(
+                                                                                                            data.kodeDesignMdbc,
+                                                                                                            data.kodeMarketing,
+                                                                                                            "${listDivisi[j]}",
+                                                                                                            "",
+                                                                                                          );
+                                                                                                          onRowPressed();
+                                                                                                          Navigator.pop(context);
+                                                                                                          showSimpleNotification(
+                                                                                                            const Text('Pemilihan Posisi Berhasil'),
+                                                                                                            background: Colors.green,
+                                                                                                            duration: const Duration(seconds: 1),
+                                                                                                          );
+                                                                                                          Future.delayed(const Duration(milliseconds: 10)).then((value) {
+                                                                                                            btnController.reset(); //reset
+                                                                                                          });
+                                                                                                        });
+                                                                                                      } else {
+                                                                                                        print('validasi tidak');
+
+                                                                                                        btnController.error();
+                                                                                                        Future.delayed(const Duration(seconds: 1)).then((value) {
+                                                                                                          btnController.reset(); //reset
+                                                                                                        });
+                                                                                                      }
+                                                                                                    }),
+                                                                                              ),
+                                                                                              Container(
+                                                                                                width: 250,
+                                                                                                padding: const EdgeInsets.only(top: 15),
+                                                                                                child: ElevatedButton(
+                                                                                                    style: ElevatedButton.styleFrom(backgroundColor: Colors.red, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
+                                                                                                    onPressed: () async {
+                                                                                                      Navigator.pop(context);
+                                                                                                    },
+                                                                                                    child: const Text(
+                                                                                                      "Batal",
+                                                                                                      style: TextStyle(
+                                                                                                        fontSize: 16,
+                                                                                                      ),
+                                                                                                    )),
+                                                                                              ),
+                                                                                            ]),
+                                                                                          ))))));
+                                                                    });
+                                                              } else if (j ==
+                                                                      1 ||
+                                                                  j == 2 ||
                                                                   j == 9) {
                                                                 await postPosisi(
                                                                   data.id,
@@ -3988,9 +4177,12 @@ class RowSourceProduksi extends DataTableSource {
                                                             } else {
                                                               Navigator.pop(
                                                                   context);
-                                                              if (j == 0 ||
-                                                                  j == 1 ||
-                                                                  j == 9) {
+                                                              if (j == 1 ||
+                                                                  j == 2 ||
+                                                                  j == 9 ||
+                                                                  j == 10 ||
+                                                                  j == 11 ||
+                                                                  j == 12) {
                                                                 await postPosisi(
                                                                   data.id,
                                                                   "${listDivisi[j]}",
@@ -4790,6 +4982,21 @@ class RowSourceProduksi extends DataTableSource {
       'id': id.toString(),
       'posisi': posisi.toString(),
       'artist': artist.toString(),
+    };
+    final response = await http.post(
+        Uri.parse('${ApiConstants.baseUrl}${ApiConstants.updatePosisidanWeek}'),
+        body: body);
+    print(response.body);
+  }
+
+  postOrulReparasi(
+      id, posisi, artist, statusBackPosisi, keteranganBackPosisi) async {
+    Map<String, String> body = {
+      'id': id.toString(),
+      'posisi': posisi.toString(),
+      'artist': artist.toString(),
+      'statusBackPosisi': statusBackPosisi.toString(),
+      'keteranganBackPosisi': keteranganBackPosisi.toString(),
     };
     final response = await http.post(
         Uri.parse('${ApiConstants.baseUrl}${ApiConstants.updatePosisidanWeek}'),

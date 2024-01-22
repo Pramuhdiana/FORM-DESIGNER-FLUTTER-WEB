@@ -40,38 +40,43 @@ class ListMpsModel {
   String? siklus;
   String? bulan;
   String? tanggalInProduksi;
+  String? keteranganBackPosisi;
+  String? statusBackPosisi;
 
-  ListMpsModel(
-      {this.id,
-      this.kodeDesignMdbc,
-      this.kodeMarketing,
-      this.posisi,
-      this.tema,
-      this.jenisBarang,
-      this.brand,
-      this.color,
-      this.beratEmas,
-      this.estimasiHarga,
-      this.ringSize,
-      this.statusForm,
-      this.keteranganMinggu,
-      this.keteranganBatu,
-      this.keteranganStatusBatu,
-      this.imageUrl,
-      this.artist,
-      this.keteranganStatusAcc,
-      this.rantai,
-      this.qtyRantai,
-      this.lain2,
-      this.qtyLain2,
-      this.earnut,
-      this.qtyEarnut,
-      this.panjangRantai,
-      this.customKomponen,
-      this.qtyCustomKomponen,
-      this.siklus,
-      this.bulan,
-      this.tanggalInProduksi});
+  ListMpsModel({
+    this.id,
+    this.kodeDesignMdbc,
+    this.kodeMarketing,
+    this.posisi,
+    this.tema,
+    this.jenisBarang,
+    this.brand,
+    this.color,
+    this.beratEmas,
+    this.estimasiHarga,
+    this.ringSize,
+    this.statusForm,
+    this.keteranganMinggu,
+    this.keteranganBatu,
+    this.keteranganStatusBatu,
+    this.imageUrl,
+    this.artist,
+    this.keteranganStatusAcc,
+    this.rantai,
+    this.qtyRantai,
+    this.lain2,
+    this.qtyLain2,
+    this.earnut,
+    this.qtyEarnut,
+    this.panjangRantai,
+    this.customKomponen,
+    this.qtyCustomKomponen,
+    this.siklus,
+    this.bulan,
+    this.tanggalInProduksi,
+    this.keteranganBackPosisi,
+    this.statusBackPosisi,
+  });
 
   ListMpsModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -104,6 +109,8 @@ class ListMpsModel {
     siklus = json['siklus'] ?? '';
     bulan = json['bulan'] ?? '';
     tanggalInProduksi = json['tanggalInProduksi'] ?? '';
+    keteranganBackPosisi = json['keteranganBackPosisi'] ?? '';
+    statusBackPosisi = json['statusBackPosisi'] ?? '';
   }
 
   Map<String, dynamic> toJson() {
@@ -138,6 +145,8 @@ class ListMpsModel {
     data['siklus'] = siklus;
     data['bulan'] = bulan;
     data['tanggalInProduksi'] = tanggalInProduksi;
+    data['keteranganBackPosisi'] = keteranganBackPosisi;
+    data['statusBackPosisi'] = statusBackPosisi;
     return data;
   }
 }

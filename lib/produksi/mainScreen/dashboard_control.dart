@@ -1066,680 +1066,6 @@ class _DashboardControlState extends State<DashboardControl> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              isPolishing == 2
-                  ? Container(
-                      height: h,
-                      width: w,
-                      color: colorCard2,
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  _onTapLevelBackPolishing('1');
-                                },
-                                child: SizedBox(
-                                  width: 50,
-                                  child: Lottie.asset(
-                                      "loadingJSON/backbutton.json",
-                                      fit: BoxFit.cover),
-                                ),
-                              ),
-                              SizedBox(
-                                width: 150,
-                                child: Text(
-                                  'Table Polishing',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                              Container(
-                                width: MediaQuery.of(context).size.width * 0.2,
-                                padding: const EdgeInsets.only(
-                                    top: 5, left: 10, right: 10),
-                                child: DecoratedBox(
-                                    decoration: BoxDecoration(
-                                      color: pilihArtistPolishing != null
-                                          ? ui.Color.fromARGB(255, 42, 255, 23)
-                                          : const Color.fromRGBO(238, 240, 235,
-                                              1), //background color of dropdown button
-                                      border: Border.all(
-                                        color: Colors.black38,
-                                        // width:
-                                        //     3
-                                      ), //border of dropdown button
-                                      borderRadius: BorderRadius.circular(
-                                          35), //border raiuds of dropdown button
-                                    ),
-                                    child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 10, right: 10),
-                                        child: DropdownButton(
-                                          value: pilihArtistPolishing,
-                                          items: [
-                                            for (var item in artistPolishing)
-                                              DropdownMenuItem(
-                                                value: item,
-                                                child: Text(item),
-                                              ),
-                                          ],
-                                          hint: const Text(
-                                              'Pilih Artist Polishing'),
-                                          onChanged: (value) {
-                                            print(value);
-                                            pilihArtistPolishing = value;
-                                            _getAllDataPolishing(
-                                                pilihArtistPolishing);
-                                          },
-                                          icon: const Padding(
-                                              padding:
-                                                  EdgeInsets.only(left: 20),
-                                              child: Icon(Icons
-                                                  .arrow_circle_down_sharp)),
-                                          iconEnabledColor:
-                                              Colors.black, //Icon color
-                                          style: const TextStyle(
-                                            color: Colors.black, //Font color
-                                            // fontSize:
-                                            //     15 //font size on dropdown button
-                                          ),
-
-                                          dropdownColor: Colors
-                                              .white, //dropdown background color
-                                          underline:
-                                              Container(), //remove underline
-                                          isExpanded:
-                                              true, //make true to make width 100%
-                                        ))),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 15),
-                          SizedBox(
-                            height: (h - 120),
-                            child: SingleChildScrollView(
-                              scrollDirection: Axis.vertical,
-                              child: pilihArtistPolishing == null
-                                  ? Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: const [
-                                        SizedBox(
-                                          height: 50,
-                                        ),
-                                        Text(
-                                          'pilih artist terlebih dahulu',
-                                          style: TextStyle(
-                                              fontSize: 25,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold),
-                                        )
-                                      ],
-                                    )
-                                  : isLoadingPolishing == true
-                                      ? Container(
-                                          padding: const EdgeInsets.all(5),
-                                          width: 90,
-                                          height: 90,
-                                          child: Lottie.asset(
-                                              "loadingJSON/loadingV1.json"),
-                                        )
-                                      : SingleChildScrollView(
-                                          scrollDirection: Axis.horizontal,
-                                          child: Container(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 5),
-                                            child: dataTablePolishing(),
-                                          )),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 50),
-                            child: Divider(color: Colors.white, thickness: 2),
-                          ),
-                          Container(
-                            padding: EdgeInsets.only(bottom: 5),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: const [
-                                Text(
-                                  '',
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 18),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
-                  : isPolishing == 1
-                      ? Container(
-                          height: h,
-                          width: w,
-                          color: colorCard2,
-                          child: Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  InkWell(
-                                    onTap: () {
-                                      _onTapLevelBackPolishing('');
-                                    },
-                                    child: SizedBox(
-                                      width: 50,
-                                      child: Lottie.asset(
-                                          "loadingJSON/backbutton.json",
-                                          fit: BoxFit.cover),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 150,
-                                  ),
-                                  Container(
-                                      padding:
-                                          EdgeInsets.only(left: 0, top: 25),
-                                      child: Text(
-                                        'Polishing 1 dan 2',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                ],
-                              ),
-                              isStokPolishingClick == true
-                                  ? chartStokPolishingLevel2()
-                                  : chartPolishingLevel2(),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 50),
-                                child:
-                                    Divider(color: Colors.white, thickness: 2),
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  _onTapLevelGoPolishing('');
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.only(bottom: 5),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: const [
-                                      Text(
-                                        'See Detailed Report',
-                                        style: TextStyle(
-                                            color: Colors.white, fontSize: 18),
-                                      ),
-                                      Icon(
-                                        Icons.arrow_forward,
-                                        color: Colors.white,
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        )
-                      : isPolishing == 0
-                          ? Container(
-                              height: h,
-                              width: w,
-                              color: colorCard2,
-                              child: Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      InkWell(
-                                        onTap: () {
-                                          _onTapLevelBackPolishing('1');
-                                        },
-                                        child: SizedBox(
-                                          width: 50,
-                                          child: Lottie.asset(
-                                              "loadingJSON/backbutton.json",
-                                              fit: BoxFit.cover),
-                                        ),
-                                      ),
-                                      SizedBox(width: 150),
-                                      Container(
-                                          child: Text(
-                                        'Wip Polishing',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                    ],
-                                  ),
-                                  chartPolishing(),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 50),
-                                    child: Divider(
-                                        color: Colors.white, thickness: 2),
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      _onTapLevelGoPolishing('');
-                                    },
-                                    child: Container(
-                                      padding: EdgeInsets.only(bottom: 5),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        children: const [
-                                          Text(
-                                            'See Detailed Report',
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 18),
-                                          ),
-                                          Icon(
-                                            Icons.arrow_forward,
-                                            color: Colors.white,
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            )
-                          : Container(
-                              height: h,
-                              width: w,
-                              color: colorCard2,
-                              child: Column(
-                                children: [
-                                  Container(
-                                      padding:
-                                          EdgeInsets.only(left: 20, top: 25),
-                                      child: Text(
-                                        'Polishing',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                  chartPolishingAwal(),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 50),
-                                    child: Divider(
-                                        color: Colors.white, thickness: 2),
-                                  ),
-                                ],
-                              ),
-                            ),
-              SizedBox(width: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  isStell == 2
-                      ? Container(
-                          height: h,
-                          width: w,
-                          color: colorCard1,
-                          child: Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  InkWell(
-                                    onTap: () {
-                                      _onTapLevelBackStell('1');
-                                    },
-                                    child: SizedBox(
-                                      width: 50,
-                                      child: Lottie.asset(
-                                          "loadingJSON/backbutton.json",
-                                          fit: BoxFit.cover),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 150,
-                                    child: Text(
-                                      'Table Stell',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                  Container(
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.2,
-                                    padding: const EdgeInsets.only(
-                                        top: 5, left: 10, right: 10),
-                                    child: DecoratedBox(
-                                        decoration: BoxDecoration(
-                                          color: pilihArtistStell != null
-                                              ? ui.Color.fromARGB(
-                                                  255, 42, 255, 23)
-                                              : const Color.fromRGBO(
-                                                  238,
-                                                  240,
-                                                  235,
-                                                  1), //background color of dropdown button
-                                          border: Border.all(
-                                            color: Colors.black38,
-                                            // width:
-                                            //     3
-                                          ), //border of dropdown button
-                                          borderRadius: BorderRadius.circular(
-                                              35), //border raiuds of dropdown button
-                                        ),
-                                        child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 10, right: 10),
-                                            child: DropdownButton(
-                                              value: pilihArtistStell,
-                                              items: [
-                                                for (var item in artistStell)
-                                                  DropdownMenuItem(
-                                                    value: item,
-                                                    child: Text(item),
-                                                  ),
-                                              ],
-                                              hint: const Text(
-                                                  'Pilih Artist Stell'),
-                                              onChanged: (value) {
-                                                print(value);
-                                                pilihArtistStell = value;
-                                                _getAllDataStell(
-                                                    pilihArtistStell);
-                                              },
-                                              icon: const Padding(
-                                                  padding:
-                                                      EdgeInsets.only(left: 20),
-                                                  child: Icon(Icons
-                                                      .arrow_circle_down_sharp)),
-                                              iconEnabledColor:
-                                                  Colors.black, //Icon color
-                                              style: const TextStyle(
-                                                color:
-                                                    Colors.black, //Font color
-                                                // fontSize:
-                                                //     15 //font size on dropdown button
-                                              ),
-
-                                              dropdownColor: Colors
-                                                  .white, //dropdown background color
-                                              underline:
-                                                  Container(), //remove underline
-                                              isExpanded:
-                                                  true, //make true to make width 100%
-                                            ))),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 15),
-                              SizedBox(
-                                height: (h - 120),
-                                child: SingleChildScrollView(
-                                  scrollDirection: Axis.vertical,
-                                  child: pilihArtistStell == null
-                                      ? Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: const [
-                                            SizedBox(
-                                              height: 50,
-                                            ),
-                                            Text(
-                                              'pilih artist terlebih dahulu',
-                                              style: TextStyle(
-                                                  fontSize: 25,
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.bold),
-                                            )
-                                          ],
-                                        )
-                                      : isLoadingStell == true
-                                          ? Container(
-                                              padding: const EdgeInsets.all(5),
-                                              width: 90,
-                                              height: 90,
-                                              child: Lottie.asset(
-                                                  "loadingJSON/loadingV1.json"),
-                                            )
-                                          : SingleChildScrollView(
-                                              scrollDirection: Axis.horizontal,
-                                              child: Container(
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 5),
-                                                child: dataTableStell(),
-                                              )),
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 50),
-                                child:
-                                    Divider(color: Colors.white, thickness: 2),
-                              ),
-                              Container(
-                                padding: EdgeInsets.only(bottom: 5),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: const [
-                                    Text(
-                                      '',
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 18),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        )
-                      : isStell == 1
-                          ? Container(
-                              height: h,
-                              width: w,
-                              color: colorCard1,
-                              child: Column(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      InkWell(
-                                        onTap: () {
-                                          _onTapLevelBackStell('');
-                                        },
-                                        child: SizedBox(
-                                          width: 50,
-                                          child: Lottie.asset(
-                                              "loadingJSON/backbutton.json",
-                                              fit: BoxFit.cover),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 150,
-                                      ),
-                                      Container(
-                                          padding:
-                                              EdgeInsets.only(left: 0, top: 25),
-                                          child: Text(
-                                            'Stell rangka 1 dan 2',
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold),
-                                          )),
-                                    ],
-                                  ),
-                                  isStokStellClick == true
-                                      ? chartStokStellLevel2()
-                                      : chartStellLevel2(),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 50),
-                                    child: Divider(
-                                        color: Colors.white, thickness: 2),
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      _onTapLevelGoStell('');
-                                    },
-                                    child: Container(
-                                      padding: EdgeInsets.only(bottom: 5),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        children: const [
-                                          Text(
-                                            'See Detailed Report',
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 18),
-                                          ),
-                                          Icon(
-                                            Icons.arrow_forward,
-                                            color: Colors.white,
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            )
-                          : isStell == 0
-                              ? Container(
-                                  height: h,
-                                  width: w,
-                                  color: colorCard1,
-                                  child: Column(
-                                    children: [
-                                      Row(
-                                        children: [
-                                          InkWell(
-                                            onTap: () {
-                                              _onTapLevelBackStell('1');
-                                            },
-                                            child: SizedBox(
-                                              width: 50,
-                                              child: Lottie.asset(
-                                                  "loadingJSON/backbutton.json",
-                                                  fit: BoxFit.cover),
-                                            ),
-                                          ),
-                                          SizedBox(width: 150),
-                                          Container(
-                                              child: Text(
-                                            'Wip Stell Rangka',
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold),
-                                          )),
-                                        ],
-                                      ),
-                                      chartStell(),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 50),
-                                        child: Divider(
-                                            color: Colors.white, thickness: 2),
-                                      ),
-                                      InkWell(
-                                        onTap: () {
-                                          _onTapLevelGoStell('');
-                                        },
-                                        child: Container(
-                                          padding: EdgeInsets.only(bottom: 5),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceAround,
-                                            children: const [
-                                              Text(
-                                                'See Detailed Report',
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 18),
-                                              ),
-                                              Icon(
-                                                Icons.arrow_forward,
-                                                color: Colors.white,
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                )
-                              : Container(
-                                  height: h,
-                                  width: w,
-                                  color: colorCard1,
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                          padding: EdgeInsets.only(
-                                              left: 20, top: 25),
-                                          child: Text(
-                                            'Stell Rangka',
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold),
-                                          )),
-                                      chartStellAwal(),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 50),
-                                        child: Divider(
-                                            color: Colors.white, thickness: 2),
-                                      ),
-                                      InkWell(
-                                        onTap: () {
-                                          _onTapLevelGoStell('');
-                                        },
-                                        child: Container(
-                                          padding: EdgeInsets.only(bottom: 5),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceAround,
-                                            children: const [
-                                              Text(
-                                                'See Detailed Report',
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 18),
-                                              ),
-                                              Icon(
-                                                Icons.arrow_forward,
-                                                color: Colors.white,
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                ],
-              ),
-              SizedBox(width: 10),
-            ],
-          ),
-          SizedBox(height: 15),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
               isFinishingClick == true
                   ? Container(
                       height: h,
@@ -1984,6 +1310,680 @@ class _DashboardControlState extends State<DashboardControl> {
                             ],
                           ),
                         ),
+              SizedBox(width: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  isPolishing == 2
+                      ? Container(
+                          height: h,
+                          width: w,
+                          color: colorCard2,
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+                                      _onTapLevelBackPolishing('1');
+                                    },
+                                    child: SizedBox(
+                                      width: 50,
+                                      child: Lottie.asset(
+                                          "loadingJSON/backbutton.json",
+                                          fit: BoxFit.cover),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 150,
+                                    child: Text(
+                                      'Table Polishing',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  Container(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.2,
+                                    padding: const EdgeInsets.only(
+                                        top: 5, left: 10, right: 10),
+                                    child: DecoratedBox(
+                                        decoration: BoxDecoration(
+                                          color: pilihArtistPolishing != null
+                                              ? ui.Color.fromARGB(
+                                                  255, 42, 255, 23)
+                                              : const Color.fromRGBO(
+                                                  238,
+                                                  240,
+                                                  235,
+                                                  1), //background color of dropdown button
+                                          border: Border.all(
+                                            color: Colors.black38,
+                                            // width:
+                                            //     3
+                                          ), //border of dropdown button
+                                          borderRadius: BorderRadius.circular(
+                                              35), //border raiuds of dropdown button
+                                        ),
+                                        child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 10, right: 10),
+                                            child: DropdownButton(
+                                              value: pilihArtistPolishing,
+                                              items: [
+                                                for (var item
+                                                    in artistPolishing)
+                                                  DropdownMenuItem(
+                                                    value: item,
+                                                    child: Text(item),
+                                                  ),
+                                              ],
+                                              hint: const Text(
+                                                  'Pilih Artist Polishing'),
+                                              onChanged: (value) {
+                                                print(value);
+                                                pilihArtistPolishing = value;
+                                                _getAllDataPolishing(
+                                                    pilihArtistPolishing);
+                                              },
+                                              icon: const Padding(
+                                                  padding:
+                                                      EdgeInsets.only(left: 20),
+                                                  child: Icon(Icons
+                                                      .arrow_circle_down_sharp)),
+                                              iconEnabledColor:
+                                                  Colors.black, //Icon color
+                                              style: const TextStyle(
+                                                color:
+                                                    Colors.black, //Font color
+                                                // fontSize:
+                                                //     15 //font size on dropdown button
+                                              ),
+
+                                              dropdownColor: Colors
+                                                  .white, //dropdown background color
+                                              underline:
+                                                  Container(), //remove underline
+                                              isExpanded:
+                                                  true, //make true to make width 100%
+                                            ))),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 15),
+                              SizedBox(
+                                height: (h - 120),
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.vertical,
+                                  child: pilihArtistPolishing == null
+                                      ? Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: const [
+                                            SizedBox(
+                                              height: 50,
+                                            ),
+                                            Text(
+                                              'pilih artist terlebih dahulu',
+                                              style: TextStyle(
+                                                  fontSize: 25,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold),
+                                            )
+                                          ],
+                                        )
+                                      : isLoadingPolishing == true
+                                          ? Container(
+                                              padding: const EdgeInsets.all(5),
+                                              width: 90,
+                                              height: 90,
+                                              child: Lottie.asset(
+                                                  "loadingJSON/loadingV1.json"),
+                                            )
+                                          : SingleChildScrollView(
+                                              scrollDirection: Axis.horizontal,
+                                              child: Container(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 5),
+                                                child: dataTablePolishing(),
+                                              )),
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 50),
+                                child:
+                                    Divider(color: Colors.white, thickness: 2),
+                              ),
+                              Container(
+                                padding: EdgeInsets.only(bottom: 5),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: const [
+                                    Text(
+                                      '',
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 18),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      : isPolishing == 1
+                          ? Container(
+                              height: h,
+                              width: w,
+                              color: colorCard2,
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      InkWell(
+                                        onTap: () {
+                                          _onTapLevelBackPolishing('');
+                                        },
+                                        child: SizedBox(
+                                          width: 50,
+                                          child: Lottie.asset(
+                                              "loadingJSON/backbutton.json",
+                                              fit: BoxFit.cover),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 150,
+                                      ),
+                                      Container(
+                                          padding:
+                                              EdgeInsets.only(left: 0, top: 25),
+                                          child: Text(
+                                            'Polishing 1 dan 2',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold),
+                                          )),
+                                    ],
+                                  ),
+                                  isStokPolishingClick == true
+                                      ? chartStokPolishingLevel2()
+                                      : chartPolishingLevel2(),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 50),
+                                    child: Divider(
+                                        color: Colors.white, thickness: 2),
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      _onTapLevelGoPolishing('');
+                                    },
+                                    child: Container(
+                                      padding: EdgeInsets.only(bottom: 5),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: const [
+                                          Text(
+                                            'See Detailed Report',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 18),
+                                          ),
+                                          Icon(
+                                            Icons.arrow_forward,
+                                            color: Colors.white,
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                          : isPolishing == 0
+                              ? Container(
+                                  height: h,
+                                  width: w,
+                                  color: colorCard2,
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          InkWell(
+                                            onTap: () {
+                                              _onTapLevelBackPolishing('1');
+                                            },
+                                            child: SizedBox(
+                                              width: 50,
+                                              child: Lottie.asset(
+                                                  "loadingJSON/backbutton.json",
+                                                  fit: BoxFit.cover),
+                                            ),
+                                          ),
+                                          SizedBox(width: 150),
+                                          Container(
+                                              child: Text(
+                                            'Wip Polishing',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold),
+                                          )),
+                                        ],
+                                      ),
+                                      chartPolishing(),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 50),
+                                        child: Divider(
+                                            color: Colors.white, thickness: 2),
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          _onTapLevelGoPolishing('');
+                                        },
+                                        child: Container(
+                                          padding: EdgeInsets.only(bottom: 5),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: const [
+                                              Text(
+                                                'See Detailed Report',
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 18),
+                                              ),
+                                              Icon(
+                                                Icons.arrow_forward,
+                                                color: Colors.white,
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              : Container(
+                                  height: h,
+                                  width: w,
+                                  color: colorCard2,
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                          padding: EdgeInsets.only(
+                                              left: 20, top: 25),
+                                          child: Text(
+                                            'Polishing',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold),
+                                          )),
+                                      chartPolishingAwal(),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 50),
+                                        child: Divider(
+                                            color: Colors.white, thickness: 2),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                ],
+              ),
+              SizedBox(width: 10),
+            ],
+          ),
+          SizedBox(height: 15),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              isStell == 2
+                  ? Container(
+                      height: h,
+                      width: w,
+                      color: colorCard1,
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  _onTapLevelBackStell('1');
+                                },
+                                child: SizedBox(
+                                  width: 50,
+                                  child: Lottie.asset(
+                                      "loadingJSON/backbutton.json",
+                                      fit: BoxFit.cover),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 150,
+                                child: Text(
+                                  'Table Stell',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              Container(
+                                width: MediaQuery.of(context).size.width * 0.2,
+                                padding: const EdgeInsets.only(
+                                    top: 5, left: 10, right: 10),
+                                child: DecoratedBox(
+                                    decoration: BoxDecoration(
+                                      color: pilihArtistStell != null
+                                          ? ui.Color.fromARGB(255, 42, 255, 23)
+                                          : const Color.fromRGBO(238, 240, 235,
+                                              1), //background color of dropdown button
+                                      border: Border.all(
+                                        color: Colors.black38,
+                                        // width:
+                                        //     3
+                                      ), //border of dropdown button
+                                      borderRadius: BorderRadius.circular(
+                                          35), //border raiuds of dropdown button
+                                    ),
+                                    child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 10, right: 10),
+                                        child: DropdownButton(
+                                          value: pilihArtistStell,
+                                          items: [
+                                            for (var item in artistStell)
+                                              DropdownMenuItem(
+                                                value: item,
+                                                child: Text(item),
+                                              ),
+                                          ],
+                                          hint:
+                                              const Text('Pilih Artist Stell'),
+                                          onChanged: (value) {
+                                            print(value);
+                                            pilihArtistStell = value;
+                                            _getAllDataStell(pilihArtistStell);
+                                          },
+                                          icon: const Padding(
+                                              padding:
+                                                  EdgeInsets.only(left: 20),
+                                              child: Icon(Icons
+                                                  .arrow_circle_down_sharp)),
+                                          iconEnabledColor:
+                                              Colors.black, //Icon color
+                                          style: const TextStyle(
+                                            color: Colors.black, //Font color
+                                            // fontSize:
+                                            //     15 //font size on dropdown button
+                                          ),
+
+                                          dropdownColor: Colors
+                                              .white, //dropdown background color
+                                          underline:
+                                              Container(), //remove underline
+                                          isExpanded:
+                                              true, //make true to make width 100%
+                                        ))),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 15),
+                          SizedBox(
+                            height: (h - 120),
+                            child: SingleChildScrollView(
+                              scrollDirection: Axis.vertical,
+                              child: pilihArtistStell == null
+                                  ? Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: const [
+                                        SizedBox(
+                                          height: 50,
+                                        ),
+                                        Text(
+                                          'pilih artist terlebih dahulu',
+                                          style: TextStyle(
+                                              fontSize: 25,
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold),
+                                        )
+                                      ],
+                                    )
+                                  : isLoadingStell == true
+                                      ? Container(
+                                          padding: const EdgeInsets.all(5),
+                                          width: 90,
+                                          height: 90,
+                                          child: Lottie.asset(
+                                              "loadingJSON/loadingV1.json"),
+                                        )
+                                      : SingleChildScrollView(
+                                          scrollDirection: Axis.horizontal,
+                                          child: Container(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 5),
+                                            child: dataTableStell(),
+                                          )),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 50),
+                            child: Divider(color: Colors.white, thickness: 2),
+                          ),
+                          Container(
+                            padding: EdgeInsets.only(bottom: 5),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: const [
+                                Text(
+                                  '',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 18),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  : isStell == 1
+                      ? Container(
+                          height: h,
+                          width: w,
+                          color: colorCard1,
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+                                      _onTapLevelBackStell('');
+                                    },
+                                    child: SizedBox(
+                                      width: 50,
+                                      child: Lottie.asset(
+                                          "loadingJSON/backbutton.json",
+                                          fit: BoxFit.cover),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 150,
+                                  ),
+                                  Container(
+                                      padding:
+                                          EdgeInsets.only(left: 0, top: 25),
+                                      child: Text(
+                                        'Stell rangka 1 dan 2',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold),
+                                      )),
+                                ],
+                              ),
+                              isStokStellClick == true
+                                  ? chartStokStellLevel2()
+                                  : chartStellLevel2(),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 50),
+                                child:
+                                    Divider(color: Colors.white, thickness: 2),
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  _onTapLevelGoStell('');
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.only(bottom: 5),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: const [
+                                      Text(
+                                        'See Detailed Report',
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 18),
+                                      ),
+                                      Icon(
+                                        Icons.arrow_forward,
+                                        color: Colors.white,
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      : isStell == 0
+                          ? Container(
+                              height: h,
+                              width: w,
+                              color: colorCard1,
+                              child: Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      InkWell(
+                                        onTap: () {
+                                          _onTapLevelBackStell('1');
+                                        },
+                                        child: SizedBox(
+                                          width: 50,
+                                          child: Lottie.asset(
+                                              "loadingJSON/backbutton.json",
+                                              fit: BoxFit.cover),
+                                        ),
+                                      ),
+                                      SizedBox(width: 150),
+                                      Container(
+                                          child: Text(
+                                        'Wip Stell Rangka',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold),
+                                      )),
+                                    ],
+                                  ),
+                                  chartStell(),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 50),
+                                    child: Divider(
+                                        color: Colors.white, thickness: 2),
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      _onTapLevelGoStell('');
+                                    },
+                                    child: Container(
+                                      padding: EdgeInsets.only(bottom: 5),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: const [
+                                          Text(
+                                            'See Detailed Report',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 18),
+                                          ),
+                                          Icon(
+                                            Icons.arrow_forward,
+                                            color: Colors.white,
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                          : Container(
+                              height: h,
+                              width: w,
+                              color: colorCard1,
+                              child: Column(
+                                children: [
+                                  Container(
+                                      padding:
+                                          EdgeInsets.only(left: 20, top: 25),
+                                      child: Text(
+                                        'Stell Rangka',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold),
+                                      )),
+                                  chartStellAwal(),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 50),
+                                    child: Divider(
+                                        color: Colors.white, thickness: 2),
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      _onTapLevelGoStell('');
+                                    },
+                                    child: Container(
+                                      padding: EdgeInsets.only(bottom: 5),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: const [
+                                          Text(
+                                            'See Detailed Report',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 18),
+                                          ),
+                                          Icon(
+                                            Icons.arrow_forward,
+                                            color: Colors.white,
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
               SizedBox(width: 10),
               isPasangBatuClick == true
                   ? Container(
@@ -3223,13 +3223,14 @@ class _DashboardControlState extends State<DashboardControl> {
         xValueMapper: (ChartData sales, _) => sales.xValue,
         yValueMapper: (ChartData sales, _) => sales.secondSeriesYValue,
         onPointTap: (event) {
-          var i = event.dataPoints![event.pointIndex! - 1].x;
+          var i = event.dataPoints![event.pointIndex!].x;
+          handleClickFinishing(i);
+          print(i);
           // showSimpleNotification(
           //   Text('$i'),
           //   background: Colors.green,
           //   duration: const Duration(seconds: 1),
           // );
-          handleClickFinishing(i);
         },
       ),
     ];

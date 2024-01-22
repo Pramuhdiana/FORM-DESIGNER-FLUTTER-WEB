@@ -6,6 +6,7 @@ import 'package:form_designer/global/global.dart';
 import 'package:form_designer/mainScreen/list_mps.dart';
 import 'package:form_designer/mainScreen/login.dart';
 import 'package:form_designer/produksi/mainScreen/dashboard_control.dart';
+import 'package:form_designer/produksi/mainScreen/dashboard_orul_reparasi.dart';
 import 'package:form_designer/produksi/mainScreen/monthly_meeting_scm.dart';
 import 'package:form_designer/produksi/mainScreen/produksi_new_screen.dart';
 import 'package:form_designer/produksi/mainScreen/report_untuk_manufaktur.dart';
@@ -31,6 +32,8 @@ class _MainViewProduksiState extends State<MainViewProduksi> {
     const ReportUntukManufaktur(),
     //? 2
     const DashboardControl(),
+    //? 3
+    const DashboardOrulReparasi(),
     //? 3
     const ProduksiNewScreen(),
     //? 4
@@ -158,7 +161,7 @@ class _MainViewProduksiState extends State<MainViewProduksi> {
 
           onTap: (index) {
             if (sharedPreferences!.getString('role') == '1') {
-              if (index == 8) {
+              if (index == screenElan.length - 1) {
                 showDialog(
                     context: context,
                     builder: (BuildContext context) {
@@ -415,6 +418,10 @@ class _MainViewProduksiState extends State<MainViewProduksi> {
       const SideNavigationBarItem(
         icon: Icons.home,
         label: 'Dashboard Control',
+      ),
+      const SideNavigationBarItem(
+        icon: Icons.home,
+        label: 'Dashboard Orul & Reparasi',
       ),
       const SideNavigationBarItem(
         icon: Icons.format_align_right_outlined,
