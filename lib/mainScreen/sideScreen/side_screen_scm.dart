@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:form_designer/SCM/mainScreen/kebutuhan_batu_by_siklus.dart';
+import 'package:form_designer/SCM/mainScreen/list_scm.dart';
 import 'package:form_designer/api/api_constant.dart';
 import 'package:form_designer/calculatePricing/list_calculate_pricing_screen.dart';
 import 'package:form_designer/calculatePricingFuji/list_calculate_pricing_screen_fuji.dart';
@@ -49,6 +50,7 @@ class _MainViewScmState extends State<MainViewScm> {
     const HomeScreen(),
     const ListDataModellerScreen(),
     const ListDesignerScreen(),
+    const ListScmScreen(),
     const ListBatuScreen(),
     const ListKebutuhanBatuScreen(),
     const ListMpsScreen(),
@@ -317,7 +319,7 @@ class _MainViewScmState extends State<MainViewScm> {
             }
             //! eka
             else if (sharedPreferences!.getString('role') == '3') {
-              if (index == 6) {
+              if (index == screenEka.length - 1) {
                 //! sign out
                 showDialog(
                     context: context,
@@ -388,7 +390,7 @@ class _MainViewScmState extends State<MainViewScm> {
             }
             //! eva
             else if (sharedPreferences!.getString('role') == '4') {
-              if (index == 4) {
+              if (index == screenEva.length - 1) {
                 //! sign out
                 showDialog(
                     context: context,
@@ -458,7 +460,7 @@ class _MainViewScmState extends State<MainViewScm> {
               }
             } else if (sharedPreferences!.getString('role') == '2') {
               //! fuji
-              if (index == 4) {
+              if (index == screenFuji.length - 1) {
                 //! sign out
                 showDialog(
                     context: context,
@@ -714,6 +716,10 @@ class _MainViewScmState extends State<MainViewScm> {
         label: 'List form designer',
       ),
       const SideNavigationBarItem(
+        icon: Icons.list_alt,
+        label: 'List data SCM',
+      ),
+      const SideNavigationBarItem(
         icon: Icons.list,
         label: 'List stok batu',
       ),
@@ -767,6 +773,7 @@ class _MainViewScmState extends State<MainViewScm> {
         icon: Icons.list_alt,
         label: 'List data modeller',
       ),
+       
       const SideNavigationBarItem(
         icon: Icons.list,
         label: 'List stok batu',
