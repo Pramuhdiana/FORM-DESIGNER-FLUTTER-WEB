@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'dart:convert';
 
 import 'package:dropdown_search/dropdown_search.dart';
@@ -7,6 +9,7 @@ import 'package:form_designer/api/api_constant.dart';
 import 'package:form_designer/calculatePricing/list_calculate_pricing_screen.dart';
 import 'package:form_designer/global/global.dart';
 import 'package:form_designer/model/list_mps_model.dart';
+// ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:http/http.dart' as http;
@@ -264,7 +267,7 @@ class _OrulScreenState extends State<OrulScreen> {
                 )))
               : Expanded(
                   child: ListView(children: [
-                  Container(
+                  SizedBox(
                     width: MediaQuery.of(context).size.width * 0.8,
                     child: Theme(
                       data: ThemeData.light().copyWith(

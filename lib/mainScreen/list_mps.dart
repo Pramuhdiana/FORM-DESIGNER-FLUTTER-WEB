@@ -495,573 +495,615 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
   }
 
   mpsSCM() {
-    // return Container(
-    //   padding: const EdgeInsets.only(top: 5),
-    //   child: Column(
-    //     mainAxisAlignment: MainAxisAlignment.start,
-    //     children: [
-    //       Padding(
-    //         padding: const EdgeInsets.all(10.0),
-    //         child: Row(
-    //           mainAxisAlignment: MainAxisAlignment.spaceAround,
-    //           children: [
-    //             SizedBox(
-    //               width: MediaQuery.of(context).size.width * 0.2,
-    //               child: DropdownSearch<String>(
-    //                 items: const [
-    //                   "JANUARI",
-    //                   "FEBRUARI",
-    //                   "MARET",
-    //                   "APRIL",
-    //                   "MEI",
-    //                   "JUNI",
-    //                   "JULI",
-    //                   "AGUSTUS",
-    //                   "SEPTEMBER",
-    //                   "OKTOBER",
-    //                   "NOVEMBER",
-    //                   "DESEMBER"
-    //                 ],
-    //                 onChanged: (item) {
-    //                   setState(() {
-    //                     isLoading = false;
-    //                   });
-    //                   siklus.text = item!;
-    //                   siklusDesigner = siklus.text.toString();
-    //                   _getDataBySiklus(siklus.text);
-    //                   //? tunggu 2 detik
-    //                   Future.delayed(const Duration(seconds: 1)).then((value) {
-    //                     //! lalu eksekusi fungsi ini
-    //                     setState(() {
-    //                       isLoading = true;
-    //                     });
-    //                   });
-    //                 },
-    //                 popupProps: const PopupPropsMultiSelection.modalBottomSheet(
-    //                   showSelectedItems: true,
-    //                   showSearchBox: true,
-    //                 ),
-    //                 dropdownDecoratorProps: const DropDownDecoratorProps(
-    //                   dropdownSearchDecoration: InputDecoration(
-    //                     labelText: "Pilih Siklus",
-    //                     filled: true,
-    //                     fillColor: Colors.white,
-    //                   ),
-    //                 ),
-    //               ),
-    //             ),
-    //             // Container(
-    //             //   width: MediaQuery.of(context).size.width * 0.2,
-    //             //   padding: const EdgeInsets.all(0),
-    //             //   decoration: BoxDecoration(
-    //             //       border: Border.all(
-    //             //         color: Colors.grey,
-    //             //       ),
-    //             //       borderRadius: BorderRadius.circular(12)),
-    //             //   child: Align(
-    //             //     alignment: Alignment.bottomCenter,
-    //             //     child: TextField(
-    //             //       textAlign: TextAlign.center,
-    //             //       controller: controller,
-    //             //       decoration: const InputDecoration(
-    //             //           hintText: "Search Anything ..."),
-    //             //       onChanged: (value) {
-    //             //         //fungsi search anyting
-    //             //         myCrm = filterDataProduksi!
-    //             //             .where((element) =>
-    //             //                 element.kodeDesignMdbc!
-    //             //                     .toLowerCase()
-    //             //                     .contains(value.toLowerCase()) ||
-    //             //                 element.namaDesigner!
-    //             //                     .toLowerCase()
-    //             //                     .contains(value.toLowerCase()) ||
-    //             //                 element.kodeMarketing!
-    //             //                     .toLowerCase()
-    //             //                     .contains(value.toLowerCase()) ||
-    //             //                 element.kodeDesign!
-    //             //                     .toLowerCase()
-    //             //                     .contains(value.toLowerCase()) ||
-    //             //                 element.tema!
-    //             //                     .toLowerCase()
-    //             //                     .contains(value.toLowerCase()) ||
-    //             //                 element.jenisBarang!
-    //             //                     .toLowerCase()
-    //             //                     .contains(value.toLowerCase()) ||
-    //             //                 element.estimasiHarga!
-    //             //                     .toString()
-    //             //                     .contains(value.toLowerCase()))
-    //             //             .toList();
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          padding: const EdgeInsets.only(top: 26, left: 20),
+          child: const Text(
+            'Master Planning Siklus',
+            style: TextStyle(
+                color: Colors.black, fontWeight: FontWeight.bold, fontSize: 26),
+          ),
+        ),
+        Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: SizedBox(
+                width: 350,
+                child: DropdownSearch<String>(
+                  items: const [
+                    "JANUARI",
+                    "FEBRUARI",
+                    "MARET",
+                    "APRIL",
+                    "MEI",
+                    "JUNI",
+                    "JULI",
+                    "AGUSTUS",
+                    "SEPTEMBER",
+                    "OKTOBER",
+                    "NOVEMBER",
+                    "DESEMBER"
+                  ],
+                  onChanged: (item) async {
+                    setState(() {
+                      isLoading = false;
+                    });
+                    siklusDesigner = item!;
+                    print(siklusDesigner);
+                    await _getDataBySiklusProduksi(
+                        siklusDesigner, pilihWeek, pilihJenisBarang);
+                    await _getListSubDivisi();
+                    setState(() {
+                      isLoading = true;
+                    });
+                  },
+                  popupProps: const PopupPropsMultiSelection.modalBottomSheet(
+                    showSelectedItems: true,
+                    showSearchBox: true,
+                  ),
+                  dropdownDecoratorProps: const DropDownDecoratorProps(
+                    textAlign: TextAlign.center,
+                    baseStyle: TextStyle(
+                        fontSize: 16,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold),
+                    dropdownSearchDecoration: InputDecoration(
+                        labelText: "Pilih Bulan",
+                        floatingLabelAlignment: FloatingLabelAlignment.center,
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(12)))),
+                  ),
+                ),
+              ),
+            ),
+            siklusDesigner.isEmpty
+                ? const SizedBox()
+                : Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: SizedBox(
+                      width: 350,
+                      child: DropdownSearch<String>(
+                        items: listJenisBarang,
+                        onChanged: (item) async {
+                          setState(() {
+                            isLoading = false;
+                          });
+                          pilihJenisBarang = item!;
+                          print(pilihJenisBarang);
+                          await _getDataBySiklusProduksi(
+                              siklusDesigner, pilihWeek, pilihJenisBarang);
+                          setState(() {
+                            isLoading = true;
+                          });
+                        },
+                        popupProps:
+                            const PopupPropsMultiSelection.modalBottomSheet(
+                          showSelectedItems: true,
+                          showSearchBox: true,
+                        ),
+                        dropdownDecoratorProps: const DropDownDecoratorProps(
+                          textAlign: TextAlign.center,
+                          baseStyle: TextStyle(
+                              fontSize: 16,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold),
+                          dropdownSearchDecoration: InputDecoration(
+                              labelText: "Pilih Jenis Barang",
+                              floatingLabelAlignment:
+                                  FloatingLabelAlignment.center,
+                              filled: true,
+                              fillColor: Colors.white,
+                              border: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(12)))),
+                        ),
+                      ),
+                    ),
+                  ),
+            siklusDesigner.isEmpty
+                ? const SizedBox()
+                : Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: SizedBox(
+                      width: 350,
+                      child: DropdownSearch<String>(
+                        items: const [
+                          "all",
+                          "WEEK 1",
+                          "WEEK 2",
+                          "WEEK 3",
+                          "WEEK 4",
+                        ],
+                        onChanged: (item) async {
+                          setState(() {
+                            isLoading = false;
+                          });
+                          pilihWeek = item!;
+                          print(pilihWeek);
+                          await _getDataBySiklusProduksi(
+                              siklusDesigner, pilihWeek, pilihJenisBarang);
+                          setState(() {
+                            isLoading = true;
+                          });
+                        },
+                        popupProps:
+                            const PopupPropsMultiSelection.modalBottomSheet(
+                          showSelectedItems: true,
+                          showSearchBox: true,
+                        ),
+                        dropdownDecoratorProps: const DropDownDecoratorProps(
+                          textAlign: TextAlign.center,
+                          baseStyle: TextStyle(
+                              fontSize: 16,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold),
+                          dropdownSearchDecoration: InputDecoration(
+                              labelText: "Pilih Minggu Ke -",
+                              floatingLabelAlignment:
+                                  FloatingLabelAlignment.center,
+                              filled: true,
+                              fillColor: Colors.white,
+                              border: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(12)))),
+                        ),
+                      ),
+                    ),
+                  ),
+          ],
+        ),
+        siklusDesigner.isEmpty
+            ? Center(
+                child: Column(
+                children: [
+                  SizedBox(
+                    width: 250,
+                    height: 210,
+                    child: Lottie.asset("loadingJSON/selectDate.json"),
+                  ),
+                  const Text(
+                    'Pilih bulan terlebih dahulu',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontSize: 26,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Acne',
+                        letterSpacing: 1.5),
+                  ),
+                ],
+              ))
+            : isLoading == false
+                ? Expanded(
+                    child: Center(
+                        child: Container(
+                    padding: const EdgeInsets.all(5),
+                    width: 90,
+                    height: 90,
+                    child: Lottie.asset("loadingJSON/loadingV1.json"),
+                  )))
+                : Expanded(
+                    child: ListView(children: [
+                      Container(
+                        padding: const EdgeInsets.all(15),
+                        width: MediaQuery.of(context).size.width * 0.8,
+                        child: Theme(
+                          data: ThemeData.light().copyWith(
+                              // cardColor: Theme.of(context).canvasColor),
+                              cardColor: Colors.white,
+                              hoverColor: Colors.grey.shade400,
+                              dividerColor: Colors.grey),
+                          child: PaginatedDataTable(
+                              showCheckboxColumn: false,
+                              availableRowsPerPage: const [10, 50, 100],
+                              rowsPerPage: _rowsPerPage,
+                              dataRowMaxHeight: 150,
+                              onRowsPerPageChanged: (value) {
+                                setState(() {
+                                  isLoading == false;
+                                });
+                                _rowsPerPage = value!;
+                                setState(() {
+                                  isLoading == true;
+                                });
+                              },
+                              sortColumnIndex: _currentSortColumn,
+                              sortAscending: sort,
+                              // rowsPerPage: 25,
+                              columnSpacing: 0,
+                              columns: [
+                                // no
+                                const DataColumn(
+                                  label: SizedBox(
+                                      child: Text(
+                                    "No",
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold),
+                                  )),
+                                ),
+                                DataColumn(label: _verticalDivider),
+                                // keterangan minggu
+                                const DataColumn(
+                                  label: SizedBox(
+                                      child: Text(
+                                    "Minggu Ke -",
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold),
+                                  )),
+                                ),
+                                DataColumn(label: _verticalDivider),
+                                //gambar
+                                DataColumn(
+                                  label: Container(
+                                      padding: const EdgeInsets.only(left: 30),
+                                      child: const Text(
+                                        "Gambar",
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold),
+                                      )),
+                                ),
+                                DataColumn(label: _verticalDivider),
 
-    //             //         setState(() {});
-    //             //       },
-    //             //     ),
-    //             //   ),
-    //             // ),
-    //           ],
-    //         ),
-    //       ),
-    //       siklusDesigner.isEmpty
-    //           ? Center(
-    //               child: Column(
-    //               children: [
-    //                 SizedBox(
-    //                   width: 250,
-    //                   height: 210,
-    //                   child: Lottie.asset("loadingJSON/selectDate.json"),
-    //                 ),
-    //                 const Text(
-    //                   'Pilih siklus terlebih dahulu',
-    //                   textAlign: TextAlign.center,
-    //                   style: TextStyle(
-    //                       fontSize: 26,
-    //                       color: Colors.blueGrey,
-    //                       fontWeight: FontWeight.bold,
-    //                       fontFamily: 'Acne',
-    //                       letterSpacing: 1.5),
-    //                 ),
-    //               ],
-    //             ))
-    //           : isLoading == false
-    //               ? Expanded(
-    //                   child: Center(
-    //                       child: Container(
-    //                   padding: const EdgeInsets.all(5),
-    //                   width: 90,
-    //                   height: 90,
-    //                   child: Lottie.asset("loadingJSON/loadingV1.json"),
-    //                 )))
-    //               : Expanded(
-    //                   child: SingleChildScrollView(
-    //                     scrollDirection: Axis.vertical,
-    //                     child: Container(
-    //                       padding: const EdgeInsets.all(15),
-    //                       width: MediaQuery.of(context).size.width * 1,
-    //                       child: SizedBox(
-    //                         width: double.infinity,
-    //                         child: Theme(
-    //                           data: ThemeData.light().copyWith(
-    //                               // cardColor: Theme.of(context).canvasColor),
-    //                               cardColor: Colors.white,
-    //                               hoverColor: Colors.grey.shade400,
-    //                               dividerColor: Colors.grey),
-    //                           child: PaginatedDataTable(
-    //                               sortColumnIndex: _currentSortColumn,
-    //                               sortAscending: sort,
-    //                               rowsPerPage: 50,
-    //                               columnSpacing: 0,
-    //                               // ignore: deprecated_member_use
-    //                               columns: [
-    //                                 // no
-    //                                 const DataColumn(
-    //                                   label: SizedBox(
-    //                                       width: 25,
-    //                                       child: Text(
-    //                                         "No",
-    //                                         style: TextStyle(
-    //                                             fontSize: 15,
-    //                                             fontWeight: FontWeight.bold),
-    //                                       )),
-    //                                 ),
-    //                                 DataColumn(label: _verticalDivider),
-    //                                 // kode design
-    //                                 DataColumn(
-    //                                     label: const SizedBox(
-    //                                         width: 120,
-    //                                         child: Text(
-    //                                           "      Kode Design",
-    //                                           style: TextStyle(
-    //                                               fontSize: 15,
-    //                                               fontWeight: FontWeight.bold),
-    //                                         )),
-    //                                     onSort: (columnIndex, _) {
-    //                                       setState(() {
-    //                                         _currentSortColumn = columnIndex;
-    //                                         if (sort == true) {
-    //                                           sort = false;
-    //                                           filterDataProduksi!.sort((a, b) => a
-    //                                               .kodeDesign!
-    //                                               .toLowerCase()
-    //                                               .compareTo(b.kodeDesign!
-    //                                                   .toLowerCase()));
-    //                                         } else {
-    //                                           sort = true;
-    //                                           filterDataProduksi!.sort((a, b) => b
-    //                                               .kodeDesign!
-    //                                               .toLowerCase()
-    //                                               .compareTo(a.kodeDesign!
-    //                                                   .toLowerCase()));
-    //                                         }
-    //                                       });
-    //                                     }),
-    //                                 DataColumn(label: _verticalDivider),
-    //                                 // kode mdbc
-    //                                 DataColumn(
-    //                                     label: const SizedBox(
-    //                                         width: 120,
-    //                                         child: Text(
-    //                                           "      Kode MDBC",
-    //                                           style: TextStyle(
-    //                                               fontSize: 15,
-    //                                               fontWeight: FontWeight.bold),
-    //                                         )),
-    //                                     onSort: (columnIndex, _) {
-    //                                       setState(() {
-    //                                         _currentSortColumn = columnIndex;
-    //                                         if (sort == true) {
-    //                                           sort = false;
-    //                                           filterDataProduksi!.sort((a, b) => a
-    //                                               .kodeDesignMdbc!
-    //                                               .toLowerCase()
-    //                                               .compareTo(b.kodeDesignMdbc!
-    //                                                   .toLowerCase()));
-    //                                         } else {
-    //                                           sort = true;
-    //                                           filterDataProduksi!.sort((a, b) => b
-    //                                               .kodeDesignMdbc!
-    //                                               .toLowerCase()
-    //                                               .compareTo(a.kodeDesignMdbc!
-    //                                                   .toLowerCase()));
-    //                                         }
-    //                                       });
-    //                                     }),
-    //                                 DataColumn(label: _verticalDivider),
-    //                                 //kode marketing
-    //                                 DataColumn(
-    //                                     label: const SizedBox(
-    //                                         width: 120,
-    //                                         child: Text(
-    //                                           "Kode Marketing",
-    //                                           style: TextStyle(
-    //                                               fontSize: 15,
-    //                                               fontWeight: FontWeight.bold),
-    //                                         )),
-    //                                     onSort: (columnIndex, _) {
-    //                                       setState(() {
-    //                                         _currentSortColumn = columnIndex;
+                                // kode mdbc
+                                DataColumn(
+                                    label: const SizedBox(
+                                        child: Text(
+                                      "Kode\nMDBC",
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
+                                    )),
+                                    onSort: (columnIndex, _) {
+                                      setState(() {
+                                        _currentSortColumn = columnIndex;
+                                        if (sort == true) {
+                                          sort = false;
+                                          filterDataProduksi!.sort((a, b) => a
+                                              .kodeDesignMdbc!
+                                              .toLowerCase()
+                                              .compareTo(b.kodeDesignMdbc!
+                                                  .toLowerCase()));
+                                        } else {
+                                          sort = true;
+                                          filterDataProduksi!.sort((a, b) => b
+                                              .kodeDesignMdbc!
+                                              .toLowerCase()
+                                              .compareTo(a.kodeDesignMdbc!
+                                                  .toLowerCase()));
+                                        }
+                                      });
+                                    }),
+                                DataColumn(label: _verticalDivider),
+                                //kode marketing
+                                DataColumn(
+                                    label: const SizedBox(
+                                        child: Text(
+                                      "Kode Marketing",
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
+                                    )),
+                                    onSort: (columnIndex, _) {
+                                      setState(() {
+                                        _currentSortColumn = columnIndex;
 
-    //                                         if (sort == true) {
-    //                                           sort = false;
-    //                                           filterDataProduksi!.sort((a, b) => a
-    //                                               .kodeMarketing!
-    //                                               .toLowerCase()
-    //                                               .compareTo(b.kodeMarketing!
-    //                                                   .toLowerCase()));
-    //                                         } else {
-    //                                           sort = true;
-    //                                           filterDataProduksi!.sort((a, b) => b
-    //                                               .kodeMarketing!
-    //                                               .toLowerCase()
-    //                                               .compareTo(a.kodeMarketing!
-    //                                                   .toLowerCase()));
-    //                                         }
-    //                                       });
-    //                                     }),
-    //                                 DataColumn(label: _verticalDivider),
-    //                                 //posisi
-    //                                 DataColumn(
-    //                                     label: const SizedBox(
-    //                                         width: 50,
-    //                                         child: Text(
-    //                                           "Posisi",
-    //                                           maxLines: 2,
-    //                                           style: TextStyle(
-    //                                               fontSize: 15,
-    //                                               fontWeight: FontWeight.bold),
-    //                                         )),
-    //                                     onSort: (columnIndex, _) {
-    //                                       setState(() {
-    //                                         _currentSortColumn = columnIndex;
-    //                                         if (sort == true) {
-    //                                           sort = false;
-    //                                           filterDataProduksi!.sort((a, b) => a
-    //                                               .photoShoot!
-    //                                               .compareTo(b.photoShoot!));
-    //                                         } else {
-    //                                           sort = true;
-    //                                           filterDataProduksi!.sort((a, b) => b
-    //                                               .photoShoot!
-    //                                               .compareTo(a.photoShoot!));
-    //                                         }
-    //                                       });
-    //                                     }),
-    //                                 DataColumn(label: _verticalDivider),
-    //                                 //status batu
-    //                                 DataColumn(
-    //                                     label: const SizedBox(
-    //                                         width: 120,
-    //                                         child: Text(
-    //                                           "Status Batu",
-    //                                           style: TextStyle(
-    //                                               fontSize: 15,
-    //                                               fontWeight: FontWeight.bold),
-    //                                         )),
-    //                                     onSort: (columnIndex, _) {
-    //                                       setState(() {
-    //                                         _currentSortColumn = columnIndex;
+                                        if (sort == true) {
+                                          sort = false;
+                                          filterDataProduksi!.sort((a, b) => a
+                                              .kodeMarketing!
+                                              .toLowerCase()
+                                              .compareTo(b.kodeMarketing!
+                                                  .toLowerCase()));
+                                        } else {
+                                          sort = true;
+                                          filterDataProduksi!.sort((a, b) => b
+                                              .kodeMarketing!
+                                              .toLowerCase()
+                                              .compareTo(a.kodeMarketing!
+                                                  .toLowerCase()));
+                                        }
+                                      });
+                                    }),
+                                DataColumn(label: _verticalDivider),
+                                //posisi
+                                DataColumn(
+                                    label: const SizedBox(
+                                        child: Text(
+                                      "Posisi",
+                                      maxLines: 2,
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
+                                    )),
+                                    onSort: (columnIndex, _) {
+                                      setState(() {
+                                        _currentSortColumn = columnIndex;
+                                        if (sort == true) {
+                                          sort = false;
+                                          myDataProduksi!.sort((a, b) =>
+                                              a.posisi!.compareTo(b.posisi!));
+                                        } else {
+                                          sort = true;
+                                          myDataProduksi!.sort((a, b) =>
+                                              b.posisi!.compareTo(a.posisi!));
+                                        }
+                                      });
+                                    }),
+                                DataColumn(label: _verticalDivider),
 
-    //                                         if (sort == true) {
-    //                                           sort = false;
-    //                                           filterDataProduksi!.sort((a, b) => a
-    //                                               .keteranganStatusBatu!
-    //                                               .toLowerCase()
-    //                                               .compareTo(b
-    //                                                   .keteranganStatusBatu!
-    //                                                   .toLowerCase()));
-    //                                         } else {
-    //                                           sort = true;
-    //                                           filterDataProduksi!.sort((a, b) => b
-    //                                               .keteranganStatusBatu!
-    //                                               .toLowerCase()
-    //                                               .compareTo(a
-    //                                                   .keteranganStatusBatu!
-    //                                                   .toLowerCase()));
-    //                                         }
-    //                                       });
-    //                                     }),
-    //                                 DataColumn(label: _verticalDivider),
-    //                                 //nama designer
-    //                                 DataColumn(
-    //                                     label: const SizedBox(
-    //                                         width: 120,
-    //                                         child: Text(
-    //                                           "Nama Designer",
-    //                                           style: TextStyle(
-    //                                               fontSize: 15,
-    //                                               fontWeight: FontWeight.bold),
-    //                                         )),
-    //                                     onSort: (columnIndex, _) {
-    //                                       setState(() {
-    //                                         _currentSortColumn = columnIndex;
+                                //status batu
+                                DataColumn(
+                                    label: const SizedBox(
+                                        child: Text(
+                                      "Status Batu",
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
+                                    )),
+                                    onSort: (columnIndex, _) {
+                                      setState(() {
+                                        _currentSortColumn = columnIndex;
 
-    //                                         if (sort == true) {
-    //                                           sort = false;
-    //                                           filterDataProduksi!.sort((a, b) => a
-    //                                               .namaDesigner!
-    //                                               .toLowerCase()
-    //                                               .compareTo(b.namaDesigner!
-    //                                                   .toLowerCase()));
-    //                                         } else {
-    //                                           sort = true;
-    //                                           filterDataProduksi!.sort((a, b) => b
-    //                                               .namaDesigner!
-    //                                               .toLowerCase()
-    //                                               .compareTo(a.namaDesigner!
-    //                                                   .toLowerCase()));
-    //                                         }
-    //                                       });
-    //                                     }),
-    //                                 DataColumn(label: _verticalDivider),
-    //                                 //tema
-    //                                 DataColumn(
-    //                                     label: const SizedBox(
-    //                                         width: 120,
-    //                                         child: Text(
-    //                                           "Tema",
-    //                                           style: TextStyle(
-    //                                               fontSize: 15,
-    //                                               fontWeight: FontWeight.bold),
-    //                                         )),
-    //                                     onSort: (columnIndex, _) {
-    //                                       setState(() {
-    //                                         _currentSortColumn = columnIndex;
-    //                                         if (sort == true) {
-    //                                           sort = false;
-    //                                           filterDataProduksi!.sort((a, b) => a.tema!
-    //                                               .toLowerCase()
-    //                                               .compareTo(
-    //                                                   b.tema!.toLowerCase()));
-    //                                         } else {
-    //                                           sort = true;
-    //                                           filterDataProduksi!.sort((a, b) => b.tema!
-    //                                               .toLowerCase()
-    //                                               .compareTo(
-    //                                                   a.tema!.toLowerCase()));
-    //                                         }
-    //                                       });
-    //                                     }),
-    //                                 DataColumn(label: _verticalDivider),
-    //                                 //jenis barang
-    //                                 DataColumn(
-    //                                     label: const SizedBox(
-    //                                         width: 120,
-    //                                         child: Text(
-    //                                           "Jenis Barang",
-    //                                           style: TextStyle(
-    //                                               fontSize: 15,
-    //                                               fontWeight: FontWeight.bold),
-    //                                         )),
-    //                                     onSort: (columnIndex, _) {
-    //                                       setState(() {
-    //                                         _currentSortColumn = columnIndex;
-    //                                         if (sort == true) {
-    //                                           sort = false;
-    //                                           filterDataProduksi!.sort((a, b) => a
-    //                                               .jenisBarang!
-    //                                               .toLowerCase()
-    //                                               .compareTo(b.jenisBarang!
-    //                                                   .toLowerCase()));
-    //                                         } else {
-    //                                           sort = true;
-    //                                           filterDataProduksi!.sort((a, b) => b
-    //                                               .jenisBarang!
-    //                                               .toLowerCase()
-    //                                               .compareTo(a.jenisBarang!
-    //                                                   .toLowerCase()));
-    //                                         }
-    //                                       });
-    //                                     }),
-    //                                 DataColumn(label: _verticalDivider),
-    //                                 //brand
-    //                                 DataColumn(
-    //                                     label: const SizedBox(
-    //                                         width: 50,
-    //                                         child: Text(
-    //                                           "Brand",
-    //                                           maxLines: 2,
-    //                                           style: TextStyle(
-    //                                               fontSize: 15,
-    //                                               fontWeight: FontWeight.bold),
-    //                                         )),
-    //                                     onSort: (columnIndex, _) {
-    //                                       setState(() {
-    //                                         _currentSortColumn = columnIndex;
-    //                                         if (sort == true) {
-    //                                           // myCrm.sort((a, b) => a['estimasiHarga'].)
-    //                                           sort = false;
-    //                                           filterDataProduksi!.sort((a, b) =>
-    //                                               a.brand!.compareTo(b.brand!));
-    //                                           // onsortColum(columnIndex, ascending);
-    //                                         } else {
-    //                                           sort = true;
-    //                                           filterDataProduksi!.sort((a, b) =>
-    //                                               b.brand!.compareTo(a.brand!));
-    //                                         }
-    //                                       });
-    //                                     }),
-    //                                 DataColumn(label: _verticalDivider),
-    //                                 //kelas harga
-    //                                 const DataColumn(
-    //                                   label: SizedBox(
-    //                                       width: 50,
-    //                                       child: Text(
-    //                                         "Kelas\nHarga",
-    //                                         maxLines: 2,
-    //                                         style: TextStyle(
-    //                                             fontSize: 15,
-    //                                             fontWeight: FontWeight.bold),
-    //                                       )),
-    //                                 ),
-    //                                 DataColumn(label: _verticalDivider),
+                                        if (sort == true) {
+                                          sort = false;
+                                          filterDataProduksi!.sort((a, b) => a
+                                              .keteranganStatusBatu!
+                                              .toLowerCase()
+                                              .compareTo(b.keteranganStatusBatu!
+                                                  .toLowerCase()));
+                                        } else {
+                                          sort = true;
+                                          filterDataProduksi!.sort((a, b) => b
+                                              .keteranganStatusBatu!
+                                              .toLowerCase()
+                                              .compareTo(a.keteranganStatusBatu!
+                                                  .toLowerCase()));
+                                        }
+                                      });
+                                    }),
+                                DataColumn(label: _verticalDivider),
+                                //status acc
+                                DataColumn(
+                                    label: const SizedBox(
+                                        child: Text(
+                                      "Status ACC",
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
+                                    )),
+                                    onSort: (columnIndex, _) {
+                                      setState(() {
+                                        _currentSortColumn = columnIndex;
 
-    //                                 //nama modeller
-    //                                 DataColumn(
-    //                                     label: const SizedBox(
-    //                                         width: 120,
-    //                                         child: Text(
-    //                                           "Nama Modeller",
-    //                                           style: TextStyle(
-    //                                               fontSize: 15,
-    //                                               fontWeight: FontWeight.bold),
-    //                                         )),
-    //                                     onSort: (columnIndex, _) {
-    //                                       setState(() {
-    //                                         _currentSortColumn = columnIndex;
-    //                                         if (sort == true) {
-    //                                           sort = false;
-    //                                           filterDataProduksi!.sort((a, b) => a
-    //                                               .namaModeller!
-    //                                               .toLowerCase()
-    //                                               .compareTo(b.namaModeller!
-    //                                                   .toLowerCase()));
-    //                                         } else {
-    //                                           sort = true;
-    //                                           filterDataProduksi!.sort((a, b) => b
-    //                                               .namaModeller!
-    //                                               .toLowerCase()
-    //                                               .compareTo(a.namaModeller!
-    //                                                   .toLowerCase()));
-    //                                         }
-    //                                       });
-    //                                     }),
-    //                                 DataColumn(label: _verticalDivider),
-    //                                 //tanggal out modeller
-    //                                 DataColumn(
-    //                                     label: const SizedBox(
-    //                                         width: 120,
-    //                                         child: Text(
-    //                                           "Tanggal Out\nModeller",
-    //                                           style: TextStyle(
-    //                                               fontSize: 15,
-    //                                               fontWeight: FontWeight.bold),
-    //                                         )),
-    //                                     onSort: (columnIndex, _) {
-    //                                       setState(() {
-    //                                         _currentSortColumn = columnIndex;
-    //                                         if (sort == true) {
-    //                                           sort = false;
-    //                                           filterDataProduksi!.sort((a, b) => a
-    //                                               .tanggalOutModeller!
-    //                                               .toLowerCase()
-    //                                               .compareTo(b
-    //                                                   .tanggalOutModeller!
-    //                                                   .toLowerCase()));
-    //                                         } else {
-    //                                           sort = true;
-    //                                           filterDataProduksi!.sort((a, b) => b
-    //                                               .tanggalOutModeller!
-    //                                               .toLowerCase()
-    //                                               .compareTo(a
-    //                                                   .tanggalOutModeller!
-    //                                                   .toLowerCase()));
-    //                                         }
-    //                                       });
-    //                                     }),
-    //                                 DataColumn(label: _verticalDivider),
-    //                                 //tanggal in produksi
-    //                                 DataColumn(
-    //                                     label: const SizedBox(
-    //                                         width: 120,
-    //                                         child: Text(
-    //                                           "Tanggal In\nProduksi",
-    //                                           style: TextStyle(
-    //                                               fontSize: 15,
-    //                                               fontWeight: FontWeight.bold),
-    //                                         )),
-    //                                     onSort: (columnIndex, _) {
-    //                                       setState(() {
-    //                                         _currentSortColumn = columnIndex;
-    //                                         if (sort == true) {
-    //                                           sort = false;
-    //                                           filterDataProduksi!.sort((a, b) => a
-    //                                               .tanggalInProduksi!
-    //                                               .toLowerCase()
-    //                                               .compareTo(b
-    //                                                   .tanggalInProduksi!
-    //                                                   .toLowerCase()));
-    //                                         } else {
-    //                                           sort = true;
-    //                                           filterDataProduksi!.sort((a, b) => b
-    //                                               .tanggalInProduksi!
-    //                                               .toLowerCase()
-    //                                               .compareTo(a
-    //                                                   .tanggalInProduksi!
-    //                                                   .toLowerCase()));
-    //                                         }
-    //                                       });
-    //                                     }),
-    //                               ],
-    //                               source:
-    //                                   // UserDataTableSource(userData: filterDataProduksi!)),
-    //                                   RowSource(
-    //                                       myData: myCrm, count: myCrm!.length)),
-    //                         ),
-    //                       ),
-    //                     ),
-    //                   ),
-    //                 )
-    //     ],
-    //   ),
-    // );
+                                        if (sort == true) {
+                                          sort = false;
+                                          filterDataProduksi!.sort((a, b) => a
+                                              .keteranganStatusAcc!
+                                              .toLowerCase()
+                                              .compareTo(b.keteranganStatusAcc!
+                                                  .toLowerCase()));
+                                        } else {
+                                          sort = true;
+                                          filterDataProduksi!.sort((a, b) => b
+                                              .keteranganStatusAcc!
+                                              .toLowerCase()
+                                              .compareTo(a.keteranganStatusAcc!
+                                                  .toLowerCase()));
+                                        }
+                                      });
+                                    }),
+                                DataColumn(label: _verticalDivider),
+                                //ketrangan batu
+                                const DataColumn(
+                                  label: SizedBox(
+                                      child: Text(
+                                    "Keterangan\nBatu",
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold),
+                                  )),
+                                  // onSort: (columnIndex, _) {
+                                  //   setState(() {
+                                  //     _currentSortColumn = columnIndex;
+
+                                  //     if (sort == true) {
+                                  //       sort = false;
+                                  //       filterDataProduksi!.sort((a, b) => a
+                                  //           .keteranganStatusBatu!
+                                  //           .toLowerCase()
+                                  //           .compareTo(b
+                                  //               .keteranganStatusBatu!
+                                  //               .toLowerCase()));
+                                  //     } else {
+                                  //       sort = true;
+                                  //       filterDataProduksi!.sort((a, b) => b
+                                  //           .keteranganStatusBatu!
+                                  //           .toLowerCase()
+                                  //           .compareTo(a
+                                  //               .keteranganStatusBatu!
+                                  //               .toLowerCase()));
+                                  //     }
+                                  //   });
+                                  // }
+                                ),
+                                DataColumn(label: _verticalDivider),
+                                //tema
+                                DataColumn(
+                                    label: const SizedBox(
+                                        child: Text(
+                                      "Tema",
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
+                                    )),
+                                    onSort: (columnIndex, _) {
+                                      setState(() {
+                                        _currentSortColumn = columnIndex;
+                                        if (sort == true) {
+                                          sort = false;
+                                          filterDataProduksi!.sort((a, b) =>
+                                              a.tema!.toLowerCase().compareTo(
+                                                  b.tema!.toLowerCase()));
+                                        } else {
+                                          sort = true;
+                                          filterDataProduksi!.sort((a, b) =>
+                                              b.tema!.toLowerCase().compareTo(
+                                                  a.tema!.toLowerCase()));
+                                        }
+                                      });
+                                    }),
+                                DataColumn(label: _verticalDivider),
+                                //jenis barang
+                                DataColumn(
+                                    label: const SizedBox(
+                                        child: Text(
+                                      "Jenis Barang",
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
+                                    )),
+                                    onSort: (columnIndex, _) {
+                                      print('tap jenis barnag');
+                                      setState(() {
+                                        _currentSortColumn = columnIndex;
+                                        if (sort == true) {
+                                          sort = false;
+                                          myDataProduksi!.sort((a, b) => a
+                                              .jenisBarang!
+                                              .toLowerCase()
+                                              .compareTo(b.jenisBarang!
+                                                  .toLowerCase()));
+                                        } else {
+                                          sort = true;
+                                          myDataProduksi!.sort((a, b) => b
+                                              .jenisBarang!
+                                              .toLowerCase()
+                                              .compareTo(a.jenisBarang!
+                                                  .toLowerCase()));
+                                        }
+                                      });
+                                    }),
+                                DataColumn(label: _verticalDivider),
+                                //brand
+                                DataColumn(
+                                    label: const SizedBox(
+                                        child: Text(
+                                      "Brand",
+                                      maxLines: 2,
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
+                                    )),
+                                    onSort: (columnIndex, _) {
+                                      setState(() {
+                                        _currentSortColumn = columnIndex;
+                                        if (sort == true) {
+                                          // myCrm.sort((a, b) => a['estimasiHarga'].)
+                                          sort = false;
+                                          filterDataProduksi!.sort((a, b) =>
+                                              a.brand!.compareTo(b.brand!));
+                                          // onsortColum(columnIndex, ascending);
+                                        } else {
+                                          sort = true;
+                                          filterDataProduksi!.sort((a, b) =>
+                                              b.brand!.compareTo(a.brand!));
+                                        }
+                                      });
+                                    }),
+                                DataColumn(label: _verticalDivider),
+                                // harga
+     sharedPreferences!.getString('role') == '1' || sharedPreferences!.getString('divisi') == 'admin'
+
+                               ? const DataColumn(
+                                  label: SizedBox(
+                                      child: Text(
+                                    "Harga",
+                                    maxLines: 2,
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold),
+                                  )),
+                                )
+                                : const DataColumn(label: SizedBox()),
+                                DataColumn(label: _verticalDivider),
+                                //kelas harga
+                                const DataColumn(
+                                  label: SizedBox(
+                                      child: Text(
+                                    "Kelas\nHarga",
+                                    maxLines: 2,
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold),
+                                  )),
+                                ),
+                                DataColumn(label: _verticalDivider),
+                                //tanggal in produksi
+                                DataColumn(
+                                    label: const SizedBox(
+                                        child: Text(
+                                      "Tanggal In\nRelease",
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
+                                    )),
+                                    onSort: (columnIndex, _) {
+                                      setState(() {
+                                        _currentSortColumn = columnIndex;
+                                        if (sort == true) {
+                                          sort = false;
+                                          filterDataProduksi!.sort((a, b) => a
+                                              .tanggalInProduksi!
+                                              .toLowerCase()
+                                              .compareTo(b.tanggalInProduksi!
+                                                  .toLowerCase()));
+                                        } else {
+                                          sort = true;
+                                          filterDataProduksi!.sort((a, b) => b
+                                              .tanggalInProduksi!
+                                              .toLowerCase()
+                                              .compareTo(a.tanggalInProduksi!
+                                                  .toLowerCase()));
+                                        }
+                                      });
+                                    }),
+                              ],
+                              source: RowSourceProduksi(
+                                  onRowPressed: () {
+                                    refresh();
+                                  }, //! mengirim data untuk me refresh state
+
+                                  listArtist: listArtist,
+                                  listDivisi: listDivisi,
+                                  myData: myDataProduksi,
+                                  count: myDataProduksi!.length,
+                                  listSubDivisiArtistFinishing:
+                                      listSubDivisiArtistFinishing,
+                                  listSubDivisiArtistPolishing:
+                                      listSubDivisiArtistPolishing,
+                                  listSubDivisiArtistStell:
+                                      listSubDivisiArtistStell,
+                                  listSubDivisiArtistPasangBatu:
+                                      listSubDivisiArtistPasangBatu,
+                                  siklus: siklusDesigner)),
+                        ),
+                      ),
+                    ]),
+                    // ),
+                  )
+      ],
+    );
+  
   }
 
   mpsProduksi() {
@@ -1604,7 +1646,7 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
                                         fontWeight: FontWeight.bold),
                                   )),
                                 )
-                                : DataColumn(label: SizedBox()),
+                                : const DataColumn(label: SizedBox()),
                                 DataColumn(label: _verticalDivider),
                                 //kelas harga
                                 const DataColumn(
@@ -3763,7 +3805,8 @@ j == 3
                       //tambahan icon ADD
                       sharedPreferences!.getString('role') == '1' ||
                               sharedPreferences!.getString('role') == '2' ||
-                              sharedPreferences!.getString('divisi') == 'admin'
+                              sharedPreferences!.getString('divisi') == 'admin'||
+                              sharedPreferences!.getString('divisi') == 'scm'
                           ? Positioned(
                               right: -5.0,
                               top: -3.0,
@@ -3781,7 +3824,8 @@ j == 3
                           : const SizedBox(),
                       sharedPreferences!.getString('role') == '1' ||
                               sharedPreferences!.getString('role') == '2' ||
-                              sharedPreferences!.getString('divisi') == 'admin'
+                              sharedPreferences!.getString('divisi') == 'admin'||
+                              sharedPreferences!.getString('divisi') == 'scm'
                           ? IconButton(
                               onPressed: () {
                                 showGeneralDialog(
@@ -3849,6 +3893,10 @@ j == 3
                                                                             ),
                                                                           )),
                                                                     ),
+                                                                    
+                              sharedPreferences!.getString('divisi') == 'scm'
+                              ? const SizedBox()
+                              :
                                                                     Container(
                                                                       padding: const EdgeInsets
                                                                           .only(
@@ -4592,7 +4640,7 @@ await postPosisi(
                                                                                                   ),
                                                                                                 ),
                                                                                                 onPressed: () async {
-                                                                                                  
+
                                                                                                   orulReparasiPopup(context, id, j, kodeDesignMdbc, kodeMarketing, posisi,'reparasi');
                                                                                                 //   await postPosisi(
                                                                                                 //     id,
