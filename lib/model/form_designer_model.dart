@@ -120,7 +120,7 @@ class FormDesignerModel {
   String? keteranganMinggu;
   String? artist;
   String? keteranganBatu;
-  String? release;
+  String? bulan;
 
   FormDesignerModel({
     this.id,
@@ -233,7 +233,7 @@ class FormDesignerModel {
     this.keteranganMinggu,
     this.artist,
     this.keteranganBatu,
-    this.release,
+    this.bulan,
   });
 
   // ignore: avoid_types_as_parameter_names
@@ -349,7 +349,7 @@ class FormDesignerModel {
         keteranganMinggu: json["keteranganMinggu"] ?? '',
         artist: json["artist"] ?? '',
         keteranganBatu: json["keteranganBatu"] ?? '',
-        release: json["release"] ?? '',
+        bulan: json["bulan"] ?? '',
       );
 
   Map<String, dynamic> toJson() => {
@@ -463,6 +463,6 @@ class FormDesignerModel {
         "keteranganMinggu": keteranganMinggu,
         "artist": artist,
         "keteranganBatu": keteranganBatu,
-        "release": release,
+        "bulan": bulan,
       };
 }

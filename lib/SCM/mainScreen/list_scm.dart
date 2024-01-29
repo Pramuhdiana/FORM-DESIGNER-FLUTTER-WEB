@@ -31,7 +31,7 @@ Widget _verticalDivider = const VerticalDivider(
 
 class _ListScmState extends State<ListScmScreen> {
   List<String> listBulan = [
-    'JANUAR',
+    'JANUARI',
     'FEBRUARI',
     'MARET',
     'APRIL',
@@ -223,7 +223,10 @@ class _ListScmState extends State<ListScmScreen> {
                     //fungsi search anyting
                     myCrm = filterCrm!
                         .where((element) =>
-                            element.kodeDesignMdbc!
+                           element.bulan!
+                                .toLowerCase()
+                                .contains(value.toLowerCase()) ||
+                                  element.bulan!
                                 .toLowerCase()
                                 .contains(value.toLowerCase()) ||
                             element.namaDesigner!
@@ -708,7 +711,7 @@ class RowSource extends DataTableSource {
             DataCell(Builder(builder: (context) {
               return Row(
                 children: [
-                  Text(data.release),
+                  Text(data.bulan),
                   IconButton(
                       onPressed: () {
                         showGeneralDialog(
@@ -762,30 +765,28 @@ class RowSource extends DataTableSource {
                                                                               50.0))),
                                                               onPressed:
                                                                   () async {
-                                                                postTanggalProduksi(
+                                                                await postTanggalProduksi(
                                                                     data.id,
                                                                     listBulan[
-                                                                        index]);
+                                                                        j]);
+                                                                        data.bulan == ''
+                                                                        ?
+                                                                        await postDataMps(
+                                                                    myData,
+                                                                    index,
+                                                                    listBulan[
+                                                                        j],
+                                                                        context,'false')
+                                                                        :
                                                                 await postDataMps(
                                                                     myData,
                                                                     index,
                                                                     listBulan[
-                                                                        index]);
+                                                                        j],
+                                                                        context,'true');
                                                                 onRowPressed();
 
-                                                                Navigator.pop(
-                                                                    context);
-                                                                showSimpleNotification(
-                                                                  const Text(
-                                                                      'Data berhasil di release'),
-                                                                  background:
-                                                                      Colors
-                                                                          .green,
-                                                                  duration:
-                                                                      const Duration(
-                                                                          seconds:
-                                                                              1),
-                                                                );
+                                                               
                                                               },
                                                               child: Text(
                                                                 "${listBulan[j]}",
@@ -801,6 +802,7 @@ class RowSource extends DataTableSource {
                         clipBehavior: Clip.none, //agar tidak menghalangi object
                         children: [
                           //tambahan icon ADD
+                        data.bulan == '' ?
                           Positioned(
                             right: -10.0,
                             top: -13.0,
@@ -812,10 +814,16 @@ class RowSource extends DataTableSource {
                                 size: 20,
                               ),
                             ),
-                          ),
-                          const Icon(
+                          )
+                          : const SizedBox(),
+                         data.bulan == '' ?
+                           const Icon(
                             Icons.send,
                             color: Colors.green,
+                          )
+                          :   const Icon(
+                            Icons.swap_horiz,
+                            color: Colors.blue,
                           ),
                         ],
                       ))
@@ -829,19 +837,24 @@ class RowSource extends DataTableSource {
   }
 
   postTanggalProduksi(id, release) async {
-    Map<String, String> body = {'id': id, 'release': release};
+    Map<String, String> body = {'id': id.toString(), 'bulan': release.toString()};
     final response = await http.post(
         Uri.parse('${ApiConstants.baseUrl}${ApiConstants.addTanggalProduksi}'),
         body: body);
     print(response.body);
+    
   }
 
-  postDataMps(var dumData, index, bulan) async {
+  postDataMps(var dumData, index, bulan,context,isUpdate) async {
     var data = dumData[index];
+    print(bulan);
+    print(data.imageUrl);
     Map<String, String> body = {
+      'isUpdate': isUpdate,
+      'id': data.id.toString(),
       'kodeDesignMdbc': data.kodeDesignMdbc.toString(),
       'kodeMarketing': data.kodeMarketing.toString(),
-      'posisi': data.posisi.toString(),
+      'posisi': 'release',
       'tema': data.tema.toString(),
       'jenisBarang': data.jenisBarang.toString(),
       'brand': data.brand.toString(),
@@ -868,10 +881,57 @@ class RowSource extends DataTableSource {
       'siklus': data.siklus.toString(),
       'bulan': bulan.toString(),
     };
-    final response = await http.post(
+    try{
+final response = await http.post(
         Uri.parse('${ApiConstants.baseUrl}${ApiConstants.postDataMps}'),
         body: body);
+        if(response.statusCode == 200){
+Navigator.pop(
+                                                                    context);
+                                                                showSimpleNotification(
+                                                                  const Text(
+                                                                      'Data berhasil di release'),
+                                                                  background:
+                                                                      Colors
+                                                                          .green,
+                                                                  duration:
+                                                                      const Duration(
+                                                                          seconds:
+                                                                              1),
+                                                                );
     print(response.body);
+        } else {
+ print('err : ${response.body}');
+      Navigator.pop(context);
+       showSimpleNotification(
+                                                                   const Text(
+                                                                      'Error Data ()'),
+                                                                  background:
+                                                                      Colors
+                                                                          .red,
+                                                                  duration:
+                                                                      const Duration(
+                                                                          seconds:
+                                                                              2),
+                                                                );
+        }
+ 
+    } catch(c){
+      print('err : $c');
+      Navigator.pop(context);
+       showSimpleNotification(
+                                                                   Text(
+                                                                      'Error Data ($c)'),
+                                                                  background:
+                                                                      Colors
+                                                                          .red,
+                                                                  duration:
+                                                                      const Duration(
+                                                                          seconds:
+                                                                              2),
+                                                                );
+    }
+    
   }
 
   _getKodeMarketingBykodeDesign(kodeDesign) async {

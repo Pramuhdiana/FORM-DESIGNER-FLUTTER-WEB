@@ -227,7 +227,9 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
                   element.posisi.toString().toLowerCase() ==
                       listDivisi[3].toString().toLowerCase() ||
                   element.posisi.toString().toLowerCase() == 
-                  listDivisi[4].toString().toLowerCase())
+                  listDivisi[4].toString().toLowerCase() ||
+                  element.posisi.toString().toLowerCase() == 
+                  'release') 
               .toList();
           alldata = filterByPosisi.toList();
         } else if (sharedPreferences!.getString('role') == '4') {
@@ -3932,7 +3934,7 @@ j == 3
                                                                           style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
                                                                           onPressed: () async {
                                                                             await postKeteranganStatusBatu(data.id,
-                                                                                'BELUM KOMPLIT');
+                                                                                'BELUM KOMPLIT BATU');
                                                                             onRowPressed();
                                                                             Navigator.pop(context);
                                                                             showSimpleNotification(
@@ -3942,7 +3944,7 @@ j == 3
                                                                             );
                                                                           },
                                                                           child: const Text(
-                                                                            "BELUM KOMPLIT",
+                                                                            "BELUM KOMPLIT BATU",
                                                                             style:
                                                                                 TextStyle(
                                                                               fontSize: 16,
