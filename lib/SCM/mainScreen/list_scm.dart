@@ -12,12 +12,10 @@ import 'package:form_designer/global/global.dart';
 import 'package:form_designer/mainScreen/form_screen.dart';
 // ignore: unused_import
 import 'package:form_designer/mainScreen/form_screen_by_id.dart';
-import 'package:form_designer/mainScreen/form_view_screen.dart';
 import 'package:form_designer/model/form_designer_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';
 import 'package:overlay_support/overlay_support.dart';
-
 
 class ListScmScreen extends StatefulWidget {
   const ListScmScreen({super.key});
@@ -32,6 +30,20 @@ Widget _verticalDivider = const VerticalDivider(
 );
 
 class _ListScmState extends State<ListScmScreen> {
+  List<String> listBulan = [
+    'JANUAR',
+    'FEBRUARI',
+    'MARET',
+    'APRIL',
+    'MEI',
+    'JUNI',
+    'JULI',
+    'AGUSTUS',
+    'SEPTEMBER',
+    'OKTOBER',
+    'NOVEMBER',
+    'DESEMBER'
+  ];
   int _rowsPerPage = 50;
   List<bool> selectedRows = [];
   List<dynamic> filteredData = [];
@@ -309,26 +321,25 @@ class _ListScmState extends State<ListScmScreen> {
                           ),
                         ),
                         Container(
-                                padding: const EdgeInsets.only(left: 20),
-                                child: FloatingActionButton.extended(
-                                  onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (c) =>
-                                                const FormScreen()));
-                                  },
-                                  label: const Text(
-                                    "Tambah Form List SCM",
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                  icon: const Icon(
-                                    Icons.add_circle_outline_sharp,
-                                    color: Colors.white,
-                                  ),
-                                  backgroundColor: Colors.blue,
-                                ),
-                              )
+                          padding: const EdgeInsets.only(left: 20),
+                          child: FloatingActionButton.extended(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (c) => const FormScreen()));
+                            },
+                            label: const Text(
+                              "Tambah Form List SCM",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            icon: const Icon(
+                              Icons.add_circle_outline_sharp,
+                              color: Colors.white,
+                            ),
+                            backgroundColor: Colors.blue,
+                          ),
+                        )
                       ],
                     ),
                   ),
@@ -356,18 +367,17 @@ class _ListScmState extends State<ListScmScreen> {
                                       hoverColor: Colors.grey.shade400,
                                       dividerColor: Colors.grey),
                                   child: PaginatedDataTable(
-                                    header: const Text('List SCM'),
                                       sortColumnIndex: _currentSortColumn,
-                                //       onRowsPerPageChanged: (value) {
-                                //   setState(() {
-                                //     _rowsPerPage = value!;
-                                //   });
-                                // },
+                                      onRowsPerPageChanged: (value) {
+                                        setState(() {
+                                          _rowsPerPage = value!;
+                                        });
+                                      },
                                       sortAscending: sort,
                                       rowsPerPage: _rowsPerPage,
                                       columnSpacing: 0,
                                       columns: [
-                                         DataColumn(
+                                        DataColumn(
                                           label: Container(
                                               padding: const EdgeInsets.only(
                                                   left: 30),
@@ -381,72 +391,64 @@ class _ListScmState extends State<ListScmScreen> {
                                         ),
                                         DataColumn(label: _verticalDivider),
                                         const DataColumn(
-                                            label: SizedBox(
-                                                child: Text(
-                                                  "Kode MDBC",
-                                                  style: TextStyle(
-                                                      fontSize: 15,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                )),
-                                           ),
-                                        DataColumn(label: _verticalDivider),
-                                        const DataColumn(
-                                            label: SizedBox(
-                                                child: Text(
-                                                        "Kode Marketing",
-                                                        style: TextStyle(
-                                                            fontSize: 15,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
-                                                      )
-                                                  ),
-                                           ),
-                                        DataColumn(label: _verticalDivider),
-                                        const DataColumn(
-                                            label: SizedBox(
-                                                child: Text(
-                                                  "Tema",
-                                                  style: TextStyle(
-                                                      fontSize: 15,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                )),
-                                          ),
-                                        DataColumn(label: _verticalDivider),
-                                        const DataColumn(
-                                            label: SizedBox(
-                                                child: Text(
-                                                  "Jenis Barang",
-                                                  style: TextStyle(
-                                                      fontSize: 15,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                )),
-                                           ),
-                                        DataColumn(label: _verticalDivider),
-                                        const DataColumn(
-                                            label: SizedBox(
-                                                child: Text(
-                                                  "Harga",
-                                                  maxLines: 2,
-                                                  style: TextStyle(
-                                                      fontSize: 15,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                )),
-                                           ),
+                                          label: SizedBox(
+                                              child: Text(
+                                            "Kode MDBC",
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold),
+                                          )),
+                                        ),
                                         DataColumn(label: _verticalDivider),
                                         const DataColumn(
                                           label: SizedBox(
                                               child: Text(
-                                                "Kelas Harga",
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              )),
+                                            "Kode Marketing",
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold),
+                                          )),
+                                        ),
+                                        DataColumn(label: _verticalDivider),
+                                        const DataColumn(
+                                          label: SizedBox(
+                                              child: Text(
+                                            "Tema",
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold),
+                                          )),
+                                        ),
+                                        DataColumn(label: _verticalDivider),
+                                        const DataColumn(
+                                          label: SizedBox(
+                                              child: Text(
+                                            "Jenis Barang",
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold),
+                                          )),
+                                        ),
+                                        DataColumn(label: _verticalDivider),
+                                        const DataColumn(
+                                          label: SizedBox(
+                                              child: Text(
+                                            "Harga",
+                                            maxLines: 2,
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold),
+                                          )),
+                                        ),
+                                        DataColumn(label: _verticalDivider),
+                                        const DataColumn(
+                                          label: SizedBox(
+                                              child: Text(
+                                            "Kelas Harga",
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold),
+                                          )),
                                         ),
                                         DataColumn(label: _verticalDivider),
                                         DataColumn(
@@ -465,19 +467,19 @@ class _ListScmState extends State<ListScmScreen> {
                                       source:
                                           // UserDataTableSource(userData: filterCrm!)),
                                           RowSource(
-                                              onRowPressed: () {
-                                                refresh();
-                                              },
-                                              selectedRows: selectedRows,
-                                              myData: myCrm,
-                                              count: myCrm!.length,
-                                              onSelectChanged:(bool value, int index){
-                                                setState(() {
-                                                  selectedRows[index] = value;
-                                                });
-                                              }
-                                              
-                                              )),
+                                        onRowPressed: () {
+                                          refresh();
+                                        },
+                                        selectedRows: selectedRows,
+                                        myData: myCrm,
+                                        count: myCrm!.length,
+                                        listBulan: listBulan,
+                                        // onSelectChanged:(bool value, int index){
+                                        //   setState(() {
+                                        //     selectedRows[index] = value;
+                                        //   });
+                                        // }
+                                      )),
                                 ),
                               ),
                             ),
@@ -521,816 +523,370 @@ class RowSource extends DataTableSource {
   final VoidCallback onRowPressed; //* menerima data untuk me refresh screen
   final count;
   final List<bool> selectedRows;
-  final Function(bool value, int index) onSelectChanged;
+  var listBulan;
+
   RowSource({
     required this.myData,
     required this.count,
     required this.onRowPressed,
     required this.selectedRows,
-    required this.onSelectChanged,
+    required this.listBulan,
   });
 
   @override
   DataRow? getRow(int index) {
-    print(index);
     if (index < rowCount) {
+      final data = myData[index];
+      return DataRow(
+          // index: index,
+          // selected: selectedRows[index],
+          // onSelectChanged: (value) {},
+          cells: [
+            //! selceted rows
+            DataCell(Checkbox(value: false, onChanged: (value) {})),
+            DataCell(_verticalDivider),
 
-        final data = myData[index];
- return DataRow.byIndex
-    (
-      index: index,
-      selected: selectedRows[index],
-      onSelectChanged: (value) {
-        onSelectChanged(value ?? false, index);
-      },
-      cells: [
-        //! selceted rows
-        DataCell(Checkbox(
-          value: false,
-          onChanged:(value){
-            onSelectChanged(value ?? false, index);
-          }
-        )),
-      DataCell(_verticalDivider),
-     
-      //kodeDesignMdbc
-      DataCell(
-        Builder(builder: (context) {
-          return Padding(
-              padding: const EdgeInsets.all(0),
-              child: sharedPreferences!.getString('level') != '1'
-                  ? Text(data.kodeDesignMdbc)
-                  : Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(data.kodeDesignMdbc),
-                      ],
-                    ));
-        }),
-      ),
-      DataCell(_verticalDivider),
-      // namaDesigner
-      DataCell(
-        Padding(
-            padding: const EdgeInsets.all(0),
-            child: sharedPreferences!.getString('level') != '1'
-                ? Text(data.kodeMarketing)
-                : Text(data.namaDesigner)),
-      ),
-      DataCell(_verticalDivider),
+            //kodeDesignMdbc
 
-      //kodeDesign
-      DataCell(
-        Padding(padding: const EdgeInsets.all(0), child: Text(data.kodeDesign)),
-      ),
-      DataCell(_verticalDivider),
+            DataCell(
+              Builder(builder: (context) {
+                return Padding(
+                    padding: const EdgeInsets.all(0),
+                    child: Text(data.kodeDesignMdbc));
+              }),
+            ),
+            DataCell(_verticalDivider),
+            // kodeMarketing
+            DataCell(FutureBuilder(
+                future: _getKodeMarketingBykodeDesign(data.kodeDesignMdbc),
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return const Text('');
+                  }
+                  if (snapshot.hasData) {
+                    return Text(snapshot.data!.toString());
+                  } else {
+                    return const CircularProgressIndicator();
+                  }
+                })),
+            // DataCell(
+            //   Padding(
+            //       padding: const EdgeInsets.all(0),
+            //       child: Text(data.kodeMarketing)),
+            // ),
+            DataCell(_verticalDivider),
 
-      //tema
-      DataCell(
-        Padding(padding: const EdgeInsets.all(0), child: Text(data.tema)),
-      ),
-      DataCell(_verticalDivider),
+            //tema
+            DataCell(
+              Padding(padding: const EdgeInsets.all(0), child: Text(data.tema)),
+            ),
+            DataCell(_verticalDivider),
 
-      //jenisBarang
-      DataCell(
-        Padding(
-            padding: const EdgeInsets.all(0), child: Text(data.jenisBarang)),
-      ),
-      DataCell(_verticalDivider),
+            //jenisBarang
+            DataCell(
+              Padding(
+                  padding: const EdgeInsets.all(0),
+                  child: Text(data.jenisBarang)),
+            ),
+            DataCell(_verticalDivider),
 
-      //estimasiHarga
-      DataCell(
-        Padding(
-            padding: const EdgeInsets.all(0),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                data.brand == "BELI BERLIAN"
-                    ? 'Rp. ${CurrencyFormat.convertToDollar(data.estimasiHarga, 0)}'
-                    : data.brand == "METIER"
-                        ? 'Rp. ${CurrencyFormat.convertToDollar(data.estimasiHarga, 0)}'
-                        : '\$ ${CurrencyFormat.convertToDollar(data.estimasiHarga, 0)}',
-                textAlign: TextAlign.center,
-              ),
-            )),
-      ),
-      DataCell(_verticalDivider),
+            //estimasiHarga
+            DataCell(
+              Padding(
+                  padding: const EdgeInsets.all(0),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      data.brand == "BELI BERLIAN"
+                          ? 'Rp. ${CurrencyFormat.convertToDollar(data.estimasiHarga, 0)}'
+                          : data.brand == "METIER"
+                              ? 'Rp. ${CurrencyFormat.convertToDollar(data.estimasiHarga, 0)}'
+                              : '\$ ${CurrencyFormat.convertToDollar(data.estimasiHarga, 0)}',
+                      textAlign: TextAlign.center,
+                    ),
+                  )),
+            ),
+            DataCell(_verticalDivider),
 
-      //kelas harga
-      DataCell(
-        Container(
-            width: 100,
-            padding: const EdgeInsets.all(0),
-            child: (data.brand.toString().toLowerCase() == "parva" ||
-                    data.brand.toString().toLowerCase() == "fine")
-                ? ((data.estimasiHarga * 0.37) * 11500) <= 5000000
-                    ? const Text(
-                        "XS",
-                        maxLines: 2,
-                        style: TextStyle(fontSize: 20, color: Colors.black),
-                      )
-                    : ((data.estimasiHarga * 0.37) * 11500) <= 10000000
-                        ? const Text(
-                            "S",
-                            maxLines: 2,
-                            style: TextStyle(fontSize: 20, color: Colors.black),
-                          )
-                        : ((data.estimasiHarga * 0.37) * 11500) <= 20000000
-                            ? const Text(
-                                "M",
-                                maxLines: 2,
-                                style: TextStyle(
-                                    fontSize: 20, color: Colors.black),
-                              )
-                            : ((data.estimasiHarga * 0.37) * 11500) <= 35000000
-                                ? const Text(
-                                    "L",
-                                    maxLines: 2,
-                                    style: TextStyle(
-                                        fontSize: 20, color: Colors.black),
-                                  )
-                                : const Text(
-                                    "XL",
-                                    maxLines: 2,
-                                    style: TextStyle(
-                                        fontSize: 20, color: Colors.black),
-                                  )
-                : (data.estimasiHarga) <= 5000000
-                    ? const Text(
-                        "XS",
-                        maxLines: 2,
-                        style: TextStyle(fontSize: 20, color: Colors.black),
-                      )
-                    : (data.estimasiHarga) <= 10000000
-                        ? const Text(
-                            "S",
-                            maxLines: 2,
-                            style: TextStyle(fontSize: 20, color: Colors.black),
-                          )
-                        : (data.estimasiHarga) <= 20000000
-                            ? const Text(
-                                "M",
-                                maxLines: 2,
-                                style: TextStyle(
-                                    fontSize: 20, color: Colors.black),
-                              )
-                            : (data.estimasiHarga) <= 35000000
-                                ? const Text(
-                                    "L",
-                                    maxLines: 2,
-                                    style: TextStyle(
-                                        fontSize: 20, color: Colors.black),
-                                  )
-                                : const Text(
-                                    "XL",
-                                    maxLines: 2,
-                                    style: TextStyle(
-                                        fontSize: 20, color: Colors.black),
-                                  )),
-      ),
-      DataCell(_verticalDivider),
+            //kelas harga
+            DataCell(
+              Container(
+                  width: 100,
+                  padding: const EdgeInsets.all(0),
+                  child: (data.brand.toString().toLowerCase() == "parva" ||
+                          data.brand.toString().toLowerCase() == "fine")
+                      ? ((data.estimasiHarga * 0.37) * 11500) <= 5000000
+                          ? const Text(
+                              "XS",
+                              maxLines: 2,
+                              style:
+                                  TextStyle(fontSize: 20, color: Colors.black),
+                            )
+                          : ((data.estimasiHarga * 0.37) * 11500) <= 10000000
+                              ? const Text(
+                                  "S",
+                                  maxLines: 2,
+                                  style: TextStyle(
+                                      fontSize: 20, color: Colors.black),
+                                )
+                              : ((data.estimasiHarga * 0.37) * 11500) <=
+                                      20000000
+                                  ? const Text(
+                                      "M",
+                                      maxLines: 2,
+                                      style: TextStyle(
+                                          fontSize: 20, color: Colors.black),
+                                    )
+                                  : ((data.estimasiHarga * 0.37) * 11500) <=
+                                          35000000
+                                      ? const Text(
+                                          "L",
+                                          maxLines: 2,
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              color: Colors.black),
+                                        )
+                                      : const Text(
+                                          "XL",
+                                          maxLines: 2,
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              color: Colors.black),
+                                        )
+                      : (data.estimasiHarga) <= 5000000
+                          ? const Text(
+                              "XS",
+                              maxLines: 2,
+                              style:
+                                  TextStyle(fontSize: 20, color: Colors.black),
+                            )
+                          : (data.estimasiHarga) <= 10000000
+                              ? const Text(
+                                  "S",
+                                  maxLines: 2,
+                                  style: TextStyle(
+                                      fontSize: 20, color: Colors.black),
+                                )
+                              : (data.estimasiHarga) <= 20000000
+                                  ? const Text(
+                                      "M",
+                                      maxLines: 2,
+                                      style: TextStyle(
+                                          fontSize: 20, color: Colors.black),
+                                    )
+                                  : (data.estimasiHarga) <= 35000000
+                                      ? const Text(
+                                          "L",
+                                          maxLines: 2,
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              color: Colors.black),
+                                        )
+                                      : const Text(
+                                          "XL",
+                                          maxLines: 2,
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              color: Colors.black),
+                                        )),
+            ),
+            DataCell(_verticalDivider),
 
-      //Aksi
-      // DataCell(Builder(builder: (context) {
-      //   return IconButton(
-      //     onPressed: () {
-      //       Navigator.push(context,
-      //           MaterialPageRoute(builder: (c) => const FormScreenById()));
-      //     },
-      //     icon: const Icon(
-      //       Icons.remove_red_eye,
-      //       color: Colors.green,
-      //     ),
-      //   );
-      // }
-      DataCell(Builder(builder: (context) {
-        return Row(
-          children: [
-            sharedPreferences!.getString('level') == '3'
-                ? IconButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (c) => FormViewScreen(
-                                    modelDesigner: FormDesignerModel(
-                                      id: data.id,
-                                      kodeDesignMdbc: data.kodeDesignMdbc,
-                                      kodeMarketing: data.kodeMarketing,
-                                      kodeProduksi: data.kodeProduksi,
-                                      namaDesigner: data.namaDesigner,
-                                      namaModeller: data.namaModeller,
-                                      kodeDesign: data.kodeDesign,
-                                      siklus: data.siklus,
-                                      tema: data.tema,
-                                      rantai: data.rantai,
-                                      qtyRantai: data.qtyRantai,
-                                      lain2: data.lain2,
-                                      qtyLain2: data.qtyLain2,
-                                      earnut: data.earnut,
-                                      qtyEarnut: data.qtyEarnut,
-                                      panjangRantai: data.panjangRantai,
-                                      customKomponen: data.customKomponen,
-                                      qtyCustomKomponen: data.qtyCustomKomponen,
-                                      jenisBarang: data.jenisBarang,
-                                      kategoriBarang: data.kategoriBarang,
-                                      brand: data.brand,
-                                      photoShoot: data.photoShoot,
-                                      color: data.color,
-                                      beratEmas: data.beratEmas,
-                                      estimasiHarga: data.estimasiHarga,
-                                      ringSize: data.ringSize,
-                                      created_at: data.created_at,
-                                      batu1: data.batu1,
-                                      qtyBatu1: data.qtyBatu1,
-                                      batu2: data.batu2,
-                                      qtyBatu2: data.qtyBatu2,
-                                      batu3: data.batu3,
-                                      qtyBatu3: data.qtyBatu3,
-                                      batu4: data.batu4,
-                                      qtyBatu4: data.qtyBatu4,
-                                      batu5: data.batu5,
-                                      qtyBatu5: data.qtyBatu5,
-                                      batu6: data.batu6,
-                                      qtyBatu6: data.qtyBatu6,
-                                      batu7: data.batu7,
-                                      qtyBatu7: data.qtyBatu7,
-                                      batu8: data.batu8,
-                                      qtyBatu8: data.qtyBatu8,
-                                      batu9: data.batu9,
-                                      qtyBatu9: data.qtyBatu9,
-                                      batu10: data.batu10,
-                                      qtyBatu10: data.qtyBatu10,
-                                      batu11: data.batu11,
-                                      qtyBatu11: data.qtyBatu11,
-                                      batu12: data.batu12,
-                                      qtyBatu12: data.qtyBatu12,
-                                      batu13: data.batu13,
-                                      qtyBatu13: data.qtyBatu13,
-                                      batu14: data.batu14,
-                                      qtyBatu14: data.qtyBatu14,
-                                      batu15: data.batu15,
-                                      qtyBatu15: data.qtyBatu15,
-                                      batu16: data.batu16,
-                                      qtyBatu16: data.qtyBatu16,
-                                      batu17: data.batu17,
-                                      qtyBatu17: data.qtyBatu17,
-                                      batu18: data.batu18,
-                                      qtyBatu18: data.qtyBatu18,
-                                      batu19: data.batu19,
-                                      qtyBatu19: data.qtyBatu19,
-                                      batu20: data.batu20,
-                                      qtyBatu20: data.qtyBatu20,
-                                      batu21: data.batu21,
-                                      qtyBatu21: data.qtyBatu21,
-                                      batu22: data.batu22,
-                                      qtyBatu22: data.qtyBatu22,
-                                      batu23: data.batu23,
-                                      qtyBatu23: data.qtyBatu23,
-                                      batu24: data.batu24,
-                                      qtyBatu24: data.qtyBatu24,
-                                      batu25: data.batu25,
-                                      qtyBatu25: data.qtyBatu25,
-                                      batu26: data.batu26,
-                                      qtyBatu26: data.qtyBatu26,
-                                      batu27: data.batu27,
-                                      qtyBatu27: data.qtyBatu27,
-                                      batu28: data.batu28,
-                                      qtyBatu28: data.qtyBatu28,
-                                      batu29: data.batu29,
-                                      qtyBatu29: data.qtyBatu29,
-                                      batu30: data.batu30,
-                                      qtyBatu30: data.qtyBatu30,
-                                      batu31: data.batu31,
-                                      qtyBatu31: data.qtyBatu31,
-                                      batu32: data.batu32,
-                                      qtyBatu32: data.qtyBatu32,
-                                      batu33: data.batu33,
-                                      qtyBatu33: data.qtyBatu33,
-                                      batu34: data.batu34,
-                                      qtyBatu34: data.qtyBatu34,
-                                      batu35: data.batu35,
-                                      qtyBatu35: data.qtyBatu35,
-                                      imageUrl: data.imageUrl,
-                                      keteranganStatusBatu:
-                                          data.keteranganStatusBatu,
-                                      pointModeller: data.pointModeller,
-                                      tanggalInModeller: data.tanggalInModeller,
-                                      tanggalOutModeller:
-                                          data.tanggalOutModeller,
-                                      tanggalInProduksi: data.tanggalInProduksi,
-                                      beratModeller: data.beratModeller,
-                                    ),
-                                  )));
-                    },
-                    icon: data.pointModeller != '0'
-                        ? const Icon(
-                            Icons.remove_red_eye,
-                            color: Colors.blue,
-                          )
-                        : Stack(
-                            clipBehavior:
-                                Clip.none, //agar tidak menghalangi object
+            //Aksi
+            // DataCell(Builder(builder: (context) {
+            //   return IconButton(
+            //     onPressed: () {
+            //       Navigator.push(context,
+            //           MaterialPageRoute(builder: (c) => const FormScreenById()));
+            //     },
+            //     icon: const Icon(
+            //       Icons.remove_red_eye,
+            //       color: Colors.green,
+            //     ),
+            //   );
+            // }
+            DataCell(Builder(builder: (context) {
+              return Row(
+                children: [
+                  Text(data.release),
+                  IconButton(
+                      onPressed: () {
+                        showGeneralDialog(
+                            transitionDuration:
+                                const Duration(milliseconds: 200),
+                            barrierDismissible: true,
+                            barrierLabel: '',
+                            context: context,
+                            pageBuilder: (context, animation1, animation2) {
+                              return const Text('');
+                            },
+                            barrierColor: Colors.black.withOpacity(0.5),
+                            transitionBuilder: (context, a1, a2, widget) {
+                              return Transform.scale(
+                                  scale: a1.value,
+                                  child: Opacity(
+                                      opacity: a1.value,
+                                      child: AlertDialog(
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(8)),
+                                          content: SizedBox(
+                                              child: SingleChildScrollView(
+                                                  scrollDirection:
+                                                      Axis.vertical,
+                                                  child: Column(children: [
+                                                    const Text(
+                                                      'Pilih bulan release',
+                                                      style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontSize: 18,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                    for (var j = 0;
+                                                        j < listBulan.length;
+                                                        j++)
+                                                      Container(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .only(
+                                                                  top: 15),
+                                                          child: ElevatedButton(
+                                                              style: ElevatedButton.styleFrom(
+                                                                  backgroundColor:
+                                                                      Colors
+                                                                          .blue,
+                                                                  shape: RoundedRectangleBorder(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              50.0))),
+                                                              onPressed:
+                                                                  () async {
+                                                                postTanggalProduksi(
+                                                                    data.id,
+                                                                    listBulan[
+                                                                        index]);
+                                                                await postDataMps(
+                                                                    myData,
+                                                                    index,
+                                                                    listBulan[
+                                                                        index]);
+                                                                onRowPressed();
 
-                            children: [
-                              //tambahan icon ADD
-                              Positioned(
-                                right: -10.0,
-                                top: -13.0,
-                                child: InkResponse(
-                                  onTap: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: const Icon(
-                                    Icons.add_circle_outline,
-                                    color: Colors.green,
-                                    size: 20,
-                                  ),
-                                ),
-                              ),
-                              const Icon(
-                                Icons.remove_red_eye,
+                                                                Navigator.pop(
+                                                                    context);
+                                                                showSimpleNotification(
+                                                                  const Text(
+                                                                      'Data berhasil di release'),
+                                                                  background:
+                                                                      Colors
+                                                                          .green,
+                                                                  duration:
+                                                                      const Duration(
+                                                                          seconds:
+                                                                              1),
+                                                                );
+                                                              },
+                                                              child: Text(
+                                                                "${listBulan[j]}",
+                                                                style:
+                                                                    const TextStyle(
+                                                                  fontSize: 16,
+                                                                ),
+                                                              )))
+                                                  ]))))));
+                            });
+                      },
+                      icon: Stack(
+                        clipBehavior: Clip.none, //agar tidak menghalangi object
+                        children: [
+                          //tambahan icon ADD
+                          Positioned(
+                            right: -10.0,
+                            top: -13.0,
+                            child: InkResponse(
+                              onTap: () {},
+                              child: const Icon(
+                                Icons.add_circle_outline,
                                 color: Colors.green,
+                                size: 20,
                               ),
-                            ],
-                          ))
-                : IconButton(
-                    onPressed: () {
-                      showDialog<String>(
-                        context: context,
-                        builder: (BuildContext context) => AlertDialog(
-                          title: const Text(
-                            'Perhatian',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold),
+                            ),
                           ),
-                          content: Row(
-                            children: [
-                              const Text(
-                                'Apakah anda yakin ingin menghapus data ',
-                              ),
-                              Text(
-                                '${data.kodeDesignMdbc}  ?',
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black),
-                              ),
-                            ],
+                          const Icon(
+                            Icons.send,
+                            color: Colors.green,
                           ),
-                          actions: <Widget>[
-                            TextButton(
-                              onPressed: () => Navigator.pop(
-                                context,
-                                'Batal',
-                              ),
-                              child: const Text('Batal'),
-                            ),
-                            TextButton(
-                              onPressed: () async {
-                                await postApiQtyBatu1(
-                                  data.batu1,
-                                  data.qtyBatu1,
-                                );
-                                await postApiQtyBatu2(
-                                  data.batu2,
-                                  data.qtyBatu2,
-                                );
-                                await postApiQtyBatu3(
-                                  data.batu3,
-                                  data.qtyBatu3,
-                                );
-                                await postApiQtyBatu4(
-                                  data.batu4,
-                                  data.qtyBatu4,
-                                );
-                                await postApiQtyBatu5(
-                                  data.batu5,
-                                  data.qtyBatu5,
-                                );
-                                await postApiQtyBatu6(
-                                  data.batu6,
-                                  data.qtyBatu6,
-                                );
-                                await postApiQtyBatu7(
-                                  data.batu7,
-                                  data.qtyBatu7,
-                                );
-                                await postApiQtyBatu8(
-                                  data.batu8,
-                                  data.qtyBatu8,
-                                );
-                                await postApiQtyBatu9(
-                                  data.batu9,
-                                  data.qtyBatu9,
-                                );
-                                await postApiQtyBatu10(
-                                  data.batu10,
-                                  data.qtyBatu10,
-                                );
-                                await postApiQtyBatu11(
-                                  data.batu11,
-                                  data.qtyBatu11,
-                                );
-                                await postApiQtyBatu12(
-                                  data.batu12,
-                                  data.qtyBatu12,
-                                );
-                                await postApiQtyBatu13(
-                                  data.batu13,
-                                  data.qtyBatu13,
-                                );
-                                await postApiQtyBatu14(
-                                  data.batu14,
-                                  data.qtyBatu14,
-                                );
-                                await postApiQtyBatu15(
-                                  data.batu15,
-                                  data.qtyBatu15,
-                                );
-                                await postApiQtyBatu16(
-                                  data.batu16,
-                                  data.qtyBatu16,
-                                );
-                                await postApiQtyBatu17(
-                                  data.batu17,
-                                  data.qtyBatu17,
-                                );
-                                await postApiQtyBatu18(
-                                  data.batu18,
-                                  data.qtyBatu18,
-                                );
-                                await postApiQtyBatu19(
-                                  data.batu19,
-                                  data.qtyBatu19,
-                                );
-                                await postApiQtyBatu20(
-                                  data.batu20,
-                                  data.qtyBatu20,
-                                );
-                                await postApiQtyBatu21(
-                                  data.batu21,
-                                  data.qtyBatu21,
-                                );
-                                await postApiQtyBatu22(
-                                  data.batu22,
-                                  data.qtyBatu22,
-                                );
-                                await postApiQtyBatu23(
-                                  data.batu23,
-                                  data.qtyBatu23,
-                                );
-                                await postApiQtyBatu24(
-                                  data.batu24,
-                                  data.qtyBatu24,
-                                );
-                                await postApiQtyBatu25(
-                                  data.batu25,
-                                  data.qtyBatu25,
-                                );
-                                await postApiQtyBatu26(
-                                  data.batu26,
-                                  data.qtyBatu26,
-                                );
-                                await postApiQtyBatu27(
-                                  data.batu27,
-                                  data.qtyBatu27,
-                                );
-                                await postApiQtyBatu28(
-                                  data.batu28,
-                                  data.qtyBatu28,
-                                );
-                                await postApiQtyBatu29(
-                                  data.batu29,
-                                  data.qtyBatu29,
-                                );
-                                await postApiQtyBatu30(
-                                  data.batu30,
-                                  data.qtyBatu30,
-                                );
-                                await postApiQtyBatu31(
-                                  data.batu31,
-                                  data.qtyBatu31,
-                                );
-                                await postApiQtyBatu32(
-                                  data.batu32,
-                                  data.qtyBatu32,
-                                );
-                                await postApiQtyBatu33(
-                                  data.batu33,
-                                  data.qtyBatu33,
-                                );
-                                await postApiQtyBatu34(
-                                  data.batu34,
-                                  data.qtyBatu34,
-                                );
-                                await postApiQtyBatu35(
-                                  data.batu35,
-                                  data.qtyBatu35,
-                                );
-                                var id = data.id.toString();
-                                Map<String, String> body = {'id': id};
-                                final response = await http.post(
-                                    Uri.parse(ApiConstants.baseUrl +
-                                        ApiConstants
-                                            .postDeleteFormDesignerById),
-                                    body: body);
-                                print(response.body);
-                                onRowPressed(); //! function merefresh state
-
-                                Navigator.pop(context);
-                                showSimpleNotification(
-                                  const Text(
-                                    'Design Terhapus',
-                                  ),
-                                  background: Colors.green,
-                                  duration: const Duration(seconds: 1),
-                                );
-                              },
-                              child: const Text(
-                                'Hapus',
-                                style: TextStyle(color: Colors.red),
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                    icon: const Icon(
-                      Icons.delete,
-                      color: Colors.red,
-                    ),
-                  ),
-            sharedPreferences!.getString('level') == '3'
-                ? const SizedBox()
-                : Padding(
-                    padding: const EdgeInsets.only(left: 15),
-                    child: IconButton(
-                      onPressed: () {
-                        data.edit! == 0
-                            ? showDialog<String>(
-                                context: context,
-                                builder: (BuildContext context) =>
-                                    const AlertDialog(
-                                      title: Text(
-                                        'Form terkunci',
-                                      ),
-                                    ))
-                            : Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (c) => FormScreenById(
-                                          modelDesigner: FormDesignerModel(
-                                            id: data.id,
-                                            kodeDesignMdbc: data.kodeDesignMdbc,
-                                            kodeMarketing: data.kodeMarketing,
-                                            kodeProduksi: data.kodeProduksi,
-                                            namaDesigner: data.namaDesigner,
-                                            namaModeller: data.namaModeller,
-                                            kodeDesign: data.kodeDesign,
-                                            siklus: data.siklus,
-                                            tema: data.tema,
-                                            rantai: data.rantai,
-                                            qtyRantai: data.qtyRantai,
-                                            lain2: data.lain2,
-                                            qtyLain2: data.qtyLain2,
-                                            earnut: data.earnut,
-                                            qtyEarnut: data.qtyEarnut,
-                                            panjangRantai: data.panjangRantai,
-                                            customKomponen: data.customKomponen,
-                                            qtyCustomKomponen:
-                                                data.qtyCustomKomponen,
-                                            jenisBarang: data.jenisBarang,
-                                            kategoriBarang: data.kategoriBarang,
-                                            brand: data.brand,
-                                            photoShoot: data.photoShoot,
-                                            color: data.color,
-                                            beratEmas: data.beratEmas,
-                                            estimasiHarga: data.estimasiHarga,
-                                            ringSize: data.ringSize,
-                                            created_at: data.created_at,
-                                            batu1: data.batu1,
-                                            qtyBatu1: data.qtyBatu1,
-                                            batu2: data.batu2,
-                                            qtyBatu2: data.qtyBatu2,
-                                            batu3: data.batu3,
-                                            qtyBatu3: data.qtyBatu3,
-                                            batu4: data.batu4,
-                                            qtyBatu4: data.qtyBatu4,
-                                            batu5: data.batu5,
-                                            qtyBatu5: data.qtyBatu5,
-                                            batu6: data.batu6,
-                                            qtyBatu6: data.qtyBatu6,
-                                            batu7: data.batu7,
-                                            qtyBatu7: data.qtyBatu7,
-                                            batu8: data.batu8,
-                                            qtyBatu8: data.qtyBatu8,
-                                            batu9: data.batu9,
-                                            qtyBatu9: data.qtyBatu9,
-                                            batu10: data.batu10,
-                                            qtyBatu10: data.qtyBatu10,
-                                            batu11: data.batu11,
-                                            qtyBatu11: data.qtyBatu11,
-                                            batu12: data.batu12,
-                                            qtyBatu12: data.qtyBatu12,
-                                            batu13: data.batu13,
-                                            qtyBatu13: data.qtyBatu13,
-                                            batu14: data.batu14,
-                                            qtyBatu14: data.qtyBatu14,
-                                            batu15: data.batu15,
-                                            qtyBatu15: data.qtyBatu15,
-                                            batu16: data.batu16,
-                                            qtyBatu16: data.qtyBatu16,
-                                            batu17: data.batu17,
-                                            qtyBatu17: data.qtyBatu17,
-                                            batu18: data.batu18,
-                                            qtyBatu18: data.qtyBatu18,
-                                            batu19: data.batu19,
-                                            qtyBatu19: data.qtyBatu19,
-                                            batu20: data.batu20,
-                                            qtyBatu20: data.qtyBatu20,
-                                            batu21: data.batu21,
-                                            qtyBatu21: data.qtyBatu21,
-                                            batu22: data.batu22,
-                                            qtyBatu22: data.qtyBatu22,
-                                            batu23: data.batu23,
-                                            qtyBatu23: data.qtyBatu23,
-                                            batu24: data.batu24,
-                                            qtyBatu24: data.qtyBatu24,
-                                            batu25: data.batu25,
-                                            qtyBatu25: data.qtyBatu25,
-                                            batu26: data.batu26,
-                                            qtyBatu26: data.qtyBatu26,
-                                            batu27: data.batu27,
-                                            qtyBatu27: data.qtyBatu27,
-                                            batu28: data.batu28,
-                                            qtyBatu28: data.qtyBatu28,
-                                            batu29: data.batu29,
-                                            qtyBatu29: data.qtyBatu29,
-                                            batu30: data.batu30,
-                                            qtyBatu30: data.qtyBatu30,
-                                            batu31: data.batu31,
-                                            qtyBatu31: data.qtyBatu31,
-                                            batu32: data.batu32,
-                                            qtyBatu32: data.qtyBatu32,
-                                            batu33: data.batu33,
-                                            qtyBatu33: data.qtyBatu33,
-                                            batu34: data.batu34,
-                                            qtyBatu34: data.qtyBatu34,
-                                            batu35: data.batu35,
-                                            qtyBatu35: data.qtyBatu35,
-                                            imageUrl: data.imageUrl,
-                                            keteranganStatusBatu:
-                                                data.keteranganStatusBatu,
-                                            pointModeller: data.pointModeller,
-                                            tanggalInModeller:
-                                                data.tanggalInModeller,
-                                            tanggalOutModeller:
-                                                data.tanggalOutModeller,
-                                            tanggalInProduksi:
-                                                data.tanggalInProduksi,
-                                            beratModeller: data.beratModeller,
-                                            statusForm: data.statusForm,
-                                          ),
-                                        )));
-                      },
-                      icon: data.edit! == 0
-                          ? const Icon(
-                              Icons.lock,
-                              color: Colors.black,
-                            )
-                          : const Icon(
-                              Icons.remove_red_eye,
-                              color: Colors.green,
-                            ),
-                    ),
-                  ),
-            sharedPreferences!.getString('level') != '1'
-                ? const SizedBox()
-                : Padding(
-                    padding: const EdgeInsets.only(left: 5),
-                    child: IconButton(
-                      onPressed: () {
-                        showDialog<String>(
-                          context: context,
-                          builder: (BuildContext context) => AlertDialog(
-                            title: const Text(
-                              'Perhatian',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            content: Row(
-                              children: [
-                                data.edit! == 0
-                                    ? const Text(
-                                        'Apakah anda yakin ingin membuka kunci ',
-                                      )
-                                    : const Text(
-                                        'Apakah anda yakin ingin kunci ',
-                                      ),
-                                Text(
-                                  '${data.kodeDesignMdbc}  ?',
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black),
-                                ),
-                              ],
-                            ),
-                            actions: <Widget>[
-                              TextButton(
-                                onPressed: () => Navigator.pop(
-                                  context,
-                                  'Batal',
-                                ),
-                                child: const Text('Batal'),
-                              ),
-                              TextButton(
-                                onPressed: () async {
-                                  var id = data.id.toString();
-                                  var edit = data.edit! == 0 ? 1 : 0;
-                                  Map<String, String> body = {
-                                    'id': id,
-                                    'edit': edit.toString()
-                                  };
-                                  final response = await http.post(
-                                      Uri.parse(ApiConstants.baseUrl +
-                                          ApiConstants.keyById),
-                                      body: body);
-                                  print(response.body);
-                                  onRowPressed(); //! function merefresh state
-
-                                  Navigator.pop(context);
-                                  showSimpleNotification(
-                                    edit == 0
-                                        ? const Text(
-                                            'Design Berhasil Dibuka',
-                                          )
-                                        : const Text(
-                                            'Design Berhasil Dikunci',
-                                          ),
-                                    background: Colors.green,
-                                    duration: const Duration(seconds: 1),
-                                  );
-                                  // sharedPreferences!.getString('divisi') ==
-                                  //         'designer'
-                                  //     ? Navigator.push(
-                                  //         context,
-                                  //         MaterialPageRoute(
-                                  //             builder: (c) =>
-                                  //                 MainViewDesigner(col: 1)))
-                                  //     : Navigator.push(
-                                  //         context,
-                                  //         MaterialPageRoute(
-                                  //             builder: (c) =>
-                                  //                 MainViewScm(col: 2))
-
-                                  // );
-                                },
-                                child: data.edit! == 0
-                                    ? const Text('Buka kunci',
-                                        style: TextStyle(color: Colors.red))
-                                    : const Text(
-                                        'Kunci',
-                                        style: TextStyle(color: Colors.red),
-                                      ),
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                      icon: data.edit! == 0
-                          ? const Icon(
-                              Icons.key,
-                              color: Colors.blue,
-                            )
-                          : Icon(
-                              Icons.key_off,
-                              color: Colors.yellow.shade900,
-                            ),
-                    ),
-                  ),
-            // sharedPreferences!.getString('level') != '1'
-            //     ? const SizedBox()
-            //     : Padding(
-            //         padding: const EdgeInsets.only(left: 5),
-            //         child: IconButton(
-            //             onPressed: () {},
-            //             icon: const Icon(
-            //               Icons.print,
-            //               color: Colors.blue,
-            //             )))
-          ],
-        );
-      }))
-    ]);
-  
+                        ],
+                      ))
+                ],
+              );
+            }))
+          ]);
     } else {
       return null;
     }
-  
+  }
+
+  postTanggalProduksi(id, release) async {
+    Map<String, String> body = {'id': id, 'release': release};
+    final response = await http.post(
+        Uri.parse('${ApiConstants.baseUrl}${ApiConstants.addTanggalProduksi}'),
+        body: body);
+    print(response.body);
+  }
+
+  postDataMps(var dumData, index, bulan) async {
+    var data = dumData[index];
+    Map<String, String> body = {
+      'kodeDesignMdbc': data.kodeDesignMdbc.toString(),
+      'kodeMarketing': data.kodeMarketing.toString(),
+      'posisi': data.posisi.toString(),
+      'tema': data.tema.toString(),
+      'jenisBarang': data.jenisBarang.toString(),
+      'brand': data.brand.toString(),
+      'color': data.color.toString(),
+      'beratEmas': data.beratEmas.toString(),
+      'estimasiHarga': data.estimasiHarga.toString(),
+      'ringSize': data.ringSize.toString(),
+      'statusForm': data.statusForm.toString(),
+      'keteranganMinggu': data.keteranganMinggu.toString(),
+      'keteranganBatu': data.keteranganBatu.toString(),
+      'keteranganStatusBatu': data.keteranganStatusBatu.toString(),
+      'imageUrl': data.imageUrl.toString(),
+      'artist': data.artist.toString(),
+      'keteranganStatusAcc': 'BELUM KOMPLIT ACC',
+      'rantai': data.rantai.toString(),
+      'qtyRantai': data.qtyRantai.toString(),
+      'lain2': data.lain2.toString(),
+      'qtyLain2': data.qtyLain2.toString(),
+      'earnut': data.earnut.toString(),
+      'qtyEarnut': data.qtyEarnut.toString(),
+      'panjangRantai': data.panjangRantai.toString(),
+      'customKomponen': data.customKomponen.toString(),
+      'qtyCustomKomponen': data.qtyCustomKomponen.toString(),
+      'siklus': data.siklus.toString(),
+      'bulan': bulan.toString(),
+    };
+    final response = await http.post(
+        Uri.parse('${ApiConstants.baseUrl}${ApiConstants.postDataMps}'),
+        body: body);
+    print(response.body);
+  }
+
+  _getKodeMarketingBykodeDesign(kodeDesign) async {
+    var kodeMarketing;
+    final response = await http.get(
+      Uri.parse(
+          '${ApiConstants.baseUrl}${ApiConstants.getDataModellerBykodeDesign}?kodeDesign="$kodeDesign"'),
+    );
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      kodeMarketing = data[0]['kodeMarketing'];
+      return kodeMarketing;
+    } else {
+      throw Exception('Unexpected error occured!');
+    }
   }
 
   @override
@@ -1340,1197 +896,8 @@ class RowSource extends DataTableSource {
   int get rowCount => count;
 
   @override
-  int get selectedRowCount => selectedRows.where((element) => element).length;
-
-  postApiQtyBatu1(batu1, qtyBatu1) async {
-    if (qtyBatu1 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu1"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu1 += data[0]['qty'];
-          print(qtyBatu1);
-          try {
-            Map<String, String> body = {
-              'size': batu1.toString(),
-              'qty': qtyBatu1.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu2(batu2, qtyBatu2) async {
-    if (qtyBatu2 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu2"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu2 += data[0]['qty'];
-          print(qtyBatu2);
-          try {
-            Map<String, String> body = {
-              'size': batu2.toString(),
-              'qty': qtyBatu2.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu3(batu3, qtyBatu3) async {
-    if (qtyBatu3 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu3"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu3 += data[0]['qty'];
-          print(qtyBatu3);
-          try {
-            Map<String, String> body = {
-              'size': batu3.toString(),
-              'qty': qtyBatu3.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu4(batu4, qtyBatu4) async {
-    if (qtyBatu4 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu4"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu4 += data[0]['qty'];
-          print(qtyBatu4);
-          try {
-            Map<String, String> body = {
-              'size': batu4.toString(),
-              'qty': qtyBatu4.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu5(batu5, qtyBatu5) async {
-    if (qtyBatu5 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu5"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu5 += data[0]['qty'];
-          print(qtyBatu5);
-          try {
-            Map<String, String> body = {
-              'size': batu5.toString(),
-              'qty': qtyBatu5.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu6(batu6, qtyBatu6) async {
-    if (qtyBatu6 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu6"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu6 += data[0]['qty'];
-          print(qtyBatu6);
-          try {
-            Map<String, String> body = {
-              'size': batu6.toString(),
-              'qty': qtyBatu6.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu7(batu7, qtyBatu7) async {
-    if (qtyBatu7 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu7"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu7 += data[0]['qty'];
-          print(qtyBatu7);
-          try {
-            Map<String, String> body = {
-              'size': batu7.toString(),
-              'qty': qtyBatu7.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu8(batu8, qtyBatu8) async {
-    if (qtyBatu8 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu8"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu8 += data[0]['qty'];
-          print(qtyBatu8);
-          try {
-            Map<String, String> body = {
-              'size': batu8.toString(),
-              'qty': qtyBatu8.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu9(batu9, qtyBatu9) async {
-    if (qtyBatu9 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu9"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu9 += data[0]['qty'];
-          print(qtyBatu9);
-          try {
-            Map<String, String> body = {
-              'size': batu9.toString(),
-              'qty': qtyBatu9.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu10(batu10, qtyBatu10) async {
-    if (qtyBatu10 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu10"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu10 += data[0]['qty'];
-          print(qtyBatu10);
-          try {
-            Map<String, String> body = {
-              'size': batu10.toString(),
-              'qty': qtyBatu10.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu11(batu11, qtyBatu11) async {
-    if (qtyBatu11 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu11"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu11 += data[0]['qty'];
-          print(qtyBatu11);
-          try {
-            Map<String, String> body = {
-              'size': batu11.toString(),
-              'qty': qtyBatu11.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu12(batu12, qtyBatu12) async {
-    if (qtyBatu12 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu12"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu12 += data[0]['qty'];
-          print(qtyBatu12);
-          try {
-            Map<String, String> body = {
-              'size': batu12.toString(),
-              'qty': qtyBatu12.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu13(batu13, qtyBatu13) async {
-    if (qtyBatu13 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu13"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu13 += data[0]['qty'];
-          print(qtyBatu13);
-          try {
-            Map<String, String> body = {
-              'size': batu13.toString(),
-              'qty': qtyBatu13.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu14(batu14, qtyBatu14) async {
-    if (qtyBatu14 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu14"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu14 += data[0]['qty'];
-          print(qtyBatu14);
-          try {
-            Map<String, String> body = {
-              'size': batu14.toString(),
-              'qty': qtyBatu14.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu15(batu15, qtyBatu15) async {
-    if (qtyBatu15 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu15"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu15 += data[0]['qty'];
-          print(qtyBatu15);
-          try {
-            Map<String, String> body = {
-              'size': batu15.toString(),
-              'qty': qtyBatu15.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu16(batu16, qtyBatu16) async {
-    if (qtyBatu16 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu16"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu16 += data[0]['qty'];
-          print(qtyBatu16);
-          try {
-            Map<String, String> body = {
-              'size': batu16.toString(),
-              'qty': qtyBatu16.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu17(batu17, qtyBatu17) async {
-    if (qtyBatu17 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu17"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu17 += data[0]['qty'];
-          print(qtyBatu17);
-          try {
-            Map<String, String> body = {
-              'size': batu17.toString(),
-              'qty': qtyBatu17.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu18(batu18, qtyBatu18) async {
-    if (qtyBatu18 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu18"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu18 += data[0]['qty'];
-          print(qtyBatu18);
-          try {
-            Map<String, String> body = {
-              'size': batu18.toString(),
-              'qty': qtyBatu18.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu19(batu19, qtyBatu19) async {
-    if (qtyBatu19 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu19"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu19 += data[0]['qty'];
-          print(qtyBatu19);
-          try {
-            Map<String, String> body = {
-              'size': batu19.toString(),
-              'qty': qtyBatu19.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu20(batu20, qtyBatu20) async {
-    if (qtyBatu20 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu20"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu20 += data[0]['qty'];
-          print(qtyBatu20);
-          try {
-            Map<String, String> body = {
-              'size': batu20.toString(),
-              'qty': qtyBatu20.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu21(batu21, qtyBatu21) async {
-    if (qtyBatu21 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu21"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu21 += data[0]['qty'];
-          print(qtyBatu21);
-          try {
-            Map<String, String> body = {
-              'size': batu21.toString(),
-              'qty': qtyBatu21.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu22(batu22, qtyBatu22) async {
-    if (qtyBatu22 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu22"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu22 += data[0]['qty'];
-          print(qtyBatu22);
-          try {
-            Map<String, String> body = {
-              'size': batu22.toString(),
-              'qty': qtyBatu22.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu23(batu23, qtyBatu23) async {
-    if (qtyBatu23 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu23"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu23 += data[0]['qty'];
-          print(qtyBatu23);
-          try {
-            Map<String, String> body = {
-              'size': batu23.toString(),
-              'qty': qtyBatu23.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu24(batu24, qtyBatu24) async {
-    if (qtyBatu24 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu24"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu24 += data[0]['qty'];
-          print(qtyBatu24);
-          try {
-            Map<String, String> body = {
-              'size': batu24.toString(),
-              'qty': qtyBatu24.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu25(batu25, qtyBatu25) async {
-    if (qtyBatu25 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu25"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu25 += data[0]['qty'];
-          print(qtyBatu25);
-          try {
-            Map<String, String> body = {
-              'size': batu25.toString(),
-              'qty': qtyBatu25.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu26(batu26, qtyBatu26) async {
-    if (qtyBatu26 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu26"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu26 += data[0]['qty'];
-          print(qtyBatu26);
-          try {
-            Map<String, String> body = {
-              'size': batu26.toString(),
-              'qty': qtyBatu26.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu27(batu27, qtyBatu27) async {
-    if (qtyBatu27 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu27"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu27 += data[0]['qty'];
-          print(qtyBatu27);
-          try {
-            Map<String, String> body = {
-              'size': batu27.toString(),
-              'qty': qtyBatu27.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu28(batu28, qtyBatu28) async {
-    if (qtyBatu28 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu28"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu28 += data[0]['qty'];
-          print(qtyBatu28);
-          try {
-            Map<String, String> body = {
-              'size': batu28.toString(),
-              'qty': qtyBatu28.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu29(batu29, qtyBatu29) async {
-    if (qtyBatu29 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu29"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu29 += data[0]['qty'];
-          print(qtyBatu29);
-          try {
-            Map<String, String> body = {
-              'size': batu29.toString(),
-              'qty': qtyBatu29.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu30(batu30, qtyBatu30) async {
-    if (qtyBatu30 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu30"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu30 += data[0]['qty'];
-          print(qtyBatu30);
-          try {
-            Map<String, String> body = {
-              'size': batu30.toString(),
-              'qty': qtyBatu30.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu31(batu31, qtyBatu31) async {
-    if (qtyBatu31 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu31"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu31 += data[0]['qty'];
-          print(qtyBatu31);
-          try {
-            Map<String, String> body = {
-              'size': batu31.toString(),
-              'qty': qtyBatu31.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu32(batu32, qtyBatu32) async {
-    if (qtyBatu32 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu32"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu32 += data[0]['qty'];
-          print(qtyBatu32);
-          try {
-            Map<String, String> body = {
-              'size': batu32.toString(),
-              'qty': qtyBatu32.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu33(batu33, qtyBatu33) async {
-    if (qtyBatu33 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu33"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu33 += data[0]['qty'];
-          print(qtyBatu33);
-          try {
-            Map<String, String> body = {
-              'size': batu33.toString(),
-              'qty': qtyBatu33.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu34(batu34, qtyBatu34) async {
-    if (qtyBatu34 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu34"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu34 += data[0]['qty'];
-          print(qtyBatu34);
-          try {
-            Map<String, String> body = {
-              'size': batu34.toString(),
-              'qty': qtyBatu34.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu35(batu35, qtyBatu35) async {
-    if (qtyBatu35 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu35"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu35 += data[0]['qty'];
-          print(qtyBatu35);
-          try {
-            Map<String, String> body = {
-              'size': batu35.toString(),
-              'qty': qtyBatu35.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
+  // int get selectedRowCount => selectedRows.where((element) => element).length;
+  int get selectedRowCount => 0;
 }
 
 class UserDataTableSource extends DataTableSource {

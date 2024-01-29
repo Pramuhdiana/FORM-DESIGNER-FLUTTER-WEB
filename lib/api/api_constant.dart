@@ -2,10 +2,11 @@
 
 // http://110.5.102.154:1212/
 // http://localhost:1212/
+var ipPublic = '203.174.11.254'; //? before 110.5.102.154
+
 class ApiConstants {
-  static String baseUrlImage =
-      'http://110.5.102.154:1212/Api_Flutter/spk/upload/';
-  static String baseUrl = 'http://110.5.102.154:1212/Api_Flutter/';
+  static String baseUrlImage = 'http://$ipPublic:1212/Api_Flutter/spk/upload/';
+  static String baseUrl = 'http://$ipPublic:1212/Api_Flutter/';
   // static String baseUrlImage =
   //     'http://110.5.102.154:1212/Api_Flutter/spk/upload/';
   // static String baseUrl = 'http://110.5.102.154:1212/Api_Flutter/';
@@ -38,6 +39,8 @@ class ApiConstants {
   static String getListArtist = 'spk/list_artist_produksi.php';
   static String getListDivisi = 'spk/list_divisi.php';
   static String getDataModeller = 'spk/get_data_modeller.php';
+  static String getDataModellerBykodeDesign =
+      'spk/get_data_modeller_by_kodeDesign.php';
   static String getDataListItem = 'spk/list_item.php';
   static String getFormPR = 'spk/get_form_pr.php';
   static String getListFormPR = 'spk/get_list_form_pr.php';
@@ -51,6 +54,7 @@ class ApiConstants {
   static String postBatuPenyesuaian = 'spk/create_batu_penyesuaian.php';
   static String postDataProduksi = 'spk/create_produksi.php';
   static String postDataModeller = 'spk/create_data_modeller.php';
+  static String postDataMps = 'spk/create_data_mps.php';
 
   static String postDeleteFormDesignerById =
       'spk/delete_form_designer_by_id.php';
