@@ -31,6 +31,7 @@ Widget _verticalDivider = const VerticalDivider(
 
 class _ListScmState extends State<ListScmScreen> {
   List<String> listBulan = [
+    'CANCEL',
     'JANUARI',
     'FEBRUARI',
     'MARET',
@@ -223,10 +224,10 @@ class _ListScmState extends State<ListScmScreen> {
                     //fungsi search anyting
                     myCrm = filterCrm!
                         .where((element) =>
-                           element.bulan!
+                            element.bulan!
                                 .toLowerCase()
                                 .contains(value.toLowerCase()) ||
-                                  element.bulan!
+                            element.bulan!
                                 .toLowerCase()
                                 .contains(value.toLowerCase()) ||
                             element.namaDesigner!
@@ -560,18 +561,24 @@ class RowSource extends DataTableSource {
             ),
             DataCell(_verticalDivider),
             // kodeMarketing
-            DataCell(FutureBuilder(
-                future: _getKodeMarketingBykodeDesign(data.kodeDesignMdbc),
-                builder: (context, snapshot) {
-                  if (snapshot.hasError) {
-                    return const Text('');
-                  }
-                  if (snapshot.hasData) {
-                    return Text(snapshot.data!.toString());
-                  } else {
-                    return const CircularProgressIndicator();
-                  }
-                })),
+            DataCell(data.kodeMarketing != ''
+                ? Builder(builder: (context) {
+                    return Padding(
+                        padding: const EdgeInsets.all(0),
+                        child: Text(data.kodeMarketing));
+                  })
+                : FutureBuilder(
+                    future: _getKodeMarketingBykodeDesign(data.kodeDesignMdbc),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        return const Text('');
+                      }
+                      if (snapshot.hasData) {
+                        return Text(snapshot.data!.toString());
+                      } else {
+                        return const CircularProgressIndicator();
+                      }
+                    })),
             // DataCell(
             //   Padding(
             //       padding: const EdgeInsets.all(0),
@@ -756,8 +763,13 @@ class RowSource extends DataTableSource {
                                                                   top: 15),
                                                           child: ElevatedButton(
                                                               style: ElevatedButton.styleFrom(
-                                                                  backgroundColor:
-                                                                      Colors
+                                                                  backgroundColor: listBulan[j]
+                                                                              .toString()
+                                                                              .toLowerCase() ==
+                                                                          'cancel'
+                                                                      ? Colors
+                                                                          .red
+                                                                      : Colors
                                                                           .blue,
                                                                   shape: RoundedRectangleBorder(
                                                                       borderRadius:
@@ -769,24 +781,22 @@ class RowSource extends DataTableSource {
                                                                     data.id,
                                                                     listBulan[
                                                                         j]);
-                                                                        data.bulan == ''
-                                                                        ?
-                                                                        await postDataMps(
-                                                                    myData,
-                                                                    index,
-                                                                    listBulan[
-                                                                        j],
-                                                                        context,'false')
-                                                                        :
-                                                                await postDataMps(
-                                                                    myData,
-                                                                    index,
-                                                                    listBulan[
-                                                                        j],
-                                                                        context,'true');
+                                                                data.bulan == ''
+                                                                    ? await postDataMps(
+                                                                        myData,
+                                                                        index,
+                                                                        listBulan[
+                                                                            j],
+                                                                        context,
+                                                                        'false')
+                                                                    : await postDataMps(
+                                                                        myData,
+                                                                        index,
+                                                                        listBulan[
+                                                                            j],
+                                                                        context,
+                                                                        'true');
                                                                 onRowPressed();
-
-                                                               
                                                               },
                                                               child: Text(
                                                                 "${listBulan[j]}",
@@ -802,29 +812,29 @@ class RowSource extends DataTableSource {
                         clipBehavior: Clip.none, //agar tidak menghalangi object
                         children: [
                           //tambahan icon ADD
-                        data.bulan == '' ?
-                          Positioned(
-                            right: -10.0,
-                            top: -13.0,
-                            child: InkResponse(
-                              onTap: () {},
-                              child: const Icon(
-                                Icons.add_circle_outline,
-                                color: Colors.green,
-                                size: 20,
-                              ),
-                            ),
-                          )
-                          : const SizedBox(),
-                         data.bulan == '' ?
-                           const Icon(
-                            Icons.send,
-                            color: Colors.green,
-                          )
-                          :   const Icon(
-                            Icons.swap_horiz,
-                            color: Colors.blue,
-                          ),
+                          data.bulan == ''
+                              ? Positioned(
+                                  right: -10.0,
+                                  top: -13.0,
+                                  child: InkResponse(
+                                    onTap: () {},
+                                    child: const Icon(
+                                      Icons.add_circle_outline,
+                                      color: Colors.green,
+                                      size: 20,
+                                    ),
+                                  ),
+                                )
+                              : const SizedBox(),
+                          data.bulan == ''
+                              ? const Icon(
+                                  Icons.send,
+                                  color: Colors.green,
+                                )
+                              : const Icon(
+                                  Icons.swap_horiz,
+                                  color: Colors.blue,
+                                ),
                         ],
                       ))
                 ],
@@ -837,15 +847,17 @@ class RowSource extends DataTableSource {
   }
 
   postTanggalProduksi(id, release) async {
-    Map<String, String> body = {'id': id.toString(), 'bulan': release.toString()};
+    Map<String, String> body = {
+      'id': id.toString(),
+      'bulan': release.toString()
+    };
     final response = await http.post(
         Uri.parse('${ApiConstants.baseUrl}${ApiConstants.addTanggalProduksi}'),
         body: body);
     print(response.body);
-    
   }
 
-  postDataMps(var dumData, index, bulan,context,isUpdate) async {
+  postDataMps(var dumData, index, bulan, context, isUpdate) async {
     var data = dumData[index];
     print(bulan);
     print(data.imageUrl);
@@ -881,57 +893,36 @@ class RowSource extends DataTableSource {
       'siklus': data.siklus.toString(),
       'bulan': bulan.toString(),
     };
-    try{
-final response = await http.post(
-        Uri.parse('${ApiConstants.baseUrl}${ApiConstants.postDataMps}'),
-        body: body);
-        if(response.statusCode == 200){
-Navigator.pop(
-                                                                    context);
-                                                                showSimpleNotification(
-                                                                  const Text(
-                                                                      'Data berhasil di release'),
-                                                                  background:
-                                                                      Colors
-                                                                          .green,
-                                                                  duration:
-                                                                      const Duration(
-                                                                          seconds:
-                                                                              1),
-                                                                );
-    print(response.body);
-        } else {
- print('err : ${response.body}');
-      Navigator.pop(context);
-       showSimpleNotification(
-                                                                   const Text(
-                                                                      'Error Data ()'),
-                                                                  background:
-                                                                      Colors
-                                                                          .red,
-                                                                  duration:
-                                                                      const Duration(
-                                                                          seconds:
-                                                                              2),
-                                                                );
-        }
- 
-    } catch(c){
+    try {
+      final response = await http.post(
+          Uri.parse('${ApiConstants.baseUrl}${ApiConstants.postDataMps}'),
+          body: body);
+      if (response.statusCode == 200) {
+        Navigator.pop(context);
+        showSimpleNotification(
+          const Text('Data berhasil di release'),
+          background: Colors.green,
+          duration: const Duration(seconds: 1),
+        );
+        print(response.body);
+      } else {
+        print('err : ${response.body}');
+        Navigator.pop(context);
+        showSimpleNotification(
+          const Text('Error Data ()'),
+          background: Colors.red,
+          duration: const Duration(seconds: 2),
+        );
+      }
+    } catch (c) {
       print('err : $c');
       Navigator.pop(context);
-       showSimpleNotification(
-                                                                   Text(
-                                                                      'Error Data ($c)'),
-                                                                  background:
-                                                                      Colors
-                                                                          .red,
-                                                                  duration:
-                                                                      const Duration(
-                                                                          seconds:
-                                                                              2),
-                                                                );
+      showSimpleNotification(
+        Text('Error Data ($c)'),
+        background: Colors.red,
+        duration: const Duration(seconds: 2),
+      );
     }
-    
   }
 
   _getKodeMarketingBykodeDesign(kodeDesign) async {

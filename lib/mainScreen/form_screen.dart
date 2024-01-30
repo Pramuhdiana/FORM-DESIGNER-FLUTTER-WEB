@@ -2,6 +2,7 @@
 import 'dart:developer';
 
 import 'dart:convert';
+import 'package:form_designer/mainScreen/sideScreen/side_screen_scm.dart';
 import 'package:uuid/uuid.dart';
 
 import 'package:dio/dio.dart';
@@ -2189,8 +2190,8 @@ class _FormScreenState extends State<FormScreen> {
             controller: btnController,
             onPressed: () {
               final isValid = formKey.currentState?.validate();
-              if(sharedPreferences!.getString('divisi') == 'scm'){
-                  Future.delayed(const Duration(seconds: 1)).then((value) async {
+              if (sharedPreferences!.getString('divisi') == 'scm') {
+                Future.delayed(const Duration(seconds: 1)).then((value) async {
                   btnController.success();
                   await showDialog<String>(
                       barrierDismissible: false,
@@ -2278,12 +2279,21 @@ class _FormScreenState extends State<FormScreen> {
                                                               ),
                                                             ));
                                                   });
-                                                  Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (c) =>
-                                                              MainViewDesigner(
-                                                                  col: 1)));
+                                                  sharedPreferences!.getString(
+                                                              'divisi') ==
+                                                          'scm'
+                                                      ? Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (c) =>
+                                                                  MainViewScm(
+                                                                      col: 3)))
+                                                      : Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (c) =>
+                                                                  MainViewDesigner(
+                                                                      col: 1)));
                                                 },
                                                 child: const Text(
                                                   "All Round",
@@ -2460,9 +2470,7 @@ class _FormScreenState extends State<FormScreen> {
                     btnController.reset(); //reset
                   });
                 });
-              
-                }
-                else if (!isValid!) {
+              } else if (!isValid!) {
                 btnController.error();
                 Future.delayed(const Duration(seconds: 1)).then((value) {
                   btnController.reset(); //reset
@@ -2966,7 +2974,9 @@ class _FormScreenState extends State<FormScreen> {
                     height: 65,
                     width: 200,
                     child: DropdownSearch<String>(
-                      enabled: sharedPreferences!.getString('divisi') == 'scm' ? true:false,
+                      enabled: sharedPreferences!.getString('divisi') == 'scm'
+                          ? true
+                          : false,
                       items: const [
                         "JANUARI",
                         "FEBRUARI",
@@ -3118,14 +3128,22 @@ class _FormScreenState extends State<FormScreen> {
               padding: const EdgeInsets.only(top: 18, bottom: 10),
               child:
                   //upload image
-                  ElevatedButton(
-                      onPressed: () {
-                        lastIdForm = generateImageName();
-                        kodeDesignMdbc.text.isEmpty
-                            ? null
-                            : _pickImage(lastIdForm);
-                      },
-                      child: const Text('Gambar Design')),
+                  sharedPreferences!.getString('divisi') == 'admin' ||
+                          sharedPreferences!.getString('divisi') == 'scm'
+                      ? ElevatedButton(
+                          onPressed: () {
+                            lastIdForm = generateImageName();
+                            _pickImage(lastIdForm);
+                          },
+                          child: const Text('Gambar Design'))
+                      : ElevatedButton(
+                          onPressed: () {
+                            lastIdForm = generateImageName();
+                            kodeDesignMdbc.text.isEmpty
+                                ? null
+                                : _pickImage(lastIdForm);
+                          },
+                          child: const Text('Gambar Design')),
             ),
             _imageFile != null
                 ? Container(

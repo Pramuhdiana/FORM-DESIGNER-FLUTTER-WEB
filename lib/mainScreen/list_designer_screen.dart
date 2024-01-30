@@ -440,7 +440,8 @@ class _ListDesignerScreenState extends State<ListDesignerScreen> {
                             ),
                           ),
                         ),
-                        sharedPreferences!.getString('level') == '3'
+                        sharedPreferences!.getString('level') == '3' ||
+                                sharedPreferences!.getString('divisi') == 'scm'
                             ? const SizedBox()
                             : Container(
                                 padding: const EdgeInsets.only(left: 20),
@@ -1122,214 +1123,216 @@ class RowSource extends DataTableSource {
                               ),
                             ],
                           ))
-                : IconButton(
-                    onPressed: () {
-                      showDialog<String>(
-                        context: context,
-                        builder: (BuildContext context) => AlertDialog(
-                          title: const Text(
-                            'Perhatian',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          content: Row(
-                            children: [
-                              const Text(
-                                'Apakah anda yakin ingin menghapus data ',
+                : data.bulan != ''
+                    ? const SizedBox()
+                    : IconButton(
+                        onPressed: () {
+                          showDialog<String>(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                              title: const Text(
+                                'Perhatian',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold),
                               ),
-                              Text(
-                                '${data.kodeDesignMdbc}  ?',
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black),
-                              ),
-                            ],
-                          ),
-                          actions: <Widget>[
-                            TextButton(
-                              onPressed: () => Navigator.pop(
-                                context,
-                                'Batal',
-                              ),
-                              child: const Text('Batal'),
-                            ),
-                            TextButton(
-                              onPressed: () async {
-                                await postApiQtyBatu1(
-                                  data.batu1,
-                                  data.qtyBatu1,
-                                );
-                                await postApiQtyBatu2(
-                                  data.batu2,
-                                  data.qtyBatu2,
-                                );
-                                await postApiQtyBatu3(
-                                  data.batu3,
-                                  data.qtyBatu3,
-                                );
-                                await postApiQtyBatu4(
-                                  data.batu4,
-                                  data.qtyBatu4,
-                                );
-                                await postApiQtyBatu5(
-                                  data.batu5,
-                                  data.qtyBatu5,
-                                );
-                                await postApiQtyBatu6(
-                                  data.batu6,
-                                  data.qtyBatu6,
-                                );
-                                await postApiQtyBatu7(
-                                  data.batu7,
-                                  data.qtyBatu7,
-                                );
-                                await postApiQtyBatu8(
-                                  data.batu8,
-                                  data.qtyBatu8,
-                                );
-                                await postApiQtyBatu9(
-                                  data.batu9,
-                                  data.qtyBatu9,
-                                );
-                                await postApiQtyBatu10(
-                                  data.batu10,
-                                  data.qtyBatu10,
-                                );
-                                await postApiQtyBatu11(
-                                  data.batu11,
-                                  data.qtyBatu11,
-                                );
-                                await postApiQtyBatu12(
-                                  data.batu12,
-                                  data.qtyBatu12,
-                                );
-                                await postApiQtyBatu13(
-                                  data.batu13,
-                                  data.qtyBatu13,
-                                );
-                                await postApiQtyBatu14(
-                                  data.batu14,
-                                  data.qtyBatu14,
-                                );
-                                await postApiQtyBatu15(
-                                  data.batu15,
-                                  data.qtyBatu15,
-                                );
-                                await postApiQtyBatu16(
-                                  data.batu16,
-                                  data.qtyBatu16,
-                                );
-                                await postApiQtyBatu17(
-                                  data.batu17,
-                                  data.qtyBatu17,
-                                );
-                                await postApiQtyBatu18(
-                                  data.batu18,
-                                  data.qtyBatu18,
-                                );
-                                await postApiQtyBatu19(
-                                  data.batu19,
-                                  data.qtyBatu19,
-                                );
-                                await postApiQtyBatu20(
-                                  data.batu20,
-                                  data.qtyBatu20,
-                                );
-                                await postApiQtyBatu21(
-                                  data.batu21,
-                                  data.qtyBatu21,
-                                );
-                                await postApiQtyBatu22(
-                                  data.batu22,
-                                  data.qtyBatu22,
-                                );
-                                await postApiQtyBatu23(
-                                  data.batu23,
-                                  data.qtyBatu23,
-                                );
-                                await postApiQtyBatu24(
-                                  data.batu24,
-                                  data.qtyBatu24,
-                                );
-                                await postApiQtyBatu25(
-                                  data.batu25,
-                                  data.qtyBatu25,
-                                );
-                                await postApiQtyBatu26(
-                                  data.batu26,
-                                  data.qtyBatu26,
-                                );
-                                await postApiQtyBatu27(
-                                  data.batu27,
-                                  data.qtyBatu27,
-                                );
-                                await postApiQtyBatu28(
-                                  data.batu28,
-                                  data.qtyBatu28,
-                                );
-                                await postApiQtyBatu29(
-                                  data.batu29,
-                                  data.qtyBatu29,
-                                );
-                                await postApiQtyBatu30(
-                                  data.batu30,
-                                  data.qtyBatu30,
-                                );
-                                await postApiQtyBatu31(
-                                  data.batu31,
-                                  data.qtyBatu31,
-                                );
-                                await postApiQtyBatu32(
-                                  data.batu32,
-                                  data.qtyBatu32,
-                                );
-                                await postApiQtyBatu33(
-                                  data.batu33,
-                                  data.qtyBatu33,
-                                );
-                                await postApiQtyBatu34(
-                                  data.batu34,
-                                  data.qtyBatu34,
-                                );
-                                await postApiQtyBatu35(
-                                  data.batu35,
-                                  data.qtyBatu35,
-                                );
-                                var id = data.id.toString();
-                                Map<String, String> body = {'id': id};
-                                final response = await http.post(
-                                    Uri.parse(ApiConstants.baseUrl +
-                                        ApiConstants
-                                            .postDeleteFormDesignerById),
-                                    body: body);
-                                print(response.body);
-                                onRowPressed(); //! function merefresh state
-
-                                Navigator.pop(context);
-                                showSimpleNotification(
+                              content: Row(
+                                children: [
                                   const Text(
-                                    'Design Terhapus',
+                                    'Apakah anda yakin ingin menghapus data ',
                                   ),
-                                  background: Colors.green,
-                                  duration: const Duration(seconds: 1),
-                                );
-                              },
-                              child: const Text(
-                                'Hapus',
-                                style: TextStyle(color: Colors.red),
+                                  Text(
+                                    '${data.kodeDesignMdbc}  ?',
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black),
+                                  ),
+                                ],
                               ),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () => Navigator.pop(
+                                    context,
+                                    'Batal',
+                                  ),
+                                  child: const Text('Batal'),
+                                ),
+                                TextButton(
+                                  onPressed: () async {
+                                    await postApiQtyBatu1(
+                                      data.batu1,
+                                      data.qtyBatu1,
+                                    );
+                                    await postApiQtyBatu2(
+                                      data.batu2,
+                                      data.qtyBatu2,
+                                    );
+                                    await postApiQtyBatu3(
+                                      data.batu3,
+                                      data.qtyBatu3,
+                                    );
+                                    await postApiQtyBatu4(
+                                      data.batu4,
+                                      data.qtyBatu4,
+                                    );
+                                    await postApiQtyBatu5(
+                                      data.batu5,
+                                      data.qtyBatu5,
+                                    );
+                                    await postApiQtyBatu6(
+                                      data.batu6,
+                                      data.qtyBatu6,
+                                    );
+                                    await postApiQtyBatu7(
+                                      data.batu7,
+                                      data.qtyBatu7,
+                                    );
+                                    await postApiQtyBatu8(
+                                      data.batu8,
+                                      data.qtyBatu8,
+                                    );
+                                    await postApiQtyBatu9(
+                                      data.batu9,
+                                      data.qtyBatu9,
+                                    );
+                                    await postApiQtyBatu10(
+                                      data.batu10,
+                                      data.qtyBatu10,
+                                    );
+                                    await postApiQtyBatu11(
+                                      data.batu11,
+                                      data.qtyBatu11,
+                                    );
+                                    await postApiQtyBatu12(
+                                      data.batu12,
+                                      data.qtyBatu12,
+                                    );
+                                    await postApiQtyBatu13(
+                                      data.batu13,
+                                      data.qtyBatu13,
+                                    );
+                                    await postApiQtyBatu14(
+                                      data.batu14,
+                                      data.qtyBatu14,
+                                    );
+                                    await postApiQtyBatu15(
+                                      data.batu15,
+                                      data.qtyBatu15,
+                                    );
+                                    await postApiQtyBatu16(
+                                      data.batu16,
+                                      data.qtyBatu16,
+                                    );
+                                    await postApiQtyBatu17(
+                                      data.batu17,
+                                      data.qtyBatu17,
+                                    );
+                                    await postApiQtyBatu18(
+                                      data.batu18,
+                                      data.qtyBatu18,
+                                    );
+                                    await postApiQtyBatu19(
+                                      data.batu19,
+                                      data.qtyBatu19,
+                                    );
+                                    await postApiQtyBatu20(
+                                      data.batu20,
+                                      data.qtyBatu20,
+                                    );
+                                    await postApiQtyBatu21(
+                                      data.batu21,
+                                      data.qtyBatu21,
+                                    );
+                                    await postApiQtyBatu22(
+                                      data.batu22,
+                                      data.qtyBatu22,
+                                    );
+                                    await postApiQtyBatu23(
+                                      data.batu23,
+                                      data.qtyBatu23,
+                                    );
+                                    await postApiQtyBatu24(
+                                      data.batu24,
+                                      data.qtyBatu24,
+                                    );
+                                    await postApiQtyBatu25(
+                                      data.batu25,
+                                      data.qtyBatu25,
+                                    );
+                                    await postApiQtyBatu26(
+                                      data.batu26,
+                                      data.qtyBatu26,
+                                    );
+                                    await postApiQtyBatu27(
+                                      data.batu27,
+                                      data.qtyBatu27,
+                                    );
+                                    await postApiQtyBatu28(
+                                      data.batu28,
+                                      data.qtyBatu28,
+                                    );
+                                    await postApiQtyBatu29(
+                                      data.batu29,
+                                      data.qtyBatu29,
+                                    );
+                                    await postApiQtyBatu30(
+                                      data.batu30,
+                                      data.qtyBatu30,
+                                    );
+                                    await postApiQtyBatu31(
+                                      data.batu31,
+                                      data.qtyBatu31,
+                                    );
+                                    await postApiQtyBatu32(
+                                      data.batu32,
+                                      data.qtyBatu32,
+                                    );
+                                    await postApiQtyBatu33(
+                                      data.batu33,
+                                      data.qtyBatu33,
+                                    );
+                                    await postApiQtyBatu34(
+                                      data.batu34,
+                                      data.qtyBatu34,
+                                    );
+                                    await postApiQtyBatu35(
+                                      data.batu35,
+                                      data.qtyBatu35,
+                                    );
+                                    var id = data.id.toString();
+                                    Map<String, String> body = {'id': id};
+                                    final response = await http.post(
+                                        Uri.parse(ApiConstants.baseUrl +
+                                            ApiConstants
+                                                .postDeleteFormDesignerById),
+                                        body: body);
+                                    print(response.body);
+                                    onRowPressed(); //! function merefresh state
+
+                                    Navigator.pop(context);
+                                    showSimpleNotification(
+                                      const Text(
+                                        'Design Terhapus',
+                                      ),
+                                      background: Colors.green,
+                                      duration: const Duration(seconds: 1),
+                                    );
+                                  },
+                                  child: const Text(
+                                    'Hapus',
+                                    style: TextStyle(color: Colors.red),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
+                          );
+                        },
+                        icon: const Icon(
+                          Icons.delete,
+                          color: Colors.red,
                         ),
-                      );
-                    },
-                    icon: const Icon(
-                      Icons.delete,
-                      color: Colors.red,
-                    ),
-                  ),
+                      ),
             sharedPreferences!.getString('level') == '3'
                 ? const SizedBox()
                 : Padding(

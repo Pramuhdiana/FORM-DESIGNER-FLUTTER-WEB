@@ -1023,13 +1023,16 @@ class _DashboardControlState extends State<DashboardControl> {
                                   child: Lottie.asset(
                                       "loadingJSON/loadingV1.json"),
                                 )
-                              : SingleChildScrollView(
-                                  scrollDirection: Axis.horizontal,
-                                  child: Container(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 5),
-                                    child: dataTablePrintingResin(),
-                                  )),
+                              : SizedBox(
+                                  height: 300,
+                                  child: SingleChildScrollView(
+                                      scrollDirection: Axis.vertical,
+                                      child: Container(
+                                        padding:
+                                            EdgeInsets.symmetric(horizontal: 5),
+                                        child: dataTablePrintingResin(),
+                                      )),
+                                ),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 50),
                             child: Divider(color: Colors.white, thickness: 2),

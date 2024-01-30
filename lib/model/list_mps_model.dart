@@ -42,6 +42,7 @@ class ListMpsModel {
   String? tanggalInProduksi;
   String? keteranganBackPosisi;
   String? statusBackPosisi;
+  String? tanggalInModeller;
 
   ListMpsModel({
     this.id,
@@ -76,6 +77,7 @@ class ListMpsModel {
     this.tanggalInProduksi,
     this.keteranganBackPosisi,
     this.statusBackPosisi,
+    this.tanggalInModeller,
   });
 
   ListMpsModel.fromJson(Map<String, dynamic> json) {
@@ -111,6 +113,7 @@ class ListMpsModel {
     tanggalInProduksi = json['tanggalInProduksi'] ?? '';
     keteranganBackPosisi = json['keteranganBackPosisi'] ?? '';
     statusBackPosisi = json['statusBackPosisi'] ?? '';
+    tanggalInModeller = json['tanggalInModeller'] ?? '';
   }
 
   Map<String, dynamic> toJson() {
@@ -147,6 +150,7 @@ class ListMpsModel {
     data['tanggalInProduksi'] = tanggalInProduksi;
     data['keteranganBackPosisi'] = keteranganBackPosisi;
     data['statusBackPosisi'] = statusBackPosisi;
+    data['tanggalInModeller'] = tanggalInModeller;
     return data;
   }
 }

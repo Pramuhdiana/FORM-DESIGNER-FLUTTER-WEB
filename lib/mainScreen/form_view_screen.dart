@@ -50,6 +50,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
   PlatformFile? _imageFile;
   String? noUrutBulan;
   String? jenisBatu;
+  String? noatauro;
   String? kodeKualitasBarang;
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -478,6 +479,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
   List<PlatformFile>? _paths;
   String? status = 'NO';
   String? lastIdForm = '0';
+  DateTime? _selectedDate;
 
   @override
   void initState() {
@@ -609,6 +611,20 @@ class _FormViewScreenState extends State<FormViewScreen> {
 
     _getData();
     _getDataBatu();
+  }
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate ?? DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime(2101),
+    );
+    if (picked != null && picked != _selectedDate) {
+      setState(() {
+        _selectedDate = picked;
+      });
+    }
   }
 
   String getHuruf(int angka) {
@@ -1759,16 +1775,24 @@ class _FormViewScreenState extends State<FormViewScreen> {
                           width: 200,
                           child: TextFormField(
                             readOnly: true,
+                            onTap: () => _selectDate(context),
                             style: const TextStyle(
                                 fontSize: 14,
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold),
                             textInputAction: TextInputAction.next,
-                            controller: tanggalInModeller,
+                            controller: TextEditingController(
+                              // ignore: unnecessary_null_comparison
+                              text: _selectedDate == null
+                                  ? ''
+                                  : DateFormat('yyyy-MM-dd')
+                                      .format(_selectedDate!),
+                            ),
                             onChanged: (value) {},
                             decoration: InputDecoration(
                               // hintText: "example: Cahaya Sanivokasi",
                               labelText: "In Modeller",
+                              suffixIcon: const Icon(Icons.calendar_today),
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(5.0)),
                             ),
@@ -2110,6 +2134,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
                               controller: btnGenerateKodeMarketing,
                               onPressed: () async {
                                 await showDialog(
+                                    barrierDismissible: true,
                                     context: context,
                                     builder: (BuildContext context) {
                                       return StatefulBuilder(
@@ -2122,28 +2147,105 @@ class _FormViewScreenState extends State<FormViewScreen> {
                                                           clipBehavior:
                                                               Clip.none,
                                                           children: <Widget>[
-                                                        Positioned(
-                                                          right: -47.0,
-                                                          top: -47.0,
-                                                          child: InkResponse(
-                                                            onTap: () {
-                                                              Navigator.of(
-                                                                      context)
-                                                                  .pop();
-                                                            },
-                                                            child:
-                                                                const CircleAvatar(
-                                                              backgroundColor:
-                                                                  Colors.red,
-                                                              child: Icon(
-                                                                  Icons.close),
-                                                            ),
-                                                          ),
-                                                        ),
+                                                        // Positioned(
+                                                        //   right: -47.0,
+                                                        //   top: -47.0,
+                                                        //   child: InkResponse(
+                                                        //     onTap: () {
+                                                        //       Navigator.of(
+                                                        //               context)
+                                                        //           .pop();
+                                                        //     },
+                                                        //     child:
+                                                        //         const CircleAvatar(
+                                                        //       backgroundColor:
+                                                        //           Colors.red,
+                                                        //       child: Icon(
+                                                        //           Icons.close),
+                                                        //     ),
+                                                        //   ),
+                                                        // ),
                                                         SizedBox(
-                                                          height: 120,
+                                                          height: 350,
                                                           child: Column(
                                                             children: [
+                                                              //no atau ro
+                                                              Container(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                        .only(
+                                                                        left:
+                                                                            10,
+                                                                        right:
+                                                                            10),
+                                                                child: DecoratedBox(
+                                                                    decoration: BoxDecoration(
+                                                                        color: noatauro != null ? const Color.fromARGB(255, 8, 209, 69) : const Color.fromRGBO(238, 240, 235, 1), //background color of dropdown button
+                                                                        border: Border.all(
+                                                                          color:
+                                                                              Colors.black38,
+                                                                          // width:
+                                                                          //     3
+                                                                        ), //border of dropdown button
+                                                                        borderRadius: BorderRadius.circular(0), //border raiuds of dropdown button
+                                                                        boxShadow: const <BoxShadow>[
+                                                                          //apply shadow on Dropdown button
+                                                                          // BoxShadow(
+                                                                          //     color: Color.fromRGBO(
+                                                                          //         0,
+                                                                          //         0,
+                                                                          //         0,
+                                                                          //         0.57), //shadow for button
+                                                                          //     blurRadius:
+                                                                          //         5) //blur radius of shadow
+                                                                        ]),
+                                                                    child: Padding(
+                                                                        padding: const EdgeInsets.only(left: 10, right: 10),
+                                                                        child: DropdownButton(
+                                                                          value:
+                                                                              noatauro,
+                                                                          items: const [
+                                                                            //add items in the dropdown
+                                                                            DropdownMenuItem(
+                                                                              value: "NO",
+                                                                              child: Text("NO"),
+                                                                            ),
+                                                                            DropdownMenuItem(
+                                                                              value: "RO",
+                                                                              child: Text("RO"),
+                                                                            )
+                                                                          ],
+                                                                          hint:
+                                                                              const Text('NO atau RO'),
+                                                                          onChanged:
+                                                                              (value) {
+                                                                            noatauro =
+                                                                                value;
+
+                                                                            setState(() =>
+                                                                                noatauro);
+                                                                          },
+                                                                          icon: const Padding(
+                                                                              padding: EdgeInsets.only(left: 20),
+                                                                              child: Icon(Icons.arrow_circle_down_sharp)),
+                                                                          iconEnabledColor:
+                                                                              Colors.black, //Icon color
+                                                                          style:
+                                                                              const TextStyle(
+                                                                            color:
+                                                                                Colors.black, //Font color
+                                                                            // fontSize:
+                                                                            //     15 //font size on dropdown button
+                                                                          ),
+
+                                                                          dropdownColor:
+                                                                              Colors.white, //dropdown background color
+                                                                          underline:
+                                                                              Container(), //remove underline
+                                                                          isExpanded:
+                                                                              true, //make true to make width 100%
+                                                                        ))),
+                                                              ),
                                                               Container(
                                                                 padding:
                                                                     const EdgeInsets
@@ -2254,7 +2356,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
                                                                                     : filterBynoUrut.isEmpty
                                                                                         ? '1'.padLeft(3, '0')
                                                                                         : (filterBynoUrut.last.noUrutBulan! + 1).toString().padLeft(3, '0');
-                                                                                print(noUrutBulan);
+                                                                                noatauro == 'RO' ? noUrutBulan = '0' : print(noUrutBulan);
                                                                               } else {}
                                                                             } catch (c) {
                                                                               print('err get data modeller : $c');
@@ -6548,21 +6650,37 @@ class _FormViewScreenState extends State<FormViewScreen> {
   }
 
   postDataModeller() async {
-    Map<String, dynamic> body = {
-      'kodeDesign': kodeDesignMdbc.text,
-      'jenisBatu': jenisBatu,
-      'bulan': bulanDesigner,
-      'kodeBulan': kodeBulan,
-      'tema': tema.text,
-      'noUrutBulan': noUrutBulan,
-      'kodeMarketing': kodeMarketing.text,
-      'status': status,
-      'marketing': 'STEPHANIE',
-      'brand': brand.text,
-      'designer': namaDesigner.text,
-      'modeller': namaModeller.text,
-      'keterangan': ''
-    };
+    Map<String, dynamic> body = noatauro == 'RO'
+        ? {
+            'kodeDesign': kodeDesignMdbc.text,
+            'jenisBatu': jenisBatu,
+            'bulan': bulanDesigner,
+            'kodeBulan': kodeBulan,
+            'tema': tema.text,
+            'noUrutBulan': '0',
+            'kodeMarketing': kodeMarketing.text,
+            'status': 'RO',
+            'marketing': 'STEPHANIE',
+            'brand': brand.text,
+            'designer': namaDesigner.text,
+            'modeller': namaModeller.text,
+            'keterangan': ''
+          }
+        : {
+            'kodeDesign': kodeDesignMdbc.text,
+            'jenisBatu': jenisBatu,
+            'bulan': bulanDesigner,
+            'kodeBulan': kodeBulan,
+            'tema': tema.text,
+            'noUrutBulan': noUrutBulan,
+            'kodeMarketing': kodeMarketing.text,
+            'status': status,
+            'marketing': 'STEPHANIE',
+            'brand': brand.text,
+            'designer': namaDesigner.text,
+            'modeller': namaModeller.text,
+            'keterangan': ''
+          };
     final response = await http.post(
         Uri.parse(ApiConstants.baseUrl + ApiConstants.postDataModeller),
         body: body);
