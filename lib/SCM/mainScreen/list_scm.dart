@@ -892,6 +892,7 @@ class RowSource extends DataTableSource {
       'qtyCustomKomponen': data.qtyCustomKomponen.toString(),
       'siklus': data.siklus.toString(),
       'bulan': bulan.toString(),
+      'totalCarat': data.totalCarat.toString(),
     };
     try {
       final response = await http.post(

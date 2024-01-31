@@ -43,6 +43,7 @@ class ListMpsModel {
   String? keteranganBackPosisi;
   String? statusBackPosisi;
   String? tanggalInModeller;
+  double? totalCarat;
 
   ListMpsModel({
     this.id,
@@ -78,6 +79,7 @@ class ListMpsModel {
     this.keteranganBackPosisi,
     this.statusBackPosisi,
     this.tanggalInModeller,
+    this.totalCarat,
   });
 
   ListMpsModel.fromJson(Map<String, dynamic> json) {
@@ -114,6 +116,7 @@ class ListMpsModel {
     keteranganBackPosisi = json['keteranganBackPosisi'] ?? '';
     statusBackPosisi = json['statusBackPosisi'] ?? '';
     tanggalInModeller = json['tanggalInModeller'] ?? '';
+    totalCarat = json['totalCarat'] ?? 0;
   }
 
   Map<String, dynamic> toJson() {
@@ -151,6 +154,7 @@ class ListMpsModel {
     data['keteranganBackPosisi'] = keteranganBackPosisi;
     data['statusBackPosisi'] = statusBackPosisi;
     data['tanggalInModeller'] = tanggalInModeller;
+    data['totalCarat'] = totalCarat;
     return data;
   }
 }

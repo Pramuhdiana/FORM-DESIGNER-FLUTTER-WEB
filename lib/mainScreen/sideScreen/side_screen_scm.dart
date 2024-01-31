@@ -30,9 +30,11 @@ class MainViewScm extends StatefulWidget {
 }
 
 class _MainViewScmState extends State<MainViewScm> {
+    bool isExpanded = true;
   @override
   void initState() {
     super.initState();
+    
   }
 
   List<Widget> screenDevi = [
@@ -82,12 +84,16 @@ class _MainViewScmState extends State<MainViewScm> {
       //method multi screen
       body: LayoutBuilder(
         builder: (context, constraints) {
+          print('layar = ${constraints.maxWidth}');
           if (constraints.maxWidth < 900) {
+            isExpanded = false;
             return screenDekstop();
             // return screenMobile();
           } else {
+            isExpanded = true;
             return screenDekstop();
           }
+
         },
       ),
     );
@@ -142,7 +148,7 @@ class _MainViewScmState extends State<MainViewScm> {
               style: const TextStyle(color: Colors.white),
             ),
           )),
-          initiallyExpanded: true,
+          initiallyExpanded: isExpanded,
           selectedIndex: widget.col,
           // ignore: prefer_const_literals_to_create_immutables
           items: sharedPreferences!.getString('role') == '4'

@@ -583,6 +583,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
     qtyBatu34.text = widget.modelDesigner!.qtyBatu34!.toString();
     batu35 = widget.modelDesigner!.batu35!.toString();
     qtyBatu35.text = widget.modelDesigner!.qtyBatu35!.toString();
+    jo.text = widget.modelDesigner!.jo!.toString();
     imageUrl = widget.modelDesigner!.imageUrl!.toString();
     keteranganStatusBatu.text =
         widget.modelDesigner!.keteranganStatusBatu!.toString();
@@ -622,7 +623,13 @@ class _FormViewScreenState extends State<FormViewScreen> {
     );
     if (picked != null && picked != _selectedDate) {
       setState(() {
-        _selectedDate = picked;
+        _selectedDate = DateTime(
+          picked.year,
+          picked.month,
+          picked.day,
+          DateTime.now().hour,
+          DateTime.now().minute,
+        );
       });
     }
   }
@@ -1770,6 +1777,8 @@ class _FormViewScreenState extends State<FormViewScreen> {
                     child: Column(
                       children: [
                         //in modeller
+                        tanggalInModeller.text.isEmpty
+                        ?
                         SizedBox(
                           height: tinggiTextfield,
                           width: 200,
@@ -1785,10 +1794,36 @@ class _FormViewScreenState extends State<FormViewScreen> {
                               // ignore: unnecessary_null_comparison
                               text: _selectedDate == null
                                   ? ''
-                                  : DateFormat('yyyy-MM-dd')
+                                  : DateFormat('dd/MM/yyyy HH:ss')
                                       .format(_selectedDate!),
                             ),
-                            onChanged: (value) {},
+                            onChanged: (value) {
+                          
+                            },
+                            decoration: InputDecoration(
+                              // hintText: "example: Cahaya Sanivokasi",
+                              labelText: "In Modeller",
+                              suffixIcon: const Icon(Icons.calendar_today),
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5.0)),
+                            ),
+                          ),
+                        )
+                        :
+                          SizedBox(
+                          height: tinggiTextfield,
+                          width: 200,
+                          child: TextFormField(
+                            readOnly: true,
+                            style: const TextStyle(
+                                fontSize: 14,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
+                            textInputAction: TextInputAction.next,
+                            controller: tanggalInModeller,
+                            onChanged: (value) {
+                          
+                            },
                             decoration: InputDecoration(
                               // hintText: "example: Cahaya Sanivokasi",
                               labelText: "In Modeller",
@@ -1916,26 +1951,31 @@ class _FormViewScreenState extends State<FormViewScreen> {
                         .then((value) async {
                       btnController.success();
                       await postAPI();
-                      await postDataModeller();
+              
+                     if(kodeMarketing.text.isNotEmpty)
+                     {
+await postDataModeller();
+                     }
+                    
                       Future.delayed(const Duration(seconds: 1)).then((value) {
                         btnController.reset(); //reset
                         // ignore: use_build_context_synchronously
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (c) => MainViewScm(col: 0)));
-
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (c) => MainViewScm(col: 3)));
+Navigator.pop(context);
                         showDialog<String>(
                             context: context,
                             builder: (BuildContext context) =>
-                                const AlertDialog(
+                                 const AlertDialog(
                                   title: Text(
                                     'Pilih Modeller Berhasil',
                                   ),
                                 ));
                         setState(() {});
                       });
-                    });
+                    }); 
                   }
                 },
                 child: const Text(
@@ -2149,14 +2189,13 @@ class _FormViewScreenState extends State<FormViewScreen> {
                               controller: btnGenerateKodeMarketing,
                               onPressed: () async {
                                 await showDialog(
-                                    barrierDismissible: true,
+                                    barrierDismissible: false,
                                     context: context,
                                     builder: (BuildContext context) {
                                       return StatefulBuilder(
                                           builder:
                                               (context, setState) =>
                                                   AlertDialog(
-
                                                       //Jenis Batu
                                                       content: Stack(
                                                           clipBehavior:
@@ -2181,8 +2220,8 @@ class _FormViewScreenState extends State<FormViewScreen> {
                                                         //   ),
                                                         // ),
                                                         SizedBox(
-                                                          height: 350,
                                                           child: Column(
+                                                            mainAxisSize: MainAxisSize.min,
                                                             children: [
                                                               //no atau ro
                                                               Container(
@@ -2268,7 +2307,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
                                                                         left:
                                                                             10,
                                                                         right:
-                                                                            10),
+                                                                            10,top:20),
                                                                 child: DecoratedBox(
                                                                     decoration: BoxDecoration(
                                                                         color: jenisBatu != null ? const Color.fromARGB(255, 8, 209, 69) : const Color.fromRGBO(238, 240, 235, 1), //background color of dropdown button
@@ -2420,19 +2459,54 @@ class _FormViewScreenState extends State<FormViewScreen> {
                                                                             Future.delayed(const Duration(seconds: 1)).then((value) async {
                                                                               btnGenerateKodeMarketing.success();
                                                                             });
-
+                                                                            // ignore: use_build_context_synchronously
+                                                                            Navigator.pop(context);
+                                                                      
                                                                             setState(() {
-                                                                              kodeMarketing.text = '$kodeJenisBarang$valueBulanDesigner$noUrutBulan$kodeWarna${kodeKualitasBarang}01E';
+                                                                              sharedPreferences!.setBool('isBatal',false);
+                                                                            });    }))),
+                                                                          //batal
+                                                                           Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                          .all(
+                                                                          8.0),
+                                                                  child: SizedBox(
+                                                                      width: 250,
+                                                                      height: 50,
+                                                                      child: ElevatedButton(
+                                                                         style: ElevatedButton.styleFrom(
+                                                                  backgroundColor: Colors
+                                                                          .red
+                                                                    ,
+                                                                  shape: RoundedRectangleBorder(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              50.0))),
+                                                                          child: const Text("Batal"),
+                                                                          onPressed: () async {
+                                                                           
+                                                                            Future.delayed(const Duration(seconds: 1)).then((value) async {
+                                                                              btnGenerateKodeMarketing.reset();
                                                                             });
                                                                             // ignore: use_build_context_synchronously
                                                                             Navigator.pop(context);
+                                                                              setState(() {
+                                                                              sharedPreferences!.setBool('isBatal',true);
+                                                                            });
                                                                           })))
                                                             ],
                                                           ),
                                                         ),
                                                       ])));
                                     });
+
                                 setState(() {
+                                  print(sharedPreferences!.getBool('isBatal'));
+    sharedPreferences!.getBool('isBatal') == true
+    ? kodeMarketing.clear()
+    :
+                                  
                                   kodeMarketing.text =
                                       '$kodeJenisBarang$valueBulanDesigner$noUrutBulan$kodeWarna${kodeKualitasBarang}01E';
                                 });
@@ -6651,18 +6725,29 @@ class _FormViewScreenState extends State<FormViewScreen> {
   }
 
   postAPI() async {
+    String tanggalInMod;
+    tanggalInModeller.text.isNotEmpty
+    ? tanggalInMod = widget.modelDesigner!.tanggalInModeller!.toString()
+    : tanggalInMod = _selectedDate.toString();
+
+    print(tanggalInMod);
     Map<String, String> body = {
       'id': widget.modelDesigner!.id!.toString(),
       'namaModeller': namaModeller.text,
       'kodeMarketing': kodeMarketing.text,
       'keteranganStatusBatu': keteranganStatusBatu.text,
       'jo': jo.text,
+      'tanggalInModeller': tanggalInMod,
     };
-    final response = await http.post(
+   try{ final response = await http.post(
         Uri.parse('${ApiConstants.baseUrl}${ApiConstants.addModeller}'),
         body: body);
     print(response.body);
+   } catch(c){
+      print('err post form dan mps: $c');
+   }
   }
+  
 
   postDataModeller() async {
     Map<String, dynamic> body = noatauro == 'RO'
@@ -6697,10 +6782,13 @@ class _FormViewScreenState extends State<FormViewScreen> {
             'modeller': namaModeller.text,
             'keterangan': ''
           };
-    final response = await http.post(
+    try{final response = await http.post(
         Uri.parse(ApiConstants.baseUrl + ApiConstants.postDataModeller),
         body: body);
     print(response.body);
+    } catch(c){
+      print('err post datamodeller: $c');
+    }
   }
 
   postPoint() async {

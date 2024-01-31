@@ -41,6 +41,7 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
   List<String> listJenisBarang = [];
   List<String> listArtist = [];
   List<String> listDivisi = [];
+  List<String> listBulan = [];
   List<int> listIdDivisi = [];
   List<String> listSubDivisiArtistFinishing = [];
   List<String> listSubDivisiArtistPolishing = [];
@@ -91,10 +92,20 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
     String month = DateFormat('MMMM', 'id').format(now);
     // nowSiklus = sharedPreferences!.getString('siklus')!;
     nowSiklus = month;
-
+    _getListBulan();
     _getList('all');
     _getListDivisi();
     _getListSubDivisi();
+  }
+
+  _getListBulan() async {
+    DateTime now = DateTime.now();
+    int currentMonth = now.month;
+    int currentYear = now.year;
+    for(int i = currentMonth; i <= 12; i++){
+
+    }
+
   }
 
   _getList(divisi) async {
@@ -1641,7 +1652,7 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
                                 DataColumn(label: _verticalDivider),
                                 // harga
                                 sharedPreferences!.getString('role') == '1' ||
-                                        sharedPreferences!
+                                    sharedPreferences!.getString('role') == '2' ||    sharedPreferences!
                                                 .getString('divisi') ==
                                             'admin'
                                     ? const DataColumn(
@@ -3300,6 +3311,24 @@ class RowSourceProduksi extends DataTableSource {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text((i + 1).toString()),
+                    Stack(
+                    clipBehavior: Clip.none, //agar tidak menghalangi object
+                    children: [
+                 
+                      sharedPreferences!.getString('role') == '1' ||
+                              sharedPreferences!.getString('role') == '2' ||
+                              sharedPreferences!.getString('divisi') == 'admin'
+                          ? IconButton(
+                              onPressed: () {
+                             
+                              },
+                              icon: const Icon(Icons.swap_horiz),
+                              color: Colors.orange,
+                            )
+                          : const SizedBox(),
+                    ],
+                  )
+            
                 ],
               ));
         }),
@@ -4297,7 +4326,7 @@ class RowSourceProduksi extends DataTableSource {
       ),
       DataCell(_verticalDivider),
       //harga
-      sharedPreferences!.getString('role') == '1' ||
+      sharedPreferences!.getString('role') == '1' ||sharedPreferences!.getString('role') == '2' ||
               sharedPreferences!.getString('divisi') == 'admin'
           ? DataCell(
               Container(
@@ -4315,7 +4344,11 @@ class RowSourceProduksi extends DataTableSource {
                         )),
             )
           : const DataCell(SizedBox()),
-      DataCell(_verticalDivider),
+           sharedPreferences!.getString('role') == '1' ||sharedPreferences!.getString('role') == '2' ||
+              sharedPreferences!.getString('divisi') == 'admin'
+          ? 
+      DataCell(_verticalDivider)
+      :const DataCell(SizedBox()),
       //kelas harga
       DataCell(
         Container(

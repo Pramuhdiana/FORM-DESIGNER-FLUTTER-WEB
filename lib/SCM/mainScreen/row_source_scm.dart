@@ -298,6 +298,8 @@ class RowSourceScm extends DataTableSource {
                                                     dataKode.tanggalInProduksi,
                                                 beratModeller:
                                                     dataKode.beratModeller,
+                                                    jo:
+                                                    dataKode.jo,
                                               ),
                                             )));
                               }),
@@ -739,7 +741,7 @@ class RowSourceScm extends DataTableSource {
       DataCell(
         Padding(
             padding: const EdgeInsets.all(0),
-            child: Text(data.beratEmas.toString())),
+            child: Text(data.totalCarat.toString())),
       ),
       DataCell(_verticalDivider),
       //brand

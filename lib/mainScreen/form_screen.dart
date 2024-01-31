@@ -135,6 +135,7 @@ class _FormScreenState extends State<FormScreen> {
   int? idStone34 = -1;
   int? idStone35 = -1;
 
+
   TextEditingController kodeDesignMdbc = TextEditingController();
   TextEditingController kodeMarketing = TextEditingController();
   TextEditingController siklus = TextEditingController();
@@ -475,6 +476,46 @@ class _FormScreenState extends State<FormScreen> {
     super.initState();
     namaDesigner.text = sharedPreferences!.getString('nama')!;
     _getSiklus();
+  }
+
+  double get totalCarat{
+    double total;
+     total = ((((caratPcsBatu1 * qtyIntBatu1!) +
+            (caratPcsBatu2 * qtyIntBatu2!) +
+            (caratPcsBatu3 * qtyIntBatu3!) +
+            (caratPcsBatu4 * qtyIntBatu4!) +
+            (caratPcsBatu5 * qtyIntBatu5!) +
+            (caratPcsBatu6 * qtyIntBatu6!) +
+            (caratPcsBatu7 * qtyIntBatu7!) +
+            (caratPcsBatu8 * qtyIntBatu8!) +
+            (caratPcsBatu9 * qtyIntBatu9!) +
+            (caratPcsBatu10 * qtyIntBatu10!) +
+            (caratPcsBatu11 * qtyIntBatu11!) +
+            (caratPcsBatu12 * qtyIntBatu12!) +
+            (caratPcsBatu13 * qtyIntBatu13!) +
+            (caratPcsBatu14 * qtyIntBatu14!) +
+            (caratPcsBatu15 * qtyIntBatu15!) +
+            (caratPcsBatu16 * qtyIntBatu16!) +
+            (caratPcsBatu17 * qtyIntBatu17!) +
+            (caratPcsBatu18 * qtyIntBatu18!) +
+            (caratPcsBatu19 * qtyIntBatu19!) +
+            (caratPcsBatu20 * qtyIntBatu20!) +
+            (caratPcsBatu21 * qtyIntBatu21!) +
+            (caratPcsBatu22 * qtyIntBatu22!) +
+            (caratPcsBatu23 * qtyIntBatu23!) +
+            (caratPcsBatu24 * qtyIntBatu24!) +
+            (caratPcsBatu25 * qtyIntBatu25!) +
+            (caratPcsBatu26 * qtyIntBatu26!) +
+            (caratPcsBatu27 * qtyIntBatu27!) +
+            (caratPcsBatu28 * qtyIntBatu28!) +
+            (caratPcsBatu29 * qtyIntBatu29!) +
+            (caratPcsBatu30 * qtyIntBatu30!) +
+            (caratPcsBatu31 * qtyIntBatu31!) +
+            (caratPcsBatu32 * qtyIntBatu32!) +
+            (caratPcsBatu33 * qtyIntBatu33!) +
+            (caratPcsBatu34 * qtyIntBatu34!) +
+            (caratPcsBatu35 * qtyIntBatu35!))));
+            return total;
   }
 
   String generateImageName() {
@@ -2190,287 +2231,7 @@ class _FormScreenState extends State<FormScreen> {
             controller: btnController,
             onPressed: () {
               final isValid = formKey.currentState?.validate();
-              if (sharedPreferences!.getString('divisi') == 'scm') {
-                Future.delayed(const Duration(seconds: 1)).then((value) async {
-                  btnController.success();
-                  await showDialog<String>(
-                      barrierDismissible: false,
-                      context: context,
-                      builder: (BuildContext context) => AlertDialog(
-                            title: AlertDialog(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8)),
-                                content: SizedBox(
-                                    height: 300,
-                                    child: SingleChildScrollView(
-                                        scrollDirection: Axis.vertical,
-                                        child: Column(children: [
-                                          const Text(
-                                            'Pilih Keterangan Status Batu',
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          Container(
-                                            padding:
-                                                const EdgeInsets.only(top: 15),
-                                            child: ElevatedButton(
-                                                style: ElevatedButton.styleFrom(
-                                                    backgroundColor:
-                                                        Colors.blue,
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        50.0))),
-                                                onPressed: () async {
-                                                  keteranganBatu = 'Round';
-                                                  print(keteranganBatu);
-                                                  postAPI();
-                                                  postApiQtyBatu1();
-                                                  postApiQtyBatu2();
-                                                  postApiQtyBatu3();
-                                                  postApiQtyBatu4();
-                                                  postApiQtyBatu5();
-                                                  postApiQtyBatu6();
-                                                  postApiQtyBatu7();
-                                                  postApiQtyBatu8();
-                                                  postApiQtyBatu9();
-                                                  postApiQtyBatu10();
-                                                  postApiQtyBatu11();
-                                                  postApiQtyBatu12();
-                                                  postApiQtyBatu13();
-                                                  postApiQtyBatu14();
-                                                  postApiQtyBatu15();
-                                                  postApiQtyBatu16();
-                                                  postApiQtyBatu17();
-                                                  postApiQtyBatu18();
-                                                  postApiQtyBatu19();
-                                                  postApiQtyBatu20();
-                                                  postApiQtyBatu21();
-                                                  postApiQtyBatu22();
-                                                  postApiQtyBatu23();
-                                                  postApiQtyBatu24();
-                                                  postApiQtyBatu25();
-                                                  postApiQtyBatu26();
-                                                  postApiQtyBatu27();
-                                                  postApiQtyBatu28();
-                                                  postApiQtyBatu29();
-                                                  postApiQtyBatu30();
-                                                  postApiQtyBatu31();
-                                                  postApiQtyBatu32();
-                                                  postApiQtyBatu33();
-                                                  postApiQtyBatu34();
-                                                  postApiQtyBatu35();
-                                                  Future.delayed(const Duration(
-                                                          seconds: 1))
-                                                      .then((value) {
-                                                    btnController
-                                                        .reset(); //reset
-                                                    showDialog<String>(
-                                                        context: context,
-                                                        builder: (BuildContext
-                                                                context) =>
-                                                            const AlertDialog(
-                                                              title: Text(
-                                                                'Design Tersimpan',
-                                                              ),
-                                                            ));
-                                                  });
-                                                  sharedPreferences!.getString(
-                                                              'divisi') ==
-                                                          'scm'
-                                                      ? Navigator.push(
-                                                          context,
-                                                          MaterialPageRoute(
-                                                              builder: (c) =>
-                                                                  MainViewScm(
-                                                                      col: 3)))
-                                                      : Navigator.push(
-                                                          context,
-                                                          MaterialPageRoute(
-                                                              builder: (c) =>
-                                                                  MainViewDesigner(
-                                                                      col: 1)));
-                                                },
-                                                child: const Text(
-                                                  "All Round",
-                                                  style: TextStyle(
-                                                    fontSize: 16,
-                                                  ),
-                                                )),
-                                          ),
-                                          Container(
-                                            padding:
-                                                const EdgeInsets.only(top: 15),
-                                            child: ElevatedButton(
-                                                style: ElevatedButton.styleFrom(
-                                                    backgroundColor:
-                                                        Colors.blue,
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        50.0))),
-                                                onPressed: () async {
-                                                  keteranganBatu = 'Fancy';
-                                                  print(keteranganBatu);
-                                                  postAPI();
-                                                  postApiQtyBatu1();
-                                                  postApiQtyBatu2();
-                                                  postApiQtyBatu3();
-                                                  postApiQtyBatu4();
-                                                  postApiQtyBatu5();
-                                                  postApiQtyBatu6();
-                                                  postApiQtyBatu7();
-                                                  postApiQtyBatu8();
-                                                  postApiQtyBatu9();
-                                                  postApiQtyBatu10();
-                                                  postApiQtyBatu11();
-                                                  postApiQtyBatu12();
-                                                  postApiQtyBatu13();
-                                                  postApiQtyBatu14();
-                                                  postApiQtyBatu15();
-                                                  postApiQtyBatu16();
-                                                  postApiQtyBatu17();
-                                                  postApiQtyBatu18();
-                                                  postApiQtyBatu19();
-                                                  postApiQtyBatu20();
-                                                  postApiQtyBatu21();
-                                                  postApiQtyBatu22();
-                                                  postApiQtyBatu23();
-                                                  postApiQtyBatu24();
-                                                  postApiQtyBatu25();
-                                                  postApiQtyBatu26();
-                                                  postApiQtyBatu27();
-                                                  postApiQtyBatu28();
-                                                  postApiQtyBatu29();
-                                                  postApiQtyBatu30();
-                                                  postApiQtyBatu31();
-                                                  postApiQtyBatu32();
-                                                  postApiQtyBatu33();
-                                                  postApiQtyBatu34();
-                                                  postApiQtyBatu35();
-                                                  Future.delayed(const Duration(
-                                                          seconds: 1))
-                                                      .then((value) {
-                                                    btnController
-                                                        .reset(); //reset
-                                                    showDialog<String>(
-                                                        context: context,
-                                                        builder: (BuildContext
-                                                                context) =>
-                                                            const AlertDialog(
-                                                              title: Text(
-                                                                'Design Tersimpan',
-                                                              ),
-                                                            ));
-                                                  });
-                                                  Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (c) =>
-                                                              MainViewDesigner(
-                                                                  col: 1)));
-                                                },
-                                                child: const Text(
-                                                  "All Fancy",
-                                                  style: TextStyle(
-                                                    fontSize: 16,
-                                                  ),
-                                                )),
-                                          ),
-                                          Container(
-                                            padding:
-                                                const EdgeInsets.only(top: 15),
-                                            child: ElevatedButton(
-                                                style: ElevatedButton.styleFrom(
-                                                    backgroundColor:
-                                                        Colors.blue,
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        50.0))),
-                                                onPressed: () async {
-                                                  keteranganBatu = 'MIX';
-                                                  print(keteranganBatu);
-                                                  postAPI();
-                                                  postApiQtyBatu1();
-                                                  postApiQtyBatu2();
-                                                  postApiQtyBatu3();
-                                                  postApiQtyBatu4();
-                                                  postApiQtyBatu5();
-                                                  postApiQtyBatu6();
-                                                  postApiQtyBatu7();
-                                                  postApiQtyBatu8();
-                                                  postApiQtyBatu9();
-                                                  postApiQtyBatu10();
-                                                  postApiQtyBatu11();
-                                                  postApiQtyBatu12();
-                                                  postApiQtyBatu13();
-                                                  postApiQtyBatu14();
-                                                  postApiQtyBatu15();
-                                                  postApiQtyBatu16();
-                                                  postApiQtyBatu17();
-                                                  postApiQtyBatu18();
-                                                  postApiQtyBatu19();
-                                                  postApiQtyBatu20();
-                                                  postApiQtyBatu21();
-                                                  postApiQtyBatu22();
-                                                  postApiQtyBatu23();
-                                                  postApiQtyBatu24();
-                                                  postApiQtyBatu25();
-                                                  postApiQtyBatu26();
-                                                  postApiQtyBatu27();
-                                                  postApiQtyBatu28();
-                                                  postApiQtyBatu29();
-                                                  postApiQtyBatu30();
-                                                  postApiQtyBatu31();
-                                                  postApiQtyBatu32();
-                                                  postApiQtyBatu33();
-                                                  postApiQtyBatu34();
-                                                  postApiQtyBatu35();
-                                                  Future.delayed(const Duration(
-                                                          seconds: 1))
-                                                      .then((value) {
-                                                    btnController
-                                                        .reset(); //reset
-                                                    showDialog<String>(
-                                                        context: context,
-                                                        builder: (BuildContext
-                                                                context) =>
-                                                            const AlertDialog(
-                                                              title: Text(
-                                                                'Design Tersimpan',
-                                                              ),
-                                                            ));
-                                                  });
-                                                  Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (c) =>
-                                                              MainViewDesigner(
-                                                                  col: 1)));
-                                                },
-                                                child: const Text(
-                                                  "MIX",
-                                                  style: TextStyle(
-                                                    fontSize: 16,
-                                                  ),
-                                                )),
-                                          ),
-                                        ])))),
-                          ));
-                  Future.delayed(const Duration(seconds: 1)).then((value) {
-                    btnController.reset(); //reset
-                  });
-                });
-              } else if (!isValid!) {
+              if (!isValid!) {
                 btnController.error();
                 Future.delayed(const Duration(seconds: 1)).then((value) {
                   btnController.reset(); //reset
@@ -2577,6 +2338,9 @@ class _FormScreenState extends State<FormScreen> {
                   btnController.reset(); //reset
                 });
               } else {
+                //? untuk SCM
+
+                //untuk yang lain
                 Future.delayed(const Duration(seconds: 1)).then((value) async {
                   btnController.success();
                   await showDialog<String>(
@@ -2614,7 +2378,7 @@ class _FormScreenState extends State<FormScreen> {
                                                 onPressed: () async {
                                                   keteranganBatu = 'Round';
                                                   print(keteranganBatu);
-                                                  postAPI();
+                                                  await postAPI();
                                                   postApiQtyBatu1();
                                                   postApiQtyBatu2();
                                                   postApiQtyBatu3();
@@ -2665,6 +2429,15 @@ class _FormScreenState extends State<FormScreen> {
                                                               ),
                                                             ));
                                                   });
+                                                  sharedPreferences!.getString('divisi') == 'scm'
+                                                  ?
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (c) =>
+                                                              MainViewScm(
+                                                                  col: 0)))
+                                                  :
                                                   Navigator.push(
                                                       context,
                                                       MaterialPageRoute(
@@ -2695,7 +2468,8 @@ class _FormScreenState extends State<FormScreen> {
                                                 onPressed: () async {
                                                   keteranganBatu = 'Fancy';
                                                   print(keteranganBatu);
-                                                  postAPI();
+                                                  await postAPI();
+                                                  
                                                   postApiQtyBatu1();
                                                   postApiQtyBatu2();
                                                   postApiQtyBatu3();
@@ -2746,6 +2520,15 @@ class _FormScreenState extends State<FormScreen> {
                                                               ),
                                                             ));
                                                   });
+                                                   sharedPreferences!.getString('divisi') == 'scm'
+                                                  ?
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (c) =>
+                                                              MainViewScm(
+                                                                  col: 0)))
+                                                  :
                                                   Navigator.push(
                                                       context,
                                                       MaterialPageRoute(
@@ -2776,7 +2559,7 @@ class _FormScreenState extends State<FormScreen> {
                                                 onPressed: () async {
                                                   keteranganBatu = 'MIX';
                                                   print(keteranganBatu);
-                                                  postAPI();
+                                                  await postAPI();
                                                   postApiQtyBatu1();
                                                   postApiQtyBatu2();
                                                   postApiQtyBatu3();
@@ -2827,6 +2610,15 @@ class _FormScreenState extends State<FormScreen> {
                                                               ),
                                                             ));
                                                   });
+                                                   sharedPreferences!.getString('divisi') == 'scm'
+                                                  ?
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (c) =>
+                                                              MainViewScm(
+                                                                  col: 0)))
+                                                  :
                                                   Navigator.push(
                                                       context,
                                                       MaterialPageRoute(
@@ -3765,6 +3557,18 @@ class _FormScreenState extends State<FormScreen> {
                                 fontWeight: FontWeight.bold),
                           ),
                         ),
+                          sharedPreferences!.getString('divisi') == 'admin' || sharedPreferences!.getString('divisi') == 'scm'
+                        ? Container(
+                          padding: const EdgeInsets.only(left: 10),
+                          child:  Text(
+                            'Total Carat : $totalCarat',
+                            style: const TextStyle(
+                                fontSize: 16,
+                                color: Colors.red,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        )
+                        : const SizedBox(),
                       ],
                     ),
                     // for (var i = 0; i <= 35; i++)
@@ -14958,9 +14762,10 @@ class _FormScreenState extends State<FormScreen> {
       'qtyBatu34': qtyBatu34.text,
       'batu35': batu35!,
       'qtyBatu35': qtyBatu35.text,
-      'imageUrl': lastIdForm! + imageUrl!,
+      'imageUrl': _imageFile == null ? imageUrl :lastIdForm! + imageUrl!,
       'statusForm': statusForm.text,
       'keteranganBatu': keteranganBatu,
+      'totalCarat': totalCarat.toStringAsFixed(2),
     };
     final response = await http.post(
         Uri.parse(ApiConstants.baseUrl + ApiConstants.postFormDesigner),
