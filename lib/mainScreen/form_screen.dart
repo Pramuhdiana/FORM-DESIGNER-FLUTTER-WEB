@@ -1,4 +1,4 @@
-// ignore_for_file: sized_box_for_whitespace, avoid_print, depend_on_referenced_packages
+// ignore_for_file: sized_box_for_whitespace, avoid_print, depend_on_referenced_packages, use_build_context_synchronously
 import 'dart:developer';
 
 import 'dart:convert';
