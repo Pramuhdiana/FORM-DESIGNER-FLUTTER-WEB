@@ -280,6 +280,8 @@ class _ListDataModellerScreenState extends State<ListDataModellerScreen> {
                                       TextEditingController();
                                   TextEditingController keteranganDataModeller =
                                       TextEditingController();
+                                  TextEditingController jo =
+                                      TextEditingController();
                                   RoundedLoadingButtonController btnController =
                                       RoundedLoadingButtonController();
                                   TextEditingController jenisBarang =
@@ -1030,6 +1032,45 @@ class _ListDataModellerScreenState extends State<ListDataModellerScreen> {
                                                                             .all(
                                                                             8.0),
                                                                     child:
+                                                                        TextFormField(
+                                                                      style: const TextStyle(
+                                                                          fontSize:
+                                                                              14,
+                                                                          color: Colors
+                                                                              .black,
+                                                                          fontWeight:
+                                                                              FontWeight.bold),
+                                                                      textInputAction:
+                                                                          TextInputAction
+                                                                              .next,
+                                                                      controller:
+                                                                          jo,
+                                                                      validator:
+                                                                          (value) {
+                                                                        if (value!
+                                                                            .isEmpty) {
+                                                                          return 'Wajib diisi *';
+                                                                        }
+                                                                        return null;
+                                                                      },
+                                                                      decoration:
+                                                                          InputDecoration(
+                                                                        // hintText: "example: Cahaya Sanivokasi",
+                                                                        labelText:
+                                                                            "JO",
+
+                                                                        border: OutlineInputBorder(
+                                                                            borderRadius:
+                                                                                BorderRadius.circular(5.0)),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                  Padding(
+                                                                    padding:
+                                                                        const EdgeInsets
+                                                                            .all(
+                                                                            8.0),
+                                                                    child:
                                                                         SizedBox(
                                                                       width:
                                                                           250,
@@ -1054,7 +1095,8 @@ class _ListDataModellerScreenState extends State<ListDataModellerScreen> {
                                                                                   'brand': brand,
                                                                                   'designer': namaDesignerDataModeller.text,
                                                                                   'modeller': namaModellerDataModeller.text,
-                                                                                  'keterangan': keteranganDataModeller.text
+                                                                                  'keterangan': keteranganDataModeller.text,
+                                                                                  'jo': jo.text
                                                                                 };
                                                                                 final response = await http.post(Uri.parse(ApiConstants.baseUrl + ApiConstants.postDataModeller), body: body);
                                                                                 print(response.body);

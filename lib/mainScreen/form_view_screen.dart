@@ -1897,31 +1897,46 @@ class _FormViewScreenState extends State<FormViewScreen> {
                     });
                     return;
                   }
-                  print('berhasil');
-
-                  Future.delayed(const Duration(seconds: 1))
-                      .then((value) async {
-                    btnController.success();
-                    await postAPI();
-                    await postDataModeller();
+                  if (kodeMarketing.text.isNotEmpty && jo.text.isEmpty) {
+                    btnController.error();
                     Future.delayed(const Duration(seconds: 1)).then((value) {
                       btnController.reset(); //reset
-                      // ignore: use_build_context_synchronously
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (c) => MainViewScm(col: 0)));
-
-                      showDialog<String>(
-                          context: context,
-                          builder: (BuildContext context) => const AlertDialog(
-                                title: Text(
-                                  'Pilih Modeller Berhasil',
-                                ),
-                              ));
-                      setState(() {});
                     });
-                  });
+                    showDialog<String>(
+                        context: context,
+                        builder: (BuildContext context) => const AlertDialog(
+                              title: Text(
+                                'JO wajib di isi jika sudah ada kode marketing',
+                              ),
+                            ));
+                    setState(() {});
+                  } else {
+                    print('berhasil');
+                    Future.delayed(const Duration(seconds: 1))
+                        .then((value) async {
+                      btnController.success();
+                      await postAPI();
+                      await postDataModeller();
+                      Future.delayed(const Duration(seconds: 1)).then((value) {
+                        btnController.reset(); //reset
+                        // ignore: use_build_context_synchronously
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (c) => MainViewScm(col: 0)));
+
+                        showDialog<String>(
+                            context: context,
+                            builder: (BuildContext context) =>
+                                const AlertDialog(
+                                  title: Text(
+                                    'Pilih Modeller Berhasil',
+                                  ),
+                                ));
+                        setState(() {});
+                      });
+                    });
+                  }
                 },
                 child: const Text(
                   "Simpan Modeller",
@@ -6664,7 +6679,8 @@ class _FormViewScreenState extends State<FormViewScreen> {
             'brand': brand.text,
             'designer': namaDesigner.text,
             'modeller': namaModeller.text,
-            'keterangan': ''
+            'keterangan': '',
+            'jo': jo.text
           }
         : {
             'kodeDesign': kodeDesignMdbc.text,
