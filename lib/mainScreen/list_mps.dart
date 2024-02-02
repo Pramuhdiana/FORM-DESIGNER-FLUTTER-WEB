@@ -103,10 +103,7 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
     int currentMonth = now.month;
     // ignore: unused_local_variable
     int currentYear = now.year;
-    for(int i = currentMonth; i <= 12; i++){
-
-    }
-
+    for (int i = currentMonth; i <= 12; i++) {}
   }
 
   _getList(divisi) async {
@@ -1653,7 +1650,9 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
                                 DataColumn(label: _verticalDivider),
                                 // harga
                                 sharedPreferences!.getString('role') == '1' ||
-                                    sharedPreferences!.getString('role') == '2' ||    sharedPreferences!
+                                        sharedPreferences!.getString('role') ==
+                                            '2' ||
+                                        sharedPreferences!
                                                 .getString('divisi') ==
                                             'admin'
                                     ? const DataColumn(
@@ -3312,16 +3311,120 @@ class RowSourceProduksi extends DataTableSource {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text((i + 1).toString()),
-                    Stack(
+                  Stack(
                     clipBehavior: Clip.none, //agar tidak menghalangi object
                     children: [
-                 
                       sharedPreferences!.getString('role') == '1' ||
                               sharedPreferences!.getString('role') == '2' ||
                               sharedPreferences!.getString('divisi') == 'admin'
                           ? IconButton(
                               onPressed: () {
-                             
+                                final dropdownFormKey = GlobalKey<FormState>();
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(8)),
+                                        // title: const Text('Pilih Siklus'),
+                                        content: SizedBox(
+                                          height: 150,
+                                          child: Column(
+                                            children: [
+                                              Form(
+                                                  key: dropdownFormKey,
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      DropdownSearch<String>(
+                                                        items: const [
+                                                          "JANUARI",
+                                                          "FEBRUARI",
+                                                          "MARET",
+                                                          "APRIL",
+                                                          "MEI",
+                                                          "JUNI",
+                                                          "JULI",
+                                                          "AGUSTUS",
+                                                          "SEPTEMBER",
+                                                          "OKTOBER",
+                                                          "NOVEMBER",
+                                                          "DESEMBER"
+                                                        ],
+                                                        dropdownDecoratorProps:
+                                                            DropDownDecoratorProps(
+                                                          dropdownSearchDecoration:
+                                                              InputDecoration(
+                                                            hintText:
+                                                                'Pilih Siklus',
+                                                            filled: true,
+                                                            fillColor:
+                                                                Colors.white,
+                                                            enabledBorder:
+                                                                OutlineInputBorder(
+                                                              borderSide:
+                                                                  const BorderSide(
+                                                                      color: Colors
+                                                                          .black,
+                                                                      width: 2),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          20),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        validator: (value) =>
+                                                            value == null
+                                                                ? "Siklus tidak boleh kosong"
+                                                                : null,
+                                                        onChanged:
+                                                            (String? newValue) {
+                                                          // addSiklus.text =
+                                                          //     newValue!;
+                                                        },
+                                                      ),
+                                                      Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(top: 20),
+                                                        child: ElevatedButton(
+                                                            onPressed:
+                                                                () async {
+                                                              if (dropdownFormKey
+                                                                  .currentState!
+                                                                  .validate()) {
+                                                                showDialog<
+                                                                        String>(
+                                                                    context:
+                                                                        context,
+                                                                    builder: (BuildContext
+                                                                            context) =>
+                                                                        const AlertDialog(
+                                                                          title:
+                                                                              Text(
+                                                                            'Siklus Berhasil Diterapkan',
+                                                                          ),
+                                                                        ));
+                                                              }
+                                                            },
+                                                            child: const Text(
+                                                              "Submit",
+                                                              style: TextStyle(
+                                                                fontSize: 24,
+                                                              ),
+                                                            )),
+                                                      )
+                                                    ],
+                                                  ))
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                                    });
                               },
                               icon: const Icon(Icons.swap_horiz),
                               color: Colors.orange,
@@ -3329,7 +3432,6 @@ class RowSourceProduksi extends DataTableSource {
                           : const SizedBox(),
                     ],
                   )
-            
                 ],
               ));
         }),
@@ -3624,20 +3726,20 @@ class RowSourceProduksi extends DataTableSource {
                                 ? idPosisi = 1
                                 : data.posisi.toString().toLowerCase() ==
                                         'finishing'
-                                    ? idPosisi = 2
+                                    ? idPosisi = 1
                                     : data.posisi.toString().toLowerCase() ==
                                             'polishing 1'
-                                        ? idPosisi = 3
+                                        ? idPosisi = 2
                                         : data.posisi
                                                     .toString()
                                                     .toLowerCase() ==
                                                 'stell 1'
-                                            ? idPosisi = 4
+                                            ? idPosisi = 3
                                             : data.posisi
                                                         .toString()
                                                         .toLowerCase() ==
                                                     'stok pasang batu'
-                                                ? idPosisi = 5
+                                                ? idPosisi = 4
                                                 : data.posisi
                                                             .toString()
                                                             .toLowerCase() ==
@@ -4327,7 +4429,8 @@ class RowSourceProduksi extends DataTableSource {
       ),
       DataCell(_verticalDivider),
       //harga
-      sharedPreferences!.getString('role') == '1' ||sharedPreferences!.getString('role') == '2' ||
+      sharedPreferences!.getString('role') == '1' ||
+              sharedPreferences!.getString('role') == '2' ||
               sharedPreferences!.getString('divisi') == 'admin'
           ? DataCell(
               Container(
@@ -4345,11 +4448,11 @@ class RowSourceProduksi extends DataTableSource {
                         )),
             )
           : const DataCell(SizedBox()),
-           sharedPreferences!.getString('role') == '1' ||sharedPreferences!.getString('role') == '2' ||
+      sharedPreferences!.getString('role') == '1' ||
+              sharedPreferences!.getString('role') == '2' ||
               sharedPreferences!.getString('divisi') == 'admin'
-          ? 
-      DataCell(_verticalDivider)
-      :const DataCell(SizedBox()),
+          ? DataCell(_verticalDivider)
+          : const DataCell(SizedBox()),
       //kelas harga
       DataCell(
         Container(

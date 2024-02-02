@@ -3,6 +3,7 @@
 import 'dart:convert';
 import 'dart:ui' as ui;
 
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:form_designer/api/api_constant.dart';
 import 'package:form_designer/global/global.dart';
@@ -34,12 +35,14 @@ class _DashboardControlState extends State<DashboardControl> {
   TextEditingController siklus = TextEditingController();
   String? updateSiklus = '';
   TextEditingController addSiklus = TextEditingController();
-
+  String chooseBulan = '';
   bool isSelected1 = false;
   TextEditingController controller = TextEditingController();
   bool sort = true;
   List<ListMpsModel>? filterCrm;
   List<ListMpsModel>? myCrm;
+  List<ListMpsModel>? allDataMPS;
+
   final searchController = TextEditingController();
   bool isLoading = false;
   bool isLoadingFinishing = false;
@@ -195,7 +198,6 @@ class _DashboardControlState extends State<DashboardControl> {
     var now = DateTime.now();
     String month = DateFormat('MMMM', 'id').format(now);
     nowSiklus = month;
-    _getAllData("all");
 
 // janRelease = 150;
     // febRelease = 160;
@@ -370,15 +372,14 @@ class _DashboardControlState extends State<DashboardControl> {
     });
   }
 
-  void _getAllData(month) async {
+  _getAllData(month) async {
+    print(month);
     setState(() {
       isLoading = true;
     });
     await _getName(month);
-    // await _getSpk(month);
-    // await _getPoint(month);
-    // await _getBeratAsal(month);
     //! looping list lebih simple
+    print('start looping resin');
     chartDataPrintResin = <ChartData>[
       ChartData(
         x: 'PRINTING RESIN',
@@ -393,6 +394,9 @@ class _DashboardControlState extends State<DashboardControl> {
         xValue: qtyWipCasting,
       ),
     ];
+    print('end looping resin');
+
+    print('start looping finishing');
     chartDataArtistFinishing = [
       for (var i = 0; i < artistFinishing.length; i++)
         artistFinishing[i].toString().toLowerCase() == 'stok'
@@ -401,10 +405,22 @@ class _DashboardControlState extends State<DashboardControl> {
                 xValue: artistFinishing[i],
                 secondSeriesYValue: qtyArtistFinishing[i])
     ];
+
     chartDataFinishingAwal = [
       ChartData(xValue: 'STOK', secondSeriesYValue: qtyStokFinishing),
       ChartData(xValue: 'WIP', secondSeriesYValue: qtyWipFinishing)
     ];
+    print('end looping finishing');
+
+    print('start looping stell');
+    print('stell awal');
+
+    chartDataStellAwal = [
+      ChartData(xValue: 'STOK', secondSeriesYValue: qtyStokStell),
+      ChartData(xValue: 'WIP', secondSeriesYValue: qtyWipStell)
+    ];
+    print('stell 1');
+
     chartDataStell = [
       for (var i = 0; i < artistStell.length; i++)
         artistStell[i].toString().toLowerCase() == 'stok'
@@ -412,16 +428,37 @@ class _DashboardControlState extends State<DashboardControl> {
             : ChartData(
                 xValue: artistStell[i], secondSeriesYValue: qtyArtistStell[i])
     ];
-    chartDataStellAwal = [
-      ChartData(xValue: 'STOK', secondSeriesYValue: qtyStokStell),
-      ChartData(xValue: 'WIP', secondSeriesYValue: qtyWipStell)
-    ];
+    print('stell 2');
 
-    // chartDataCasting = [
-    //   for (var i = 0; i < artistCasting.length; i++)
-    //     ChartData(
-    //         xValue: artistCasting[i], secondSeriesYValue: qtyArtistCasting[i])
-    // ];
+    print(artistStell.length);
+    print('s===');
+    print(artistStell[0]);
+    print(artistStell[1]);
+    print('a===');
+
+    chartDataStellLevel2 = [
+      for (var i = 0; i < artistStell.length; i++)
+        artistStell[i].toString().toLowerCase() == 'stok'
+            ? ChartData()
+            : ChartData(
+                xValue: artistStell[i],
+                secondSeriesYValue: qtyArtistStell2[i],
+                yValue: qtyArtistStell1[i])
+    ];
+    print('stell 2 stok');
+
+    chartDataStokStellLevel2 = [
+      for (var i = 0; i < artistStell.length; i++)
+        artistStell[i].toString().toLowerCase() != 'stok'
+            ? ChartData()
+            : ChartData(
+                xValue: artistStell[i],
+                secondSeriesYValue: qtyArtistStell2[i],
+                yValue: qtyArtistStell1[i])
+    ];
+    print('end looping stell');
+
+    print('start looping polishing');
 
     chartDataPolishing = [
       for (var i = 0; i < artistPolishing.length; i++)
@@ -435,7 +472,6 @@ class _DashboardControlState extends State<DashboardControl> {
       ChartData(xValue: 'STOK', secondSeriesYValue: qtyStokPolishing),
       ChartData(xValue: 'WIP', secondSeriesYValue: qtyWipPolishing)
     ];
-
     chartDataStokPolishingLevel2 = [
       for (var i = 0; i < artistPolishing.length; i++)
         artistPolishing[i].toString().toLowerCase() != 'stok'
@@ -445,7 +481,6 @@ class _DashboardControlState extends State<DashboardControl> {
                 secondSeriesYValue: qtyArtistPolishing2[i],
                 yValue: qtyArtistPolishing1[i])
     ];
-
     chartDataPolishingLevel2 = [
       for (var i = 0; i < artistPolishing.length; i++)
         artistPolishing[i].toString().toLowerCase() == 'stok'
@@ -455,26 +490,7 @@ class _DashboardControlState extends State<DashboardControl> {
                 secondSeriesYValue: qtyArtistPolishing2[i],
                 yValue: qtyArtistPolishing1[i])
     ];
-
-    chartDataStellLevel2 = [
-      for (var i = 0; i < artistStell.length; i++)
-        artistPolishing[i].toString().toLowerCase() == 'stok'
-            ? ChartData()
-            : ChartData(
-                xValue: artistStell[i],
-                secondSeriesYValue: qtyArtistStell2[i],
-                yValue: qtyArtistStell1[i])
-    ];
-
-    chartDataStokStellLevel2 = [
-      for (var i = 0; i < artistStell.length; i++)
-        artistStell[i].toString().toLowerCase() != 'stok'
-            ? ChartData()
-            : ChartData(
-                xValue: artistStell[i],
-                secondSeriesYValue: qtyArtistStell2[i],
-                yValue: qtyArtistStell1[i])
-    ];
+    print('end looping polishing');
 
     chartDataPasangBatu = [
       for (var i = 0; i < artistPasangBatu.length; i++)
@@ -485,6 +501,8 @@ class _DashboardControlState extends State<DashboardControl> {
                 secondSeriesYValue: qtyArtistPasangBatu[i],
                 text: '${artistPasangBatu[i]} \n ${qtyArtistPasangBatu[i]}')
     ];
+    print('start looping pb');
+
     chartDataWipPasangBatu = [
       ChartData(
           xValue: 'STOK',
@@ -495,6 +513,7 @@ class _DashboardControlState extends State<DashboardControl> {
           secondSeriesYValue: qtyWipPasangBatu,
           text: 'WIP \n $qtyWipPasangBatu'),
     ];
+    print('end looping pb');
 
     setState(() {
       isLoading = false;
@@ -502,7 +521,7 @@ class _DashboardControlState extends State<DashboardControl> {
   }
 
   _getName(month) async {
-    print('get nama on');
+    print('functon on');
     artistPrintingResin = [];
     artistFinishingResin = [];
     List<String> dummyArtistPrintingResin = [];
@@ -521,30 +540,68 @@ class _DashboardControlState extends State<DashboardControl> {
     List<String> dummyArtistPolishing2 = [];
     List<String> dummyArtistStell1 = [];
     List<String> dummyArtistStell2 = [];
+    chartDataPrintResin = [];
+    chartDataFinishingResin = [];
+    chartDataCasting = [];
+    chartDataArtistFinishing = [];
+    chartDataFinishingAwal = [];
+    chartDataPolishing = [];
+    chartDataPolishingAwal = [];
+    chartDataPolishingLevel2 = [];
+    chartDataStokPolishingLevel2 = [];
+    chartDataStell = [];
+    chartDataStellAwal = [];
+    chartDataStellLevel2 = [];
+    chartDataStokStellLevel2 = [];
+    chartDataPasangBatu = [];
+    chartDataWipPasangBatu = [];
+    qtyArtistPrintingResin = 0;
+    qtyArtistFinishingResin = 0;
+    qtyArtistFinishing = [];
+    qtyArtistStell = [];
+    qtyArtistCasting = [];
+    qtyArtistPolishing = [];
+    qtyArtistPolishing1 = [];
+    qtyArtistPolishing2 = [];
+    qtyArtistStell1 = [];
+    qtyArtistStell2 = [];
+    qtyArtistPasangBatu = [];
+    qtyWipCasting = 0;
+    qtyWipFinishing = 0;
+    qtyWipStell = 0;
+    qtyWipPolishing = 0;
+    qtyWipPasangBatu = 0;
+    qtyStokFinishing = 0;
+    qtyStokStell = 0;
+    qtyStokPolishing = 0;
+    qtyStokPasangBatu = 0;
 
     // final response = await http.get(
     //     Uri.parse(ApiConstants.baseUrl + ApiConstants.getListFormDesigner));
     final response = await http
         .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getListMps));
-    print(response.statusCode);
-    print(response.body);
     if (response.statusCode == 200) {
+      print('bulannya :$month');
       List jsonResponse = json.decode(response.body);
-
-      // var allData =
-      //     jsonResponse.map((data) => FormDesignerModel.fromJson(data)).toList();
       var allData =
           jsonResponse.map((data) => ListMpsModel.fromJson(data)).toList();
-
+      var filterByMonth = allData.where((element) =>
+          element.bulan.toString().toLowerCase() ==
+          month.toString().toLowerCase());
+      allData = filterByMonth.toList();
+      allDataMPS = filterByMonth.toList();
       //! printing resin
+      print('start printing resin');
       var filterByPrintingResin = allData
           .where((element) =>
               element.posisi.toString().toLowerCase() == 'printing resin')
           .toList();
-
       //! looping list lebih simple
-      for (var item in filterByPrintingResin) {
-        dummyArtistPrintingResin.add(item.artist!);
+      // for (var item in filterByPrintingResin) {
+      //   dummyArtistPrintingResin.add(item.artist!);
+      // }
+      for (var i = 0; i < filterByPrintingResin.length; i++) {
+        dummyArtistPrintingResin.add(filterByPrintingResin[i].artist!);
       }
       artistPrintingResin = dummyArtistPrintingResin.toSet().toList();
       for (var i = 0; i < artistPrintingResin.length; i++) {
@@ -553,18 +610,27 @@ class _DashboardControlState extends State<DashboardControl> {
             .length;
         qtyArtistPrintingResin = count;
       }
+      print('end printing resin');
+
       //? end function PrintingResin
 
       //! Finishing resin
+      print('start finishing resin');
+
       var filterByFinishingResin = allData
           .where((element) =>
               element.posisi.toString().toLowerCase() == 'finishing resin')
           .toList();
 
       //! looping list lebih simple
-      for (var item in filterByFinishingResin) {
-        dummyArtistFinishingResin.add(item.artist!);
+      // for (var item in filterByFinishingResin) {
+      //   dummyArtistFinishingResin.add(item.artist!);
+      // }
+
+      for (var i = 0; i < filterByFinishingResin.length; i++) {
+        dummyArtistFinishingResin.add(filterByFinishingResin[i].artist!);
       }
+
       artistFinishingResin = dummyArtistFinishingResin.toSet().toList();
       for (var i = 0; i < artistFinishingResin.length; i++) {
         int count = dummyArtistFinishingResin
@@ -572,14 +638,18 @@ class _DashboardControlState extends State<DashboardControl> {
             .length;
         qtyArtistFinishingResin = count;
       }
+      print('end finishing resin');
+
       //? end function FinishingResin
 
       //! finishing
+      print('start finishing');
+
       var filterByFinishing = allData
           .where((element) =>
               element.posisi.toString().toLowerCase() == 'finishing')
           .toList();
-      // _listFinishing = filterByFinishing;
+      _listFinishing = filterByFinishing;
 
       //! looping list lebih simple
       for (var item in filterByFinishing) {
@@ -603,9 +673,13 @@ class _DashboardControlState extends State<DashboardControl> {
             .length;
         qtyWipFinishing = countWip;
       }
+      print('end finishing');
+
       //? end function Finishing
 
       //! stell rangka
+      print('start stell');
+
       var filterByStell = allData
           .where((element) =>
               element.posisi.toString().toLowerCase() == 'stell 1' ||
@@ -631,9 +705,13 @@ class _DashboardControlState extends State<DashboardControl> {
             .length;
         qtyWipStell = countWip;
       }
+      print('end stell');
+
       //? end function Stell
 
       //! casting
+      print('start casting');
+
       var filterByCasting = allData
           .where((element) =>
               element.posisi.toString().toLowerCase() == 'casting' ||
@@ -652,9 +730,13 @@ class _DashboardControlState extends State<DashboardControl> {
         qtyArtistCasting.add(count);
         qtyWipCasting = count;
       }
+      print('end casting');
+
       //? end function Casting
 
       //! polishing
+      print('start polishing');
+
       var filterByPolishing = allData
           .where((element) =>
               element.posisi.toString().toLowerCase() == 'polishing 1' ||
@@ -682,6 +764,7 @@ class _DashboardControlState extends State<DashboardControl> {
             .length;
         qtyWipPolishing = countWip;
       }
+
       //? end function Polishing
 
       //! polishing1
@@ -718,9 +801,13 @@ class _DashboardControlState extends State<DashboardControl> {
             .length;
         qtyArtistPolishing2.add(count);
       }
+      print('end polishing');
+
       //? end function Polishing2
 
       //! Stell1
+      print('start stell 2x');
+
       var filterByStell1 = allData
           .where(
               (element) => element.posisi.toString().toLowerCase() == 'stell 1')
@@ -754,9 +841,13 @@ class _DashboardControlState extends State<DashboardControl> {
             .length;
         qtyArtistStell2.add(count);
       }
+      print('end stell 2x');
+
       //? end function Stell2
 
       //! PasangBatu
+      print('start pb');
+
       var filterByPasangBatu = allData
           .where((element) =>
               element.posisi.toString().toLowerCase() == 'pasang batu')
@@ -781,118 +872,76 @@ class _DashboardControlState extends State<DashboardControl> {
             .length;
         qtyWipPasangBatu = countWip;
       }
+      print('end pb');
       //? end function PasangBatu
     } else {}
   }
 
   getDataTable(artist) async {
     print('get data divisi on');
-    final response = await http
-        .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getListMps));
-    if (response.statusCode == 200) {
-      List jsonResponse = json.decode(response.body);
-      var allData =
-          jsonResponse.map((data) => ListMpsModel.fromJson(data)).toList();
-      //! finishing
-      var filterByFinishing = allData
-          .where((element) =>
-              element.posisi.toString().toLowerCase() == 'finishing')
-          .toList();
-      var filterByArtist = filterByFinishing
-          .where((element) =>
-              element.artist.toString().toLowerCase() ==
-              artist.toString().toLowerCase())
-          .toList();
-      _listFinishing = filterByArtist;
-    } else {}
+    var filterByFinishing = allDataMPS!
+        .where(
+            (element) => element.posisi.toString().toLowerCase() == 'finishing')
+        .toList();
+    var filterByArtist = filterByFinishing
+        .where((element) =>
+            element.artist.toString().toLowerCase() ==
+            artist.toString().toLowerCase())
+        .toList();
+    _listFinishing = filterByArtist;
   }
 
   getDataTableDivisi(divisi) async {
-    print('get data divisi on');
-    final response = await http
-        .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getListMps));
-    if (response.statusCode == 200) {
-      List jsonResponse = json.decode(response.body);
-      var allData =
-          jsonResponse.map((data) => ListMpsModel.fromJson(data)).toList();
-      //! divisi
-      var filterByDivisi = allData
-          .where((element) =>
-              element.posisi.toString().toLowerCase() ==
-              divisi.toString().toLowerCase())
-          .toList();
-
-      _listByDivisi = filterByDivisi;
-    } else {}
+    var filterByDivisi = allDataMPS!
+        .where((element) =>
+            element.posisi.toString().toLowerCase() ==
+            divisi.toString().toLowerCase())
+        .toList();
+    _listByDivisi = filterByDivisi;
   }
 
   getDataTablePasangBatu(artist) async {
-    print('get data divisi on');
-    final response = await http
-        .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getListMps));
-    if (response.statusCode == 200) {
-      List jsonResponse = json.decode(response.body);
-      var allData =
-          jsonResponse.map((data) => ListMpsModel.fromJson(data)).toList();
-      //! finishing
-      var filterByPasangBatu = allData
-          .where((element) =>
-              element.posisi.toString().toLowerCase() == 'pasang batu')
-          .toList();
-      var filterByArtist = filterByPasangBatu
-          .where((element) =>
-              element.artist.toString().toLowerCase() ==
-              artist.toString().toLowerCase())
-          .toList();
-      _listPasangBatu = filterByArtist;
-    } else {}
+    var filterByPasangBatu = allDataMPS!
+        .where((element) =>
+            element.posisi.toString().toLowerCase() == 'pasang batu')
+        .toList();
+    var filterByArtist = filterByPasangBatu
+        .where((element) =>
+            element.artist.toString().toLowerCase() ==
+            artist.toString().toLowerCase())
+        .toList();
+    _listPasangBatu = filterByArtist;
   }
 
   getDataTablePolishing(artist) async {
-    print('get data divisi on');
-    final response = await http
-        .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getListMps));
-    if (response.statusCode == 200) {
-      List jsonResponse = json.decode(response.body);
-      var allData =
-          jsonResponse.map((data) => ListMpsModel.fromJson(data)).toList();
-      //! polishing
-      var filterBypolishing = allData
-          .where((element) =>
-              element.posisi.toString().toLowerCase() == 'polishing 1' ||
-              element.posisi.toString().toLowerCase() == 'polishing 2')
-          .toList();
-      var filterByArtist = filterBypolishing
-          .where((element) =>
-              element.artist.toString().toLowerCase() ==
-              artist.toString().toLowerCase())
-          .toList();
-      _listPolishing = filterByArtist;
-    } else {}
+    //! polishing
+    var filterBypolishing = allDataMPS!
+        .where((element) =>
+            element.posisi.toString().toLowerCase() == 'polishing 1' ||
+            element.posisi.toString().toLowerCase() == 'polishing 2')
+        .toList();
+    var filterByArtist = filterBypolishing
+        .where((element) =>
+            element.artist.toString().toLowerCase() ==
+            artist.toString().toLowerCase())
+        .toList();
+    _listPolishing = filterByArtist;
   }
 
   getDataTableStell(artist) async {
-    print('get data divisi on');
-    final response = await http
-        .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getListMps));
-    if (response.statusCode == 200) {
-      List jsonResponse = json.decode(response.body);
-      var allData =
-          jsonResponse.map((data) => ListMpsModel.fromJson(data)).toList();
-      //! polishing
-      var filterByStell = allData
-          .where((element) =>
-              element.posisi.toString().toLowerCase() == 'stell 1' ||
-              element.posisi.toString().toLowerCase() == 'stell 2')
-          .toList();
-      var filterByArtist = filterByStell
-          .where((element) =>
-              element.artist.toString().toLowerCase() ==
-              artist.toString().toLowerCase())
-          .toList();
-      _listStell = filterByArtist;
-      print(_listFinishing);
-    } else {}
+    //! polishing
+    var filterByStell = allDataMPS!
+        .where((element) =>
+            element.posisi.toString().toLowerCase() == 'stell 1' ||
+            element.posisi.toString().toLowerCase() == 'stell 2')
+        .toList();
+    var filterByArtist = filterByStell
+        .where((element) =>
+            element.artist.toString().toLowerCase() ==
+            artist.toString().toLowerCase())
+        .toList();
+    _listStell = filterByArtist;
+    print(_listFinishing);
   }
 
   @override
@@ -930,41 +979,109 @@ class _DashboardControlState extends State<DashboardControl> {
               ),
               elevation: 0,
             ),
-            body: isLoading == true
-                ? Center(
-                    child: Transform.scale(
-                    scale: 2,
-                    child: Container(
-                      padding: const EdgeInsets.all(5),
-                      width: MediaQuery.of(context).size.width * 1,
-                      height: MediaQuery.of(context).size.height * 1,
-                      child: Lottie.asset("loadingJSON/dashboardBuild.json"),
-                    ),
-                  ))
-                : Container(
-                    width: MediaQuery.of(context).size.width * 1,
-                    color: colorBG,
-                    padding: EdgeInsets.all(10),
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: SingleChildScrollView(
-                          scrollDirection: Axis.vertical,
-                          child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.only(top: 26),
-                                  child: const Text(
-                                    'Dashboard Control',
-                                    style: TextStyle(
+            body: Container(
+                width: MediaQuery.of(context).size.width * 1,
+                color: colorBG,
+                padding: EdgeInsets.all(10),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.only(top: 26),
+                              child: const Text(
+                                'Dashboard Control',
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 26),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: SizedBox(
+                                width: 350,
+                                child: DropdownSearch<String>(
+                                  items: const [
+                                    "JANUARI",
+                                    "FEBRUARI",
+                                    "MARET",
+                                    "APRIL",
+                                    "MEI",
+                                    "JUNI",
+                                    "JULI",
+                                    "AGUSTUS",
+                                    "SEPTEMBER",
+                                    "OKTOBER",
+                                    "NOVEMBER",
+                                    "DESEMBER"
+                                  ],
+                                  onChanged: (item) async {
+                                    chooseBulan = item!;
+                                    await _getAllData(chooseBulan);
+                                  },
+                                  popupProps: const PopupPropsMultiSelection
+                                      .modalBottomSheet(
+                                    showSelectedItems: true,
+                                    showSearchBox: true,
+                                  ),
+                                  dropdownDecoratorProps:
+                                      const DropDownDecoratorProps(
+                                    textAlign: TextAlign.center,
+                                    baseStyle: TextStyle(
+                                        fontSize: 16,
                                         color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 26),
+                                        fontWeight: FontWeight.bold),
+                                    dropdownSearchDecoration: InputDecoration(
+                                        labelText: "Pilih Bulan",
+                                        floatingLabelAlignment:
+                                            FloatingLabelAlignment.center,
+                                        filled: true,
+                                        fillColor: Colors.white,
+                                        border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(12)))),
                                   ),
                                 ),
-                                dashboardProduksi(),
-                              ])),
-                    ))));
+                              ),
+                            ),
+                            chooseBulan.isEmpty
+                                ? Center(
+                                    child: Column(
+                                    children: [
+                                      SizedBox(
+                                        width: 250,
+                                        height: 210,
+                                        child: Lottie.asset(
+                                            "loadingJSON/selectDate.json"),
+                                      ),
+                                      const Text(
+                                        'Pilih bulan terlebih dahulu',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            fontSize: 26,
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: 'Acne',
+                                            letterSpacing: 1.5),
+                                      ),
+                                    ],
+                                  ))
+                                : isLoading == true
+                                    ? Center(
+                                        child: Container(
+                                        padding: const EdgeInsets.all(5),
+                                        width: 90,
+                                        height: 90,
+                                        child: Lottie.asset(
+                                            "loadingJSON/loadingV1.json"),
+                                      ))
+                                    : dashboardProduksi(),
+                          ])),
+                ))));
   }
 
   //! dashboard produksi

@@ -46,8 +46,10 @@ class _HomeScreenAdminState extends State<HomeScreenAdmin> {
   List<FormDesignerModel>? listJenisBarang;
   List<FormDesignerModel>? uniqListJenisBarang;
 
-  List<FormDesignerModel>? listJenisBarangView1;
   List<String> listKelasHarga = [];
+  List<String> uniqListKelasHarga = [];
+
+  List<FormDesignerModel>? listJenisBarangView1;
   List sumNamaModeller = [
     'Arif Kurniawan',
     'Aris Pravidan',
@@ -79,9 +81,14 @@ class _HomeScreenAdminState extends State<HomeScreenAdmin> {
   final searchController = TextEditingController();
   bool isLoading = false;
   bool isJenisBarangView1 = false;
+  bool isKelasHargaView1 = false;
   bool isLoadingJenisBarang = false;
+  bool isLoadingKelasHarga = false;
+  bool isLoadingReport = false;
+  bool isLoadingPointModeller = false;
   var nowSiklus = '';
   String? namaJenisBarangView1 = '';
+  String? namaKelasHargaView1 = '';
 
   bool isSummaryModeller = false;
 
@@ -94,53 +101,17 @@ class _HomeScreenAdminState extends State<HomeScreenAdmin> {
     siklusDesigner = month;
     _getAllData("all", sharedPreferences!.getString('nama')!);
     nowSiklus = sharedPreferences!.getString('siklus')!;
-    _getDataJenisBarang('all','');
+    // _getDataJenisBarang('all', '');
   }
 
-  Future<List<FormDesignerModel>> _getDataJenisBarang(chooseSiklus, nama) async {
-   setState(() {
-  isLoadingJenisBarang = true;
-  });
-    final response = await http.get(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.getListFormDesigner));
-    if (response.statusCode == 200) {
-      print('fungsi jenis barang oke');
-
-      List jsonResponse = json.decode(response.body);
-
-      var g =
-          jsonResponse.map((data) => FormDesignerModel.fromJson(data)).toList();
-      //! method admin
-    
-        if (chooseSiklus.toString().toLowerCase() == "all") {
-          listJenisBarang = g;
-
-         
-        } else {
-          var filterBySiklus = g.where((element) =>
-              element.siklus.toString().toLowerCase() ==
-              chooseSiklus.toString().toLowerCase());
-
-          filterBySiklus.toList();
-          listJenisBarang = filterBySiklus.toList();
-        }
-     
-      print(g.length);
-
-      g = removeDuplicates(listJenisBarang!);
-    uniqListJenisBarang =g;
-       setState(() {
-  isLoadingJenisBarang = false;
-  });
-      // g = filterBySiklus.toList();
-      return g;
-    } else {
-      throw Exception('Unexpected error occured!');
-    }
-    
-  }
-
-  Future<List<FormDesignerModel>> _getAllData(month, name) async {
+  _getAllData(month, name) async {
+    setState(() {
+      isLoading = true;
+      isLoadingJenisBarang = true;
+      isLoadingKelasHarga = true;
+      isLoadingReport = true;
+      isLoadingPointModeller = true;
+    });
     final response = await http.get(
         Uri.parse(ApiConstants.baseUrl + ApiConstants.getListFormDesigner));
 
@@ -149,38 +120,240 @@ class _HomeScreenAdminState extends State<HomeScreenAdmin> {
 
       var allData =
           jsonResponse.map((data) => FormDesignerModel.fromJson(data)).toList();
+      var g =
+          jsonResponse.map((data) => FormDesignerModel.fromJson(data)).toList();
+      var dataHarga =
+          jsonResponse.map((data) => FormDesignerModel.fromJson(data)).toList();
 
       //! method admin
-     
-        if (month.toString().toLowerCase() == "all") {
-          var filterByStatusBatu = allData.where((element) =>
-              element.keteranganStatusBatu.toString().toLowerCase() ==
-              "batu lengkap");
-          batuLengkap = filterByStatusBatu.toList().length;
-        } else {
-          var filterBySiklus = allData.where((element) =>
-              element.siklus.toString().toLowerCase() ==
-              month.toString().toLowerCase());
-          var filterByStatusBatu = filterBySiklus.where((element) =>
-              element.keteranganStatusBatu.toString().toLowerCase() ==
-              "batu lengkap");
-          batuLengkap = filterByStatusBatu.toList().length;
-          allData = filterBySiklus.toList();
+
+      if (month.toString().toLowerCase() == "all") {
+        //! point modeller
+        var filterByPoint =
+            g.where((element) => double.parse(element.pointModeller!) > 0);
+        //? point modeller arif
+        var filterByArif = filterByPoint.where((element) =>
+            element.namaModeller.toString().toLowerCase() == "arif kurniawan");
+        pointArif = 0.0;
+        for (var i = 0; i < filterByArif.length; i++) {
+          pointArif += double.parse(filterByArif.toList()[i].pointModeller!);
         }
-    
-      
+        //? point modeller aris
+        var filterByAris = filterByPoint.where((element) =>
+            element.namaModeller.toString().toLowerCase() == "aris pravidan");
+        pointAris = 0.0;
+        for (var i = 0; i < filterByAris.length; i++) {
+          pointAris += double.parse(filterByAris.toList()[i].pointModeller!);
+        }
+
+        //? point modeller fikri
+        var filterByFikri = filterByPoint.where((element) =>
+            element.namaModeller.toString().toLowerCase() == "fikryansyah");
+        pointFikri = 0.0;
+        for (var i = 0; i < filterByFikri.length; i++) {
+          pointFikri += double.parse(filterByFikri.toList()[i].pointModeller!);
+        }
+
+        //? point modeller yuse
+        var filterByyuse = filterByPoint.where((element) =>
+            element.namaModeller.toString().toLowerCase() == "yuse");
+        pointyuse = 0.0;
+        for (var i = 0; i < filterByyuse.length; i++) {
+          pointyuse += double.parse(filterByyuse.toList()[i].pointModeller!);
+        }
+
+        //! berat modeller
+        var filterByberat =
+            g.where((element) => double.parse(element.beratModeller!) > 0);
+        //? berat modeller arif
+        var filterBeratByArif = filterByberat.where((element) =>
+            element.namaModeller.toString().toLowerCase() == "arif kurniawan");
+        beratArif = 0.0;
+        for (var i = 0; i < filterBeratByArif.length; i++) {
+          beratArif +=
+              double.parse(filterBeratByArif.toList()[i].beratModeller!);
+        }
+        //? berat modeller aris
+        var filterBeratByAris = filterByberat.where((element) =>
+            element.namaModeller.toString().toLowerCase() == "aris pravidan");
+        beratAris = 0.0;
+        for (var i = 0; i < filterBeratByAris.length; i++) {
+          beratAris +=
+              double.parse(filterBeratByAris.toList()[i].beratModeller!);
+        }
+
+        //? berat modeller fikri
+        var filterBeratByFikri = filterByberat.where((element) =>
+            element.namaModeller.toString().toLowerCase() == "fikryansyah");
+        beratFikri = 0.0;
+        for (var i = 0; i < filterBeratByFikri.length; i++) {
+          beratFikri +=
+              double.parse(filterBeratByFikri.toList()[i].beratModeller!);
+        }
+
+        //? berat modeller yuse
+        var filterBeratByyuse = filterByberat.where((element) =>
+            element.namaModeller.toString().toLowerCase() == "yuse");
+        beratyuse = 0.0;
+        for (var i = 0; i < filterBeratByyuse.length; i++) {
+          beratyuse +=
+              double.parse(filterBeratByyuse.toList()[i].beratModeller!);
+        }
+        listJenisBarang = allData;
+        var filterByStatusBatu = allData.where((element) =>
+            element.keteranganStatusBatu.toString().toLowerCase() ==
+            "batu lengkap");
+        batuLengkap = filterByStatusBatu.toList().length;
+      } else {
+        var filterBySiklus = allData.where((element) =>
+            element.siklus.toString().toLowerCase() ==
+            month.toString().toLowerCase());
+        dataHarga = filterBySiklus.toList();
+        var filterByStatusBatu = filterBySiklus.where((element) =>
+            element.keteranganStatusBatu.toString().toLowerCase() ==
+            "batu lengkap");
+        batuLengkap = filterByStatusBatu.toList().length;
+        allData = filterBySiklus.toList();
+        listJenisBarang = filterBySiklus.toList();
+
+        //! point modeller
+        var filterByPoint = filterBySiklus
+            .where((element) => double.parse(element.pointModeller!) > 0);
+        //? point modeller arif
+        var filterByArif = filterByPoint.where((element) =>
+            element.namaModeller.toString().toLowerCase() == "arif kurniawan");
+        pointArif = 0.0;
+        for (var i = 0; i < filterByArif.length; i++) {
+          pointArif += double.parse(filterByArif.toList()[i].pointModeller!);
+        }
+        //? point modeller aris
+        var filterByAris = filterByPoint.where((element) =>
+            element.namaModeller.toString().toLowerCase() == "aris pravidan");
+        pointAris = 0.0;
+        for (var i = 0; i < filterByAris.length; i++) {
+          pointAris += double.parse(filterByAris.toList()[i].pointModeller!);
+        }
+
+        //? point modeller fikri
+        var filterByFikri = filterByPoint.where((element) =>
+            element.namaModeller.toString().toLowerCase() == "fikryansyah");
+        pointFikri = 0.0;
+        for (var i = 0; i < filterByFikri.length; i++) {
+          pointFikri += double.parse(filterByFikri.toList()[i].pointModeller!);
+        }
+
+        //? point modeller yuse
+        var filterByyuse = filterByPoint.where((element) =>
+            element.namaModeller.toString().toLowerCase() == "yuse");
+        pointyuse = 0.0;
+        for (var i = 0; i < filterByyuse.length; i++) {
+          pointyuse += double.parse(filterByyuse.toList()[i].pointModeller!);
+        }
+
+        //! berat modeller
+        var filterByberat =
+            g.where((element) => double.parse(element.beratModeller!) > 0);
+        //? berat modeller arif
+        var filterBeratByArif = filterByberat.where((element) =>
+            element.namaModeller.toString().toLowerCase() == "arif kurniawan");
+        beratArif = 0.0;
+        for (var i = 0; i < filterBeratByArif.length; i++) {
+          beratArif +=
+              double.parse(filterBeratByArif.toList()[i].beratModeller!);
+        }
+        //? berat modeller aris
+        var filterBeratByAris = filterByberat.where((element) =>
+            element.namaModeller.toString().toLowerCase() == "aris pravidan");
+        beratAris = 0.0;
+        for (var i = 0; i < filterBeratByAris.length; i++) {
+          beratAris +=
+              double.parse(filterBeratByAris.toList()[i].beratModeller!);
+        }
+
+        //? berat modeller fikri
+        var filterBeratByFikri = filterByberat.where((element) =>
+            element.namaModeller.toString().toLowerCase() == "fikryansyah");
+        beratFikri = 0.0;
+        for (var i = 0; i < filterBeratByFikri.length; i++) {
+          beratFikri +=
+              double.parse(filterBeratByFikri.toList()[i].beratModeller!);
+        }
+
+        //? berat modeller yuse
+        var filterBeratByyuse = filterByberat.where((element) =>
+            element.namaModeller.toString().toLowerCase() == "yuse");
+        beratyuse = 0.0;
+        for (var i = 0; i < filterBeratByyuse.length; i++) {
+          beratyuse +=
+              double.parse(filterBeratByyuse.toList()[i].beratModeller!);
+        }
+      }
+      var alldataJenisBarang = allData.toList();
+      alldataJenisBarang = removeDuplicates(listJenisBarang!);
+      uniqListJenisBarang = alldataJenisBarang;
+
+      //* fungsi looping untuk menambahakn beberapa item kje dalam list kosong
+      listKelasHarga.clear();
+      uniqListKelasHarga.clear();
+      sumHarga.clear();
+      sumHarga.add(0);
+
+      for (var i = 0; i < dataHarga.length; i++) {
+        if (dataHarga[i].brand.toString().toLowerCase() == "parva" ||
+            dataHarga[i].brand.toString().toLowerCase() == "fine") {
+          int nilai = ((dataHarga[i].estimasiHarga! * 0.37) * 11500).round();
+          sumHarga.add(nilai);
+          if (((dataHarga[i].estimasiHarga! * 0.37) * 11500) <= 5000000) {
+            listKelasHarga.add(
+                'XS'); //!menambahakn item baru ke dalam list yang sudah dibuatkan
+          } else if (((dataHarga[i].estimasiHarga! * 0.37) * 11500) <=
+              10000000) {
+            listKelasHarga.add('S');
+          } else if (((dataHarga[i].estimasiHarga! * 0.37) * 11500) <=
+              20000000) {
+            listKelasHarga.add('M');
+          } else if (((dataHarga[i].estimasiHarga! * 0.37) * 11500) <=
+              35000000) {
+            listKelasHarga.add('L');
+          } else {
+            listKelasHarga.add('XL');
+          }
+        }
+        //? untuk beli berlian dan metier
+        else {
+          int nilai = dataHarga[i].estimasiHarga!;
+          sumHarga.add(nilai);
+          if (dataHarga[i].estimasiHarga! <= 5000000) {
+            listKelasHarga.add(
+                'XS'); //!menambahakn item baru ke dalam list yang sudah dibuatkan
+          } else if (dataHarga[i].estimasiHarga! <= 10000000) {
+            listKelasHarga.add('S');
+          } else if (dataHarga[i].estimasiHarga! <= 20000000) {
+            listKelasHarga.add('M');
+          } else if (dataHarga[i].estimasiHarga! <= 35000000) {
+            listKelasHarga.add('L');
+          } else {
+            listKelasHarga.add('XL');
+          }
+        }
+      }
+      uniqListKelasHarga = listKelasHarga.toSet().toList();
+      totalHarga = sumHarga.reduce((a, b) => a + b);
 
       setState(() {
         filterCrm = allData;
         myCrm = allData;
-        isLoading = true;
         // isLoadingJenisBarang = true;
         totalSPK = allData.length;
         totalSPKSelesai = allData
             .where((element) => double.parse(element.pointModeller!) > 0)
             .length;
+        isLoading = false;
+        isLoadingJenisBarang = false;
+        isLoadingKelasHarga = false;
+        isLoadingReport = false;
+        isLoadingPointModeller = false;
       });
-      return allData;
     } else {
       throw Exception('Unexpected error occured!');
     }
@@ -213,291 +386,6 @@ class _HomeScreenAdminState extends State<HomeScreenAdmin> {
 
       // g = removeDuplicates(listJenisBarangView1!);
       g = listJenisBarangView1!;
-      return g;
-    } else {
-      throw Exception('Unexpected error occured!');
-    }
-  }
-
-
-
-  Future<List<FormDesignerModel>> _getData(chooseSiklus, nama) async {
-    final response = await http.get(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.getListFormDesigner));
-    if (response.statusCode == 200) {
-      print('fungsi get data oke');
-
-      List jsonResponse = json.decode(response.body);
-
-      var g =
-          jsonResponse.map((data) => FormDesignerModel.fromJson(data)).toList();
-      //! method admin
-    
-        if (chooseSiklus.toString().toLowerCase() == "all") {
-
-          //! point modeller
-          var filterByPoint =
-              g.where((element) => double.parse(element.pointModeller!) > 0);
-          //? point modeller arif
-          var filterByArif = filterByPoint.where((element) =>
-              element.namaModeller.toString().toLowerCase() ==
-              "arif kurniawan");
-          pointArif = 0.0;
-          for (var i = 0; i < filterByArif.length; i++) {
-            pointArif += double.parse(filterByArif.toList()[i].pointModeller!);
-          }
-          //? point modeller aris
-          var filterByAris = filterByPoint.where((element) =>
-              element.namaModeller.toString().toLowerCase() == "aris pravidan");
-          pointAris = 0.0;
-          for (var i = 0; i < filterByAris.length; i++) {
-            pointAris += double.parse(filterByAris.toList()[i].pointModeller!);
-          }
-
-          //? point modeller fikri
-          var filterByFikri = filterByPoint.where((element) =>
-              element.namaModeller.toString().toLowerCase() == "fikryansyah");
-          pointFikri = 0.0;
-          for (var i = 0; i < filterByFikri.length; i++) {
-            pointFikri +=
-                double.parse(filterByFikri.toList()[i].pointModeller!);
-          }
-
-          //? point modeller yuse
-          var filterByyuse = filterByPoint.where((element) =>
-              element.namaModeller.toString().toLowerCase() == "yuse");
-          pointyuse = 0.0;
-          for (var i = 0; i < filterByyuse.length; i++) {
-            pointyuse += double.parse(filterByyuse.toList()[i].pointModeller!);
-          }
-
-          //! berat modeller
-          var filterByberat =
-              g.where((element) => double.parse(element.beratModeller!) > 0);
-          //? berat modeller arif
-          var filterBeratByArif = filterByberat.where((element) =>
-              element.namaModeller.toString().toLowerCase() ==
-              "arif kurniawan");
-          beratArif = 0.0;
-          for (var i = 0; i < filterBeratByArif.length; i++) {
-            beratArif +=
-                double.parse(filterBeratByArif.toList()[i].beratModeller!);
-          }
-          //? berat modeller aris
-          var filterBeratByAris = filterByberat.where((element) =>
-              element.namaModeller.toString().toLowerCase() == "aris pravidan");
-          beratAris = 0.0;
-          for (var i = 0; i < filterBeratByAris.length; i++) {
-            beratAris +=
-                double.parse(filterBeratByAris.toList()[i].beratModeller!);
-          }
-
-          //? berat modeller fikri
-          var filterBeratByFikri = filterByberat.where((element) =>
-              element.namaModeller.toString().toLowerCase() == "fikryansyah");
-          beratFikri = 0.0;
-          for (var i = 0; i < filterBeratByFikri.length; i++) {
-            beratFikri +=
-                double.parse(filterBeratByFikri.toList()[i].beratModeller!);
-          }
-
-          //? berat modeller yuse
-          var filterBeratByyuse = filterByberat.where((element) =>
-              element.namaModeller.toString().toLowerCase() == "yuse");
-          beratyuse = 0.0;
-          for (var i = 0; i < filterBeratByyuse.length; i++) {
-            beratyuse +=
-                double.parse(filterBeratByyuse.toList()[i].beratModeller!);
-          }
-        } else {
-          var filterBySiklus = g.where((element) =>
-              element.siklus.toString().toLowerCase() ==
-              chooseSiklus.toString().toLowerCase());
-
-          filterBySiklus.toList();
-
-          //! point modeller
-          var filterByPoint =
-              g.where((element) => double.parse(element.pointModeller!) > 0);
-          //? point modeller arif
-          var filterByArif = filterByPoint.where((element) =>
-              element.namaModeller.toString().toLowerCase() ==
-              "arif kurniawan");
-          pointArif = 0.0;
-          for (var i = 0; i < filterByArif.length; i++) {
-            pointArif += double.parse(filterByArif.toList()[i].pointModeller!);
-          }
-          //? point modeller aris
-          var filterByAris = filterByPoint.where((element) =>
-              element.namaModeller.toString().toLowerCase() == "aris pravidan");
-          pointAris = 0.0;
-          for (var i = 0; i < filterByAris.length; i++) {
-            pointAris += double.parse(filterByAris.toList()[i].pointModeller!);
-          }
-
-          //? point modeller fikri
-          var filterByFikri = filterByPoint.where((element) =>
-              element.namaModeller.toString().toLowerCase() == "fikryansyah");
-          pointFikri = 0.0;
-          for (var i = 0; i < filterByFikri.length; i++) {
-            pointFikri +=
-                double.parse(filterByFikri.toList()[i].pointModeller!);
-          }
-
-          //? point modeller yuse
-          var filterByyuse = filterByPoint.where((element) =>
-              element.namaModeller.toString().toLowerCase() == "yuse");
-          pointyuse = 0.0;
-          for (var i = 0; i < filterByyuse.length; i++) {
-            pointyuse += double.parse(filterByyuse.toList()[i].pointModeller!);
-          }
-
-        //! berat modeller
-          var filterByberat =
-              g.where((element) => double.parse(element.beratModeller!) > 0);
-          //? berat modeller arif
-          var filterBeratByArif = filterByberat.where((element) =>
-              element.namaModeller.toString().toLowerCase() ==
-              "arif kurniawan");
-          beratArif = 0.0;
-          for (var i = 0; i < filterBeratByArif.length; i++) {
-            beratArif +=
-                double.parse(filterBeratByArif.toList()[i].beratModeller!);
-          }
-          //? berat modeller aris
-          var filterBeratByAris = filterByberat.where((element) =>
-              element.namaModeller.toString().toLowerCase() == "aris pravidan");
-          beratAris = 0.0;
-          for (var i = 0; i < filterBeratByAris.length; i++) {
-            beratAris +=
-                double.parse(filterBeratByAris.toList()[i].beratModeller!);
-          }
-
-          //? berat modeller fikri
-          var filterBeratByFikri = filterByberat.where((element) =>
-              element.namaModeller.toString().toLowerCase() == "fikryansyah");
-          beratFikri = 0.0;
-          for (var i = 0; i < filterBeratByFikri.length; i++) {
-            beratFikri +=
-                double.parse(filterBeratByFikri.toList()[i].beratModeller!);
-          }
-
-          //? berat modeller yuse
-          var filterBeratByyuse = filterByberat.where((element) =>
-              element.namaModeller.toString().toLowerCase() == "yuse");
-          beratyuse = 0.0;
-          for (var i = 0; i < filterBeratByyuse.length; i++) {
-            beratyuse +=
-                double.parse(filterBeratByyuse.toList()[i].beratModeller!);
-          }
-        }
-     
-
-      // g = filterBySiklus.toList();
-      return g;
-    } else {
-      throw Exception('Unexpected error occured!');
-    }
-  }
-
-  Future<List<FormDesignerModel>> _getKelasHarga(chooseSiklus, nama) async {
-    final response = await http.get(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.getListFormDesigner));
-    if (response.statusCode == 200) {
-      List jsonResponse = json.decode(response.body);
-
-      var g =
-          jsonResponse.map((data) => FormDesignerModel.fromJson(data)).toList();
-
-      if (sharedPreferences!.getString('level') == '1') {
-//! kondisi scm
-
-        if (chooseSiklus.toString().toLowerCase() == "all") {
-        } else {
-          var filterBySiklus = g.where((element) =>
-              element.siklus.toString().toLowerCase() ==
-              chooseSiklus.toString().toLowerCase());
-          g = filterBySiklus.toList();
-        }
-      } else if (sharedPreferences!.getString('level') == '2') {
-        //! kondisi designer
-        if (chooseSiklus.toString().toLowerCase() == "all") {
-          var filterByName = g.where((element) =>
-              element.namaDesigner.toString().toLowerCase() ==
-              nama.toString().toLowerCase());
-          g = filterByName.toList();
-        } else {
-          var filterBySiklus = g.where((element) =>
-              element.siklus.toString().toLowerCase() ==
-              chooseSiklus.toString().toLowerCase());
-          var filterByName = filterBySiklus.where((element) =>
-              element.namaDesigner.toString().toLowerCase() ==
-              nama.toString().toLowerCase());
-          g = filterByName.toList();
-        }
-      } else {
-        //! kondisi modeller
-        if (chooseSiklus.toString().toLowerCase() == "all") {
-          var filterByName = g.where((element) =>
-              element.namaModeller.toString().toLowerCase() ==
-              nama.toString().toLowerCase());
-          g = filterByName.toList();
-        } else {
-          var filterBySiklus = g.where((element) =>
-              element.siklus.toString().toLowerCase() ==
-              chooseSiklus.toString().toLowerCase());
-          var filterByName = filterBySiklus.where((element) =>
-              element.namaModeller.toString().toLowerCase() ==
-              nama.toString().toLowerCase());
-          g = filterByName.toList();
-        }
-      }
-
-      //* fungsi looping untuk menambahakn beberapa item kje dalam list kosong
-      listKelasHarga.clear();
-      sumHarga.clear();
-      sumHarga.add(0);
-
-      for (var i = 0; i < g.length; i++) {
-        if (g[i].brand.toString().toLowerCase() == "parva" ||
-            g[i].brand.toString().toLowerCase() == "fine") {
-          int nilai = ((g[i].estimasiHarga! * 0.37) * 11500).round();
-          sumHarga.add(nilai);
-          if (((g[i].estimasiHarga! * 0.37) * 11500) <= 5000000) {
-            listKelasHarga.add(
-                'XS'); //!menambahakn item baru ke dalam list yang sudah dibuatkan
-          } else if (((g[i].estimasiHarga! * 0.37) * 11500) <= 10000000) {
-            listKelasHarga.add('S');
-          } else if (((g[i].estimasiHarga! * 0.37) * 11500) <= 20000000) {
-            listKelasHarga.add('M');
-          } else if (((g[i].estimasiHarga! * 0.37) * 11500) <= 35000000) {
-            listKelasHarga.add('L');
-          } else {
-            listKelasHarga.add('XL');
-          }
-        }
-        //? untuk beli berlian dan metier
-        else {
-          int nilai = g[i].estimasiHarga!;
-          sumHarga.add(nilai);
-          if (g[i].estimasiHarga! <= 5000000) {
-            listKelasHarga.add(
-                'XS'); //!menambahakn item baru ke dalam list yang sudah dibuatkan
-          } else if (g[i].estimasiHarga! <= 10000000) {
-            listKelasHarga.add('S');
-          } else if (g[i].estimasiHarga! <= 20000000) {
-            listKelasHarga.add('M');
-          } else if (g[i].estimasiHarga! <= 35000000) {
-            listKelasHarga.add('L');
-          } else {
-            listKelasHarga.add('XL');
-          }
-        }
-      }
-      totalHarga = sumHarga.reduce((a, b) => a + b);
-
-      // print(listKelasHarga.where((e) => e == "XS").length); //! mencari kalimat tertentu di dalam list yang menampilkan count dalam list
-      // print(listKelasHarga.toSet().toList()); //! menghapus item duplikat di dalam 1 list
       return g;
     } else {
       throw Exception('Unexpected error occured!');
@@ -751,7 +639,6 @@ class _HomeScreenAdminState extends State<HomeScreenAdmin> {
                 ),
               ),
               dashboardSCM()
-                  
             ]),
           ]),
         ));
@@ -1101,8 +988,6 @@ class _HomeScreenAdminState extends State<HomeScreenAdmin> {
                               // isLoadingJenisBarang = true;
                               siklus.text = item!;
                               siklusDesigner = siklus.text.toString();
-                              _getData(siklusDesigner,
-                                  sharedPreferences!.getString('nama')!);
                               _getAllData(siklusDesigner,
                                   sharedPreferences!.getString('nama')!);
                             });
@@ -1203,12 +1088,10 @@ class _HomeScreenAdminState extends State<HomeScreenAdmin> {
                           onChanged: (item) {
                             setState(() {
                               listKelasHarga.clear();
-_getDataJenisBarang(item,'');
+                              // _getDataJenisBarang(item, '');
                               isLoadingJenisBarang = true;
                               siklus.text = item!;
                               siklusDesigner = siklus.text.toString();
-                              _getData(siklusDesigner,
-                                  sharedPreferences!.getString('nama')!);
                               _getAllData(siklusDesigner,
                                   sharedPreferences!.getString('nama')!);
                             });
@@ -1290,2626 +1173,18 @@ _getDataJenisBarang(item,'');
                 }
               })),
 
-          isSummaryModeller == true
-              ? Align(
-                  alignment: Alignment.bottomLeft,
-                  child: Container(
-                      padding: const EdgeInsets.all(0),
-                      width: 900,
-                      height: 330,
-                      child: Card(
-                          color: Colors.white,
-                          child: FutureBuilder(
-                              future: siklus.text.isEmpty
-                                  ? _getData("all",
-                                      sharedPreferences!.getString('nama')!)
-                                  : _getData(siklusDesigner,
-                                      sharedPreferences!.getString('nama')!),
-                              builder: (context, snapshot) {
-                                if (snapshot.hasError) {
-                                  return Column(children: [
-                                    const Text('Summary Modeller',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 24,
-                                        )),
-                                    const Divider(thickness: 5),
-                                    Center(
-                                        child: SizedBox(
-                                      width: 250,
-                                      height: 210,
-                                      child: Lottie.asset(
-                                          "loadingJSON/somethingwentwrong.json"),
-                                    ))
-                                  ]);
-                                }
-
-                                if (snapshot.connectionState ==
-                                    ConnectionState.waiting) {
-                                  return Column(children: [
-                                    const Text('Summary Modeller',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 24,
-                                        )),
-                                    const Divider(thickness: 5),
-                                    Container(
-                                      padding: const EdgeInsets.all(0),
-                                      width: 90,
-                                      height: 90,
-                                      child: Lottie.asset(
-                                          "loadingJSON/loadingV1.json"),
-                                    )
-                                  ]);
-                                }
-                                if (snapshot.data!.isEmpty) {
-                                  return const Column(children: [
-                                    Text('Summary Modeller',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 24,
-                                        )),
-                                    Divider(thickness: 5),
-                                    Center(
-                                      child: Text(
-                                        'Tidak ada data',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            fontSize: 26,
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold,
-                                            fontFamily: 'Acne',
-                                            letterSpacing: 1.5),
-                                      ),
-                                    )
-                                  ]);
-                                }
-                                if (snapshot.hasData) {
-                                  return Column(children: [
-                                    InkWell(
-                                      onTap: () {
-                                        setState(() {
-                                          isSummaryModeller = false;
-                                        });
-                                      },
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Lottie.asset(
-                                              "loadingJSON/backbutton.json",
-                                              fit: BoxFit.cover),
-                                          Container(
-                                            padding:
-                                                const EdgeInsets.only(left: 0),
-                                            alignment: Alignment.center,
-                                            child: const Text(
-                                                'Summary Modeller',
-                                                style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 24,
-                                                )),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    const Divider(thickness: 5),
-                                    Expanded(
-                                      child: Container(
-                                        padding: const EdgeInsets.all(0),
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                1,
-                                        child: SizedBox(
-                                          width: double.infinity,
-                                          child: Theme(
-                                            data: ThemeData.light().copyWith(
-                                                // cardColor: Theme.of(context).canvasColor),
-                                                cardColor: Colors.white,
-                                                hoverColor:
-                                                    Colors.grey.shade400,
-                                                dividerColor: Colors.grey),
-                                            child: _dataTableSumModeller(),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ]);
-                                }
-                                return Column(children: [
-                                  const Text('Summary Modeller',
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 24,
-                                      )),
-                                  const Divider(thickness: 5),
-                                  Container(
-                                    padding: const EdgeInsets.all(0),
-                                    width: 90,
-                                    height: 90,
-                                    child: Lottie.asset(
-                                        "loadingJSON/loadingV1.json"),
-                                  )
-                                ]);
-                              }))))
-              : LayoutBuilder(builder: (context, constraints) {
-                  print(constraints.maxWidth);
-                  //? fungsi multi screen
-                  if (constraints.maxWidth < 900) {
-                    return Column(
-                      children: [
-                        //*report jenis barang SCM
-                        isJenisBarangView1 == true
-                            ? jenisBarangView1(namaJenisBarangView1)
-                            : Align(
-                                alignment: Alignment.bottomLeft,
-                                child: Container(
-                                    padding: const EdgeInsets.all(12),
-                                    width: 300,
-                                    height: 300,
-                                    child: Card(
-                                        color: Colors.white,
-                                        child: FutureBuilder(
-                                            future: siklus.text.isEmpty
-                                                ? _getData(
-                                                    "all",
-                                                    sharedPreferences!
-                                                        .getString('nama')!)
-                                                : _getData(
-                                                    siklusDesigner,
-                                                    sharedPreferences!
-                                                        .getString('nama')!),
-                                            builder: (context, snapshot) {
-                                              if (snapshot.hasError) {
-                                                return Column(children: [
-                                                  const Text('Jenis Barang',
-                                                      style: TextStyle(
-                                                        color: Colors.black,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 24,
-                                                      )),
-                                                  const Divider(thickness: 5),
-                                                  Center(
-                                                      child: SizedBox(
-                                                    width: 250,
-                                                    height: 210,
-                                                    child: Lottie.asset(
-                                                        "loadingJSON/somethingwentwrong.json"),
-                                                  ))
-                                                ]);
-                                              }
-
-                                              if (snapshot.connectionState ==
-                                                  ConnectionState.waiting) {
-                                                return Column(children: [
-                                                  const Text('Jenis Barang',
-                                                      style: TextStyle(
-                                                        color: Colors.black,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 24,
-                                                      )),
-                                                  const Divider(thickness: 5),
-                                                  Container(
-                                                    padding:
-                                                        const EdgeInsets.all(0),
-                                                    width: 90,
-                                                    height: 90,
-                                                    child: Lottie.asset(
-                                                        "loadingJSON/loadingV1.json"),
-                                                  )
-                                                ]);
-                                              }
-                                              if (snapshot.data!.isEmpty) {
-                                                return const Column(children: [
-                                                  Text('Jenis Barang',
-                                                      style: TextStyle(
-                                                        color: Colors.black,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 24,
-                                                      )),
-                                                  Divider(thickness: 5),
-                                                  Center(
-                                                    child: Text(
-                                                      'Tidak ada data',
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style: TextStyle(
-                                                          fontSize: 26,
-                                                          color: Colors.black,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontFamily: 'Acne',
-                                                          letterSpacing: 1.5),
-                                                    ),
-                                                  )
-                                                ]);
-                                              }
-                                              if (snapshot.hasData) {
-                                                return Column(children: [
-                                                  const Text('Jenis Barang',
-                                                      style: TextStyle(
-                                                        color: Colors.black,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 24,
-                                                      )),
-                                                  const Divider(thickness: 5),
-                                                  Expanded(
-                                                    child:
-                                                        isLoadingJenisBarang ==
-                                                                true
-                                                            ? Container(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                        .all(0),
-                                                                width: 90,
-                                                                height: 90,
-                                                                child: Lottie.asset(
-                                                                    "loadingJSON/loadingV1.json"),
-                                                              )
-                                                            : ListView.builder(
-                                                                itemCount:
-                                                                    snapshot
-                                                                        .data!
-                                                                        .length,
-                                                                itemBuilder:
-                                                                    (BuildContext
-                                                                            context,
-                                                                        int index) {
-                                                                  var data =
-                                                                      snapshot.data![
-                                                                          index];
-                                                                  return Container(
-                                                                    padding:
-                                                                        const EdgeInsets
-                                                                            .all(
-                                                                            0),
-                                                                    child:
-                                                                        Column(
-                                                                      children: [
-                                                                        Container(
-                                                                          padding: const EdgeInsets
-                                                                              .symmetric(
-                                                                              horizontal: 17),
-                                                                          child:
-                                                                              ElevatedButton(
-                                                                            onPressed:
-                                                                                () {
-                                                                              setState(() {
-                                                                                namaJenisBarangView1 = data.jenisBarang.toString();
-                                                                                isJenisBarangView1 = true;
-                                                                              });
-                                                                            },
-                                                                            style:
-                                                                                ElevatedButton.styleFrom(backgroundColor: Colors.blue.shade100, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
-                                                                            child:
-                                                                                Row(
-                                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                              children: [
-                                                                                Text(
-                                                                                  data.jenisBarang.toString(),
-                                                                                  style: const TextStyle(fontSize: 14, color: Colors.black, fontWeight: FontWeight.bold),
-                                                                                ),
-                                                                                Text(
-                                                                                  listJenisBarang!.where((element) => element.jenisBarang.toString().toLowerCase() == data.jenisBarang.toString().toLowerCase()).toList().length.toString(),
-                                                                                  style: const TextStyle(fontSize: 14, color: Colors.black, fontWeight: FontWeight.bold),
-                                                                                ),
-                                                                              ],
-                                                                            ),
-                                                                          ),
-                                                                        ),
-                                                                        const Divider(
-                                                                          thickness:
-                                                                              1,
-                                                                          color:
-                                                                              Colors.grey,
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                  );
-                                                                },
-                                                              ),
-                                                  ),
-                                                ]);
-                                              }
-                                              return Column(children: [
-                                                const Text('Jenis Barang',
-                                                    style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 24,
-                                                    )),
-                                                const Divider(thickness: 5),
-                                                Container(
-                                                  padding:
-                                                      const EdgeInsets.all(0),
-                                                  width: 90,
-                                                  height: 90,
-                                                  child: Lottie.asset(
-                                                      "loadingJSON/loadingV1.json"),
-                                                )
-                                              ]);
-                                            })))),
-
-                        //*report kelas harga
-                        Align(
-                            alignment: Alignment.bottomLeft,
-                            child: Container(
-                                padding: const EdgeInsets.all(12),
-                                width: 300,
-                                height: 300,
-                                child: Card(
-                                    color: Colors.white,
-                                    child: FutureBuilder(
-                                        future: siklus.text.isEmpty
-                                            ? _getKelasHarga(
-                                                "all",
-                                                sharedPreferences!
-                                                    .getString('nama')!)
-                                            : _getKelasHarga(
-                                                siklusDesigner,
-                                                sharedPreferences!
-                                                    .getString('nama')!),
-                                        builder: (context, snapshot) {
-                                          if (snapshot.hasError) {
-                                            return Column(children: [
-                                              const Text('Kelas Harga',
-                                                  style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 24,
-                                                  )),
-                                              const Divider(thickness: 5),
-                                              Center(
-                                                  child: SizedBox(
-                                                height: 210,
-                                                child: Lottie.asset(
-                                                    "loadingJSON/somethingwentwrong.json"),
-                                              ))
-                                            ]);
-                                          }
-
-                                          if (snapshot.connectionState ==
-                                              ConnectionState.waiting) {
-                                            return Column(children: [
-                                              const Text('Kelas Harga',
-                                                  style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 24,
-                                                  )),
-                                              const Divider(thickness: 5),
-                                              Container(
-                                                padding:
-                                                    const EdgeInsets.all(0),
-                                                width: 90,
-                                                height: 90,
-                                                child: Lottie.asset(
-                                                    "loadingJSON/loadingV1.json"),
-                                              )
-                                            ]);
-                                          }
-                                          if (snapshot.data!.isEmpty) {
-                                            return const Column(children: [
-                                              Text('Kelas Harga',
-                                                  style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 24,
-                                                  )),
-                                              Divider(thickness: 5),
-                                              Center(
-                                                child: Text(
-                                                  'Tidak ada data',
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                      fontSize: 26,
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontFamily: 'Acne',
-                                                      letterSpacing: 1.5),
-                                                ),
-                                              )
-                                            ]);
-                                          }
-                                          if (snapshot.hasData) {
-                                            return Column(children: [
-                                              const Text('Kelas Harga',
-                                                  style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 24,
-                                                  )),
-                                              const Divider(thickness: 5),
-                                              Expanded(
-                                                child: isLoading == false
-                                                    ? Container(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(0),
-                                                        width: 90,
-                                                        height: 90,
-                                                        child: Lottie.asset(
-                                                            "loadingJSON/loadingV1.json"),
-                                                      )
-                                                    : ListView.builder(
-                                                        itemCount:
-                                                            listKelasHarga
-                                                                .toSet()
-                                                                .toList()
-                                                                .length,
-                                                        itemBuilder:
-                                                            (BuildContext
-                                                                    context,
-                                                                int index) {
-                                                          // ignore: unused_local_variable
-                                                          var data = snapshot
-                                                              .data![index];
-                                                          return Container(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(0),
-                                                            child: Column(
-                                                              children: [
-                                                                Container(
-                                                                  padding: const EdgeInsets
-                                                                      .symmetric(
-                                                                      horizontal:
-                                                                          17),
-                                                                  child:
-                                                                      ElevatedButton(
-                                                                    onPressed:
-                                                                        () {
-                                                                      setState(
-                                                                          () {});
-                                                                    },
-                                                                    style: ElevatedButton.styleFrom(
-                                                                        backgroundColor: Colors
-                                                                            .blue
-                                                                            .shade100,
-                                                                        shape: RoundedRectangleBorder(
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(50.0))),
-                                                                    child: Row(
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .spaceBetween,
-                                                                      children: [
-                                                                        // menampilkan list kelas harga di list dan menghilangkan duplikatnya
-                                                                        Text(
-                                                                          listKelasHarga
-                                                                              .toSet()
-                                                                              .toList()[index]
-                                                                              .toString(),
-                                                                          maxLines:
-                                                                              2,
-                                                                          style: const TextStyle(
-                                                                              fontSize: 14,
-                                                                              color: Colors.black,
-                                                                              fontWeight: FontWeight.bold),
-                                                                        ),
-                                                                        //fungsi menampilkan jumlah kelas harga di list
-                                                                        Text(
-                                                                          listKelasHarga
-                                                                              .where((element) => element == listKelasHarga.toSet().toList()[index].toString())
-                                                                              .length
-                                                                              .toString(),
-                                                                          style: const TextStyle(
-                                                                              fontSize: 14,
-                                                                              color: Colors.black,
-                                                                              fontWeight: FontWeight.bold),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                                const Divider(
-                                                                  thickness: 1,
-                                                                  color: Colors
-                                                                      .grey,
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          );
-                                                        },
-                                                      ),
-                                              ),
-                                            ]);
-                                          }
-                                          return Column(children: [
-                                            const Text('Kelas Harga',
-                                                style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 24,
-                                                )),
-                                            const Divider(thickness: 5),
-                                            Container(
-                                              padding: const EdgeInsets.all(0),
-                                              width: 90,
-                                              height: 90,
-                                              child: Lottie.asset(
-                                                  "loadingJSON/loadingV1.json"),
-                                            )
-                                          ]);
-                                        })))),
-
-                        //* report Menu Report
-                        Align(
-                            alignment: Alignment.bottomLeft,
-                            child: Container(
-                                padding: const EdgeInsets.all(12),
-                                width: 300,
-                                height: 300,
-                                child: Card(
-                                    color: Colors.white,
-                                    child: FutureBuilder(
-                                        future: siklus.text.isEmpty
-                                            ? _getKelasHarga(
-                                                "all",
-                                                sharedPreferences!
-                                                    .getString('nama')!)
-                                            : _getKelasHarga(
-                                                siklusDesigner,
-                                                sharedPreferences!
-                                                    .getString('nama')!),
-                                        builder: (context, snapshot) {
-                                          if (snapshot.hasError) {
-                                            return Column(children: [
-                                              const Text('Summary Report',
-                                                  style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 24,
-                                                  )),
-                                              const Divider(thickness: 5),
-                                              Center(
-                                                  child: SizedBox(
-                                                height: 210,
-                                                child: Lottie.asset(
-                                                    "loadingJSON/somethingwentwrong.json"),
-                                              ))
-                                            ]);
-                                          }
-
-                                          if (snapshot.connectionState ==
-                                              ConnectionState.waiting) {
-                                            return Column(children: [
-                                              const Text('Summary Report',
-                                                  style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 24,
-                                                  )),
-                                              const Divider(thickness: 5),
-                                              Container(
-                                                padding:
-                                                    const EdgeInsets.all(0),
-                                                width: 90,
-                                                height: 90,
-                                                child: Lottie.asset(
-                                                    "loadingJSON/loadingV1.json"),
-                                              )
-                                            ]);
-                                          }
-                                          if (snapshot.data!.isEmpty) {
-                                            return const Column(children: [
-                                              Text('Summary Report',
-                                                  style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 24,
-                                                  )),
-                                              Divider(thickness: 5),
-                                              Center(
-                                                child: Text(
-                                                  'Tidak ada data',
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                      fontSize: 26,
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontFamily: 'Acne',
-                                                      letterSpacing: 1.5),
-                                                ),
-                                              )
-                                            ]);
-                                          }
-                                          if (snapshot.hasData) {
-                                            batuBelumLengkap =
-                                                totalSPK - batuLengkap;
-                                            return Column(children: [
-                                              const Text('Summary Report',
-                                                  style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 24,
-                                                  )),
-                                              const Divider(thickness: 5),
-                                              Expanded(
-                                                  child: isLoading == false
-                                                      ? Container(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(0),
-                                                          width: 90,
-                                                          height: 90,
-                                                          child: Lottie.asset(
-                                                              "loadingJSON/loadingV1.json"),
-                                                        )
-                                                      : SingleChildScrollView(
-                                                          scrollDirection:
-                                                              Axis.vertical,
-                                                          child: Container(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(0),
-                                                            child: Column(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .start,
-                                                              children: [
-                                                                //? SPK
-                                                                Container(
-                                                                  padding: const EdgeInsets
-                                                                      .symmetric(
-                                                                      horizontal:
-                                                                          17),
-                                                                  child:
-                                                                      ElevatedButton(
-                                                                    onPressed:
-                                                                        () {
-                                                                      setState(
-                                                                          () {});
-                                                                    },
-                                                                    style: ElevatedButton.styleFrom(
-                                                                        backgroundColor: Colors
-                                                                            .blue
-                                                                            .shade100,
-                                                                        shape: RoundedRectangleBorder(
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(50.0))),
-                                                                    child: Row(
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .spaceBetween,
-                                                                      children: [
-                                                                        const Text(
-                                                                          'SPK',
-                                                                          maxLines:
-                                                                              2,
-                                                                          style: TextStyle(
-                                                                              fontSize: 14,
-                                                                              color: Colors.black,
-                                                                              fontWeight: FontWeight.bold),
-                                                                        ),
-                                                                        //fungsi menampilkan jumlah SESUAI table
-                                                                        Text(
-                                                                          '$totalSPK',
-                                                                          style: const TextStyle(
-                                                                              fontSize: 14,
-                                                                              color: Colors.black,
-                                                                              fontWeight: FontWeight.bold),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                  ),
-                                                                ),
-
-                                                                const Padding(
-                                                                  padding: EdgeInsets
-                                                                      .only(
-                                                                          bottom:
-                                                                              0),
-                                                                  child:
-                                                                      Divider(
-                                                                    thickness:
-                                                                        1,
-                                                                    color: Colors
-                                                                        .grey,
-                                                                  ),
-                                                                ),
-                                                                //? SPK LENGKAP
-                                                                Container(
-                                                                  padding: const EdgeInsets
-                                                                      .symmetric(
-                                                                      horizontal:
-                                                                          17),
-                                                                  child:
-                                                                      ElevatedButton(
-                                                                    onPressed:
-                                                                        () {
-                                                                      setState(
-                                                                          () {});
-                                                                    },
-                                                                    style: ElevatedButton.styleFrom(
-                                                                        backgroundColor:
-                                                                            Colors
-                                                                                .green,
-                                                                        shape: RoundedRectangleBorder(
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(50.0))),
-                                                                    child: Row(
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .spaceBetween,
-                                                                      children: [
-                                                                        const Text(
-                                                                          'SPK Lengkap',
-                                                                          maxLines:
-                                                                              2,
-                                                                          style: TextStyle(
-                                                                              fontSize: 14,
-                                                                              color: Colors.black,
-                                                                              fontWeight: FontWeight.bold),
-                                                                        ),
-                                                                        //fungsi menampilkan jumlah SESUAI table
-                                                                        Text(
-                                                                          '$batuLengkap',
-                                                                          style: const TextStyle(
-                                                                              fontSize: 14,
-                                                                              color: Colors.black,
-                                                                              fontWeight: FontWeight.bold),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                  ),
-                                                                ),
-
-                                                                const Padding(
-                                                                  padding: EdgeInsets
-                                                                      .only(
-                                                                          bottom:
-                                                                              0),
-                                                                  child:
-                                                                      Divider(
-                                                                    thickness:
-                                                                        1,
-                                                                    color: Colors
-                                                                        .grey,
-                                                                  ),
-                                                                ),
-                                                                //? SPK Tidak LENGKAP
-                                                                Container(
-                                                                  padding: const EdgeInsets
-                                                                      .symmetric(
-                                                                      horizontal:
-                                                                          17),
-                                                                  child:
-                                                                      ElevatedButton(
-                                                                    onPressed:
-                                                                        () {
-                                                                      setState(
-                                                                          () {});
-                                                                    },
-                                                                    style: ElevatedButton.styleFrom(
-                                                                        backgroundColor:
-                                                                            Colors
-                                                                                .orange,
-                                                                        shape: RoundedRectangleBorder(
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(50.0))),
-                                                                    child: Row(
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .spaceBetween,
-                                                                      children: [
-                                                                        const Text(
-                                                                          'SPK Tidak Lengkap',
-                                                                          maxLines:
-                                                                              2,
-                                                                          style: TextStyle(
-                                                                              fontSize: 14,
-                                                                              color: Colors.black,
-                                                                              fontWeight: FontWeight.bold),
-                                                                        ),
-                                                                        //fungsi menampilkan jumlah SESUAI table
-                                                                        Text(
-                                                                          '$batuBelumLengkap',
-                                                                          // '($totalSPK - $batuLengkap)',
-                                                                          style: const TextStyle(
-                                                                              fontSize: 14,
-                                                                              color: Colors.black,
-                                                                              fontWeight: FontWeight.bold),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                  ),
-                                                                ),
-
-                                                                const Padding(
-                                                                  padding: EdgeInsets
-                                                                      .only(
-                                                                          bottom:
-                                                                              0),
-                                                                  child:
-                                                                      Divider(
-                                                                    thickness:
-                                                                        1,
-                                                                    color: Colors
-                                                                        .grey,
-                                                                  ),
-                                                                ),
-                                                                //? SPK Cancel
-                                                                Container(
-                                                                  padding: const EdgeInsets
-                                                                      .symmetric(
-                                                                      horizontal:
-                                                                          17),
-                                                                  child:
-                                                                      ElevatedButton(
-                                                                    onPressed:
-                                                                        () {
-                                                                      setState(
-                                                                          () {});
-                                                                    },
-                                                                    style: ElevatedButton.styleFrom(
-                                                                        backgroundColor:
-                                                                            Colors
-                                                                                .red,
-                                                                        shape: RoundedRectangleBorder(
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(50.0))),
-                                                                    child:
-                                                                        const Row(
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .spaceBetween,
-                                                                      children: [
-                                                                        Text(
-                                                                          'SPK Cancel',
-                                                                          maxLines:
-                                                                              2,
-                                                                          style: TextStyle(
-                                                                              fontSize: 14,
-                                                                              color: Colors.black,
-                                                                              fontWeight: FontWeight.bold),
-                                                                        ),
-                                                                        //fungsi menampilkan jumlah SESUAI table
-                                                                        Text(
-                                                                          '0',
-                                                                          style: TextStyle(
-                                                                              fontSize: 14,
-                                                                              color: Colors.black,
-                                                                              fontWeight: FontWeight.bold),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                  ),
-                                                                ),
-
-                                                                const Padding(
-                                                                  padding: EdgeInsets
-                                                                      .only(
-                                                                          bottom:
-                                                                              0),
-                                                                  child:
-                                                                      Divider(
-                                                                    thickness:
-                                                                        1,
-                                                                    color: Colors
-                                                                        .grey,
-                                                                  ),
-                                                                ),
-
-                                                                //? Total harga
-                                                                Container(
-                                                                  padding: const EdgeInsets
-                                                                      .symmetric(
-                                                                      horizontal:
-                                                                          17),
-                                                                  child:
-                                                                      ElevatedButton(
-                                                                    onPressed:
-                                                                        () {
-                                                                      setState(
-                                                                          () {});
-                                                                    },
-                                                                    style: ElevatedButton.styleFrom(
-                                                                        backgroundColor: Colors
-                                                                            .blue
-                                                                            .shade100,
-                                                                        shape: RoundedRectangleBorder(
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(50.0))),
-                                                                    child: Row(
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .spaceBetween,
-                                                                      children: [
-                                                                        const Text(
-                                                                          'Total',
-                                                                          maxLines:
-                                                                              2,
-                                                                          style: TextStyle(
-                                                                              fontSize: 14,
-                                                                              color: Colors.black,
-                                                                              fontWeight: FontWeight.bold),
-                                                                        ),
-                                                                        //fungsi menampilkan jumlah SESUAI table
-                                                                        Text(
-                                                                          'Rp. ${CurrencyFormat.convertToDollar(totalHarga, 0)}',
-                                                                          style: const TextStyle(
-                                                                              fontSize: 14,
-                                                                              color: Colors.black,
-                                                                              fontWeight: FontWeight.bold),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                  ),
-                                                                ),
-
-                                                                const Padding(
-                                                                  padding: EdgeInsets
-                                                                      .only(
-                                                                          bottom:
-                                                                              0),
-                                                                  child:
-                                                                      Divider(
-                                                                    thickness:
-                                                                        1,
-                                                                    color: Colors
-                                                                        .grey,
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        )),
-                                            ]);
-                                          }
-                                          return Column(children: [
-                                            const Text('Summary Report',
-                                                style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 24,
-                                                )),
-                                            const Divider(thickness: 5),
-                                            Container(
-                                              padding: const EdgeInsets.all(0),
-                                              width: 90,
-                                              height: 90,
-                                              child: Lottie.asset(
-                                                  "loadingJSON/loadingV1.json"),
-                                            )
-                                          ]);
-                                        })))),
-
-                        //* report Point Modeller
-                        Align(
-                            alignment: Alignment.bottomLeft,
-                            child: Container(
-                                padding: const EdgeInsets.all(12),
-                                width: 300,
-                                height: 300,
-                                child: Card(
-                                    color: Colors.white,
-                                    child: FutureBuilder(
-                                        future: siklus.text.isEmpty
-                                            ? _getKelasHarga(
-                                                "all",
-                                                sharedPreferences!
-                                                    .getString('nama')!)
-                                            : _getKelasHarga(
-                                                siklusDesigner,
-                                                sharedPreferences!
-                                                    .getString('nama')!),
-                                        builder: (context, snapshot) {
-                                          if (snapshot.hasError) {
-                                            return Column(children: [
-                                              const Text('Point Modeller',
-                                                  style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 24,
-                                                  )),
-                                              const Divider(thickness: 5),
-                                              Center(
-                                                  child: SizedBox(
-                                                height: 210,
-                                                child: Lottie.asset(
-                                                    "loadingJSON/somethingwentwrong.json"),
-                                              ))
-                                            ]);
-                                          }
-
-                                          if (snapshot.connectionState ==
-                                              ConnectionState.waiting) {
-                                            return Column(children: [
-                                              const Text('Point Modeller',
-                                                  style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 24,
-                                                  )),
-                                              const Divider(thickness: 5),
-                                              Container(
-                                                padding:
-                                                    const EdgeInsets.all(0),
-                                                width: 90,
-                                                height: 90,
-                                                child: Lottie.asset(
-                                                    "loadingJSON/loadingV1.json"),
-                                              )
-                                            ]);
-                                          }
-                                          if (snapshot.data!.isEmpty) {
-                                            return const Column(children: [
-                                              Text('Point Modeller',
-                                                  style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 24,
-                                                  )),
-                                              Divider(thickness: 5),
-                                              Center(
-                                                child: Text(
-                                                  'Tidak ada data',
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                      fontSize: 26,
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontFamily: 'Acne',
-                                                      letterSpacing: 1.5),
-                                                ),
-                                              )
-                                            ]);
-                                          }
-                                          if (snapshot.hasData) {
-                                            return Column(children: [
-                                              const Text('Point Modeller',
-                                                  style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 24,
-                                                  )),
-                                              const Divider(thickness: 5),
-                                              Expanded(
-                                                  child: isLoading == false
-                                                      ? Container(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(0),
-                                                          width: 90,
-                                                          height: 90,
-                                                          child: Lottie.asset(
-                                                              "loadingJSON/loadingV1.json"),
-                                                        )
-                                                      : SingleChildScrollView(
-                                                          scrollDirection:
-                                                              Axis.vertical,
-                                                          child: Container(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(0),
-                                                            child: Column(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .start,
-                                                              children: [
-                                                                //? Arif Kurniawan
-                                                                Container(
-                                                                  padding: const EdgeInsets
-                                                                      .symmetric(
-                                                                      horizontal:
-                                                                          17),
-                                                                  // child: ElevatedButton(
-                                                                  //   onPressed: () {
-                                                                  //     setState(() {});
-                                                                  //   },
-                                                                  //   style: ElevatedButton.styleFrom(
-                                                                  //       backgroundColor:
-                                                                  //           Colors.blue
-                                                                  //               .shade100,
-                                                                  //       shape: RoundedRectangleBorder(
-                                                                  //           borderRadius:
-                                                                  //               BorderRadius
-                                                                  //                   .circular(
-                                                                  //                       50.0))),
-                                                                  child: Row(
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .spaceBetween,
-                                                                    children: [
-                                                                      const Text(
-                                                                        'Arif Kurniawan',
-                                                                        maxLines:
-                                                                            2,
-                                                                        style: TextStyle(
-                                                                            fontSize:
-                                                                                14,
-                                                                            color:
-                                                                                Colors.black,
-                                                                            fontWeight: FontWeight.bold),
-                                                                      ),
-                                                                      //fungsi menampilkan jumlah SESUAI table
-                                                                      Text(
-                                                                        pointArif
-                                                                            .toStringAsFixed(2),
-                                                                        style: const TextStyle(
-                                                                            fontSize:
-                                                                                14,
-                                                                            color:
-                                                                                Colors.black,
-                                                                            fontWeight: FontWeight.bold),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                  // ),
-                                                                ),
-
-                                                                const Padding(
-                                                                  padding: EdgeInsets
-                                                                      .only(
-                                                                          bottom:
-                                                                              0),
-                                                                  child:
-                                                                      Divider(
-                                                                    thickness:
-                                                                        1,
-                                                                    color: Colors
-                                                                        .grey,
-                                                                  ),
-                                                                ),
-
-                                                                //? Aris Pravidan
-                                                                Container(
-                                                                  padding: const EdgeInsets
-                                                                      .symmetric(
-                                                                      horizontal:
-                                                                          17),
-                                                                  // child: ElevatedButton(
-                                                                  //   onPressed: () {
-                                                                  //     setState(() {});
-                                                                  //   },
-                                                                  //   style: ElevatedButton.styleFrom(
-                                                                  //       backgroundColor:
-                                                                  //           Colors.blue
-                                                                  //               .shade100,
-                                                                  //       shape: RoundedRectangleBorder(
-                                                                  //           borderRadius:
-                                                                  //               BorderRadius
-                                                                  //                   .circular(
-                                                                  //                       50.0))),
-                                                                  child: Row(
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .spaceBetween,
-                                                                    children: [
-                                                                      const Text(
-                                                                        'Aris Pravidan',
-                                                                        maxLines:
-                                                                            2,
-                                                                        style: TextStyle(
-                                                                            fontSize:
-                                                                                14,
-                                                                            color:
-                                                                                Colors.black,
-                                                                            fontWeight: FontWeight.bold),
-                                                                      ),
-                                                                      //fungsi menampilkan jumlah SESUAI table
-                                                                      Text(
-                                                                        pointAris
-                                                                            .toStringAsFixed(2),
-                                                                        style: const TextStyle(
-                                                                            fontSize:
-                                                                                14,
-                                                                            color:
-                                                                                Colors.black,
-                                                                            fontWeight: FontWeight.bold),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                  // ),
-                                                                ),
-
-                                                                const Padding(
-                                                                  padding: EdgeInsets
-                                                                      .only(
-                                                                          bottom:
-                                                                              0),
-                                                                  child:
-                                                                      Divider(
-                                                                    thickness:
-                                                                        1,
-                                                                    color: Colors
-                                                                        .grey,
-                                                                  ),
-                                                                ),
-                                                                //? Fikryansyah
-                                                                Container(
-                                                                  padding: const EdgeInsets
-                                                                      .symmetric(
-                                                                      horizontal:
-                                                                          17),
-                                                                  // child: ElevatedButton(
-                                                                  //   onPressed: () {
-                                                                  //     setState(() {});
-                                                                  //   },
-                                                                  //   style: ElevatedButton.styleFrom(
-                                                                  //       backgroundColor:
-                                                                  //           Colors.blue
-                                                                  //               .shade100,
-                                                                  //       shape: RoundedRectangleBorder(
-                                                                  //           borderRadius:
-                                                                  //               BorderRadius
-                                                                  //                   .circular(
-                                                                  //                       50.0))),
-                                                                  child: Row(
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .spaceBetween,
-                                                                    children: [
-                                                                      const Text(
-                                                                        'Fikryansyah',
-                                                                        maxLines:
-                                                                            2,
-                                                                        style: TextStyle(
-                                                                            fontSize:
-                                                                                14,
-                                                                            color:
-                                                                                Colors.black,
-                                                                            fontWeight: FontWeight.bold),
-                                                                      ),
-                                                                      //fungsi menampilkan jumlah SESUAI table
-                                                                      Text(
-                                                                        pointFikri
-                                                                            .toStringAsFixed(2),
-                                                                        style: const TextStyle(
-                                                                            fontSize:
-                                                                                14,
-                                                                            color:
-                                                                                Colors.black,
-                                                                            fontWeight: FontWeight.bold),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                  // ),
-                                                                ),
-
-                                                                const Padding(
-                                                                  padding: EdgeInsets
-                                                                      .only(
-                                                                          bottom:
-                                                                              0),
-                                                                  child:
-                                                                      Divider(
-                                                                    thickness:
-                                                                        1,
-                                                                    color: Colors
-                                                                        .grey,
-                                                                  ),
-                                                                ),
-                                                                //? Yuse
-                                                                Container(
-                                                                  padding: const EdgeInsets
-                                                                      .symmetric(
-                                                                      horizontal:
-                                                                          17),
-                                                                  // child: ElevatedButton(
-                                                                  //   onPressed: () {
-                                                                  //     setState(() {});
-                                                                  //   },
-                                                                  //   style: ElevatedButton.styleFrom(
-                                                                  //       backgroundColor:
-                                                                  //           Colors.blue
-                                                                  //               .shade100,
-                                                                  //       shape: RoundedRectangleBorder(
-                                                                  //           borderRadius:
-                                                                  //               BorderRadius
-                                                                  //                   .circular(
-                                                                  //                       50.0))),
-                                                                  child: Row(
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .spaceBetween,
-                                                                    children: [
-                                                                      const Text(
-                                                                        'Yuse',
-                                                                        maxLines:
-                                                                            2,
-                                                                        style: TextStyle(
-                                                                            fontSize:
-                                                                                14,
-                                                                            color:
-                                                                                Colors.black,
-                                                                            fontWeight: FontWeight.bold),
-                                                                      ),
-                                                                      //fungsi menampilkan jumlah SESUAI table
-                                                                      Text(
-                                                                        pointyuse
-                                                                            .toStringAsFixed(2),
-                                                                        style: const TextStyle(
-                                                                            fontSize:
-                                                                                14,
-                                                                            color:
-                                                                                Colors.black,
-                                                                            fontWeight: FontWeight.bold),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                  // ),
-                                                                ),
-
-                                                                const Padding(
-                                                                  padding: EdgeInsets
-                                                                      .only(
-                                                                          bottom:
-                                                                              0),
-                                                                  child:
-                                                                      Divider(
-                                                                    thickness:
-                                                                        1,
-                                                                    color: Colors
-                                                                        .grey,
-                                                                  ),
-                                                                ),
-                                                                const SizedBox(
-                                                                  height: 30,
-                                                                ),
-                                                                //? Summary Report Modeller
-                                                                Container(
-                                                                  padding: const EdgeInsets
-                                                                      .symmetric(
-                                                                      horizontal:
-                                                                          17),
-                                                                  child:
-                                                                      ElevatedButton(
-                                                                    onPressed:
-                                                                        () {
-                                                                      setState(
-                                                                          () {
-                                                                        isSummaryModeller =
-                                                                            true;
-                                                                      });
-                                                                    },
-                                                                    style: ElevatedButton.styleFrom(
-                                                                        backgroundColor: Colors
-                                                                            .blue
-                                                                            .shade100,
-                                                                        shape: RoundedRectangleBorder(
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(50.0))),
-                                                                    child:
-                                                                        const Row(
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .spaceBetween,
-                                                                      children: [
-                                                                        Text(
-                                                                          'Summary Report',
-                                                                          maxLines:
-                                                                              2,
-                                                                          style: TextStyle(
-                                                                              fontSize: 14,
-                                                                              color: Colors.black,
-                                                                              fontWeight: FontWeight.bold),
-                                                                        ),
-                                                                        //fungsi menampilkan jumlah SESUAI table
-                                                                        Icon(
-                                                                          Icons
-                                                                              .arrow_forward_sharp,
-                                                                          color:
-                                                                              Colors.black,
-                                                                        )
-                                                                      ],
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        )),
-                                            ]);
-                                          }
-                                          return Column(children: [
-                                            const Text('Summary Report',
-                                                style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 24,
-                                                )),
-                                            const Divider(thickness: 5),
-                                            Container(
-                                              padding: const EdgeInsets.all(0),
-                                              width: 90,
-                                              height: 90,
-                                              child: Lottie.asset(
-                                                  "loadingJSON/loadingV1.json"),
-                                            )
-                                          ]);
-                                        })))),
-                      ],
-                    );
-                  } else {
-                    return SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: [
-                          //*report jenis barang SCM
-                          isJenisBarangView1 == true
-                              ? jenisBarangView1(namaJenisBarangView1)
-                              : 
-                              Align(
-                                  alignment: Alignment.bottomLeft,
-                                  child: Container(
-                                      padding: const EdgeInsets.all(12),
-                                      width: 300,
-                                      height: 300,
-                                      child: Card(
-                                          color: Colors.white,
-                                          child: Column(children: [
-                                                    const Text('Sum Jenis Barang',
-                                                        style: TextStyle(
-                                                          color: Colors.black,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize: 24,
-                                                        )),
-                                                    const Divider(thickness: 5),
-                                                    Expanded(
-                                                      child:
-                                                      isLoadingJenisBarang == true
-                                                      
-                                                       ? Container(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(0),
-                                                        width: 90,
-                                                        height: 90,
-                                                        child: Lottie.asset(
-                                                            "loadingJSON/loadingV1.json"),
-                                                      )
-                                                    
-                                                      :
-                                                              ListView
-                                                                  .builder(
-                                                                  itemCount:
-                                                                      uniqListJenisBarang!.length,
-                                                                  itemBuilder:
-                                                                      (BuildContext
-                                                                              context,
-                                                                          int index) {
-                                                                    var data =
-                                                                        listJenisBarang![index];
-                                                                    var dataUniq = uniqListJenisBarang![index];
-                                                                    return Container(
-                                                                      padding:
-                                                                          const EdgeInsets
-                                                                              .all(
-                                                                              0),
-                                                                      child:
-                                                                          Column(
-                                                                        children: [
-                                                                          Container(
-                                                                            padding:
-                                                                                const EdgeInsets.symmetric(horizontal: 17),
-                                                                            child:
-                                                                                ElevatedButton(
-                                                                              onPressed: () {
-                                                                                setState(() {
-                                                                                  namaJenisBarangView1 = data.jenisBarang.toString();
-                                                                                  isJenisBarangView1 = true;
-                                                                                });
-                                                                              },
-                                                                              style: ElevatedButton.styleFrom(backgroundColor: Colors.blue.shade100, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
-                                                                              child: Row(
-                                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                children: [
-                                                                                  Text(
-                                                                                    dataUniq.jenisBarang.toString(),
-                                                                                    style: const TextStyle(fontSize: 14, color: Colors.black, fontWeight: FontWeight.bold),
-                                                                                  ),
-                                                                                  Text(
-                                                                                    listJenisBarang!.where((element) => element.jenisBarang.toString().toLowerCase() == data.jenisBarang.toString().toLowerCase()).toList().length.toString(),
-                                                                                    style: const TextStyle(fontSize: 14, color: Colors.black, fontWeight: FontWeight.bold),
-                                                                                  ),
-                                                                                ],
-                                                                              ),
-                                                                            ),
-                                                                          ),
-                                                                          const Divider(
-                                                                            thickness:
-                                                                                1,
-                                                                            color:
-                                                                                Colors.grey,
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                    );
-                                                                  },
-                                                                ),
-                                                    ),
-                                                  ])))),
-                                           
-
-                          //*report kelas harga
-                          Align(
-                              alignment: Alignment.bottomLeft,
-                              child: Container(
-                                  padding: const EdgeInsets.all(12),
-                                  width: 300,
-                                  height: 300,
-                                  child: Card(
-                                      color: Colors.white,
-                                      child: FutureBuilder(
-                                          future: siklus.text.isEmpty
-                                              ? _getKelasHarga(
-                                                  "all",
-                                                  sharedPreferences!
-                                                      .getString('nama')!)
-                                              : _getKelasHarga(
-                                                  siklusDesigner,
-                                                  sharedPreferences!
-                                                      .getString('nama')!),
-                                          builder: (context, snapshot) {
-                                            if (snapshot.hasError) {
-                                              return Column(children: [
-                                                const Text('Kelas Harga',
-                                                    style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 24,
-                                                    )),
-                                                const Divider(thickness: 5),
-                                                Center(
-                                                    child: SizedBox(
-                                                  height: 210,
-                                                  child: Lottie.asset(
-                                                      "loadingJSON/somethingwentwrong.json"),
-                                                ))
-                                              ]);
-                                            }
-
-                                            if (snapshot.connectionState ==
-                                                ConnectionState.waiting) {
-                                              return Column(children: [
-                                                const Text('Kelas Harga',
-                                                    style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 24,
-                                                    )),
-                                                const Divider(thickness: 5),
-                                                Container(
-                                                  padding:
-                                                      const EdgeInsets.all(0),
-                                                  width: 90,
-                                                  height: 90,
-                                                  child: Lottie.asset(
-                                                      "loadingJSON/loadingV1.json"),
-                                                )
-                                              ]);
-                                            }
-                                            if (snapshot.data!.isEmpty) {
-                                              return const Column(children: [
-                                                Text('Kelas Harga',
-                                                    style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 24,
-                                                    )),
-                                                Divider(thickness: 5),
-                                                Center(
-                                                  child: Text(
-                                                    'Tidak ada data',
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(
-                                                        fontSize: 26,
-                                                        color: Colors.black,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontFamily: 'Acne',
-                                                        letterSpacing: 1.5),
-                                                  ),
-                                                )
-                                              ]);
-                                            }
-                                            if (snapshot.hasData) {
-                                              return Column(children: [
-                                                const Text('Kelas Harga',
-                                                    style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 24,
-                                                    )),
-                                                const Divider(thickness: 5),
-                                                Expanded(
-                                                  child: isLoading == false
-                                                      ? Container(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(0),
-                                                          width: 90,
-                                                          height: 90,
-                                                          child: Lottie.asset(
-                                                              "loadingJSON/loadingV1.json"),
-                                                        )
-                                                      : ListView.builder(
-                                                          itemCount:
-                                                              listKelasHarga
-                                                                  .toSet()
-                                                                  .toList()
-                                                                  .length,
-                                                          itemBuilder:
-                                                              (BuildContext
-                                                                      context,
-                                                                  int index) {
-                                                            // ignore: unused_local_variable
-                                                            var data = snapshot
-                                                                .data![index];
-                                                            return Container(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .all(0),
-                                                              child: Column(
-                                                                children: [
-                                                                  Container(
-                                                                    padding: const EdgeInsets
-                                                                        .symmetric(
-                                                                        horizontal:
-                                                                            17),
-                                                                    child:
-                                                                        ElevatedButton(
-                                                                      onPressed:
-                                                                          () {
-                                                                        setState(
-                                                                            () {});
-                                                                      },
-                                                                      style: ElevatedButton.styleFrom(
-                                                                          backgroundColor: Colors
-                                                                              .blue
-                                                                              .shade100,
-                                                                          shape:
-                                                                              RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
-                                                                      child:
-                                                                          Row(
-                                                                        mainAxisAlignment:
-                                                                            MainAxisAlignment.spaceBetween,
-                                                                        children: [
-                                                                          // menampilkan list kelas harga di list dan menghilangkan duplikatnya
-                                                                          Text(
-                                                                            listKelasHarga.toSet().toList()[index].toString(),
-                                                                            maxLines:
-                                                                                2,
-                                                                            style: const TextStyle(
-                                                                                fontSize: 14,
-                                                                                color: Colors.black,
-                                                                                fontWeight: FontWeight.bold),
-                                                                          ),
-                                                                          //fungsi menampilkan jumlah kelas harga di list
-                                                                          Text(
-                                                                            listKelasHarga.where((element) => element == listKelasHarga.toSet().toList()[index].toString()).length.toString(),
-                                                                            style: const TextStyle(
-                                                                                fontSize: 14,
-                                                                                color: Colors.black,
-                                                                                fontWeight: FontWeight.bold),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                  const Divider(
-                                                                    thickness:
-                                                                        1,
-                                                                    color: Colors
-                                                                        .grey,
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            );
-                                                          },
-                                                        ),
-                                                ),
-                                              ]);
-                                            }
-                                            return Column(children: [
-                                              const Text('Kelas Harga',
-                                                  style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 24,
-                                                  )),
-                                              const Divider(thickness: 5),
-                                              Container(
-                                                padding:
-                                                    const EdgeInsets.all(0),
-                                                width: 90,
-                                                height: 90,
-                                                child: Lottie.asset(
-                                                    "loadingJSON/loadingV1.json"),
-                                              )
-                                            ]);
-                                          })))),
-
-                          //* report Menu Report
-                          Align(
-                              alignment: Alignment.bottomLeft,
-                              child: Container(
-                                  padding: const EdgeInsets.all(12),
-                                  width: 300,
-                                  height: 300,
-                                  child: Card(
-                                      color: Colors.white,
-                                      child: FutureBuilder(
-                                          future: siklus.text.isEmpty
-                                              ? _getKelasHarga(
-                                                  "all",
-                                                  sharedPreferences!
-                                                      .getString('nama')!)
-                                              : _getKelasHarga(
-                                                  siklusDesigner,
-                                                  sharedPreferences!
-                                                      .getString('nama')!),
-                                          builder: (context, snapshot) {
-                                            if (snapshot.hasError) {
-                                              return Column(children: [
-                                                const Text('Summary Report',
-                                                    style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 24,
-                                                    )),
-                                                const Divider(thickness: 5),
-                                                Center(
-                                                    child: SizedBox(
-                                                  height: 210,
-                                                  child: Lottie.asset(
-                                                      "loadingJSON/somethingwentwrong.json"),
-                                                ))
-                                              ]);
-                                            }
-
-                                            if (snapshot.connectionState ==
-                                                ConnectionState.waiting) {
-                                              return Column(children: [
-                                                const Text('Summary Report',
-                                                    style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 24,
-                                                    )),
-                                                const Divider(thickness: 5),
-                                                Container(
-                                                  padding:
-                                                      const EdgeInsets.all(0),
-                                                  width: 90,
-                                                  height: 90,
-                                                  child: Lottie.asset(
-                                                      "loadingJSON/loadingV1.json"),
-                                                )
-                                              ]);
-                                            }
-                                            if (snapshot.data!.isEmpty) {
-                                              return const Column(children: [
-                                                Text('Summary Report',
-                                                    style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 24,
-                                                    )),
-                                                Divider(thickness: 5),
-                                                Center(
-                                                  child: Text(
-                                                    'Tidak ada data',
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(
-                                                        fontSize: 26,
-                                                        color: Colors.black,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontFamily: 'Acne',
-                                                        letterSpacing: 1.5),
-                                                  ),
-                                                )
-                                              ]);
-                                            }
-                                            if (snapshot.hasData) {
-                                              batuBelumLengkap =
-                                                  totalSPK - batuLengkap;
-                                              return Column(children: [
-                                                const Text('Summary Report',
-                                                    style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 24,
-                                                    )),
-                                                const Divider(thickness: 5),
-                                                Expanded(
-                                                    child: isLoading == false
-                                                        ? Container(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(0),
-                                                            width: 90,
-                                                            height: 90,
-                                                            child: Lottie.asset(
-                                                                "loadingJSON/loadingV1.json"),
-                                                          )
-                                                        : SingleChildScrollView(
-                                                            scrollDirection:
-                                                                Axis.vertical,
-                                                            child: Container(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .all(0),
-                                                              child: Column(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .start,
-                                                                children: [
-                                                                  //? SPK
-                                                                  Container(
-                                                                    padding: const EdgeInsets
-                                                                        .symmetric(
-                                                                        horizontal:
-                                                                            17),
-                                                                    child:
-                                                                        ElevatedButton(
-                                                                      onPressed:
-                                                                          () {
-                                                                        setState(
-                                                                            () {});
-                                                                      },
-                                                                      style: ElevatedButton.styleFrom(
-                                                                          backgroundColor: Colors
-                                                                              .blue
-                                                                              .shade100,
-                                                                          shape:
-                                                                              RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
-                                                                      child:
-                                                                          Row(
-                                                                        mainAxisAlignment:
-                                                                            MainAxisAlignment.spaceBetween,
-                                                                        children: [
-                                                                          const Text(
-                                                                            'SPK',
-                                                                            maxLines:
-                                                                                2,
-                                                                            style: TextStyle(
-                                                                                fontSize: 14,
-                                                                                color: Colors.black,
-                                                                                fontWeight: FontWeight.bold),
-                                                                          ),
-                                                                          //fungsi menampilkan jumlah SESUAI table
-                                                                          Text(
-                                                                            '$totalSPK',
-                                                                            style: const TextStyle(
-                                                                                fontSize: 14,
-                                                                                color: Colors.black,
-                                                                                fontWeight: FontWeight.bold),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                    ),
-                                                                  ),
-
-                                                                  const Padding(
-                                                                    padding: EdgeInsets.only(
-                                                                        bottom:
-                                                                            0),
-                                                                    child:
-                                                                        Divider(
-                                                                      thickness:
-                                                                          1,
-                                                                      color: Colors
-                                                                          .grey,
-                                                                    ),
-                                                                  ),
-                                                                  //? SPK LENGKAP
-                                                                  Container(
-                                                                    padding: const EdgeInsets
-                                                                        .symmetric(
-                                                                        horizontal:
-                                                                            17),
-                                                                    child:
-                                                                        ElevatedButton(
-                                                                      onPressed:
-                                                                          () {
-                                                                        setState(
-                                                                            () {});
-                                                                      },
-                                                                      style: ElevatedButton.styleFrom(
-                                                                          backgroundColor: Colors
-                                                                              .green,
-                                                                          shape:
-                                                                              RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
-                                                                      child:
-                                                                          Row(
-                                                                        mainAxisAlignment:
-                                                                            MainAxisAlignment.spaceBetween,
-                                                                        children: [
-                                                                          const Text(
-                                                                            'SPK Lengkap',
-                                                                            maxLines:
-                                                                                2,
-                                                                            style: TextStyle(
-                                                                                fontSize: 14,
-                                                                                color: Colors.black,
-                                                                                fontWeight: FontWeight.bold),
-                                                                          ),
-                                                                          //fungsi menampilkan jumlah SESUAI table
-                                                                          Text(
-                                                                            '$batuLengkap',
-                                                                            style: const TextStyle(
-                                                                                fontSize: 14,
-                                                                                color: Colors.black,
-                                                                                fontWeight: FontWeight.bold),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                    ),
-                                                                  ),
-
-                                                                  const Padding(
-                                                                    padding: EdgeInsets.only(
-                                                                        bottom:
-                                                                            0),
-                                                                    child:
-                                                                        Divider(
-                                                                      thickness:
-                                                                          1,
-                                                                      color: Colors
-                                                                          .grey,
-                                                                    ),
-                                                                  ),
-                                                                  //? SPK Tidak LENGKAP
-                                                                  Container(
-                                                                    padding: const EdgeInsets
-                                                                        .symmetric(
-                                                                        horizontal:
-                                                                            17),
-                                                                    child:
-                                                                        ElevatedButton(
-                                                                      onPressed:
-                                                                          () {
-                                                                        setState(
-                                                                            () {});
-                                                                      },
-                                                                      style: ElevatedButton.styleFrom(
-                                                                          backgroundColor: Colors
-                                                                              .orange,
-                                                                          shape:
-                                                                              RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
-                                                                      child:
-                                                                          Row(
-                                                                        mainAxisAlignment:
-                                                                            MainAxisAlignment.spaceBetween,
-                                                                        children: [
-                                                                          const Text(
-                                                                            'SPK Tidak Lengkap',
-                                                                            maxLines:
-                                                                                2,
-                                                                            style: TextStyle(
-                                                                                fontSize: 14,
-                                                                                color: Colors.black,
-                                                                                fontWeight: FontWeight.bold),
-                                                                          ),
-                                                                          //fungsi menampilkan jumlah SESUAI table
-                                                                          Text(
-                                                                            '$batuBelumLengkap',
-                                                                            // '($totalSPK - $batuLengkap)',
-                                                                            style: const TextStyle(
-                                                                                fontSize: 14,
-                                                                                color: Colors.black,
-                                                                                fontWeight: FontWeight.bold),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                    ),
-                                                                  ),
-
-                                                                  const Padding(
-                                                                    padding: EdgeInsets.only(
-                                                                        bottom:
-                                                                            0),
-                                                                    child:
-                                                                        Divider(
-                                                                      thickness:
-                                                                          1,
-                                                                      color: Colors
-                                                                          .grey,
-                                                                    ),
-                                                                  ),
-                                                                  //? SPK Cancel
-                                                                  Container(
-                                                                    padding: const EdgeInsets
-                                                                        .symmetric(
-                                                                        horizontal:
-                                                                            17),
-                                                                    child:
-                                                                        ElevatedButton(
-                                                                      onPressed:
-                                                                          () {
-                                                                        setState(
-                                                                            () {});
-                                                                      },
-                                                                      style: ElevatedButton.styleFrom(
-                                                                          backgroundColor: Colors
-                                                                              .red,
-                                                                          shape:
-                                                                              RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
-                                                                      child:
-                                                                          const Row(
-                                                                        mainAxisAlignment:
-                                                                            MainAxisAlignment.spaceBetween,
-                                                                        children: [
-                                                                          Text(
-                                                                            'SPK Cancel',
-                                                                            maxLines:
-                                                                                2,
-                                                                            style: TextStyle(
-                                                                                fontSize: 14,
-                                                                                color: Colors.black,
-                                                                                fontWeight: FontWeight.bold),
-                                                                          ),
-                                                                          //fungsi menampilkan jumlah SESUAI table
-                                                                          Text(
-                                                                            '0',
-                                                                            style: TextStyle(
-                                                                                fontSize: 14,
-                                                                                color: Colors.black,
-                                                                                fontWeight: FontWeight.bold),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                    ),
-                                                                  ),
-
-                                                                  const Padding(
-                                                                    padding: EdgeInsets.only(
-                                                                        bottom:
-                                                                            0),
-                                                                    child:
-                                                                        Divider(
-                                                                      thickness:
-                                                                          1,
-                                                                      color: Colors
-                                                                          .grey,
-                                                                    ),
-                                                                  ),
-
-                                                                  //? Total harga
-                                                                  Container(
-                                                                    padding: const EdgeInsets
-                                                                        .symmetric(
-                                                                        horizontal:
-                                                                            17),
-                                                                    child:
-                                                                        ElevatedButton(
-                                                                      onPressed:
-                                                                          () {
-                                                                        setState(
-                                                                            () {});
-                                                                      },
-                                                                      style: ElevatedButton.styleFrom(
-                                                                          backgroundColor: Colors
-                                                                              .blue
-                                                                              .shade100,
-                                                                          shape:
-                                                                              RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
-                                                                      child:
-                                                                          Row(
-                                                                        mainAxisAlignment:
-                                                                            MainAxisAlignment.spaceBetween,
-                                                                        children: [
-                                                                          const Text(
-                                                                            'Total',
-                                                                            maxLines:
-                                                                                2,
-                                                                            style: TextStyle(
-                                                                                fontSize: 14,
-                                                                                color: Colors.black,
-                                                                                fontWeight: FontWeight.bold),
-                                                                          ),
-                                                                          //fungsi menampilkan jumlah SESUAI table
-                                                                          Text(
-                                                                            'Rp. ${CurrencyFormat.convertToDollar(totalHarga, 0)}',
-                                                                            style: const TextStyle(
-                                                                                fontSize: 14,
-                                                                                color: Colors.black,
-                                                                                fontWeight: FontWeight.bold),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                    ),
-                                                                  ),
-
-                                                                  const Padding(
-                                                                    padding: EdgeInsets.only(
-                                                                        bottom:
-                                                                            0),
-                                                                    child:
-                                                                        Divider(
-                                                                      thickness:
-                                                                          1,
-                                                                      color: Colors
-                                                                          .grey,
-                                                                    ),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          )),
-                                              ]);
-                                            }
-                                            return Column(children: [
-                                              const Text('Summary Report',
-                                                  style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 24,
-                                                  )),
-                                              const Divider(thickness: 5),
-                                              Container(
-                                                padding:
-                                                    const EdgeInsets.all(0),
-                                                width: 90,
-                                                height: 90,
-                                                child: Lottie.asset(
-                                                    "loadingJSON/loadingV1.json"),
-                                              )
-                                            ]);
-                                          })))),
-
-                          //* report Point Modeller
-                          Align(
-                              alignment: Alignment.bottomLeft,
-                              child: Container(
-                                  padding: const EdgeInsets.all(12),
-                                  width: 300,
-                                  height: 300,
-                                  child: Card(
-                                      color: Colors.white,
-                                      child: FutureBuilder(
-                                          future: siklus.text.isEmpty
-                                              ? _getKelasHarga(
-                                                  "all",
-                                                  sharedPreferences!
-                                                      .getString('nama')!)
-                                              : _getKelasHarga(
-                                                  siklusDesigner,
-                                                  sharedPreferences!
-                                                      .getString('nama')!),
-                                          builder: (context, snapshot) {
-                                            if (snapshot.hasError) {
-                                              return Column(children: [
-                                                const Text('Point Modeller',
-                                                    style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 24,
-                                                    )),
-                                                const Divider(thickness: 5),
-                                                Center(
-                                                    child: SizedBox(
-                                                  height: 210,
-                                                  child: Lottie.asset(
-                                                      "loadingJSON/somethingwentwrong.json"),
-                                                ))
-                                              ]);
-                                            }
-
-                                            if (snapshot.connectionState ==
-                                                ConnectionState.waiting) {
-                                              return Column(children: [
-                                                const Text('Point Modeller',
-                                                    style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 24,
-                                                    )),
-                                                const Divider(thickness: 5),
-                                                Container(
-                                                  padding:
-                                                      const EdgeInsets.all(0),
-                                                  width: 90,
-                                                  height: 90,
-                                                  child: Lottie.asset(
-                                                      "loadingJSON/loadingV1.json"),
-                                                )
-                                              ]);
-                                            }
-                                            if (snapshot.data!.isEmpty) {
-                                              return const Column(children: [
-                                                Text('Point Modeller',
-                                                    style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 24,
-                                                    )),
-                                                Divider(thickness: 5),
-                                                Center(
-                                                  child: Text(
-                                                    'Tidak ada data',
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(
-                                                        fontSize: 26,
-                                                        color: Colors.black,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontFamily: 'Acne',
-                                                        letterSpacing: 1.5),
-                                                  ),
-                                                )
-                                              ]);
-                                            }
-                                            if (snapshot.hasData) {
-                                              return Column(children: [
-                                                const Text('Point Modeller',
-                                                    style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 24,
-                                                    )),
-                                                const Divider(thickness: 5),
-                                                Expanded(
-                                                    child: isLoading == false
-                                                        ? Container(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(0),
-                                                            width: 90,
-                                                            height: 90,
-                                                            child: Lottie.asset(
-                                                                "loadingJSON/loadingV1.json"),
-                                                          )
-                                                        : SingleChildScrollView(
-                                                            scrollDirection:
-                                                                Axis.vertical,
-                                                            child: Container(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .all(0),
-                                                              child: Column(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .start,
-                                                                children: [
-                                                                  //? Arif Kurniawan
-                                                                  Container(
-                                                                    padding: const EdgeInsets
-                                                                        .symmetric(
-                                                                        horizontal:
-                                                                            17),
-                                                                    // child: ElevatedButton(
-                                                                    //   onPressed: () {
-                                                                    //     setState(() {});
-                                                                    //   },
-                                                                    //   style: ElevatedButton.styleFrom(
-                                                                    //       backgroundColor:
-                                                                    //           Colors.blue
-                                                                    //               .shade100,
-                                                                    //       shape: RoundedRectangleBorder(
-                                                                    //           borderRadius:
-                                                                    //               BorderRadius
-                                                                    //                   .circular(
-                                                                    //                       50.0))),
-                                                                    child: Row(
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .spaceBetween,
-                                                                      children: [
-                                                                        const Text(
-                                                                          'Arif Kurniawan',
-                                                                          maxLines:
-                                                                              2,
-                                                                          style: TextStyle(
-                                                                              fontSize: 14,
-                                                                              color: Colors.black,
-                                                                              fontWeight: FontWeight.bold),
-                                                                        ),
-                                                                        //fungsi menampilkan jumlah SESUAI table
-                                                                        Text(
-                                                                          pointArif
-                                                                              .toStringAsFixed(2),
-                                                                          style: const TextStyle(
-                                                                              fontSize: 14,
-                                                                              color: Colors.black,
-                                                                              fontWeight: FontWeight.bold),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                    // ),
-                                                                  ),
-
-                                                                  const Padding(
-                                                                    padding: EdgeInsets.only(
-                                                                        bottom:
-                                                                            0),
-                                                                    child:
-                                                                        Divider(
-                                                                      thickness:
-                                                                          1,
-                                                                      color: Colors
-                                                                          .grey,
-                                                                    ),
-                                                                  ),
-
-                                                                  //? Aris Pravidan
-                                                                  Container(
-                                                                    padding: const EdgeInsets
-                                                                        .symmetric(
-                                                                        horizontal:
-                                                                            17),
-                                                                    // child: ElevatedButton(
-                                                                    //   onPressed: () {
-                                                                    //     setState(() {});
-                                                                    //   },
-                                                                    //   style: ElevatedButton.styleFrom(
-                                                                    //       backgroundColor:
-                                                                    //           Colors.blue
-                                                                    //               .shade100,
-                                                                    //       shape: RoundedRectangleBorder(
-                                                                    //           borderRadius:
-                                                                    //               BorderRadius
-                                                                    //                   .circular(
-                                                                    //                       50.0))),
-                                                                    child: Row(
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .spaceBetween,
-                                                                      children: [
-                                                                        const Text(
-                                                                          'Aris Pravidan',
-                                                                          maxLines:
-                                                                              2,
-                                                                          style: TextStyle(
-                                                                              fontSize: 14,
-                                                                              color: Colors.black,
-                                                                              fontWeight: FontWeight.bold),
-                                                                        ),
-                                                                        //fungsi menampilkan jumlah SESUAI table
-                                                                        Text(
-                                                                          pointAris
-                                                                              .toStringAsFixed(2),
-                                                                          style: const TextStyle(
-                                                                              fontSize: 14,
-                                                                              color: Colors.black,
-                                                                              fontWeight: FontWeight.bold),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                    // ),
-                                                                  ),
-
-                                                                  const Padding(
-                                                                    padding: EdgeInsets.only(
-                                                                        bottom:
-                                                                            0),
-                                                                    child:
-                                                                        Divider(
-                                                                      thickness:
-                                                                          1,
-                                                                      color: Colors
-                                                                          .grey,
-                                                                    ),
-                                                                  ),
-                                                                  //? Fikryansyah
-                                                                  Container(
-                                                                    padding: const EdgeInsets
-                                                                        .symmetric(
-                                                                        horizontal:
-                                                                            17),
-                                                                    // child: ElevatedButton(
-                                                                    //   onPressed: () {
-                                                                    //     setState(() {});
-                                                                    //   },
-                                                                    //   style: ElevatedButton.styleFrom(
-                                                                    //       backgroundColor:
-                                                                    //           Colors.blue
-                                                                    //               .shade100,
-                                                                    //       shape: RoundedRectangleBorder(
-                                                                    //           borderRadius:
-                                                                    //               BorderRadius
-                                                                    //                   .circular(
-                                                                    //                       50.0))),
-                                                                    child: Row(
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .spaceBetween,
-                                                                      children: [
-                                                                        const Text(
-                                                                          'Fikryansyah',
-                                                                          maxLines:
-                                                                              2,
-                                                                          style: TextStyle(
-                                                                              fontSize: 14,
-                                                                              color: Colors.black,
-                                                                              fontWeight: FontWeight.bold),
-                                                                        ),
-                                                                        //fungsi menampilkan jumlah SESUAI table
-                                                                        Text(
-                                                                          pointFikri
-                                                                              .toStringAsFixed(2),
-                                                                          style: const TextStyle(
-                                                                              fontSize: 14,
-                                                                              color: Colors.black,
-                                                                              fontWeight: FontWeight.bold),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                    // ),
-                                                                  ),
-
-                                                                  const Padding(
-                                                                    padding: EdgeInsets.only(
-                                                                        bottom:
-                                                                            0),
-                                                                    child:
-                                                                        Divider(
-                                                                      thickness:
-                                                                          1,
-                                                                      color: Colors
-                                                                          .grey,
-                                                                    ),
-                                                                  ),
-                                                                  //? Yuse
-                                                                  Container(
-                                                                    padding: const EdgeInsets
-                                                                        .symmetric(
-                                                                        horizontal:
-                                                                            17),
-                                                                    // child: ElevatedButton(
-                                                                    //   onPressed: () {
-                                                                    //     setState(() {});
-                                                                    //   },
-                                                                    //   style: ElevatedButton.styleFrom(
-                                                                    //       backgroundColor:
-                                                                    //           Colors.blue
-                                                                    //               .shade100,
-                                                                    //       shape: RoundedRectangleBorder(
-                                                                    //           borderRadius:
-                                                                    //               BorderRadius
-                                                                    //                   .circular(
-                                                                    //                       50.0))),
-                                                                    child: Row(
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .spaceBetween,
-                                                                      children: [
-                                                                        const Text(
-                                                                          'Yuse',
-                                                                          maxLines:
-                                                                              2,
-                                                                          style: TextStyle(
-                                                                              fontSize: 14,
-                                                                              color: Colors.black,
-                                                                              fontWeight: FontWeight.bold),
-                                                                        ),
-                                                                        //fungsi menampilkan jumlah SESUAI table
-                                                                        Text(
-                                                                          pointyuse
-                                                                              .toStringAsFixed(2),
-                                                                          style: const TextStyle(
-                                                                              fontSize: 14,
-                                                                              color: Colors.black,
-                                                                              fontWeight: FontWeight.bold),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                    // ),
-                                                                  ),
-
-                                                                  const Padding(
-                                                                    padding: EdgeInsets.only(
-                                                                        bottom:
-                                                                            0),
-                                                                    child:
-                                                                        Divider(
-                                                                      thickness:
-                                                                          1,
-                                                                      color: Colors
-                                                                          .grey,
-                                                                    ),
-                                                                  ),
-                                                                  const SizedBox(
-                                                                    height: 30,
-                                                                  ),
-                                                                  //? Summary Report Modeller
-                                                                  Container(
-                                                                    padding: const EdgeInsets
-                                                                        .symmetric(
-                                                                        horizontal:
-                                                                            17),
-                                                                    child:
-                                                                        ElevatedButton(
-                                                                      onPressed:
-                                                                          () {
-                                                                        setState(
-                                                                            () {
-                                                                          isSummaryModeller =
-                                                                              true;
-                                                                        });
-                                                                      },
-                                                                      style: ElevatedButton.styleFrom(
-                                                                          backgroundColor: Colors
-                                                                              .blue
-                                                                              .shade100,
-                                                                          shape:
-                                                                              RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
-                                                                      child:
-                                                                          const Row(
-                                                                        mainAxisAlignment:
-                                                                            MainAxisAlignment.spaceBetween,
-                                                                        children: [
-                                                                          Text(
-                                                                            'Summary Report',
-                                                                            maxLines:
-                                                                                2,
-                                                                            style: TextStyle(
-                                                                                fontSize: 14,
-                                                                                color: Colors.black,
-                                                                                fontWeight: FontWeight.bold),
-                                                                          ),
-                                                                          //fungsi menampilkan jumlah SESUAI table
-                                                                          Icon(
-                                                                            Icons.arrow_forward_sharp,
-                                                                            color:
-                                                                                Colors.black,
-                                                                          )
-                                                                        ],
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          )),
-                                              ]);
-                                            }
-                                            return Column(children: [
-                                              const Text('Summary Report',
-                                                  style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 24,
-                                                  )),
-                                              const Divider(thickness: 5),
-                                              Container(
-                                                padding:
-                                                    const EdgeInsets.all(0),
-                                                width: 90,
-                                                height: 90,
-                                                child: Lottie.asset(
-                                                    "loadingJSON/loadingV1.json"),
-                                              )
-                                            ]);
-                                          })))),
-                        ],
-                      ),
-                    );
-                  }
-                }),
+          LayoutBuilder(builder: (context, constraints) {
+            print(constraints.maxWidth);
+            //? fungsi multi screen
+            if (constraints.maxWidth < 900) {
+              return mobileScreen();
+            } else {
+              return webScreen();
+            }
+          }),
 
           //? table list scm
-          isLoading == false
+          isLoading == true
               ? Center(
                   child: Padding(
                   padding: const EdgeInsets.only(left: 500),
@@ -4387,6 +1662,1828 @@ _getDataJenisBarang(item,'');
         body: body);
     print(response.body);
   }
+
+  mobileScreen() {
+    return isSummaryModeller == true
+        ? Align(
+            alignment: Alignment.bottomLeft,
+            child: Container(
+                padding: const EdgeInsets.all(0),
+                width: 900,
+                height: 330,
+                child: Card(
+                    color: Colors.white,
+                    child: Column(children: [
+                      InkWell(
+                        onTap: () {
+                          setState(() {
+                            isSummaryModeller = false;
+                          });
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Lottie.asset("loadingJSON/backbutton.json",
+                                fit: BoxFit.cover),
+                            Container(
+                              padding: const EdgeInsets.only(left: 0),
+                              alignment: Alignment.center,
+                              child: const Text('Summary Modeller',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 24,
+                                  )),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const Divider(thickness: 5),
+                      Expanded(
+                        child: Container(
+                          padding: const EdgeInsets.all(0),
+                          width: MediaQuery.of(context).size.width * 1,
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: Theme(
+                              data: ThemeData.light().copyWith(
+                                  // cardColor: Theme.of(context).canvasColor),
+                                  cardColor: Colors.white,
+                                  hoverColor: Colors.grey.shade400,
+                                  dividerColor: Colors.grey),
+                              child: _dataTableSumModeller(),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ]))))
+        : Column(
+            children: [
+              //*report jenis barang SCM
+              isJenisBarangView1 == true
+                  ? jenisBarangView1(namaJenisBarangView1)
+                  : Align(
+                      alignment: Alignment.bottomLeft,
+                      child: Container(
+                          padding: const EdgeInsets.all(12),
+                          width: 300,
+                          height: 300,
+                          child: Card(
+                              color: Colors.white,
+                              child: Column(children: [
+                                const Text('Sum Jenis Barang',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 24,
+                                    )),
+                                const Divider(thickness: 5),
+                                Expanded(
+                                  child: isLoadingJenisBarang == true
+                                      ? Container(
+                                          padding: const EdgeInsets.all(0),
+                                          width: 90,
+                                          height: 90,
+                                          child: Lottie.asset(
+                                              "loadingJSON/loadingV1.json"),
+                                        )
+                                      : ListView.builder(
+                                          itemCount:
+                                              uniqListJenisBarang!.length,
+                                          itemBuilder: (BuildContext context,
+                                              int index) {
+                                            var data = listJenisBarang![index];
+                                            var dataUniq =
+                                                uniqListJenisBarang![index];
+                                            return Container(
+                                              padding: const EdgeInsets.all(0),
+                                              child: Column(
+                                                children: [
+                                                  Container(
+                                                    padding: const EdgeInsets
+                                                        .symmetric(
+                                                        horizontal: 17),
+                                                    child: ElevatedButton(
+                                                      onPressed: () {
+                                                        setState(() {
+                                                          namaJenisBarangView1 =
+                                                              data.jenisBarang
+                                                                  .toString();
+                                                          isJenisBarangView1 =
+                                                              true;
+                                                        });
+                                                      },
+                                                      style: ElevatedButton.styleFrom(
+                                                          backgroundColor:
+                                                              Colors.blue
+                                                                  .shade100,
+                                                          shape: RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          50.0))),
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Text(
+                                                            dataUniq.jenisBarang
+                                                                .toString(),
+                                                            style: const TextStyle(
+                                                                fontSize: 14,
+                                                                color: Colors
+                                                                    .black,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
+                                                          Text(
+                                                            listJenisBarang!
+                                                                .where((element) =>
+                                                                    element
+                                                                        .jenisBarang
+                                                                        .toString()
+                                                                        .toLowerCase() ==
+                                                                    dataUniq
+                                                                        .jenisBarang
+                                                                        .toString()
+                                                                        .toLowerCase())
+                                                                .toList()
+                                                                .length
+                                                                .toString(),
+                                                            style: const TextStyle(
+                                                                fontSize: 14,
+                                                                color: Colors
+                                                                    .black,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  const Divider(
+                                                    thickness: 1,
+                                                    color: Colors.grey,
+                                                  ),
+                                                ],
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                ),
+                              ])))),
+
+              //*report kelas harga
+              Align(
+                  alignment: Alignment.bottomLeft,
+                  child: Container(
+                      padding: const EdgeInsets.all(12),
+                      width: 300,
+                      height: 300,
+                      child: Card(
+                          color: Colors.white,
+                          child: Column(children: [
+                            const Text('Sum Kelas Harga',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 24,
+                                )),
+                            const Divider(thickness: 5),
+                            Expanded(
+                              child: isLoadingKelasHarga == true
+                                  ? Container(
+                                      padding: const EdgeInsets.all(0),
+                                      width: 90,
+                                      height: 90,
+                                      child: Lottie.asset(
+                                          "loadingJSON/loadingV1.json"),
+                                    )
+                                  : ListView.builder(
+                                      itemCount: uniqListKelasHarga.length,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        var data = listKelasHarga[index];
+                                        var dataUniq =
+                                            uniqListKelasHarga[index];
+                                        return Container(
+                                          padding: const EdgeInsets.all(0),
+                                          child: Column(
+                                            children: [
+                                              Container(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 17),
+                                                child: ElevatedButton(
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      namaKelasHargaView1 =
+                                                          data;
+                                                      isKelasHargaView1 = true;
+                                                    });
+                                                  },
+                                                  style: ElevatedButton.styleFrom(
+                                                      backgroundColor:
+                                                          Colors.blue.shade100,
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          50.0))),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        dataUniq,
+                                                        style: const TextStyle(
+                                                            fontSize: 14,
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                      Text(
+                                                        listKelasHarga
+                                                            .where((element) =>
+                                                                element
+                                                                    .toString()
+                                                                    .toLowerCase() ==
+                                                                dataUniq
+                                                                    .toString()
+                                                                    .toLowerCase())
+                                                            .length
+                                                            .toString(),
+                                                        style: const TextStyle(
+                                                            fontSize: 14,
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                              const Divider(
+                                                thickness: 1,
+                                                color: Colors.grey,
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                    ),
+                            ),
+                          ])))),
+
+              //* report Menu Report
+              Align(
+                  alignment: Alignment.bottomLeft,
+                  child: Container(
+                      padding: const EdgeInsets.all(12),
+                      width: 300,
+                      height: 300,
+                      child: Card(
+                          color: Colors.white,
+                          child: Column(children: [
+                            const Text('Report',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 24,
+                                )),
+                            const Divider(thickness: 5),
+                            Expanded(
+                                child: isLoadingReport == true
+                                    ? Container(
+                                        padding: const EdgeInsets.all(0),
+                                        width: 90,
+                                        height: 90,
+                                        child: Lottie.asset(
+                                            "loadingJSON/loadingV1.json"),
+                                      )
+                                    : SingleChildScrollView(
+                                        scrollDirection: Axis.vertical,
+                                        child: Container(
+                                          padding: const EdgeInsets.all(0),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              //? SPK
+                                              Container(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 17),
+                                                child: ElevatedButton(
+                                                  onPressed: () {
+                                                    setState(() {});
+                                                  },
+                                                  style: ElevatedButton.styleFrom(
+                                                      backgroundColor:
+                                                          Colors.blue.shade100,
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          50.0))),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      const Text(
+                                                        'SPK',
+                                                        maxLines: 2,
+                                                        style: TextStyle(
+                                                            fontSize: 14,
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                      //fungsi menampilkan jumlah SESUAI table
+                                                      Text(
+                                                        '$totalSPK',
+                                                        style: const TextStyle(
+                                                            fontSize: 14,
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+
+                                              const Padding(
+                                                padding:
+                                                    EdgeInsets.only(bottom: 0),
+                                                child: Divider(
+                                                  thickness: 1,
+                                                  color: Colors.grey,
+                                                ),
+                                              ),
+                                              //? SPK LENGKAP
+                                              Container(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 17),
+                                                child: ElevatedButton(
+                                                  onPressed: () {
+                                                    setState(() {});
+                                                  },
+                                                  style: ElevatedButton.styleFrom(
+                                                      backgroundColor:
+                                                          Colors.green,
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          50.0))),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      const Text(
+                                                        'SPK Lengkap',
+                                                        maxLines: 2,
+                                                        style: TextStyle(
+                                                            fontSize: 14,
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                      //fungsi menampilkan jumlah SESUAI table
+                                                      Text(
+                                                        '$batuLengkap',
+                                                        style: const TextStyle(
+                                                            fontSize: 14,
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+
+                                              const Padding(
+                                                padding:
+                                                    EdgeInsets.only(bottom: 0),
+                                                child: Divider(
+                                                  thickness: 1,
+                                                  color: Colors.grey,
+                                                ),
+                                              ),
+                                              //? SPK Tidak LENGKAP
+                                              Container(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 17),
+                                                child: ElevatedButton(
+                                                  onPressed: () {
+                                                    setState(() {});
+                                                  },
+                                                  style: ElevatedButton.styleFrom(
+                                                      backgroundColor:
+                                                          Colors.orange,
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          50.0))),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      const Text(
+                                                        'SPK Tidak Lengkap',
+                                                        maxLines: 2,
+                                                        style: TextStyle(
+                                                            fontSize: 14,
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                      //fungsi menampilkan jumlah SESUAI table
+                                                      Text(
+                                                        '$batuBelumLengkap',
+                                                        // '($totalSPK - $batuLengkap)',
+                                                        style: const TextStyle(
+                                                            fontSize: 14,
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+
+                                              const Padding(
+                                                padding:
+                                                    EdgeInsets.only(bottom: 0),
+                                                child: Divider(
+                                                  thickness: 1,
+                                                  color: Colors.grey,
+                                                ),
+                                              ),
+                                              //? SPK Cancel
+                                              Container(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 17),
+                                                child: ElevatedButton(
+                                                  onPressed: () {
+                                                    setState(() {});
+                                                  },
+                                                  style: ElevatedButton.styleFrom(
+                                                      backgroundColor:
+                                                          Colors.red,
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          50.0))),
+                                                  child: const Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        'SPK Cancel',
+                                                        maxLines: 2,
+                                                        style: TextStyle(
+                                                            fontSize: 14,
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                      //fungsi menampilkan jumlah SESUAI table
+                                                      Text(
+                                                        '0',
+                                                        style: TextStyle(
+                                                            fontSize: 14,
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+
+                                              const Padding(
+                                                padding:
+                                                    EdgeInsets.only(bottom: 0),
+                                                child: Divider(
+                                                  thickness: 1,
+                                                  color: Colors.grey,
+                                                ),
+                                              ),
+
+                                              //? Total harga
+                                              Container(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 17),
+                                                child: ElevatedButton(
+                                                  onPressed: () {
+                                                    setState(() {});
+                                                  },
+                                                  style: ElevatedButton.styleFrom(
+                                                      backgroundColor:
+                                                          Colors.blue.shade100,
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          50.0))),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      const Text(
+                                                        'Total',
+                                                        maxLines: 2,
+                                                        style: TextStyle(
+                                                            fontSize: 14,
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                      //fungsi menampilkan jumlah SESUAI table
+                                                      Text(
+                                                        'Rp. ${CurrencyFormat.convertToDollar(totalHarga, 0)}',
+                                                        style: const TextStyle(
+                                                            fontSize: 14,
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+
+                                              const Padding(
+                                                padding:
+                                                    EdgeInsets.only(bottom: 0),
+                                                child: Divider(
+                                                  thickness: 1,
+                                                  color: Colors.grey,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      )),
+                          ])))),
+
+              //* report Point Modeller
+              Align(
+                  alignment: Alignment.bottomLeft,
+                  child: Container(
+                      padding: const EdgeInsets.all(12),
+                      width: 300,
+                      height: 300,
+                      child: Card(
+                          color: Colors.white,
+                          child: Column(children: [
+                            const Text('Point Modeller',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 24,
+                                )),
+                            const Divider(thickness: 5),
+                            Expanded(
+                                child: isLoadingPointModeller == true
+                                    ? Container(
+                                        padding: const EdgeInsets.all(0),
+                                        width: 90,
+                                        height: 90,
+                                        child: Lottie.asset(
+                                            "loadingJSON/loadingV1.json"),
+                                      )
+                                    : SingleChildScrollView(
+                                        scrollDirection: Axis.vertical,
+                                        child: Container(
+                                          padding: const EdgeInsets.all(0),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              //? Arif Kurniawan
+                                              Container(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 17),
+                                                // child: ElevatedButton(
+                                                //   onPressed: () {
+                                                //     setState(() {});
+                                                //   },
+                                                //   style: ElevatedButton.styleFrom(
+                                                //       backgroundColor:
+                                                //           Colors.blue
+                                                //               .shade100,
+                                                //       shape: RoundedRectangleBorder(
+                                                //           borderRadius:
+                                                //               BorderRadius
+                                                //                   .circular(
+                                                //                       50.0))),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    const Text(
+                                                      'Arif Kurniawan',
+                                                      maxLines: 2,
+                                                      style: TextStyle(
+                                                          fontSize: 14,
+                                                          color: Colors.black,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                    //fungsi menampilkan jumlah SESUAI table
+                                                    Text(
+                                                      pointArif
+                                                          .toStringAsFixed(2),
+                                                      style: const TextStyle(
+                                                          fontSize: 14,
+                                                          color: Colors.black,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                  ],
+                                                ),
+                                                // ),
+                                              ),
+
+                                              const Padding(
+                                                padding:
+                                                    EdgeInsets.only(bottom: 0),
+                                                child: Divider(
+                                                  thickness: 1,
+                                                  color: Colors.grey,
+                                                ),
+                                              ),
+
+                                              //? Aris Pravidan
+                                              Container(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 17),
+                                                // child: ElevatedButton(
+                                                //   onPressed: () {
+                                                //     setState(() {});
+                                                //   },
+                                                //   style: ElevatedButton.styleFrom(
+                                                //       backgroundColor:
+                                                //           Colors.blue
+                                                //               .shade100,
+                                                //       shape: RoundedRectangleBorder(
+                                                //           borderRadius:
+                                                //               BorderRadius
+                                                //                   .circular(
+                                                //                       50.0))),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    const Text(
+                                                      'Aris Pravidan',
+                                                      maxLines: 2,
+                                                      style: TextStyle(
+                                                          fontSize: 14,
+                                                          color: Colors.black,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                    //fungsi menampilkan jumlah SESUAI table
+                                                    Text(
+                                                      pointAris
+                                                          .toStringAsFixed(2),
+                                                      style: const TextStyle(
+                                                          fontSize: 14,
+                                                          color: Colors.black,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                  ],
+                                                ),
+                                                // ),
+                                              ),
+
+                                              const Padding(
+                                                padding:
+                                                    EdgeInsets.only(bottom: 0),
+                                                child: Divider(
+                                                  thickness: 1,
+                                                  color: Colors.grey,
+                                                ),
+                                              ),
+                                              //? Fikryansyah
+                                              Container(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 17),
+                                                // child: ElevatedButton(
+                                                //   onPressed: () {
+                                                //     setState(() {});
+                                                //   },
+                                                //   style: ElevatedButton.styleFrom(
+                                                //       backgroundColor:
+                                                //           Colors.blue
+                                                //               .shade100,
+                                                //       shape: RoundedRectangleBorder(
+                                                //           borderRadius:
+                                                //               BorderRadius
+                                                //                   .circular(
+                                                //                       50.0))),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    const Text(
+                                                      'Fikryansyah',
+                                                      maxLines: 2,
+                                                      style: TextStyle(
+                                                          fontSize: 14,
+                                                          color: Colors.black,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                    //fungsi menampilkan jumlah SESUAI table
+                                                    Text(
+                                                      pointFikri
+                                                          .toStringAsFixed(2),
+                                                      style: const TextStyle(
+                                                          fontSize: 14,
+                                                          color: Colors.black,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                  ],
+                                                ),
+                                                // ),
+                                              ),
+
+                                              const Padding(
+                                                padding:
+                                                    EdgeInsets.only(bottom: 0),
+                                                child: Divider(
+                                                  thickness: 1,
+                                                  color: Colors.grey,
+                                                ),
+                                              ),
+                                              //? Yuse
+                                              Container(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 17),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    const Text(
+                                                      'Yuse',
+                                                      maxLines: 2,
+                                                      style: TextStyle(
+                                                          fontSize: 14,
+                                                          color: Colors.black,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                    //fungsi menampilkan jumlah SESUAI table
+                                                    Text(
+                                                      pointyuse
+                                                          .toStringAsFixed(2),
+                                                      style: const TextStyle(
+                                                          fontSize: 14,
+                                                          color: Colors.black,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                  ],
+                                                ),
+                                                // ),
+                                              ),
+
+                                              const Padding(
+                                                padding:
+                                                    EdgeInsets.only(bottom: 0),
+                                                child: Divider(
+                                                  thickness: 1,
+                                                  color: Colors.grey,
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                height: 30,
+                                              ),
+                                              //? Summary Report Modeller
+                                              Container(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 17),
+                                                child: ElevatedButton(
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      isSummaryModeller = true;
+                                                    });
+                                                  },
+                                                  style: ElevatedButton.styleFrom(
+                                                      backgroundColor:
+                                                          Colors.blue.shade100,
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          50.0))),
+                                                  child: const Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        'Summary Report',
+                                                        maxLines: 2,
+                                                        style: TextStyle(
+                                                            fontSize: 14,
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                      //fungsi menampilkan jumlah SESUAI table
+                                                      Icon(
+                                                        Icons
+                                                            .arrow_forward_sharp,
+                                                        color: Colors.black,
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      )),
+                          ])))),
+            ],
+          );
+  }
+
+  webScreen() {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: isSummaryModeller == true
+          ? Align(
+              alignment: Alignment.bottomLeft,
+              child: Container(
+                  padding: const EdgeInsets.all(0),
+                  width: 900,
+                  height: 330,
+                  child: Card(
+                      color: Colors.white,
+                      child: Column(children: [
+                        InkWell(
+                          onTap: () {
+                            setState(() {
+                              isSummaryModeller = false;
+                            });
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Lottie.asset("loadingJSON/backbutton.json",
+                                  fit: BoxFit.cover),
+                              Container(
+                                padding: const EdgeInsets.only(left: 0),
+                                alignment: Alignment.center,
+                                child: const Text('Summary Modeller',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 24,
+                                    )),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const Divider(thickness: 5),
+                        Expanded(
+                          child: Container(
+                            padding: const EdgeInsets.all(0),
+                            width: MediaQuery.of(context).size.width * 1,
+                            child: SizedBox(
+                              width: double.infinity,
+                              child: Theme(
+                                data: ThemeData.light().copyWith(
+                                    // cardColor: Theme.of(context).canvasColor),
+                                    cardColor: Colors.white,
+                                    hoverColor: Colors.grey.shade400,
+                                    dividerColor: Colors.grey),
+                                child: _dataTableSumModeller(),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ]))))
+          : Row(
+              children: [
+                //*report jenis barang SCM
+                isJenisBarangView1 == true
+                    ? jenisBarangView1(namaJenisBarangView1)
+                    : Align(
+                        alignment: Alignment.bottomLeft,
+                        child: Container(
+                            padding: const EdgeInsets.all(12),
+                            width: 300,
+                            height: 300,
+                            child: Card(
+                                color: Colors.white,
+                                child: Column(children: [
+                                  const Text('Sum Jenis Barang',
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 24,
+                                      )),
+                                  const Divider(thickness: 5),
+                                  Expanded(
+                                    child: isLoadingJenisBarang == true
+                                        ? Container(
+                                            padding: const EdgeInsets.all(0),
+                                            width: 90,
+                                            height: 90,
+                                            child: Lottie.asset(
+                                                "loadingJSON/loadingV1.json"),
+                                          )
+                                        : ListView.builder(
+                                            itemCount:
+                                                uniqListJenisBarang!.length,
+                                            itemBuilder: (BuildContext context,
+                                                int index) {
+                                              var data =
+                                                  listJenisBarang![index];
+                                              var dataUniq =
+                                                  uniqListJenisBarang![index];
+                                              return Container(
+                                                padding:
+                                                    const EdgeInsets.all(0),
+                                                child: Column(
+                                                  children: [
+                                                    Container(
+                                                      padding: const EdgeInsets
+                                                          .symmetric(
+                                                          horizontal: 17),
+                                                      child: ElevatedButton(
+                                                        onPressed: () {
+                                                          setState(() {
+                                                            namaJenisBarangView1 =
+                                                                data.jenisBarang
+                                                                    .toString();
+                                                            isJenisBarangView1 =
+                                                                true;
+                                                          });
+                                                        },
+                                                        style: ElevatedButton.styleFrom(
+                                                            backgroundColor:
+                                                                Colors.blue
+                                                                    .shade100,
+                                                            shape: RoundedRectangleBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            50.0))),
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            Text(
+                                                              dataUniq
+                                                                  .jenisBarang
+                                                                  .toString(),
+                                                              style: const TextStyle(
+                                                                  fontSize: 14,
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
+                                                            ),
+                                                            Text(
+                                                              listJenisBarang!
+                                                                  .where((element) =>
+                                                                      element
+                                                                          .jenisBarang
+                                                                          .toString()
+                                                                          .toLowerCase() ==
+                                                                      dataUniq
+                                                                          .jenisBarang
+                                                                          .toString()
+                                                                          .toLowerCase())
+                                                                  .toList()
+                                                                  .length
+                                                                  .toString(),
+                                                              style: const TextStyle(
+                                                                  fontSize: 14,
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    const Divider(
+                                                      thickness: 1,
+                                                      color: Colors.grey,
+                                                    ),
+                                                  ],
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                  ),
+                                ])))),
+
+                //*report kelas harga
+                Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Container(
+                        padding: const EdgeInsets.all(12),
+                        width: 300,
+                        height: 300,
+                        child: Card(
+                            color: Colors.white,
+                            child: Column(children: [
+                              const Text('Sum Kelas Harga',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 24,
+                                  )),
+                              const Divider(thickness: 5),
+                              Expanded(
+                                child: isLoadingKelasHarga == true
+                                    ? Container(
+                                        padding: const EdgeInsets.all(0),
+                                        width: 90,
+                                        height: 90,
+                                        child: Lottie.asset(
+                                            "loadingJSON/loadingV1.json"),
+                                      )
+                                    : ListView.builder(
+                                        itemCount: uniqListKelasHarga.length,
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
+                                          var data = listKelasHarga[index];
+                                          var dataUniq =
+                                              uniqListKelasHarga[index];
+                                          return Container(
+                                            padding: const EdgeInsets.all(0),
+                                            child: Column(
+                                              children: [
+                                                Container(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 17),
+                                                  child: ElevatedButton(
+                                                    onPressed: () {
+                                                      setState(() {
+                                                        namaKelasHargaView1 =
+                                                            data;
+                                                        isKelasHargaView1 =
+                                                            true;
+                                                      });
+                                                    },
+                                                    style: ElevatedButton.styleFrom(
+                                                        backgroundColor: Colors
+                                                            .blue.shade100,
+                                                        shape: RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        50.0))),
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Text(
+                                                          dataUniq,
+                                                          style: const TextStyle(
+                                                              fontSize: 14,
+                                                              color:
+                                                                  Colors.black,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                        Text(
+                                                          listKelasHarga
+                                                              .where((element) =>
+                                                                  element
+                                                                      .toString()
+                                                                      .toLowerCase() ==
+                                                                  dataUniq
+                                                                      .toString()
+                                                                      .toLowerCase())
+                                                              .length
+                                                              .toString(),
+                                                          style: const TextStyle(
+                                                              fontSize: 14,
+                                                              color:
+                                                                  Colors.black,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                                const Divider(
+                                                  thickness: 1,
+                                                  color: Colors.grey,
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                        },
+                                      ),
+                              ),
+                            ])))),
+
+                //* report Menu Report
+                Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Container(
+                        padding: const EdgeInsets.all(12),
+                        width: 300,
+                        height: 300,
+                        child: Card(
+                            color: Colors.white,
+                            child: Column(children: [
+                              const Text('Summary Report',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 24,
+                                  )),
+                              const Divider(thickness: 5),
+                              Expanded(
+                                  child: isLoadingReport == true
+                                      ? Container(
+                                          padding: const EdgeInsets.all(0),
+                                          width: 90,
+                                          height: 90,
+                                          child: Lottie.asset(
+                                              "loadingJSON/loadingV1.json"),
+                                        )
+                                      : SingleChildScrollView(
+                                          scrollDirection: Axis.vertical,
+                                          child: Container(
+                                            padding: const EdgeInsets.all(0),
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                //? SPK
+                                                Container(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 17),
+                                                  child: ElevatedButton(
+                                                    onPressed: () {
+                                                      setState(() {});
+                                                    },
+                                                    style: ElevatedButton.styleFrom(
+                                                        backgroundColor: Colors
+                                                            .blue.shade100,
+                                                        shape: RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        50.0))),
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        const Text(
+                                                          'SPK',
+                                                          maxLines: 2,
+                                                          style: TextStyle(
+                                                              fontSize: 14,
+                                                              color:
+                                                                  Colors.black,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                        //fungsi menampilkan jumlah SESUAI table
+                                                        Text(
+                                                          '$totalSPK',
+                                                          style: const TextStyle(
+                                                              fontSize: 14,
+                                                              color:
+                                                                  Colors.black,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+
+                                                const Padding(
+                                                  padding: EdgeInsets.only(
+                                                      bottom: 0),
+                                                  child: Divider(
+                                                    thickness: 1,
+                                                    color: Colors.grey,
+                                                  ),
+                                                ),
+                                                //? SPK LENGKAP
+                                                Container(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 17),
+                                                  child: ElevatedButton(
+                                                    onPressed: () {
+                                                      setState(() {});
+                                                    },
+                                                    style: ElevatedButton.styleFrom(
+                                                        backgroundColor:
+                                                            Colors.green,
+                                                        shape: RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        50.0))),
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        const Text(
+                                                          'SPK Lengkap',
+                                                          maxLines: 2,
+                                                          style: TextStyle(
+                                                              fontSize: 14,
+                                                              color:
+                                                                  Colors.black,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                        //fungsi menampilkan jumlah SESUAI table
+                                                        Text(
+                                                          '$batuLengkap',
+                                                          style: const TextStyle(
+                                                              fontSize: 14,
+                                                              color:
+                                                                  Colors.black,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+
+                                                const Padding(
+                                                  padding: EdgeInsets.only(
+                                                      bottom: 0),
+                                                  child: Divider(
+                                                    thickness: 1,
+                                                    color: Colors.grey,
+                                                  ),
+                                                ),
+                                                //? SPK Tidak LENGKAP
+                                                Container(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 17),
+                                                  child: ElevatedButton(
+                                                    onPressed: () {
+                                                      setState(() {});
+                                                    },
+                                                    style: ElevatedButton.styleFrom(
+                                                        backgroundColor:
+                                                            Colors.orange,
+                                                        shape: RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        50.0))),
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        const Text(
+                                                          'SPK Tidak Lengkap',
+                                                          maxLines: 2,
+                                                          style: TextStyle(
+                                                              fontSize: 14,
+                                                              color:
+                                                                  Colors.black,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                        //fungsi menampilkan jumlah SESUAI table
+                                                        Text(
+                                                          '$batuBelumLengkap',
+                                                          // '($totalSPK - $batuLengkap)',
+                                                          style: const TextStyle(
+                                                              fontSize: 14,
+                                                              color:
+                                                                  Colors.black,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+
+                                                const Padding(
+                                                  padding: EdgeInsets.only(
+                                                      bottom: 0),
+                                                  child: Divider(
+                                                    thickness: 1,
+                                                    color: Colors.grey,
+                                                  ),
+                                                ),
+                                                //? SPK Cancel
+                                                Container(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 17),
+                                                  child: ElevatedButton(
+                                                    onPressed: () {
+                                                      setState(() {});
+                                                    },
+                                                    style: ElevatedButton.styleFrom(
+                                                        backgroundColor:
+                                                            Colors.red,
+                                                        shape: RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        50.0))),
+                                                    child: const Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Text(
+                                                          'SPK Cancel',
+                                                          maxLines: 2,
+                                                          style: TextStyle(
+                                                              fontSize: 14,
+                                                              color:
+                                                                  Colors.black,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                        //fungsi menampilkan jumlah SESUAI table
+                                                        Text(
+                                                          '0',
+                                                          style: TextStyle(
+                                                              fontSize: 14,
+                                                              color:
+                                                                  Colors.black,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+
+                                                const Padding(
+                                                  padding: EdgeInsets.only(
+                                                      bottom: 0),
+                                                  child: Divider(
+                                                    thickness: 1,
+                                                    color: Colors.grey,
+                                                  ),
+                                                ),
+
+                                                //? Total harga
+                                                Container(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 17),
+                                                  child: ElevatedButton(
+                                                    onPressed: () {
+                                                      setState(() {});
+                                                    },
+                                                    style: ElevatedButton.styleFrom(
+                                                        backgroundColor: Colors
+                                                            .blue.shade100,
+                                                        shape: RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        50.0))),
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        const Text(
+                                                          'Total',
+                                                          maxLines: 2,
+                                                          style: TextStyle(
+                                                              fontSize: 14,
+                                                              color:
+                                                                  Colors.black,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                        //fungsi menampilkan jumlah SESUAI table
+                                                        Text(
+                                                          'Rp. ${CurrencyFormat.convertToDollar(totalHarga, 0)}',
+                                                          style: const TextStyle(
+                                                              fontSize: 14,
+                                                              color:
+                                                                  Colors.black,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+
+                                                const Padding(
+                                                  padding: EdgeInsets.only(
+                                                      bottom: 0),
+                                                  child: Divider(
+                                                    thickness: 1,
+                                                    color: Colors.grey,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        )),
+                            ])))),
+
+                //* report Point Modeller
+                Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Container(
+                        padding: const EdgeInsets.all(12),
+                        width: 300,
+                        height: 300,
+                        child: Card(
+                            color: Colors.white,
+                            child: Column(children: [
+                              const Text('Point Modeller',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 24,
+                                  )),
+                              const Divider(thickness: 5),
+                              Expanded(
+                                  child: isLoadingPointModeller == true
+                                      ? Container(
+                                          padding: const EdgeInsets.all(0),
+                                          width: 90,
+                                          height: 90,
+                                          child: Lottie.asset(
+                                              "loadingJSON/loadingV1.json"),
+                                        )
+                                      : SingleChildScrollView(
+                                          scrollDirection: Axis.vertical,
+                                          child: Container(
+                                            padding: const EdgeInsets.all(0),
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                //? Arif Kurniawan
+                                                Container(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 17),
+                                                  // child: ElevatedButton(
+                                                  //   onPressed: () {
+                                                  //     setState(() {});
+                                                  //   },
+                                                  //   style: ElevatedButton.styleFrom(
+                                                  //       backgroundColor:
+                                                  //           Colors.blue
+                                                  //               .shade100,
+                                                  //       shape: RoundedRectangleBorder(
+                                                  //           borderRadius:
+                                                  //               BorderRadius
+                                                  //                   .circular(
+                                                  //                       50.0))),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      const Text(
+                                                        'Arif Kurniawan',
+                                                        maxLines: 2,
+                                                        style: TextStyle(
+                                                            fontSize: 14,
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                      //fungsi menampilkan jumlah SESUAI table
+                                                      Text(
+                                                        pointArif
+                                                            .toStringAsFixed(2),
+                                                        style: const TextStyle(
+                                                            fontSize: 14,
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  // ),
+                                                ),
+
+                                                const Padding(
+                                                  padding: EdgeInsets.only(
+                                                      bottom: 0),
+                                                  child: Divider(
+                                                    thickness: 1,
+                                                    color: Colors.grey,
+                                                  ),
+                                                ),
+
+                                                //? Aris Pravidan
+                                                Container(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 17),
+                                                  // child: ElevatedButton(
+                                                  //   onPressed: () {
+                                                  //     setState(() {});
+                                                  //   },
+                                                  //   style: ElevatedButton.styleFrom(
+                                                  //       backgroundColor:
+                                                  //           Colors.blue
+                                                  //               .shade100,
+                                                  //       shape: RoundedRectangleBorder(
+                                                  //           borderRadius:
+                                                  //               BorderRadius
+                                                  //                   .circular(
+                                                  //                       50.0))),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      const Text(
+                                                        'Aris Pravidan',
+                                                        maxLines: 2,
+                                                        style: TextStyle(
+                                                            fontSize: 14,
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                      //fungsi menampilkan jumlah SESUAI table
+                                                      Text(
+                                                        pointAris
+                                                            .toStringAsFixed(2),
+                                                        style: const TextStyle(
+                                                            fontSize: 14,
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  // ),
+                                                ),
+
+                                                const Padding(
+                                                  padding: EdgeInsets.only(
+                                                      bottom: 0),
+                                                  child: Divider(
+                                                    thickness: 1,
+                                                    color: Colors.grey,
+                                                  ),
+                                                ),
+                                                //? Fikryansyah
+                                                Container(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 17),
+                                                  // child: ElevatedButton(
+                                                  //   onPressed: () {
+                                                  //     setState(() {});
+                                                  //   },
+                                                  //   style: ElevatedButton.styleFrom(
+                                                  //       backgroundColor:
+                                                  //           Colors.blue
+                                                  //               .shade100,
+                                                  //       shape: RoundedRectangleBorder(
+                                                  //           borderRadius:
+                                                  //               BorderRadius
+                                                  //                   .circular(
+                                                  //                       50.0))),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      const Text(
+                                                        'Fikryansyah',
+                                                        maxLines: 2,
+                                                        style: TextStyle(
+                                                            fontSize: 14,
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                      //fungsi menampilkan jumlah SESUAI table
+                                                      Text(
+                                                        pointFikri
+                                                            .toStringAsFixed(2),
+                                                        style: const TextStyle(
+                                                            fontSize: 14,
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  // ),
+                                                ),
+
+                                                const Padding(
+                                                  padding: EdgeInsets.only(
+                                                      bottom: 0),
+                                                  child: Divider(
+                                                    thickness: 1,
+                                                    color: Colors.grey,
+                                                  ),
+                                                ),
+                                                //? Yuse
+                                                Container(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 17),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      const Text(
+                                                        'Yuse',
+                                                        maxLines: 2,
+                                                        style: TextStyle(
+                                                            fontSize: 14,
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                      //fungsi menampilkan jumlah SESUAI table
+                                                      Text(
+                                                        pointyuse
+                                                            .toStringAsFixed(2),
+                                                        style: const TextStyle(
+                                                            fontSize: 14,
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  // ),
+                                                ),
+
+                                                const Padding(
+                                                  padding: EdgeInsets.only(
+                                                      bottom: 0),
+                                                  child: Divider(
+                                                    thickness: 1,
+                                                    color: Colors.grey,
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  height: 30,
+                                                ),
+                                                //? Summary Report Modeller
+                                                Container(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 17),
+                                                  child: ElevatedButton(
+                                                    onPressed: () {
+                                                      setState(() {
+                                                        isSummaryModeller =
+                                                            true;
+                                                      });
+                                                    },
+                                                    style: ElevatedButton.styleFrom(
+                                                        backgroundColor: Colors
+                                                            .blue.shade100,
+                                                        shape: RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        50.0))),
+                                                    child: const Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Text(
+                                                          'Summary Report',
+                                                          maxLines: 2,
+                                                          style: TextStyle(
+                                                              fontSize: 14,
+                                                              color:
+                                                                  Colors.black,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                        //fungsi menampilkan jumlah SESUAI table
+                                                        Icon(
+                                                          Icons
+                                                              .arrow_forward_sharp,
+                                                          color: Colors.black,
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        )),
+                            ])))),
+              ],
+            ),
+    );
+  }
 }
 
 class RowSource extends DataTableSource {
@@ -4645,7 +3742,8 @@ class RowSource extends DataTableSource {
                                               data.tanggalInProduksi,
                                           beratModeller: data.beratModeller,
                                           statusForm: data.statusForm,
-                                          jo:data.jo, ),
+                                          jo: data.jo,
+                                        ),
                                       )));
                         },
                         icon: Stack(
@@ -4790,7 +3888,8 @@ class RowSource extends DataTableSource {
                                   tanggalOutModeller: data.tanggalOutModeller,
                                   tanggalInProduksi: data.tanggalInProduksi,
                                   beratModeller: data.beratModeller,
-                               jo:data.jo, ),
+                                  jo: data.jo,
+                                ),
                               )));
                 },
                 icon: (sharedPreferences!.getString('level') != '3' &&
@@ -4969,8 +4068,9 @@ class RowSource extends DataTableSource {
                                 tanggalOutModeller: data.tanggalOutModeller,
                                 tanggalInProduksi: data.tanggalInProduksi,
                                 beratModeller: data.beratModeller,
-                                statusForm:data.statusForm,
-                            jo:data.jo,  ),
+                                statusForm: data.statusForm,
+                                jo: data.jo,
+                              ),
                             )));
               },
               icon: const Icon(

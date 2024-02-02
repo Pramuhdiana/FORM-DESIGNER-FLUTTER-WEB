@@ -43,6 +43,10 @@ class _FormScreenState extends State<FormScreen> {
   List pemakaianBatu = [];
   List<XFile>? imagefiles;
   PlatformFile? _imageFile;
+  // ignore: prefer_typing_uninitialized_variables
+  var imgBytes;
+  // ignore: prefer_typing_uninitialized_variables
+  var imgName;
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   double doubleBeratEmasDariCustomer = 0;
@@ -134,7 +138,6 @@ class _FormScreenState extends State<FormScreen> {
   int? idStone33 = -1;
   int? idStone34 = -1;
   int? idStone35 = -1;
-
 
   TextEditingController kodeDesignMdbc = TextEditingController();
   TextEditingController kodeMarketing = TextEditingController();
@@ -478,44 +481,44 @@ class _FormScreenState extends State<FormScreen> {
     _getSiklus();
   }
 
-  double get totalCarat{
+  double get totalCarat {
     double total;
-     total = ((((caratPcsBatu1 * qtyIntBatu1!) +
-            (caratPcsBatu2 * qtyIntBatu2!) +
-            (caratPcsBatu3 * qtyIntBatu3!) +
-            (caratPcsBatu4 * qtyIntBatu4!) +
-            (caratPcsBatu5 * qtyIntBatu5!) +
-            (caratPcsBatu6 * qtyIntBatu6!) +
-            (caratPcsBatu7 * qtyIntBatu7!) +
-            (caratPcsBatu8 * qtyIntBatu8!) +
-            (caratPcsBatu9 * qtyIntBatu9!) +
-            (caratPcsBatu10 * qtyIntBatu10!) +
-            (caratPcsBatu11 * qtyIntBatu11!) +
-            (caratPcsBatu12 * qtyIntBatu12!) +
-            (caratPcsBatu13 * qtyIntBatu13!) +
-            (caratPcsBatu14 * qtyIntBatu14!) +
-            (caratPcsBatu15 * qtyIntBatu15!) +
-            (caratPcsBatu16 * qtyIntBatu16!) +
-            (caratPcsBatu17 * qtyIntBatu17!) +
-            (caratPcsBatu18 * qtyIntBatu18!) +
-            (caratPcsBatu19 * qtyIntBatu19!) +
-            (caratPcsBatu20 * qtyIntBatu20!) +
-            (caratPcsBatu21 * qtyIntBatu21!) +
-            (caratPcsBatu22 * qtyIntBatu22!) +
-            (caratPcsBatu23 * qtyIntBatu23!) +
-            (caratPcsBatu24 * qtyIntBatu24!) +
-            (caratPcsBatu25 * qtyIntBatu25!) +
-            (caratPcsBatu26 * qtyIntBatu26!) +
-            (caratPcsBatu27 * qtyIntBatu27!) +
-            (caratPcsBatu28 * qtyIntBatu28!) +
-            (caratPcsBatu29 * qtyIntBatu29!) +
-            (caratPcsBatu30 * qtyIntBatu30!) +
-            (caratPcsBatu31 * qtyIntBatu31!) +
-            (caratPcsBatu32 * qtyIntBatu32!) +
-            (caratPcsBatu33 * qtyIntBatu33!) +
-            (caratPcsBatu34 * qtyIntBatu34!) +
-            (caratPcsBatu35 * qtyIntBatu35!))));
-            return total;
+    total = ((((caratPcsBatu1 * qtyIntBatu1!) +
+        (caratPcsBatu2 * qtyIntBatu2!) +
+        (caratPcsBatu3 * qtyIntBatu3!) +
+        (caratPcsBatu4 * qtyIntBatu4!) +
+        (caratPcsBatu5 * qtyIntBatu5!) +
+        (caratPcsBatu6 * qtyIntBatu6!) +
+        (caratPcsBatu7 * qtyIntBatu7!) +
+        (caratPcsBatu8 * qtyIntBatu8!) +
+        (caratPcsBatu9 * qtyIntBatu9!) +
+        (caratPcsBatu10 * qtyIntBatu10!) +
+        (caratPcsBatu11 * qtyIntBatu11!) +
+        (caratPcsBatu12 * qtyIntBatu12!) +
+        (caratPcsBatu13 * qtyIntBatu13!) +
+        (caratPcsBatu14 * qtyIntBatu14!) +
+        (caratPcsBatu15 * qtyIntBatu15!) +
+        (caratPcsBatu16 * qtyIntBatu16!) +
+        (caratPcsBatu17 * qtyIntBatu17!) +
+        (caratPcsBatu18 * qtyIntBatu18!) +
+        (caratPcsBatu19 * qtyIntBatu19!) +
+        (caratPcsBatu20 * qtyIntBatu20!) +
+        (caratPcsBatu21 * qtyIntBatu21!) +
+        (caratPcsBatu22 * qtyIntBatu22!) +
+        (caratPcsBatu23 * qtyIntBatu23!) +
+        (caratPcsBatu24 * qtyIntBatu24!) +
+        (caratPcsBatu25 * qtyIntBatu25!) +
+        (caratPcsBatu26 * qtyIntBatu26!) +
+        (caratPcsBatu27 * qtyIntBatu27!) +
+        (caratPcsBatu28 * qtyIntBatu28!) +
+        (caratPcsBatu29 * qtyIntBatu29!) +
+        (caratPcsBatu30 * qtyIntBatu30!) +
+        (caratPcsBatu31 * qtyIntBatu31!) +
+        (caratPcsBatu32 * qtyIntBatu32!) +
+        (caratPcsBatu33 * qtyIntBatu33!) +
+        (caratPcsBatu34 * qtyIntBatu34!) +
+        (caratPcsBatu35 * qtyIntBatu35!))));
+    return total;
   }
 
   String generateImageName() {
@@ -577,8 +580,10 @@ class _FormScreenState extends State<FormScreen> {
         if (_paths != null) {
           _imageFile = _paths!.first;
           imageUrl = _paths!.first.name;
+          imgBytes = _paths!.first.bytes!;
+          imgName = _paths!.first.name;
           //passing file bytes and file name for API call
-          ApiClient.uploadFile(_paths!.first.bytes!, _paths!.first.name, id);
+          // ApiClient.uploadFile(_paths!.first.bytes!, _paths!.first.name, id);
         }
       }
     });
@@ -2429,21 +2434,21 @@ class _FormScreenState extends State<FormScreen> {
                                                               ),
                                                             ));
                                                   });
-                                                  sharedPreferences!.getString('divisi') == 'scm'
-                                                  ?
-                                                  Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (c) =>
-                                                              MainViewScm(
-                                                                  col: 0)))
-                                                  :
-                                                  Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (c) =>
-                                                              MainViewDesigner(
-                                                                  col: 1)));
+                                                  sharedPreferences!.getString(
+                                                              'divisi') ==
+                                                          'scm'
+                                                      ? Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (c) =>
+                                                                  MainViewScm(
+                                                                      col: 0)))
+                                                      : Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (c) =>
+                                                                  MainViewDesigner(
+                                                                      col: 1)));
                                                 },
                                                 child: const Text(
                                                   "All Round",
@@ -2469,7 +2474,7 @@ class _FormScreenState extends State<FormScreen> {
                                                   keteranganBatu = 'Fancy';
                                                   print(keteranganBatu);
                                                   await postAPI();
-                                                  
+
                                                   postApiQtyBatu1();
                                                   postApiQtyBatu2();
                                                   postApiQtyBatu3();
@@ -2520,21 +2525,21 @@ class _FormScreenState extends State<FormScreen> {
                                                               ),
                                                             ));
                                                   });
-                                                   sharedPreferences!.getString('divisi') == 'scm'
-                                                  ?
-                                                  Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (c) =>
-                                                              MainViewScm(
-                                                                  col: 0)))
-                                                  :
-                                                  Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (c) =>
-                                                              MainViewDesigner(
-                                                                  col: 1)));
+                                                  sharedPreferences!.getString(
+                                                              'divisi') ==
+                                                          'scm'
+                                                      ? Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (c) =>
+                                                                  MainViewScm(
+                                                                      col: 0)))
+                                                      : Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (c) =>
+                                                                  MainViewDesigner(
+                                                                      col: 1)));
                                                 },
                                                 child: const Text(
                                                   "All Fancy",
@@ -2610,21 +2615,21 @@ class _FormScreenState extends State<FormScreen> {
                                                               ),
                                                             ));
                                                   });
-                                                   sharedPreferences!.getString('divisi') == 'scm'
-                                                  ?
-                                                  Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (c) =>
-                                                              MainViewScm(
-                                                                  col: 0)))
-                                                  :
-                                                  Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (c) =>
-                                                              MainViewDesigner(
-                                                                  col: 1)));
+                                                  sharedPreferences!.getString(
+                                                              'divisi') ==
+                                                          'scm'
+                                                      ? Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (c) =>
+                                                                  MainViewScm(
+                                                                      col: 0)))
+                                                      : Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (c) =>
+                                                                  MainViewDesigner(
+                                                                      col: 1)));
                                                 },
                                                 child: const Text(
                                                   "MIX",
@@ -2932,7 +2937,14 @@ class _FormScreenState extends State<FormScreen> {
                           onPressed: () {
                             lastIdForm = generateImageName();
                             kodeDesignMdbc.text.isEmpty
-                                ? null
+                                ? showDialog<String>(
+                                    context: context,
+                                    builder: (BuildContext context) =>
+                                        const AlertDialog(
+                                          title: Text(
+                                            'Isi terlebih dahulu kodeMDBC',
+                                          ),
+                                        ))
                                 : _pickImage(lastIdForm);
                           },
                           child: const Text('Gambar Design')),
@@ -3557,18 +3569,19 @@ class _FormScreenState extends State<FormScreen> {
                                 fontWeight: FontWeight.bold),
                           ),
                         ),
-                          sharedPreferences!.getString('divisi') == 'admin' || sharedPreferences!.getString('divisi') == 'scm'
-                        ? Container(
-                          padding: const EdgeInsets.only(left: 10),
-                          child:  Text(
-                            'Total Carat : $totalCarat',
-                            style: const TextStyle(
-                                fontSize: 16,
-                                color: Colors.red,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        )
-                        : const SizedBox(),
+                        sharedPreferences!.getString('divisi') == 'admin' ||
+                                sharedPreferences!.getString('divisi') == 'scm'
+                            ? Container(
+                                padding: const EdgeInsets.only(left: 10),
+                                child: Text(
+                                  'Total Carat : $totalCarat',
+                                  style: const TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.red,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              )
+                            : const SizedBox(),
                       ],
                     ),
                     // for (var i = 0; i <= 35; i++)
@@ -14762,7 +14775,7 @@ class _FormScreenState extends State<FormScreen> {
       'qtyBatu34': qtyBatu34.text,
       'batu35': batu35!,
       'qtyBatu35': qtyBatu35.text,
-      'imageUrl': _imageFile == null ? imageUrl :lastIdForm! + imageUrl!,
+      'imageUrl': _imageFile == null ? imageUrl : lastIdForm! + imageUrl!,
       'statusForm': statusForm.text,
       'keteranganBatu': keteranganBatu,
       'totalCarat': totalCarat.toStringAsFixed(2),
@@ -14770,6 +14783,9 @@ class _FormScreenState extends State<FormScreen> {
     final response = await http.post(
         Uri.parse(ApiConstants.baseUrl + ApiConstants.postFormDesigner),
         body: body);
+    if (response.statusCode == 200) {
+      ApiClient.uploadFile(imgBytes, imgName, lastIdForm!);
+    }
     print(response.body);
   }
 

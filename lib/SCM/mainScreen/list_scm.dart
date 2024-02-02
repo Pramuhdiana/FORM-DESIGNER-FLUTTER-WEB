@@ -273,78 +273,163 @@ class _ListScmState extends State<ListScmScreen> {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(10.0),
-                    child: Row(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.only(),
-                          width: 350,
-                          child: DropdownSearch<String>(
-                            items: const [
-                              "JANUARI",
-                              "FEBRUARI",
-                              "MARET",
-                              "APRIL",
-                              "MEI",
-                              "JUNI",
-                              "JULI",
-                              "AGUSTUS",
-                              "SEPTEMBER",
-                              "OKTOBER",
-                              "NOVEMBER",
-                              "DESEMBER"
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        if (constraints.maxWidth < 900) {
+                          return Column(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.only(),
+                                width: 350,
+                                child: DropdownSearch<String>(
+                                  items: const [
+                                    "JANUARI",
+                                    "FEBRUARI",
+                                    "MARET",
+                                    "APRIL",
+                                    "MEI",
+                                    "JUNI",
+                                    "JULI",
+                                    "AGUSTUS",
+                                    "SEPTEMBER",
+                                    "OKTOBER",
+                                    "NOVEMBER",
+                                    "DESEMBER"
+                                  ],
+                                  onChanged: (item) {
+                                    setState(() {
+                                      siklus.text = item!;
+                                      siklusDesigner = siklus.text.toString();
+                                      _getDataBySiklus(siklus.text);
+                                    });
+                                  },
+                                  popupProps: const PopupPropsMultiSelection
+                                      .modalBottomSheet(
+                                    showSelectedItems: true,
+                                    showSearchBox: true,
+                                  ),
+                                  dropdownDecoratorProps:
+                                      const DropDownDecoratorProps(
+                                    textAlign: TextAlign.center,
+                                    baseStyle: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
+                                    dropdownSearchDecoration: InputDecoration(
+                                        labelText: "Pilih Siklus",
+                                        floatingLabelAlignment:
+                                            FloatingLabelAlignment.center,
+                                        filled: true,
+                                        fillColor: Colors.white,
+                                        border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(12)))),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Container(
+                                padding: const EdgeInsets.only(left: 20),
+                                child: FloatingActionButton.extended(
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (c) =>
+                                                const FormScreen()));
+                                  },
+                                  label: const Text(
+                                    "Tambah Form List SCM",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  icon: const Icon(
+                                    Icons.add_circle_outline_sharp,
+                                    color: Colors.white,
+                                  ),
+                                  backgroundColor: Colors.blue,
+                                ),
+                              )
                             ],
-                            onChanged: (item) {
-                              setState(() {
-                                siklus.text = item!;
-                                siklusDesigner = siklus.text.toString();
-                                _getDataBySiklus(siklus.text);
-                              });
-                            },
-                            popupProps:
-                                const PopupPropsMultiSelection.modalBottomSheet(
-                              showSelectedItems: true,
-                              showSearchBox: true,
-                            ),
-                            dropdownDecoratorProps:
-                                const DropDownDecoratorProps(
-                              textAlign: TextAlign.center,
-                              baseStyle: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold),
-                              dropdownSearchDecoration: InputDecoration(
-                                  labelText: "Pilih Siklus",
-                                  floatingLabelAlignment:
-                                      FloatingLabelAlignment.center,
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(12)))),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.only(left: 20),
-                          child: FloatingActionButton.extended(
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (c) => const FormScreen()));
-                            },
-                            label: const Text(
-                              "Tambah Form List SCM",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            icon: const Icon(
-                              Icons.add_circle_outline_sharp,
-                              color: Colors.white,
-                            ),
-                            backgroundColor: Colors.blue,
-                          ),
-                        )
-                      ],
+                          );
+                        } else {
+                          return Row(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.only(),
+                                width: 350,
+                                child: DropdownSearch<String>(
+                                  items: const [
+                                    "JANUARI",
+                                    "FEBRUARI",
+                                    "MARET",
+                                    "APRIL",
+                                    "MEI",
+                                    "JUNI",
+                                    "JULI",
+                                    "AGUSTUS",
+                                    "SEPTEMBER",
+                                    "OKTOBER",
+                                    "NOVEMBER",
+                                    "DESEMBER"
+                                  ],
+                                  onChanged: (item) {
+                                    setState(() {
+                                      siklus.text = item!;
+                                      siklusDesigner = siklus.text.toString();
+                                      _getDataBySiklus(siklus.text);
+                                    });
+                                  },
+                                  popupProps: const PopupPropsMultiSelection
+                                      .modalBottomSheet(
+                                    showSelectedItems: true,
+                                    showSearchBox: true,
+                                  ),
+                                  dropdownDecoratorProps:
+                                      const DropDownDecoratorProps(
+                                    textAlign: TextAlign.center,
+                                    baseStyle: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
+                                    dropdownSearchDecoration: InputDecoration(
+                                        labelText: "Pilih Siklus",
+                                        floatingLabelAlignment:
+                                            FloatingLabelAlignment.center,
+                                        filled: true,
+                                        fillColor: Colors.white,
+                                        border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(12)))),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.only(left: 20),
+                                child: FloatingActionButton.extended(
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (c) =>
+                                                const FormScreen()));
+                                  },
+                                  label: const Text(
+                                    "Tambah Form List SCM",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  icon: const Icon(
+                                    Icons.add_circle_outline_sharp,
+                                    color: Colors.white,
+                                  ),
+                                  backgroundColor: Colors.blue,
+                                ),
+                              )
+                            ],
+                          );
+                        }
+                      },
                     ),
                   ),
                   isLoading == false

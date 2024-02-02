@@ -178,8 +178,8 @@ class _SiklusSebelumnyaState extends State<SiklusSebelumnya> {
     _listL = [];
     _listXL = [];
     print('get data bulan on');
-    final response = await http.get(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.getListMps));
+    final response = await http
+        .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getListMps));
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);
       var allData =
@@ -389,7 +389,7 @@ class _SiklusSebelumnyaState extends State<SiklusSebelumnya> {
       isLoading = true;
     });
     await _getData(month);
-    novBrj =147;
+    novBrj = 147;
     novRelease = 160;
     desBrj = 186;
     desRelease = 245;
@@ -486,8 +486,8 @@ class _SiklusSebelumnyaState extends State<SiklusSebelumnya> {
   }
 
   _getDataByMonth(month) async {
-    final response = await http.get(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.getListMps));
+    final response = await http
+        .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getListMps));
 
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);
@@ -512,8 +512,8 @@ class _SiklusSebelumnyaState extends State<SiklusSebelumnya> {
 
   getDataTableValuePencapaian(month) async {
     print('get data value on');
-    final response = await http.get(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.getListMps));
+    final response = await http
+        .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getListMps));
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);
       var allData =
@@ -560,8 +560,8 @@ class _SiklusSebelumnyaState extends State<SiklusSebelumnya> {
   }
 
   _getData(month) async {
-    final response = await http.get(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.getListMps));
+    final response = await http
+        .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getListMps));
 
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);
@@ -667,6 +667,8 @@ class _SiklusSebelumnyaState extends State<SiklusSebelumnya> {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+
     String greeting() {
       var hour = DateTime.now().hour;
       if (hour < 12) {
@@ -701,150 +703,142 @@ class _SiklusSebelumnyaState extends State<SiklusSebelumnya> {
                   ))
                 : Container(
                     width: MediaQuery.of(context).size.width * 1,
+                    height: screenHeight,
                     color: colorBG,
                     padding: EdgeInsets.all(10),
-                    child: SingleChildScrollView(
-                        scrollDirection: Axis.vertical,
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.only(top: 26),
-                                child: const Text(
-                                  'Report Untuk SCM Siklus Sebelumnya',
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 26),
-                                ),
-                              ),
-                              dashboardProduksi(),
-                            ])))));
+                    child: dashboardProduksi())));
+    //  SingleChildScrollView(
+    //     scrollDirection: Axis.vertical,
+    //     child: Column(
+    //         crossAxisAlignment: CrossAxisAlignment.start,
+    //         children: [
+    //           // Container(
+    //           //   padding: const EdgeInsets.only(top: 26),
+    //           //   child: const Text(
+    //           //     'Report Untuk SCM Siklus Sebelumnya',
+    //           //     style: TextStyle(
+    //           //         color: Colors.black,
+    //           //         fontWeight: FontWeight.bold,
+    //           //         fontSize: 26),
+    //           //   ),
+    //           // ),
+    //           dashboardProduksi(),
+    //         ])))));
   }
 
   //! dashboard produksi
   dashboardProduksi() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        isTimelineClick == true
-            ? Container(
-                height: 550,
-                color: colorCard1,
-                padding: const EdgeInsets.all(5),
-                child: Column(
+    return isTimelineClick == true
+        ? Container(
+            color: Colors.white,
+            padding: const EdgeInsets.all(5),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            handleClickTimeline('');
-                          },
-                          child: SizedBox(
-                            width: 50,
-                            child: Lottie.asset("loadingJSON/backbutton.json",
-                                fit: BoxFit.cover),
-                          ),
-                        ),
-                        Container(
-                            padding: EdgeInsets.only(left: 80, top: 25),
-                            child: Text(
-                              'Tabel Kelas Harga',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold),
-                            )),
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.2,
-                          padding: const EdgeInsets.only(
-                              top: 5, left: 10, right: 10),
-                          child: DecoratedBox(
-                              decoration: BoxDecoration(
-                                color: pilihBulan != null
-                                    ? ui.Color.fromARGB(255, 42, 255, 23)
-                                    : const Color.fromRGBO(238, 240, 235,
-                                        1), //background color of dropdown button
-                                border: Border.all(
-                                  color: Colors.black38,
-                                  // width:
-                                  //     3
-                                ), //border of dropdown button
-                                borderRadius: BorderRadius.circular(
-                                    35), //border raiuds of dropdown button
-                              ),
-                              child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 10, right: 10),
-                                  child: DropdownButton(
-                                    value: pilihBulan,
-                                    items: [
-                                      for (var item in listBulan)
-                                        DropdownMenuItem(
-                                          value: item,
-                                          child: Text(item),
-                                        ),
-                                    ],
-                                    hint: const Text('Pilih Bulan'),
-                                    onChanged: (value) {
-                                      print(value);
-                                      pilihBulan = value;
-                                      _getAllDataLevel2(pilihBulan);
-                                    },
-                                    icon: const Padding(
-                                        padding: EdgeInsets.only(left: 20),
-                                        child: Icon(
-                                            Icons.arrow_circle_down_sharp)),
-                                    iconEnabledColor: Colors.black, //Icon color
-                                    style: const TextStyle(
-                                      color: Colors.black, //Font color
-                                      // fontSize:
-                                      //     15 //font size on dropdown button
-                                    ),
-
-                                    dropdownColor: Colors
-                                        .white, //dropdown background color
-                                    underline: Container(), //remove underline
-                                    isExpanded:
-                                        true, //make true to make width 100%
-                                  ))),
-                        ),
-                      ],
+                    InkWell(
+                      onTap: () {
+                        handleClickTimeline('');
+                      },
+                      child: SizedBox(
+                        width: 50,
+                        child: Lottie.asset("loadingJSON/backbutton.json",
+                            fit: BoxFit.cover),
+                      ),
                     ),
-                    isLoadingTimeline == true
-                        ? Container(
-                            padding: const EdgeInsets.all(5),
-                            width: 90,
-                            height: 90,
-                            child: Lottie.asset("loadingJSON/loadingV1.json"),
-                          )
-                        : SingleChildScrollView(
-                            scrollDirection: Axis.vertical,
-                            child: Container(child: dataTableBarang())),
-                  ],
-                ))
-            : Container(
-                height: 550,
-                color: colorCard1,
-                padding: const EdgeInsets.all(5),
-                child: Column(
-                  children: [
                     Container(
-                        padding: EdgeInsets.only(left: 20, top: 25),
+                        padding: EdgeInsets.only(left: 80, top: 25),
                         child: Text(
-                          'Timeline Pencapaian Produksi',
+                          'Tabel Kelas Harga',
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 20,
                               fontWeight: FontWeight.bold),
                         )),
-                    chartReportLevel1()
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.2,
+                      padding:
+                          const EdgeInsets.only(top: 5, left: 10, right: 10),
+                      child: DecoratedBox(
+                          decoration: BoxDecoration(
+                            color: pilihBulan != null
+                                ? ui.Color.fromARGB(255, 42, 255, 23)
+                                : const Color.fromRGBO(238, 240, 235,
+                                    1), //background color of dropdown button
+                            border: Border.all(
+                              color: Colors.black38,
+                              // width:
+                              //     3
+                            ), //border of dropdown button
+                            borderRadius: BorderRadius.circular(
+                                35), //border raiuds of dropdown button
+                          ),
+                          child: Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 10, right: 10),
+                              child: DropdownButton(
+                                value: pilihBulan,
+                                items: [
+                                  for (var item in listBulan)
+                                    DropdownMenuItem(
+                                      value: item,
+                                      child: Text(item),
+                                    ),
+                                ],
+                                hint: const Text('Pilih Bulan'),
+                                onChanged: (value) {
+                                  print(value);
+                                  pilihBulan = value;
+                                  _getAllDataLevel2(pilihBulan);
+                                },
+                                icon: const Padding(
+                                    padding: EdgeInsets.only(left: 20),
+                                    child: Icon(Icons.arrow_circle_down_sharp)),
+                                iconEnabledColor: Colors.black, //Icon color
+                                style: const TextStyle(
+                                  color: Colors.black, //Font color
+                                  // fontSize:
+                                  //     15 //font size on dropdown button
+                                ),
+
+                                dropdownColor:
+                                    Colors.white, //dropdown background color
+                                underline: Container(), //remove underline
+                                isExpanded: true, //make true to make width 100%
+                              ))),
+                    ),
                   ],
-                )),
-        SizedBox(height: 10),
-      ],
-    );
+                ),
+                isLoadingTimeline == true
+                    ? Container(
+                        padding: const EdgeInsets.all(5),
+                        width: 90,
+                        height: 90,
+                        child: Lottie.asset("loadingJSON/loadingV1.json"),
+                      )
+                    : SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        child: Container(child: dataTableBarang())),
+              ],
+            ))
+        : Container(
+            color: Colors.white,
+            padding: const EdgeInsets.all(5),
+            child: Column(
+              children: [
+                Container(
+                    padding: EdgeInsets.only(left: 20, top: 25),
+                    child: Text(
+                      'Timeline Pencapaian Produksi',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
+                    )),
+                chartReportLevel1()
+              ],
+            ));
   }
 
   chartReportLevel1() {
@@ -858,14 +852,14 @@ class _SiklusSebelumnyaState extends State<SiklusSebelumnya> {
             labelFormat: '{value}%',
             maximum: 100.00,
             labelStyle: TextStyle(
-                color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14),
+                color: Colors.black, fontWeight: FontWeight.bold, fontSize: 14),
             interval: 5.00)
       ],
 
       //! X axis as CategoryAxis axis placed here. BAWAH
       primaryXAxis: CategoryAxis(
           labelStyle:
-              TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
           // maximumLabelWidth: 50,
           axisLine: const AxisLine(width: 0),
           majorGridLines: const MajorGridLines(width: 0),
@@ -878,7 +872,7 @@ class _SiklusSebelumnyaState extends State<SiklusSebelumnya> {
           opposedPosition: false,
           interval: 20,
           labelStyle:
-              TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
           labelFormat: '{value}'),
 
       series: getDataReportLevel1(),

@@ -5,9 +5,8 @@ import 'package:form_designer/SCM/mainScreen/kebutuhan_batu_by_siklus.dart';
 import 'package:form_designer/SCM/mainScreen/list_scm.dart';
 import 'package:form_designer/api/api_constant.dart';
 import 'package:form_designer/calculatePricing/list_calculate_pricing_screen.dart';
-import 'package:form_designer/calculatePricingFuji/list_calculate_pricing_screen_fuji.dart';
 import 'package:form_designer/global/global.dart';
-import 'package:form_designer/mainScreen/home_screen.dart';
+import 'package:form_designer/mainScreen/home_admin.dart';
 import 'package:form_designer/mainScreen/list_batu_screen.dart';
 import 'package:form_designer/mainScreen/list_data_modeller.dart';
 import 'package:form_designer/mainScreen/list_designer_screen.dart';
@@ -30,47 +29,46 @@ class MainViewScm extends StatefulWidget {
 }
 
 class _MainViewScmState extends State<MainViewScm> {
-    bool isExpanded = true;
+  bool isExpanded = true;
   @override
   void initState() {
     super.initState();
-    
   }
 
   List<Widget> screenDevi = [
-    const HomeScreen(),
-    const ListDataModellerScreen(),
-    const ListDesignerScreen(),
-    const ListBatuScreen(),
-    const ListCalculatePricingScreen(),
-    const ListKebutuhanBatuScreen(),
-    const ListStatusApprovalScreen(),
-    const ListMpsScreen(),
-    const HomeScreen()
-  ];
-  List<Widget> screenEka = [
-    const HomeScreen(),
+    const HomeScreenAdmin(),
     const ListDataModellerScreen(),
     const ListDesignerScreen(),
     const ListScmScreen(),
     const ListBatuScreen(),
     const ListKebutuhanBatuScreen(),
     const ListMpsScreen(),
-    const HomeScreen()
+    const ListStatusApprovalScreen(),
+    const ListCalculatePricingScreen(),
+    const HomeScreenAdmin()
+  ];
+  List<Widget> screenEka = [
+    const HomeScreenAdmin(),
+    const ListDataModellerScreen(),
+    const ListDesignerScreen(),
+    const ListScmScreen(),
+    const ListBatuScreen(),
+    const ListKebutuhanBatuScreen(),
+    const ListMpsScreen(),
+    const HomeScreenAdmin()
   ];
   List<Widget> screenFuji = [
-    const HomeScreen(),
-    const ListCalculatePricingScreen(),
-    const ListCalculatePricingFujiScreen(),
+    const HomeScreenAdmin(),
     const ListStatusApprovalScreen(),
-    const HomeScreen()
+    const ListCalculatePricingScreen(),
+    const HomeScreenAdmin()
   ];
   List<Widget> screenEva = [
-    const HomeScreen(),
+    const HomeScreenAdmin(),
     const ListDataModellerScreen(),
     const ListBatuScreen(),
     const ListMpsScreen(),
-    const HomeScreen()
+    const HomeScreenAdmin()
   ];
 
   final _formKey = GlobalKey<FormState>();
@@ -93,7 +91,6 @@ class _MainViewScmState extends State<MainViewScm> {
             isExpanded = true;
             return screenDekstop();
           }
-
         },
       ),
     );
@@ -163,7 +160,7 @@ class _MainViewScmState extends State<MainViewScm> {
             print(sharedPreferences!.getString('role'));
             if (sharedPreferences!.getString('role') == '1') {
               //! devi
-              if (index == 8) {
+              if (index == screenDevi.length - 1) {
                 //! sign out
                 showDialog(
                     context: context,
@@ -226,7 +223,7 @@ class _MainViewScmState extends State<MainViewScm> {
                         ),
                       );
                     });
-              } else if (index == 4) {
+              } else if (index == screenDevi.length - 2) {
                 //! kalkulator
                 showDialog(
                     context: context,
@@ -529,7 +526,7 @@ class _MainViewScmState extends State<MainViewScm> {
                         ),
                       );
                     });
-              } else if (index == 1) {
+              } else if (index == screenFuji.length - 2) {
                 //! kalkulator
                 showDialog(
                     context: context,
@@ -681,24 +678,28 @@ class _MainViewScmState extends State<MainViewScm> {
         label: 'List form designer',
       ),
       const SideNavigationBarItem(
-        icon: Icons.list,
-        label: 'List stok batu',
+        icon: Icons.list_alt,
+        label: 'List data SCM',
       ),
       const SideNavigationBarItem(
-        icon: Icons.calculate_outlined,
-        label: 'Calculate Price',
+        icon: Icons.list,
+        label: 'List stok batu',
       ),
       const SideNavigationBarItem(
         icon: Icons.bar_chart_sharp,
         label: 'Kebutuhan Data Batu',
       ),
       const SideNavigationBarItem(
+        icon: Icons.moving_outlined,
+        label: 'Monitoring Per Siklus',
+      ),
+      const SideNavigationBarItem(
         icon: Icons.verified,
         label: 'Status Approval',
       ),
       const SideNavigationBarItem(
-        icon: Icons.moving_outlined,
-        label: 'Monitoring Per Siklus',
+        icon: Icons.calculate_outlined,
+        label: 'Calculate Price',
       ),
       const SideNavigationBarItem(
         icon: Icons.logout,
@@ -751,16 +752,12 @@ class _MainViewScmState extends State<MainViewScm> {
         label: 'Dashboard',
       ),
       const SideNavigationBarItem(
-        icon: Icons.calculate_outlined,
-        label: 'Calculate Price',
-      ),
-      const SideNavigationBarItem(
-        icon: Icons.calculate_outlined,
-        label: 'Kalkulator Custom',
-      ),
-      const SideNavigationBarItem(
         icon: Icons.verified,
         label: 'Status Approval',
+      ),
+      const SideNavigationBarItem(
+        icon: Icons.calculate_outlined,
+        label: 'Calculate Price',
       ),
       const SideNavigationBarItem(
         icon: Icons.logout,
@@ -779,7 +776,6 @@ class _MainViewScmState extends State<MainViewScm> {
         icon: Icons.list_alt,
         label: 'List data modeller',
       ),
-       
       const SideNavigationBarItem(
         icon: Icons.list,
         label: 'List stok batu',
