@@ -55,6 +55,7 @@ class ApiConstants {
   static String postDataProduksi = 'spk/create_produksi.php';
   static String postDataModeller = 'spk/create_data_modeller.php';
   static String postDataMps = 'spk/create_mps.php';
+  static String postDataMpsIsSend = 'spk/add_posisi_mps.php';
 
   static String postDeleteFormDesignerById =
       'spk/delete_form_designer_by_id.php';

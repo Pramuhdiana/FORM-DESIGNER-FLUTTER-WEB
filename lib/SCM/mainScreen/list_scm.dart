@@ -224,7 +224,7 @@ class _ListScmState extends State<ListScmScreen> {
                     //fungsi search anyting
                     myCrm = filterCrm!
                         .where((element) =>
-                            element.bulan!
+                            element.kodeDesignMdbc!
                                 .toLowerCase()
                                 .contains(value.toLowerCase()) ||
                             element.bulan!
@@ -944,8 +944,6 @@ class RowSource extends DataTableSource {
 
   postDataMps(var dumData, index, bulan, context, isUpdate) async {
     var data = dumData[index];
-    print(bulan);
-    print(data.imageUrl);
     Map<String, String> body = {
       'isUpdate': isUpdate,
       'id': data.id.toString(),
@@ -976,7 +974,7 @@ class RowSource extends DataTableSource {
       'customKomponen': data.customKomponen.toString(),
       'qtyCustomKomponen': data.qtyCustomKomponen.toString(),
       'siklus': data.siklus.toString(),
-      'bulan': bulan.toString(),
+      'bulan': bulan.toString().toUpperCase(),
       'totalCarat': data.totalCarat.toString(),
     };
     try {
@@ -1010,7 +1008,15 @@ class RowSource extends DataTableSource {
       );
     }
   }
-
+  updateStatusMPS(id, status) async {
+     Map<String, String> body = {
+      'id': id.toString(),
+    };
+    final response = await http.post(
+        Uri.parse('${ApiConstants.baseUrl}${ApiConstants.addTanggalProduksi}'),
+        body: body);
+    print(response.body);
+  }
   _getKodeMarketingBykodeDesign(kodeDesign) async {
     var kodeMarketing;
     final response = await http.get(

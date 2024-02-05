@@ -142,8 +142,8 @@ class _SiklusSebelumnyaState extends State<SiklusSebelumnya> {
     aguBrj = 0;
     sepBrj = 0;
     oktBrj = 0;
-    novBrj = 140;
-    desBrj = 150;
+    novBrj = 0;
+    desBrj = 0;
   }
 
   void _getAllDataLevel2(month) async {
@@ -389,10 +389,6 @@ class _SiklusSebelumnyaState extends State<SiklusSebelumnya> {
       isLoading = true;
     });
     await _getData(month);
-    novBrj = 147;
-    novRelease = 160;
-    desBrj = 186;
-    desRelease = 245;
     chartDataReportLevel1 = <ChartData>[
       ChartData(
           xValue: 'JANUARI',

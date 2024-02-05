@@ -13,6 +13,7 @@ import 'package:form_designer/mainScreen/list_designer_screen.dart';
 import 'package:form_designer/mainScreen/list_mps.dart';
 import 'package:form_designer/mainScreen/list_status_approval.dart';
 import 'package:form_designer/mainScreen/login.dart';
+import 'package:form_designer/produksi/mainScreen/monthly_meeting_scm.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:side_navigation/side_navigation.dart';
 
@@ -42,6 +43,7 @@ class _MainViewScmState extends State<MainViewScm> {
     const ListScmScreen(),
     const ListBatuScreen(),
     const ListKebutuhanBatuScreen(),
+    const MonthlyMeetingScm(),
     const ListMpsScreen(),
     const ListStatusApprovalScreen(),
     const ListCalculatePricingScreen(),
@@ -54,6 +56,7 @@ class _MainViewScmState extends State<MainViewScm> {
     const ListScmScreen(),
     const ListBatuScreen(),
     const ListKebutuhanBatuScreen(),
+    const MonthlyMeetingScm(),
     const ListMpsScreen(),
     const HomeScreenAdmin()
   ];
@@ -690,6 +693,10 @@ class _MainViewScmState extends State<MainViewScm> {
         label: 'Kebutuhan Data Batu',
       ),
       const SideNavigationBarItem(
+        icon: Icons.developer_mode,
+        label: 'Monthly Meeting SCM',
+      ),
+      const SideNavigationBarItem(
         icon: Icons.moving_outlined,
         label: 'Monitoring Per Siklus',
       ),
@@ -733,6 +740,10 @@ class _MainViewScmState extends State<MainViewScm> {
       const SideNavigationBarItem(
         icon: Icons.bar_chart_sharp,
         label: 'Kebutuhan Data Batu',
+      ),
+      const SideNavigationBarItem(
+        icon: Icons.developer_mode,
+        label: 'Monthly Meeting SCM',
       ),
       const SideNavigationBarItem(
         icon: Icons.moving_outlined,
