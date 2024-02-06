@@ -821,57 +821,60 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
                 : sharedPreferences!.getString('role') == '2' ||
                         sharedPreferences!.getString('role') == '1' ||
                         sharedPreferences!.getString('divisi') == 'admin'
-                    ? Container(
-                        height: 80,
-                        padding: const EdgeInsets.all(10.0),
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.blue,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50.0))),
-                          onPressed: () async {
-                            setState(() {
-                              isLoading = true;
-                            });
-                            showDialog(
-                              context: context,
-                              barrierDismissible:
-                                  false, // Prevent dialog dismissal on tap outside
-                              builder: (BuildContext context) {
-                                return Dialog(
-                                  backgroundColor: Colors.transparent,
-                                  elevation: 0,
-                                  child: Container(
-                                    padding: const EdgeInsets.all(16),
-                                    color: Colors.white,
-                                    child: const Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        CircularProgressIndicator(),
-                                        SizedBox(height: 20),
-                                        Text(
-                                          'Loading, please wait...',
-                                          style: TextStyle(fontSize: 16),
+                    ? siklusDesigner == 'DESEMBER'
+                        ? const SizedBox()
+                        : Container(
+                            height: 80,
+                            padding: const EdgeInsets.all(10.0),
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.blue,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(50.0))),
+                              onPressed: () async {
+                                setState(() {
+                                  isLoading = true;
+                                });
+                                showDialog(
+                                  context: context,
+                                  barrierDismissible:
+                                      false, // Prevent dialog dismissal on tap outside
+                                  builder: (BuildContext context) {
+                                    return Dialog(
+                                      backgroundColor: Colors.transparent,
+                                      elevation: 0,
+                                      child: Container(
+                                        padding: const EdgeInsets.all(16),
+                                        color: Colors.white,
+                                        child: const Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            CircularProgressIndicator(),
+                                            SizedBox(height: 20),
+                                            Text(
+                                              'Loading, please wait...',
+                                              style: TextStyle(fontSize: 16),
+                                            ),
+                                          ],
                                         ),
-                                      ],
-                                    ),
-                                  ),
+                                      ),
+                                    );
+                                  },
                                 );
+                                await postSendAll(
+                                    myDataProduksi!,
+                                    listBulan[int.parse(convertMonthToNumber(
+                                            siklusDesigner)) -
+                                        1]);
+                                Navigator.of(context).pop();
+                                setState(() {
+                                  isLoading = false;
+                                });
                               },
-                            );
-                            await postSendAll(
-                                myDataProduksi!,
-                                listBulan[int.parse(
-                                        convertMonthToNumber(siklusDesigner)) -
-                                    1]);
-                            Navigator.of(context).pop();
-                            setState(() {
-                              isLoading = false;
-                            });
-                          },
-                          child: Text(
-                              'Kirim semua ke bulan ${listBulan[int.parse(convertMonthToNumber(siklusDesigner)) - 1]}'),
-                        ))
+                              child: Text(
+                                  'Kirim semua ke bulan ${listBulan[int.parse(convertMonthToNumber(siklusDesigner)) - 1]}'),
+                            ))
                     : const SizedBox()
           ],
         ),
