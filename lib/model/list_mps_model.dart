@@ -10,6 +10,7 @@ String allcrmToJson(List<ListMpsModel> data) =>
 initState() {}
 
 class ListMpsModel {
+  int? idMps;
   int? id;
   String? kodeDesignMdbc;
   String? kodeMarketing;
@@ -47,6 +48,7 @@ class ListMpsModel {
   String? isSend;
 
   ListMpsModel({
+    this.idMps,
     this.id,
     this.kodeDesignMdbc,
     this.kodeMarketing,
@@ -85,6 +87,7 @@ class ListMpsModel {
   });
 
   ListMpsModel.fromJson(Map<String, dynamic> json) {
+    idMps = json['idMps'];
     id = json['id'];
     kodeDesignMdbc = json['kodeDesignMdbc'] ?? '';
     kodeMarketing = json['kodeMarketing'] ?? '';
@@ -124,6 +127,7 @@ class ListMpsModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    data['idMps'] = idMps;
     data['id'] = id;
     data['kodeDesignMdbc'] = kodeDesignMdbc;
     data['kodeMarketing'] = kodeMarketing;

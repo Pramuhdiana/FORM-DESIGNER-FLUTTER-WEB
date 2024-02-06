@@ -98,6 +98,123 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
     _getListSubDivisi();
   }
 
+  String convertMonthToNumber(String monthName) {
+    // Map nama bulan ke angka bulan
+    Map<String, int> monthMap = {
+      'JANUARI': 1,
+      'FEBRUARI': 2,
+      'MARET': 3,
+      'APRIL': 4,
+      'MEI': 5,
+      'JUNI': 6,
+      'JULI': 7,
+      'AGUSTUS': 8,
+      'SEPTEMBER': 9,
+      'OKTOBER': 10,
+      'NOVEMBER': 11,
+      'DESEMBER': 12,
+    };
+
+    // Mengembalikan angka bulan dari map jika ditemukan, atau 0 jika tidak ditemukan
+    return monthMap[monthName] != null ? monthMap[monthName].toString() : '';
+  }
+
+  postSendAll(List<ListMpsModel> data, newMonth) async {
+    var filterByNonBrj = data
+        .where((element) => element.posisi.toString().toLowerCase() != 'brj')
+        .toList();
+    var filterByCancel =
+        filterByNonBrj.where((element) => element.isSend == '').toList();
+    data = filterByCancel.toList();
+    for (var i = 0; i < data.length; i++) {
+      await postMps(data, i, newMonth);
+    }
+  }
+
+  postMps(var dumData, i, bulan) async {
+    var data = dumData[i];
+    Map<String, String> bodyStatusmps = {
+      'id': data.idMps.toString(),
+    };
+    try {
+      final response = await http.post(
+          Uri.parse('${ApiConstants.baseUrl}${ApiConstants.postDataMpsIsSend}'),
+          body: bodyStatusmps);
+      if (response.statusCode == 200) {
+      } else {
+        print('err : ${response.body}');
+        showSimpleNotification(
+          Text('Error Data (${response.body})'),
+          background: Colors.red,
+          duration: const Duration(seconds: 2),
+        );
+      }
+    } catch (c) {
+      print('err : $c');
+      showSimpleNotification(
+        Text('Error Data ($c)'),
+        background: Colors.red,
+        duration: const Duration(seconds: 2),
+      );
+    }
+
+    Map<String, String> body = {
+      'isUpdate': 'new',
+      'id': data.id.toString(),
+      'kodeDesignMdbc': data.kodeDesignMdbc.toString(),
+      'kodeMarketing': data.kodeMarketing.toString(),
+      'posisi': data.posisi.toString(),
+      'tema': data.tema.toString(),
+      'jenisBarang': data.jenisBarang.toString(),
+      'brand': data.brand.toString(),
+      'color': data.color.toString(),
+      'beratEmas': data.beratEmas.toString(),
+      'estimasiHarga': data.estimasiHarga.toString(),
+      'ringSize': data.ringSize.toString(),
+      'statusForm': data.statusForm.toString(),
+      'keteranganMinggu': data.keteranganMinggu.toString(),
+      'keteranganBatu': data.keteranganBatu.toString(),
+      'keteranganStatusBatu': data.keteranganStatusBatu.toString(),
+      'imageUrl': data.imageUrl.toString(),
+      'artist': data.artist.toString(),
+      'keteranganStatusAcc': data.artist.toString(),
+      'rantai': data.rantai.toString(),
+      'qtyRantai': data.qtyRantai.toString(),
+      'lain2': data.lain2.toString(),
+      'qtyLain2': data.qtyLain2.toString(),
+      'earnut': data.earnut.toString(),
+      'qtyEarnut': data.qtyEarnut.toString(),
+      'panjangRantai': data.panjangRantai.toString(),
+      'customKomponen': data.customKomponen.toString(),
+      'qtyCustomKomponen': data.qtyCustomKomponen.toString(),
+      'siklus': data.siklus.toString(),
+      'bulan': bulan.toString().toUpperCase(),
+      'totalCarat': data.totalCarat.toString(),
+    };
+    try {
+      final response = await http.post(
+          Uri.parse('${ApiConstants.baseUrl}${ApiConstants.postDataMps}'),
+          body: body);
+      if (response.statusCode == 200) {
+        print(response.body);
+      } else {
+        print('err : ${response.body}');
+        showSimpleNotification(
+          const Text('Error Data ()'),
+          background: Colors.red,
+          duration: const Duration(seconds: 2),
+        );
+      }
+    } catch (c) {
+      print('err : $c');
+      showSimpleNotification(
+        Text('Error Data ($c)'),
+        background: Colors.red,
+        duration: const Duration(seconds: 2),
+      );
+    }
+  }
+
   _getListBulan() async {
     DateTime now = DateTime.now();
     int currentMonth = now.month;
@@ -135,7 +252,7 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
       case 12:
         return 'Desember';
       default:
-        return '';
+        return 'Desember';
     }
   }
 
@@ -179,7 +296,8 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
       //     divisi.toString().toLowerCase());
 
       // alldata = filterByDivisi.toList();
-      if (sharedPreferences!.getString('role') == '1' ||
+      if (sharedPreferences!.getString('nama') == 'Tri Sartika R' ||
+          sharedPreferences!.getString('role') == '1' ||
           sharedPreferences!.getString('divisi') == 'admin') {
         for (var i = 2; i < alldata.length; i++) {
           listDivisi.add(alldata[i].divisi!);
@@ -700,29 +818,61 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
                   ),
             siklusDesigner.isEmpty
                 ? const SizedBox()
-                : Container(
-                    height: 80,
-                    padding: const EdgeInsets.all(10.0),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blue,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50.0))),
-                      onPressed: () {
-                        setState(() {
-                          isLoading = true;
-                        });
-                        //? tunggu 2 detik
-                        Future.delayed(const Duration(seconds: 1))
-                            .then((value) {
-                          //! lalu eksekusi fungsi ini
-                          setState(() {
-                            isLoading = false;
-                          });
-                        });
-                      },
-                      child: Text('Kirim semua ke bulan depan ${listBulan[1]}'),
-                    )),
+                : sharedPreferences!.getString('role') == '2' ||
+                        sharedPreferences!.getString('role') == '1' ||
+                        sharedPreferences!.getString('divisi') == 'admin'
+                    ? Container(
+                        height: 80,
+                        padding: const EdgeInsets.all(10.0),
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blue,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(50.0))),
+                          onPressed: () async {
+                            setState(() {
+                              isLoading = true;
+                            });
+                            showDialog(
+                              context: context,
+                              barrierDismissible:
+                                  false, // Prevent dialog dismissal on tap outside
+                              builder: (BuildContext context) {
+                                return Dialog(
+                                  backgroundColor: Colors.transparent,
+                                  elevation: 0,
+                                  child: Container(
+                                    padding: const EdgeInsets.all(16),
+                                    color: Colors.white,
+                                    child: const Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        CircularProgressIndicator(),
+                                        SizedBox(height: 20),
+                                        Text(
+                                          'Loading, please wait...',
+                                          style: TextStyle(fontSize: 16),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                            await postSendAll(
+                                myDataProduksi!,
+                                listBulan[int.parse(
+                                        convertMonthToNumber(siklusDesigner)) -
+                                    1]);
+                            Navigator.of(context).pop();
+                            setState(() {
+                              isLoading = false;
+                            });
+                          },
+                          child: Text(
+                              'Kirim semua ke bulan ${listBulan[int.parse(convertMonthToNumber(siklusDesigner)) - 1]}'),
+                        ))
+                    : const SizedBox()
           ],
         ),
         siklusDesigner.isEmpty
@@ -3215,12 +3365,16 @@ class RowSourceProduksi extends DataTableSource {
                   Stack(
                     clipBehavior: Clip.none, //agar tidak menghalangi object
                     children: [
-                      sharedPreferences!.getString('role') == '1' ||
-                              sharedPreferences!.getString('role') == '2' ||
-                              sharedPreferences!.getString('divisi') == 'admin'
-                          ? data.posisi.toString().toLowerCase() == 'brj'
-                              ? const SizedBox()
-                              : data.isSend.toString() != ''
+                      data.isSend.toString() != ''
+                          ? const Icon(
+                              Icons.verified,
+                              color: Colors.red,
+                            )
+                          : sharedPreferences!.getString('role') == '1' ||
+                                  sharedPreferences!.getString('role') == '2' ||
+                                  sharedPreferences!.getString('divisi') ==
+                                      'admin'
+                              ? data.posisi.toString().toLowerCase() == 'brj'
                                   ? const SizedBox()
                                   : IconButton(
                                       onPressed: () {
@@ -3282,7 +3436,7 @@ class RowSourceProduksi extends DataTableSource {
                                           Icons.cancel_schedule_send_sharp),
                                       color: Colors.red,
                                     )
-                          : const SizedBox(),
+                              : const SizedBox(),
                     ],
                   )
                 ],
@@ -3549,7 +3703,9 @@ class RowSourceProduksi extends DataTableSource {
               child: Column(
                 children: [
                   Text('${data.posisi}'),
-                  data.posisi.toString().toLowerCase() == 'brj'
+                  data.posisi.toString().toLowerCase() == 'brj' ||
+                          data.posisi.toString().toLowerCase() ==
+                              'out pasang batu'
                       ? const SizedBox()
                       : Text('${data.artist}'),
                 ],
@@ -3689,12 +3845,13 @@ class RowSourceProduksi extends DataTableSource {
                                                               //! function back posisi
                                                               orulReparasiPopup(
                                                                   context,
-                                                                  data.id,
+                                                                  data.idMps,
                                                                   j,
                                                                   data.kodeDesignMdbc,
                                                                   data.kodeMarketing,
                                                                   data.posisi,
-                                                                  'orul');
+                                                                  'orul',
+                                                                  '');
                                                             } else if (j <
                                                                 idPosisi) {
                                                               isBackPosisi =
@@ -3714,7 +3871,7 @@ class RowSourceProduksi extends DataTableSource {
                                                               //! back posisi untuk role admin dan head
                                                               artistPopup(
                                                                   context,
-                                                                  data.id,
+                                                                  data.idMps,
                                                                   j,
                                                                   data.kodeDesignMdbc,
                                                                   data.kodeMarketing,
@@ -3745,7 +3902,8 @@ class RowSourceProduksi extends DataTableSource {
                                                                             12 ||
                                                                         j == 13
                                                                     ? postDatabase(
-                                                                        data.id,
+                                                                        data
+                                                                            .idMps,
                                                                         j,
                                                                         data
                                                                             .kodeDesignMdbc,
@@ -3763,7 +3921,7 @@ class RowSourceProduksi extends DataTableSource {
                                                                                 .kodeMarketing)
                                                                         : artistPopup(
                                                                             context,
-                                                                            data.id,
+                                                                            data.idMps,
                                                                             j,
                                                                             data.kodeDesignMdbc,
                                                                             data.kodeMarketing,
@@ -3798,7 +3956,7 @@ class RowSourceProduksi extends DataTableSource {
                                                                         data
                                                                             .kodeMarketing)
                                                                     : postDatabase(
-                                                                        data.id,
+                                                                        data.idMps,
                                                                         j,
                                                                         data.kodeDesignMdbc,
                                                                         data.kodeMarketing);
@@ -3806,9 +3964,10 @@ class RowSourceProduksi extends DataTableSource {
                                                                       .getString(
                                                                           'role') ==
                                                                   '4') {
-                                                                j == 6 || j == 7
+                                                                j == 4 || j == 7
                                                                     ? postDatabase(
-                                                                        data.id,
+                                                                        data
+                                                                            .idMps,
                                                                         j,
                                                                         data
                                                                             .kodeDesignMdbc,
@@ -3816,7 +3975,7 @@ class RowSourceProduksi extends DataTableSource {
                                                                             .kodeMarketing)
                                                                     : artistPopup(
                                                                         context,
-                                                                        data.id,
+                                                                        data.idMps,
                                                                         j,
                                                                         data.kodeDesignMdbc,
                                                                         data.kodeMarketing,
@@ -3828,7 +3987,8 @@ class RowSourceProduksi extends DataTableSource {
                                                                   '5') {
                                                                 j == 2
                                                                     ? postDatabase(
-                                                                        data.id,
+                                                                        data
+                                                                            .idMps,
                                                                         j,
                                                                         data
                                                                             .kodeDesignMdbc,
@@ -3836,7 +3996,7 @@ class RowSourceProduksi extends DataTableSource {
                                                                             .kodeMarketing)
                                                                     : artistPopup(
                                                                         context,
-                                                                        data.id,
+                                                                        data.idMps,
                                                                         j,
                                                                         data.kodeDesignMdbc,
                                                                         data.kodeMarketing,
@@ -4282,7 +4442,11 @@ class RowSourceProduksi extends DataTableSource {
       DataCell(
         Padding(padding: const EdgeInsets.all(0), child: Text(data.brand)),
       ),
-      DataCell(_verticalDivider),
+      sharedPreferences!.getString('role') == '1' ||
+              sharedPreferences!.getString('role') == '2' ||
+              sharedPreferences!.getString('divisi') == 'admin'
+          ? DataCell(_verticalDivider)
+          : const DataCell(SizedBox()),
       //harga
       sharedPreferences!.getString('role') == '1' ||
               sharedPreferences!.getString('role') == '2' ||
@@ -4359,7 +4523,7 @@ class RowSourceProduksi extends DataTableSource {
   postDataMps(var dumData, index, bulan, context, isUpdate) async {
     var data = dumData[index];
     Map<String, String> body = {
-      'id': data.id.toString(),
+      'id': data.idMps.toString(),
     };
     print(body);
     try {
@@ -4395,11 +4559,13 @@ class RowSourceProduksi extends DataTableSource {
   }
 
   postPosisi(id, posisi, artist) async {
+    print('post posisi on');
     Map<String, String> body = {
       'id': id.toString(),
       'posisi': posisi.toString(),
       'artist': artist.toString(),
     };
+    print(body);
     final response = await http.post(
         Uri.parse('${ApiConstants.baseUrl}${ApiConstants.updatePosisidanWeek}'),
         body: body);
@@ -4592,6 +4758,8 @@ class RowSourceProduksi extends DataTableSource {
   }
 
   postDatabase(id, j, kodeDesignMdbc, kodeMarketing) async {
+    print(id);
+    print(listDivisi[j]);
     await postPosisi(
       id,
       "${listDivisi[j]}",
@@ -4614,8 +4782,6 @@ class RowSourceProduksi extends DataTableSource {
 
   artistPopup(
       context, id, j, kodeDesignMdbc, kodeMarketing, posisi, isBackPosisi) {
-    posisi = listDivisi[j];
-
     return isBackPosisi == false
         ? showGeneralDialog(
             transitionDuration: const Duration(milliseconds: 200),
@@ -4733,37 +4899,38 @@ class RowSourceProduksi extends DataTableSource {
                                           );
                                           onRowPressed();
 
-                                          await postHistory(
-                                            kodeDesignMdbc,
-                                            kodeMarketing,
-                                            "${listDivisi[j]}",
-                                            posisi.toString().toLowerCase() ==
-                                                    'finishing'
-                                                ? listSubDivisiArtistFinishing[
-                                                    i]
-                                                : posisi
-                                                                .toString()
-                                                                .toLowerCase() ==
-                                                            'polishing 1' ||
-                                                        posisi
-                                                                .toString()
-                                                                .toLowerCase() ==
-                                                            'polishing 2'
-                                                    ? listSubDivisiArtistPolishing[
-                                                        i]
-                                                    : posisi
-                                                                    .toString()
-                                                                    .toLowerCase() ==
-                                                                'stell 1' ||
-                                                            posisi
-                                                                    .toString()
-                                                                    .toLowerCase() ==
-                                                                'stell 2'
-                                                        ? listSubDivisiArtistStell[
-                                                            i]
-                                                        : listSubDivisiArtistPasangBatu[
-                                                            i],
-                                          );
+                                          // await postHistory(
+                                          //   kodeDesignMdbc,
+                                          //   kodeMarketing,
+                                          //   "${listDivisi[j]}",
+                                          //   posisi.toString().toLowerCase() ==
+                                          //           'finishing'
+                                          //       ? listSubDivisiArtistFinishing[
+                                          //           i]
+                                          //       : posisi
+                                          //                       .toString()
+                                          //                       .toLowerCase() ==
+                                          //                   'polishing 1' ||
+                                          //               posisi
+                                          //                       .toString()
+                                          //                       .toLowerCase() ==
+                                          //                   'polishing 2'
+                                          //           ? listSubDivisiArtistPolishing[
+                                          //               i]
+                                          //           : posisi
+                                          //                           .toString()
+                                          //                           .toLowerCase() ==
+                                          //                       'stell 1' ||
+                                          //                   posisi
+                                          //                           .toString()
+                                          //                           .toLowerCase() ==
+                                          //                       'stell 2'
+                                          //               ? listSubDivisiArtistStell[
+                                          //                   i]
+                                          //               : listSubDivisiArtistPasangBatu[
+                                          //                   i],
+                                          // );
+
                                           Navigator.pop(context);
                                           showSimpleNotification(
                                             const Text(
@@ -4890,6 +5057,37 @@ class RowSourceProduksi extends DataTableSource {
                                           ),
                                         ),
                                         onPressed: () async {
+                                          var artisOrulRep = '';
+                                          artisOrulRep = posisi
+                                                      .toString()
+                                                      .toLowerCase() ==
+                                                  'finishing'
+                                              ? listSubDivisiArtistFinishing[i]
+                                              : posisi
+                                                              .toString()
+                                                              .toLowerCase() ==
+                                                          'polishing 1' ||
+                                                      posisi
+                                                              .toString()
+                                                              .toLowerCase() ==
+                                                          'polishing 2'
+                                                  ? listSubDivisiArtistPolishing[
+                                                      i]
+                                                  : posisi
+                                                                  .toString()
+                                                                  .toLowerCase() ==
+                                                              'stell 1' ||
+                                                          posisi
+                                                                  .toString()
+                                                                  .toLowerCase() ==
+                                                              'stell 2'
+                                                      ? listSubDivisiArtistStell[
+                                                          i]
+                                                      : listSubDivisiArtistPasangBatu[
+                                                          i];
+
+                                          print(
+                                              '$posisi -- $artisOrulRep orul/reparasi');
                                           orulReparasiPopup(
                                               context,
                                               id,
@@ -4897,39 +5095,22 @@ class RowSourceProduksi extends DataTableSource {
                                               kodeDesignMdbc,
                                               kodeMarketing,
                                               posisi,
-                                              'reparasi');
-                                          //   await postPosisi(
-                                          //     id,
-                                          //     "${listDivisi[j]}",
-                                          //     posisi.toString().toLowerCase() == 'finishing'
-                                          //         ? listSubDivisiArtistFinishing[i]
-                                          // : posisi.toString().toLowerCase() == 'polishing 1' || posisi.toString().toLowerCase() == 'polishing 2'
-                                          //             ? listSubDivisiArtistPolishing[i]
-                                          // : posisi.toString().toLowerCase() == 'stell 1' || posisi.toString().toLowerCase() == 'stell 2'
-                                          //                 ? listSubDivisiArtistStell[i]
-                                          //                 : listSubDivisiArtistPasangBatu[i],
-                                          //   );
-                                          //   onRowPressed();
-
-                                          //   await postHistory(
-                                          //    kodeDesignMdbc,
-                                          //    kodeMarketing,
-                                          //     "${listDivisi[j]}",
-                                          //     posisi.toString().toLowerCase() == 'finishing'
-
-                                          //         ? listSubDivisiArtistFinishing[i]
-                                          // : posisi.toString().toLowerCase() == 'polishing 1' || posisi.toString().toLowerCase() == 'polishing 2'
-                                          //             ? listSubDivisiArtistPolishing[i]
-                                          // : posisi.toString().toLowerCase() == 'stell 1' || posisi.toString().toLowerCase() == 'stell 2'
-                                          //                 ? listSubDivisiArtistStell[i]
-                                          //                 : listSubDivisiArtistPasangBatu[i],
-                                          //   );
-                                          //   Navigator.pop(context);
-                                          //   showSimpleNotification(
-                                          //     const Text('Menambahkan posisi dan artist berhasil'),
-                                          //     background: Colors.green,
-                                          //     duration: const Duration(seconds: 1),
-                                          //   );
+                                              'reparasi',
+                                              artisOrulRep);
+                                          onRowPressed();
+                                          await postHistory(
+                                              kodeDesignMdbc,
+                                              kodeMarketing,
+                                              "${listDivisi[j]}",
+                                              artisOrulRep);
+                                          Navigator.pop(context);
+                                          showSimpleNotification(
+                                            const Text(
+                                                'Data berhasil terkirim'),
+                                            background: Colors.green,
+                                            duration:
+                                                const Duration(seconds: 1),
+                                          );
                                         },
                                         child: Text(
                                           posisi.toString().toLowerCase() ==
@@ -4970,8 +5151,8 @@ class RowSourceProduksi extends DataTableSource {
             });
   }
 
-  orulReparasiPopup(
-      context, id, j, kodeDesignMdbc, kodeMarketing, posisi, statusBackPosisi) {
+  orulReparasiPopup(context, id, j, kodeDesignMdbc, kodeMarketing, posisi,
+      statusBackPosisi, artis) {
     return showGeneralDialog(
         transitionDuration: const Duration(milliseconds: 200),
         barrierDismissible: false,
@@ -5000,9 +5181,9 @@ class RowSourceProduksi extends DataTableSource {
                               child: Form(
                                 key: formKey,
                                 child: Column(children: [
-                                  const Text(
-                                    'Alasan / Keterangan',
-                                    style: TextStyle(
+                                  Text(
+                                    'Alasan / Keterangan $artis',
+                                    style: const TextStyle(
                                         color: Colors.black,
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold),
@@ -5040,34 +5221,35 @@ class RowSourceProduksi extends DataTableSource {
                                         onPressed: () async {
                                           if (formKey.currentState!
                                               .validate()) {
-                                            print('validasi ok');
                                             formKey.currentState!.save();
                                             Future.delayed(const Duration(
                                                     milliseconds: 10))
                                                 .then((value) async {
                                               btnController.success();
+                                              print(
+                                                  '$posisi => ${listDivisi[j]} : ${keterangan.text}');
                                               await postOrulReparasi(
                                                   id,
                                                   "${listDivisi[j]}",
-                                                  '',
+                                                  '$artis',
                                                   '$statusBackPosisi',
                                                   '$posisi => ${listDivisi[j]} : ${keterangan.text}');
 
-                                              await postHistory(
-                                                kodeDesignMdbc,
-                                                kodeMarketing,
-                                                "${listDivisi[j]}",
-                                                "",
-                                              );
-                                              onRowPressed();
-                                              Navigator.pop(context);
-                                              showSimpleNotification(
-                                                const Text(
-                                                    'Pemilihan Posisi Berhasil'),
-                                                background: Colors.green,
-                                                duration:
-                                                    const Duration(seconds: 1),
-                                              );
+                                              // await postHistory(
+                                              //   kodeDesignMdbc,
+                                              //   kodeMarketing,
+                                              //   "${listDivisi[j]}",
+                                              //   "",
+                                              // );
+                                              // onRowPressed();
+                                              // Navigator.pop(context);
+                                              // showSimpleNotification(
+                                              //   const Text(
+                                              //       'Pemilihan Posisi Berhasil'),
+                                              //   background: Colors.green,
+                                              //   duration:
+                                              //       const Duration(seconds: 1),
+                                              // );
                                               Future.delayed(const Duration(
                                                       milliseconds: 10))
                                                   .then((value) {
@@ -5120,6 +5302,7 @@ class RowSourceProduksi extends DataTableSource {
       'statusBackPosisi': statusBackPosisi.toString(),
       'keteranganBackPosisi': keteranganBackPosisi.toString(),
     };
+    print(body);
     final response = await http.post(
         Uri.parse('${ApiConstants.baseUrl}${ApiConstants.updatePosisidanWeek}'),
         body: body);
@@ -5170,1196 +5353,6 @@ class RowSourceProduksi extends DataTableSource {
         Uri.parse('${ApiConstants.baseUrl}${ApiConstants.addHistoryPosisi}'),
         body: body);
     print(response.body);
-  }
-
-  postApiQtyBatu1(batu1, qtyBatu1) async {
-    if (qtyBatu1 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu1"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu1 += data[0]['qty'];
-          print(qtyBatu1);
-          try {
-            Map<String, String> body = {
-              'size': batu1.toString(),
-              'qty': qtyBatu1.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu2(batu2, qtyBatu2) async {
-    if (qtyBatu2 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu2"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu2 += data[0]['qty'];
-          print(qtyBatu2);
-          try {
-            Map<String, String> body = {
-              'size': batu2.toString(),
-              'qty': qtyBatu2.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu3(batu3, qtyBatu3) async {
-    if (qtyBatu3 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu3"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu3 += data[0]['qty'];
-          print(qtyBatu3);
-          try {
-            Map<String, String> body = {
-              'size': batu3.toString(),
-              'qty': qtyBatu3.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu4(batu4, qtyBatu4) async {
-    if (qtyBatu4 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu4"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu4 += data[0]['qty'];
-          print(qtyBatu4);
-          try {
-            Map<String, String> body = {
-              'size': batu4.toString(),
-              'qty': qtyBatu4.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu5(batu5, qtyBatu5) async {
-    if (qtyBatu5 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu5"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu5 += data[0]['qty'];
-          print(qtyBatu5);
-          try {
-            Map<String, String> body = {
-              'size': batu5.toString(),
-              'qty': qtyBatu5.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu6(batu6, qtyBatu6) async {
-    if (qtyBatu6 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu6"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu6 += data[0]['qty'];
-          print(qtyBatu6);
-          try {
-            Map<String, String> body = {
-              'size': batu6.toString(),
-              'qty': qtyBatu6.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu7(batu7, qtyBatu7) async {
-    if (qtyBatu7 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu7"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu7 += data[0]['qty'];
-          print(qtyBatu7);
-          try {
-            Map<String, String> body = {
-              'size': batu7.toString(),
-              'qty': qtyBatu7.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu8(batu8, qtyBatu8) async {
-    if (qtyBatu8 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu8"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu8 += data[0]['qty'];
-          print(qtyBatu8);
-          try {
-            Map<String, String> body = {
-              'size': batu8.toString(),
-              'qty': qtyBatu8.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu9(batu9, qtyBatu9) async {
-    if (qtyBatu9 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu9"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu9 += data[0]['qty'];
-          print(qtyBatu9);
-          try {
-            Map<String, String> body = {
-              'size': batu9.toString(),
-              'qty': qtyBatu9.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu10(batu10, qtyBatu10) async {
-    if (qtyBatu10 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu10"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu10 += data[0]['qty'];
-          print(qtyBatu10);
-          try {
-            Map<String, String> body = {
-              'size': batu10.toString(),
-              'qty': qtyBatu10.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu11(batu11, qtyBatu11) async {
-    if (qtyBatu11 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu11"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu11 += data[0]['qty'];
-          print(qtyBatu11);
-          try {
-            Map<String, String> body = {
-              'size': batu11.toString(),
-              'qty': qtyBatu11.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu12(batu12, qtyBatu12) async {
-    if (qtyBatu12 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu12"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu12 += data[0]['qty'];
-          print(qtyBatu12);
-          try {
-            Map<String, String> body = {
-              'size': batu12.toString(),
-              'qty': qtyBatu12.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu13(batu13, qtyBatu13) async {
-    if (qtyBatu13 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu13"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu13 += data[0]['qty'];
-          print(qtyBatu13);
-          try {
-            Map<String, String> body = {
-              'size': batu13.toString(),
-              'qty': qtyBatu13.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu14(batu14, qtyBatu14) async {
-    if (qtyBatu14 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu14"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu14 += data[0]['qty'];
-          print(qtyBatu14);
-          try {
-            Map<String, String> body = {
-              'size': batu14.toString(),
-              'qty': qtyBatu14.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu15(batu15, qtyBatu15) async {
-    if (qtyBatu15 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu15"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu15 += data[0]['qty'];
-          print(qtyBatu15);
-          try {
-            Map<String, String> body = {
-              'size': batu15.toString(),
-              'qty': qtyBatu15.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu16(batu16, qtyBatu16) async {
-    if (qtyBatu16 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu16"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu16 += data[0]['qty'];
-          print(qtyBatu16);
-          try {
-            Map<String, String> body = {
-              'size': batu16.toString(),
-              'qty': qtyBatu16.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu17(batu17, qtyBatu17) async {
-    if (qtyBatu17 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu17"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu17 += data[0]['qty'];
-          print(qtyBatu17);
-          try {
-            Map<String, String> body = {
-              'size': batu17.toString(),
-              'qty': qtyBatu17.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu18(batu18, qtyBatu18) async {
-    if (qtyBatu18 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu18"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu18 += data[0]['qty'];
-          print(qtyBatu18);
-          try {
-            Map<String, String> body = {
-              'size': batu18.toString(),
-              'qty': qtyBatu18.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu19(batu19, qtyBatu19) async {
-    if (qtyBatu19 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu19"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu19 += data[0]['qty'];
-          print(qtyBatu19);
-          try {
-            Map<String, String> body = {
-              'size': batu19.toString(),
-              'qty': qtyBatu19.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu20(batu20, qtyBatu20) async {
-    if (qtyBatu20 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu20"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu20 += data[0]['qty'];
-          print(qtyBatu20);
-          try {
-            Map<String, String> body = {
-              'size': batu20.toString(),
-              'qty': qtyBatu20.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu21(batu21, qtyBatu21) async {
-    if (qtyBatu21 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu21"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu21 += data[0]['qty'];
-          print(qtyBatu21);
-          try {
-            Map<String, String> body = {
-              'size': batu21.toString(),
-              'qty': qtyBatu21.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu22(batu22, qtyBatu22) async {
-    if (qtyBatu22 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu22"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu22 += data[0]['qty'];
-          print(qtyBatu22);
-          try {
-            Map<String, String> body = {
-              'size': batu22.toString(),
-              'qty': qtyBatu22.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu23(batu23, qtyBatu23) async {
-    if (qtyBatu23 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu23"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu23 += data[0]['qty'];
-          print(qtyBatu23);
-          try {
-            Map<String, String> body = {
-              'size': batu23.toString(),
-              'qty': qtyBatu23.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu24(batu24, qtyBatu24) async {
-    if (qtyBatu24 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu24"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu24 += data[0]['qty'];
-          print(qtyBatu24);
-          try {
-            Map<String, String> body = {
-              'size': batu24.toString(),
-              'qty': qtyBatu24.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu25(batu25, qtyBatu25) async {
-    if (qtyBatu25 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu25"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu25 += data[0]['qty'];
-          print(qtyBatu25);
-          try {
-            Map<String, String> body = {
-              'size': batu25.toString(),
-              'qty': qtyBatu25.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu26(batu26, qtyBatu26) async {
-    if (qtyBatu26 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu26"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu26 += data[0]['qty'];
-          print(qtyBatu26);
-          try {
-            Map<String, String> body = {
-              'size': batu26.toString(),
-              'qty': qtyBatu26.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu27(batu27, qtyBatu27) async {
-    if (qtyBatu27 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu27"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu27 += data[0]['qty'];
-          print(qtyBatu27);
-          try {
-            Map<String, String> body = {
-              'size': batu27.toString(),
-              'qty': qtyBatu27.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu28(batu28, qtyBatu28) async {
-    if (qtyBatu28 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu28"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu28 += data[0]['qty'];
-          print(qtyBatu28);
-          try {
-            Map<String, String> body = {
-              'size': batu28.toString(),
-              'qty': qtyBatu28.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu29(batu29, qtyBatu29) async {
-    if (qtyBatu29 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu29"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu29 += data[0]['qty'];
-          print(qtyBatu29);
-          try {
-            Map<String, String> body = {
-              'size': batu29.toString(),
-              'qty': qtyBatu29.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu30(batu30, qtyBatu30) async {
-    if (qtyBatu30 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu30"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu30 += data[0]['qty'];
-          print(qtyBatu30);
-          try {
-            Map<String, String> body = {
-              'size': batu30.toString(),
-              'qty': qtyBatu30.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu31(batu31, qtyBatu31) async {
-    if (qtyBatu31 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu31"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu31 += data[0]['qty'];
-          print(qtyBatu31);
-          try {
-            Map<String, String> body = {
-              'size': batu31.toString(),
-              'qty': qtyBatu31.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu32(batu32, qtyBatu32) async {
-    if (qtyBatu32 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu32"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu32 += data[0]['qty'];
-          print(qtyBatu32);
-          try {
-            Map<String, String> body = {
-              'size': batu32.toString(),
-              'qty': qtyBatu32.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu33(batu33, qtyBatu33) async {
-    if (qtyBatu33 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu33"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu33 += data[0]['qty'];
-          print(qtyBatu33);
-          try {
-            Map<String, String> body = {
-              'size': batu33.toString(),
-              'qty': qtyBatu33.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu34(batu34, qtyBatu34) async {
-    if (qtyBatu34 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu34"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu34 += data[0]['qty'];
-          print(qtyBatu34);
-          try {
-            Map<String, String> body = {
-              'size': batu34.toString(),
-              'qty': qtyBatu34.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
-  }
-
-  postApiQtyBatu35(batu35, qtyBatu35) async {
-    if (qtyBatu35 > 0) {
-      try {
-        final response = await http.get(
-          Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.getDataBatuByName}?size="$batu35"'),
-        );
-        if (response.statusCode == 200) {
-          final data = jsonDecode(response.body);
-          // print(data[0]['qty']);
-          qtyBatu35 += data[0]['qty'];
-          print(qtyBatu35);
-          try {
-            Map<String, String> body = {
-              'size': batu35.toString(),
-              'qty': qtyBatu35.toString(),
-            };
-            final response = await http.post(
-                Uri.parse(ApiConstants.baseUrl +
-                    ApiConstants.postUpdateDataBatuBySize),
-                body: body);
-            print(response.body);
-          } catch (c) {
-            print(c);
-          }
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
-      null;
-    }
   }
 }
 
