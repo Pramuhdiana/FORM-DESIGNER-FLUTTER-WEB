@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:form_designer/global/global.dart';
 import 'package:form_designer/mainScreen/login.dart';
-import 'package:form_designer/pembelian/home_pembelian.dart';
+import 'package:form_designer/qc/mainScreen/home_qc.dart';
 import 'package:form_designer/qc/mainScreen/list_form_pr_qc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:side_navigation/side_navigation.dart';
@@ -28,9 +28,9 @@ class _MainViewQcState extends State<MainViewQc> {
   }
 
   List<Widget> views = [
-    const HomeScreenPembelian(),
+    const HomeScreenQc(),
     const ListFormPrQc(),
-    const HomeScreenPembelian()
+    const HomeScreenQc()
   ];
 
   bool isKodeAkses = false;

@@ -47,6 +47,7 @@ class _DashboardControlState extends State<DashboardControl> {
   bool isLoading = false;
   bool isLoadingFinishing = false;
   bool isLoadingPrintingResin = false;
+  bool isLoadingCasting = false;
   bool isLoadingPasangBatu = false;
   bool isLoadingPolishing = false;
   bool isLoadingStell = false;
@@ -79,6 +80,10 @@ class _DashboardControlState extends State<DashboardControl> {
   //! varaible
   List<String> artistPrintingResin = [];
   int qtyArtistPrintingResin = 0;
+  int qtyW1Casting = 0;
+  int qtyW2Casting = 0;
+  int qtyW3Casting = 0;
+  int qtyW4Casting = 0;
   List<String> artistFinishingResin = [];
   int qtyArtistFinishingResin = 0;
   List<String> artistFinishing = [];
@@ -102,6 +107,8 @@ class _DashboardControlState extends State<DashboardControl> {
   int isStell = -1;
   bool isPrintingResinClick = false;
   bool isFinishingClick = false;
+  bool isCastingClick = false;
+  bool isCastingWeekClick = false;
   bool isWipFinishingClick = false;
   bool isWipPolishingClick = false;
   bool isStokPolishingClick = false;
@@ -114,11 +121,15 @@ class _DashboardControlState extends State<DashboardControl> {
   String? pilihProsesAwal;
   String? pilihArtistPolishing;
   String? pilihArtistStell;
+  String? pilihArtistCasting;
+
   List<ListMpsModel>? _listFinishing;
   List<ListMpsModel>? _listByDivisi;
   List<ListMpsModel>? _listPolishing;
   List<ListMpsModel>? _listPasangBatu;
   List<ListMpsModel>? _listStell;
+
+  List<ListMpsModel>? _listCasting;
 
   String jan = 'januari';
   String feb = 'februari';
@@ -178,8 +189,8 @@ class _DashboardControlState extends State<DashboardControl> {
     super.initState();
     final difference = today
         .difference(targetDate)
-        .inDays; //! untuk menentukan sudah berapa lama dari tanggal create sampai tanggal sekarang
-    print(difference);
+        .inDays; //! hints untuk menentukan sudah berapa lama dari tanggal create sampai tanggal sekarang
+    print('menentukan berapa lama tanggal create sampe selesai $difference');
     initializeDateFormatting();
     _tooltipBehaviorFinishing = TooltipBehavior(
         enable: true, format: 'Total: point.y', canShowMarker: true);
@@ -223,11 +234,6 @@ class _DashboardControlState extends State<DashboardControl> {
     octBrj = 0;
     novBrj = 140;
     decBrj = 150;
-
-    chartDataCasting = <ChartData>[
-      ChartData(xValue: 'Fachri', secondSeriesYValue: 12),
-      ChartData(xValue: 'Budi', secondSeriesYValue: 5),
-    ];
   }
 
   void handleClickFinishing(artist) {
@@ -267,6 +273,33 @@ class _DashboardControlState extends State<DashboardControl> {
             pilihProsesAwal = divisi;
 
             _getAllDataProsesAwal(divisi);
+          });
+  }
+
+  void handleClickCasting(divisi) {
+    divisi == ''
+        ? setState(() {
+            isCastingClick = !isCastingClick;
+            pilihProsesAwal = null;
+          })
+        : setState(() {
+            isCastingClick = !isCastingClick;
+            pilihProsesAwal = divisi;
+
+            _getAllDataCasting(divisi);
+          });
+  }
+
+  void handleClickCastingWeek(artist) {
+    artist == ''
+        ? setState(() {
+            isCastingWeekClick = !isCastingWeekClick;
+            pilihProsesAwal = null;
+          })
+        : setState(() {
+            isCastingWeekClick = !isCastingWeekClick;
+            pilihProsesAwal = artist;
+            _getAllDataCasting(artist);
           });
   }
 
@@ -332,6 +365,27 @@ class _DashboardControlState extends State<DashboardControl> {
     });
   }
 
+  void _getAllDataTableCasting(artist) async {
+    setState(() {
+      isLoadingCasting = true;
+    });
+    await getDataTableCasting(artist);
+    setState(() {
+      isLoadingCasting = false;
+    });
+  }
+
+  void _getAllDataCasting(artist) async {
+    setState(() {
+      isLoadingCasting = true;
+    });
+    pilihArtistCasting = artist;
+    await getDataCastingWeek(artist);
+    setState(() {
+      isLoadingCasting = false;
+    });
+  }
+
   void _getAllDataProsesAwal(divisi) async {
     setState(() {
       isLoadingPrintingResin = true;
@@ -373,7 +427,6 @@ class _DashboardControlState extends State<DashboardControl> {
   }
 
   _getAllData(month) async {
-    print(month);
     setState(() {
       isLoading = true;
     });
@@ -392,6 +445,24 @@ class _DashboardControlState extends State<DashboardControl> {
       ChartData(
         x: 'CASTING',
         xValue: qtyWipCasting,
+      ),
+    ];
+    chartDataCasting = <ChartData>[
+      ChartData(
+        x: 'W1',
+        xValue: qtyW1Casting,
+      ),
+      ChartData(
+        x: 'W2',
+        xValue: qtyW2Casting,
+      ),
+      ChartData(
+        x: 'W3',
+        xValue: qtyW3Casting,
+      ),
+      ChartData(
+        x: 'W4',
+        xValue: qtyW4Casting,
       ),
     ];
     print('end looping resin');
@@ -429,13 +500,6 @@ class _DashboardControlState extends State<DashboardControl> {
                 xValue: artistStell[i], secondSeriesYValue: qtyArtistStell[i])
     ];
     print('stell 2');
-
-    print(artistStell.length);
-    print('s===');
-    print(artistStell[0]);
-    print(artistStell[1]);
-    print('a===');
-
     chartDataStellLevel2 = [
       for (var i = 0; i < artistStell.length; i++)
         artistStell[i].toString().toLowerCase() == 'stok'
@@ -521,7 +585,6 @@ class _DashboardControlState extends State<DashboardControl> {
   }
 
   _getName(month) async {
-    print('functon on');
     artistPrintingResin = [];
     artistFinishingResin = [];
     List<String> dummyArtistPrintingResin = [];
@@ -575,13 +638,15 @@ class _DashboardControlState extends State<DashboardControl> {
     qtyStokStell = 0;
     qtyStokPolishing = 0;
     qtyStokPasangBatu = 0;
-
+    qtyW1Casting = 0;
+    qtyW2Casting = 0;
+    qtyW3Casting = 0;
+    qtyW4Casting = 0;
     // final response = await http.get(
     //     Uri.parse(ApiConstants.baseUrl + ApiConstants.getListFormDesigner));
     final response = await http
         .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getListMps));
     if (response.statusCode == 200) {
-      print('bulannya :$month');
       List jsonResponse = json.decode(response.body);
       var allData =
           jsonResponse.map((data) => ListMpsModel.fromJson(data)).toList();
@@ -591,7 +656,7 @@ class _DashboardControlState extends State<DashboardControl> {
       allData = filterByMonth.toList();
       allDataMPS = filterByMonth.toList();
       //! printing resin
-      print('start printing resin');
+      print('start printing resin vol 2');
       var filterByPrintingResin = allData
           .where((element) =>
               element.posisi.toString().toLowerCase() == 'printing resin')
@@ -610,12 +675,35 @@ class _DashboardControlState extends State<DashboardControl> {
             .length;
         qtyArtistPrintingResin = count;
       }
-      print('end printing resin');
+      print('end printing resin vol 22');
 
       //? end function PrintingResin
 
+      //! printing casting
+      print('start casting vol 2');
+      var filterByCastingWeek = allData
+          .where(
+              (element) => element.posisi.toString().toLowerCase() == 'casting')
+          .toList();
+      _listCasting = filterByCastingWeek;
+
+      qtyW1Casting = filterByCastingWeek
+          .where((element) => element.artist.toString().toLowerCase() == 'w1')
+          .length;
+      qtyW2Casting = filterByCastingWeek
+          .where((element) => element.artist.toString().toLowerCase() == 'w2')
+          .length;
+      qtyW3Casting = filterByCastingWeek
+          .where((element) => element.artist.toString().toLowerCase() == 'w3')
+          .length;
+      qtyW4Casting = filterByCastingWeek
+          .where((element) => element.artist.toString().toLowerCase() == 'w4')
+          .length;
+      print('end casting vol 2');
+      //? end function Casting
+
       //! Finishing resin
-      print('start finishing resin');
+      print('start finishing resin vol 2');
 
       var filterByFinishingResin = allData
           .where((element) =>
@@ -638,12 +726,12 @@ class _DashboardControlState extends State<DashboardControl> {
             .length;
         qtyArtistFinishingResin = count;
       }
-      print('end finishing resin');
+      print('end finishing resin vol 2');
 
       //? end function FinishingResin
 
       //! finishing
-      print('start finishing');
+      print('start finishing vol 2');
 
       var filterByFinishing = allData
           .where((element) =>
@@ -673,12 +761,12 @@ class _DashboardControlState extends State<DashboardControl> {
             .length;
         qtyWipFinishing = countWip;
       }
-      print('end finishing');
+      print('end finishing vol 2');
 
       //? end function Finishing
 
       //! stell rangka
-      print('start stell');
+      print('start stell vol 2');
 
       var filterByStell = allData
           .where((element) =>
@@ -705,12 +793,12 @@ class _DashboardControlState extends State<DashboardControl> {
             .length;
         qtyWipStell = countWip;
       }
-      print('end stell');
+      print('end stell vol 2');
 
       //? end function Stell
 
       //! casting
-      print('start casting');
+      print('start casting vol 2');
 
       var filterByCasting = allData
           .where((element) =>
@@ -730,12 +818,12 @@ class _DashboardControlState extends State<DashboardControl> {
         qtyArtistCasting.add(count);
         qtyWipCasting = count;
       }
-      print('end casting');
+      print('end casting vol 2');
 
       //? end function Casting
 
       //! polishing
-      print('start polishing');
+      print('start polishing vol 2');
 
       var filterByPolishing = allData
           .where((element) =>
@@ -801,12 +889,12 @@ class _DashboardControlState extends State<DashboardControl> {
             .length;
         qtyArtistPolishing2.add(count);
       }
-      print('end polishing');
+      print('end polishing vol 2');
 
       //? end function Polishing2
 
       //! Stell1
-      print('start stell 2x');
+      print('start stell 2x vol 2');
 
       var filterByStell1 = allData
           .where(
@@ -841,12 +929,12 @@ class _DashboardControlState extends State<DashboardControl> {
             .length;
         qtyArtistStell2.add(count);
       }
-      print('end stell 2x');
+      print('end stell 2x vol 2');
 
       //? end function Stell2
 
       //! PasangBatu
-      print('start pb');
+      print('start pb vol 2');
 
       var filterByPasangBatu = allData
           .where((element) =>
@@ -872,13 +960,12 @@ class _DashboardControlState extends State<DashboardControl> {
             .length;
         qtyWipPasangBatu = countWip;
       }
-      print('end pb');
+      print('end pb vol 2');
       //? end function PasangBatu
     } else {}
   }
 
   getDataTable(artist) async {
-    print('get data divisi on');
     var filterByFinishing = allDataMPS!
         .where(
             (element) => element.posisi.toString().toLowerCase() == 'finishing')
@@ -889,6 +976,46 @@ class _DashboardControlState extends State<DashboardControl> {
             artist.toString().toLowerCase())
         .toList();
     _listFinishing = filterByArtist;
+  }
+
+  getDataTableCasting(artist) async {
+    var filterByCasting = allDataMPS!
+        .where(
+            (element) => element.posisi.toString().toLowerCase() == 'casting')
+        .toList();
+    var filterByArtist = filterByCasting
+        .where((element) =>
+            element.artist.toString().toLowerCase() ==
+            artist.toString().toLowerCase())
+        .toList();
+    _listCasting = filterByArtist;
+  }
+
+  getDataCastingWeek(artist) async {
+    qtyW1Casting = 0;
+    qtyW2Casting = 0;
+    qtyW3Casting = 0;
+    qtyW4Casting = 0;
+    //! printing casting
+    print('start casting');
+    var filterByCastingWeek = allDataMPS!
+        .where(
+            (element) => element.posisi.toString().toLowerCase() == 'casting')
+        .toList();
+    qtyW1Casting = filterByCastingWeek
+        .where((element) => element.artist.toString().toLowerCase() == 'w1')
+        .length;
+    qtyW2Casting = filterByCastingWeek
+        .where((element) => element.artist.toString().toLowerCase() == 'w2')
+        .length;
+    qtyW3Casting = filterByCastingWeek
+        .where((element) => element.artist.toString().toLowerCase() == 'w3')
+        .length;
+    qtyW4Casting = filterByCastingWeek
+        .where((element) => element.artist.toString().toLowerCase() == 'w4')
+        .length;
+    print('end casting');
+    //? end function Casting
   }
 
   getDataTableDivisi(divisi) async {
@@ -1101,20 +1228,175 @@ class _DashboardControlState extends State<DashboardControl> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              isPrintingResinClick == true
+              isCastingWeekClick == true
                   ? Container(
                       height: h,
                       width: w + w + 10,
                       color: colorCard1,
                       child: Column(
                         children: [
-                          Container(
-                              padding: EdgeInsets.only(left: 0, top: 25),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  handleClickCastingWeek('');
+                                },
+                                child: SizedBox(
+                                  width: 50,
+                                  child: Lottie.asset(
+                                      "loadingJSON/backbutton.json",
+                                      fit: BoxFit.cover),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 150,
+                                child: Text(
+                                  'Table Casting',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              Container(
+                                width:
+                                    MediaQuery.of(context).size.width * 0.2, //?
+                                padding: const EdgeInsets.only(
+                                    top: 5, left: 10, right: 10),
+                                child: DecoratedBox(
+                                    decoration: BoxDecoration(
+                                      color: pilihArtistCasting != null
+                                          ? ui.Color.fromARGB(255, 42, 255, 23)
+                                          : const Color.fromRGBO(238, 240, 235,
+                                              1), //background color of dropdown button
+                                      border: Border.all(
+                                        color: Colors.black38,
+                                        // width:
+                                        //     3
+                                      ), //border of dropdown button
+                                      borderRadius: BorderRadius.circular(
+                                          35), //border raiuds of dropdown button
+                                    ),
+                                    child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 10, right: 10),
+                                        child: DropdownButton(
+                                          value: pilihArtistCasting,
+                                          items: [
+                                            for (var item in artistCasting)
+                                              DropdownMenuItem(
+                                                value: item,
+                                                child: Text(item),
+                                              ),
+                                          ],
+                                          hint:
+                                              const Text('Pilih Week Casting'),
+                                          onChanged: (value) {
+                                            pilihArtistCasting = value;
+                                            _getAllDataTableCasting(
+                                                pilihArtistCasting);
+                                          },
+                                          icon: const Padding(
+                                              padding:
+                                                  EdgeInsets.only(left: 20),
+                                              child: Icon(Icons
+                                                  .arrow_circle_down_sharp)),
+                                          iconEnabledColor:
+                                              Colors.black, //Icon color
+                                          style: const TextStyle(
+                                            color: Colors.black, //Font color
+                                            // fontSize:
+                                            //     15 //font size on dropdown button
+                                          ),
+
+                                          dropdownColor: Colors
+                                              .white, //dropdown background color
+                                          underline:
+                                              Container(), //remove underline
+                                          isExpanded:
+                                              true, //make true to make width 100%
+                                        ))),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 15),
+                          SizedBox(
+                            height: (h - 120),
+                            child: SingleChildScrollView(
+                              scrollDirection: Axis.vertical,
+                              child: pilihArtistCasting == null
+                                  ? Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: const [
+                                        SizedBox(
+                                          height: 50,
+                                        ),
+                                        Text(
+                                          'pilih artist terlebih dahulu',
+                                          style: TextStyle(
+                                              fontSize: 25,
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold),
+                                        )
+                                      ],
+                                    )
+                                  : isLoadingCasting == true
+                                      ? Container(
+                                          padding: const EdgeInsets.all(5),
+                                          width: 90,
+                                          height: 90,
+                                          child: Lottie.asset(
+                                              "loadingJSON/loadingV1.json"),
+                                        )
+                                      : SingleChildScrollView(
+                                          scrollDirection: Axis.horizontal,
+                                          child: Container(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 5),
+                                            child: dataTableCasting(),
+                                          )),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 50),
+                            child: Divider(color: Colors.white, thickness: 2),
+                          ),
+                          InkWell(
+                            onTap: () {},
+                            child: Container(
+                              padding: EdgeInsets.only(bottom: 5),
                               child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: const [
+                                  Text(
+                                    '',
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 18),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  : isCastingClick == true
+                      ? Container(
+                          height: h,
+                          width: w + w + 10,
+                          color: colorCard1,
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   InkWell(
                                     onTap: () {
-                                      handleClickProsesAwal('');
+                                      handleClickCasting('');
                                     },
                                     child: SizedBox(
                                       width: 50,
@@ -1123,63 +1405,114 @@ class _DashboardControlState extends State<DashboardControl> {
                                           fit: BoxFit.cover),
                                     ),
                                   ),
-                                  Text(
-                                    '$pilihProsesAwal',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold),
+                                  Container(
+                                      padding:
+                                          EdgeInsets.only(left: 0, top: 25),
+                                      child: Text(
+                                        'Casting',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold),
+                                      )),
+                                  SizedBox(width: 150),
+                                ],
+                              ),
+                              chartCasting(),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 50),
+                                child:
+                                    Divider(color: Colors.white, thickness: 2),
+                              ),
+                            ],
+                          ),
+                        )
+                      : isPrintingResinClick == true
+                          ? Container(
+                              height: h,
+                              width: w + w + 10,
+                              color: colorCard1,
+                              child: Column(
+                                children: [
+                                  Container(
+                                      padding:
+                                          EdgeInsets.only(left: 0, top: 25),
+                                      child: Row(
+                                        children: [
+                                          InkWell(
+                                            onTap: () {
+                                              handleClickProsesAwal('');
+                                            },
+                                            child: SizedBox(
+                                              width: 50,
+                                              child: Lottie.asset(
+                                                  "loadingJSON/backbutton.json",
+                                                  fit: BoxFit.cover),
+                                            ),
+                                          ),
+                                          Text(
+                                            '$pilihProsesAwal',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      )),
+                                  isLoadingPrintingResin == true
+                                      ? Container(
+                                          padding: const EdgeInsets.all(5),
+                                          width: 90,
+                                          height: 90,
+                                          child: Lottie.asset(
+                                              "loadingJSON/loadingV1.json"),
+                                        )
+                                      : SizedBox(
+                                          height: 300,
+                                          child: SingleChildScrollView(
+                                              scrollDirection: Axis.vertical,
+                                              child: Container(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 5),
+                                                child: dataTablePrintingResin(),
+                                              )),
+                                        ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 50),
+                                    child: Divider(
+                                        color: Colors.white, thickness: 2),
                                   ),
                                 ],
-                              )),
-                          isLoadingPrintingResin == true
-                              ? Container(
-                                  padding: const EdgeInsets.all(5),
-                                  width: 90,
-                                  height: 90,
-                                  child: Lottie.asset(
-                                      "loadingJSON/loadingV1.json"),
-                                )
-                              : SizedBox(
-                                  height: 300,
-                                  child: SingleChildScrollView(
-                                      scrollDirection: Axis.vertical,
-                                      child: Container(
-                                        padding:
-                                            EdgeInsets.symmetric(horizontal: 5),
-                                        child: dataTablePrintingResin(),
+                              ),
+                            )
+                          : Container(
+                              height: h,
+                              width: w + w + 10,
+                              color: colorCard1,
+                              child: Column(
+                                children: [
+                                  Container(
+                                      padding:
+                                          EdgeInsets.only(left: 0, top: 25),
+                                      child: Text(
+                                        'Proses Awal',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold),
                                       )),
-                                ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 50),
-                            child: Divider(color: Colors.white, thickness: 2),
-                          ),
-                        ],
-                      ),
-                    )
-                  : Container(
-                      height: h,
-                      width: w + w + 10,
-                      color: colorCard1,
-                      child: Column(
-                        children: [
-                          Container(
-                              padding: EdgeInsets.only(left: 0, top: 25),
-                              child: Text(
-                                'Proses Awal',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold),
-                              )),
-                          chartPrintingResin(),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 50),
-                            child: Divider(color: Colors.white, thickness: 2),
-                          ),
-                        ],
-                      ),
-                    ),
+                                  chartPrintingResin(),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 50),
+                                    child: Divider(
+                                        color: Colors.white, thickness: 2),
+                                  ),
+                                ],
+                              ),
+                            ),
             ],
           ),
           SizedBox(height: 15),
@@ -2483,6 +2816,22 @@ class _DashboardControlState extends State<DashboardControl> {
         rows: rowsDataFinishing(_listFinishing, _listFinishing!.length));
   }
 
+  dataTableCasting() {
+    return DataTable(
+        headingTextStyle:
+            const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+        headingRowColor:
+            MaterialStateProperty.resolveWith((states) => Colors.black54),
+        dataRowColor:
+            MaterialStateProperty.resolveWith((states) => Colors.white),
+        columnSpacing: 0,
+        headingRowHeight: 50,
+        // dataRowMaxHeight: 50,
+        columns: columnsDataFinishing(),
+        border: TableBorder.all(),
+        rows: rowsDataFinishing(_listCasting, _listCasting!.length));
+  }
+
   dataTablePasangBatu() {
     return DataTable(
         headingTextStyle:
@@ -3267,11 +3616,7 @@ class _DashboardControlState extends State<DashboardControl> {
           i.toString().toLowerCase() == 'printing resin' ||
                   i.toString().toLowerCase() == 'finishing resin'
               ? handleClickProsesAwal(i)
-              : showSimpleNotification(
-                  Text('tap $i oke'),
-                  background: Colors.green,
-                  duration: const Duration(seconds: 1),
-                );
+              : handleClickCasting(i);
         },
       ),
       // //! tabel finishing resin.
@@ -3345,7 +3690,6 @@ class _DashboardControlState extends State<DashboardControl> {
         onPointTap: (event) {
           var i = event.dataPoints![event.pointIndex!].x;
           handleClickFinishing(i);
-          print(i);
           // showSimpleNotification(
           //   Text('$i'),
           //   background: Colors.green,
@@ -3461,13 +3805,22 @@ class _DashboardControlState extends State<DashboardControl> {
             //     .middle
             ), //? ini untuk label di dalam diagram
         dataSource: chartDataCasting!,
-        pointColorMapper: (ChartData sales, _) =>
-            _getPointColor(sales.secondSeriesYValue),
-        name: 'SPK',
+        onCreateShader: (ShaderDetails details) {
+          return ui.Gradient.linear(
+              details.rect.topLeft,
+              details.rect.bottomLeft,
+              const <Color>[Colors.red, Colors.orange, Colors.yellow],
+              <double>[0.3, 0.6, 0.9]);
+        },
+        color: Color.fromARGB(255, 45, 45, 43),
         width: 0.8,
-        xValueMapper: (ChartData sales, _) => sales.xValue,
-        yValueMapper: (ChartData sales, _) => sales.secondSeriesYValue,
-        onPointTap: (event) {},
+        xValueMapper: (ChartData sales, _) => sales.x,
+        yValueMapper: (ChartData sales, _) => sales.xValue,
+
+        onPointTap: (event) {
+          var i = event.dataPoints![event.pointIndex!].x;
+          handleClickCastingWeek(i);
+        },
       ),
     ];
   }

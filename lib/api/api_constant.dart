@@ -72,6 +72,8 @@ class ApiConstants {
   static String postDataListItem = 'spk/create_list_item.php';
   static String postListFormPR = 'spk/create_list_form_pr.php';
   static String postFormPR = 'spk/create_form_pr.php';
+  static String updateStatusPR = 'spk/update_form_pr.php';
+  static String updateListFormPR = 'spk/update_list_form_pr.php';
 
   static String addModeller = 'spk/add_modeller.php';
   static String addPointModeller = 'spk/add_point_modeller.php';

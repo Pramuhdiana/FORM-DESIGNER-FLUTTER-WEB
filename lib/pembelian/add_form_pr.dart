@@ -43,6 +43,7 @@ class _AddFormPrState extends State<AddFormPr> {
   TextEditingController qty1 = TextEditingController();
   TextEditingController vendor = TextEditingController();
   TextEditingController noPR = TextEditingController();
+  String? jenisForm;
   List<String> listItem = [];
   List<List<String>> selectListItem = [];
   TextEditingController notes = TextEditingController();
@@ -200,6 +201,58 @@ class _AddFormPrState extends State<AddFormPr> {
                     ),
                   ),
                 ),
+                SizedBox(width: wid),
+                DecoratedBox(
+                  decoration: BoxDecoration(
+                      color: jenisForm != null
+                          ? const Color.fromARGB(255, 8, 209, 69)
+                          : const Color.fromARGB(255, 255, 255,
+                              255), //background color of dropdown button
+                      border: Border.all(
+                        color: Colors.black38,
+                        // width:
+                        //     3
+                      ), //border of dropdown button
+                      borderRadius: BorderRadius.circular(
+                          0), //border raiuds of dropdown button
+                      boxShadow: const <BoxShadow>[]),
+                  child: Container(
+                      padding: const EdgeInsets.only(left: 10),
+                      width: 200,
+                      child: DropdownButton(
+                        value: jenisForm,
+                        items: const [
+                          //add items in the dropdown
+                          DropdownMenuItem(
+                            value: "Retur",
+                            child: Text("Retur"),
+                          ),
+                          DropdownMenuItem(
+                            value: "Pembelian",
+                            child: Text("Pembelian"),
+                          ),
+                        ],
+                        hint: const Text('Jenis Form'),
+                        onChanged: (value) {
+                          setState(() {
+                            jenisForm = value;
+                          });
+                        },
+                        icon: const Padding(
+                            padding: EdgeInsets.only(left: 20),
+                            child: Icon(Icons.arrow_circle_down_sharp)),
+                        iconEnabledColor: Colors.black, //Icon color
+                        style: const TextStyle(
+                          color: Colors.black, //Font color
+                          // fontSize:
+                          //     15 //font size on dropdown button
+                        ),
+
+                        dropdownColor: Colors.white, //dropdown background color
+                        underline: Container(), //remove underline
+                        isExpanded: true, //make true to make width 100%
+                      )),
+                )
               ],
             ),
             Row(
@@ -221,7 +274,7 @@ class _AddFormPrState extends State<AddFormPr> {
                           });
                         },
                       ),
-                      Text('Diamond is $isCheckedDiamond'),
+                      const Text('Diamond'),
                     ]),
                 SizedBox(width: wid),
                 Row(
@@ -242,7 +295,7 @@ class _AddFormPrState extends State<AddFormPr> {
                           });
                         },
                       ),
-                      Text('Emas is $isCheckedEmas'),
+                      const Text('Emas'),
                     ]),
                 SizedBox(width: wid),
                 Row(
@@ -262,7 +315,7 @@ class _AddFormPrState extends State<AddFormPr> {
                           });
                         },
                       ),
-                      Text('BarangBerharga is $isCheckedBarangBerharga'),
+                      const Text('BarangBerharga'),
                     ]),
               ],
             ),
@@ -537,44 +590,62 @@ class _AddFormPrState extends State<AddFormPr> {
                                   Colors.green),
                             ),
                             onPressed: () async {
-                              for (var i = 0; i < selectListItem.length; i++) {
-                                totalBerat +=
-                                    double.parse(selectListItem[i][2]);
-                                totalQty += int.parse(selectListItem[i][1]);
-                                selectListItem[i][0] != ''
-                                    ? totalItem += 1
-                                    : null;
-                              }
-                              await postApiFormPR();
+                              if (jenisForm == null) {
+                                showDialog<String>(
+                                    context: context,
+                                    builder: (BuildContext context) =>
+                                        const AlertDialog(
+                                          title: Text(
+                                            'jenis form wajib diisi',
+                                          ),
+                                        ));
+                              } else {
+                                for (var i = 0;
+                                    i < selectListItem.length;
+                                    i++) {
+                                  totalBerat +=
+                                      double.tryParse(selectListItem[i][2]) ??
+                                          0;
+                                  totalQty +=
+                                      int.tryParse(selectListItem[i][1]) ?? 0;
+                                  selectListItem[i][0] != ''
+                                      ? totalItem += 1
+                                      : null;
+                                }
+                                await postApiFormPR();
 
-                              for (var i = 0; i < selectListItem.length; i++) {
-                                isCheckedDiamond == false
-                                    ? postApiListFormPR(
-                                        selectListItem[i][0],
-                                        selectListItem[i][1],
-                                        selectListItem[i][2],
-                                        selectListItem[i][3],
-                                        selectListItem[i][4])
-                                    : postApiListFormPR(
-                                        selectListItem[i][0],
-                                        selectListItem[i][1],
-                                        selectListItem[i][2],
-                                        '',
-                                        '');
+                                for (var i = 0;
+                                    i < selectListItem.length;
+                                    i++) {
+                                  isCheckedDiamond == false
+                                      ? postApiListFormPR(
+                                          selectListItem[i][0],
+                                          selectListItem[i][1],
+                                          selectListItem[i][2],
+                                          selectListItem[i][3],
+                                          selectListItem[i][4])
+                                      : postApiListFormPR(
+                                          selectListItem[i][0],
+                                          selectListItem[i][1],
+                                          selectListItem[i][2],
+                                          '',
+                                          '');
+                                }
+                                sharedPreferences!.getString('divisi') ==
+                                        'admin'
+                                    ? Navigator.pop(context)
+                                    : Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (c) => MainViewPembelian(
+                                                  col: 1,
+                                                )));
+                                showSimpleNotification(
+                                  const Text('Form PR Berhasil Dibuat'),
+                                  background: Colors.green,
+                                  duration: const Duration(seconds: 1),
+                                );
                               }
-                            sharedPreferences!.getString('divisi') == 'admin'
-                            ? Navigator.pop(context)
-                            :  Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (c) => MainViewPembelian(
-                                            col: 1,
-                                          )));
-                              showSimpleNotification(
-                                const Text('Form PR Berhasil Dibuat'),
-                                background: Colors.green,
-                                duration: const Duration(seconds: 1),
-                              );
                             },
                             child: const Text('Simpan')),
                       ),
@@ -616,6 +687,8 @@ class _AddFormPrState extends State<AddFormPr> {
       'total_item': totalItem.toString(),
       'total_berat': totalBerat.toString(),
       'total_qty': totalQty.toString(),
+      'jenis_form': jenisForm.toString(),
+      'jenis_item': jenisFormItem.toString(),
     };
     final response = await http.post(
         Uri.parse('${ApiConstants.baseUrl}${ApiConstants.postFormPR}'),

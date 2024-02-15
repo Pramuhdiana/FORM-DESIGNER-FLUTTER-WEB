@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:form_designer/api/api_constant.dart';
 import 'package:form_designer/calculatePricing/list_calculate_pricing_screen.dart';
 import 'package:form_designer/global/global.dart';
+import 'package:form_designer/mainScreen/view_photo_mps.dart';
 import 'package:form_designer/model/list_mps_model.dart';
 // ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart';
@@ -28,7 +29,7 @@ Widget _verticalDivider = const VerticalDivider(
 
 class _OrulScreenState extends State<OrulScreen> {
   var nowSiklus = '';
-  var nowBulan = 'all';
+  var nowBulan = '';
   final int _currentSortColumn = 0;
 
   List<ListMpsModel>? filterDataOrul;
@@ -46,10 +47,12 @@ class _OrulScreenState extends State<OrulScreen> {
     String month = DateFormat('MMMM', 'id').format(now);
     // nowSiklus = sharedPreferences!.getString('siklus')!;
     nowSiklus = month;
-    _get(nowBulan);
+    _get(nowSiklus);
   }
 
   _getData(chooseSiklus) async {
+    // ignore: avoid_print
+    print('getdata orul $chooseSiklus');
     final response = await http.get(Uri.parse(
         '${ApiConstants.baseUrl}${ApiConstants.getListMpsBySiklus}?siklus=$chooseSiklus'));
 
@@ -170,15 +173,7 @@ class _OrulScreenState extends State<OrulScreen> {
                 ),
                 centerTitle: true,
               ),
-              body: isLoading == true
-                  ? Center(
-                      child: Container(
-                      padding: const EdgeInsets.all(5),
-                      width: 90,
-                      height: 90,
-                      child: Lottie.asset("loadingJSON/loadingV1.json"),
-                    ))
-                  : listOrul())),
+              body: listOrul())),
     );
   }
 
@@ -256,62 +251,127 @@ class _OrulScreenState extends State<OrulScreen> {
               ),
             ],
           ),
-          isLoading == true
-              ? Expanded(
-                  child: Center(
-                      child: Container(
-                  padding: const EdgeInsets.all(5),
-                  width: 90,
-                  height: 90,
-                  child: Lottie.asset("loadingJSON/loadingV1.json"),
-                )))
-              : Expanded(
-                  child: ListView(children: [
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.8,
-                    child: Theme(
-                      data: ThemeData.light().copyWith(
-                          // cardColor: Theme.of(context).canvasColor),
-                          cardColor: Colors.white,
-                          hoverColor: Colors.grey.shade400,
-                          dividerColor: Colors.grey),
-                      child: PaginatedDataTable(
-                        showCheckboxColumn: false,
-                        availableRowsPerPage: const [10, 50, 100],
-                        rowsPerPage: _rowsPerPage,
-                        dataRowMaxHeight: 150,
-                        onRowsPerPageChanged: (value) {
-                          setState(() {
-                            isLoading == false;
-                          });
-                          _rowsPerPage = value!;
-                          setState(() {
-                            isLoading == true;
-                          });
-                        },
-                        sortColumnIndex: _currentSortColumn,
-                        sortAscending: sort,
-                        // rowsPerPage: 25,
-                        columnSpacing: 0,
-                        columns: [
-                          // no
-                          const DataColumn(
-                            label: SizedBox(
-                                child: Text(
-                              "No",
-                              style: TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.bold),
-                            )),
-                          ),
-                          DataColumn(label: _verticalDivider),
-                        ],
-                        source: RowSourceOrul(
-                            listOrul: listDataOrul,
-                            countOrul: listDataOrul!.length),
-                      ),
+          nowBulan.isEmpty
+              ? Center(
+                  child: Column(
+                  children: [
+                    SizedBox(
+                      width: 250,
+                      height: 210,
+                      child: Lottie.asset("loadingJSON/selectDate.json"),
                     ),
-                  )
-                ]))
+                    const Text(
+                      'Pilih bulan terlebih dahulu',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 26,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Acne',
+                          letterSpacing: 1.5),
+                    ),
+                  ],
+                ))
+              : isLoading == true
+                  ? Expanded(
+                      child: Center(
+                          child: Container(
+                      padding: const EdgeInsets.all(5),
+                      width: 90,
+                      height: 90,
+                      child: Lottie.asset("loadingJSON/loadingV1.json"),
+                    )))
+                  : Expanded(
+                      child: ListView(children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.8,
+                        child: Theme(
+                          data: ThemeData.light().copyWith(
+                              // cardColor: Theme.of(context).canvasColor),
+                              cardColor: Colors.white,
+                              hoverColor: Colors.grey.shade400,
+                              dividerColor: Colors.grey),
+                          child: PaginatedDataTable(
+                            showCheckboxColumn: false,
+                            availableRowsPerPage: const [10, 50, 100],
+                            rowsPerPage: _rowsPerPage,
+                            dataRowMaxHeight: 150,
+                            onRowsPerPageChanged: (value) {
+                              setState(() {
+                                isLoading == false;
+                              });
+                              _rowsPerPage = value!;
+                              setState(() {
+                                isLoading == true;
+                              });
+                            },
+                            sortColumnIndex: _currentSortColumn,
+                            sortAscending: sort,
+                            // rowsPerPage: 25,
+                            columnSpacing: 0,
+                            columns: [
+                              // no
+                              const DataColumn(
+                                label: SizedBox(
+                                    child: Text(
+                                  "No",
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold),
+                                )),
+                              ),
+                              DataColumn(label: _verticalDivider),
+                              // gambar
+                              const DataColumn(
+                                label: SizedBox(
+                                    child: Text(
+                                  "Gambar",
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold),
+                                )),
+                              ),
+                              DataColumn(label: _verticalDivider),
+                              // kode MDBC
+                              const DataColumn(
+                                label: SizedBox(
+                                    child: Text(
+                                  "Kode\nMDBC",
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold),
+                                )),
+                              ),
+                              DataColumn(label: _verticalDivider),
+                              // kode Marketing
+                              const DataColumn(
+                                label: SizedBox(
+                                    child: Text(
+                                  "Kode Marketing",
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold),
+                                )),
+                              ),
+                              DataColumn(label: _verticalDivider),
+                              // keterangan
+                              const DataColumn(
+                                label: SizedBox(
+                                    child: Text(
+                                  "Keterangan",
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold),
+                                )),
+                              ),
+                            ],
+                            source: RowSourceOrul(
+                                listOrul: listDataOrul,
+                                countOrul: listDataOrul!.length),
+                          ),
+                        ),
+                      )
+                    ]))
         ]);
   }
 }
@@ -350,7 +410,76 @@ class RowSourceOrul extends DataTableSource {
                 ],
               ));
         }),
-      )
+      ),
+      DataCell(_verticalDivider),
+      //gambar
+      DataCell(Builder(builder: (context) {
+        return Padding(
+            padding: const EdgeInsets.all(0),
+            child: SizedBox(
+              width: 100,
+              height: 140,
+              child: InkWell(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (c) => ViewPhotoMpsScreen(
+                                modelMps: ListMpsModel(
+                                    kodeDesignMdbc: data.kodeDesignMdbc,
+                                    imageUrl: data.imageUrl),
+                              )));
+                },
+                child: Image.network(
+                  ApiConstants.baseUrlImage + data.imageUrl!,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ));
+      })),
+
+      DataCell(_verticalDivider),
+      //kode mdbc
+      DataCell(
+        Builder(builder: (context) {
+          return Padding(
+              padding: const EdgeInsets.all(0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text(data.kodeDesignMdbc),
+                ],
+              ));
+        }),
+      ),
+      DataCell(_verticalDivider),
+      //kode marketing
+      DataCell(
+        Builder(builder: (context) {
+          return Padding(
+              padding: const EdgeInsets.all(0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(data.kodeMarketing),
+                ],
+              ));
+        }),
+      ),
+      DataCell(_verticalDivider),
+      //keterangan
+      DataCell(
+        Builder(builder: (context) {
+          return Padding(
+              padding: const EdgeInsets.all(0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(data.keteranganBackPosisi),
+                ],
+              ));
+        }),
+      ),
     ]);
   }
 

@@ -53,7 +53,7 @@ class _MainViewAdminState extends State<MainViewAdmin> {
     const SummarySusutScreen(),
     const SummaryPasangBatuScreen(),
     const SummaryProduktivitasScreen(),
-    //! keluar untuk scm dan admin
+    //! keluar admin
     const HomeScreen()
   ];
 

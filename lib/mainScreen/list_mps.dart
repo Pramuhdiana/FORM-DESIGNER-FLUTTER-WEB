@@ -909,16 +909,18 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
                     height: 90,
                     child: Lottie.asset("loadingJSON/loadingV1.json"),
                   )))
-                : sharedPreferences!.getString('divisi') == 'adminn'
+                : sharedPreferences!.getString('divisi') == 'admin'
+                    //? masih on proses
                     ? Expanded(
                         child: Container(
-                          width: 2500,
                           color: Colors.white,
                           padding: const EdgeInsets.all(16),
                           child: DataTable2(
                               columnSpacing: 12,
-                              horizontalMargin: 12,
-                              minWidth: 600,
+                              horizontalMargin: double
+                                  .infinity, // Atur horizontal margin ke double.infinity
+                              minWidth: double
+                                  .infinity, // Atur minWidth ke double.infinity                          minWidth: 600,
                               columns: [
                                 // no
                                 const DataColumn2(
@@ -932,7 +934,7 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
                                 ),
                                 DataColumn(label: _verticalDivider),
                                 // keterangan minggu
-                                const DataColumn(
+                                const DataColumn2(
                                   label: SizedBox(
                                       child: Text(
                                     "Minggu Ke -",
@@ -943,7 +945,7 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
                                 ),
                                 DataColumn(label: _verticalDivider),
                                 //gambar
-                                DataColumn(
+                                DataColumn2(
                                   label: Container(
                                       padding: const EdgeInsets.only(left: 30),
                                       child: const Text(
@@ -955,7 +957,7 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
                                 ),
                                 DataColumn(label: _verticalDivider),
                                 // kode mdbc
-                                DataColumn(
+                                DataColumn2(
                                     label: const SizedBox(
                                         child: Text(
                                       "Kode\nMDBC",
@@ -985,7 +987,7 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
                                     }),
                                 DataColumn(label: _verticalDivider),
                                 //kode marketing
-                                DataColumn(
+                                DataColumn2(
                                     label: const SizedBox(
                                         child: Text(
                                       "Kode Marketing",
@@ -1016,7 +1018,7 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
                                     }),
                                 DataColumn(label: _verticalDivider),
                                 //posisi
-                                DataColumn(
+                                DataColumn2(
                                     label: const SizedBox(
                                         child: Text(
                                       "Posisi",
@@ -1041,7 +1043,7 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
                                     }),
                                 DataColumn(label: _verticalDivider),
                                 //status batu
-                                DataColumn(
+                                DataColumn2(
                                     label: const SizedBox(
                                         child: Text(
                                       "Status Batu",
@@ -1072,7 +1074,7 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
                                     }),
                                 DataColumn(label: _verticalDivider),
                                 //status acc
-                                DataColumn(
+                                DataColumn2(
                                     label: const SizedBox(
                                         child: Text(
                                       "Status ACC",
@@ -1103,7 +1105,7 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
                                     }),
                                 DataColumn(label: _verticalDivider),
                                 //ketrangan batu
-                                const DataColumn(
+                                const DataColumn2(
                                   label: SizedBox(
                                       child: Text(
                                     "Keterangan\nBatu",
@@ -1114,7 +1116,7 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
                                 ),
                                 DataColumn(label: _verticalDivider),
                                 //tema
-                                DataColumn(
+                                DataColumn2(
                                     label: const SizedBox(
                                         child: Text(
                                       "Tema",
@@ -1140,7 +1142,7 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
                                     }),
                                 DataColumn(label: _verticalDivider),
                                 //jenis barang
-                                DataColumn(
+                                DataColumn2(
                                     label: const SizedBox(
                                         child: Text(
                                       "Jenis Barang",
@@ -1193,7 +1195,7 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
                                 // ),
                                 // DataColumn(label: _verticalDivider),
                                 //brand
-                                DataColumn(
+                                DataColumn2(
                                     label: const SizedBox(
                                         child: Text(
                                       "Brand",
@@ -1220,7 +1222,7 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
                                     }),
                                 DataColumn(label: _verticalDivider),
                                 // harga
-                                const DataColumn(
+                                const DataColumn2(
                                   label: SizedBox(
                                       child: Text(
                                     "Harga",
@@ -1232,7 +1234,7 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
                                 ),
                                 DataColumn(label: _verticalDivider),
                                 //kelas harga
-                                const DataColumn(
+                                const DataColumn2(
                                   label: SizedBox(
                                       child: Text(
                                     "Kelas\nHarga",
@@ -1244,7 +1246,7 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
                                 ),
                                 DataColumn(label: _verticalDivider),
                                 //tanggal in release
-                                DataColumn(
+                                DataColumn2(
                                     label: const SizedBox(
                                         child: Text(
                                       "Tanggal In\nRelease",
@@ -1278,7 +1280,7 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
                                   (i) => DataRow(cells: [
                                         DataCell(
                                           Builder(builder: (context) {
-                                            return Padding(
+                                            return Container(
                                                 padding:
                                                     const EdgeInsets.all(0),
                                                 child: Row(
@@ -1383,7 +1385,7 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
                                         //keterangan minggu
                                         DataCell(
                                           Builder(builder: (context) {
-                                            return Padding(
+                                            return Container(
                                                 padding:
                                                     const EdgeInsets.all(0),
                                                 child: Row(
@@ -4898,16 +4900,20 @@ class RowSourceProduksi extends DataTableSource {
                           print('tap ke : ${data.posisi}');
                           int idPosisi = 0;
                           if (sharedPreferences!.getString('role') == '3') {
-                            data.posisi.toString().toLowerCase() ==
-                                    'printing resin'
-                                ? idPosisi = 1
+                            data.posisi.toString().toLowerCase() == 'orul'
+                                ? idPosisi = 0
                                 : data.posisi.toString().toLowerCase() ==
-                                        'finishing resin'
-                                    ? idPosisi = 2
+                                        'printing resin'
+                                    ? idPosisi = 1
                                     : data.posisi.toString().toLowerCase() ==
-                                            'casting'
-                                        ? idPosisi = 3
-                                        : idPosisi = 4;
+                                            'finishing resin'
+                                        ? idPosisi = 2
+                                        : data.posisi
+                                                    .toString()
+                                                    .toLowerCase() ==
+                                                'casting'
+                                            ? idPosisi = 3
+                                            : idPosisi = 4;
                           } else if (sharedPreferences!.getString('role') ==
                               '4') {
                             data.posisi.toString().toLowerCase() ==

@@ -6,7 +6,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:form_designer/api/api_constant.dart';
 import 'package:form_designer/global/global.dart';
-import 'package:form_designer/mainScreen/sideScreen/side_screen_addPR.dart';
 import 'package:form_designer/pembelian/form_pr_model.dart';
 import 'package:form_designer/pembelian/list_form_pr_model.dart';
 import 'package:http/http.dart' as http;
@@ -44,7 +43,6 @@ class _ListFormPrQcState extends State<ListFormPrQc> {
   initState() {
     super.initState();
     _getData();
-    print('init on');
   }
 
   _getData() async {
@@ -60,7 +58,7 @@ class _ListFormPrQcState extends State<ListFormPrQc> {
       var data =
           jsonResponse.map((data) => FormPrModel.fromJson(data)).toList();
       var filterByStatus =
-          data.where((element) => element.status == 'send').toList();
+          data.where((element) => element.status == 'terkirim').toList();
       data = filterByStatus;
       setState(() {
         filterFormPR = data;
@@ -149,31 +147,6 @@ class _ListFormPrQcState extends State<ListFormPrQc> {
                           fontWeight: FontWeight.bold,
                           fontSize: 26),
                     ),
-                  ),
-                  FloatingActionButton.extended(
-                    onPressed: () async {
-                      // Navigasi ke ScreenB dan tunggu hingga layar tersebut ditutup
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => MainViewAddPr(
-                                col: 1,
-                                onBackPressed: () {
-                                  // Callback yang akan dijalankan saat Navigator.pop dari ScreenB
-                                  // _getData();
-                                  print('call back oke');
-                                })),
-                      );
-                    },
-                    label: const Text(
-                      "Tambah Form PR",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    icon: const Icon(
-                      Icons.add_circle_outline_sharp,
-                      color: Colors.white,
-                    ),
-                    backgroundColor: Colors.blue,
                   ),
                   isLoading == true
                       ? Expanded(

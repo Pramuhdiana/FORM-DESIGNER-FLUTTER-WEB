@@ -2435,7 +2435,8 @@ class _AddCalculatePricingScreenState extends State<AddCalculatePricingScreen> {
         ),
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.only(bottom: 2),
-          child: CustomLoadingButton(
+          child: 
+          CustomLoadingButton(
             controller: btnController,
             onPressed: () {
               // final isValid = formKey.currentState?.validate();

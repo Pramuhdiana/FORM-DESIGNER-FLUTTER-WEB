@@ -63,12 +63,14 @@ class _MySplashScreenState extends State<MySplashScreen> {
           } else if (sharedPreferences!.getString('divisi') == 'qc') {
             Navigator.push(
                 context, MaterialPageRoute(builder: (c) => MainViewQc(col: 0)));
-          }  else if (sharedPreferences!.getString('divisi') == 'pembelian') {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (c) => MainViewPembelian(col: 0)));
-          }  else if (sharedPreferences!.getString('divisi') == 'admin') {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (c) => const MainViewAdmin()));
+          } else if (sharedPreferences!.getString('divisi') == 'pembelian') {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (c) => MainViewPembelian(col: 0)));
+          } else if (sharedPreferences!.getString('divisi') == 'admin') {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (c) => const MainViewAdmin()));
+            // Navigator.push(context,
+            //     MaterialPageRoute(builder: (c) => const MainAdminScreen()));
           } else {
             //admin
             Navigator.push(
@@ -141,62 +143,62 @@ class _MySplashScreenState extends State<MySplashScreen> {
   }
 
   dialogBox() {
-    return  showGeneralDialog(
-              transitionDuration: const Duration(milliseconds: 200),
-              barrierDismissible: true,
-              barrierLabel: '',
-              context: context,
-              pageBuilder: (context, animation1, animation2) {
-                return const Text('');
-              },
-              barrierColor: Colors.black.withOpacity(0.5),
-              transitionBuilder: (context, a1, a2, widget) {
-                return Transform.scale(
-                    scale: a1.value,
-                    child: Opacity(
-                        opacity: a1.value,
-                        child: AlertDialog(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-            title: const Text('Please choose aplikasi'),
-            content: SizedBox(
-              height: MediaQuery.of(context).size.height * 0.5,
-              child: Column(
-                children: [
-                  ElevatedButton(
-                    //if user click this button, user can upload image from gallery
-                    onPressed: () {
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (c) => const MainScreen()));
-                    },
-                    child: const Row(
-                      children: [
-                        Icon(Icons.trending_up_sharp),
-                        Text('Pos Mobile'),
-                      ],
+    return showGeneralDialog(
+        transitionDuration: const Duration(milliseconds: 200),
+        barrierDismissible: true,
+        barrierLabel: '',
+        context: context,
+        pageBuilder: (context, animation1, animation2) {
+          return const Text('');
+        },
+        barrierColor: Colors.black.withOpacity(0.5),
+        transitionBuilder: (context, a1, a2, widget) {
+          return Transform.scale(
+              scale: a1.value,
+              child: Opacity(
+                  opacity: a1.value,
+                  child: AlertDialog(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8)),
+                    title: const Text('Please choose aplikasi'),
+                    content: SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.5,
+                      child: Column(
+                        children: [
+                          ElevatedButton(
+                            //if user click this button, user can upload image from gallery
+                            onPressed: () {
+                              // Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //         builder: (c) => const MainScreen()));
+                            },
+                            child: const Row(
+                              children: [
+                                Icon(Icons.trending_up_sharp),
+                                Text('Pos Mobile'),
+                              ],
+                            ),
+                          ),
+                          ElevatedButton(
+                            //if user click this button. user can upload image from camera
+                            onPressed: () {
+                              // Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //         builder: (c) => ApprovePricingScreen()));
+                            },
+                            child: const Row(
+                              children: [
+                                Icon(Icons.price_check_sharp),
+                                Text('Approval Pricing'),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  ElevatedButton(
-                    //if user click this button. user can upload image from camera
-                    onPressed: () {
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (c) => ApprovePricingScreen()));
-                    },
-                    child: const Row(
-                      children: [
-                        Icon(Icons.price_check_sharp),
-                        Text('Approval Pricing'),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          )
-       )); });
+                  )));
+        });
   }
 }

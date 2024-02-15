@@ -7,10 +7,12 @@ import 'package:form_designer/api/api_constant.dart';
 import 'package:form_designer/global/global.dart';
 import 'package:form_designer/mainScreen/home_screen.dart';
 import 'package:form_designer/mainScreen/list_mps.dart';
+import 'package:form_designer/pembelian/add_form_pr.dart';
 import 'package:form_designer/produksi/mainScreen/CRUD/finishing.dart';
 import 'package:form_designer/produksi/mainScreen/CRUD/polishing1.dart';
 import 'package:form_designer/produksi/mainScreen/CRUD/stell1.dart';
 import 'package:form_designer/produksi/mainScreen/orul.dart';
+import 'package:form_designer/produksi/mainScreen/reparasi.dart';
 import 'package:form_designer/produksi/mainScreen/siklus_saat_ini.dart';
 import 'package:form_designer/produksi/mainScreen/siklus_sebelumnya.dart';
 import 'package:form_designer/produksi/modelProduksi/produksi_model.dart';
@@ -83,7 +85,7 @@ class _DashboardOrulReparasiState extends State<DashboardOrulReparasi>
 
   final List<Widget> _views = [
     const OrulScreen(),
-    const SiklusSaatIni(),
+    const ReparasiScreen(),
   ];
   var nowSiklus = '';
 
