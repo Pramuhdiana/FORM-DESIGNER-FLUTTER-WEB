@@ -654,7 +654,7 @@ class _ListKebutuhanBatuScreenState extends State<ListKebutuhanBatuScreen> {
                     siklusDesigner = siklus.text.toString();
                     _getData(siklus.text);
 
-                    //? tunggu 2 detik
+                    //* hints tunggu 2 detik
                     Future.delayed(const Duration(seconds: 1)).then((value) {
                       //! lalu eksekusi fungsi ini
                       setState(() {
