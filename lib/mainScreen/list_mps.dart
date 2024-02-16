@@ -2075,8 +2075,8 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
                                         sharedPreferences!
                                                 .getString('divisi') ==
                                             'admin'
-                                    ? dataColumnRole1()
-                                    : dataColumnRole3(),
+                                    ? dataColumnProduksi()
+                                    : dataColumnScm(),
                                 source: sharedPreferences!
                                                 .getString('divisi') ==
                                             'produksi' ||
@@ -2136,7 +2136,7 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
     });
   }
 
-  dataColumnRole1() {
+  dataColumnProduksi() {
     return [
       // no
       DataColumn(
@@ -2458,7 +2458,12 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
               )),
             )
           : const DataColumn(label: SizedBox()),
-      DataColumn(label: _verticalDivider),
+      sharedPreferences!.getString('role') == '1' ||
+              sharedPreferences!.getString('role') == '2' ||
+              sharedPreferences!.getString('divisi') == 'admin'
+          ? DataColumn(label: _verticalDivider)
+          : const DataColumn(label: SizedBox()),
+
       //kelas harga
       DataColumn(
           label: const SizedBox(
@@ -2510,7 +2515,7 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
     ];
   }
 
-  dataColumnRole3() {
+  dataColumnScm() {
     return [
       // no
       const DataColumn(
@@ -2866,7 +2871,7 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
             });
           }),
       DataColumn(label: _verticalDivider),
-      //tanggal in release
+      //tanggal in modeller
       const DataColumn(
         label: SizedBox(
             child: Text(
@@ -4049,11 +4054,7 @@ class RowSourceProduksi extends DataTableSource {
       DataCell(
         Padding(padding: const EdgeInsets.all(0), child: Text(data.brand)),
       ),
-      sharedPreferences!.getString('role') == '1' ||
-              sharedPreferences!.getString('role') == '2' ||
-              sharedPreferences!.getString('divisi') == 'admin'
-          ? DataCell(_verticalDivider)
-          : const DataCell(SizedBox()),
+      DataCell(_verticalDivider),
       //harga
       sharedPreferences!.getString('role') == '1' ||
               sharedPreferences!.getString('role') == '2' ||
