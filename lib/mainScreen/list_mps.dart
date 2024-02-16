@@ -3484,6 +3484,10 @@ class RowSourceProduksi extends DataTableSource {
                                                                       '1' ||
                                                                   sharedPreferences!
                                                                           .getString(
+                                                                              'nama') ==
+                                                                      'Tri Sartika R' ||
+                                                                  sharedPreferences!
+                                                                          .getString(
                                                                               'divisi') ==
                                                                       'admin') {
                                                                 //! admin dan head
@@ -3523,22 +3527,24 @@ class RowSourceProduksi extends DataTableSource {
                                                                             data.kodeMarketing,
                                                                             data.posisi,
                                                                             isBackPosisi);
-                                                              } else if (sharedPreferences!
-                                                                      .getString(
-                                                                          'role') ==
-                                                                  '2') {
-                                                                showSimpleNotification(
-                                                                  const Text(
-                                                                      'Tidak ada pilihan'),
-                                                                  background:
-                                                                      Colors
-                                                                          .red,
-                                                                  duration:
-                                                                      const Duration(
-                                                                          seconds:
-                                                                              1),
-                                                                );
-                                                              } else if (sharedPreferences!
+                                                              }
+                                                              //  else if (sharedPreferences!
+                                                              //         .getString(
+                                                              //             'role') ==
+                                                              //     '2') {
+                                                              //   showSimpleNotification(
+                                                              //     const Text(
+                                                              //         'Tidak ada pilihan'),
+                                                              //     background:
+                                                              //         Colors
+                                                              //             .red,
+                                                              //     duration:
+                                                              //         const Duration(
+                                                              //             seconds:
+                                                              //                 1),
+                                                              //   );
+                                                              // }
+                                                              else if (sharedPreferences!
                                                                       .getString(
                                                                           'role') ==
                                                                   '3') {
