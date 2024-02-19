@@ -8,9 +8,10 @@ import 'package:form_designer/api/api_constant.dart';
 import 'package:form_designer/global/global.dart';
 import 'package:form_designer/pembelian/form_pr_model.dart';
 import 'package:form_designer/pembelian/list_form_pr_model.dart';
+import 'package:form_designer/qc/mainScreen/add_form_detail_batu_qy.dart';
 import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';
-import 'package:overlay_support/overlay_support.dart';
+// ignore: unused_import
 import 'package:intl/intl.dart';
 
 class ListFormPrQc extends StatefulWidget {
@@ -27,6 +28,7 @@ Widget _verticalDivider = const VerticalDivider(
 );
 
 class _ListFormPrQcState extends State<ListFormPrQc> {
+  int indexDataPr = 0;
   TextEditingController controller = TextEditingController();
 
   List<FormPrModel>? filterFormPR;
@@ -35,6 +37,9 @@ class _ListFormPrQcState extends State<ListFormPrQc> {
   bool sort = true;
   int _currentSortColumn = 0;
   int _rowsPerPage = 10;
+  bool isForm = false;
+
+  //? variable yang di kirim
 
   List<ListItemPRModel>? _listItemPR;
   var dataListPR;
@@ -43,6 +48,19 @@ class _ListFormPrQcState extends State<ListFormPrQc> {
   initState() {
     super.initState();
     _getData();
+  }
+
+  refresh() async {
+    print('refresh state');
+    setState(() {
+      isLoading = true;
+    });
+    setState(() {
+      isForm = !isForm;
+    });
+    setState(() {
+      isLoading = false;
+    });
   }
 
   _getData() async {
@@ -132,190 +150,219 @@ class _ListFormPrQcState extends State<ListFormPrQc> {
               ),
             ),
           ),
-          body: Container(
-            padding: const EdgeInsets.only(left: 20, right: 20),
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.only(top: 26),
-                    child: const Text(
-                      'List PR',
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 26),
-                    ),
+          body: isForm == true
+              ? FormDetailBatuQc(
+                  dataFormPr: FormPrModel(
+                    noPR: dataFormPR![indexDataPr].noPR,
+                    vendor: dataFormPR![indexDataPr].vendor,
+                    created_at: dataFormPR![indexDataPr].created_at,
                   ),
-                  isLoading == true
-                      ? Expanded(
-                          child: Center(
-                              child: Container(
-                          padding: const EdgeInsets.all(5),
-                          width: 90,
-                          height: 90,
-                          child: Lottie.asset("loadingJSON/loadingV1.json"),
-                        )))
-                      : Expanded(
-                          child: ListView(children: [
-                          Container(
-                            padding: const EdgeInsets.all(15),
-                            width: MediaQuery.of(context).size.width * 0.8,
-                            child: Theme(
-                              data: ThemeData.light().copyWith(
-                                  // cardColor: Theme.of(context).canvasColor),
-                                  cardColor: Colors.white,
-                                  hoverColor: Colors.grey.shade400,
-                                  dividerColor: Colors.grey),
-                              child: PaginatedDataTable(
-                                  showCheckboxColumn: false,
-                                  availableRowsPerPage: const [10, 50, 100],
-                                  rowsPerPage: _rowsPerPage,
-                                  onRowsPerPageChanged: (value) {
-                                    setState(() {
-                                      _rowsPerPage = value!;
-                                    });
-                                  },
-                                  sortColumnIndex: _currentSortColumn,
-                                  sortAscending: sort,
-                                  // rowsPerPage: 25,
-                                  columnSpacing: 0,
-                                  columns: [
-                                    //AKSI
-                                    DataColumn(
-                                      label: Container(
-                                          padding:
-                                              const EdgeInsets.only(left: 0),
-                                          child: const Text(
-                                            "AKSI",
+                  //* hints untuk menerima isform close jika ada yang panggil oncloseform
+                  onCloseForm: () {
+                    setState(() {
+                      refresh();
+                    });
+                  },
+                )
+              : Container(
+                  padding: const EdgeInsets.only(left: 20, right: 20),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.only(top: 26),
+                          child: const Text(
+                            'List PR',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 26),
+                          ),
+                        ),
+                        isLoading == true
+                            ? Expanded(
+                                child: Center(
+                                    child: Container(
+                                padding: const EdgeInsets.all(5),
+                                width: 90,
+                                height: 90,
+                                child:
+                                    Lottie.asset("loadingJSON/loadingV1.json"),
+                              )))
+                            : Expanded(
+                                child: ListView(children: [
+                                Container(
+                                  padding: const EdgeInsets.all(15),
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.8,
+                                  child: Theme(
+                                    data: ThemeData.light().copyWith(
+                                        // cardColor: Theme.of(context).canvasColor),
+                                        cardColor: Colors.white,
+                                        hoverColor: Colors.grey.shade400,
+                                        dividerColor: Colors.grey),
+                                    child: PaginatedDataTable(
+                                      showCheckboxColumn: false,
+                                      availableRowsPerPage: const [10, 50, 100],
+                                      rowsPerPage: _rowsPerPage,
+                                      onRowsPerPageChanged: (value) {
+                                        setState(() {
+                                          _rowsPerPage = value!;
+                                        });
+                                      },
+                                      sortColumnIndex: _currentSortColumn,
+                                      sortAscending: sort,
+                                      // rowsPerPage: 25,
+                                      columnSpacing: 0,
+                                      columns: [
+                                        //AKSI
+                                        DataColumn(
+                                          label: Container(
+                                              padding: const EdgeInsets.only(
+                                                  left: 0),
+                                              child: const Text(
+                                                "AKSI",
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              )),
+                                        ),
+                                        DataColumn(label: _verticalDivider),
+
+                                        // No PR
+                                        DataColumn(
+                                            label: const SizedBox(
+                                                child: Text(
+                                              "Nomor PR",
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold),
+                                            )),
+                                            onSort: (columnIndex, _) {
+                                              setState(() {
+                                                _currentSortColumn =
+                                                    columnIndex;
+                                                if (sort == true) {
+                                                  sort = false;
+                                                  filterFormPR!.sort((a, b) => a
+                                                      .noPR!
+                                                      .toLowerCase()
+                                                      .compareTo(b.noPR!
+                                                          .toLowerCase()));
+                                                } else {
+                                                  sort = true;
+                                                  filterFormPR!.sort((a, b) => b
+                                                      .noPR!
+                                                      .toLowerCase()
+                                                      .compareTo(a.noPR!
+                                                          .toLowerCase()));
+                                                }
+                                              });
+                                            }),
+                                        DataColumn(label: _verticalDivider),
+                                        // vendor
+                                        DataColumn(
+                                            label: const SizedBox(
+                                                child: Text(
+                                              "Vendor",
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold),
+                                            )),
+                                            onSort: (columnIndex, _) {
+                                              setState(() {
+                                                _currentSortColumn =
+                                                    columnIndex;
+                                                if (sort == true) {
+                                                  sort = false;
+                                                  filterFormPR!.sort((a, b) => a
+                                                      .vendor!
+                                                      .toLowerCase()
+                                                      .compareTo(b.vendor!
+                                                          .toLowerCase()));
+                                                } else {
+                                                  sort = true;
+                                                  filterFormPR!.sort((a, b) => b
+                                                      .vendor!
+                                                      .toLowerCase()
+                                                      .compareTo(a.vendor!
+                                                          .toLowerCase()));
+                                                }
+                                              });
+                                            }),
+                                        DataColumn(label: _verticalDivider),
+                                        // notes
+                                        const DataColumn(
+                                          label: SizedBox(
+                                              child: Text(
+                                            "Notes",
                                             style: TextStyle(
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.bold),
                                           )),
-                                    ),
-                                    DataColumn(label: _verticalDivider),
+                                        ),
 
-                                    // No PR
-                                    DataColumn(
-                                        label: const SizedBox(
-                                            child: Text(
-                                          "Nomor PR",
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.bold),
-                                        )),
-                                        onSort: (columnIndex, _) {
-                                          setState(() {
-                                            _currentSortColumn = columnIndex;
-                                            if (sort == true) {
-                                              sort = false;
-                                              filterFormPR!.sort((a, b) => a
-                                                  .noPR!
-                                                  .toLowerCase()
-                                                  .compareTo(
-                                                      b.noPR!.toLowerCase()));
-                                            } else {
-                                              sort = true;
-                                              filterFormPR!.sort((a, b) => b
-                                                  .noPR!
-                                                  .toLowerCase()
-                                                  .compareTo(
-                                                      a.noPR!.toLowerCase()));
-                                            }
-                                          });
-                                        }),
-                                    DataColumn(label: _verticalDivider),
-                                    // vendor
-                                    DataColumn(
-                                        label: const SizedBox(
-                                            child: Text(
-                                          "Vendor",
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.bold),
-                                        )),
-                                        onSort: (columnIndex, _) {
-                                          setState(() {
-                                            _currentSortColumn = columnIndex;
-                                            if (sort == true) {
-                                              sort = false;
-                                              filterFormPR!.sort((a, b) => a
-                                                  .vendor!
-                                                  .toLowerCase()
-                                                  .compareTo(
-                                                      b.vendor!.toLowerCase()));
-                                            } else {
-                                              sort = true;
-                                              filterFormPR!.sort((a, b) => b
-                                                  .vendor!
-                                                  .toLowerCase()
-                                                  .compareTo(
-                                                      a.vendor!.toLowerCase()));
-                                            }
-                                          });
-                                        }),
-                                    DataColumn(label: _verticalDivider),
-                                    // notes
-                                    const DataColumn(
-                                      label: SizedBox(
-                                          child: Text(
-                                        "Notes",
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                    ),
+                                        DataColumn(label: _verticalDivider),
+                                        // total Item
+                                        const DataColumn(
+                                          label: SizedBox(
+                                              child: Text(
+                                            "Total Item",
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold),
+                                          )),
+                                        ),
 
-                                    DataColumn(label: _verticalDivider),
-                                    // total Item
-                                    const DataColumn(
-                                      label: SizedBox(
-                                          child: Text(
-                                        "Total Item",
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                    ),
+                                        DataColumn(label: _verticalDivider),
 
-                                    DataColumn(label: _verticalDivider),
+                                        // Total QTY
+                                        const DataColumn(
+                                          label: SizedBox(
+                                              child: Text(
+                                            "Total Qty",
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold),
+                                          )),
+                                        ),
+                                        DataColumn(label: _verticalDivider),
 
-                                    // Total QTY
-                                    const DataColumn(
-                                      label: SizedBox(
-                                          child: Text(
-                                        "Total Qty",
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                    ),
-                                    DataColumn(label: _verticalDivider),
+                                        // Total Berat
+                                        const DataColumn(
+                                          label: SizedBox(
+                                              child: Text(
+                                            "Total Berat",
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold),
+                                          )),
+                                        ),
+                                      ],
 
-                                    // Total Berat
-                                    const DataColumn(
-                                      label: SizedBox(
-                                          child: Text(
-                                        "Total Berat",
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.bold),
-                                      )),
+                                      source:
+                                          // UserDataTableSource(userData: filterCrm!)),
+                                          RowSource(
+                                              onRowPressed: (int i) {
+                                                setState(() {
+                                                  indexDataPr = i;
+                                                });
+                                                print('select $indexDataPr');
+                                                refresh();
+                                              }, //! mengirim data untuk me refresh state
+                                              indexDataPr: indexDataPr,
+                                              listDataPR: _listItemPR,
+                                              context: context,
+                                              myData: dataFormPR,
+                                              count: dataFormPR!.length),
                                     ),
-                                  ],
-                                  source:
-                                      // UserDataTableSource(userData: filterCrm!)),
-                                      RowSource(
-                                          listDataPR: _listItemPR,
-                                          context: context,
-                                          myData: dataFormPR,
-                                          count: dataFormPR!.length)),
-                            ),
-                          ),
-                        ]))
-                ]),
-          )),
+                                  ),
+                                )
+                              ]))
+                      ]),
+                )),
     );
   }
 
@@ -449,6 +496,14 @@ class _ListFormPrQcState extends State<ListFormPrQc> {
               source:
                   // UserDataTableSource(userData: filterCrm!)),
                   RowSource(
+                      onRowPressed: (int i) {
+                        setState(() {
+                          indexDataPr = i;
+                        });
+                        print('select $indexDataPr');
+                        refresh();
+                      },
+                      indexDataPr: indexDataPr,
                       listDataPR: _listItemPR,
                       context: context,
                       myData: dataFormPR,
@@ -460,28 +515,33 @@ class _ListFormPrQcState extends State<ListFormPrQc> {
 }
 
 class RowSource extends DataTableSource {
+  final void Function(int)
+      onRowPressed; //* menerima data untuk me refresh screen
   BuildContext context;
   var myData;
   List<ListItemPRModel>? listDataPR;
   final count;
+  int indexDataPr; // Variabel untuk menyimpan indeks baris yang dipilih
   RowSource({
     required this.myData,
     required this.count,
     required this.context,
     required this.listDataPR,
+    required this.onRowPressed,
+    required this.indexDataPr,
   });
 
   @override
   DataRow? getRow(int index) {
     if (index < rowCount) {
-      return recentFileDataRow(myData![index], context, listDataPR!);
+      return recentFileDataRow(myData![index], context, listDataPR!, index);
     } else {
       return null;
     }
   }
 
-  DataRow recentFileDataRow(
-      var data, BuildContext context, List<ListItemPRModel>? listDataPR) {
+  DataRow recentFileDataRow(var data, BuildContext context,
+      List<ListItemPRModel>? listDataPR, index) {
     return DataRow(cells: [
       //Aksi
       DataCell(Builder(builder: (context) {
@@ -491,198 +551,7 @@ class RowSource extends DataTableSource {
               padding: const EdgeInsets.only(left: 0),
               child: IconButton(
                 onPressed: () {
-                  var filterBynoPR = listDataPR!
-                      .where((element) =>
-                          element.noPr.toString().toLowerCase() ==
-                          data.noPR.toString().toLowerCase())
-                      .toList();
-                  showGeneralDialog(
-                      transitionDuration: const Duration(milliseconds: 200),
-                      barrierDismissible: true,
-                      barrierLabel: '',
-                      context: context,
-                      pageBuilder: (context, animation1, animation2) {
-                        return const Text('');
-                      },
-                      barrierColor: Colors.black.withOpacity(0.5),
-                      transitionBuilder: (context, a1, a2, widget) {
-                        return Transform.scale(
-                            scale: a1.value,
-                            child: Opacity(
-                                opacity: a1.value,
-                                child: AlertDialog(
-                                    content: Stack(
-                                        clipBehavior: Clip.none,
-                                        children: <Widget>[
-                                      SizedBox(
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Align(
-                                              alignment: Alignment.topLeft,
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  const Text(
-                                                    'Jl. Raya Daan Mogot\nKM 21 Pergudangan Eraprima\nBlok I No.2 Batu Ceper, Tanggerang,\nBanten 15122, Tangerang',
-                                                    style: TextStyle(
-                                                        color: Colors.black,
-                                                        fontSize: 12),
-                                                  ),
-                                                  Text(
-                                                    'No. ${data.noPR}',
-                                                    textAlign: TextAlign.start,
-                                                    style: const TextStyle(
-                                                        color: Colors.black,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 18),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            const Text(
-                                              'TANDA TERIMA',
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 22),
-                                            ),
-                                            const Align(
-                                              alignment: Alignment.topLeft,
-                                              child: Text(
-                                                'Sudah Diterima dengan rincian sbb',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 12),
-                                              ),
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  'Vendor : ${data.vendor}',
-                                                  textAlign: TextAlign.start,
-                                                  style: const TextStyle(
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 12),
-                                                ),
-                                                Text(
-                                                  'Tanggal : ${DateFormat('dd-MMMM-yyyy').format(DateTime.parse(data.created_at))}',
-                                                  textAlign: TextAlign.start,
-                                                  style: const TextStyle(
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 12),
-                                                ),
-                                              ],
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                const Text(
-                                                  'Lokasi  : CSV',
-                                                  textAlign: TextAlign.start,
-                                                  style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 12),
-                                                ),
-                                                Text(
-                                                  'Jam : ${DateFormat('H.mm').format(DateTime.parse(data.created_at))}',
-                                                  textAlign: TextAlign.start,
-                                                  style: const TextStyle(
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 12),
-                                                ),
-                                              ],
-                                            ),
-                                            Container(
-                                              constraints: const BoxConstraints(
-                                                maxHeight:
-                                                    550, // Sesuaikan dengan tinggi maksimum yang diinginkan
-                                              ),
-                                              child: SingleChildScrollView(
-                                                scrollDirection: Axis.vertical,
-                                                child:
-                                                    dataTableForm(filterBynoPR),
-                                              ),
-                                            ),
-                                            const SizedBox(height: 20),
-                                            const Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Column(
-                                                    children: [
-                                                      Text(
-                                                        'Diserahkan oleh,',
-                                                        textAlign:
-                                                            TextAlign.start,
-                                                        style: TextStyle(
-                                                            color: Colors.black,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize: 12),
-                                                      ),
-                                                      SizedBox(height: 40),
-                                                      Text('....')
-                                                    ],
-                                                  ),
-                                                  Column(
-                                                    children: [
-                                                      Text(
-                                                        'Diterima oleh,',
-                                                        textAlign:
-                                                            TextAlign.start,
-                                                        style: TextStyle(
-                                                            color: Colors.black,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize: 12),
-                                                      ),
-                                                      SizedBox(height: 40),
-                                                      Text('....')
-                                                    ],
-                                                  ),
-                                                ])
-                                          ],
-                                        ),
-                                      )
-                                    ]))));
-                      });
-                },
-                icon: const Icon(
-                  Icons.remove_red_eye_outlined,
-                  color: Colors.green,
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 0),
-              child: IconButton(
-                onPressed: () {
-                  showSimpleNotification(
-                    const Text(
-                      'Form Terkirim',
-                    ),
-                    background: Colors.green,
-                    duration: const Duration(seconds: 1),
-                  );
+                  onRowPressed(index);
                 },
                 icon: const Icon(
                   Icons.send,

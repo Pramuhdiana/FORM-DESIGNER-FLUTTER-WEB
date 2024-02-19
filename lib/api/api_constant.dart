@@ -46,6 +46,10 @@ class ApiConstants {
   static String getListFormPR = 'spk/get_list_form_pr.php';
   static String getListMps = 'spk/get_list_mps.php';
   static String getListMpsBySiklus = 'spk/get_list_mps_by_siklus.php';
+  static String getListUsers = 'spk/get_users.php';
+  static String getListMenu = 'spk/get_list_menu.php';
+  static String getListPanjang = 'spk/get_list_ukuran.php?type=panjang';
+  static String getListLebar = 'spk/get_list_ukuran.php?type=lebar';
 
   static String postDataBatu = 'spk/create_batu.php';
   static String postLogin = 'spk/login.php';
@@ -56,22 +60,22 @@ class ApiConstants {
   static String postDataModeller = 'spk/create_data_modeller.php';
   static String postDataMps = 'spk/create_mps.php';
   static String postDataMpsIsSend = 'spk/add_status_mps.php';
-
   static String postDeleteFormDesignerById =
       'spk/delete_form_designer_by_id.php';
   static String postDeleteBatuById = 'spk/delete_batu_by_id.php';
   static String postUpdateDataBatu = 'spk/update_qty_batu.php';
   static String postUpdateDataBatuBySize = 'spk/update_qty_batu_by_size.php';
   static String postUpdateListDataBatu = 'spk/update_batu.php';
+  static String postDataListItem = 'spk/create_list_item.php';
+  static String postListFormPR = 'spk/create_list_form_pr.php';
+  static String postFormPR = 'spk/create_form_pr.php';
   static String updateFormDesigner = 'spk/update_form_designer.php';
   static String updateSiklusdesigner = 'spk/update_siklus_designer.php';
   static String updatePosisi = 'spk/add_posisi.php';
   static String updatePosisidanWeek = 'spk/add_posisi_mps.php';
   static String updateNilaiProduksi = 'spk/update_nilai_produksi.php';
   static String updateDataModeller = 'spk/update_form_data_modeller.php';
-  static String postDataListItem = 'spk/create_list_item.php';
-  static String postListFormPR = 'spk/create_list_form_pr.php';
-  static String postFormPR = 'spk/create_form_pr.php';
+
   static String updateStatusPR = 'spk/update_form_pr.php';
   static String updateListFormPR = 'spk/update_list_form_pr.php';
 
@@ -81,6 +85,8 @@ class ApiConstants {
   static String addTanggalProduksi = 'spk/add_tanggal_in_produksi.php';
   static String addTanggalModeller = 'spk/add_tanggal_out_modeller.php';
   static String addHistoryPosisi = 'spk/create_history.php';
+
+  static String createUsers = 'spk/create_users.php';
 
   static String keyById = 'spk/key.php';
 }

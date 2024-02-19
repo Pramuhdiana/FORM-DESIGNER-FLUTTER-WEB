@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart';
 
@@ -8,7 +9,7 @@ SharedPreferences? sharedPreferences;
 int revisiBesar =
     1; //UI baru, banyak fitur baru, perubahan konsep, dll  (MAJOR)
 int revisiKecil =
-    31; //perubahan kecil                                    (MINOR)
+    32; //perubahan kecil                                    (MINOR)
 int rilisPerbaikanbug =
     1; //perbaikan bug                                      (PATCH)
 //? komen

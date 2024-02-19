@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:form_designer/SCM/mainScreen/kebutuhan_batu_by_siklus.dart';
+import 'package:form_designer/SCM/mainScreen/list_scm.dart';
+import 'package:form_designer/admin/list_user.dart';
 import 'package:form_designer/api/api_constant.dart';
 import 'package:form_designer/calculatePricing/list_calculate_pricing_screen.dart';
 import 'package:form_designer/global/global.dart';
@@ -37,9 +39,11 @@ class _MainViewAdminState extends State<MainViewAdmin> {
   List<Widget> views = [
     //? 0
     const HomeScreenAdmin(),
+    const ListUser(),
     const ListDataModellerScreen(),
     const ListBatuScreen(), //* produksi
     const ListDesignerScreen(),
+    const ListScmScreen(),
     const ListCalculatePricingScreen(),
     const ListKebutuhanBatuScreen(),
     const ListStatusApprovalScreen(),
@@ -140,15 +144,23 @@ class _MainViewAdminState extends State<MainViewAdmin> {
             ),
             SideNavigationBarItem(
               icon: Icons.developer_mode,
+              label: 'List User',
+            ),
+            SideNavigationBarItem(
+              icon: Icons.developer_mode,
               label: 'List Data Modeller',
             ),
             SideNavigationBarItem(
               icon: Icons.developer_mode,
-              label: 'List Batu',
+              label: 'List Data Batu',
             ),
             SideNavigationBarItem(
               icon: Icons.developer_mode,
-              label: 'List Designer',
+              label: 'List Data Designer',
+            ),
+            SideNavigationBarItem(
+              icon: Icons.developer_mode,
+              label: 'List Data SCM',
             ),
             SideNavigationBarItem(
               icon: Icons.developer_mode,
@@ -156,7 +168,7 @@ class _MainViewAdminState extends State<MainViewAdmin> {
             ),
             SideNavigationBarItem(
               icon: Icons.developer_mode,
-              label: 'Kebutuhan Batu',
+              label: 'List Data Kebutuhan Batu',
             ),
             SideNavigationBarItem(
               icon: Icons.developer_mode,

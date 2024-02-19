@@ -1777,61 +1777,59 @@ class _FormViewScreenState extends State<FormViewScreen> {
                       children: [
                         //in modeller
                         tanggalInModeller.text.isEmpty
-                        ?
-                        SizedBox(
-                          height: tinggiTextfield,
-                          width: 200,
-                          child: TextFormField(
-                            readOnly: true,
-                            onTap: () => _selectDate(context),
-                            style: const TextStyle(
-                                fontSize: 14,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold),
-                            textInputAction: TextInputAction.next,
-                            controller: TextEditingController(
-                              // ignore: unnecessary_null_comparison
-                              text: _selectedDate == null
-                                  ? ''
-                                  : DateFormat('dd/MM/yyyy HH:ss')
-                                      .format(_selectedDate!),
-                            ),
-                            onChanged: (value) {
-                          
-                            },
-                            decoration: InputDecoration(
-                              // hintText: "example: Cahaya Sanivokasi",
-                              labelText: "In Modeller",
-                              suffixIcon: const Icon(Icons.calendar_today),
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(5.0)),
-                            ),
-                          ),
-                        )
-                        :
-                          SizedBox(
-                          height: tinggiTextfield,
-                          width: 200,
-                          child: TextFormField(
-                            readOnly: true,
-                            style: const TextStyle(
-                                fontSize: 14,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold),
-                            textInputAction: TextInputAction.next,
-                            controller: tanggalInModeller,
-                            onChanged: (value) {
-                          
-                            },
-                            decoration: InputDecoration(
-                              // hintText: "example: Cahaya Sanivokasi",
-                              labelText: "In Modeller",
-                              suffixIcon: const Icon(Icons.calendar_today),
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(5.0)),
-                            ),
-                          ),
-                        ),
+                            ? SizedBox(
+                                height: tinggiTextfield,
+                                width: 200,
+                                child: TextFormField(
+                                  readOnly: true,
+                                  onTap: () => _selectDate(context),
+                                  style: const TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold),
+                                  textInputAction: TextInputAction.next,
+                                  controller: TextEditingController(
+                                    // ignore: unnecessary_null_comparison
+                                    text: _selectedDate == null
+                                        ? ''
+                                        : DateFormat('dd/MM/yyyy HH:ss')
+                                            .format(_selectedDate!),
+                                  ),
+                                  onChanged: (value) {},
+                                  decoration: InputDecoration(
+                                    // hintText: "example: Cahaya Sanivokasi",
+                                    labelText: "In Modeller",
+                                    suffixIcon:
+                                        const Icon(Icons.calendar_today),
+                                    border: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(5.0)),
+                                  ),
+                                ),
+                              )
+                            : SizedBox(
+                                height: tinggiTextfield,
+                                width: 200,
+                                child: TextFormField(
+                                  readOnly: true,
+                                  style: const TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold),
+                                  textInputAction: TextInputAction.next,
+                                  controller: tanggalInModeller,
+                                  onChanged: (value) {},
+                                  decoration: InputDecoration(
+                                    // hintText: "example: Cahaya Sanivokasi",
+                                    labelText: "In Modeller",
+                                    suffixIcon:
+                                        const Icon(Icons.calendar_today),
+                                    border: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(5.0)),
+                                  ),
+                                ),
+                              ),
                         //out modeller
                         SizedBox(
                           height: tinggiTextfield,
@@ -1931,7 +1929,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
                     });
                     return;
                   }
-                  if (kodeMarketing.text.isNotEmpty && jo.text.isEmpty) {
+                  if (kodeMarketing.text.isNotEmpty) {
                     btnController.error();
                     Future.delayed(const Duration(seconds: 1)).then((value) {
                       btnController.reset(); //reset
@@ -1940,7 +1938,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
                         context: context,
                         builder: (BuildContext context) => const AlertDialog(
                               title: Text(
-                                'JO wajib di isi jika sudah ada kode marketing',
+                                'Kodemarketing wajib di isi',
                               ),
                             ));
                     setState(() {});
@@ -1950,12 +1948,11 @@ class _FormViewScreenState extends State<FormViewScreen> {
                         .then((value) async {
                       btnController.success();
                       await postAPI();
-              
-                     if(kodeMarketing.text.isNotEmpty)
-                     {
-await postDataModeller();
-                     }
-                    
+
+                      if (kodeMarketing.text.isNotEmpty) {
+                        await postDataModeller();
+                      }
+
                       Future.delayed(const Duration(seconds: 1)).then((value) {
                         btnController.reset(); //reset
                         // ignore: use_build_context_synchronously
@@ -1963,18 +1960,18 @@ await postDataModeller();
                         //     context,
                         //     MaterialPageRoute(
                         //         builder: (c) => MainViewScm(col: 3)));
-Navigator.pop(context);
+                        Navigator.pop(context);
                         showDialog<String>(
                             context: context,
                             builder: (BuildContext context) =>
-                                 const AlertDialog(
+                                const AlertDialog(
                                   title: Text(
                                     'Pilih Modeller Berhasil',
                                   ),
                                 ));
                         setState(() {});
                       });
-                    }); 
+                    });
                   }
                 },
                 child: const Text(
@@ -2220,7 +2217,9 @@ Navigator.pop(context);
                                                         // ),
                                                         SizedBox(
                                                           child: Column(
-                                                            mainAxisSize: MainAxisSize.min,
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .min,
                                                             children: [
                                                               //no atau ro
                                                               Container(
@@ -2306,7 +2305,9 @@ Navigator.pop(context);
                                                                         left:
                                                                             10,
                                                                         right:
-                                                                            10,top:20),
+                                                                            10,
+                                                                        top:
+                                                                            20),
                                                                 child: DecoratedBox(
                                                                     decoration: BoxDecoration(
                                                                         color: jenisBatu != null ? const Color.fromARGB(255, 8, 209, 69) : const Color.fromRGBO(238, 240, 235, 1), //background color of dropdown button
@@ -2460,12 +2461,13 @@ Navigator.pop(context);
                                                                             });
                                                                             // ignore: use_build_context_synchronously
                                                                             Navigator.pop(context);
-                                                                      
+
                                                                             setState(() {
-                                                                              sharedPreferences!.setBool('isBatal',false);
-                                                                            });    }))),
-                                                                          //batal
-                                                                           Padding(
+                                                                              sharedPreferences!.setBool('isBatal', false);
+                                                                            });
+                                                                          }))),
+                                                              //batal
+                                                              Padding(
                                                                   padding:
                                                                       const EdgeInsets
                                                                           .all(
@@ -2474,24 +2476,16 @@ Navigator.pop(context);
                                                                       width: 250,
                                                                       height: 50,
                                                                       child: ElevatedButton(
-                                                                         style: ElevatedButton.styleFrom(
-                                                                  backgroundColor: Colors
-                                                                          .red
-                                                                    ,
-                                                                  shape: RoundedRectangleBorder(
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              50.0))),
+                                                                          style: ElevatedButton.styleFrom(backgroundColor: Colors.red, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
                                                                           child: const Text("Batal"),
                                                                           onPressed: () async {
-                                                                           
                                                                             Future.delayed(const Duration(seconds: 1)).then((value) async {
                                                                               btnGenerateKodeMarketing.reset();
                                                                             });
                                                                             // ignore: use_build_context_synchronously
                                                                             Navigator.pop(context);
-                                                                              setState(() {
-                                                                              sharedPreferences!.setBool('isBatal',true);
+                                                                            setState(() {
+                                                                              sharedPreferences!.setBool('isBatal', true);
                                                                             });
                                                                           })))
                                                             ],
@@ -2502,12 +2496,10 @@ Navigator.pop(context);
 
                                 setState(() {
                                   print(sharedPreferences!.getBool('isBatal'));
-    sharedPreferences!.getBool('isBatal') == true
-    ? kodeMarketing.clear()
-    :
-                                  
-                                  kodeMarketing.text =
-                                      '$kodeJenisBarang$valueBulanDesigner$noUrutBulan$kodeWarna${kodeKualitasBarang}01E';
+                                  sharedPreferences!.getBool('isBatal') == true
+                                      ? kodeMarketing.clear()
+                                      : kodeMarketing.text =
+                                          '$kodeJenisBarang$valueBulanDesigner$noUrutBulan$kodeWarna${kodeKualitasBarang}01E';
                                 });
                               },
                               child: const Text('Generate\nKode Marketing'),
@@ -6726,8 +6718,8 @@ Navigator.pop(context);
   postAPI() async {
     String tanggalInMod;
     tanggalInModeller.text.isNotEmpty
-    ? tanggalInMod = widget.modelDesigner!.tanggalInModeller!.toString()
-    : tanggalInMod = _selectedDate.toString();
+        ? tanggalInMod = widget.modelDesigner!.tanggalInModeller!.toString()
+        : tanggalInMod = _selectedDate.toString();
 
     print(tanggalInMod);
     Map<String, String> body = {
@@ -6738,15 +6730,15 @@ Navigator.pop(context);
       'jo': jo.text,
       'tanggalInModeller': tanggalInMod,
     };
-   try{ final response = await http.post(
-        Uri.parse('${ApiConstants.baseUrl}${ApiConstants.addModeller}'),
-        body: body);
-    print(response.body);
-   } catch(c){
+    try {
+      final response = await http.post(
+          Uri.parse('${ApiConstants.baseUrl}${ApiConstants.addModeller}'),
+          body: body);
+      print(response.body);
+    } catch (c) {
       print('err post form dan mps: $c');
-   }
+    }
   }
-  
 
   postDataModeller() async {
     Map<String, dynamic> body = noatauro == 'RO'
@@ -6781,11 +6773,12 @@ Navigator.pop(context);
             'modeller': namaModeller.text,
             'keterangan': ''
           };
-    try{final response = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.postDataModeller),
-        body: body);
-    print(response.body);
-    } catch(c){
+    try {
+      final response = await http.post(
+          Uri.parse(ApiConstants.baseUrl + ApiConstants.postDataModeller),
+          body: body);
+      print(response.body);
+    } catch (c) {
       print('err post datamodeller: $c');
     }
   }
