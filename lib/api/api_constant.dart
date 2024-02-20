@@ -7,9 +7,15 @@ var ipPublic = '203.174.11.254'; //? before 110.5.102.154
 class ApiConstants {
   static String baseUrlImage = 'http://$ipPublic:1212/Api_Flutter/spk/upload/';
   static String baseUrl = 'http://$ipPublic:1212/Api_Flutter/';
-  // static String baseUrlImage =
-  //     'http://110.5.102.154:1212/Api_Flutter/spk/upload/';
-  // static String baseUrl = 'http://110.5.102.154:1212/Api_Flutter/';
+
+  //* HINTS API YANG SUDAH RESTFULL
+  static String getListPanjang = 'spk/rest_api.php?type=panjang';
+  static String getListLebar = 'spk/rest_api.php?type=lebar';
+  static String getListJenisBatu = 'spk/rest_api.php?type=jenisBatu';
+  static String getListKualitasBatu = 'spk/rest_api.php?type=kualitasBatu';
+  static String getListUkuranRound = 'spk/rest_api.php?type=ukuranRound';
+  //* END RESTFULL
+
   static String getNilaiProduksi = 'spk/get_nilai_produksi.php';
   static String getDataBatu = 'spk/batu.php';
   static String getDataBatuCalculator = 'spk/batu_calculator.php';
@@ -48,8 +54,6 @@ class ApiConstants {
   static String getListMpsBySiklus = 'spk/get_list_mps_by_siklus.php';
   static String getListUsers = 'spk/get_users.php';
   static String getListMenu = 'spk/get_list_menu.php';
-  static String getListPanjang = 'spk/get_list_ukuran.php?type=panjang';
-  static String getListLebar = 'spk/get_list_ukuran.php?type=lebar';
 
   static String postDataBatu = 'spk/create_batu.php';
   static String postLogin = 'spk/login.php';

@@ -1929,50 +1929,49 @@ class _FormViewScreenState extends State<FormViewScreen> {
                     });
                     return;
                   }
-                  if (kodeMarketing.text.isNotEmpty) {
-                    btnController.error();
+                  // if (kodeMarketing.text.isNotEmpty) {
+                  //   btnController.error();
+                  //   Future.delayed(const Duration(seconds: 1)).then((value) {
+                  //     btnController.reset(); //reset
+                  //   });
+                  //   showDialog<String>(
+                  //       context: context,
+                  //       builder: (BuildContext context) => const AlertDialog(
+                  //             title: Text(
+                  //               'Kodemarketing wajib di isi',
+                  //             ),
+                  //           ));
+                  //   setState(() {});
+                  // } else {
+                  print('berhasil');
+                  Future.delayed(const Duration(seconds: 1))
+                      .then((value) async {
+                    btnController.success();
+                    await postAPI();
+
+                    if (kodeMarketing.text.isNotEmpty) {
+                      await postDataModeller();
+                    }
+
                     Future.delayed(const Duration(seconds: 1)).then((value) {
                       btnController.reset(); //reset
+                      // ignore: use_build_context_synchronously
+                      // Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //         builder: (c) => MainViewScm(col: 3)));
+                      Navigator.pop(context);
+                      showDialog<String>(
+                          context: context,
+                          builder: (BuildContext context) => const AlertDialog(
+                                title: Text(
+                                  'Pilih Modeller Berhasil',
+                                ),
+                              ));
+                      setState(() {});
                     });
-                    showDialog<String>(
-                        context: context,
-                        builder: (BuildContext context) => const AlertDialog(
-                              title: Text(
-                                'Kodemarketing wajib di isi',
-                              ),
-                            ));
-                    setState(() {});
-                  } else {
-                    print('berhasil');
-                    Future.delayed(const Duration(seconds: 1))
-                        .then((value) async {
-                      btnController.success();
-                      await postAPI();
-
-                      if (kodeMarketing.text.isNotEmpty) {
-                        await postDataModeller();
-                      }
-
-                      Future.delayed(const Duration(seconds: 1)).then((value) {
-                        btnController.reset(); //reset
-                        // ignore: use_build_context_synchronously
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (c) => MainViewScm(col: 3)));
-                        Navigator.pop(context);
-                        showDialog<String>(
-                            context: context,
-                            builder: (BuildContext context) =>
-                                const AlertDialog(
-                                  title: Text(
-                                    'Pilih Modeller Berhasil',
-                                  ),
-                                ));
-                        setState(() {});
-                      });
-                    });
-                  }
+                  });
+                  // }
                 },
                 child: const Text(
                   "Simpan Modeller",

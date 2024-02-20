@@ -156,6 +156,8 @@ class _ListFormPrQcState extends State<ListFormPrQc> {
                     noPR: dataFormPR![indexDataPr].noPR,
                     vendor: dataFormPR![indexDataPr].vendor,
                     created_at: dataFormPR![indexDataPr].created_at,
+                    fixTotalQty: dataFormPR![indexDataPr].fixTotalQty,
+                    fixTotalBerat: dataFormPR![indexDataPr].fixTotalBerat,
                   ),
                   //* hints untuk menerima isform close jika ada yang panggil oncloseform
                   onCloseForm: () {
@@ -335,6 +337,28 @@ class _ListFormPrQcState extends State<ListFormPrQc> {
                                           label: SizedBox(
                                               child: Text(
                                             "Total Berat",
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold),
+                                          )),
+                                        ),
+                                        // Total qty diterima
+                                        DataColumn(label: _verticalDivider),
+                                        const DataColumn(
+                                          label: SizedBox(
+                                              child: Text(
+                                            "Total Qty Diterima",
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold),
+                                          )),
+                                        ),
+                                        // Total Berat diterima
+                                        DataColumn(label: _verticalDivider),
+                                        const DataColumn(
+                                          label: SizedBox(
+                                              child: Text(
+                                            "Total Berat Diterima",
                                             style: TextStyle(
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.bold),
@@ -593,91 +617,103 @@ class RowSource extends DataTableSource {
       DataCell(
         Padding(padding: const EdgeInsets.all(0), child: Text(data.totalBerat)),
       ),
+      DataCell(_verticalDivider),
+      //fixTotalQty
+      DataCell(
+        Padding(
+            padding: const EdgeInsets.all(0), child: Text(data.fixTotalQty)),
+      ),
+      DataCell(_verticalDivider),
+      //fixTotalBerat
+      DataCell(
+        Padding(
+            padding: const EdgeInsets.all(0), child: Text(data.fixTotalBerat)),
+      ),
     ]);
   }
 
-  dataTableForm(List<ListItemPRModel>? listData) {
-    return DataTable(
-        headingTextStyle:
-            const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
-        headingRowColor:
-            MaterialStateProperty.resolveWith((states) => Colors.black54),
-        dataRowColor:
-            MaterialStateProperty.resolveWith((states) => Colors.white),
-        columnSpacing: 0,
-        headingRowHeight: 50,
-        // dataRowMaxHeight: 50,
-        columns: columnsData(),
-        border: TableBorder.all(),
-        rows: rowsData(listData, listData!.length));
-  }
+  // dataTableForm(List<ListItemPRModel>? listData) {
+  //   return DataTable(
+  //       headingTextStyle:
+  //           const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+  //       headingRowColor:
+  //           MaterialStateProperty.resolveWith((states) => Colors.black54),
+  //       dataRowColor:
+  //           MaterialStateProperty.resolveWith((states) => Colors.white),
+  //       columnSpacing: 0,
+  //       headingRowHeight: 50,
+  //       // dataRowMaxHeight: 50,
+  //       columns: columnsData(),
+  //       border: TableBorder.all(),
+  //       rows: rowsData(listData, listData!.length));
+  // }
 
-  List<DataColumn> columnsData() {
-    return [
-      const DataColumn(
-          label: Center(
-              child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        child: Text('No'),
-      ))),
-      const DataColumn(
-          label: Center(
-              child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        child: Text('Nama Barang / Dokumen'),
-      ))),
-      const DataColumn(
-          label: Center(
-              child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        child: Text('Qty'),
-      ))),
-      const DataColumn(
-          label: Center(
-              child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        child: Text('Berat'),
-      ))),
-      const DataColumn(
-          label: Center(
-              child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        child: Text('Kadar'),
-      ))),
-      const DataColumn(
-          label: Center(
-              child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        child: Text('Color'),
-      ))),
-    ];
-  }
+  // List<DataColumn> columnsData() {
+  //   return [
+  //     const DataColumn(
+  //         label: Center(
+  //             child: Padding(
+  //       padding: EdgeInsets.symmetric(horizontal: 10),
+  //       child: Text('No'),
+  //     ))),
+  //     const DataColumn(
+  //         label: Center(
+  //             child: Padding(
+  //       padding: EdgeInsets.symmetric(horizontal: 10),
+  //       child: Text('Nama Barang / Dokumen'),
+  //     ))),
+  //     const DataColumn(
+  //         label: Center(
+  //             child: Padding(
+  //       padding: EdgeInsets.symmetric(horizontal: 10),
+  //       child: Text('Qty'),
+  //     ))),
+  //     const DataColumn(
+  //         label: Center(
+  //             child: Padding(
+  //       padding: EdgeInsets.symmetric(horizontal: 10),
+  //       child: Text('Berat'),
+  //     ))),
+  //     const DataColumn(
+  //         label: Center(
+  //             child: Padding(
+  //       padding: EdgeInsets.symmetric(horizontal: 10),
+  //       child: Text('Kadar'),
+  //     ))),
+  //     const DataColumn(
+  //         label: Center(
+  //             child: Padding(
+  //       padding: EdgeInsets.symmetric(horizontal: 10),
+  //       child: Text('Color'),
+  //     ))),
+  //   ];
+  // }
 
-  List<DataRow> rowsData(var data, int count) {
-    return [
-      for (var i = 0; i < count; i++)
-        DataRow(cells: [
-          DataCell(Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Center(child: Text('${i + 1}')))),
-          DataCell(Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Center(child: Text(data[i].item)))),
-          DataCell(Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Center(child: Text(data[i].qty)))),
-          DataCell(Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Center(child: Text(data[i].berat)))),
-          DataCell(Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Center(child: Text(data[i].kadar)))),
-          DataCell(Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Center(child: Text(data[i].color)))),
-        ]),
-    ];
-  }
+  // List<DataRow> rowsData(var data, int count) {
+  //   return [
+  //     for (var i = 0; i < count; i++)
+  //       DataRow(cells: [
+  //         DataCell(Container(
+  //             padding: const EdgeInsets.symmetric(horizontal: 10),
+  //             child: Center(child: Text('${i + 1}')))),
+  //         DataCell(Container(
+  //             padding: const EdgeInsets.symmetric(horizontal: 10),
+  //             child: Center(child: Text(data[i].item)))),
+  //         DataCell(Container(
+  //             padding: const EdgeInsets.symmetric(horizontal: 10),
+  //             child: Center(child: Text(data[i].qty)))),
+  //         DataCell(Container(
+  //             padding: const EdgeInsets.symmetric(horizontal: 10),
+  //             child: Center(child: Text(data[i].berat)))),
+  //         DataCell(Container(
+  //             padding: const EdgeInsets.symmetric(horizontal: 10),
+  //             child: Center(child: Text(data[i].kadar)))),
+  //         DataCell(Container(
+  //             padding: const EdgeInsets.symmetric(horizontal: 10),
+  //             child: Center(child: Text(data[i].color)))),
+  //       ]),
+  //   ];
+  // }
 
   @override
   bool get isRowCountApproximate => false;
