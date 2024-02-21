@@ -3453,6 +3453,10 @@ class RowSourceProduksi extends DataTableSource {
                                                               isBackPosisi =
                                                                   true;
 
+                                                              print(
+                                                                  'divisi yang di klik' +
+                                                                      listDivisi[
+                                                                          j]);
                                                               //! function back posisi
                                                               showSimpleNotification(
                                                                 const Text(
@@ -3464,15 +3468,34 @@ class RowSourceProduksi extends DataTableSource {
                                                                         seconds:
                                                                             1),
                                                               );
-                                                              //! back posisi untuk role admin dan head
-                                                              artistPopup(
-                                                                  context,
-                                                                  data.idMps,
-                                                                  j,
-                                                                  data.kodeDesignMdbc,
-                                                                  data.kodeMarketing,
-                                                                  data.posisi,
-                                                                  isBackPosisi);
+                                                              if (listDivisi[j]
+                                                                          .toString()
+                                                                          .toLowerCase() ==
+                                                                      'printing resin' ||
+                                                                  listDivisi[j]
+                                                                          .toString()
+                                                                          .toLowerCase() ==
+                                                                      'finishing resin') {
+                                                                orulReparasiPopup(
+                                                                    context,
+                                                                    data.idMps,
+                                                                    j,
+                                                                    data.kodeDesignMdbc,
+                                                                    data.kodeMarketing,
+                                                                    data.posisi,
+                                                                    'reparasi',
+                                                                    '');
+                                                              } else {
+                                                                //! back posisi untuk role admin dan head
+                                                                artistPopup(
+                                                                    context,
+                                                                    data.idMps,
+                                                                    j,
+                                                                    data.kodeDesignMdbc,
+                                                                    data.kodeMarketing,
+                                                                    data.posisi,
+                                                                    isBackPosisi);
+                                                              }
                                                             } else {
                                                               isBackPosisi =
                                                                   false;
@@ -4864,21 +4887,21 @@ class RowSourceProduksi extends DataTableSource {
                                                   '$statusBackPosisi',
                                                   '$posisi => ${listDivisi[j]} : ${keterangan.text}');
 
-                                              // await postHistory(
-                                              //   kodeDesignMdbc,
-                                              //   kodeMarketing,
-                                              //   "${listDivisi[j]}",
-                                              //   "",
-                                              // );
-                                              // onRowPressed();
-                                              // Navigator.pop(context);
-                                              // showSimpleNotification(
-                                              //   const Text(
-                                              //       'Pemilihan Posisi Berhasil'),
-                                              //   background: Colors.green,
-                                              //   duration:
-                                              //       const Duration(seconds: 1),
-                                              // );
+                                              await postHistory(
+                                                kodeDesignMdbc,
+                                                kodeMarketing,
+                                                "${listDivisi[j]}",
+                                                "",
+                                              );
+                                              onRowPressed();
+                                              Navigator.pop(context);
+                                              showSimpleNotification(
+                                                const Text(
+                                                    'Pemilihan Posisi Berhasil'),
+                                                background: Colors.green,
+                                                duration:
+                                                    const Duration(seconds: 1),
+                                              );
                                               Future.delayed(const Duration(
                                                       milliseconds: 10))
                                                   .then((value) {

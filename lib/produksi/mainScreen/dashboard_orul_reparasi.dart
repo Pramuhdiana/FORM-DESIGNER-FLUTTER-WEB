@@ -101,20 +101,8 @@ class _DashboardOrulReparasiState extends State<DashboardOrulReparasi>
                 automaticallyImplyLeading: false,
                 backgroundColor: Colors.white,
                 leadingWidth: 320,
-                // leading: Row(
-                //   children: [
-                //     Padding(
-                //       padding: const EdgeInsets.all(0.0),
-                //       child: Text(
-                //         "Bulan Saat Ini : $siklusSaatIini",
-                //         style:
-                //             const TextStyle(fontSize: 20, color: Colors.black),
-                //       ),
-                //     ),
-                //   ],
-                // ),
                 elevation: 0,
-                bottom: TabBar(
+                title: TabBar(
                   labelColor: Colors.white,
                   unselectedLabelColor: Colors.black,
                   labelStyle: const TextStyle(fontWeight: FontWeight.bold),

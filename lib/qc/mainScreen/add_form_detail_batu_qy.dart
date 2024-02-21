@@ -45,6 +45,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
   List<KualitasBatuModel>? listKualitasBatu;
   String? tglOut;
   int no = 0;
+
   @override
   void initState() {
     super.initState();
@@ -316,11 +317,13 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
   //* HINTS get data dan filter langsung ke API
   Future<List<UkuranRoundModel>> getListUkuranRound(
       kualitasBatu, filter) async {
+    var filterKualitas = kualitasBatu.toString().toLowerCase();
+    if (kualitasBatu.toString().toLowerCase() == 'zr / zs') {
+      filterKualitas = 'zr';
+    }
     var response = await Dio().get(
       ApiConstants.baseUrl + ApiConstants.getListUkuranRound,
-      queryParameters: {
-        "filter": kualitasBatu.toString().toLowerCase() + filter.toLowerCase()
-      },
+      queryParameters: {"filter": filterKualitas + filter.toLowerCase()},
     );
     final data = response.data;
     if (data != null) {
@@ -333,9 +336,29 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
     setState(() {
       isLoading = true;
     });
-    await getPanjang();
+    // await getPanjang();
+    //* hinst start menyimpan list string lokal ke json
+    List<String>? panjangStrings =
+        sharedPreferences!.getStringList('listPanjang');
+    if (panjangStrings != null) {
+      // Mengonversi data JSON menjadi objek PanjangModel
+      listPanjang = panjangStrings
+          .map((jsonString) => PanjangModel.fromJson(json.decode(jsonString)))
+          .toList();
+    }
+    //* end fungsi
     await getLebar();
-    await getJenisBatu();
+    // await getJenisBatu();
+    //* hinst start menyimpan list string lokal ke json
+    List<String>? jenisBatuStrings =
+        sharedPreferences!.getStringList('jenisBatu');
+    if (jenisBatuStrings != null) {
+      // Mengonversi data JSON menjadi objek PanjangModel
+      listJenisBatu = jenisBatuStrings
+          .map((jsonString) => JenisBatuModel.fromJson(json.decode(jsonString)))
+          .toList();
+    }
+    //* end fungsi
     await getKualitasBatu();
 
     setState(() {
@@ -692,12 +715,6 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                                                 ),
                                             ],
                                             onChanged: (value) {
-                                              if (value
-                                                      .toString()
-                                                      .toLowerCase() ==
-                                                  'zr / zs') {
-                                                value = 'zr';
-                                              }
                                               setState(() {
                                                 kualitasBatu = value;
                                               });

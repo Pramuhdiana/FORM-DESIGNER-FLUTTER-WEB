@@ -15,6 +15,9 @@ import 'package:form_designer/mainScreen/sideScreen/side_screen_produksi.dart';
 import 'package:form_designer/mainScreen/sideScreen/side_screen_qc.dart';
 import 'package:form_designer/mainScreen/sideScreen/side_screen_scm.dart';
 import 'package:form_designer/model/siklus_model.dart';
+import 'package:form_designer/qc/modelQc/jenisBatuModel.dart';
+import 'package:form_designer/qc/modelQc/panjangModel.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../global/global.dart';
 import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';
@@ -93,7 +96,60 @@ class _MySplashScreenState extends State<MySplashScreen> {
   @override
   void initState() {
     super.initState();
+    _getData();
     splashScreenTimer();
+  }
+
+  _getData() async {
+    await getPanjang();
+    // await getLebar();
+    await getJenisBatu();
+    // await getKualitasBatu();
+  }
+
+  //* HINTS menyimpan api ke list lokal
+  getPanjang() async {
+    print('on');
+    final prefs = await SharedPreferences.getInstance();
+
+    try {
+      final response = await http
+          .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getListPanjang));
+      if (response.statusCode == 200) {
+        List jsonResponse = json.decode(response.body);
+        var alldata =
+            jsonResponse.map((data) => PanjangModel.fromJson(data)).toList();
+        final jsonList =
+            alldata.map((panjang) => json.encode(panjang.toJson())).toList();
+        await prefs.setStringList('listPanjang', jsonList);
+      } else {
+        throw Exception('Unexpected error occured!');
+      }
+    } catch (c) {
+      print('err get data panjang = $c');
+    }
+  }
+
+  getJenisBatu() async {
+    print('on');
+    final prefs = await SharedPreferences.getInstance();
+
+    try {
+      final response = await http
+          .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getListJenisBatu));
+      if (response.statusCode == 200) {
+        List jsonResponse = json.decode(response.body);
+        var alldata =
+            jsonResponse.map((data) => JenisBatuModel.fromJson(data)).toList();
+        final jsonList =
+            alldata.map((panjang) => json.encode(panjang.toJson())).toList();
+        await prefs.setStringList('jenisBatu', jsonList);
+      } else {
+        throw Exception('Unexpected error occured!');
+      }
+    } catch (c) {
+      print('err get data panjang = $c');
+    }
   }
 
   @override
