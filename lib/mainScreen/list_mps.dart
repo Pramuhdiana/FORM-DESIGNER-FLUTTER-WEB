@@ -3453,10 +3453,6 @@ class RowSourceProduksi extends DataTableSource {
                                                               isBackPosisi =
                                                                   true;
 
-                                                              print(
-                                                                  'divisi yang di klik' +
-                                                                      listDivisi[
-                                                                          j]);
                                                               //! function back posisi
                                                               showSimpleNotification(
                                                                 const Text(

@@ -247,7 +247,7 @@ class _HomeScreenQcState extends State<HomeScreenQc> {
           DataCell(
             Center(
               child: TextFormField(
-                initialValue: data[i].color,
+                initialValue: dumDiterima,
                 textAlign:
                     TextAlign.center, // Menengahkan teks secara horizontal
                 onChanged: (value) {
@@ -695,13 +695,13 @@ class _HomeScreenQcState extends State<HomeScreenQc> {
                                                                         selectListItem
                                                                             .length;
                                                                     i++) {
-                                                                  totalBerat +=
-                                                                      double.tryParse(selectListItem[i]
+                                                                  totalQty +=
+                                                                      int.tryParse(selectListItem[i]
                                                                               [
                                                                               5]) ??
                                                                           0;
-                                                                  totalQty +=
-                                                                      int.tryParse(selectListItem[i]
+                                                                  totalBerat +=
+                                                                      double.tryParse(selectListItem[i]
                                                                               [
                                                                               6]) ??
                                                                           0;
@@ -763,6 +763,8 @@ class _HomeScreenQcState extends State<HomeScreenQc> {
                                                                   // ignore: use_build_context_synchronously
                                                                   Navigator.pop(
                                                                       context);
+                                                                  selectListItem
+                                                                      .clear();
                                                                   _getData();
                                                                 });
                                                               },
@@ -1002,7 +1004,7 @@ class _HomeScreenQcState extends State<HomeScreenQc> {
   postStatusPR(id, fixTotalQty, fixTotalBerat) async {
     Map<String, String> body = {
       'id': id.toString(),
-      'status': 'selesai',
+      'status': 'qc',
       'fix_total_qty': fixTotalQty.toString(),
       'fix_total_berat': fixTotalBerat.toString()
     };

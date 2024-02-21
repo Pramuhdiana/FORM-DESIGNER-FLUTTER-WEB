@@ -76,7 +76,7 @@ class _ListFormPrQcState extends State<ListFormPrQc> {
       var data =
           jsonResponse.map((data) => FormPrModel.fromJson(data)).toList();
       var filterByStatus =
-          data.where((element) => element.status == 'terkirim').toList();
+          data.where((element) => element.status == 'qc').toList();
       data = filterByStatus;
       setState(() {
         filterFormPR = data;

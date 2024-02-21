@@ -3,16 +3,19 @@
 class UkuranRoundModel {
   final int idRound;
   final String ukuranRound;
+  final String caratPcs;
 
   UkuranRoundModel({
     required this.idRound,
     required this.ukuranRound,
+    required this.caratPcs,
   });
 
   factory UkuranRoundModel.fromJson(Map<String, dynamic> json) {
     return UkuranRoundModel(
       idRound: json["idRound"],
       ukuranRound: json["ukuranRound"] ?? 'null',
+      caratPcs: json["caratPcs"].toString(),
     );
   }
 

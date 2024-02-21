@@ -35,25 +35,45 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
   TextEditingController notesReject = TextEditingController();
   // TextEditingController jenisBatu = TextEditingController();
   String? jenisBatu;
+  String? kodeBatu;
   String? kualitasBatu;
   bool isLoading = false;
   final List<DataRow> _rows = []; // List untuk menyimpan setiap DataRow
   List<String> dataRow = [];
+  List<String> listCaratPcs = [];
+  List<String> listBerat = [];
   List<PanjangModel>? listPanjang;
   List<LebarModel>? listLebar;
   List<JenisBatuModel>? listJenisBatu;
   List<KualitasBatuModel>? listKualitasBatu;
   String? tglOut;
   int no = 0;
+  List<List<String>> selectListItemRound = [];
+  List<List<String>> selectListItemFancy = [];
+  String? ukuran = '';
+  String? qty = '';
+  String? berat = '';
+  String? caratPcs = '';
+  String? kodeMdbc = '';
+  String? panjang = '';
+  String? lebar = '';
+  String? qtyFancy = '';
+  String? beratFancy = '';
+  String? resultPanjang = '';
+  String? resultLebar = '';
+  double sumBerat = 0.0;
+  String? kebutuhanBerat;
+  double? previousBerat; // Variabel untuk menyimpan nilai berat sebelumnya
 
   @override
   void initState() {
     super.initState();
     tglOut = DateFormat('dd/MMMM/yyyy HH:ss').format(DateTime.now());
+    kebutuhanBerat = widget.dataFormPr!.fixTotalBerat.toString() ?? '0';
     _getData();
   }
 
-  dataTableForm(jenisBatu) {
+  dataTableForm(String jenisBatu, int count) {
     return DataTable(
         headingTextStyle:
             const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
@@ -68,7 +88,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
         border: TableBorder.all(),
         rows: rowsData(jenisBatu, () {
           setState(() {});
-        }, 5));
+        }, count));
   }
 
   List<DataColumn> columnsData(String jenisBatu) {
@@ -102,7 +122,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                 label: Center(
                     child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 10),
-              child: Text('Aksi'),
+              child: Text('Carat / Pcs'),
             ))),
           ]
         : [
@@ -116,7 +136,37 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                 label: Center(
                     child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 10),
-              child: Text('Nama Barang / Dokumen'),
+              child: Text('Kode Mdbc'),
+            ))),
+            const DataColumn(
+                label: Center(
+                    child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: Text('Panjang'),
+            ))),
+            const DataColumn(
+                label: Center(
+                    child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: Text('x'),
+            ))),
+            const DataColumn(
+                label: Center(
+                    child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: Text('Lebar'),
+            ))),
+            const DataColumn(
+                label: Center(
+                    child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: Text('Qty'),
+            ))),
+            const DataColumn(
+                label: Center(
+                    child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: Text('Berat'),
             ))),
           ];
   }
@@ -144,8 +194,12 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                       ),
                       compareFn: (item, sItem) => item.idRound == sItem.idRound,
                       onChanged: (item) {
+                        ukuran = item!.ukuranRound;
+                        caratPcs = item.caratPcs;
                         setState(() {
-                          // rantai.text = item!.nama;
+                          selectListItemRound[i][0] = '$ukuran';
+                          selectListItemRound[i][3] = '$caratPcs';
+                          print(selectListItemRound);
                         });
                       },
                       dropdownDecoratorProps: const DropDownDecoratorProps(
@@ -158,50 +212,13 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                     ),
                   ),
                 ),
-                //? ukuran round
 
-                DataCell(
-                  Center(
-                    child: TextFormField(
-                      // initialValue: data[i].kadar,
-                      textAlign: TextAlign
-                          .center, // Menengahkan teks secara horizontal
-                      onChanged: (value) {
-                        setState(() {
-                          // dumKadar = value;
-                          // selectListItem[i].isNotEmpty
-                          //     ? selectListItem[i][3] = '$dumKadar'
-                          //     : null;
-                        });
-                        onChangedCallback(); // Panggil onChangedCallback di sini
-                        // print(selectListItem);
-                      },
-                    ),
-                  ),
-                ),
                 //? qty round
+                DataCell(Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Center(child: Text((selectListItemRound[i][1]))))),
 
-                DataCell(
-                  Center(
-                    child: TextFormField(
-                      // initialValue: data[i].kadar,
-                      textAlign: TextAlign
-                          .center, // Menengahkan teks secara horizontal
-                      onChanged: (value) {
-                        setState(() {
-                          // dumKadar = value;
-                          // selectListItem[i].isNotEmpty
-                          //     ? selectListItem[i][3] = '$dumKadar'
-                          //     : null;
-                        });
-                        onChangedCallback(); // Panggil onChangedCallback di sini
-                        // print(selectListItem);
-                      },
-                    ),
-                  ),
-                ),
                 //? berat round
-
                 DataCell(
                   Center(
                     child: TextFormField(
@@ -209,88 +226,102 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                       textAlign: TextAlign
                           .center, // Menengahkan teks secara horizontal
                       onChanged: (value) {
+                        berat = value;
+                        int resultQty = (double.tryParse(value)! /
+                                double.parse(selectListItemRound[i][3]))
+                            .round();
+
+                        print(
+                            'value = $value berat = $berat total : $sumBerat');
                         setState(() {
-                          // dumKadar = value;
-                          // selectListItem[i].isNotEmpty
-                          //     ? selectListItem[i][3] = '$dumKadar'
-                          //     : null;
+                          if (double.parse(kebutuhanBerat!) < sumBerat) {
+                            showDialog<String>(
+                                context: context,
+                                builder: (BuildContext context) =>
+                                    const AlertDialog(
+                                      title: Text(
+                                        'Total carat melibihi yang seharusnya diterima',
+                                      ),
+                                    ));
+                            berat = '0';
+                            resultQty = 0;
+                          }
+                          qty = resultQty.toString();
+                          selectListItemRound[i][1] = '$qty';
+                          selectListItemRound[i][2] = '$berat';
+                          print(selectListItemRound);
                         });
-                        onChangedCallback(); // Panggil onChangedCallback di sini
+                        // onChangedCallback(); // Panggil onChangedCallback di sini
                         // print(selectListItem);
                       },
                     ),
                   ),
                 ),
+
+                DataCell(Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Center(child: Text(selectListItemRound[i][3])))),
               ]),
           ]
         : [
             for (var i = 0; i < count; i++)
+              //? nomor
               DataRow(cells: [
                 DataCell(Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: Center(child: Text('${i + 1}')))),
-                //? ukuran round
-                DataCell(
-                  Center(
-                    child: TextFormField(
-                      // initialValue: data[i].kadar,
-                      textAlign: TextAlign
-                          .center, // Menengahkan teks secara horizontal
-                      onChanged: (value) {
-                        setState(() {
-                          // dumKadar = value;
-                          // selectListItem[i].isNotEmpty
-                          //     ? selectListItem[i][3] = '$dumKadar'
-                          //     : null;
-                        });
-                        onChangedCallback(); // Panggil onChangedCallback di sini
-                        // print(selectListItem);
-                      },
-                    ),
-                  ),
-                ),
-                //? qty round
-                DataCell(
-                  Center(
-                    child: TextFormField(
-                      // initialValue: data[i].kadar,
-                      textAlign: TextAlign
-                          .center, // Menengahkan teks secara horizontal
-                      onChanged: (value) {
-                        setState(() {
-                          // dumKadar = value;
-                          // selectListItem[i].isNotEmpty
-                          //     ? selectListItem[i][3] = '$dumKadar'
-                          //     : null;
-                        });
-                        onChangedCallback(); // Panggil onChangedCallback di sini
-                        // print(selectListItem);
-                      },
-                    ),
-                  ),
-                ),
-                //? berat round
-                DataCell(
-                  Center(
-                    child: TextFormField(
-                      // initialValue: data[i].kadar,
-                      textAlign: TextAlign
-                          .center, // Menengahkan teks secara horizontal
-                      onChanged: (value) {
-                        setState(() {
-                          // dumKadar = value;
-                          // selectListItem[i].isNotEmpty
-                          //     ? selectListItem[i][3] = '$dumKadar'
-                          //     : null;
-                        });
-                        onChangedCallback(); // Panggil onChangedCallback di sini
-                        // print(selectListItem);
-                      },
-                    ),
-                  ),
-                ),
+                //? kode mdbc
+                DataCell(Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Center(child: Text(selectListItemFancy[i][0])))),
 
-                //? aksi round
+                //? panjang fancy
+                DataCell(
+                  Center(
+                    child: TextFormField(
+                      // initialValue: data[i].kadar,
+                      textAlign: TextAlign
+                          .center, // Menengahkan teks secara horizontal
+                      onChanged: (panjangValue) {
+                        final double panjang =
+                            double.tryParse(panjangValue) ?? 0;
+                        resultPanjang = calculateResultPanjang(panjang);
+
+                        setState(() {
+                          selectListItemFancy[i][0] =
+                              '$kodeBatu$resultPanjang$resultLebar';
+                          print('fancy = $selectListItemFancy');
+                        });
+                      },
+                    ),
+                  ),
+                ),
+                //? x
+                DataCell(Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: const Center(child: Text('x')))),
+
+                //? lebar fancy
+                DataCell(
+                  Center(
+                    child: TextFormField(
+                      // initialValue: data[i].kadar,
+                      textAlign: TextAlign
+                          .center, // Menengahkan teks secara horizontal
+                      onChanged: (lebarValue) {
+                        final double lebar = double.tryParse(lebarValue) ?? 0;
+                        resultLebar = calculateResultLebar(lebar);
+
+                        setState(() {
+                          selectListItemFancy[i][0] =
+                              '$kodeBatu$resultPanjang$resultLebar';
+                          print('fancy = $selectListItemFancy');
+                        });
+                      },
+                    ),
+                  ),
+                ),
+                //? qty fancy
                 DataCell(
                   Center(
                     child: TextFormField(
@@ -298,13 +329,41 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                       textAlign: TextAlign
                           .center, // Menengahkan teks secara horizontal
                       onChanged: (value) {
-                        setState(() {
-                          // dumKadar = value;
-                          // selectListItem[i].isNotEmpty
-                          //     ? selectListItem[i][3] = '$dumKadar'
-                          //     : null;
-                        });
-                        onChangedCallback(); // Panggil onChangedCallback di sini
+                        // berat = value;
+                        // var resultQty = (double.tryParse(value)! /
+                        //         double.parse(selectListItemRound[i][3]))
+                        //     .round();
+                        // setState(() {
+                        //   qty = resultQty.toString();
+                        //   selectListItemRound[i][1] = '$qty';
+                        //   selectListItemRound[i][2] = '$berat';
+                        //   print(selectListItemRound);
+                        // });
+                        // onChangedCallback(); // Panggil onChangedCallback di sini
+                        // print(selectListItem);
+                      },
+                    ),
+                  ),
+                ),
+                //? berat fancy
+                DataCell(
+                  Center(
+                    child: TextFormField(
+                      // initialValue: data[i].kadar,
+                      textAlign: TextAlign
+                          .center, // Menengahkan teks secara horizontal
+                      onChanged: (value) {
+                        // berat = value;
+                        // var resultQty = (double.tryParse(value)! /
+                        //         double.parse(selectListItemRound[i][3]))
+                        //     .round();
+                        // setState(() {
+                        //   qty = resultQty.toString();
+                        //   selectListItemRound[i][1] = '$qty';
+                        //   selectListItemRound[i][2] = '$berat';
+                        //   print(selectListItemRound);
+                        // });
+                        // onChangedCallback(); // Panggil onChangedCallback di sini
                         // print(selectListItem);
                       },
                     ),
@@ -676,6 +735,14 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                                             onChanged: (value) {
                                               setState(() {
                                                 jenisBatu = value;
+                                                //* HINTS Cari item yang sesuai dengan value yang dipilih
+                                                var selectedItem =
+                                                    listJenisBatu!.firstWhere(
+                                                        (item) =>
+                                                            item.jenisBatu ==
+                                                            value);
+                                                kodeBatu =
+                                                    selectedItem.kodeBatu;
                                               });
                                             },
                                             // decoration: InputDecoration(
@@ -741,28 +808,95 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                           const SizedBox(
                             height: 10,
                           ),
-                          dataTableForm('round'),
-                          // DataTable(
-                          //   border: TableBorder.all(),
-                          //   columns: const [
-                          //     DataColumn(label: Text('No')),
-                          //     DataColumn(label: Text('Kode Mdbc')),
-                          //     DataColumn(label: Text('Panjang')),
-                          //     DataColumn(label: Text('x')),
-                          //     DataColumn(label: Text('Lebar')),
-                          //     DataColumn(label: Text('Qty')),
-                          //     DataColumn(label: Text('Berat')),
-                          //     DataColumn(label: Text('Aksi')),
-                          //   ],
-                          //   rows: _rows.isNotEmpty
-                          //       ? _rows
-                          //       : [
-                          //           // Default empty row
-                          //         ],
-                          // ),
-                          IconButton(
-                            icon: const Icon(Icons.add),
-                            onPressed: _addRow,
+                          jenisBatu == null
+                              ? const SizedBox()
+                              : dataTableForm(jenisBatu!, no),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          jenisBatu == null
+                              ? const SizedBox()
+                              : Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    ElevatedButton.icon(
+                                      onPressed: () {
+                                        setState(() {
+                                          if (jenisBatu
+                                                  .toString()
+                                                  .toLowerCase() ==
+                                              'round') {
+                                            ukuran = '';
+                                            qty = '0';
+                                            berat = '';
+                                            caratPcs = '';
+                                            selectListItemRound.add([
+                                              '$ukuran',
+                                              '$qty',
+                                              '$berat',
+                                              '$caratPcs',
+                                            ]);
+                                            print(selectListItemRound);
+                                          } else {
+                                            kodeMdbc = '';
+                                            panjang = '';
+                                            lebar = '';
+                                            qtyFancy = '';
+                                            beratFancy = '';
+                                            selectListItemFancy.add([
+                                              '$kodeMdbc',
+                                              '$panjang',
+                                              '$lebar',
+                                              '$qtyFancy',
+                                              '$beratFancy',
+                                            ]);
+                                            print(
+                                                'fancy = $selectListItemFancy');
+                                          }
+
+                                          no += 1;
+                                        });
+                                      },
+                                      icon: const Icon(Icons.add), // Icon "add"
+                                      label: const Text('Tambah Item'),
+                                    ),
+                                    const SizedBox(
+                                      width: 30,
+                                    ),
+                                    no < 1
+                                        ? const SizedBox()
+                                        : ElevatedButton.icon(
+                                            onPressed: () {
+                                              setState(() {
+                                                no -= 1;
+                                                if (jenisBatu
+                                                        .toString()
+                                                        .toLowerCase() ==
+                                                    'round') {
+                                                  selectListItemRound
+                                                      .removeAt(no);
+                                                  print(selectListItemRound);
+                                                } else {
+                                                  selectListItemFancy
+                                                      .removeAt(no);
+                                                  print(
+                                                      'fancy = $selectListItemFancy');
+                                                }
+                                              });
+                                            },
+                                            icon: const Icon(
+                                                Icons.delete), // Icon "delete"
+                                            label: const Text(
+                                                'Hapus Item'), // Label tombol
+                                            style: ElevatedButton.styleFrom(
+                                              backgroundColor: Colors
+                                                  .red, // Warna latar belakang merah
+                                            ),
+                                          )
+                                  ],
+                                ),
+                          const SizedBox(
+                            height: 20,
                           ),
                           Container(
                             color: Colors.grey.shade400,
