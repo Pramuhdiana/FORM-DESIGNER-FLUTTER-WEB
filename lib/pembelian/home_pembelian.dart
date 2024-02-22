@@ -8,6 +8,7 @@ import 'package:form_designer/api/api_constant.dart';
 import 'package:form_designer/global/global.dart';
 // ignore: unused_import
 import 'package:form_designer/mainScreen/form_screen_by_id.dart';
+import 'package:form_designer/pembelian/export_pembelian.dart';
 import 'package:form_designer/pembelian/form_pr_model.dart';
 import 'package:form_designer/qc/modelQc/itemQcModel.dart';
 import 'package:form_designer/widgets/custom_loading.dart';
@@ -662,12 +663,9 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
                                                               controller:
                                                                   btnControllerSimpan,
                                                               onPressed:
-                                                                  () async {
-                                                              
-                                                                  Navigator.pop(
-                                                                      context);
-                                                                  selectListItemRound
-                                                                      .clear();
+                                                                  ()  {
+                                                              exportData('${dataFormPR![index].noQc}');
+                                                                
                                                                 },
                                                               
                                                               child: const Text(
@@ -896,6 +894,46 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
                       crossAxisSpacing: 4.0,
                     );
                   })));
+  }
+
+  exportData(noQc) async{
+
+     showDialog(
+      context: context,
+      barrierDismissible: false, // Prevent dialog dismissal on tap outside
+      builder: (BuildContext context) {
+        return Dialog(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          child: Container(
+            padding: const EdgeInsets.all(16),
+            color: Colors.white,
+            child: const Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CircularProgressIndicator(),
+                SizedBox(height: 20),
+                Text(
+                  'Loading, please wait...',
+                  style: TextStyle(fontSize: 16),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+                              ExcelPembelian().exportExcel(noQc);
+
+      // ignore: use_build_context_synchronously
+      Future.delayed(const Duration(seconds: 1))
+                                    .then((value) {
+                                  //! lalu eksekusi fungsi ini
+                                  Navigator.pop(context);
+                                  Navigator.pop(context);
+                                });
+                                                                  selectListItemRound
+                                                                      .clear();
   }
 
   postStatusPR(id, fixTotalQty, fixTotalBerat) async {

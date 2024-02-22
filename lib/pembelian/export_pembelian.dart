@@ -1,0 +1,132 @@
+// ignore_for_file: avoid_print
+
+import 'dart:convert';
+import 'dart:io';
+import 'package:form_designer/api/api_constant.dart';
+import 'package:form_designer/pembelian/form_pr_model.dart';
+import 'package:form_designer/qc/modelQc/itemQcModel.dart';
+// ignore: depend_on_referenced_packages
+import 'package:path/path.dart';
+import 'package:excel/excel.dart';
+import 'package:http/http.dart' as http;
+// ignore: depend_on_referenced_packages
+
+class ExcelPembelian {
+  List<FormPrModel>? dataFormPR;
+  List<ItemQcModel>? dataItemQc;
+  
+
+
+  Future<void> exportExcel(noQc) async {
+   
+
+//get data
+    final response = await http
+        .get(Uri.parse('${ApiConstants.baseUrl}${ApiConstants.getFormPR}'));
+
+    if (response.statusCode == 200) {
+      List jsonResponse = json.decode(response.body);
+
+      var data =
+          jsonResponse.map((data) => FormPrModel.fromJson(data)).toList();
+      var filterByNoQc =
+          data.where((element) => element.noQc == noQc).toList();
+      data = filterByNoQc;
+      dataFormPR = data;
+    } else {
+      print(response.body);
+      throw Exception('Unexpected error occured!');
+    }
+    //get listnya
+    final responseList = await http
+        .get(Uri.parse('${ApiConstants.baseUrl}${ApiConstants.getItemQc}'));
+
+    if (responseList.statusCode == 200) {
+      List jsonResponse = json.decode(responseList.body);
+
+      var dataList = jsonResponse
+          .map((dataList) => ItemQcModel.fromJson(dataList))
+          .toList();
+ var filterByNoQc =
+          dataList.where((element) => element.noQc == noQc).toList();
+      dataList = filterByNoQc;
+        dataItemQc = dataList;
+    } else {
+      print(response.body);
+      throw Exception('Unexpected error occured!');
+    }
+
+    var excel = Excel.createExcel();
+    CellStyle headStyle = CellStyle(
+      bold: true,
+      italic: true,
+      textWrapping: TextWrapping.WrapText,
+      rotation: 0,
+    );
+
+    var sheet = excel['mySheet'];
+
+    var no = sheet.cell(CellIndex.indexByString("A1"));
+    no.value = "No";
+    no.cellStyle = headStyle;
+    var kodeMdbc = sheet.cell(CellIndex.indexByString("B1"));
+    kodeMdbc.value = "Kode MDBC";
+    kodeMdbc.cellStyle = headStyle;
+    var qty = sheet.cell(CellIndex.indexByString("C1"));
+    qty.value = "Qty";
+    qty.cellStyle = headStyle;
+    var berat = sheet.cell(CellIndex.indexByString("D1"));
+    berat.value = "Berat";
+    berat.cellStyle = headStyle;
+  
+
+    for (int row = 0; row < dataItemQc!.length; row++) {
+      //belum bisa image  Image.network( ApiConstants.baseUrlImage + myData![row].imageUrl!,);
+      var data = dataItemQc![row];
+
+      //? listn o
+      var listNo = sheet
+          .cell(CellIndex.indexByColumnRow(columnIndex: 0, rowIndex: row + 1));
+      listNo.value = (row + 1);
+
+      //? list kodeMdbc
+      var listKodeMdbc = sheet
+          .cell(CellIndex.indexByColumnRow(columnIndex: 1, rowIndex: row + 1));
+      listKodeMdbc.value = data.item;
+       //? list qty
+      var listQty = sheet
+          .cell(CellIndex.indexByColumnRow(columnIndex: 2, rowIndex: row + 1));
+      listQty.value = data.qty;
+        //? list berat
+      var listBerat = sheet
+          .cell(CellIndex.indexByColumnRow(columnIndex: 3, rowIndex: row + 1));
+      listBerat.value = data.berat;
+
+    }
+
+    excel.rename("mySheet", "RESULT");
+    excel.delete('Sheet1');
+
+    /// appending rows and checking the time complexity of it
+    Stopwatch stopwatch = Stopwatch()..start();
+    stopwatch.reset();
+    // Saving the file
+      // Simpan file
+    String outputFileName = "$noQc.xlsx";
+    //stopwatch.reset();
+    List<int>? fileBytes = excel.save();
+    //print('saving executed in ${stopwatch.elapsed}');
+    // if (fileBytes != null) {
+      try{
+      File(join(outputFileName))
+        ..createSync(recursive: true)
+        ..writeAsBytesSync(fileBytes!);
+      } catch(c){
+        print('err get excel $c');
+      }
+    // } 
+   
+  }
+
+
+}
