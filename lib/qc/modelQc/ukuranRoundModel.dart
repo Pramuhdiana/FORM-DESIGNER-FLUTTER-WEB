@@ -1,4 +1,5 @@
-// ignore_for_file: non_constant_idRoundentifier_names, unnecessary_this
+
+// ignore_for_file: file_names, unnecessary_this
 
 class UkuranRoundModel {
   final int idRound;

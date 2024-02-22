@@ -347,7 +347,13 @@ class _HomeScreenQcState extends State<HomeScreenQc> {
                     height: 90,
                     child: Lottie.asset("loadingJSON/loadingV1.json"),
                   ))
-                : LayoutBuilder(builder: (context, constraints) {
+                :
+                dataFormPR!.isEmpty
+                ? const Center(
+                child: Text('Tidak ada data'),
+                )
+                :
+                 LayoutBuilder(builder: (context, constraints) {
                     return StaggeredGridView.countBuilder(
                       crossAxisCount: constraints.maxWidth < 900
                           ? 1

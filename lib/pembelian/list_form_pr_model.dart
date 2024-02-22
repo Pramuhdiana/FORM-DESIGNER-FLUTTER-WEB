@@ -3,7 +3,7 @@
 class ListItemPRModel {
   final int id;
   String? noPr;
-  final String item;
+  final String? item;
   final String? qty;
   final String? berat;
   final String? kadar;

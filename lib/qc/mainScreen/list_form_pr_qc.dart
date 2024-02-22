@@ -51,22 +51,20 @@ class _ListFormPrQcState extends State<ListFormPrQc> {
   }
 
   refresh() async {
-    print('refresh state');
-    setState(() {
-      isLoading = true;
-    });
+ 
     setState(() {
       isForm = !isForm;
+        _getData();
     });
-    setState(() {
-      isLoading = false;
-    });
+    
+  
   }
 
   _getData() async {
     setState(() {
       isLoading = true;
     });
+    try{
     final response = await http
         .get(Uri.parse('${ApiConstants.baseUrl}${ApiConstants.getFormPR}'));
 
@@ -76,17 +74,23 @@ class _ListFormPrQcState extends State<ListFormPrQc> {
       var data =
           jsonResponse.map((data) => FormPrModel.fromJson(data)).toList();
       var filterByStatus =
-          data.where((element) => element.status == 'qc').toList();
+          data.where((element) => element.status == 'qc' || element.status == 'selesai' ).toList();
       data = filterByStatus;
       setState(() {
         filterFormPR = data;
         dataFormPR = data;
       });
+      print('form pr oke');
+
     } else {
       print(response.body);
       throw Exception('Unexpected error occured!');
     }
+    } catch(c){
+      print('err get form PR $c');
+    }
     //get listnya
+    try{
     final responseList = await http
         .get(Uri.parse('${ApiConstants.baseUrl}${ApiConstants.getListFormPR}'));
 
@@ -96,15 +100,22 @@ class _ListFormPrQcState extends State<ListFormPrQc> {
       var dataList = jsonResponse
           .map((dataList) => ListItemPRModel.fromJson(dataList))
           .toList();
-
-      setState(() {
+          setState(() {
         _listItemPR = dataList;
-        isLoading = false;
-      });
+            
+          });
+
+      print('list item pr oke');
     } else {
-      print(response.body);
+      print(responseList.body);
       throw Exception('Unexpected error occured!');
     }
+    } catch(c){
+      print('err get form list item pr $c');
+    }
+      setState(() {
+        isLoading = false;
+      });
   }
 
   @override
@@ -151,11 +162,14 @@ class _ListFormPrQcState extends State<ListFormPrQc> {
             ),
           ),
           body: isForm == true
-              ? FormDetailBatuQc(
+              ? 
+              FormDetailBatuQc(
                   dataFormPr: FormPrModel(
                     noPR: dataFormPR![indexDataPr].noPR,
+                    id: dataFormPR![indexDataPr].id,
                     vendor: dataFormPR![indexDataPr].vendor,
                     created_at: dataFormPR![indexDataPr].created_at,
+                    tanggalInQc: dataFormPR![indexDataPr].tanggalInQc,
                     fixTotalQty: dataFormPR![indexDataPr].fixTotalQty,
                     fixTotalBerat: dataFormPR![indexDataPr].fixTotalBerat,
                   ),
@@ -571,6 +585,21 @@ class RowSource extends DataTableSource {
       DataCell(Builder(builder: (context) {
         return Row(
           children: [
+            data.status.toString().toLowerCase() == 'selesai'
+            ?
+              Padding(
+              padding: const EdgeInsets.only(left: 0),
+              child: IconButton(
+                onPressed: () {
+                  onRowPressed(index);
+                },
+                icon: const Icon(
+                  Icons.remove_red_eye_outlined,
+                  color: Colors.green,
+                ),
+              ),
+            )
+            :
             Padding(
               padding: const EdgeInsets.only(left: 0),
               child: IconButton(

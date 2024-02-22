@@ -14,6 +14,8 @@ class ApiConstants {
   static String getListJenisBatu = 'spk/rest_api.php?type=jenisBatu';
   static String getListKualitasBatu = 'spk/rest_api.php?type=kualitasBatu';
   static String getListUkuranRound = 'spk/rest_api.php?type=ukuranRound';
+  static String getCountQc = 'spk/rest_api.php?type=qc';
+  static String getItemQc = 'spk/rest_api.php?type=itemQc';
   //* END RESTFULL
 
   static String getNilaiProduksi = 'spk/get_nilai_produksi.php';
@@ -72,6 +74,7 @@ class ApiConstants {
   static String postUpdateListDataBatu = 'spk/update_batu.php';
   static String postDataListItem = 'spk/create_list_item.php';
   static String postListFormPR = 'spk/create_list_form_pr.php';
+  static String postListFormQc = 'spk/create_list_form_qc.php';
   static String postFormPR = 'spk/create_form_pr.php';
   static String updateFormDesigner = 'spk/update_form_designer.php';
   static String updateSiklusdesigner = 'spk/update_siklus_designer.php';

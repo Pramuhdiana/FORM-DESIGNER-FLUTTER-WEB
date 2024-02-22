@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:form_designer/api/api_constant.dart';
 import 'package:form_designer/global/global.dart';
 import 'package:form_designer/pembelian/form_pr_model.dart';
+import 'package:form_designer/qc/modelQc/formQcModel.dart';
 import 'package:form_designer/qc/modelQc/jenisBatuModel.dart';
 import 'package:form_designer/qc/modelQc/kualitasBatuModel.dart';
 import 'package:form_designer/qc/modelQc/lebarModel.dart';
@@ -17,6 +18,7 @@ import 'package:lottie/lottie.dart';
 import 'package:http/http.dart' as http;
 // ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart';
+import 'package:overlay_support/overlay_support.dart';
 
 class FormDetailBatuQc extends StatefulWidget {
   final VoidCallback? onCloseForm;
@@ -38,7 +40,6 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
   String? kodeBatu;
   String? kualitasBatu;
   bool isLoading = false;
-  final List<DataRow> _rows = []; // List untuk menyimpan setiap DataRow
   List<String> dataRow = [];
   List<String> listCaratPcs = [];
   List<String> listBerat = [];
@@ -64,14 +65,53 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
   double sumBerat = 0.0;
   String? kebutuhanBerat;
   double? previousBerat; // Variabel untuk menyimpan nilai berat sebelumnya
+  String? idForm;
+  String noQc ='';
+  String? nomorQc;
+  int totalQty = 0;
+  double totalBerat = 0.0;
+  String? noPr;
 
   @override
   void initState() {
     super.initState();
     tglOut = DateFormat('dd/MMMM/yyyy HH:ss').format(DateTime.now());
-    kebutuhanBerat = widget.dataFormPr!.fixTotalBerat.toString() ?? '0';
+    kebutuhanBerat = widget.dataFormPr!.fixTotalBerat.toString();
+    idForm = widget.dataFormPr!.id.toString();
+    noPr = widget.dataFormPr!.noPR.toString();
     _getData();
   }
+
+  String getMonthName(String month) {
+  switch (month) {
+    case '01':
+      return 'Januari';
+    case '02':
+      return 'Februari';
+    case '03':
+      return 'Maret';
+    case '04':
+      return 'April';
+    case '05':
+      return 'Mei';
+    case '06':
+      return 'Juni';
+    case '07':
+      return 'Juli';
+    case '08':
+      return 'Agustus';
+    case '09':
+      return 'September';
+    case '10':
+      return 'Oktober';
+    case '11':
+      return 'November';
+    case '12':
+      return 'Desember';
+    default:
+      return 'Invalid';
+  }
+}
 
   dataTableForm(String jenisBatu, int count) {
     return DataTable(
@@ -234,18 +274,18 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                         print(
                             'value = $value berat = $berat total : $sumBerat');
                         setState(() {
-                          if (double.parse(kebutuhanBerat!) < sumBerat) {
-                            showDialog<String>(
-                                context: context,
-                                builder: (BuildContext context) =>
-                                    const AlertDialog(
-                                      title: Text(
-                                        'Total carat melibihi yang seharusnya diterima',
-                                      ),
-                                    ));
-                            berat = '0';
-                            resultQty = 0;
-                          }
+                          // if (double.parse(kebutuhanBerat!) < sumBerat) {
+                          //   showDialog<String>(
+                          //       context: context,
+                          //       builder: (BuildContext context) =>
+                          //           const AlertDialog(
+                          //             title: Text(
+                          //               'Total carat melibihi yang seharusnya diterima',
+                          //             ),
+                          //           ));
+                          //   berat = '0';
+                          //   resultQty = 0;
+                          // }
                           qty = resultQty.toString();
                           selectListItemRound[i][1] = '$qty';
                           selectListItemRound[i][2] = '$berat';
@@ -288,8 +328,9 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                         resultPanjang = calculateResultPanjang(panjang);
 
                         setState(() {
+                           selectListItemFancy[i][1] = '$panjang';
                           selectListItemFancy[i][0] =
-                              '$kodeBatu$resultPanjang$resultLebar';
+                              '$kodeBatu$resultPanjang$kualitasBatu$resultLebar';
                           print('fancy = $selectListItemFancy');
                         });
                       },
@@ -313,8 +354,9 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                         resultLebar = calculateResultLebar(lebar);
 
                         setState(() {
+                           selectListItemFancy[i][2] = '$lebar';
                           selectListItemFancy[i][0] =
-                              '$kodeBatu$resultPanjang$resultLebar';
+                              '$kodeBatu$resultPanjang$kualitasBatu$resultLebar';
                           print('fancy = $selectListItemFancy');
                         });
                       },
@@ -329,18 +371,11 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                       textAlign: TextAlign
                           .center, // Menengahkan teks secara horizontal
                       onChanged: (value) {
-                        // berat = value;
-                        // var resultQty = (double.tryParse(value)! /
-                        //         double.parse(selectListItemRound[i][3]))
-                        //     .round();
-                        // setState(() {
-                        //   qty = resultQty.toString();
-                        //   selectListItemRound[i][1] = '$qty';
-                        //   selectListItemRound[i][2] = '$berat';
-                        //   print(selectListItemRound);
-                        // });
-                        // onChangedCallback(); // Panggil onChangedCallback di sini
-                        // print(selectListItem);
+                        qtyFancy = value;
+                        setState(() {
+                           selectListItemFancy[i][3] = '$qtyFancy';
+                          print('fancy = $selectListItemFancy');
+                        });
                       },
                     ),
                   ),
@@ -353,18 +388,11 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                       textAlign: TextAlign
                           .center, // Menengahkan teks secara horizontal
                       onChanged: (value) {
-                        // berat = value;
-                        // var resultQty = (double.tryParse(value)! /
-                        //         double.parse(selectListItemRound[i][3]))
-                        //     .round();
-                        // setState(() {
-                        //   qty = resultQty.toString();
-                        //   selectListItemRound[i][1] = '$qty';
-                        //   selectListItemRound[i][2] = '$berat';
-                        //   print(selectListItemRound);
-                        // });
-                        // onChangedCallback(); // Panggil onChangedCallback di sini
-                        // print(selectListItem);
+                              beratFancy = value;
+                        setState(() {
+                           selectListItemFancy[i][4] = '$beratFancy';
+                          print('fancy = $selectListItemFancy');
+                        });
                       },
                     ),
                   ),
@@ -395,6 +423,8 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
     setState(() {
       isLoading = true;
     });
+    await getCountQc();
+
     // await getPanjang();
     //* hinst start menyimpan list string lokal ke json
     List<String>? panjangStrings =
@@ -419,10 +449,34 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
     }
     //* end fungsi
     await getKualitasBatu();
-
     setState(() {
       isLoading = false;
     });
+  }
+
+   getCountQc() async {
+    try {
+      final response = await http
+          .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getCountQc));
+      if (response.statusCode == 200) {
+        List jsonResponse = json.decode(response.body);
+        var allData =
+            jsonResponse.map((data) => QcModel.fromJson(data)).toList();
+        int number = allData.length + 1;
+       nomorQc = number.toString().padLeft(5, '0');
+       setState(() {
+            DateTime now = DateTime.now();
+  
+  String month = now.month.toString().padLeft(2, '0');
+  String year = now.year.toString();
+  noQc = '${widget.dataFormPr!.noPR}/QC/${getMonthName(month)}/$year/$nomorQc';
+       });
+      } else {
+        throw Exception('Unexpected error occured!');
+      }
+    } catch (c) {
+      print('err get data panjang = $c');
+    }
   }
 
   getPanjang() async {
@@ -588,8 +642,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                                             padding:
                                                 const EdgeInsets.only(left: 0),
                                             width: widValue,
-                                            child: Text(widget.dataFormPr!.noPR
-                                                .toString()))
+                                            child: Text(noQc))
                                       ],
                                     ),
                                     Row(
@@ -608,7 +661,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                                           child: Text(
                                               DateFormat('dd/MMMM/yyyy HH:ss')
                                                   .format(DateTime.parse(widget
-                                                      .dataFormPr!.created_at!
+                                                      .dataFormPr!.tanggalInQc!
                                                       .toString()))),
                                         )
                                       ],
@@ -719,12 +772,17 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                                         const SizedBox(
                                             width: 30, child: Text(':')),
                                         Container(
+                                          
                                           padding:
                                               const EdgeInsets.only(left: 0),
                                           width: widValue,
                                           child: DropdownButtonFormField(
+                                            
                                             value: jenisBatu,
-                                            items: [
+                                            
+                                            items: 
+                                           
+                                            [
                                               //* hints looping sederhana
                                               for (var item in listJenisBatu!)
                                                 DropdownMenuItem(
@@ -732,9 +790,17 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                                                   child: Text(item.jenisBatu!),
                                                 ),
                                             ],
-                                            onChanged: (value) {
+                                            onChanged: 
+                                             jenisBatu.toString().toLowerCase() == 'round' &&  selectListItemRound.isNotEmpty
+                                            ?
+                                           null
+                                          :  jenisBatu.toString().toLowerCase() != 'round' &&  selectListItemFancy.isNotEmpty
+                                             
+                                           ? null
+                                            : 
+                                            (value) {
                                               setState(() {
-                                                jenisBatu = value;
+                                                jenisBatu = value.toString();
                                                 //* HINTS Cari item yang sesuai dengan value yang dipilih
                                                 var selectedItem =
                                                     listJenisBatu!.firstWhere(
@@ -745,13 +811,6 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                                                     selectedItem.kodeBatu;
                                               });
                                             },
-                                            // decoration: InputDecoration(
-                                            //   suffixIcon: Icon(Icons
-                                            //       .arrow_circle_down_sharp), // Tambahkan ikon di sini
-                                            //   errorText: jenisBatu == null
-                                            //       ? 'Pilih jenis batu'
-                                            //       : null, // Pesan kesalahan
-                                            // ),
                                           ),
                                         )
                                       ],
@@ -1026,89 +1085,152 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                     ),
                   ),
                 ),
+            jenisBatu == null
+            ? const SizedBox()
+            :
+              Container(
+                width: MediaQuery.of(context).size.width * 0.7,
+                padding: const EdgeInsets.only(bottom: 20,top:20),
+                child: FloatingActionButton.extended(
+                onPressed: () {
+                   showDialog(
+      context: context,
+      barrierDismissible: false, // Prevent dialog dismissal on tap outside
+      builder: (BuildContext context) {
+        return Dialog(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          child: Container(
+            padding: const EdgeInsets.all(16),
+            color: Colors.white,
+            child: const Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CircularProgressIndicator(),
+                SizedBox(height: 20),
+                Text(
+                  'Loading, please wait...',
+                  style: TextStyle(fontSize: 16),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+                  simpanForm();
+                
+                },
+                label: const Text('Simpan Form',style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold
+                ),),
+                icon:const Icon(Icons.save_alt,size: 20,) ,
+              //  const SizedBox(
+              //     width: 200, // Sesuaikan dengan lebar yang diinginkan
+              //     child: Row(
+              //       mainAxisAlignment: MainAxisAlignment.center,
+              //       children: [
+              //         Icon(Icons.save_alt),
+              //         SizedBox(width: 8), // Jarak antara ikon dan teks
+              //         Text('Simpan Form'),
+              //       ],
+              //     ),
+              //   ),
+              ),
+              )
               ],
             ),
           );
   }
 
-  void _addRow() {
-    setState(() {
-      String? valuePanjang = '0';
-      String? valueLebar = '0';
-      // Menambahkan baris baru di paling bawah tabel
-      _rows.add(
-        DataRow(cells: [
-          DataCell(Text((_rows.length + 1).toString())), //? no
-          const DataCell(Text('')),
-          DataCell(TextField(
-            onChanged: (value) {
-              valuePanjang = value;
-              _calculateResult(_rows.length, valuePanjang!, valueLebar!);
-            },
-          )),
-          const DataCell(TextField()),
-          DataCell(TextField(
-            onChanged: (value) {
-              valueLebar = value;
-              _calculateResult(_rows.length, valuePanjang!, valueLebar!);
-            },
-          )),
-          const DataCell(TextField()),
-          const DataCell(TextField()),
-          DataCell(IconButton(
-            icon: const Icon(Icons.delete),
-            onPressed: () {
-              _deleteRow(_rows.length); // Menghapus baris yang sesuai
-            },
-          )),
-        ]),
-      );
-    });
-    print(_rows);
-  }
-
-  void _deleteRow(int index) {
-    setState(() {
-      _rows.removeAt(index);
-    });
-  }
-
-  void _calculateResult(int index, String panjangValue, String lebarValue) {
-    if (panjangValue.isNotEmpty || lebarValue.isNotEmpty) {
-      final double panjang = double.tryParse(panjangValue) ?? 0;
-      final double lebar = double.tryParse(lebarValue) ?? 0;
-      final String resultPanjang = calculateResultPanjang(panjang);
-      final String resultLebar = calculateResultLebar(lebar);
-      setState(() {
-        _rows[index - 1] = DataRow(cells: [
-          DataCell(Text(index.toString())),
-          DataCell(
-              Text('BQ${resultPanjang}SA$resultLebar')), // Menampilkan hasil
-          DataCell(TextField(
-            onChanged: (value) {
-              panjangValue = value;
-              _calculateResult(_rows.length, panjangValue, lebarValue);
-            },
-          )),
-          const DataCell(Text('x')),
-          DataCell(TextField(
-            onChanged: (value) {
-              lebarValue = value;
-              _calculateResult(_rows.length, panjangValue, lebarValue);
-            },
-          )),
-          const DataCell(TextField()),
-          const DataCell(TextField()),
-          DataCell(IconButton(
-            icon: const Icon(Icons.delete),
-            onPressed: () {
-              _deleteRow(index);
-            },
-          )),
-        ]);
-      });
+  simpanForm() async {
+    totalBerat =0;
+    totalQty=0;
+    if(jenisBatu.toString().toLowerCase() == 'round'){
+          for (var i = 0;
+                                    i < selectListItemRound.length;
+                                    i++) {
+                                  totalBerat +=
+                                      double.tryParse(selectListItemRound[i][2]) ??
+                                          0;
+                                  totalQty +=
+                                      int.tryParse(selectListItemRound[i][1]) ?? 0;
+                                
+     await postDetailItem(
+       selectListItemRound[i][0],
+                                          selectListItemRound[i][1],
+                                          selectListItemRound[i][2],
+                                          '',
+                                          '');
+                              
+                                }
+    } else {
+       for (var i = 0;
+                                    i < selectListItemFancy.length;
+                                    i++) {
+                                  totalBerat +=
+                                      double.tryParse(selectListItemFancy[i][4]) ??
+                                          0;
+                                  totalQty +=
+                                      int.tryParse(selectListItemFancy[i][3]) ?? 0;
+      await postDetailItem(
+       selectListItemFancy[i][0],
+                                          selectListItemFancy[i][3],
+                                          selectListItemFancy[i][4],
+                                          selectListItemFancy[i][1],
+                                          selectListItemFancy[i][2]);
+                                
+                                }
     }
+    
+    
+    await postStatusPR(idForm);
+    // ignore: use_build_context_synchronously
+    Navigator.pop(context);
+                        refresh();
+        showSimpleNotification(
+                                              const Text(
+                                                  'Form Berhasil Disimpan'),
+                                              background: Colors.green,
+                                              duration:
+                                                  const Duration(seconds: 1),
+                                            );
+    
   }
+   postStatusPR(String? id) async {
+    Map<String, String> body = {
+      'id': id.toString(),
+      'status': 'selesai',
+      'noQc': noQc.toString(),
+      'total_qty_diterima': totalQty.toString(),
+      'total_berat_diteirma': totalBerat.toString(),
+      'notes_reject': notesReject.text,
+    };
+    final response = await http.post(
+        Uri.parse('${ApiConstants.baseUrl}${ApiConstants.updateStatusPR}'),
+        body: body);
+    print(response.body);
+  }
+  postDetailItem(String item,qty, berat, panjang, lebar) async {
+     Map<String, String> body = {
+      'noPr': noPr!,
+      'noQc': noQc,
+      'item': item,
+      'qty': qty,
+      'berat': berat,
+      'panjang': panjang,
+      'lebar': lebar,
+      'jenisBatu': jenisBatu!,
+      'kualitasBatu': kualitasBatu!,
+      'ukuranBatu': ukuranBatu.text,
+    };
+    final response = await http.post(
+        Uri.parse('${ApiConstants.baseUrl}${ApiConstants.postListFormQc}'),
+        body: body);
+    print(response.body);
+  }
+
 
   //* HINTS Fungsi untuk menentukan hasil berdasarkan range panjang dan lebar fancy
   String calculateResultPanjang(double panjang) {
