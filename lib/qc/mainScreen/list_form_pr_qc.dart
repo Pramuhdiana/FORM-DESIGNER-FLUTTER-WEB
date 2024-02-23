@@ -51,71 +51,69 @@ class _ListFormPrQcState extends State<ListFormPrQc> {
   }
 
   refresh() async {
- 
     setState(() {
       isForm = !isForm;
-        _getData();
+      _getData();
     });
-    
-  
   }
 
   _getData() async {
     setState(() {
       isLoading = true;
     });
-    try{
-    final response = await http
-        .get(Uri.parse('${ApiConstants.baseUrl}${ApiConstants.getFormPR}'));
+    try {
+      final response = await http
+          .get(Uri.parse('${ApiConstants.baseUrl}${ApiConstants.getFormPR}'));
 
-    if (response.statusCode == 200) {
-      List jsonResponse = json.decode(response.body);
+      if (response.statusCode == 200) {
+        List jsonResponse = json.decode(response.body);
 
-      var data =
-          jsonResponse.map((data) => FormPrModel.fromJson(data)).toList();
-      var filterByStatus =
-          data.where((element) => element.status == 'qc' || element.status == 'selesai' ).toList();
-      data = filterByStatus;
-      setState(() {
-        filterFormPR = data;
-        dataFormPR = data;
-      });
-      print('form pr oke');
-
-    } else {
-      print(response.body);
-      throw Exception('Unexpected error occured!');
-    }
-    } catch(c){
+        var data =
+            jsonResponse.map((data) => FormPrModel.fromJson(data)).toList();
+        var filterByStatus = data
+            .where((element) =>
+                element.status == 'qc' || element.status == 'qc review')
+            .toList();
+        // data.where((element) => element.status == 'qc' || element.status == 'selesai' ).toList();
+        data = filterByStatus;
+        setState(() {
+          filterFormPR = data;
+          dataFormPR = data;
+        });
+        print('form pr oke');
+      } else {
+        print(response.body);
+        throw Exception('Unexpected error occured!');
+      }
+    } catch (c) {
       print('err get form PR $c');
     }
     //get listnya
-    try{
-    final responseList = await http
-        .get(Uri.parse('${ApiConstants.baseUrl}${ApiConstants.getListFormPR}'));
+    try {
+      final responseList = await http.get(
+          Uri.parse('${ApiConstants.baseUrl}${ApiConstants.getListFormPR}'));
 
-    if (responseList.statusCode == 200) {
-      List jsonResponse = json.decode(responseList.body);
+      if (responseList.statusCode == 200) {
+        List jsonResponse = json.decode(responseList.body);
 
-      var dataList = jsonResponse
-          .map((dataList) => ListItemPRModel.fromJson(dataList))
-          .toList();
-          setState(() {
-        _listItemPR = dataList;
-            
-          });
+        var dataList = jsonResponse
+            .map((dataList) => ListItemPRModel.fromJson(dataList))
+            .toList();
+        setState(() {
+          _listItemPR = dataList;
+        });
 
-      print('list item pr oke');
-    } else {
-      print(responseList.body);
-      throw Exception('Unexpected error occured!');
-    }
-    } catch(c){
+        print('list item pr oke');
+      } else {
+        print(responseList.body);
+        throw Exception('Unexpected error occured!');
+      }
+    } catch (c) {
       print('err get form list item pr $c');
     }
-      setState(() {
-        isLoading = false;
-      });
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
@@ -157,13 +155,23 @@ class _ListFormPrQcState extends State<ListFormPrQc> {
                 // keyboardType: TextInputType.number,
                 // focusNode: numberFocusNode,
                 keyboardType: TextInputType.text,
-                onChanged: (value) {},
+                onChanged: (value) {
+                  dataFormPR = filterFormPR!
+                      .where((element) =>
+                          element.noPR!
+                              .toLowerCase()
+                              .contains(value.toLowerCase()) ||
+                          element.vendor!
+                              .toLowerCase()
+                              .contains(value.toLowerCase()))
+                      .toList();
+                  setState(() {});
+                },
               ),
             ),
           ),
           body: isForm == true
-              ? 
-              FormDetailBatuQc(
+              ? FormDetailBatuQc(
                   dataFormPr: FormPrModel(
                     noPR: dataFormPR![indexDataPr].noPR,
                     id: dataFormPR![indexDataPr].id,
@@ -189,7 +197,7 @@ class _ListFormPrQcState extends State<ListFormPrQc> {
                         Container(
                           padding: const EdgeInsets.only(top: 26),
                           child: const Text(
-                            'List PR',
+                            'List Qc',
                             style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold,
@@ -586,32 +594,30 @@ class RowSource extends DataTableSource {
         return Row(
           children: [
             data.status.toString().toLowerCase() == 'selesai'
-            ?
-              Padding(
-              padding: const EdgeInsets.only(left: 0),
-              child: IconButton(
-                onPressed: () {
-                  onRowPressed(index);
-                },
-                icon: const Icon(
-                  Icons.remove_red_eye_outlined,
-                  color: Colors.green,
-                ),
-              ),
-            )
-            :
-            Padding(
-              padding: const EdgeInsets.only(left: 0),
-              child: IconButton(
-                onPressed: () {
-                  onRowPressed(index);
-                },
-                icon: const Icon(
-                  Icons.send,
-                  color: Colors.blue,
-                ),
-              ),
-            ),
+                ? Padding(
+                    padding: const EdgeInsets.only(left: 0),
+                    child: IconButton(
+                      onPressed: () {
+                        onRowPressed(index);
+                      },
+                      icon: const Icon(
+                        Icons.remove_red_eye_outlined,
+                        color: Colors.green,
+                      ),
+                    ),
+                  )
+                : Padding(
+                    padding: const EdgeInsets.only(left: 0),
+                    child: IconButton(
+                      onPressed: () {
+                        onRowPressed(index);
+                      },
+                      icon: const Icon(
+                        Icons.send,
+                        color: Colors.blue,
+                      ),
+                    ),
+                  ),
           ],
         );
       })),

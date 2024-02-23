@@ -66,12 +66,12 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
   String? kebutuhanBerat;
   double? previousBerat; // Variabel untuk menyimpan nilai berat sebelumnya
   String? idForm;
-  String noQc ='';
+  String noQc = '';
   String? nomorQc;
   int totalQty = 0;
   double totalBerat = 0.0;
   String? noPr;
-
+  double? lebarLayar;
   @override
   void initState() {
     super.initState();
@@ -83,35 +83,35 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
   }
 
   String getMonthName(String month) {
-  switch (month) {
-    case '01':
-      return 'Januari';
-    case '02':
-      return 'Februari';
-    case '03':
-      return 'Maret';
-    case '04':
-      return 'April';
-    case '05':
-      return 'Mei';
-    case '06':
-      return 'Juni';
-    case '07':
-      return 'Juli';
-    case '08':
-      return 'Agustus';
-    case '09':
-      return 'September';
-    case '10':
-      return 'Oktober';
-    case '11':
-      return 'November';
-    case '12':
-      return 'Desember';
-    default:
-      return 'Invalid';
+    switch (month) {
+      case '01':
+        return 'Januari';
+      case '02':
+        return 'Februari';
+      case '03':
+        return 'Maret';
+      case '04':
+        return 'April';
+      case '05':
+        return 'Mei';
+      case '06':
+        return 'Juni';
+      case '07':
+        return 'Juli';
+      case '08':
+        return 'Agustus';
+      case '09':
+        return 'September';
+      case '10':
+        return 'Oktober';
+      case '11':
+        return 'November';
+      case '12':
+        return 'Desember';
+      default:
+        return 'Invalid';
+    }
   }
-}
 
   dataTableForm(String jenisBatu, int count) {
     return DataTable(
@@ -140,12 +140,38 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
               padding: EdgeInsets.symmetric(horizontal: 10),
               child: Text('No'),
             ))),
-            const DataColumn(
-                label: Center(
-                    child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              child: Text('Ukuran Batu Round'),
-            ))),
+            DataColumn(
+              label: Expanded(
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Flexible(
+                      child: lebarLayar! < 600
+                          ? const Text(
+                              'Ukuran batu\nround',
+                              textAlign: TextAlign
+                                  .center, // Atur alignment sesuai kebutuhan
+                              overflow: TextOverflow
+                                  .ellipsis, // Jika teks melebihi lebar, teks akan terpotong dengan tanda elipsis
+                              style: TextStyle(
+                                  fontSize:
+                                      16), // Sesuaikan ukuran font sesuai kebutuhan
+                            )
+                          : const Text(
+                              'Ukuran batu round',
+                              textAlign: TextAlign
+                                  .center, // Atur alignment sesuai kebutuhan
+                              overflow: TextOverflow
+                                  .ellipsis, // Jika teks melebihi lebar, teks akan terpotong dengan tanda elipsis
+                              style: TextStyle(
+                                  fontSize:
+                                      16), // Sesuaikan ukuran font sesuai kebutuhan
+                            ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
             const DataColumn(
                 label: Center(
                     child: Padding(
@@ -158,12 +184,38 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
               padding: EdgeInsets.symmetric(horizontal: 10),
               child: Text('Berat'),
             ))),
-            const DataColumn(
-                label: Center(
-                    child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              child: Text('Carat / Pcs'),
-            ))),
+            DataColumn(
+              label: Expanded(
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Flexible(
+                      child: lebarLayar! < 600
+                          ? const Text(
+                              'Carat\npcs',
+                              textAlign: TextAlign
+                                  .center, // Atur alignment sesuai kebutuhan
+                              overflow: TextOverflow
+                                  .ellipsis, // Jika teks melebihi lebar, teks akan terpotong dengan tanda elipsis
+                              style: TextStyle(
+                                  fontSize:
+                                      16), // Sesuaikan ukuran font sesuai kebutuhan
+                            )
+                          : const Text(
+                              'Carat / Pcs',
+                              textAlign: TextAlign
+                                  .center, // Atur alignment sesuai kebutuhan
+                              overflow: TextOverflow
+                                  .ellipsis, // Jika teks melebihi lebar, teks akan terpotong dengan tanda elipsis
+                              style: TextStyle(
+                                  fontSize:
+                                      16), // Sesuaikan ukuran font sesuai kebutuhan
+                            ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ]
         : [
             const DataColumn(
@@ -328,7 +380,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                         resultPanjang = calculateResultPanjang(panjang);
 
                         setState(() {
-                           selectListItemFancy[i][1] = '$panjang';
+                          selectListItemFancy[i][1] = '$panjang';
                           selectListItemFancy[i][0] =
                               '$kodeBatu$resultPanjang$kualitasBatu$resultLebar';
                           print('fancy = $selectListItemFancy');
@@ -354,7 +406,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                         resultLebar = calculateResultLebar(lebar);
 
                         setState(() {
-                           selectListItemFancy[i][2] = '$lebar';
+                          selectListItemFancy[i][2] = '$lebar';
                           selectListItemFancy[i][0] =
                               '$kodeBatu$resultPanjang$kualitasBatu$resultLebar';
                           print('fancy = $selectListItemFancy');
@@ -373,7 +425,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                       onChanged: (value) {
                         qtyFancy = value;
                         setState(() {
-                           selectListItemFancy[i][3] = '$qtyFancy';
+                          selectListItemFancy[i][3] = '$qtyFancy';
                           print('fancy = $selectListItemFancy');
                         });
                       },
@@ -388,9 +440,9 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                       textAlign: TextAlign
                           .center, // Menengahkan teks secara horizontal
                       onChanged: (value) {
-                              beratFancy = value;
+                        beratFancy = value;
                         setState(() {
-                           selectListItemFancy[i][4] = '$beratFancy';
+                          selectListItemFancy[i][4] = '$beratFancy';
                           print('fancy = $selectListItemFancy');
                         });
                       },
@@ -454,7 +506,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
     });
   }
 
-   getCountQc() async {
+  getCountQc() async {
     try {
       final response = await http
           .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getCountQc));
@@ -463,14 +515,15 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
         var allData =
             jsonResponse.map((data) => QcModel.fromJson(data)).toList();
         int number = allData.length + 1;
-       nomorQc = number.toString().padLeft(5, '0');
-       setState(() {
-            DateTime now = DateTime.now();
-  
-  String month = now.month.toString().padLeft(2, '0');
-  String year = now.year.toString();
-  noQc = '${widget.dataFormPr!.noPR}/QC/${getMonthName(month)}/$year/$nomorQc';
-       });
+        nomorQc = number.toString().padLeft(5, '0');
+        setState(() {
+          DateTime now = DateTime.now();
+
+          String month = now.month.toString().padLeft(2, '0');
+          String year = now.year.toString();
+          noQc =
+              '${widget.dataFormPr!.noPR}/QC/${getMonthName(month)}/$year/$nomorQc';
+        });
       } else {
         throw Exception('Unexpected error occured!');
       }
@@ -623,236 +676,508 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                                   fontSize: 26),
                             ),
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              // ignore: avoid_unnecessary_containers
-                              Container(
-                                child: Column(
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child:
+                                LayoutBuilder(builder: (context, constraints) {
+                              print(constraints.maxWidth);
+                              lebarLayar = constraints.maxWidth;
+
+                              //* hints fungsi multi screen
+                              if (constraints.maxWidth < 900) {
+                                return Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        const SizedBox(
-                                            width: 100, child: Text('NO. QC')),
-                                        const SizedBox(
-                                            width: 30, child: Text(':')),
-                                        Container(
-                                            padding:
-                                                const EdgeInsets.only(left: 0),
-                                            width: widValue,
-                                            child: Text(noQc))
-                                      ],
+                                    // ignore: avoid_unnecessary_containers
+                                    Container(
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              const SizedBox(
+                                                  width: 100,
+                                                  child: Text('NO. QC')),
+                                              const SizedBox(
+                                                  width: 30, child: Text(':')),
+                                              Container(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 0),
+                                                  width: widValue,
+                                                  child: Text(noQc))
+                                            ],
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              const SizedBox(
+                                                  width: 100,
+                                                  child: Text('TGL QC IN')),
+                                              const SizedBox(
+                                                  width: 30, child: Text(':')),
+                                              Container(
+                                                padding: const EdgeInsets.only(
+                                                    left: 0),
+                                                width: widValue,
+                                                child: Text(DateFormat(
+                                                        'dd/MMMM/yyyy HH:ss')
+                                                    .format(DateTime.parse(
+                                                        widget.dataFormPr!
+                                                            .tanggalInQc!
+                                                            .toString()))),
+                                              )
+                                            ],
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              const SizedBox(
+                                                  width: 100,
+                                                  child: Text('TGL QC OUT')),
+                                              const SizedBox(
+                                                  width: 30, child: Text(':')),
+                                              Container(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 0),
+                                                  width: widValue,
+                                                  child: Text('$tglOut'))
+                                            ],
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              const SizedBox(
+                                                  width: 100,
+                                                  child: Text('VENDOR')),
+                                              const SizedBox(
+                                                  width: 30, child: Text(':')),
+                                              Container(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 0),
+                                                  width: widValue,
+                                                  child: Text(widget
+                                                      .dataFormPr!.vendor
+                                                      .toString()))
+                                            ],
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              const SizedBox(
+                                                  width: 100,
+                                                  child: Text('KEBUTUHAN')),
+                                              const SizedBox(
+                                                  width: 30, child: Text(':')),
+                                              SizedBox(
+                                                  width: widValue,
+                                                  child: Text(widget
+                                                      .dataFormPr!.fixTotalBerat
+                                                      .toString()))
+                                            ],
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        const SizedBox(
-                                            width: 100,
-                                            child: Text('TGL QC IN')),
-                                        const SizedBox(
-                                            width: 30, child: Text(':')),
-                                        Container(
-                                          padding:
-                                              const EdgeInsets.only(left: 0),
-                                          width: widValue,
-                                          child: Text(
-                                              DateFormat('dd/MMMM/yyyy HH:ss')
-                                                  .format(DateTime.parse(widget
-                                                      .dataFormPr!.tanggalInQc!
-                                                      .toString()))),
-                                        )
-                                      ],
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        const SizedBox(
-                                            width: 100,
-                                            child: Text('TGL QC OUT')),
-                                        const SizedBox(
-                                            width: 30, child: Text(':')),
-                                        Container(
-                                            padding:
-                                                const EdgeInsets.only(left: 0),
-                                            width: widValue,
-                                            child: Text('$tglOut'))
-                                      ],
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        const SizedBox(
-                                            width: 100, child: Text('VENDOR')),
-                                        const SizedBox(
-                                            width: 30, child: Text(':')),
-                                        Container(
-                                            padding:
-                                                const EdgeInsets.only(left: 0),
-                                            width: widValue,
-                                            child: Text(widget
-                                                .dataFormPr!.vendor
-                                                .toString()))
-                                      ],
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        const SizedBox(
-                                            width: 100,
-                                            child: Text('KEBUTUHAN')),
-                                        const SizedBox(
-                                            width: 30, child: Text(':')),
-                                        SizedBox(
-                                            width: widValue,
-                                            child: Text(widget
-                                                .dataFormPr!.fixTotalBerat
-                                                .toString()))
-                                      ],
+                                    // ignore: avoid_unnecessary_containers
+                                    Container(
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              const SizedBox(
+                                                  width: 100,
+                                                  child: Text('UKURAN BATU')),
+                                              const SizedBox(
+                                                  width: 30, child: Text(':')),
+                                              Container(
+                                                padding: const EdgeInsets.only(
+                                                    left: 0),
+                                                width: 150,
+                                                child: TextFormField(
+                                                  style: const TextStyle(
+                                                      fontSize: 14,
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                  textInputAction:
+                                                      TextInputAction.next,
+                                                  controller: ukuranBatu,
+                                                  decoration: InputDecoration(
+                                                    filled: true,
+                                                    fillColor: Colors.white,
+                                                    labelText: "",
+                                                    border: OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5.0)),
+                                                  ),
+                                                  validator: (value) {
+                                                    if (value!.isEmpty) {
+                                                      return 'Wajib diisi *';
+                                                    }
+                                                    return null;
+                                                  },
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              const SizedBox(
+                                                  width: 100,
+                                                  child: Text('JENIS BATU')),
+                                              const SizedBox(
+                                                  width: 30, child: Text(':')),
+                                              Container(
+                                                padding: const EdgeInsets.only(
+                                                    left: 0),
+                                                width: 150,
+                                                child: DropdownButtonFormField(
+                                                  value: jenisBatu,
+                                                  items: [
+                                                    //* hints looping sederhana
+                                                    for (var item
+                                                        in listJenisBatu!)
+                                                      DropdownMenuItem(
+                                                        value: item.jenisBatu,
+                                                        child: Text(
+                                                            item.jenisBatu!),
+                                                      ),
+                                                  ],
+                                                  onChanged: jenisBatu
+                                                                  .toString()
+                                                                  .toLowerCase() ==
+                                                              'round' &&
+                                                          selectListItemRound
+                                                              .isNotEmpty
+                                                      ? null
+                                                      : jenisBatu
+                                                                      .toString()
+                                                                      .toLowerCase() !=
+                                                                  'round' &&
+                                                              selectListItemFancy
+                                                                  .isNotEmpty
+                                                          ? null
+                                                          : (value) {
+                                                              setState(() {
+                                                                jenisBatu = value
+                                                                    .toString();
+                                                                //* HINTS Cari item yang sesuai dengan value yang dipilih
+                                                                var selectedItem =
+                                                                    listJenisBatu!.firstWhere(
+                                                                        (item) =>
+                                                                            item.jenisBatu ==
+                                                                            value);
+                                                                kodeBatu =
+                                                                    selectedItem
+                                                                        .kodeBatu;
+                                                              });
+                                                            },
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              const SizedBox(
+                                                  width: 100,
+                                                  child: Text('KUALITAS')),
+                                              const SizedBox(
+                                                  width: 30, child: Text(':')),
+                                              Container(
+                                                padding: const EdgeInsets.only(
+                                                    left: 0),
+                                                width: 150,
+                                                child: DropdownButtonFormField(
+                                                  value: kualitasBatu,
+                                                  items: [
+                                                    //* hints looping sederhana
+                                                    for (var item
+                                                        in listKualitasBatu!)
+                                                      DropdownMenuItem(
+                                                        value:
+                                                            item.kualitasBatu,
+                                                        child: Text(
+                                                            item.kualitasBatu!),
+                                                      ),
+                                                  ],
+                                                  onChanged: (value) {
+                                                    setState(() {
+                                                      kualitasBatu = value;
+                                                    });
+                                                  },
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ],
-                                ),
-                              ),
-                              // ignore: avoid_unnecessary_containers
-                              Container(
-                                child: Column(
+                                );
+                              } else {
+                                return Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        const SizedBox(
-                                            width: 100,
-                                            child: Text('UKURAN BATU')),
-                                        const SizedBox(
-                                            width: 30, child: Text(':')),
-                                        Container(
-                                          padding:
-                                              const EdgeInsets.only(left: 0),
-                                          width: widValue,
-                                          child: TextFormField(
-                                            style: const TextStyle(
-                                                fontSize: 14,
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold),
-                                            textInputAction:
-                                                TextInputAction.next,
-                                            controller: ukuranBatu,
-                                            decoration: InputDecoration(
-                                              filled: true,
-                                              fillColor: Colors.white,
-                                              labelText: "",
-                                              border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          5.0)),
-                                            ),
-                                            validator: (value) {
-                                              if (value!.isEmpty) {
-                                                return 'Wajib diisi *';
-                                              }
-                                              return null;
-                                            },
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        const SizedBox(
-                                            width: 100,
-                                            child: Text('JENIS BATU')),
-                                        const SizedBox(
-                                            width: 30, child: Text(':')),
-                                        Container(
-                                          
-                                          padding:
-                                              const EdgeInsets.only(left: 0),
-                                          width: widValue,
-                                          child: DropdownButtonFormField(
-                                            
-                                            value: jenisBatu,
-                                            
-                                            items: 
-                                           
-                                            [
-                                              //* hints looping sederhana
-                                              for (var item in listJenisBatu!)
-                                                DropdownMenuItem(
-                                                  value: item.jenisBatu,
-                                                  child: Text(item.jenisBatu!),
-                                                ),
+                                    // ignore: avoid_unnecessary_containers
+                                    Container(
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              const SizedBox(
+                                                  width: 100,
+                                                  child: Text('NO. QC')),
+                                              const SizedBox(
+                                                  width: 30, child: Text(':')),
+                                              Container(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 0),
+                                                  width: widValue,
+                                                  child: Text(noQc))
                                             ],
-                                            onChanged: 
-                                             jenisBatu.toString().toLowerCase() == 'round' &&  selectListItemRound.isNotEmpty
-                                            ?
-                                           null
-                                          :  jenisBatu.toString().toLowerCase() != 'round' &&  selectListItemFancy.isNotEmpty
-                                             
-                                           ? null
-                                            : 
-                                            (value) {
-                                              setState(() {
-                                                jenisBatu = value.toString();
-                                                //* HINTS Cari item yang sesuai dengan value yang dipilih
-                                                var selectedItem =
-                                                    listJenisBatu!.firstWhere(
-                                                        (item) =>
-                                                            item.jenisBatu ==
-                                                            value);
-                                                kodeBatu =
-                                                    selectedItem.kodeBatu;
-                                              });
-                                            },
                                           ),
-                                        )
-                                      ],
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        const SizedBox(
-                                            width: 100,
-                                            child: Text('KUALITAS')),
-                                        const SizedBox(
-                                            width: 30, child: Text(':')),
-                                        Container(
-                                          padding:
-                                              const EdgeInsets.only(left: 0),
-                                          width: widValue,
-                                          child: DropdownButtonFormField(
-                                            value: kualitasBatu,
-                                            items: [
-                                              //* hints looping sederhana
-                                              for (var item
-                                                  in listKualitasBatu!)
-                                                DropdownMenuItem(
-                                                  value: item.kualitasBatu,
-                                                  child:
-                                                      Text(item.kualitasBatu!),
-                                                ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              const SizedBox(
+                                                  width: 100,
+                                                  child: Text('TGL QC IN')),
+                                              const SizedBox(
+                                                  width: 30, child: Text(':')),
+                                              Container(
+                                                padding: const EdgeInsets.only(
+                                                    left: 0),
+                                                width: widValue,
+                                                child: Text(DateFormat(
+                                                        'dd/MMMM/yyyy HH:ss')
+                                                    .format(DateTime.parse(
+                                                        widget.dataFormPr!
+                                                            .tanggalInQc!
+                                                            .toString()))),
+                                              )
                                             ],
-                                            onChanged: (value) {
-                                              setState(() {
-                                                kualitasBatu = value;
-                                              });
-                                            },
                                           ),
-                                        )
-                                      ],
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              const SizedBox(
+                                                  width: 100,
+                                                  child: Text('TGL QC OUT')),
+                                              const SizedBox(
+                                                  width: 30, child: Text(':')),
+                                              Container(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 0),
+                                                  width: widValue,
+                                                  child: Text('$tglOut'))
+                                            ],
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              const SizedBox(
+                                                  width: 100,
+                                                  child: Text('VENDOR')),
+                                              const SizedBox(
+                                                  width: 30, child: Text(':')),
+                                              Container(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 0),
+                                                  width: widValue,
+                                                  child: Text(widget
+                                                      .dataFormPr!.vendor
+                                                      .toString()))
+                                            ],
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              const SizedBox(
+                                                  width: 100,
+                                                  child: Text('KEBUTUHAN')),
+                                              const SizedBox(
+                                                  width: 30, child: Text(':')),
+                                              SizedBox(
+                                                  width: widValue,
+                                                  child: Text(widget
+                                                      .dataFormPr!.fixTotalBerat
+                                                      .toString()))
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    // ignore: avoid_unnecessary_containers
+                                    Container(
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              const SizedBox(
+                                                  width: 100,
+                                                  child: Text('UKURAN BATU')),
+                                              const SizedBox(
+                                                  width: 30, child: Text(':')),
+                                              Container(
+                                                padding: const EdgeInsets.only(
+                                                    left: 0),
+                                                width: widValue,
+                                                child: TextFormField(
+                                                  style: const TextStyle(
+                                                      fontSize: 14,
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                  textInputAction:
+                                                      TextInputAction.next,
+                                                  controller: ukuranBatu,
+                                                  decoration: InputDecoration(
+                                                    filled: true,
+                                                    fillColor: Colors.white,
+                                                    labelText: "",
+                                                    border: OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5.0)),
+                                                  ),
+                                                  validator: (value) {
+                                                    if (value!.isEmpty) {
+                                                      return 'Wajib diisi *';
+                                                    }
+                                                    return null;
+                                                  },
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              const SizedBox(
+                                                  width: 100,
+                                                  child: Text('JENIS BATU')),
+                                              const SizedBox(
+                                                  width: 30, child: Text(':')),
+                                              Container(
+                                                padding: const EdgeInsets.only(
+                                                    left: 0),
+                                                width: widValue,
+                                                child: DropdownButtonFormField(
+                                                  value: jenisBatu,
+                                                  items: [
+                                                    //* hints looping sederhana
+                                                    for (var item
+                                                        in listJenisBatu!)
+                                                      DropdownMenuItem(
+                                                        value: item.jenisBatu,
+                                                        child: Text(
+                                                            item.jenisBatu!),
+                                                      ),
+                                                  ],
+                                                  onChanged: jenisBatu
+                                                                  .toString()
+                                                                  .toLowerCase() ==
+                                                              'round' &&
+                                                          selectListItemRound
+                                                              .isNotEmpty
+                                                      ? null
+                                                      : jenisBatu
+                                                                      .toString()
+                                                                      .toLowerCase() !=
+                                                                  'round' &&
+                                                              selectListItemFancy
+                                                                  .isNotEmpty
+                                                          ? null
+                                                          : (value) {
+                                                              setState(() {
+                                                                jenisBatu = value
+                                                                    .toString();
+                                                                //* HINTS Cari item yang sesuai dengan value yang dipilih
+                                                                var selectedItem =
+                                                                    listJenisBatu!.firstWhere(
+                                                                        (item) =>
+                                                                            item.jenisBatu ==
+                                                                            value);
+                                                                kodeBatu =
+                                                                    selectedItem
+                                                                        .kodeBatu;
+                                                              });
+                                                            },
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              const SizedBox(
+                                                  width: 100,
+                                                  child: Text('KUALITAS')),
+                                              const SizedBox(
+                                                  width: 30, child: Text(':')),
+                                              Container(
+                                                padding: const EdgeInsets.only(
+                                                    left: 0),
+                                                width: widValue,
+                                                child: DropdownButtonFormField(
+                                                  value: kualitasBatu,
+                                                  items: [
+                                                    //* hints looping sederhana
+                                                    for (var item
+                                                        in listKualitasBatu!)
+                                                      DropdownMenuItem(
+                                                        value:
+                                                            item.kualitasBatu,
+                                                        child: Text(
+                                                            item.kualitasBatu!),
+                                                      ),
+                                                  ],
+                                                  onChanged: (value) {
+                                                    setState(() {
+                                                      kualitasBatu = value;
+                                                    });
+                                                  },
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ],
-                                ),
-                              ),
-                            ],
+                                );
+                              }
+                            }),
                           ),
                           Container(
                             color: Colors.grey.shade400,
@@ -869,7 +1194,10 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                           ),
                           jenisBatu == null
                               ? const SizedBox()
-                              : dataTableForm(jenisBatu!, no),
+                              : SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: dataTableForm(jenisBatu!, no),
+                                ),
                           const SizedBox(
                             height: 20,
                           ),
@@ -999,206 +1327,281 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                               ),
                             ),
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Column(
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child:
+                                LayoutBuilder(builder: (context, constraints) {
+                              if (constraints.maxWidth < 900) {
+                                return Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        SizedBox(
+                                            width: 200,
+                                            child: Text(
+                                              'Name :  ${sharedPreferences!.getString('nama')!}',
+                                              style: const TextStyle(
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold),
+                                            )),
+                                        const SizedBox(
+                                          height: 65,
+                                        ),
+                                        const SizedBox(
+                                            width: 200,
+                                            child: Text(
+                                              'QUALITY CONTROL',
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold),
+                                            )),
+                                      ],
+                                    ),
+                                    const Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        SizedBox(
+                                            width: 200,
+                                            child: Text(
+                                              'Name :',
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold),
+                                            )),
+                                        SizedBox(
+                                          height: 65,
+                                        ),
+                                        SizedBox(
+                                            width: 200,
+                                            child: Text(
+                                              'WAREHOUSE',
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold),
+                                            )),
+                                      ],
+                                    ),
+                                    const Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        SizedBox(
+                                            width: 200,
+                                            child: Text(
+                                              'Name :',
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold),
+                                            )),
+                                        SizedBox(
+                                          height: 65,
+                                        ),
+                                        SizedBox(
+                                            child: Text(
+                                          'PURCHASING',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold),
+                                        )),
+                                      ],
+                                    ),
+                                  ],
+                                );
+                              }
+                              return Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceAround,
                                 children: [
-                                  SizedBox(
-                                      width: 200,
-                                      child: Text(
-                                        'Name :  ${sharedPreferences!.getString('nama')!}',
-                                        style: const TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                  const SizedBox(
-                                    height: 65,
+                                  Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      SizedBox(
+                                          width: 200,
+                                          child: Text(
+                                            'Name :  ${sharedPreferences!.getString('nama')!}',
+                                            style: const TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.bold),
+                                          )),
+                                      const SizedBox(
+                                        height: 65,
+                                      ),
+                                      const SizedBox(
+                                          width: 200,
+                                          child: Text(
+                                            'QUALITY CONTROL',
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.bold),
+                                          )),
+                                    ],
                                   ),
-                                  const SizedBox(
-                                      width: 200,
-                                      child: Text(
-                                        'QUALITY CONTROL',
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                ],
-                              ),
-                              const Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  SizedBox(
-                                      width: 200,
-                                      child: Text(
-                                        'Name :',
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                  SizedBox(
-                                    height: 65,
+                                  const Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      SizedBox(
+                                          width: 200,
+                                          child: Text(
+                                            'Name :',
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.bold),
+                                          )),
+                                      SizedBox(
+                                        height: 65,
+                                      ),
+                                      SizedBox(
+                                          width: 200,
+                                          child: Text(
+                                            'WAREHOUSE',
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.bold),
+                                          )),
+                                    ],
                                   ),
-                                  SizedBox(
-                                      width: 200,
-                                      child: Text(
-                                        'WAREHOUSE',
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                ],
-                              ),
-                              const Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                      width: 200,
-                                      child: Text(
-                                        'Name :',
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                  SizedBox(
-                                    height: 65,
-                                  ),
-                                  SizedBox(
-                                      width: 200,
-                                      child: Text(
+                                  const Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                          width: 200,
+                                          child: Text(
+                                            'Name :',
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.bold),
+                                          )),
+                                      SizedBox(
+                                        height: 65,
+                                      ),
+                                      SizedBox(
+                                          child: Text(
                                         'PURCHASING',
                                         style: TextStyle(
                                             color: Colors.black,
                                             fontWeight: FontWeight.bold),
                                       )),
+                                    ],
+                                  ),
                                 ],
-                              ),
-                            ],
+                              );
+                            }),
                           ),
                         ],
                       ),
                     ),
                   ),
                 ),
-            jenisBatu == null
-            ? const SizedBox()
-            :
-              Container(
-                width: MediaQuery.of(context).size.width * 0.7,
-                padding: const EdgeInsets.only(bottom: 20,top:20),
-                child: FloatingActionButton.extended(
-                onPressed: () {
-                   showDialog(
-      context: context,
-      barrierDismissible: false, // Prevent dialog dismissal on tap outside
-      builder: (BuildContext context) {
-        return Dialog(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          child: Container(
-            padding: const EdgeInsets.all(16),
-            color: Colors.white,
-            child: const Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                CircularProgressIndicator(),
-                SizedBox(height: 20),
-                Text(
-                  'Loading, please wait...',
-                  style: TextStyle(fontSize: 16),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-                  simpanForm();
-                
-                },
-                label: const Text('Simpan Form',style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold
-                ),),
-                icon:const Icon(Icons.save_alt,size: 20,) ,
-              //  const SizedBox(
-              //     width: 200, // Sesuaikan dengan lebar yang diinginkan
-              //     child: Row(
-              //       mainAxisAlignment: MainAxisAlignment.center,
-              //       children: [
-              //         Icon(Icons.save_alt),
-              //         SizedBox(width: 8), // Jarak antara ikon dan teks
-              //         Text('Simpan Form'),
-              //       ],
-              //     ),
-              //   ),
-              ),
-              )
+                jenisBatu == null
+                    ? const SizedBox()
+                    : Container(
+                        width: MediaQuery.of(context).size.width * 0.7,
+                        padding: const EdgeInsets.only(bottom: 20, top: 20),
+                        child: FloatingActionButton.extended(
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              barrierDismissible:
+                                  false, // Prevent dialog dismissal on tap outside
+                              builder: (BuildContext context) {
+                                return Dialog(
+                                  backgroundColor: Colors.transparent,
+                                  elevation: 0,
+                                  child: Container(
+                                    padding: const EdgeInsets.all(16),
+                                    color: Colors.white,
+                                    child: const Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        CircularProgressIndicator(),
+                                        SizedBox(height: 20),
+                                        Text(
+                                          'Loading, please wait...',
+                                          style: TextStyle(fontSize: 16),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                            simpanForm();
+                          },
+                          label: const Text(
+                            'Simpan Form',
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
+                          icon: const Icon(
+                            Icons.save_alt,
+                            size: 20,
+                          ),
+                          //  const SizedBox(
+                          //     width: 200, // Sesuaikan dengan lebar yang diinginkan
+                          //     child: Row(
+                          //       mainAxisAlignment: MainAxisAlignment.center,
+                          //       children: [
+                          //         Icon(Icons.save_alt),
+                          //         SizedBox(width: 8), // Jarak antara ikon dan teks
+                          //         Text('Simpan Form'),
+                          //       ],
+                          //     ),
+                          //   ),
+                        ),
+                      )
               ],
             ),
           );
   }
 
   simpanForm() async {
-    totalBerat =0;
-    totalQty=0;
-    if(jenisBatu.toString().toLowerCase() == 'round'){
-          for (var i = 0;
-                                    i < selectListItemRound.length;
-                                    i++) {
-                                  totalBerat +=
-                                      double.tryParse(selectListItemRound[i][2]) ??
-                                          0;
-                                  totalQty +=
-                                      int.tryParse(selectListItemRound[i][1]) ?? 0;
-                                
-     await postDetailItem(
-       selectListItemRound[i][0],
-                                          selectListItemRound[i][1],
-                                          selectListItemRound[i][2],
-                                          '',
-                                          '');
-                              
-                                }
+    totalBerat = 0;
+    totalQty = 0;
+    if (jenisBatu.toString().toLowerCase() == 'round') {
+      for (var i = 0; i < selectListItemRound.length; i++) {
+        totalBerat += double.tryParse(selectListItemRound[i][2]) ?? 0;
+        totalQty += int.tryParse(selectListItemRound[i][1]) ?? 0;
+
+        await postDetailItem(selectListItemRound[i][0],
+            selectListItemRound[i][1], selectListItemRound[i][2], '', '');
+      }
     } else {
-       for (var i = 0;
-                                    i < selectListItemFancy.length;
-                                    i++) {
-                                  totalBerat +=
-                                      double.tryParse(selectListItemFancy[i][4]) ??
-                                          0;
-                                  totalQty +=
-                                      int.tryParse(selectListItemFancy[i][3]) ?? 0;
-      await postDetailItem(
-       selectListItemFancy[i][0],
-                                          selectListItemFancy[i][3],
-                                          selectListItemFancy[i][4],
-                                          selectListItemFancy[i][1],
-                                          selectListItemFancy[i][2]);
-                                
-                                }
+      for (var i = 0; i < selectListItemFancy.length; i++) {
+        totalBerat += double.tryParse(selectListItemFancy[i][4]) ?? 0;
+        totalQty += int.tryParse(selectListItemFancy[i][3]) ?? 0;
+        await postDetailItem(
+            selectListItemFancy[i][0],
+            selectListItemFancy[i][3],
+            selectListItemFancy[i][4],
+            selectListItemFancy[i][1],
+            selectListItemFancy[i][2]);
+      }
     }
-    
-    
+
     await postStatusPR(idForm);
     // ignore: use_build_context_synchronously
     Navigator.pop(context);
-                        refresh();
-        showSimpleNotification(
-                                              const Text(
-                                                  'Form Berhasil Disimpan'),
-                                              background: Colors.green,
-                                              duration:
-                                                  const Duration(seconds: 1),
-                                            );
-    
+    refresh();
+    showSimpleNotification(
+      const Text('Form Berhasil Disimpan'),
+      background: Colors.green,
+      duration: const Duration(seconds: 1),
+    );
   }
-   postStatusPR(String? id) async {
+
+  postStatusPR(String? id) async {
     Map<String, String> body = {
       'id': id.toString(),
       'status': 'selesai',
@@ -1212,8 +1615,9 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
         body: body);
     print(response.body);
   }
-  postDetailItem(String item,qty, berat, panjang, lebar) async {
-     Map<String, String> body = {
+
+  postDetailItem(String item, qty, berat, panjang, lebar) async {
+    Map<String, String> body = {
       'noPr': noPr!,
       'noQc': noQc,
       'item': item,
@@ -1230,7 +1634,6 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
         body: body);
     print(response.body);
   }
-
 
   //* HINTS Fungsi untuk menentukan hasil berdasarkan range panjang dan lebar fancy
   String calculateResultPanjang(double panjang) {
