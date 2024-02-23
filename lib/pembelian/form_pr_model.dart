@@ -24,6 +24,11 @@ class FormPrModel {
   String? jenisItem;
   String? fixTotalQty;
   String? fixTotalBerat;
+  String? noQc;
+  String? tanggalInQc;
+  String? tanggalSelesai;
+  String? totalBeratDiterima;
+  String? totalQtyDiterima;
 
   FormPrModel({
     this.id,
@@ -40,6 +45,11 @@ class FormPrModel {
     this.jenisItem,
     this.fixTotalQty,
     this.fixTotalBerat,
+    this.noQc,
+    this.tanggalInQc,
+    this.tanggalSelesai,
+    this.totalBeratDiterima,
+    this.totalQtyDiterima,
   });
 
   // ignore: avoid_types_as_parameter_names
@@ -48,7 +58,7 @@ class FormPrModel {
         noPR: json["noPr"] ?? '',
         vendor: json["vendor"] ?? '',
         notes: json["notes"] ?? '',
-        created_at: json["created_at"],
+        created_at: json["created_at"].toString(),
         totalItem: json["total_item"].toString(),
         totalQty: json["total_qty"].toString(),
         totalBerat: json["total_berat"].toString(),
@@ -58,6 +68,11 @@ class FormPrModel {
         jenisItem: json["jenis_item"].toString(),
         fixTotalQty: json["fix_total_qty"].toString(),
         fixTotalBerat: json["fix_total_berat"].toString(),
+        noQc: json["noQc"].toString(),
+        tanggalInQc: json["tanggal_in_qc"].toString(),
+        tanggalSelesai: json["tanggal_selesai"].toString(),
+        totalBeratDiterima: json["total_berat_diterima"].toString(),
+        totalQtyDiterima: json["total_qty_diterima"].toString(),
       );
 
   Map<String, dynamic> toJson() => {
@@ -75,5 +90,10 @@ class FormPrModel {
         "jenis_item": jenisItem,
         "fix_total_qty": fixTotalQty,
         "fix_total_berat": fixTotalBerat,
+        "noQc": noQc,
+        "tanggal_in_qc": tanggalInQc,
+        "tanggal_selesai": tanggalSelesai,
+        "total_berat_diterima": totalBeratDiterima,
+        "total_qty_diterima": totalQtyDiterima,
       };
 }

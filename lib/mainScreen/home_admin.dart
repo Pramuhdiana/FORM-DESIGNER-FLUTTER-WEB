@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:form_designer/api/api_constant.dart';
 import 'package:form_designer/global/currency_format.dart';
 import 'package:form_designer/global/global.dart';
+import 'package:form_designer/mainScreen/excel.dart';
 import 'package:form_designer/mainScreen/excel_admin.dart';
 import 'package:form_designer/mainScreen/form_ro.dart';
 // import 'package:form_designer/mainScreen/form_ro.dart';
@@ -1042,7 +1043,7 @@ class _HomeScreenAdminState extends State<HomeScreenAdmin> {
                                       );
                                     });
                                 //call function another class
-                                // ExcelScreen().exportExcel(siklus.text);
+                                ExcelScreen().exportExcel(siklus.text);
                                 Future.delayed(const Duration(seconds: 1))
                                     .then((value) {
                                   //! lalu eksekusi fungsi ini
