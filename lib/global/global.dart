@@ -9,7 +9,7 @@ SharedPreferences? sharedPreferences;
 int revisiBesar =
     1; //UI baru, banyak fitur baru, perubahan konsep, dll  (MAJOR)
 int revisiKecil =
-    32; //perubahan kecil                                    (MINOR)
+    33; //perubahan kecil                                    (MINOR)
 int rilisPerbaikanbug =
     3; //perbaikan bug                                      (PATCH)
 //? komen
