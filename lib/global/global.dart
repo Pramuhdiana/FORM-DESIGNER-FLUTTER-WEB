@@ -11,7 +11,7 @@ int revisiBesar =
 int revisiKecil =
     33; //perubahan kecil                                    (MINOR)
 int rilisPerbaikanbug =
-    3; //perbaikan bug                                      (PATCH)
+    4; //perbaikan bug                                      (PATCH)
 //? komen
 Color colorDasar = const Color.fromRGBO(38, 54, 72, 1);
 Color colorBG = const Color.fromARGB(255, 157, 157, 165);

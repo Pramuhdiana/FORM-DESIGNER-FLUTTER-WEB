@@ -1194,10 +1194,11 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                           ),
                           jenisBatu == null
                               ? const SizedBox()
-                              : SingleChildScrollView(
-                                  scrollDirection: Axis.horizontal,
-                                  child: dataTableForm(jenisBatu!, no),
-                                ),
+                              : dataTableForm(jenisBatu!, no),
+                          //  SingleChildScrollView(
+                          //     scrollDirection: Axis.horizontal,
+                          //     child: dataTableForm(jenisBatu!, no),
+                          //   ),
                           const SizedBox(
                             height: 20,
                           ),

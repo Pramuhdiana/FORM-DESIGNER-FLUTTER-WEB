@@ -309,7 +309,18 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
                   // keyboardType: TextInputType.number,
                   // focusNode: numberFocusNode,
                   keyboardType: TextInputType.text,
-                  onChanged: (value) {},
+                  onChanged: (value) {
+                    dataFormPR = filterFormPR!
+                        .where((element) =>
+                            element.noPR!
+                                .toLowerCase()
+                                .contains(value.toLowerCase()) ||
+                            element.vendor!
+                                .toLowerCase()
+                                .contains(value.toLowerCase()))
+                        .toList();
+                    setState(() {});
+                  },
                 ),
               ),
             ),
