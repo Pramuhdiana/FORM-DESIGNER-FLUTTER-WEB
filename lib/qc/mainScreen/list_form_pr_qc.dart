@@ -9,6 +9,7 @@ import 'package:form_designer/global/global.dart';
 import 'package:form_designer/pembelian/form_pr_model.dart';
 import 'package:form_designer/pembelian/list_form_pr_model.dart';
 import 'package:form_designer/qc/mainScreen/add_form_detail_batu_qy.dart';
+import 'package:fullscreen_window/fullscreen_window.dart';
 import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';
 // ignore: unused_import
@@ -43,11 +44,29 @@ class _ListFormPrQcState extends State<ListFormPrQc> {
 
   List<ListItemPRModel>? _listItemPR;
   var dataListPR;
+  String screenSizeText = "";
 
   @override
   initState() {
     super.initState();
     _getData();
+    setFullScreen(true);
+    showScreenSize();
+  }
+
+  void setFullScreen(bool isFullScreen) {
+    FullScreenWindow.setFullScreen(isFullScreen);
+  }
+
+  void showScreenSize() async {
+    Size logicalSize = await FullScreenWindow.getScreenSize(context);
+    Size physicalSize = await FullScreenWindow.getScreenSize(null);
+    setState(() {
+      screenSizeText =
+          "Screen size (logical pixel): ${logicalSize.width} x ${logicalSize.height}\n";
+      screenSizeText +=
+          "Screen size (physical pixel): ${physicalSize.width} x ${physicalSize.height}\n";
+    });
   }
 
   refresh() async {

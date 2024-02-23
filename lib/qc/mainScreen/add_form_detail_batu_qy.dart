@@ -140,34 +140,18 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
               padding: EdgeInsets.symmetric(horizontal: 10),
               child: Text('No'),
             ))),
-            DataColumn(
-              label: Expanded(
-                child: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Flexible(
-                      child: lebarLayar! < 600
-                          ? const Text(
-                              'Ukuran batu\nround',
-                              textAlign: TextAlign
-                                  .center, // Atur alignment sesuai kebutuhan
-                              overflow: TextOverflow
-                                  .ellipsis, // Jika teks melebihi lebar, teks akan terpotong dengan tanda elipsis
-                              style: TextStyle(
-                                  fontSize:
-                                      16), // Sesuaikan ukuran font sesuai kebutuhan
-                            )
-                          : const Text(
-                              'Ukuran batu round',
-                              textAlign: TextAlign
-                                  .center, // Atur alignment sesuai kebutuhan
-                              overflow: TextOverflow
-                                  .ellipsis, // Jika teks melebihi lebar, teks akan terpotong dengan tanda elipsis
-                              style: TextStyle(
-                                  fontSize:
-                                      16), // Sesuaikan ukuran font sesuai kebutuhan
-                            ),
-                    ),
+            const DataColumn(
+              label: Center(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  child: Text(
+                    'Ukuran batu\nround',
+                    textAlign:
+                        TextAlign.center, // Atur alignment sesuai kebutuhan
+                    overflow: TextOverflow
+                        .ellipsis, // Jika teks melebihi lebar, teks akan terpotong dengan tanda elipsis
+                    style: TextStyle(
+                        fontSize: 16), // Sesuaikan ukuran font sesuai kebutuhan
                   ),
                 ),
               ),
@@ -184,34 +168,18 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
               padding: EdgeInsets.symmetric(horizontal: 10),
               child: Text('Berat'),
             ))),
-            DataColumn(
-              label: Expanded(
-                child: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Flexible(
-                      child: lebarLayar! < 600
-                          ? const Text(
-                              'Carat\npcs',
-                              textAlign: TextAlign
-                                  .center, // Atur alignment sesuai kebutuhan
-                              overflow: TextOverflow
-                                  .ellipsis, // Jika teks melebihi lebar, teks akan terpotong dengan tanda elipsis
-                              style: TextStyle(
-                                  fontSize:
-                                      16), // Sesuaikan ukuran font sesuai kebutuhan
-                            )
-                          : const Text(
-                              'Carat / Pcs',
-                              textAlign: TextAlign
-                                  .center, // Atur alignment sesuai kebutuhan
-                              overflow: TextOverflow
-                                  .ellipsis, // Jika teks melebihi lebar, teks akan terpotong dengan tanda elipsis
-                              style: TextStyle(
-                                  fontSize:
-                                      16), // Sesuaikan ukuran font sesuai kebutuhan
-                            ),
-                    ),
+            const DataColumn(
+              label: Center(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  child: Text(
+                    'Carat\nPcs',
+                    textAlign:
+                        TextAlign.center, // Atur alignment sesuai kebutuhan
+                    overflow: TextOverflow
+                        .ellipsis, // Jika teks melebihi lebar, teks akan terpotong dengan tanda elipsis
+                    style: TextStyle(
+                        fontSize: 16), // Sesuaikan ukuran font sesuai kebutuhan
                   ),
                 ),
               ),
