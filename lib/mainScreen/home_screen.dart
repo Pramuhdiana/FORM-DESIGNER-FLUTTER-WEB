@@ -1256,7 +1256,7 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.all(10.0),
               child: LayoutBuilder(builder: (context, constraints) {
                 print(constraints.maxWidth);
-                //? fungsi multi screen
+                //* hints fungsi multi screen
                 if (constraints.maxWidth < 900) {
                   return Column(
                     children: [
@@ -6926,7 +6926,8 @@ class RowSource extends DataTableSource {
                                               data.tanggalInProduksi,
                                           beratModeller: data.beratModeller,
                                           statusForm: data.statusForm,
-                                     jo:data.jo,   ),
+                                          jo: data.jo,
+                                        ),
                                       )));
                         },
                         icon: Stack(
@@ -7071,7 +7072,8 @@ class RowSource extends DataTableSource {
                                   tanggalOutModeller: data.tanggalOutModeller,
                                   tanggalInProduksi: data.tanggalInProduksi,
                                   beratModeller: data.beratModeller,
-                              jo:data.jo,  ),
+                                  jo: data.jo,
+                                ),
                               )));
                 },
                 icon: (sharedPreferences!.getString('level') != '3' &&
@@ -7250,7 +7252,9 @@ class RowSource extends DataTableSource {
                                 tanggalOutModeller: data.tanggalOutModeller,
                                 tanggalInProduksi: data.tanggalInProduksi,
                                 beratModeller: data.beratModeller,
-                           statusForm:data.statusForm,jo:data.jo,  ),
+                                statusForm: data.statusForm,
+                                jo: data.jo,
+                              ),
                             )));
               },
               icon: const Icon(
