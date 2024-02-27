@@ -22,6 +22,7 @@ class FormPrModel {
   String? tanggalKirim;
   String? jenisForm;
   String? jenisItem;
+  String? jenisBatu;
   String? fixTotalQty;
   String? fixTotalBerat;
   String? noQc;
@@ -43,6 +44,7 @@ class FormPrModel {
     this.tanggalKirim,
     this.jenisForm,
     this.jenisItem,
+    this.jenisBatu,
     this.fixTotalQty,
     this.fixTotalBerat,
     this.noQc,
@@ -66,6 +68,7 @@ class FormPrModel {
         tanggalKirim: json["tanggal_kirim"].toString(),
         jenisForm: json["jenis_form"].toString(),
         jenisItem: json["jenis_item"].toString(),
+        jenisBatu: json["jenis_batu"].toString(),
         fixTotalQty: json["fix_total_qty"].toString(),
         fixTotalBerat: json["fix_total_berat"].toString(),
         noQc: json["noQc"].toString(),
@@ -88,6 +91,7 @@ class FormPrModel {
         "tanggal_kirim": tanggalKirim,
         "jenis_form": jenisForm,
         "jenis_item": jenisItem,
+        "jenis_batu": jenisBatu,
         "fix_total_qty": fixTotalQty,
         "fix_total_berat": fixTotalBerat,
         "noQc": noQc,

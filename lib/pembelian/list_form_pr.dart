@@ -37,7 +37,6 @@ class _ListFormPrState extends State<ListFormPr> {
   bool sort = true;
   int _currentSortColumn = 0;
   int _rowsPerPage = 10;
-
   List<ListItemPRModel>? _listItemPR;
   var dataListPR;
 
@@ -510,6 +509,12 @@ class RowSource extends DataTableSource {
   String? _selectedTime;
   final count;
   final VoidCallback onRowPressed; //* menerima data untuk me refresh screen
+
+  double totalBeratReceive = 0.0;
+  int? totalQtyReceive;
+
+  double? totalBeratDatang;
+  int? totalQtyDatang;
   RowSource({
     required this.myData,
     required this.count,
@@ -538,11 +543,16 @@ class RowSource extends DataTableSource {
               padding: const EdgeInsets.only(left: 0),
               child: IconButton(
                 onPressed: () {
+                  totalBeratReceive = 0.0;
+                  totalQtyReceive = 0;
                   var filterBynoPR = listDataPR!
                       .where((element) =>
                           element.noPr.toString().toLowerCase() ==
                           data.noPR.toString().toLowerCase())
                       .toList();
+                  // for(var i=0; i< filterBynoPR.length; i++){
+                  // totalBeratReceive +=  double.tryParse(filterBynoPR[i].receiveBerat!) ?? 0;
+                  // }
                   showGeneralDialog(
                       transitionDuration: const Duration(milliseconds: 200),
                       barrierDismissible: false,
@@ -940,7 +950,25 @@ class RowSource extends DataTableSource {
           label: Center(
               child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 10),
-        child: Text('Berat'),
+        child: Text('Berat\nPengajuan'),
+      ))),
+      const DataColumn(
+          label: Center(
+              child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 10),
+        child: Text('Berat\nKedatangan'),
+      ))),
+      const DataColumn(
+          label: Center(
+              child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 10),
+        child: Text('Berat\nDiterima'),
+      ))),
+      const DataColumn(
+          label: Center(
+              child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 10),
+        child: Text('Berat\nDikembalikan'),
       ))),
       jenisItem.toString().toLowerCase() == 'diamond'
           ? const DataColumn(
@@ -980,6 +1008,17 @@ class RowSource extends DataTableSource {
           DataCell(Container(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Center(child: Text(data[i].berat)))),
+          DataCell(Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Center(child: Text(data[i].fixBerat)))),
+          DataCell(Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Center(child: Text(data[i].receiveBerat)))),
+          DataCell(Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Center(
+                  child: Text(
+                      '${double.parse(data[i].fixBerat) - double.parse(data[i].receiveBerat)}')))),
           DataCell(Container(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Center(child: Text(data[i].kadar)))),

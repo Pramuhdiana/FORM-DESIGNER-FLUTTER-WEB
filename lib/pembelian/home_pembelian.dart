@@ -10,6 +10,7 @@ import 'package:form_designer/global/global.dart';
 import 'package:form_designer/mainScreen/form_screen_by_id.dart';
 import 'package:form_designer/pembelian/export_pembelian.dart';
 import 'package:form_designer/pembelian/form_pr_model.dart';
+import 'package:form_designer/pembelian/list_form_pr_model.dart';
 import 'package:form_designer/qc/modelQc/itemQcModel.dart';
 import 'package:form_designer/widgets/custom_loading.dart';
 import 'package:intl/intl.dart';
@@ -35,9 +36,10 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
       RoundedLoadingButtonController();
   RoundedLoadingButtonController btnControllerSimpan =
       RoundedLoadingButtonController();
-  List<FormPrModel>? filterFormPR;
+  List<ListItemPRModel>? filterFormPR;
   List<FormPrModel>? dataFormPR;
-  List<ItemQcModel>? _listDetailItemQc;
+  List<ListItemPRModel>? listItemQc;
+  List<ItemQcModel>? listDetailItemQc;
   List<List<String>> selectListItemRound = [];
   List<List<String>> selectListItemFancy = [];
   String? dumItem = '';
@@ -76,15 +78,34 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
       // data.sort((a, b) => a.tanggalSelesai!.compareTo(b.tanggalSelesai!));
       //? Sekarang, data sudah diurutkan berdasarkan tanggal terlama
 
-      setState(() {
-        filterFormPR = data;
-        dataFormPR = data;
-      });
+      dataFormPR = data;
     } else {
       print(response.body);
       throw Exception('Unexpected error occured!');
     }
-    //get listnya
+    //get listnya QC
+    final responseListItem = await http
+        .get(Uri.parse('${ApiConstants.baseUrl}${ApiConstants.getListFormPR}'));
+
+    if (responseListItem.statusCode == 200) {
+      List jsonResponse = json.decode(responseListItem.body);
+
+      var dataListItem = jsonResponse
+          .map((dataListItem) => ListItemPRModel.fromJson(dataListItem))
+          .toList();
+      var filterByNoQc =
+          dataListItem.where((element) => element.noQc != '').toList();
+
+      listItemQc = filterByNoQc;
+      filterFormPR = filterByNoQc;
+
+      print(listItemQc);
+    } else {
+      print(response.body);
+      throw Exception('Unexpected error occured!');
+    }
+
+    //get detail listnya QC
     final responseList = await http
         .get(Uri.parse('${ApiConstants.baseUrl}${ApiConstants.getItemQc}'));
 
@@ -95,10 +116,7 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
           .map((dataList) => ItemQcModel.fromJson(dataList))
           .toList();
 
-      setState(() {
-        _listDetailItemQc = dataList;
-        isLoading = false;
-      });
+      listDetailItemQc = dataList;
     } else {
       print(response.body);
       throw Exception('Unexpected error occured!');
@@ -310,12 +328,12 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
                   // focusNode: numberFocusNode,
                   keyboardType: TextInputType.text,
                   onChanged: (value) {
-                    dataFormPR = filterFormPR!
+                    listItemQc = filterFormPR!
                         .where((element) =>
-                            element.noPR!
+                            element.noPr!
                                 .toLowerCase()
                                 .contains(value.toLowerCase()) ||
-                            element.vendor!
+                            element.noQc!
                                 .toLowerCase()
                                 .contains(value.toLowerCase()))
                         .toList();
@@ -332,7 +350,7 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
                     height: 90,
                     child: Lottie.asset("loadingJSON/loadingV1.json"),
                   ))
-                : dataFormPR!.isEmpty
+                : listItemQc!.isEmpty
                     ? const Center(
                         child: Text('Tidak ada data'),
                       )
@@ -341,15 +359,15 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
                           crossAxisCount: constraints.maxWidth < 900
                               ? 1
                               : 2, // dua item per baris
-                          itemCount: dataFormPR!.length,
+                          itemCount: listItemQc!.length,
                           itemBuilder: (context, index) => InkWell(
                             onTap: () {
                               selectListItemRound.clear();
-                              var filterBynoPR = _listDetailItemQc!
+                              var filterBynoPR = listDetailItemQc!
                                   .where((element) =>
-                                      element.noQc.toString().toLowerCase() ==
-                                      dataFormPR![index]
-                                          .noQc
+                                      element.noPr.toString().toLowerCase() ==
+                                      listItemQc![index]
+                                          .noPr
                                           .toString()
                                           .toLowerCase())
                                   .toList();
@@ -447,7 +465,7 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
                                                                 fontSize: 22),
                                                           ),
                                                           Text(
-                                                            'No. ${dataFormPR![index].noQc}',
+                                                            'No. ${listItemQc![index].noQc}',
                                                             textAlign:
                                                                 TextAlign.start,
                                                             style: const TextStyle(
@@ -477,12 +495,12 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
                                                                 MainAxisAlignment
                                                                     .spaceBetween,
                                                             children: [
-                                                              Text(
-                                                                'Vendor : ${dataFormPR![index].vendor}',
+                                                              const Text(
+                                                                'Vendor : value',
                                                                 textAlign:
                                                                     TextAlign
                                                                         .start,
-                                                                style: const TextStyle(
+                                                                style: TextStyle(
                                                                     color: Colors
                                                                         .black,
                                                                     fontWeight:
@@ -492,7 +510,7 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
                                                                         12),
                                                               ),
                                                               Text(
-                                                                'Tanggal selesai : ${DateFormat('dd-MMMM-yyyy').format(DateTime.parse(dataFormPR![index].tanggalSelesai!))}',
+                                                                'Tanggal selesai : ${DateFormat('dd-MMMM-yyyy').format(DateTime.parse(listItemQc![index].updateAt!))}',
                                                                 textAlign:
                                                                     TextAlign
                                                                         .start,
@@ -527,7 +545,7 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
                                                                         12),
                                                               ),
                                                               Text(
-                                                                'Jam : ${DateFormat('H.mm').format(DateTime.parse(dataFormPR![index].tanggalSelesai!))}',
+                                                                'Jam : ${DateFormat('H.mm').format(DateTime.parse(listItemQc![index].updateAt!))}',
                                                                 textAlign:
                                                                     TextAlign
                                                                         .start,
@@ -557,7 +575,7 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
                                                               child: dataTableForm(
                                                                   filterBynoPR,
                                                                   'edit',
-                                                                  _listDetailItemQc![
+                                                                  listDetailItemQc![
                                                                           index]
                                                                       .jenisBatu!),
                                                             ),
@@ -694,7 +712,7 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
                                                                     onPressed:
                                                                         () {
                                                                       exportData(
-                                                                          '${dataFormPR![index].noQc}');
+                                                                          '${listItemQc![index].noQc}');
                                                                     },
                                                                     child:
                                                                         const Text(
@@ -762,7 +780,7 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
                                             fontSize: 22),
                                       ),
                                       Text(
-                                        'No. ${dataFormPR![index].noQc}',
+                                        'No. ${listItemQc![index].noQc}',
                                         textAlign: TextAlign.start,
                                         style: const TextStyle(
                                             color: Colors.black,
@@ -783,16 +801,16 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Text(
-                                            'Vendor : ${dataFormPR![index].vendor}',
+                                          const Text(
+                                            'Vendor : value',
                                             textAlign: TextAlign.start,
-                                            style: const TextStyle(
+                                            style: TextStyle(
                                                 color: Colors.black,
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 12),
                                           ),
                                           Text(
-                                            'Tanggal : ${DateFormat('dd-MMMM-yyyy').format(DateTime.parse(dataFormPR![index].tanggalSelesai!))}',
+                                            'Tanggal : ${DateFormat('dd-MMMM-yyyy').format(DateTime.parse(listItemQc![index].updateAt!))}',
                                             textAlign: TextAlign.start,
                                             style: const TextStyle(
                                                 color: Colors.black,
@@ -814,7 +832,7 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
                                                 fontSize: 12),
                                           ),
                                           Text(
-                                            'Jam : ${DateFormat('H.mm').format(DateTime.parse(dataFormPR![index].tanggalSelesai!))}',
+                                            'Jam : ${DateFormat('H.mm').format(DateTime.parse(listItemQc![index].updateAt!))}',
                                             textAlign: TextAlign.start,
                                             style: const TextStyle(
                                                 color: Colors.black,
@@ -833,18 +851,18 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
                                         child: SingleChildScrollView(
                                           scrollDirection: Axis.vertical,
                                           child: dataTableForm(
-                                              _listDetailItemQc!
+                                              listDetailItemQc!
                                                   .where((element) =>
                                                       element.noQc
                                                           .toString()
                                                           .toLowerCase() ==
-                                                      dataFormPR![index]
+                                                      listItemQc![index]
                                                           .noQc
                                                           .toString()
                                                           .toLowerCase())
                                                   .toList(),
                                               'read',
-                                              _listDetailItemQc![index]
+                                              listDetailItemQc![index]
                                                   .jenisBatu!),
                                         ),
                                       ),

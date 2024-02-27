@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:form_designer/api/api_constant.dart';
 import 'package:form_designer/global/global.dart';
 // ignore: unused_import
@@ -219,7 +220,7 @@ class _HomeScreenQcState extends State<HomeScreenQc> {
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10),
                     child: Text(
-                      'Qtyr /\n Diterima',
+                      'Qty /\n Diterima',
                       maxLines: 2, // Atur maksimal 2 baris
                     ),
                   ),
@@ -246,50 +247,24 @@ class _HomeScreenQcState extends State<HomeScreenQc> {
           DataCell(Container(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Center(child: Text(data[i].berat)))),
-          DataCell(
-            Center(
-              child: TextFormField(
-                initialValue: data[i].kadar,
-                textAlign:
-                    TextAlign.center, // Menengahkan teks secara horizontal
-                onChanged: (value) {
-                  setState(() {
-                    dumKadar = value;
-                    selectListItem[i].isNotEmpty
-                        ? selectListItem[i][3] = '$dumKadar'
-                        : null;
-                  });
-                  onChangedCallback(); // Panggil onChangedCallback di sini
-                  print(selectListItem);
-                },
-              ),
-            ),
-          ),
-          DataCell(
-            Center(
-              child: TextFormField(
-                initialValue: data[i].color,
-                textAlign:
-                    TextAlign.center, // Menengahkan teks secara horizontal
-                onChanged: (value) {
-                  setState(() {
-                    dumColor = value;
-                    selectListItem[i].isNotEmpty
-                        ? selectListItem[i][4] = '$dumColor'
-                        : null;
-                  });
-                  onChangedCallback(); // Panggil onChangedCallback di sini
-                  print(selectListItem);
-                },
-              ),
-            ),
-          ),
+          DataCell(Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Center(child: Text(data[i].kadar)))),
+          DataCell(Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Center(child: Text(data[i].color)))),
           DataCell(
             Center(
               child: TextFormField(
                 initialValue: dumDiterima,
-                textAlign:
-                    TextAlign.center, // Menengahkan teks secara horizontal
+                textAlign: TextAlign.center,
+                //* HINTS Menengahkan teks secara horizontal
+                keyboardType: const TextInputType.numberWithOptions(
+                    decimal: true), // Mengizinkan input nilai desimal
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.allow(RegExp(
+                      r'^\d+\.?\d{0,3}')), // Membatasi input agar sesuai format desimal
+                ],
                 onChanged: (value) {
                   setState(() {
                     dumDiterima = value;

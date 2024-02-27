@@ -10,6 +10,7 @@ import 'package:form_designer/api/api_constant.dart';
 import 'package:form_designer/global/global.dart';
 import 'package:form_designer/mainScreen/sideScreen/side_screen_pembelian.dart';
 import 'package:form_designer/pembelian/form_pr_model.dart';
+import 'package:form_designer/qc/modelQc/kualitasBatuModel.dart';
 import 'package:http/http.dart' as http;
 import 'package:form_designer/pembelian/list_item_model.dart';
 import 'package:overlay_support/overlay_support.dart';
@@ -24,12 +25,16 @@ class AddFormPr extends StatefulWidget {
 }
 
 class _AddFormPrState extends State<AddFormPr> {
+  String? kualitasBatu;
+  List<KualitasBatuModel>? listKualitasBatu;
   var satuan = '';
+  String? jenisBatu = 'ROUND';
   int limitItem = 0;
   int totalItem = 0;
   int totalQty = 0;
   double totalBerat = 0.0;
   bool isCheckedDiamond = false;
+  bool isCheckedRound = false;
   bool isCheckedEmas = false;
   bool isCheckedBarangBerharga = false;
   String? jenisFormItem = '';
@@ -69,6 +74,28 @@ class _AddFormPrState extends State<AddFormPr> {
     } else {
       print(response.body);
       throw Exception('Unexpected error occured!');
+    }
+    await getKualitasBatu();
+  }
+
+  getKualitasBatu() async {
+    try {
+      final response = await http.get(
+          Uri.parse(ApiConstants.baseUrl + ApiConstants.getListKualitasBatu));
+      if (response.statusCode == 200) {
+        List jsonResponse = json.decode(response.body);
+        var alldata = jsonResponse
+            .map((data) => KualitasBatuModel.fromJson(data))
+            .toList();
+        setState(() {
+          listKualitasBatu = alldata.toList();
+        });
+      } else {
+        throw Exception('Unexpected error occured!');
+      }
+    } catch (c) {
+      // ignore:
+      print('err get data jenisBatu = $c');
     }
   }
 
@@ -257,25 +284,50 @@ class _AddFormPrState extends State<AddFormPr> {
             ),
             Row(
               children: [
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Checkbox(
-                        value: isCheckedDiamond,
-                        onChanged: (value) {
-                          setState(() {
-                            isCheckedDiamond = value!;
-                            if (isCheckedDiamond) {
-                              satuan = 'Carat';
-                              jenisFormItem = 'Diamond';
-                              isCheckedEmas = false;
-                              isCheckedBarangBerharga = false;
-                            }
-                          });
-                        },
-                      ),
-                      const Text('Diamond'),
-                    ]),
+                Column(
+                  children: [
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Checkbox(
+                            value: isCheckedDiamond,
+                            onChanged: (value) {
+                              setState(() {
+                                isCheckedDiamond = value!;
+                                if (isCheckedDiamond) {
+                                  satuan = 'Carat';
+                                  jenisFormItem = 'Diamond';
+                                  isCheckedEmas = false;
+                                  isCheckedBarangBerharga = false;
+                                }
+                              });
+                            },
+                          ),
+                          const Text('Diamond'),
+                        ]),
+                    isCheckedDiamond == false
+                        ? const SizedBox()
+                        : Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                                Checkbox(
+                                  value: isCheckedRound,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      isCheckedRound = value!;
+                                      if (isCheckedRound) {
+                                        jenisBatu = 'FANCY';
+                                      } else {
+                                        jenisBatu = 'ROUND';
+                                      }
+                                      print(jenisBatu);
+                                    });
+                                  },
+                                ),
+                                const Text('Fancy ?'),
+                              ]),
+                  ],
+                ),
                 SizedBox(width: wid),
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -500,34 +552,52 @@ class _AddFormPrState extends State<AddFormPr> {
                                     },
                                   ),
                                 )
-                              : SizedBox(width: wid),
-                          SizedBox(width: wid),
-                          isCheckedDiamond == false
-                              ? SizedBox(
+                              : SizedBox(
                                   height: 65,
                                   width: widCrt,
-                                  child: TextFormField(
-                                    style: const TextStyle(
-                                        fontSize: 14, color: Colors.black),
-                                    textInputAction: TextInputAction.next,
-                                    decoration: InputDecoration(
-                                      labelText: "Color",
-                                      border: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              color: Colors.black),
-                                          borderRadius:
-                                              BorderRadius.circular(5.0)),
-                                    ),
+                                  child: DropdownButtonFormField(
+                                    value: kualitasBatu,
+                                    items: [
+                                      //* hints looping sederhana
+                                      for (var item in listKualitasBatu!)
+                                        DropdownMenuItem(
+                                          value: item.kualitasBatu,
+                                          child: Text(item.kualitasBatu!),
+                                        ),
+                                    ],
                                     onChanged: (item) {
-                                      dumColor = item;
+                                      dumKadar = item;
                                       selectListItem[i].isNotEmpty
-                                          ? selectListItem[i][4] = '$dumColor'
+                                          ? selectListItem[i][3] = '$dumKadar'
                                           : null;
                                       print(selectListItem);
                                     },
                                   ),
-                                )
-                              : SizedBox(width: wid),
+                                ),
+                          SizedBox(width: wid),
+                          SizedBox(
+                            height: 65,
+                            width: widCrt,
+                            child: TextFormField(
+                              style: const TextStyle(
+                                  fontSize: 14, color: Colors.black),
+                              textInputAction: TextInputAction.next,
+                              decoration: InputDecoration(
+                                labelText: "Color",
+                                border: OutlineInputBorder(
+                                    borderSide:
+                                        const BorderSide(color: Colors.black),
+                                    borderRadius: BorderRadius.circular(5.0)),
+                              ),
+                              onChanged: (item) {
+                                dumColor = item;
+                                selectListItem[i].isNotEmpty
+                                    ? selectListItem[i][4] = '$dumColor'
+                                    : null;
+                                print(selectListItem);
+                              },
+                            ),
+                          )
                         ],
                       ),
                     ),
@@ -628,8 +698,8 @@ class _AddFormPrState extends State<AddFormPr> {
                                           selectListItem[i][0],
                                           selectListItem[i][1],
                                           selectListItem[i][2],
-                                          '',
-                                          '');
+                                          selectListItem[i][3],
+                                          selectListItem[i][4]);
                                 }
                                 sharedPreferences!.getString('divisi') ==
                                         'admin'
@@ -689,6 +759,7 @@ class _AddFormPrState extends State<AddFormPr> {
       'total_qty': totalQty.toString(),
       'jenis_form': jenisForm.toString(),
       'jenis_item': jenisFormItem.toString(),
+      'jenis_batu': jenisBatu.toString(),
     };
     final response = await http.post(
         Uri.parse('${ApiConstants.baseUrl}${ApiConstants.postFormPR}'),

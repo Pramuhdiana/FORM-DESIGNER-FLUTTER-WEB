@@ -11,6 +11,10 @@ class ListItemPRModel {
   final String? created_at;
   final String? fixQty;
   final String? fixBerat;
+  final String? receiveBerat;
+  final String? noQc;
+  final String? updateAt;
+  final String? notesReject;
 
   ListItemPRModel({
     required this.id,
@@ -23,6 +27,10 @@ class ListItemPRModel {
     this.created_at,
     this.fixQty,
     this.fixBerat,
+    this.receiveBerat,
+    this.noQc,
+    this.updateAt,
+    this.notesReject,
   });
 
   factory ListItemPRModel.fromJson(Map<String, dynamic> json) {
@@ -35,8 +43,12 @@ class ListItemPRModel {
       kadar: json["kadar"].toString(),
       color: json["color"].toString(),
       created_at: json["created_at"].toString(),
-      fixQty: (json["fixQty"] ?? '').toString(),
-      fixBerat: (json["fixBerat"] ?? '').toString(),
+      fixQty: (json["fixQty"] ?? '0').toString(),
+      fixBerat: (json["fixBerat"] ?? '0').toString(),
+      receiveBerat: (json["receiveBerat"] ?? '0').toString(),
+      noQc: json["noQc"] ?? '',
+      updateAt: json["updated_at"] ?? '',
+      notesReject: json["notesReject"] ?? '',
     );
   }
   Map<String, dynamic> toJson() {
@@ -50,7 +62,11 @@ class ListItemPRModel {
     data['color'] = color;
     data['created_at'] = created_at;
     data['fixQty'] = fixQty;
-    data['fixBerat'] = qty;
+    data['fixBerat'] = fixBerat;
+    data['receiveBerat'] = receiveBerat;
+    data['noQc'] = noQc;
+    data['updated_at'] = updateAt;
+    data['notesReject'] = notesReject;
     return data;
   }
 }

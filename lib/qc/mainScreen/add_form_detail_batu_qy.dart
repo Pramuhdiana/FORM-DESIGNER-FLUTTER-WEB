@@ -5,10 +5,12 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:form_designer/api/api_constant.dart';
 import 'package:form_designer/global/global.dart';
 import 'package:form_designer/pembelian/form_pr_model.dart';
-import 'package:form_designer/qc/modelQc/formQcModel.dart';
+import 'package:form_designer/pembelian/list_form_pr_model.dart';
+import 'package:form_designer/qc/modelQc/itemQcModel.dart';
 import 'package:form_designer/qc/modelQc/jenisBatuModel.dart';
 import 'package:form_designer/qc/modelQc/kualitasBatuModel.dart';
 import 'package:form_designer/qc/modelQc/lebarModel.dart';
@@ -20,11 +22,19 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:overlay_support/overlay_support.dart';
 
+// ignore: must_be_immutable
 class FormDetailBatuQc extends StatefulWidget {
   final VoidCallback? onCloseForm;
   final FormPrModel? dataFormPr;
+  int? countItem;
+  List<ListItemPRModel>? listItemPR;
 
-  const FormDetailBatuQc({Key? key, this.onCloseForm, this.dataFormPr})
+  FormDetailBatuQc(
+      {Key? key,
+      this.onCloseForm,
+      this.dataFormPr,
+      this.countItem,
+      this.listItemPR})
       : super(key: key);
   @override
   // ignore: library_private_types_in_public_api
@@ -33,11 +43,13 @@ class FormDetailBatuQc extends StatefulWidget {
 
 class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
   bool isForm = false;
+  bool isloadingItem = false;
   TextEditingController ukuranBatu = TextEditingController();
   TextEditingController notesReject = TextEditingController();
   // TextEditingController jenisBatu = TextEditingController();
   String? jenisBatu;
   String? kodeBatu;
+  int? countItemPr;
   String? kualitasBatu;
   bool isLoading = false;
   List<String> dataRow = [];
@@ -49,7 +61,9 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
   List<KualitasBatuModel>? listKualitasBatu;
   String? tglOut;
   int no = 0;
+  String? idItemPr;
   List<List<String>> selectListItemRound = [];
+  List<List<dynamic>> indexSelectItemRound = [];
   List<List<String>> selectListItemFancy = [];
   String? ukuran = '';
   String? qty = '';
@@ -72,6 +86,11 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
   double totalBerat = 0.0;
   String? noPr;
   double? lebarLayar;
+
+  List<bool> _isOpen = []; // List untuk mengatur status container
+  List<ListItemPRModel>? listItemPr;
+  List<ItemQcModel>? listDetailItemPR;
+
   @override
   void initState() {
     super.initState();
@@ -79,7 +98,83 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
     kebutuhanBerat = widget.dataFormPr!.fixTotalBerat.toString();
     idForm = widget.dataFormPr!.id.toString();
     noPr = widget.dataFormPr!.noPR.toString();
+    jenisBatu = widget.dataFormPr!.jenisBatu.toString();
+    countItemPr = widget.countItem;
+    _isOpen = List.generate(
+        countItemPr!, (index) => false); // List untuk mengatur status container
     _getData();
+  }
+
+  callData(int index) async {
+    setState(() {
+      isloadingItem = true;
+    });
+    List<ItemQcModel>? filterBynoQc;
+    if (jenisBatu.toString().toLowerCase() != 'round') {
+      await getJenisBatu(index);
+    }
+    for (int i = 0; i < _isOpen.length; i++) {
+      if (i != index) {
+        _isOpen[i] = false;
+      }
+    }
+    idItemPr = listItemPr![index].id.toString();
+
+    if (double.parse(listItemPr![index].receiveBerat!) > 0
+        // &&
+        //     _isOpen[index] == false
+        ) {
+      notesReject.text = listItemPr![index].notesReject.toString();
+      filterBynoQc = listDetailItemPR!
+          .where((element) => element.noQc == listItemPr![index].noQc)
+          .toList();
+      for (var i = 0; i < filterBynoQc.length; i++) {
+        if (jenisBatu.toString().toLowerCase() == 'round') {
+          ukuran = '${filterBynoQc[i].item}';
+          qty = '${filterBynoQc[i].qty}';
+          berat = '${filterBynoQc[i].berat}';
+          caratPcs = '${filterBynoQc[i].caratPcs}';
+          String idItem = '${filterBynoQc[i].id}';
+          selectListItemRound.add([
+            '$ukuran',
+            '$qty',
+            '$berat',
+            '$caratPcs',
+            idItem,
+          ]);
+          print('round = $selectListItemRound');
+        } else {
+          kodeMdbc = '${filterBynoQc[i].item}';
+          panjang = '${filterBynoQc[i].panjang}';
+          lebar = '${filterBynoQc[i].lebar}';
+          qtyFancy = '${filterBynoQc[i].qty}';
+          beratFancy = '${filterBynoQc[i].berat}';
+          String idItem = '${filterBynoQc[i].id}';
+
+          selectListItemFancy.add([
+            '$kodeMdbc',
+            '$panjang',
+            '$lebar',
+            '$qtyFancy',
+            '$beratFancy',
+            idItem,
+          ]);
+          print('fancy = $selectListItemFancy');
+        }
+      }
+
+      no += filterBynoQc.length;
+      _isOpen[index] = !_isOpen[index];
+      print('mode edit');
+      print('count table akhir = $no');
+    } else {
+      _isOpen[index] = !_isOpen[index];
+      print('mode new');
+      print('count table akhir = $no');
+    }
+    setState(() {
+      isloadingItem = false;
+    });
   }
 
   String getMonthName(String month) {
@@ -113,7 +208,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
     }
   }
 
-  dataTableForm(String jenisBatu, int count) {
+  dataTableForm(String mode, String jenisBatu, int count, int index) {
     return DataTable(
         headingTextStyle:
             const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
@@ -124,14 +219,18 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
         columnSpacing: 0,
         headingRowHeight: 50,
         // dataRowMaxHeight: 50,
-        columns: columnsData(jenisBatu),
+        columns: columnsData(jenisBatu, index),
         border: TableBorder.all(),
-        rows: rowsData(jenisBatu, () {
-          setState(() {});
-        }, count));
+        rows: mode == 'edit'
+            ? rowsEditData(index, jenisBatu, () {
+                setState(() {});
+              }, count)
+            : rowsData(index, jenisBatu, () {
+                setState(() {});
+              }, count));
   }
 
-  List<DataColumn> columnsData(String jenisBatu) {
+  List<DataColumn> columnsData(String jenisBatu, int index) {
     return jenisBatu.toString().toLowerCase() == 'round'
         ? [
             const DataColumn(
@@ -232,7 +331,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
   }
 
   List<DataRow> rowsData(
-      String jenisBatu, Function() onChangedCallback, int count) {
+      int index, String jenisBatu, Function() onChangedCallback, int count) {
     return jenisBatu.toString().toLowerCase() == 'round'
         ? [
             for (var i = 0; i < count; i++)
@@ -245,8 +344,10 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                 DataCell(
                   Center(
                     child: DropdownSearch<UkuranRoundModel>(
-                      asyncItems: (String? filter) =>
-                          getListUkuranRound(kualitasBatu, filter),
+                      asyncItems: (String? filter) => getListUkuranRound(
+                          listItemPr![index].item!,
+                          listItemPr![index].kadar!,
+                          filter!),
                       popupProps: PopupPropsMultiSelection.modalBottomSheet(
                         showSelectedItems: true,
                         itemBuilder: _listUkuranRound,
@@ -285,6 +386,13 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                       // initialValue: data[i].kadar,
                       textAlign: TextAlign
                           .center, // Menengahkan teks secara horizontal
+                      keyboardType: const TextInputType.numberWithOptions(
+                          decimal:
+                              true), //* hHINTS Mengizinkan input nilai desimal
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.allow(RegExp(
+                            r'^\d+\.?\d{0,3}')), // Membatasi input agar sesuai format desimal
+                      ],
                       onChanged: (value) {
                         berat = value;
                         int resultQty = (double.tryParse(value)! /
@@ -421,18 +529,288 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
           ];
   }
 
+  List<DataRow> rowsEditData(
+      int index, String jenisBatu, Function() onChangedCallback, int count) {
+    return jenisBatu.toString().toLowerCase() == 'round'
+        ? [
+            for (var i = 0; i < count; i++)
+              //? nomor
+              DataRow(cells: [
+                DataCell(Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Center(child: Text('${i + 1}')))),
+                //? ukuran batu round
+                DataCell(
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 8.0, horizontal: 10),
+                    child: InkWell(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              content: DropdownSearch<UkuranRoundModel>(
+                                asyncItems: (String? filter) =>
+                                    getListUkuranRound(
+                                  listItemPr![index].item!,
+                                  listItemPr![index].kadar!,
+                                  filter!,
+                                ),
+                                popupProps:
+                                    PopupPropsMultiSelection.modalBottomSheet(
+                                  showSelectedItems: true,
+                                  itemBuilder: _listUkuranRound,
+                                  showSearchBox: true,
+                                ),
+                                compareFn: (item, sItem) =>
+                                    item.idRound == sItem.idRound,
+                                onChanged: (item) {
+                                  ukuran = item!.ukuranRound;
+                                  caratPcs = item.caratPcs;
+                                  setState(() {
+                                    selectListItemRound[i][0] = '$ukuran';
+                                    selectListItemRound[i][3] = '$caratPcs';
+                                    print(selectListItemRound);
+                                  });
+                                  Navigator.of(context)
+                                      .pop(); // Close the dialog
+                                },
+                                dropdownDecoratorProps:
+                                    const DropDownDecoratorProps(
+                                  dropdownSearchDecoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          const SizedBox(width: 10),
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              selectListItemRound[i][0],
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          const Expanded(
+                            flex: 1,
+                            child: Icon(Icons.arrow_drop_down),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+
+                //? qty round
+                DataCell(Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Center(child: Text((selectListItemRound[i][1]))))),
+
+                //? berat round
+                DataCell(
+                  Center(
+                    child: TextFormField(
+                      initialValue: selectListItemRound[i][2],
+                      textAlign: TextAlign
+                          .center, // Menengahkan teks secara horizontal
+                      keyboardType: const TextInputType.numberWithOptions(
+                          decimal:
+                              true), //* hHINTS Mengizinkan input nilai desimal
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.allow(RegExp(
+                            r'^\d+\.?\d{0,3}')), // Membatasi input agar sesuai format desimal
+                      ],
+                      onChanged: (value) {
+                        berat = value;
+                        int resultQty = (double.tryParse(value)! /
+                                double.parse(selectListItemRound[i][3]))
+                            .round();
+
+                        print(
+                            'value = $value berat = $berat total : $sumBerat');
+                        setState(() {
+                          // if (double.parse(kebutuhanBerat!) < sumBerat) {
+                          //   showDialog<String>(
+                          //       context: context,
+                          //       builder: (BuildContext context) =>
+                          //           const AlertDialog(
+                          //             title: Text(
+                          //               'Total carat melibihi yang seharusnya diterima',
+                          //             ),
+                          //           ));
+                          //   berat = '0';
+                          //   resultQty = 0;
+                          // }
+                          qty = resultQty.toString();
+                          selectListItemRound[i][1] = '$qty';
+                          selectListItemRound[i][2] = '$berat';
+                          print(selectListItemRound);
+                        });
+                        // onChangedCallback(); // Panggil onChangedCallback di sini
+                        // print(selectListItem);
+                      },
+                    ),
+                  ),
+                ),
+
+                DataCell(Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Center(child: Text(selectListItemRound[i][3])))),
+              ]),
+          ]
+        : [
+            for (var i = 0; i < count; i++)
+              //? nomor
+              DataRow(cells: [
+                DataCell(Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Center(child: Text('${i + 1}')))),
+                //? kode mdbc
+                DataCell(Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Center(child: Text(selectListItemFancy[i][0])))),
+
+                //? panjang fancy
+                DataCell(
+                  Center(
+                    child: TextFormField(
+                      initialValue: selectListItemFancy[i][1],
+                      textAlign: TextAlign
+                          .center, // Menengahkan teks secara horizontal
+                      keyboardType: const TextInputType.numberWithOptions(
+                          decimal:
+                              true), //* hHINTS Mengizinkan input nilai desimal
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.allow(RegExp(
+                            r'^\d+\.?\d{0,3}')), // Membatasi input agar sesuai format desimal
+                      ],
+                      onChanged: (panjangValue) {
+                        final double panjang =
+                            double.tryParse(panjangValue) ?? 0;
+                        resultPanjang = calculateResultPanjang(panjang);
+
+                        setState(() {
+                          selectListItemFancy[i][1] = '$panjang';
+                          selectListItemFancy[i][0] =
+                              '$kodeBatu$resultPanjang$kualitasBatu$resultLebar';
+                          print('fancy = $selectListItemFancy');
+                        });
+                      },
+                    ),
+                  ),
+                ),
+                //? x
+                DataCell(Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: const Center(child: Text('x')))),
+
+                //? lebar fancy
+                DataCell(
+                  Center(
+                    child: TextFormField(
+                      initialValue: selectListItemFancy[i][2],
+                      textAlign: TextAlign
+                          .center, // Menengahkan teks secara horizontal
+                      keyboardType: const TextInputType.numberWithOptions(
+                          decimal:
+                              true), //* hHINTS Mengizinkan input nilai desimal
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.allow(RegExp(
+                            r'^\d+\.?\d{0,3}')), // Membatasi input agar sesuai format desimal
+                      ],
+                      onChanged: (lebarValue) {
+                        final double lebar = double.tryParse(lebarValue) ?? 0;
+                        resultLebar = calculateResultLebar(lebar);
+
+                        setState(() {
+                          selectListItemFancy[i][2] = '$lebar';
+                          selectListItemFancy[i][0] =
+                              '$kodeBatu$resultPanjang$kualitasBatu$resultLebar';
+                          print('fancy = $selectListItemFancy');
+                        });
+                      },
+                    ),
+                  ),
+                ),
+                //? qty fancy
+                DataCell(
+                  Center(
+                    child: TextFormField(
+                      initialValue: selectListItemFancy[i][3],
+                      textAlign: TextAlign
+                          .center, // Menengahkan teks secara horizontal
+                      keyboardType: const TextInputType.numberWithOptions(
+                          decimal:
+                              true), //* hHINTS Mengizinkan input nilai desimal
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.allow(RegExp(
+                            r'^\d+\.?\d{0,3}')), // Membatasi input agar sesuai format desimal
+                      ],
+                      onChanged: (value) {
+                        qtyFancy = value;
+                        setState(() {
+                          selectListItemFancy[i][3] = '$qtyFancy';
+                          print('fancy = $selectListItemFancy');
+                        });
+                      },
+                    ),
+                  ),
+                ),
+                //? berat fancy
+                DataCell(
+                  Center(
+                    child: TextFormField(
+                      initialValue: selectListItemFancy[i][4],
+                      textAlign: TextAlign
+                          .center, // Menengahkan teks secara horizontal
+                      keyboardType: const TextInputType.numberWithOptions(
+                          decimal:
+                              true), //* hHINTS Mengizinkan input nilai desimal
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.allow(RegExp(
+                            r'^\d+\.?\d{0,3}')), // Membatasi input agar sesuai format desimal
+                      ],
+                      onChanged: (value) {
+                        beratFancy = value;
+                        setState(() {
+                          selectListItemFancy[i][4] = '$beratFancy';
+                          print('fancy = $selectListItemFancy');
+                        });
+                      },
+                    ),
+                  ),
+                ),
+              ]),
+          ];
+  }
+
   //* HINTS get data dan filter langsung ke API
   Future<List<UkuranRoundModel>> getListUkuranRound(
-      kualitasBatu, filter) async {
+      String lot, String kualitasBatu, String filter) async {
+    print('$lot, $kualitasBatu');
     var filterKualitas = kualitasBatu.toString().toLowerCase();
     if (kualitasBatu.toString().toLowerCase() == 'zr / zs') {
       filterKualitas = 'zr';
     }
     var response = await Dio().get(
       ApiConstants.baseUrl + ApiConstants.getListUkuranRound,
-      queryParameters: {"filter": filterKualitas + filter.toLowerCase()},
+      queryParameters: {
+        "jenisRound": filterKualitas,
+        "lot": lot,
+        "filter": filter.toLowerCase()
+      },
     );
+
     final data = response.data;
+
     if (data != null) {
       return UkuranRoundModel.fromJsonList(data);
     }
@@ -443,7 +821,8 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
     setState(() {
       isLoading = true;
     });
-    await getCountQc();
+    // listItemPr = widget.listItemPR;
+    // await getCountQc();
 
     // await getPanjang();
     //* hinst start menyimpan list string lokal ke json
@@ -457,7 +836,6 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
     }
     //* end fungsi
     await getLebar();
-    // await getJenisBatu();
     //* hinst start menyimpan list string lokal ke json
     List<String>? jenisBatuStrings =
         sharedPreferences!.getStringList('jenisBatu');
@@ -468,37 +846,78 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
           .toList();
     }
     //* end fungsi
-    await getKualitasBatu();
+    // await getKualitasBatu();
+    try {
+      final responseList = await http.get(
+          Uri.parse('${ApiConstants.baseUrl}${ApiConstants.getListFormPR}'));
+
+      if (responseList.statusCode == 200) {
+        List jsonResponse = json.decode(responseList.body);
+
+        var dataList = jsonResponse
+            .map((dataList) => ListItemPRModel.fromJson(dataList))
+            .toList();
+        setState(() {
+          listItemPr = dataList;
+        });
+
+        print('list item pr oke');
+      } else {
+        print(responseList.body);
+        throw Exception('Unexpected error occured!');
+      }
+    } catch (c) {
+      print('err get form list item pr $c');
+    }
+
+    var filtBynoPR = listItemPr!
+        .where((element) =>
+            element.noPr.toString().toLowerCase() ==
+            noPr.toString().toLowerCase())
+        .toList();
+
+    //get listnya
+    final responseList = await http
+        .get(Uri.parse('${ApiConstants.baseUrl}${ApiConstants.getItemQc}'));
+
+    if (responseList.statusCode == 200) {
+      List jsonResponse = json.decode(responseList.body);
+
+      var dataList = jsonResponse
+          .map((dataList) => ItemQcModel.fromJson(dataList))
+          .toList();
+      listDetailItemPR = dataList;
+    }
     setState(() {
+      listItemPr = filtBynoPR;
       isLoading = false;
     });
   }
 
-  getCountQc() async {
-    try {
-      final response = await http
-          .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getCountQc));
-      if (response.statusCode == 200) {
-        List jsonResponse = json.decode(response.body);
-        var allData =
-            jsonResponse.map((data) => QcModel.fromJson(data)).toList();
-        int number = allData.length + 1;
-        nomorQc = number.toString().padLeft(5, '0');
-        setState(() {
-          DateTime now = DateTime.now();
+  // getCountQc() async {
+  //   try {
+  //     final response = await http
+  //         .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getCountQc));
+  //     if (response.statusCode == 200) {
+  //       List jsonResponse = json.decode(response.body);
+  //       var allData =
+  //           jsonResponse.map((data) => QcModel.fromJson(data)).toList();
+  //       int number = allData.length + 1;
+  //       nomorQc = number.toString().padLeft(5, '0');
+  //       setState(() {
+  //         // DateTime now = DateTime.now();
 
-          String month = now.month.toString().padLeft(2, '0');
-          String year = now.year.toString();
-          noQc =
-              '${widget.dataFormPr!.noPR}/QC/${getMonthName(month)}/$year/$nomorQc';
-        });
-      } else {
-        throw Exception('Unexpected error occured!');
-      }
-    } catch (c) {
-      print('err get data panjang = $c');
-    }
-  }
+  //         // String month = now.month.toString().padLeft(2, '0');
+  //         // String year = now.year.toString();
+  //         // noQc = '${widget.dataFormPr!.noPR}/QC/${getMonthName(month)}/$year';
+  //       });
+  //     } else {
+  //       throw Exception('Unexpected error occured!');
+  //     }
+  //   } catch (c) {
+  //     print('err get data panjang = $c');
+  //   }
+  // }
 
   getPanjang() async {
     try {
@@ -539,7 +958,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
     }
   }
 
-  getJenisBatu() async {
+  getJenisBatu(int i) async {
     try {
       final response = await http
           .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getListJenisBatu));
@@ -547,8 +966,13 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
         List jsonResponse = json.decode(response.body);
         var alldata =
             jsonResponse.map((data) => JenisBatuModel.fromJson(data)).toList();
+        var filterByJenis = alldata
+            .where((element) =>
+                element.jenisBatu.toString().toLowerCase() ==
+                listItemPr![i].item.toString().toLowerCase())
+            .toList();
         setState(() {
-          listJenisBatu = alldata.toList();
+          kodeBatu = filterByJenis.first.kodeBatu.toString();
         });
       } else {
         throw Exception('Unexpected error occured!');
@@ -559,26 +983,26 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
     }
   }
 
-  getKualitasBatu() async {
-    try {
-      final response = await http.get(
-          Uri.parse(ApiConstants.baseUrl + ApiConstants.getListKualitasBatu));
-      if (response.statusCode == 200) {
-        List jsonResponse = json.decode(response.body);
-        var alldata = jsonResponse
-            .map((data) => KualitasBatuModel.fromJson(data))
-            .toList();
-        setState(() {
-          listKualitasBatu = alldata.toList();
-        });
-      } else {
-        throw Exception('Unexpected error occured!');
-      }
-    } catch (c) {
-      // ignore:
-      print('err get data jenisBatu = $c');
-    }
-  }
+  // getKualitasBatu() async {
+  //   try {
+  //     final response = await http.get(
+  //         Uri.parse(ApiConstants.baseUrl + ApiConstants.getListKualitasBatu));
+  //     if (response.statusCode == 200) {
+  //       List jsonResponse = json.decode(response.body);
+  //       var alldata = jsonResponse
+  //           .map((data) => KualitasBatuModel.fromJson(data))
+  //           .toList();
+  //       setState(() {
+  //         listKualitasBatu = alldata.toList();
+  //       });
+  //     } else {
+  //       throw Exception('Unexpected error occured!');
+  //     }
+  //   } catch (c) {
+  //     // ignore:
+  //     print('err get data jenisBatu = $c');
+  //   }
+  // }
 
   refresh() {
     //? hints Panggil onCloseForm untuk menutup form
@@ -587,8 +1011,6 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
 
   @override
   Widget build(BuildContext context) {
-    double widhtMAX = MediaQuery.of(context).size.width;
-    double widValue = 250;
     return isLoading == true
         ? Center(
             child: Container(
@@ -603,7 +1025,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
             child: Column(
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     InkWell(
                       onTap: () {
@@ -611,928 +1033,938 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                       },
                       child: SizedBox(
                         width: 50,
-                        child: Lottie.asset("loadingJSON/backbutton.json",
-                            fit: BoxFit.cover),
+                        child: Lottie.asset(
+                          "loadingJSON/backbutton.json",
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                   ],
                 ),
                 Expanded(
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.vertical,
-                    child: Container(
-                      width: widhtMAX,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(
-                            color: Colors
-                                .white), // Atur warna dan ketebalan garis sesuai kebutuhan
-                        borderRadius: BorderRadius.circular(
-                            10), // Atur sudut border sesuai kebutuhan
-                      ),
-                      padding:
-                          const EdgeInsets.only(top: 26, left: 20, right: 20),
-                      child: Column(
-                        children: [
-                          Container(
-                            color: Colors.grey.shade400,
-                            child: const Text(
-                              'LEMBAR QUALITY CONTROL',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 26),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child:
-                                LayoutBuilder(builder: (context, constraints) {
-                              print(constraints.maxWidth);
-                              lebarLayar = constraints.maxWidth;
+                  // Tambahkan Expanded agar ListView dapat memanfaatkan sisa ruang yang tersedia
+                  child: Container(
+                    color: Colors.white,
+                    child: ListView.builder(
+                      itemCount: countItemPr,
+                      itemBuilder: (context, index) {
+                        return Column(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              child: ListTile(
+                                title: listItemPr![index].receiveBerat != '0'
+                                    ? Container(
+                                        color: Colors.green,
+                                        child: Text(
+                                          '${listItemPr![index].item} Tersimpan',
+                                          style: const TextStyle(
+                                              fontSize: 20,
+                                              color: Colors.black),
+                                        ),
+                                      )
+                                    : Text(
+                                        '${listItemPr![index].item} Tap to detail'),
+                                onTap: () {
+                                  selectListItemFancy.clear();
+                                  selectListItemRound.clear();
+                                  no = 0;
+                                  print('count table awal = $no');
 
-                              //* hints fungsi multi screen
-                              if (constraints.maxWidth < 900) {
-                                return Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    // ignore: avoid_unnecessary_containers
-                                    Container(
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              const SizedBox(
-                                                  width: 100,
-                                                  child: Text('NO. QC')),
-                                              const SizedBox(
-                                                  width: 30, child: Text(':')),
-                                              Container(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 0),
-                                                  width: widValue,
-                                                  child: Text(noQc))
-                                            ],
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              const SizedBox(
-                                                  width: 100,
-                                                  child: Text('TGL QC IN')),
-                                              const SizedBox(
-                                                  width: 30, child: Text(':')),
-                                              Container(
-                                                padding: const EdgeInsets.only(
-                                                    left: 0),
-                                                width: widValue,
-                                                child: Text(DateFormat(
-                                                        'dd/MMMM/yyyy HH:ss')
-                                                    .format(DateTime.parse(
-                                                        widget.dataFormPr!
-                                                            .tanggalInQc!
-                                                            .toString()))),
-                                              )
-                                            ],
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              const SizedBox(
-                                                  width: 100,
-                                                  child: Text('TGL QC OUT')),
-                                              const SizedBox(
-                                                  width: 30, child: Text(':')),
-                                              Container(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 0),
-                                                  width: widValue,
-                                                  child: Text('$tglOut'))
-                                            ],
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              const SizedBox(
-                                                  width: 100,
-                                                  child: Text('VENDOR')),
-                                              const SizedBox(
-                                                  width: 30, child: Text(':')),
-                                              Container(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 0),
-                                                  width: widValue,
-                                                  child: Text(widget
-                                                      .dataFormPr!.vendor
-                                                      .toString()))
-                                            ],
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              const SizedBox(
-                                                  width: 100,
-                                                  child: Text('KEBUTUHAN')),
-                                              const SizedBox(
-                                                  width: 30, child: Text(':')),
-                                              SizedBox(
-                                                  width: widValue,
-                                                  child: Text(widget
-                                                      .dataFormPr!.fixTotalBerat
-                                                      .toString()))
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    // ignore: avoid_unnecessary_containers
-                                    Container(
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              const SizedBox(
-                                                  width: 100,
-                                                  child: Text('UKURAN BATU')),
-                                              const SizedBox(
-                                                  width: 30, child: Text(':')),
-                                              Container(
-                                                padding: const EdgeInsets.only(
-                                                    left: 0),
-                                                width: 150,
-                                                child: TextFormField(
-                                                  style: const TextStyle(
-                                                      fontSize: 14,
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                  textInputAction:
-                                                      TextInputAction.next,
-                                                  controller: ukuranBatu,
-                                                  decoration: InputDecoration(
-                                                    filled: true,
-                                                    fillColor: Colors.white,
-                                                    labelText: "",
-                                                    border: OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(5.0)),
-                                                  ),
-                                                  validator: (value) {
-                                                    if (value!.isEmpty) {
-                                                      return 'Wajib diisi *';
-                                                    }
-                                                    return null;
-                                                  },
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              const SizedBox(
-                                                  width: 100,
-                                                  child: Text('JENIS BATU')),
-                                              const SizedBox(
-                                                  width: 30, child: Text(':')),
-                                              Container(
-                                                padding: const EdgeInsets.only(
-                                                    left: 0),
-                                                width: 150,
-                                                child: DropdownButtonFormField(
-                                                  value: jenisBatu,
-                                                  items: [
-                                                    //* hints looping sederhana
-                                                    for (var item
-                                                        in listJenisBatu!)
-                                                      DropdownMenuItem(
-                                                        value: item.jenisBatu,
-                                                        child: Text(
-                                                            item.jenisBatu!),
-                                                      ),
-                                                  ],
-                                                  onChanged: jenisBatu
-                                                                  .toString()
-                                                                  .toLowerCase() ==
-                                                              'round' &&
-                                                          selectListItemRound
-                                                              .isNotEmpty
-                                                      ? null
-                                                      : jenisBatu
-                                                                      .toString()
-                                                                      .toLowerCase() !=
-                                                                  'round' &&
-                                                              selectListItemFancy
-                                                                  .isNotEmpty
-                                                          ? null
-                                                          : (value) {
-                                                              setState(() {
-                                                                jenisBatu = value
-                                                                    .toString();
-                                                                //* HINTS Cari item yang sesuai dengan value yang dipilih
-                                                                var selectedItem =
-                                                                    listJenisBatu!.firstWhere(
-                                                                        (item) =>
-                                                                            item.jenisBatu ==
-                                                                            value);
-                                                                kodeBatu =
-                                                                    selectedItem
-                                                                        .kodeBatu;
-                                                              });
-                                                            },
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              const SizedBox(
-                                                  width: 100,
-                                                  child: Text('KUALITAS')),
-                                              const SizedBox(
-                                                  width: 30, child: Text(':')),
-                                              Container(
-                                                padding: const EdgeInsets.only(
-                                                    left: 0),
-                                                width: 150,
-                                                child: DropdownButtonFormField(
-                                                  value: kualitasBatu,
-                                                  items: [
-                                                    //* hints looping sederhana
-                                                    for (var item
-                                                        in listKualitasBatu!)
-                                                      DropdownMenuItem(
-                                                        value:
-                                                            item.kualitasBatu,
-                                                        child: Text(
-                                                            item.kualitasBatu!),
-                                                      ),
-                                                  ],
-                                                  onChanged: (value) {
-                                                    setState(() {
-                                                      kualitasBatu = value;
-                                                    });
-                                                  },
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                );
-                              } else {
-                                return Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    // ignore: avoid_unnecessary_containers
-                                    Container(
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              const SizedBox(
-                                                  width: 100,
-                                                  child: Text('NO. QC')),
-                                              const SizedBox(
-                                                  width: 30, child: Text(':')),
-                                              Container(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 0),
-                                                  width: widValue,
-                                                  child: Text(noQc))
-                                            ],
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              const SizedBox(
-                                                  width: 100,
-                                                  child: Text('TGL QC IN')),
-                                              const SizedBox(
-                                                  width: 30, child: Text(':')),
-                                              Container(
-                                                padding: const EdgeInsets.only(
-                                                    left: 0),
-                                                width: widValue,
-                                                child: Text(DateFormat(
-                                                        'dd/MMMM/yyyy HH:ss')
-                                                    .format(DateTime.parse(
-                                                        widget.dataFormPr!
-                                                            .tanggalInQc!
-                                                            .toString()))),
-                                              )
-                                            ],
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              const SizedBox(
-                                                  width: 100,
-                                                  child: Text('TGL QC OUT')),
-                                              const SizedBox(
-                                                  width: 30, child: Text(':')),
-                                              Container(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 0),
-                                                  width: widValue,
-                                                  child: Text('$tglOut'))
-                                            ],
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              const SizedBox(
-                                                  width: 100,
-                                                  child: Text('VENDOR')),
-                                              const SizedBox(
-                                                  width: 30, child: Text(':')),
-                                              Container(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 0),
-                                                  width: widValue,
-                                                  child: Text(widget
-                                                      .dataFormPr!.vendor
-                                                      .toString()))
-                                            ],
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              const SizedBox(
-                                                  width: 100,
-                                                  child: Text('KEBUTUHAN')),
-                                              const SizedBox(
-                                                  width: 30, child: Text(':')),
-                                              SizedBox(
-                                                  width: widValue,
-                                                  child: Text(widget
-                                                      .dataFormPr!.fixTotalBerat
-                                                      .toString()))
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    // ignore: avoid_unnecessary_containers
-                                    Container(
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              const SizedBox(
-                                                  width: 100,
-                                                  child: Text('UKURAN BATU')),
-                                              const SizedBox(
-                                                  width: 30, child: Text(':')),
-                                              Container(
-                                                padding: const EdgeInsets.only(
-                                                    left: 0),
-                                                width: widValue,
-                                                child: TextFormField(
-                                                  style: const TextStyle(
-                                                      fontSize: 14,
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                  textInputAction:
-                                                      TextInputAction.next,
-                                                  controller: ukuranBatu,
-                                                  decoration: InputDecoration(
-                                                    filled: true,
-                                                    fillColor: Colors.white,
-                                                    labelText: "",
-                                                    border: OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(5.0)),
-                                                  ),
-                                                  validator: (value) {
-                                                    if (value!.isEmpty) {
-                                                      return 'Wajib diisi *';
-                                                    }
-                                                    return null;
-                                                  },
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              const SizedBox(
-                                                  width: 100,
-                                                  child: Text('JENIS BATU')),
-                                              const SizedBox(
-                                                  width: 30, child: Text(':')),
-                                              Container(
-                                                padding: const EdgeInsets.only(
-                                                    left: 0),
-                                                width: widValue,
-                                                child: DropdownButtonFormField(
-                                                  value: jenisBatu,
-                                                  items: [
-                                                    //* hints looping sederhana
-                                                    for (var item
-                                                        in listJenisBatu!)
-                                                      DropdownMenuItem(
-                                                        value: item.jenisBatu,
-                                                        child: Text(
-                                                            item.jenisBatu!),
-                                                      ),
-                                                  ],
-                                                  onChanged: jenisBatu
-                                                                  .toString()
-                                                                  .toLowerCase() ==
-                                                              'round' &&
-                                                          selectListItemRound
-                                                              .isNotEmpty
-                                                      ? null
-                                                      : jenisBatu
-                                                                      .toString()
-                                                                      .toLowerCase() !=
-                                                                  'round' &&
-                                                              selectListItemFancy
-                                                                  .isNotEmpty
-                                                          ? null
-                                                          : (value) {
-                                                              setState(() {
-                                                                jenisBatu = value
-                                                                    .toString();
-                                                                //* HINTS Cari item yang sesuai dengan value yang dipilih
-                                                                var selectedItem =
-                                                                    listJenisBatu!.firstWhere(
-                                                                        (item) =>
-                                                                            item.jenisBatu ==
-                                                                            value);
-                                                                kodeBatu =
-                                                                    selectedItem
-                                                                        .kodeBatu;
-                                                              });
-                                                            },
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              const SizedBox(
-                                                  width: 100,
-                                                  child: Text('KUALITAS')),
-                                              const SizedBox(
-                                                  width: 30, child: Text(':')),
-                                              Container(
-                                                padding: const EdgeInsets.only(
-                                                    left: 0),
-                                                width: widValue,
-                                                child: DropdownButtonFormField(
-                                                  value: kualitasBatu,
-                                                  items: [
-                                                    //* hints looping sederhana
-                                                    for (var item
-                                                        in listKualitasBatu!)
-                                                      DropdownMenuItem(
-                                                        value:
-                                                            item.kualitasBatu,
-                                                        child: Text(
-                                                            item.kualitasBatu!),
-                                                      ),
-                                                  ],
-                                                  onChanged: (value) {
-                                                    setState(() {
-                                                      kualitasBatu = value;
-                                                    });
-                                                  },
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                );
-                              }
-                            }),
-                          ),
-                          Container(
-                            color: Colors.grey.shade400,
-                            child: const Text(
-                              'TABEL DATA YANG DITEIRMA QC',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 26),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          jenisBatu == null
-                              ? const SizedBox()
-                              : dataTableForm(jenisBatu!, no),
-                          //  SingleChildScrollView(
-                          //     scrollDirection: Axis.horizontal,
-                          //     child: dataTableForm(jenisBatu!, no),
-                          //   ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          jenisBatu == null
-                              ? const SizedBox()
-                              : Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    ElevatedButton.icon(
-                                      onPressed: () {
-                                        setState(() {
-                                          if (jenisBatu
-                                                  .toString()
-                                                  .toLowerCase() ==
-                                              'round') {
-                                            ukuran = '';
-                                            qty = '0';
-                                            berat = '';
-                                            caratPcs = '';
-                                            selectListItemRound.add([
-                                              '$ukuran',
-                                              '$qty',
-                                              '$berat',
-                                              '$caratPcs',
-                                            ]);
-                                            print(selectListItemRound);
-                                          } else {
-                                            kodeMdbc = '';
-                                            panjang = '';
-                                            lebar = '';
-                                            qtyFancy = '';
-                                            beratFancy = '';
-                                            selectListItemFancy.add([
-                                              '$kodeMdbc',
-                                              '$panjang',
-                                              '$lebar',
-                                              '$qtyFancy',
-                                              '$beratFancy',
-                                            ]);
-                                            print(
-                                                'fancy = $selectListItemFancy');
-                                          }
-
-                                          no += 1;
-                                        });
-                                      },
-                                      icon: const Icon(Icons.add), // Icon "add"
-                                      label: const Text('Tambah Item'),
-                                    ),
-                                    const SizedBox(
-                                      width: 30,
-                                    ),
-                                    no < 1
-                                        ? const SizedBox()
-                                        : ElevatedButton.icon(
-                                            onPressed: () {
-                                              setState(() {
-                                                no -= 1;
-                                                if (jenisBatu
-                                                        .toString()
-                                                        .toLowerCase() ==
-                                                    'round') {
-                                                  selectListItemRound
-                                                      .removeAt(no);
-                                                  print(selectListItemRound);
-                                                } else {
-                                                  selectListItemFancy
-                                                      .removeAt(no);
-                                                  print(
-                                                      'fancy = $selectListItemFancy');
-                                                }
-                                              });
-                                            },
-                                            icon: const Icon(
-                                                Icons.delete), // Icon "delete"
-                                            label: const Text(
-                                                'Hapus Item'), // Label tombol
-                                            style: ElevatedButton.styleFrom(
-                                              backgroundColor: Colors
-                                                  .red, // Warna latar belakang merah
-                                            ),
-                                          )
-                                  ],
-                                ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Container(
-                            color: Colors.grey.shade400,
-                            child: const Text(
-                              'KETERANGAN',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 26),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          ConstrainedBox(
-                            constraints: const BoxConstraints(
-                                minHeight: 100,
-                                maxHeight:
-                                    200), //? untuk menenrukan max tinggi di sizedbox
-                            child: SizedBox(
-                              child: TextField(
-                                controller: notesReject,
-                                keyboardType: TextInputType.multiline,
-                                maxLines:
-                                    null, // null untuk menyesuaikan tinggi sesuai isi teks
-                                decoration: const InputDecoration(
-                                  labelText: 'Notes Reject',
-                                  hintText: 'Masukkan keterangan di sini...',
-                                  labelStyle: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold),
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      width:
-                                          2, // Atur ketebalan border sesuai kebutuhan
-                                      color: Colors
-                                          .black, // Atur warna border sesuai kebutuhan
-                                    ),
-                                  ),
-                                ),
+                                  callData(index);
+                                },
                               ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child:
-                                LayoutBuilder(builder: (context, constraints) {
-                              if (constraints.maxWidth < 900) {
-                                return Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        SizedBox(
-                                            width: 200,
-                                            child: Text(
-                                              'Name :  ${sharedPreferences!.getString('nama')!}',
-                                              style: const TextStyle(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.bold),
-                                            )),
-                                        const SizedBox(
-                                          height: 65,
-                                        ),
-                                        const SizedBox(
-                                            width: 200,
-                                            child: Text(
-                                              'QUALITY CONTROL',
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.bold),
-                                            )),
-                                      ],
-                                    ),
-                                    const Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        SizedBox(
-                                            width: 200,
-                                            child: Text(
-                                              'Name :',
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.bold),
-                                            )),
-                                        SizedBox(
-                                          height: 65,
-                                        ),
-                                        SizedBox(
-                                            width: 200,
-                                            child: Text(
-                                              'WAREHOUSE',
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.bold),
-                                            )),
-                                      ],
-                                    ),
-                                    const Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        SizedBox(
-                                            width: 200,
-                                            child: Text(
-                                              'Name :',
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.bold),
-                                            )),
-                                        SizedBox(
-                                          height: 65,
-                                        ),
-                                        SizedBox(
-                                            child: Text(
-                                          'PURCHASING',
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold),
-                                        )),
-                                      ],
-                                    ),
-                                  ],
-                                );
-                              }
-                              return Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                            if (_isOpen[index])
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 8.0,
+                                    right: 8.0,
+                                    bottom: 8.0), // Atur padding di sini
+                                child: Container(
+                                  color: colorBG,
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: isloadingItem == true
+                                      ? Center(
+                                          child: Container(
+                                            padding: const EdgeInsets.all(5),
+                                            width: 90,
+                                            height: 90,
+                                            child: Lottie.asset(
+                                                "loadingJSON/loadingV1.json"),
+                                          ),
+                                        )
+                                      : listItemPr![index].receiveBerat != '0'
+                                          ? editFormItem(index, listItemPr,
+                                              listDetailItemPR)
+                                          : detailFormItem(index),
+                                ),
+                              ),
+                          ],
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+  }
+
+  detailFormItem(i) {
+    double widhtMAX = MediaQuery.of(context).size.width;
+    double widValue = 250;
+    kualitasBatu = listItemPr![i].kadar;
+    DateTime now = DateTime.now();
+
+    String month = now.month.toString().padLeft(2, '0');
+    String year = now.year.toString();
+    return Expanded(
+      child: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Container(
+          width: widhtMAX,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border.all(
+                color: Colors
+                    .white), // Atur warna dan ketebalan garis sesuai kebutuhan
+            borderRadius:
+                BorderRadius.circular(10), // Atur sudut border sesuai kebutuhan
+          ),
+          padding: const EdgeInsets.only(top: 26, left: 20, right: 20),
+          child: Column(
+            children: [
+              Container(
+                color: Colors.grey.shade400,
+                child: Text(
+                  'LEMBAR QUALITY CONTROL ${listItemPr![i].item}',
+                  style: const TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 26),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: LayoutBuilder(builder: (context, constraints) {
+                  print(constraints.maxWidth);
+                  lebarLayar = constraints.maxWidth;
+
+                  //* hints fungsi multi screen
+                  if (constraints.maxWidth < 900) {
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        // ignore: avoid_unnecessary_containers
+                        Container(
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      SizedBox(
-                                          width: 200,
-                                          child: Text(
-                                            'Name :  ${sharedPreferences!.getString('nama')!}',
-                                            style: const TextStyle(
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold),
-                                          )),
-                                      const SizedBox(
-                                        height: 65,
-                                      ),
-                                      const SizedBox(
-                                          width: 200,
-                                          child: Text(
-                                            'QUALITY CONTROL',
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold),
-                                          )),
-                                    ],
-                                  ),
-                                  const Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      SizedBox(
-                                          width: 200,
-                                          child: Text(
-                                            'Name :',
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold),
-                                          )),
-                                      SizedBox(
-                                        height: 65,
-                                      ),
-                                      SizedBox(
-                                          width: 200,
-                                          child: Text(
-                                            'WAREHOUSE',
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold),
-                                          )),
-                                    ],
-                                  ),
-                                  const Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      SizedBox(
-                                          width: 200,
-                                          child: Text(
-                                            'Name :',
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold),
-                                          )),
-                                      SizedBox(
-                                        height: 65,
-                                      ),
-                                      SizedBox(
-                                          child: Text(
-                                        'PURCHASING',
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                    ],
-                                  ),
+                                  const SizedBox(
+                                      width: 100, child: Text('NO. QC')),
+                                  const SizedBox(width: 30, child: Text(':')),
+                                  Container(
+                                      padding: const EdgeInsets.only(left: 0),
+                                      width: widValue,
+                                      child: Text(noQc =
+                                          '${widget.dataFormPr!.noPR}/QC/${getMonthName(month)}/$year/${(i + 1).toString().padLeft(5, '0')}'))
                                 ],
-                              );
-                            }),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  const SizedBox(
+                                      width: 100, child: Text('TGL QC IN')),
+                                  const SizedBox(width: 30, child: Text(':')),
+                                  Container(
+                                    padding: const EdgeInsets.only(left: 0),
+                                    width: widValue,
+                                    child: Text(DateFormat('dd/MMMM/yyyy HH:ss')
+                                        .format(DateTime.parse(widget
+                                            .dataFormPr!.tanggalInQc!
+                                            .toString()))),
+                                  )
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  const SizedBox(
+                                      width: 100, child: Text('TGL QC OUT')),
+                                  const SizedBox(width: 30, child: Text(':')),
+                                  Container(
+                                      padding: const EdgeInsets.only(left: 0),
+                                      width: widValue,
+                                      child: Text('$tglOut'))
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  const SizedBox(
+                                      width: 100, child: Text('VENDOR')),
+                                  const SizedBox(width: 30, child: Text(':')),
+                                  Container(
+                                      padding: const EdgeInsets.only(left: 0),
+                                      width: widValue,
+                                      child: Text(
+                                          widget.dataFormPr!.vendor.toString()))
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  const SizedBox(
+                                      width: 100, child: Text('KEBUTUHAN')),
+                                  const SizedBox(width: 30, child: Text(':')),
+                                  SizedBox(
+                                      width: widValue,
+                                      child: Text('${listItemPr![i].fixBerat}'))
+                                ],
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
+                      ],
+                    );
+                  } else {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        // ignore: avoid_unnecessary_containers
+                        Container(
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  const SizedBox(
+                                      width: 100, child: Text('NO. QC')),
+                                  const SizedBox(width: 30, child: Text(':')),
+                                  Container(
+                                      padding: const EdgeInsets.only(left: 0),
+                                      width: widValue,
+                                      child: Text(noQc =
+                                          '${widget.dataFormPr!.noPR}/QC/${getMonthName(month)}/$year/${(i + 1).toString().padLeft(5, '0')}'))
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  const SizedBox(
+                                      width: 100, child: Text('TGL QC IN')),
+                                  const SizedBox(width: 30, child: Text(':')),
+                                  Container(
+                                    padding: const EdgeInsets.only(left: 0),
+                                    width: widValue,
+                                    child: Text(DateFormat('dd/MMMM/yyyy HH:ss')
+                                        .format(DateTime.parse(widget
+                                            .dataFormPr!.tanggalInQc!
+                                            .toString()))),
+                                  )
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  const SizedBox(
+                                      width: 100, child: Text('TGL QC OUT')),
+                                  const SizedBox(width: 30, child: Text(':')),
+                                  Container(
+                                      padding: const EdgeInsets.only(left: 0),
+                                      width: widValue,
+                                      child: Text('$tglOut'))
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  const SizedBox(
+                                      width: 100, child: Text('VENDOR')),
+                                  const SizedBox(width: 30, child: Text(':')),
+                                  Container(
+                                      padding: const EdgeInsets.only(left: 0),
+                                      width: widValue,
+                                      child: Text(
+                                          widget.dataFormPr!.vendor.toString()))
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  const SizedBox(
+                                      width: 100, child: Text('KEBUTUHAN')),
+                                  const SizedBox(width: 30, child: Text(':')),
+                                  SizedBox(
+                                      width: widValue,
+                                      child: Text('${listItemPr![i].fixBerat}'))
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    );
+                  }
+                }),
+              ),
+              Container(
+                color: Colors.grey.shade400,
+                child: const Text(
+                  'TABEL DATA YANG DITEIRMA QC',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 26),
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              jenisBatu == null
+                  ? const SizedBox()
+                  : dataTableForm('new', jenisBatu!, no, i),
+              //  SingleChildScrollView(
+              //     scrollDirection: Axis.horizontal,
+              //     child: dataTableForm(jenisBatu!, no),
+              //   ),
+              const SizedBox(
+                height: 20,
+              ),
+              jenisBatu == null
+                  ? const SizedBox()
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ElevatedButton.icon(
+                          onPressed: () {
+                            setState(() {
+                              if (jenisBatu.toString().toLowerCase() ==
+                                  'round') {
+                                ukuran = '';
+                                qty = '0';
+                                berat = '';
+                                caratPcs = '';
+                                selectListItemRound.add([
+                                  '$ukuran',
+                                  '$qty',
+                                  '$berat',
+                                  '$caratPcs',
+                                ]);
+                                print(selectListItemRound);
+                              } else {
+                                kodeMdbc = '';
+                                panjang = '';
+                                lebar = '';
+                                qtyFancy = '';
+                                beratFancy = '';
+                                selectListItemFancy.add([
+                                  '$kodeMdbc',
+                                  '$panjang',
+                                  '$lebar',
+                                  '$qtyFancy',
+                                  '$beratFancy',
+                                ]);
+                                print('fancy = $selectListItemFancy');
+                              }
+
+                              no += 1;
+                            });
+                          },
+                          icon: const Icon(Icons.add), // Icon "add"
+                          label: const Text('Tambah Item'),
+                        ),
+                        const SizedBox(
+                          width: 30,
+                        ),
+                        no < 1
+                            ? const SizedBox()
+                            : ElevatedButton.icon(
+                                onPressed: () {
+                                  setState(() {
+                                    no -= 1;
+                                    if (jenisBatu.toString().toLowerCase() ==
+                                        'round') {
+                                      selectListItemRound.removeAt(no);
+                                      print(selectListItemRound);
+                                    } else {
+                                      selectListItemFancy.removeAt(no);
+                                      print('fancy = $selectListItemFancy');
+                                    }
+                                  });
+                                },
+                                icon: const Icon(Icons.delete), // Icon "delete"
+                                label: const Text('Hapus Item'), // Label tombol
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor:
+                                      Colors.red, // Warna latar belakang merah
+                                ),
+                              )
+                      ],
+                    ),
+              const SizedBox(
+                height: 20,
+              ),
+              Container(
+                color: Colors.grey.shade400,
+                child: const Text(
+                  'KETERANGAN',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 26),
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              ConstrainedBox(
+                constraints: const BoxConstraints(
+                    minHeight: 100,
+                    maxHeight: 200), //? untuk menenrukan max tinggi di sizedbox
+                child: SizedBox(
+                  child: TextField(
+                    controller: notesReject,
+                    keyboardType: TextInputType.multiline,
+                    maxLines:
+                        null, // null untuk menyesuaikan tinggi sesuai isi teks
+                    decoration: const InputDecoration(
+                      labelText: 'Notes Reject',
+                      hintText: 'Masukkan keterangan di sini...',
+                      labelStyle: TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.bold),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          width: 2, // Atur ketebalan border sesuai kebutuhan
+                          color: Colors
+                              .black, // Atur warna border sesuai kebutuhan
+                        ),
                       ),
                     ),
                   ),
                 ),
-                jenisBatu == null
-                    ? const SizedBox()
-                    : Container(
-                        width: MediaQuery.of(context).size.width * 0.7,
-                        padding: const EdgeInsets.only(bottom: 20, top: 20),
-                        child: FloatingActionButton.extended(
-                          onPressed: () {
-                            showDialog(
-                              context: context,
-                              barrierDismissible:
-                                  false, // Prevent dialog dismissal on tap outside
-                              builder: (BuildContext context) {
-                                return Dialog(
-                                  backgroundColor: Colors.transparent,
-                                  elevation: 0,
-                                  child: Container(
-                                    padding: const EdgeInsets.all(16),
-                                    color: Colors.white,
-                                    child: const Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        CircularProgressIndicator(),
-                                        SizedBox(height: 20),
-                                        Text(
-                                          'Loading, please wait...',
-                                          style: TextStyle(fontSize: 16),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                );
-                              },
-                            );
-                            simpanForm();
-                          },
-                          label: const Text(
-                            'Simpan Form',
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width *
+                    0.8, // 80% of screen width
+                height: 45, // Fixed height of 45
+                padding: const EdgeInsets.only(bottom: 5),
+                child: ElevatedButton(
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      barrierDismissible:
+                          false, // Prevent dialog dismissal on tap outside
+                      builder: (BuildContext context) {
+                        return Dialog(
+                          backgroundColor: Colors.transparent,
+                          elevation: 0,
+                          child: Container(
+                            padding: const EdgeInsets.all(16),
+                            color: Colors.white,
+                            child: const Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                CircularProgressIndicator(),
+                                SizedBox(height: 20),
+                                Text(
+                                  'Loading, please wait...',
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                              ],
+                            ),
                           ),
-                          icon: const Icon(
-                            Icons.save_alt,
-                            size: 20,
+                        );
+                      },
+                    );
+                    simpanForm();
+                  },
+                  child: const Text(
+                    'Simpan Form',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+
+                  //  const SizedBox(
+                  //     width: 200, // Sesuaikan dengan lebar yang diinginkan
+                  //     child: Row(
+                  //       mainAxisAlignment: MainAxisAlignment.center,
+                  //       children: [
+                  //         Icon(Icons.save_alt),
+                  //         SizedBox(width: 8), // Jarak antara ikon dan teks
+                  //         Text('Simpan Form'),
+                  //       ],
+                  //     ),
+                  //   ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+    // jenisBatu == null
+    //     ? const SizedBox()
+    //     : Container(
+    //         width: MediaQuery.of(context).size.width * 0.7,
+    //         padding: const EdgeInsets.only(bottom: 20, top: 20),
+    //         child:
+    //         FloatingActionButton.extended(
+    //           onPressed: () {
+    //             showDialog(
+    //               context: context,
+    //               barrierDismissible:
+    //                   false, // Prevent dialog dismissal on tap outside
+    //               builder: (BuildContext context) {
+    //                 return Dialog(
+    //                   backgroundColor: Colors.transparent,
+    //                   elevation: 0,
+    //                   child: Container(
+    //                     padding: const EdgeInsets.all(16),
+    //                     color: Colors.white,
+    //                     child: const Column(
+    //                       mainAxisSize: MainAxisSize.min,
+    //                       children: [
+    //                         CircularProgressIndicator(),
+    //                         SizedBox(height: 20),
+    //                         Text(
+    //                           'Loading, please wait...',
+    //                           style: TextStyle(fontSize: 16),
+    //                         ),
+    //                       ],
+    //                     ),
+    //                   ),
+    //                 );
+    //               },
+    //             );
+    //             simpanForm();
+    //           },
+    //           label: const Text(
+    //             'Simpan Form',
+    //             style: TextStyle(
+    //                 fontSize: 20, fontWeight: FontWeight.bold),
+    //           ),
+    //           icon: const Icon(
+    //             Icons.save_alt,
+    //             size: 20,
+    //           ),
+    //           //  const SizedBox(
+    //           //     width: 200, // Sesuaikan dengan lebar yang diinginkan
+    //           //     child: Row(
+    //           //       mainAxisAlignment: MainAxisAlignment.center,
+    //           //       children: [
+    //           //         Icon(Icons.save_alt),
+    //           //         SizedBox(width: 8), // Jarak antara ikon dan teks
+    //           //         Text('Simpan Form'),
+    //           //       ],
+    //           //     ),
+    //           //   ),
+    //         ),
+    //       )
+  }
+
+  editFormItem(i, var allData, var detailItem) {
+    double widhtMAX = MediaQuery.of(context).size.width;
+    double widValue = 250;
+    var data = allData[i];
+    var detailItemdata = detailItem[i];
+    kualitasBatu = data.kadar;
+    noQc = detailItemdata.noQc;
+    return Expanded(
+      child: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Container(
+          width: widhtMAX,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border.all(
+                color: Colors
+                    .white), // Atur warna dan ketebalan garis sesuai kebutuhan
+            borderRadius:
+                BorderRadius.circular(10), // Atur sudut border sesuai kebutuhan
+          ),
+          padding: const EdgeInsets.only(top: 26, left: 20, right: 20),
+          child: Column(
+            children: [
+              Container(
+                color: Colors.grey.shade400,
+                child: Text(
+                  'LEMBAR QUALITY CONTROL ${listItemPr![i].item}',
+                  style: const TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 26),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: LayoutBuilder(builder: (context, constraints) {
+                  print(constraints.maxWidth);
+                  lebarLayar = constraints.maxWidth;
+
+                  //* hints fungsi multi screen
+                  if (constraints.maxWidth < 900) {
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        // ignore: avoid_unnecessary_containers
+                        Container(
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  const SizedBox(
+                                      width: 100, child: Text('NO. QC')),
+                                  const SizedBox(width: 30, child: Text(':')),
+                                  Container(
+                                      padding: const EdgeInsets.only(left: 0),
+                                      width: widValue,
+                                      child: Text(noQc))
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  const SizedBox(
+                                      width: 100, child: Text('TGL QC IN')),
+                                  const SizedBox(width: 30, child: Text(':')),
+                                  Container(
+                                    padding: const EdgeInsets.only(left: 0),
+                                    width: widValue,
+                                    child: Text(DateFormat('dd/MMMM/yyyy HH:ss')
+                                        .format(DateTime.parse(widget
+                                            .dataFormPr!.tanggalInQc!
+                                            .toString()))),
+                                  )
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  const SizedBox(
+                                      width: 100, child: Text('TGL QC OUT')),
+                                  const SizedBox(width: 30, child: Text(':')),
+                                  Container(
+                                      padding: const EdgeInsets.only(left: 0),
+                                      width: widValue,
+                                      child: Text('$tglOut'))
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  const SizedBox(
+                                      width: 100, child: Text('VENDOR')),
+                                  const SizedBox(width: 30, child: Text(':')),
+                                  Container(
+                                      padding: const EdgeInsets.only(left: 0),
+                                      width: widValue,
+                                      child: Text(
+                                          widget.dataFormPr!.vendor.toString()))
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  const SizedBox(
+                                      width: 100, child: Text('KEBUTUHAN')),
+                                  const SizedBox(width: 30, child: Text(':')),
+                                  SizedBox(
+                                      width: widValue,
+                                      child: Text('${listItemPr![i].fixBerat}'))
+                                ],
+                              ),
+                            ],
                           ),
-                          //  const SizedBox(
-                          //     width: 200, // Sesuaikan dengan lebar yang diinginkan
-                          //     child: Row(
-                          //       mainAxisAlignment: MainAxisAlignment.center,
-                          //       children: [
-                          //         Icon(Icons.save_alt),
-                          //         SizedBox(width: 8), // Jarak antara ikon dan teks
-                          //         Text('Simpan Form'),
-                          //       ],
-                          //     ),
-                          //   ),
                         ),
-                      )
-              ],
-            ),
-          );
+                      ],
+                    );
+                  } else {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        // ignore: avoid_unnecessary_containers
+                        Container(
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  const SizedBox(
+                                      width: 100, child: Text('NO. QC')),
+                                  const SizedBox(width: 30, child: Text(':')),
+                                  Container(
+                                      padding: const EdgeInsets.only(left: 0),
+                                      width: widValue,
+                                      child: Text(noQc))
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  const SizedBox(
+                                      width: 100, child: Text('TGL QC IN')),
+                                  const SizedBox(width: 30, child: Text(':')),
+                                  Container(
+                                    padding: const EdgeInsets.only(left: 0),
+                                    width: widValue,
+                                    child: Text(DateFormat('dd/MMMM/yyyy HH:ss')
+                                        .format(DateTime.parse(widget
+                                            .dataFormPr!.tanggalInQc!
+                                            .toString()))),
+                                  )
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  const SizedBox(
+                                      width: 100, child: Text('TGL QC OUT')),
+                                  const SizedBox(width: 30, child: Text(':')),
+                                  Container(
+                                      padding: const EdgeInsets.only(left: 0),
+                                      width: widValue,
+                                      child: Text(
+                                          DateFormat('dd/MMMM/yyyy HH:ss')
+                                              .format(DateTime.parse(widget
+                                                  .dataFormPr!.tanggalInQc!
+                                                  .toString()))))
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  const SizedBox(
+                                      width: 100, child: Text('VENDOR')),
+                                  const SizedBox(width: 30, child: Text(':')),
+                                  Container(
+                                      padding: const EdgeInsets.only(left: 0),
+                                      width: widValue,
+                                      child: Text(
+                                          widget.dataFormPr!.vendor.toString()))
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  const SizedBox(
+                                      width: 100, child: Text('KEBUTUHAN')),
+                                  const SizedBox(width: 30, child: Text(':')),
+                                  SizedBox(
+                                      width: widValue,
+                                      child: Text('${listItemPr![i].fixBerat}'))
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    );
+                  }
+                }),
+              ),
+              Container(
+                color: Colors.grey.shade400,
+                child: const Text(
+                  'TABEL DATA YANG DITEIRMA QC',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 26),
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              jenisBatu == null
+                  ? const SizedBox()
+                  : dataTableForm('edit', jenisBatu!, no, i),
+              const SizedBox(
+                height: 20,
+              ),
+              jenisBatu == null
+                  ? const SizedBox()
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ElevatedButton.icon(
+                          onPressed: () {
+                            setState(() {
+                              if (jenisBatu.toString().toLowerCase() ==
+                                  'round') {
+                                ukuran = '';
+                                qty = '0';
+                                berat = '';
+                                caratPcs = '';
+                                selectListItemRound.add([
+                                  '$ukuran',
+                                  '$qty',
+                                  '$berat',
+                                  '$caratPcs',
+                                ]);
+                                print(selectListItemRound);
+                                // Menambahkan index dan selectListItemRound ke indexSelectItemRound
+//                                 indexSelectItemRound
+//                                     .add([i, selectListItemRound]);
+
+// // Mencetak nilai indexSelectItemRound
+//                                 print(indexSelectItemRound);
+                              } else {
+                                kodeMdbc = '';
+                                panjang = '';
+                                lebar = '';
+                                qtyFancy = '';
+                                beratFancy = '';
+                                selectListItemFancy.add([
+                                  '$kodeMdbc',
+                                  '$panjang',
+                                  '$lebar',
+                                  '$qtyFancy',
+                                  '$beratFancy',
+                                ]);
+                                print('fancy = $selectListItemFancy');
+                              }
+
+                              no += 1;
+                            });
+                          },
+                          icon: const Icon(Icons.add), // Icon "add"
+                          label: const Text('Tambah Item'),
+                        ),
+                        const SizedBox(
+                          width: 30,
+                        ),
+                        no < 1
+                            ? const SizedBox()
+                            : ElevatedButton.icon(
+                                onPressed: () {
+                                  setState(() {
+                                    no -= 1;
+                                    if (jenisBatu.toString().toLowerCase() ==
+                                        'round') {
+                                      selectListItemRound.removeAt(no);
+                                      print(selectListItemRound);
+                                    } else {
+                                      selectListItemFancy.removeAt(no);
+                                      print('fancy = $selectListItemFancy');
+                                    }
+                                  });
+                                },
+                                icon: const Icon(Icons.delete), // Icon "delete"
+                                label: const Text('Hapus Item'), // Label tombol
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor:
+                                      Colors.red, // Warna latar belakang merah
+                                ),
+                              )
+                      ],
+                    ),
+              const SizedBox(
+                height: 20,
+              ),
+              Container(
+                color: Colors.grey.shade400,
+                child: const Text(
+                  'KETERANGAN',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 26),
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              ConstrainedBox(
+                constraints: const BoxConstraints(
+                    minHeight: 100,
+                    maxHeight: 200), //? untuk menenrukan max tinggi di sizedbox
+                child: SizedBox(
+                  child: TextField(
+                    controller: notesReject,
+                    keyboardType: TextInputType.multiline,
+                    maxLines:
+                        null, // null untuk menyesuaikan tinggi sesuai isi teks
+                    decoration: const InputDecoration(
+                      labelText: 'Notes Reject',
+                      hintText: 'Masukkan keterangan di sini...',
+                      labelStyle: TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.bold),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          width: 2, // Atur ketebalan border sesuai kebutuhan
+                          color: Colors
+                              .black, // Atur warna border sesuai kebutuhan
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width *
+                    0.8, // 80% of screen width
+                height: 45, // Fixed height of 45
+                padding: const EdgeInsets.only(bottom: 5),
+                child: ElevatedButton(
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      barrierDismissible:
+                          false, // Prevent dialog dismissal on tap outside
+                      builder: (BuildContext context) {
+                        return Dialog(
+                          backgroundColor: Colors.transparent,
+                          elevation: 0,
+                          child: Container(
+                            padding: const EdgeInsets.all(16),
+                            color: Colors.white,
+                            child: const Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                CircularProgressIndicator(),
+                                SizedBox(height: 20),
+                                Text(
+                                  'Loading, please wait...',
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                    editForm();
+                  },
+                  child: const Text(
+                    'Edit Form',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+
+                  //  const SizedBox(
+                  //     width: 200, // Sesuaikan dengan lebar yang diinginkan
+                  //     child: Row(
+                  //       mainAxisAlignment: MainAxisAlignment.center,
+                  //       children: [
+                  //         Icon(Icons.save_alt),
+                  //         SizedBox(width: 8), // Jarak antara ikon dan teks
+                  //         Text('Simpan Form'),
+                  //       ],
+                  //     ),
+                  //   ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   simpanForm() async {
@@ -1543,8 +1975,13 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
         totalBerat += double.tryParse(selectListItemRound[i][2]) ?? 0;
         totalQty += int.tryParse(selectListItemRound[i][1]) ?? 0;
 
-        await postDetailItem(selectListItemRound[i][0],
-            selectListItemRound[i][1], selectListItemRound[i][2], '', '');
+        await postDetailItem(
+            selectListItemRound[i][0],
+            selectListItemRound[i][1],
+            selectListItemRound[i][2],
+            '',
+            '',
+            selectListItemRound[i][3]);
       }
     } else {
       for (var i = 0; i < selectListItemFancy.length; i++) {
@@ -1555,10 +1992,56 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
             selectListItemFancy[i][3],
             selectListItemFancy[i][4],
             selectListItemFancy[i][1],
-            selectListItemFancy[i][2]);
+            selectListItemFancy[i][2],
+            '0');
       }
     }
 
+    await postStatusItemPR(idItemPr);
+    await postStatusPR(idForm);
+    // ignore: use_build_context_synchronously
+    Navigator.pop(context);
+    refresh();
+    showSimpleNotification(
+      const Text('Form Berhasil Disimpan'),
+      background: Colors.green,
+      duration: const Duration(seconds: 1),
+    );
+  }
+
+  editForm() async {
+    totalBerat = 0;
+    totalQty = 0;
+    if (jenisBatu.toString().toLowerCase() == 'round') {
+      for (var i = 0; i < selectListItemRound.length; i++) {
+        totalBerat += double.tryParse(selectListItemRound[i][2]) ?? 0;
+        totalQty += int.tryParse(selectListItemRound[i][1]) ?? 0;
+
+        await updateDetailItem(
+            selectListItemRound[i][4], //? id
+            selectListItemRound[i][0],
+            selectListItemRound[i][1],
+            selectListItemRound[i][2],
+            '',
+            '',
+            selectListItemRound[i][3]);
+      }
+    } else {
+      for (var i = 0; i < selectListItemFancy.length; i++) {
+        totalBerat += double.tryParse(selectListItemFancy[i][4]) ?? 0;
+        totalQty += int.tryParse(selectListItemFancy[i][3]) ?? 0;
+        await updateDetailItem(
+            selectListItemFancy[i][5], //? id
+            selectListItemFancy[i][0],
+            selectListItemFancy[i][3],
+            selectListItemFancy[i][4],
+            selectListItemFancy[i][1],
+            selectListItemFancy[i][2],
+            '0');
+      }
+    }
+
+    await postStatusItemPR(idItemPr);
     await postStatusPR(idForm);
     // ignore: use_build_context_synchronously
     Navigator.pop(context);
@@ -1573,7 +2056,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
   postStatusPR(String? id) async {
     Map<String, String> body = {
       'id': id.toString(),
-      'status': 'selesai',
+      'status': 'qc',
       'noQc': noQc.toString(),
       'total_qty_diterima': totalQty.toString(),
       'total_berat_diteirma': totalBerat.toString(),
@@ -1585,8 +2068,24 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
     print(response.body);
   }
 
-  postDetailItem(String item, qty, berat, panjang, lebar) async {
+  postStatusItemPR(String? id) async {
     Map<String, String> body = {
+      'type': 'itemPr', // Menambahkan jenis data 'itemPr' ke body
+      'id': id.toString(),
+      'noQc': noQc.toString(),
+      'receiveBerat': totalBerat.toString(),
+      'receiveQty': totalQty.toString(),
+      'notesReject': notesReject.text,
+    };
+    final response = await http.post(
+        Uri.parse('${ApiConstants.baseUrl}${ApiConstants.updateItemPr}'),
+        body: jsonEncode(body));
+    print(response.body);
+  }
+
+  postDetailItem(String item, qty, berat, panjang, lebar, caratPcs) async {
+    Map<String, String> body = {
+      'type': 'itemPr', // Menambahkan jenis data 'itemPr' ke body
       'noPr': noPr!,
       'noQc': noQc,
       'item': item,
@@ -1594,6 +2093,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
       'berat': berat,
       'panjang': panjang,
       'lebar': lebar,
+      'caratPcs': caratPcs,
       'jenisBatu': jenisBatu!,
       'kualitasBatu': kualitasBatu!,
       'ukuranBatu': ukuranBatu.text,
@@ -1601,6 +2101,26 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
     final response = await http.post(
         Uri.parse('${ApiConstants.baseUrl}${ApiConstants.postListFormQc}'),
         body: body);
+    print(response.body);
+  }
+
+  updateDetailItem(
+      String id, String item, qty, berat, panjang, lebar, caratPcs) async {
+    Map<String, String> body = {
+      'id': id,
+      'item': item,
+      'qty': qty,
+      'berat': berat,
+      'panjang': panjang,
+      'lebar': lebar,
+      'caratPcs': caratPcs,
+      'jenisBatu': jenisBatu!,
+      'kualitasBatu': kualitasBatu!,
+      'ukuranBatu': ukuranBatu.text,
+    };
+    final response = await http.post(
+        Uri.parse('${ApiConstants.baseUrl}${ApiConstants.updateItemPr}'),
+        body: jsonEncode(body));
     print(response.body);
   }
 

@@ -95,592 +95,639 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<List<FormDesignerModel>> _getAllData(month, name) async {
-    final response = await http.get(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.getListFormDesigner));
+    print('get all data on');
+    try {
+      final response = await http.get(
+          Uri.parse(ApiConstants.baseUrl + ApiConstants.getListFormDesigner));
 
-    if (response.statusCode == 200) {
-      List jsonResponse = json.decode(response.body);
+      if (response.statusCode == 200) {
+        List jsonResponse = json.decode(response.body);
 
-      var allData =
-          jsonResponse.map((data) => FormDesignerModel.fromJson(data)).toList();
+        var allData = jsonResponse
+            .map((data) => FormDesignerModel.fromJson(data))
+            .toList();
 
-      //! method scm
-      if (sharedPreferences!.getString('level') == '1') {
-        if (month.toString().toLowerCase() == "all") {
-          var filterByStatusBatu = allData.where((element) =>
-              element.keteranganStatusBatu.toString().toLowerCase() ==
-              "batu lengkap");
-          batuLengkap = filterByStatusBatu.toList().length;
-        } else {
-          var filterBySiklus = allData.where((element) =>
-              element.siklus.toString().toLowerCase() ==
-              month.toString().toLowerCase());
-          var filterByStatusBatu = filterBySiklus.where((element) =>
-              element.keteranganStatusBatu.toString().toLowerCase() ==
-              "batu lengkap");
-          batuLengkap = filterByStatusBatu.toList().length;
-          allData = filterBySiklus.toList();
+        //! method scm
+        if (sharedPreferences!.getString('level') == '1') {
+          if (month.toString().toLowerCase() == "all") {
+            var filterByStatusBatu = allData.where((element) =>
+                element.keteranganStatusBatu.toString().toLowerCase() ==
+                "batu lengkap");
+            batuLengkap = filterByStatusBatu.toList().length;
+          } else {
+            var filterBySiklus = allData.where((element) =>
+                element.siklus.toString().toLowerCase() ==
+                month.toString().toLowerCase());
+            var filterByStatusBatu = filterBySiklus.where((element) =>
+                element.keteranganStatusBatu.toString().toLowerCase() ==
+                "batu lengkap");
+            batuLengkap = filterByStatusBatu.toList().length;
+            allData = filterBySiklus.toList();
+          }
         }
-      }
-      //! method designer
-      else if (sharedPreferences!.getString('level') == '2') {
-        if (month.toString().toLowerCase() == "all") {
-          var filterByName = allData.where((element) =>
-              element.namaDesigner.toString().toLowerCase() ==
-              name.toString().toLowerCase());
-          allData = filterByName.toList();
-        } else {
-          var filterBySiklus = allData.where((element) =>
-              element.siklus.toString().toLowerCase() ==
-              month.toString().toLowerCase());
-          var filterByName = filterBySiklus.where((element) =>
-              element.namaDesigner.toString().toLowerCase() ==
-              name.toString().toLowerCase());
-          allData = filterByName.toList();
+        //! method designer
+        else if (sharedPreferences!.getString('level') == '2') {
+          if (month.toString().toLowerCase() == "all") {
+            var filterByName = allData.where((element) =>
+                element.namaDesigner.toString().toLowerCase() ==
+                name.toString().toLowerCase());
+            allData = filterByName.toList();
+          } else {
+            var filterBySiklus = allData.where((element) =>
+                element.siklus.toString().toLowerCase() ==
+                month.toString().toLowerCase());
+            var filterByName = filterBySiklus.where((element) =>
+                element.namaDesigner.toString().toLowerCase() ==
+                name.toString().toLowerCase());
+            allData = filterByName.toList();
+          }
         }
-      }
-      //! method modeller
+        //! method modeller
 
-      else {
-        if (month.toString().toLowerCase() == "all") {
-          var filterByName = allData.where((element) =>
-              element.namaModeller.toString().toLowerCase() ==
-              name.toString().toLowerCase());
-          allData = filterByName.toList();
-          allData.sort((a, b) => double.parse(a.pointModeller!)
-              .compareTo(double.parse(b.pointModeller!)));
-        } else {
-          var filterBySiklus = allData.where((element) =>
-              element.siklus.toString().toLowerCase() ==
-              month.toString().toLowerCase());
-          var filterByName = filterBySiklus.where((element) =>
-              element.namaModeller.toString().toLowerCase() ==
-              name.toString().toLowerCase());
-          allData = filterByName.toList();
-          allData.sort((a, b) => double.parse(a.pointModeller!)
-              .compareTo(double.parse(b.pointModeller!)));
+        else {
+          if (month.toString().toLowerCase() == "all") {
+            var filterByName = allData.where((element) =>
+                element.namaModeller.toString().toLowerCase() ==
+                name.toString().toLowerCase());
+            allData = filterByName.toList();
+            allData.sort((a, b) => double.parse(a.pointModeller!)
+                .compareTo(double.parse(b.pointModeller!)));
+          } else {
+            var filterBySiklus = allData.where((element) =>
+                element.siklus.toString().toLowerCase() ==
+                month.toString().toLowerCase());
+            var filterByName = filterBySiklus.where((element) =>
+                element.namaModeller.toString().toLowerCase() ==
+                name.toString().toLowerCase());
+            allData = filterByName.toList();
+            allData.sort((a, b) => double.parse(a.pointModeller!)
+                .compareTo(double.parse(b.pointModeller!)));
+          }
         }
-      }
 
-      setState(() {
-        filterCrm = allData;
-        myCrm = allData;
-        isLoading = true;
-        isLoadingJenisBarang = true;
-        totalSPK = allData.length;
-        totalSPKSelesai = allData
-            .where((element) => double.parse(element.pointModeller!) > 0)
-            .length;
-      });
-      return allData;
-    } else {
+        setState(() {
+          filterCrm = allData;
+          myCrm = allData;
+          isLoading = true;
+          isLoadingJenisBarang = true;
+          totalSPK = allData.length;
+          totalSPKSelesai = allData
+              .where((element) => double.parse(element.pointModeller!) > 0)
+              .length;
+          print('end funtion get data all');
+        });
+
+        return allData;
+      } else {
+        throw Exception('Unexpected error occured!');
+      }
+    } catch (c) {
+      print('err get data designer $c');
       throw Exception('Unexpected error occured!');
     }
   }
 
   Future<List<FormDesignerModel>> _getDataJeniBarangView1(
       chooseSiklus, nama, jenisBarangView1) async {
-    final response = await http.get(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.getListFormDesigner));
-    if (response.statusCode == 200) {
-      List jsonResponse = json.decode(response.body);
+    try {
+      final response = await http.get(
+          Uri.parse(ApiConstants.baseUrl + ApiConstants.getListFormDesigner));
+      if (response.statusCode == 200) {
+        List jsonResponse = json.decode(response.body);
 
-      var g =
-          jsonResponse.map((data) => FormDesignerModel.fromJson(data)).toList();
-      //! method scm
-      if (chooseSiklus.toString().toLowerCase() == "all") {
-        var filterByJenisBarang = g.where((element) =>
-            element.jenisBarang.toString().toLowerCase() ==
-            jenisBarangView1.toString().toLowerCase());
-        listJenisBarangView1 = filterByJenisBarang.toList();
+        var g = jsonResponse
+            .map((data) => FormDesignerModel.fromJson(data))
+            .toList();
+        //! method scm
+        if (chooseSiklus.toString().toLowerCase() == "all") {
+          var filterByJenisBarang = g.where((element) =>
+              element.jenisBarang.toString().toLowerCase() ==
+              jenisBarangView1.toString().toLowerCase());
+          listJenisBarangView1 = filterByJenisBarang.toList();
+        } else {
+          var filterBySiklus = g.where((element) =>
+              element.siklus.toString().toLowerCase() ==
+              chooseSiklus.toString().toLowerCase());
+          var filterByJenisBarang = filterBySiklus.where((element) =>
+              element.jenisBarang.toString().toLowerCase() ==
+              jenisBarangView1.toString().toLowerCase());
+          listJenisBarangView1 = filterByJenisBarang.toList();
+        }
+
+        // g = removeDuplicates(listJenisBarangView1!);
+        g = listJenisBarangView1!;
+        return g;
       } else {
-        var filterBySiklus = g.where((element) =>
-            element.siklus.toString().toLowerCase() ==
-            chooseSiklus.toString().toLowerCase());
-        var filterByJenisBarang = filterBySiklus.where((element) =>
-            element.jenisBarang.toString().toLowerCase() ==
-            jenisBarangView1.toString().toLowerCase());
-        listJenisBarangView1 = filterByJenisBarang.toList();
+        throw Exception('Unexpected error occured!');
       }
-
-      // g = removeDuplicates(listJenisBarangView1!);
-      g = listJenisBarangView1!;
-      return g;
-    } else {
+    } catch (c) {
+      print('err get data jenis barang $c');
       throw Exception('Unexpected error occured!');
     }
   }
 
   Future<List<FormDesignerModel>> _getData(chooseSiklus, nama) async {
-    final response = await http.get(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.getListFormDesigner));
-    if (response.statusCode == 200) {
-      print('fungsi jenis barang oke');
+    try {
+      final response = await http.get(
+          Uri.parse(ApiConstants.baseUrl + ApiConstants.getListFormDesigner));
+      if (response.statusCode == 200) {
+        print('fungsi jenis barang oke');
 
-      List jsonResponse = json.decode(response.body);
+        List jsonResponse = json.decode(response.body);
 
-      var g =
-          jsonResponse.map((data) => FormDesignerModel.fromJson(data)).toList();
-      //! method scm
-      if (sharedPreferences!.getString('level') == '1') {
-        if (chooseSiklus.toString().toLowerCase() == "all") {
-          listJenisBarang = g;
+        var g = jsonResponse
+            .map((data) => FormDesignerModel.fromJson(data))
+            .toList();
+        //! method scm
+        if (sharedPreferences!.getString('level') == '1') {
+          if (chooseSiklus.toString().toLowerCase() == "all") {
+            listJenisBarang = g;
 
-          //! point modeller
-          var filterByPoint =
-              g.where((element) => double.parse(element.pointModeller!) > 0);
-          //? point modeller arif
-          var filterByArif = filterByPoint.where((element) =>
-              element.namaModeller.toString().toLowerCase() ==
-              "arif kurniawan");
-          pointArif = 0.0;
-          for (var i = 0; i < filterByArif.length; i++) {
-            pointArif += double.parse(filterByArif.toList()[i].pointModeller!);
-          }
-          //? point modeller aris
-          var filterByAris = filterByPoint.where((element) =>
-              element.namaModeller.toString().toLowerCase() == "aris pravidan");
-          pointAris = 0.0;
-          for (var i = 0; i < filterByAris.length; i++) {
-            pointAris += double.parse(filterByAris.toList()[i].pointModeller!);
-          }
+            //! point modeller
+            var filterByPoint =
+                g.where((element) => double.parse(element.pointModeller!) > 0);
+            //? point modeller arif
+            var filterByArif = filterByPoint.where((element) =>
+                element.namaModeller.toString().toLowerCase() ==
+                "arif kurniawan");
+            pointArif = 0.0;
+            for (var i = 0; i < filterByArif.length; i++) {
+              pointArif +=
+                  double.parse(filterByArif.toList()[i].pointModeller!);
+            }
+            //? point modeller aris
+            var filterByAris = filterByPoint.where((element) =>
+                element.namaModeller.toString().toLowerCase() ==
+                "aris pravidan");
+            pointAris = 0.0;
+            for (var i = 0; i < filterByAris.length; i++) {
+              pointAris +=
+                  double.parse(filterByAris.toList()[i].pointModeller!);
+            }
 
-          //? point modeller fikri
-          var filterByFikri = filterByPoint.where((element) =>
-              element.namaModeller.toString().toLowerCase() == "fikryansyah");
-          pointFikri = 0.0;
-          for (var i = 0; i < filterByFikri.length; i++) {
-            pointFikri +=
-                double.parse(filterByFikri.toList()[i].pointModeller!);
-          }
+            //? point modeller fikri
+            var filterByFikri = filterByPoint.where((element) =>
+                element.namaModeller.toString().toLowerCase() == "fikryansyah");
+            pointFikri = 0.0;
+            for (var i = 0; i < filterByFikri.length; i++) {
+              pointFikri +=
+                  double.parse(filterByFikri.toList()[i].pointModeller!);
+            }
 
-          //? point modeller yuse
-          var filterByyuse = filterByPoint.where((element) =>
-              element.namaModeller.toString().toLowerCase() == "yuse");
-          pointyuse = 0.0;
-          for (var i = 0; i < filterByyuse.length; i++) {
-            pointyuse += double.parse(filterByyuse.toList()[i].pointModeller!);
-          }
+            //? point modeller yuse
+            var filterByyuse = filterByPoint.where((element) =>
+                element.namaModeller.toString().toLowerCase() == "yuse");
+            pointyuse = 0.0;
+            for (var i = 0; i < filterByyuse.length; i++) {
+              pointyuse +=
+                  double.parse(filterByyuse.toList()[i].pointModeller!);
+            }
 
-          //! berat modeller
-          var filterByberat =
-              g.where((element) => double.parse(element.beratModeller!) > 0);
-          //? berat modeller arif
-          var filterBeratByArif = filterByberat.where((element) =>
-              element.namaModeller.toString().toLowerCase() ==
-              "arif kurniawan");
-          beratArif = 0.0;
-          for (var i = 0; i < filterBeratByArif.length; i++) {
-            beratArif +=
-                double.parse(filterBeratByArif.toList()[i].beratModeller!);
-          }
-          //? berat modeller aris
-          var filterBeratByAris = filterByberat.where((element) =>
-              element.namaModeller.toString().toLowerCase() == "aris pravidan");
-          beratAris = 0.0;
-          for (var i = 0; i < filterBeratByAris.length; i++) {
-            beratAris +=
-                double.parse(filterBeratByAris.toList()[i].beratModeller!);
-          }
+            //! berat modeller
+            var filterByberat =
+                g.where((element) => double.parse(element.beratModeller!) > 0);
+            //? berat modeller arif
+            var filterBeratByArif = filterByberat.where((element) =>
+                element.namaModeller.toString().toLowerCase() ==
+                "arif kurniawan");
+            beratArif = 0.0;
+            for (var i = 0; i < filterBeratByArif.length; i++) {
+              beratArif +=
+                  double.parse(filterBeratByArif.toList()[i].beratModeller!);
+            }
+            //? berat modeller aris
+            var filterBeratByAris = filterByberat.where((element) =>
+                element.namaModeller.toString().toLowerCase() ==
+                "aris pravidan");
+            beratAris = 0.0;
+            for (var i = 0; i < filterBeratByAris.length; i++) {
+              beratAris +=
+                  double.parse(filterBeratByAris.toList()[i].beratModeller!);
+            }
 
-          //? berat modeller fikri
-          var filterBeratByFikri = filterByberat.where((element) =>
-              element.namaModeller.toString().toLowerCase() == "fikryansyah");
-          beratFikri = 0.0;
-          for (var i = 0; i < filterBeratByFikri.length; i++) {
-            beratFikri +=
-                double.parse(filterBeratByFikri.toList()[i].beratModeller!);
-          }
+            //? berat modeller fikri
+            var filterBeratByFikri = filterByberat.where((element) =>
+                element.namaModeller.toString().toLowerCase() == "fikryansyah");
+            beratFikri = 0.0;
+            for (var i = 0; i < filterBeratByFikri.length; i++) {
+              beratFikri +=
+                  double.parse(filterBeratByFikri.toList()[i].beratModeller!);
+            }
 
-          //? berat modeller yuse
-          var filterBeratByyuse = filterByberat.where((element) =>
-              element.namaModeller.toString().toLowerCase() == "yuse");
-          beratyuse = 0.0;
-          for (var i = 0; i < filterBeratByyuse.length; i++) {
-            beratyuse +=
-                double.parse(filterBeratByyuse.toList()[i].beratModeller!);
-          }
-        } else {
-          var filterBySiklus = g.where((element) =>
-              element.siklus.toString().toLowerCase() ==
-              chooseSiklus.toString().toLowerCase());
+            //? berat modeller yuse
+            var filterBeratByyuse = filterByberat.where((element) =>
+                element.namaModeller.toString().toLowerCase() == "yuse");
+            beratyuse = 0.0;
+            for (var i = 0; i < filterBeratByyuse.length; i++) {
+              beratyuse +=
+                  double.parse(filterBeratByyuse.toList()[i].beratModeller!);
+            }
+          } else {
+            var filterBySiklus = g.where((element) =>
+                element.siklus.toString().toLowerCase() ==
+                chooseSiklus.toString().toLowerCase());
 
-          filterBySiklus.toList();
-          listJenisBarang = filterBySiklus.toList();
+            filterBySiklus.toList();
+            listJenisBarang = filterBySiklus.toList();
 
-          //! point modeller
-          var filterByPoint =
-              g.where((element) => double.parse(element.pointModeller!) > 0);
-          //? point modeller arif
-          var filterByArif = filterByPoint.where((element) =>
-              element.namaModeller.toString().toLowerCase() ==
-              "arif kurniawan");
-          pointArif = 0.0;
-          for (var i = 0; i < filterByArif.length; i++) {
-            pointArif += double.parse(filterByArif.toList()[i].pointModeller!);
-          }
-          //? point modeller aris
-          var filterByAris = filterByPoint.where((element) =>
-              element.namaModeller.toString().toLowerCase() == "aris pravidan");
-          pointAris = 0.0;
-          for (var i = 0; i < filterByAris.length; i++) {
-            pointAris += double.parse(filterByAris.toList()[i].pointModeller!);
-          }
+            //! point modeller
+            var filterByPoint =
+                g.where((element) => double.parse(element.pointModeller!) > 0);
+            //? point modeller arif
+            var filterByArif = filterByPoint.where((element) =>
+                element.namaModeller.toString().toLowerCase() ==
+                "arif kurniawan");
+            pointArif = 0.0;
+            for (var i = 0; i < filterByArif.length; i++) {
+              pointArif +=
+                  double.parse(filterByArif.toList()[i].pointModeller!);
+            }
+            //? point modeller aris
+            var filterByAris = filterByPoint.where((element) =>
+                element.namaModeller.toString().toLowerCase() ==
+                "aris pravidan");
+            pointAris = 0.0;
+            for (var i = 0; i < filterByAris.length; i++) {
+              pointAris +=
+                  double.parse(filterByAris.toList()[i].pointModeller!);
+            }
 
-          //? point modeller fikri
-          var filterByFikri = filterByPoint.where((element) =>
-              element.namaModeller.toString().toLowerCase() == "fikryansyah");
-          pointFikri = 0.0;
-          for (var i = 0; i < filterByFikri.length; i++) {
-            pointFikri +=
-                double.parse(filterByFikri.toList()[i].pointModeller!);
-          }
+            //? point modeller fikri
+            var filterByFikri = filterByPoint.where((element) =>
+                element.namaModeller.toString().toLowerCase() == "fikryansyah");
+            pointFikri = 0.0;
+            for (var i = 0; i < filterByFikri.length; i++) {
+              pointFikri +=
+                  double.parse(filterByFikri.toList()[i].pointModeller!);
+            }
 
-          //? point modeller yuse
-          var filterByyuse = filterByPoint.where((element) =>
-              element.namaModeller.toString().toLowerCase() == "yuse");
-          pointyuse = 0.0;
-          for (var i = 0; i < filterByyuse.length; i++) {
-            pointyuse += double.parse(filterByyuse.toList()[i].pointModeller!);
-          }
-
-//! berat modeller
-          var filterByberat =
-              g.where((element) => double.parse(element.beratModeller!) > 0);
-          //? berat modeller arif
-          var filterBeratByArif = filterByberat.where((element) =>
-              element.namaModeller.toString().toLowerCase() ==
-              "arif kurniawan");
-          beratArif = 0.0;
-          for (var i = 0; i < filterBeratByArif.length; i++) {
-            beratArif +=
-                double.parse(filterBeratByArif.toList()[i].beratModeller!);
-          }
-          //? berat modeller aris
-          var filterBeratByAris = filterByberat.where((element) =>
-              element.namaModeller.toString().toLowerCase() == "aris pravidan");
-          beratAris = 0.0;
-          for (var i = 0; i < filterBeratByAris.length; i++) {
-            beratAris +=
-                double.parse(filterBeratByAris.toList()[i].beratModeller!);
-          }
-
-          //? berat modeller fikri
-          var filterBeratByFikri = filterByberat.where((element) =>
-              element.namaModeller.toString().toLowerCase() == "fikryansyah");
-          beratFikri = 0.0;
-          for (var i = 0; i < filterBeratByFikri.length; i++) {
-            beratFikri +=
-                double.parse(filterBeratByFikri.toList()[i].beratModeller!);
-          }
-
-          //? berat modeller yuse
-          var filterBeratByyuse = filterByberat.where((element) =>
-              element.namaModeller.toString().toLowerCase() == "yuse");
-          beratyuse = 0.0;
-          for (var i = 0; i < filterBeratByyuse.length; i++) {
-            beratyuse +=
-                double.parse(filterBeratByyuse.toList()[i].beratModeller!);
-          }
-        }
-      }
-      //! method designer
-
-      else if (sharedPreferences!.getString('level') == '2') {
-        if (chooseSiklus.toString().toLowerCase() == "all") {
-          var filterByName = g.where((element) =>
-              element.namaDesigner.toString().toLowerCase() ==
-              nama.toString().toLowerCase());
-
-          listJenisBarang = filterByName.toList();
-        } else {
-          var filterBySiklus = g.where((element) =>
-              element.siklus.toString().toLowerCase() ==
-              chooseSiklus.toString().toLowerCase());
-          var filterByName = filterBySiklus.where((element) =>
-              element.namaDesigner.toString().toLowerCase() ==
-              nama.toString().toLowerCase());
-
-          listJenisBarang = filterByName.toList();
-        }
-      }
-      //! method modeller
-
-      else {
-        if (chooseSiklus.toString().toLowerCase() == "all") {
-          var filterByNameModeller = g.where((element) =>
-              element.namaModeller.toString().toLowerCase() ==
-              nama.toString().toLowerCase());
-
-          listJenisBarang = filterByNameModeller.toList();
-          //! point modeller
-          var filterByPoint =
-              g.where((element) => double.parse(element.pointModeller!) > 0);
-          //? point modeller arif
-          var filterByArif = filterByPoint.where((element) =>
-              element.namaModeller.toString().toLowerCase() ==
-              "arif kurniawan");
-          pointArif = 0.0;
-          for (var i = 0; i < filterByArif.length; i++) {
-            pointArif += double.parse(filterByArif.toList()[i].pointModeller!);
-          }
-          //? point modeller aris
-          var filterByAris = filterByPoint.where((element) =>
-              element.namaModeller.toString().toLowerCase() == "aris pravidan");
-          pointAris = 0.0;
-          for (var i = 0; i < filterByAris.length; i++) {
-            pointAris += double.parse(filterByAris.toList()[i].pointModeller!);
-          }
-
-          //? point modeller fikri
-          var filterByFikri = filterByPoint.where((element) =>
-              element.namaModeller.toString().toLowerCase() == "fikryansyah");
-          pointFikri = 0.0;
-          for (var i = 0; i < filterByFikri.length; i++) {
-            pointFikri +=
-                double.parse(filterByFikri.toList()[i].pointModeller!);
-          }
-
-          //? point modeller yuse
-          var filterByyuse = filterByPoint.where((element) =>
-              element.namaModeller.toString().toLowerCase() == "yuse");
-          pointyuse = 0.0;
-          for (var i = 0; i < filterByyuse.length; i++) {
-            pointyuse += double.parse(filterByyuse.toList()[i].pointModeller!);
-          }
+            //? point modeller yuse
+            var filterByyuse = filterByPoint.where((element) =>
+                element.namaModeller.toString().toLowerCase() == "yuse");
+            pointyuse = 0.0;
+            for (var i = 0; i < filterByyuse.length; i++) {
+              pointyuse +=
+                  double.parse(filterByyuse.toList()[i].pointModeller!);
+            }
 
 //! berat modeller
-          var filterByberat =
-              g.where((element) => double.parse(element.beratModeller!) > 0);
-          //? berat modeller arif
-          var filterBeratByArif = filterByberat.where((element) =>
-              element.namaModeller.toString().toLowerCase() ==
-              "arif kurniawan");
-          beratArif = 0.0;
-          for (var i = 0; i < filterBeratByArif.length; i++) {
-            beratArif +=
-                double.parse(filterBeratByArif.toList()[i].beratModeller!);
-          }
-          //? berat modeller aris
-          var filterBeratByAris = filterByberat.where((element) =>
-              element.namaModeller.toString().toLowerCase() == "aris pravidan");
-          beratAris = 0.0;
-          for (var i = 0; i < filterBeratByAris.length; i++) {
-            beratAris +=
-                double.parse(filterBeratByAris.toList()[i].beratModeller!);
-          }
+            var filterByberat =
+                g.where((element) => double.parse(element.beratModeller!) > 0);
+            //? berat modeller arif
+            var filterBeratByArif = filterByberat.where((element) =>
+                element.namaModeller.toString().toLowerCase() ==
+                "arif kurniawan");
+            beratArif = 0.0;
+            for (var i = 0; i < filterBeratByArif.length; i++) {
+              beratArif +=
+                  double.parse(filterBeratByArif.toList()[i].beratModeller!);
+            }
+            //? berat modeller aris
+            var filterBeratByAris = filterByberat.where((element) =>
+                element.namaModeller.toString().toLowerCase() ==
+                "aris pravidan");
+            beratAris = 0.0;
+            for (var i = 0; i < filterBeratByAris.length; i++) {
+              beratAris +=
+                  double.parse(filterBeratByAris.toList()[i].beratModeller!);
+            }
 
-          //? berat modeller fikri
-          var filterBeratByFikri = filterByberat.where((element) =>
-              element.namaModeller.toString().toLowerCase() == "fikryansyah");
-          beratFikri = 0.0;
-          for (var i = 0; i < filterBeratByFikri.length; i++) {
-            beratFikri +=
-                double.parse(filterBeratByFikri.toList()[i].beratModeller!);
-          }
+            //? berat modeller fikri
+            var filterBeratByFikri = filterByberat.where((element) =>
+                element.namaModeller.toString().toLowerCase() == "fikryansyah");
+            beratFikri = 0.0;
+            for (var i = 0; i < filterBeratByFikri.length; i++) {
+              beratFikri +=
+                  double.parse(filterBeratByFikri.toList()[i].beratModeller!);
+            }
 
-          //? berat modeller yuse
-          var filterBeratByyuse = filterByberat.where((element) =>
-              element.namaModeller.toString().toLowerCase() == "yuse");
-          beratyuse = 0.0;
-          for (var i = 0; i < filterBeratByyuse.length; i++) {
-            beratyuse +=
-                double.parse(filterBeratByyuse.toList()[i].beratModeller!);
-          }
-        } else {
-          var filterBySiklus = g.where((element) =>
-              element.siklus.toString().toLowerCase() ==
-              chooseSiklus.toString().toLowerCase());
-          var filterByName = filterBySiklus.where((element) =>
-              element.namaModeller.toString().toLowerCase() ==
-              nama.toString().toLowerCase());
-
-          listJenisBarang = filterByName.toList();
-          //! point modeller
-          var filterByPoint = filterBySiklus
-              .where((element) => double.parse(element.pointModeller!) > 0);
-          //? point modeller arif
-          var filterByArif = filterByPoint.where((element) =>
-              element.namaModeller.toString().toLowerCase() ==
-              "arif kurniawan");
-          pointArif = 0.0;
-          for (var i = 0; i < filterByArif.length; i++) {
-            pointArif += double.parse(filterByArif.toList()[i].pointModeller!);
-          }
-          //? point modeller aris
-          var filterByAris = filterByPoint.where((element) =>
-              element.namaModeller.toString().toLowerCase() == "aris pravidan");
-          pointAris = 0.0;
-          for (var i = 0; i < filterByAris.length; i++) {
-            pointAris += double.parse(filterByAris.toList()[i].pointModeller!);
-          }
-
-          //? point modeller fikri
-          var filterByFikri = filterByPoint.where((element) =>
-              element.namaModeller.toString().toLowerCase() == "fikryansyah");
-          pointFikri = 0.0;
-          for (var i = 0; i < filterByFikri.length; i++) {
-            pointFikri +=
-                double.parse(filterByFikri.toList()[i].pointModeller!);
-          }
-
-          //? point modeller yuse
-          var filterByyuse = filterByPoint.where((element) =>
-              element.namaModeller.toString().toLowerCase() == "yuse");
-          pointyuse = 0.0;
-          for (var i = 0; i < filterByyuse.length; i++) {
-            pointyuse += double.parse(filterByyuse.toList()[i].pointModeller!);
-          }
-
-//! berat modeller
-          var filterByberat = filterBySiklus
-              .where((element) => double.parse(element.beratModeller!) > 0);
-          //? berat modeller arif
-          var filterBeratByArif = filterByberat.where((element) =>
-              element.namaModeller.toString().toLowerCase() ==
-              "arif kurniawan");
-          beratArif = 0.0;
-          for (var i = 0; i < filterBeratByArif.length; i++) {
-            beratArif +=
-                double.parse(filterBeratByArif.toList()[i].beratModeller!);
-          }
-          //? berat modeller aris
-          var filterBeratByAris = filterByberat.where((element) =>
-              element.namaModeller.toString().toLowerCase() == "aris pravidan");
-          beratAris = 0.0;
-          for (var i = 0; i < filterBeratByAris.length; i++) {
-            beratAris +=
-                double.parse(filterBeratByAris.toList()[i].beratModeller!);
-          }
-
-          //? berat modeller fikri
-          var filterBeratByFikri = filterByberat.where((element) =>
-              element.namaModeller.toString().toLowerCase() == "fikryansyah");
-          beratFikri = 0.0;
-          for (var i = 0; i < filterBeratByFikri.length; i++) {
-            beratFikri +=
-                double.parse(filterBeratByFikri.toList()[i].beratModeller!);
-          }
-
-          //? berat modeller yuse
-          var filterBeratByyuse = filterByberat.where((element) =>
-              element.namaModeller.toString().toLowerCase() == "yuse");
-          beratyuse = 0.0;
-          for (var i = 0; i < filterBeratByyuse.length; i++) {
-            beratyuse +=
-                double.parse(filterBeratByyuse.toList()[i].beratModeller!);
+            //? berat modeller yuse
+            var filterBeratByyuse = filterByberat.where((element) =>
+                element.namaModeller.toString().toLowerCase() == "yuse");
+            beratyuse = 0.0;
+            for (var i = 0; i < filterBeratByyuse.length; i++) {
+              beratyuse +=
+                  double.parse(filterBeratByyuse.toList()[i].beratModeller!);
+            }
           }
         }
-      }
+        //! method designer
 
-      g = removeDuplicates(listJenisBarang!);
-      // g = filterBySiklus.toList();
-      return g;
-    } else {
+        else if (sharedPreferences!.getString('level') == '2') {
+          if (chooseSiklus.toString().toLowerCase() == "all") {
+            var filterByName = g.where((element) =>
+                element.namaDesigner.toString().toLowerCase() ==
+                nama.toString().toLowerCase());
+
+            listJenisBarang = filterByName.toList();
+          } else {
+            var filterBySiklus = g.where((element) =>
+                element.siklus.toString().toLowerCase() ==
+                chooseSiklus.toString().toLowerCase());
+            var filterByName = filterBySiklus.where((element) =>
+                element.namaDesigner.toString().toLowerCase() ==
+                nama.toString().toLowerCase());
+
+            listJenisBarang = filterByName.toList();
+          }
+        }
+        //! method modeller
+
+        else {
+          if (chooseSiklus.toString().toLowerCase() == "all") {
+            var filterByNameModeller = g.where((element) =>
+                element.namaModeller.toString().toLowerCase() ==
+                nama.toString().toLowerCase());
+
+            listJenisBarang = filterByNameModeller.toList();
+            //! point modeller
+            var filterByPoint =
+                g.where((element) => double.parse(element.pointModeller!) > 0);
+            //? point modeller arif
+            var filterByArif = filterByPoint.where((element) =>
+                element.namaModeller.toString().toLowerCase() ==
+                "arif kurniawan");
+            pointArif = 0.0;
+            for (var i = 0; i < filterByArif.length; i++) {
+              pointArif +=
+                  double.parse(filterByArif.toList()[i].pointModeller!);
+            }
+            //? point modeller aris
+            var filterByAris = filterByPoint.where((element) =>
+                element.namaModeller.toString().toLowerCase() ==
+                "aris pravidan");
+            pointAris = 0.0;
+            for (var i = 0; i < filterByAris.length; i++) {
+              pointAris +=
+                  double.parse(filterByAris.toList()[i].pointModeller!);
+            }
+
+            //? point modeller fikri
+            var filterByFikri = filterByPoint.where((element) =>
+                element.namaModeller.toString().toLowerCase() == "fikryansyah");
+            pointFikri = 0.0;
+            for (var i = 0; i < filterByFikri.length; i++) {
+              pointFikri +=
+                  double.parse(filterByFikri.toList()[i].pointModeller!);
+            }
+
+            //? point modeller yuse
+            var filterByyuse = filterByPoint.where((element) =>
+                element.namaModeller.toString().toLowerCase() == "yuse");
+            pointyuse = 0.0;
+            for (var i = 0; i < filterByyuse.length; i++) {
+              pointyuse +=
+                  double.parse(filterByyuse.toList()[i].pointModeller!);
+            }
+
+//! berat modeller
+            var filterByberat =
+                g.where((element) => double.parse(element.beratModeller!) > 0);
+            //? berat modeller arif
+            var filterBeratByArif = filterByberat.where((element) =>
+                element.namaModeller.toString().toLowerCase() ==
+                "arif kurniawan");
+            beratArif = 0.0;
+            for (var i = 0; i < filterBeratByArif.length; i++) {
+              beratArif +=
+                  double.parse(filterBeratByArif.toList()[i].beratModeller!);
+            }
+            //? berat modeller aris
+            var filterBeratByAris = filterByberat.where((element) =>
+                element.namaModeller.toString().toLowerCase() ==
+                "aris pravidan");
+            beratAris = 0.0;
+            for (var i = 0; i < filterBeratByAris.length; i++) {
+              beratAris +=
+                  double.parse(filterBeratByAris.toList()[i].beratModeller!);
+            }
+
+            //? berat modeller fikri
+            var filterBeratByFikri = filterByberat.where((element) =>
+                element.namaModeller.toString().toLowerCase() == "fikryansyah");
+            beratFikri = 0.0;
+            for (var i = 0; i < filterBeratByFikri.length; i++) {
+              beratFikri +=
+                  double.parse(filterBeratByFikri.toList()[i].beratModeller!);
+            }
+
+            //? berat modeller yuse
+            var filterBeratByyuse = filterByberat.where((element) =>
+                element.namaModeller.toString().toLowerCase() == "yuse");
+            beratyuse = 0.0;
+            for (var i = 0; i < filterBeratByyuse.length; i++) {
+              beratyuse +=
+                  double.parse(filterBeratByyuse.toList()[i].beratModeller!);
+            }
+          } else {
+            var filterBySiklus = g.where((element) =>
+                element.siklus.toString().toLowerCase() ==
+                chooseSiklus.toString().toLowerCase());
+            var filterByName = filterBySiklus.where((element) =>
+                element.namaModeller.toString().toLowerCase() ==
+                nama.toString().toLowerCase());
+
+            listJenisBarang = filterByName.toList();
+            //! point modeller
+            var filterByPoint = filterBySiklus
+                .where((element) => double.parse(element.pointModeller!) > 0);
+            //? point modeller arif
+            var filterByArif = filterByPoint.where((element) =>
+                element.namaModeller.toString().toLowerCase() ==
+                "arif kurniawan");
+            pointArif = 0.0;
+            for (var i = 0; i < filterByArif.length; i++) {
+              pointArif +=
+                  double.parse(filterByArif.toList()[i].pointModeller!);
+            }
+            //? point modeller aris
+            var filterByAris = filterByPoint.where((element) =>
+                element.namaModeller.toString().toLowerCase() ==
+                "aris pravidan");
+            pointAris = 0.0;
+            for (var i = 0; i < filterByAris.length; i++) {
+              pointAris +=
+                  double.parse(filterByAris.toList()[i].pointModeller!);
+            }
+
+            //? point modeller fikri
+            var filterByFikri = filterByPoint.where((element) =>
+                element.namaModeller.toString().toLowerCase() == "fikryansyah");
+            pointFikri = 0.0;
+            for (var i = 0; i < filterByFikri.length; i++) {
+              pointFikri +=
+                  double.parse(filterByFikri.toList()[i].pointModeller!);
+            }
+
+            //? point modeller yuse
+            var filterByyuse = filterByPoint.where((element) =>
+                element.namaModeller.toString().toLowerCase() == "yuse");
+            pointyuse = 0.0;
+            for (var i = 0; i < filterByyuse.length; i++) {
+              pointyuse +=
+                  double.parse(filterByyuse.toList()[i].pointModeller!);
+            }
+
+//! berat modeller
+            var filterByberat = filterBySiklus
+                .where((element) => double.parse(element.beratModeller!) > 0);
+            //? berat modeller arif
+            var filterBeratByArif = filterByberat.where((element) =>
+                element.namaModeller.toString().toLowerCase() ==
+                "arif kurniawan");
+            beratArif = 0.0;
+            for (var i = 0; i < filterBeratByArif.length; i++) {
+              beratArif +=
+                  double.parse(filterBeratByArif.toList()[i].beratModeller!);
+            }
+            //? berat modeller aris
+            var filterBeratByAris = filterByberat.where((element) =>
+                element.namaModeller.toString().toLowerCase() ==
+                "aris pravidan");
+            beratAris = 0.0;
+            for (var i = 0; i < filterBeratByAris.length; i++) {
+              beratAris +=
+                  double.parse(filterBeratByAris.toList()[i].beratModeller!);
+            }
+
+            //? berat modeller fikri
+            var filterBeratByFikri = filterByberat.where((element) =>
+                element.namaModeller.toString().toLowerCase() == "fikryansyah");
+            beratFikri = 0.0;
+            for (var i = 0; i < filterBeratByFikri.length; i++) {
+              beratFikri +=
+                  double.parse(filterBeratByFikri.toList()[i].beratModeller!);
+            }
+
+            //? berat modeller yuse
+            var filterBeratByyuse = filterByberat.where((element) =>
+                element.namaModeller.toString().toLowerCase() == "yuse");
+            beratyuse = 0.0;
+            for (var i = 0; i < filterBeratByyuse.length; i++) {
+              beratyuse +=
+                  double.parse(filterBeratByyuse.toList()[i].beratModeller!);
+            }
+          }
+        }
+
+        g = removeDuplicates(listJenisBarang!);
+        // g = filterBySiklus.toList();
+        return g;
+      } else {
+        throw Exception('Unexpected error occured!');
+      }
+    } catch (c) {
+      print('error get all data 2 $c');
       throw Exception('Unexpected error occured!');
     }
   }
 
   Future<List<FormDesignerModel>> _getKelasHarga(chooseSiklus, nama) async {
-    final response = await http.get(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.getListFormDesigner));
-    if (response.statusCode == 200) {
-      List jsonResponse = json.decode(response.body);
+    try {
+      final response = await http.get(
+          Uri.parse(ApiConstants.baseUrl + ApiConstants.getListFormDesigner));
+      if (response.statusCode == 200) {
+        List jsonResponse = json.decode(response.body);
 
-      var g =
-          jsonResponse.map((data) => FormDesignerModel.fromJson(data)).toList();
+        var g = jsonResponse
+            .map((data) => FormDesignerModel.fromJson(data))
+            .toList();
 
-      if (sharedPreferences!.getString('level') == '1') {
+        if (sharedPreferences!.getString('level') == '1') {
 //! kondisi scm
 
-        if (chooseSiklus.toString().toLowerCase() == "all") {
+          if (chooseSiklus.toString().toLowerCase() == "all") {
+          } else {
+            var filterBySiklus = g.where((element) =>
+                element.siklus.toString().toLowerCase() ==
+                chooseSiklus.toString().toLowerCase());
+            g = filterBySiklus.toList();
+          }
+        } else if (sharedPreferences!.getString('level') == '2') {
+          //! kondisi designer
+          if (chooseSiklus.toString().toLowerCase() == "all") {
+            var filterByName = g.where((element) =>
+                element.namaDesigner.toString().toLowerCase() ==
+                nama.toString().toLowerCase());
+            g = filterByName.toList();
+          } else {
+            var filterBySiklus = g.where((element) =>
+                element.siklus.toString().toLowerCase() ==
+                chooseSiklus.toString().toLowerCase());
+            var filterByName = filterBySiklus.where((element) =>
+                element.namaDesigner.toString().toLowerCase() ==
+                nama.toString().toLowerCase());
+            g = filterByName.toList();
+          }
         } else {
-          var filterBySiklus = g.where((element) =>
-              element.siklus.toString().toLowerCase() ==
-              chooseSiklus.toString().toLowerCase());
-          g = filterBySiklus.toList();
+          //! kondisi modeller
+          if (chooseSiklus.toString().toLowerCase() == "all") {
+            var filterByName = g.where((element) =>
+                element.namaModeller.toString().toLowerCase() ==
+                nama.toString().toLowerCase());
+            g = filterByName.toList();
+          } else {
+            var filterBySiklus = g.where((element) =>
+                element.siklus.toString().toLowerCase() ==
+                chooseSiklus.toString().toLowerCase());
+            var filterByName = filterBySiklus.where((element) =>
+                element.namaModeller.toString().toLowerCase() ==
+                nama.toString().toLowerCase());
+            g = filterByName.toList();
+          }
         }
-      } else if (sharedPreferences!.getString('level') == '2') {
-        //! kondisi designer
-        if (chooseSiklus.toString().toLowerCase() == "all") {
-          var filterByName = g.where((element) =>
-              element.namaDesigner.toString().toLowerCase() ==
-              nama.toString().toLowerCase());
-          g = filterByName.toList();
-        } else {
-          var filterBySiklus = g.where((element) =>
-              element.siklus.toString().toLowerCase() ==
-              chooseSiklus.toString().toLowerCase());
-          var filterByName = filterBySiklus.where((element) =>
-              element.namaDesigner.toString().toLowerCase() ==
-              nama.toString().toLowerCase());
-          g = filterByName.toList();
+
+        //* fungsi looping untuk menambahakn beberapa item kje dalam list kosong
+        listKelasHarga.clear();
+        sumHarga.clear();
+        sumHarga.add(0);
+
+        for (var i = 0; i < g.length; i++) {
+          if (g[i].brand.toString().toLowerCase() == "parva" ||
+              g[i].brand.toString().toLowerCase() == "fine") {
+            int nilai = ((g[i].estimasiHarga! * 0.37) * 11500).round();
+            sumHarga.add(nilai);
+            if (((g[i].estimasiHarga! * 0.37) * 11500) <= 5000000) {
+              listKelasHarga.add(
+                  'XS'); //!menambahakn item baru ke dalam list yang sudah dibuatkan
+            } else if (((g[i].estimasiHarga! * 0.37) * 11500) <= 10000000) {
+              listKelasHarga.add('S');
+            } else if (((g[i].estimasiHarga! * 0.37) * 11500) <= 20000000) {
+              listKelasHarga.add('M');
+            } else if (((g[i].estimasiHarga! * 0.37) * 11500) <= 35000000) {
+              listKelasHarga.add('L');
+            } else {
+              listKelasHarga.add('XL');
+            }
+          }
+          //? untuk beli berlian dan metier
+          else {
+            int nilai = g[i].estimasiHarga!;
+            sumHarga.add(nilai);
+            if (g[i].estimasiHarga! <= 5000000) {
+              listKelasHarga.add(
+                  'XS'); //!menambahakn item baru ke dalam list yang sudah dibuatkan
+            } else if (g[i].estimasiHarga! <= 10000000) {
+              listKelasHarga.add('S');
+            } else if (g[i].estimasiHarga! <= 20000000) {
+              listKelasHarga.add('M');
+            } else if (g[i].estimasiHarga! <= 35000000) {
+              listKelasHarga.add('L');
+            } else {
+              listKelasHarga.add('XL');
+            }
+          }
         }
+        totalHarga = sumHarga.reduce((a, b) => a + b);
+
+        // print(listKelasHarga.where((e) => e == "XS").length); //! mencari kalimat tertentu di dalam list yang menampilkan count dalam list
+        // print(listKelasHarga.toSet().toList()); //! menghapus item duplikat di dalam 1 list
+        return g;
       } else {
-        //! kondisi modeller
-        if (chooseSiklus.toString().toLowerCase() == "all") {
-          var filterByName = g.where((element) =>
-              element.namaModeller.toString().toLowerCase() ==
-              nama.toString().toLowerCase());
-          g = filterByName.toList();
-        } else {
-          var filterBySiklus = g.where((element) =>
-              element.siklus.toString().toLowerCase() ==
-              chooseSiklus.toString().toLowerCase());
-          var filterByName = filterBySiklus.where((element) =>
-              element.namaModeller.toString().toLowerCase() ==
-              nama.toString().toLowerCase());
-          g = filterByName.toList();
-        }
+        throw Exception('Unexpected error occured!');
       }
-
-      //* fungsi looping untuk menambahakn beberapa item kje dalam list kosong
-      listKelasHarga.clear();
-      sumHarga.clear();
-      sumHarga.add(0);
-
-      for (var i = 0; i < g.length; i++) {
-        if (g[i].brand.toString().toLowerCase() == "parva" ||
-            g[i].brand.toString().toLowerCase() == "fine") {
-          int nilai = ((g[i].estimasiHarga! * 0.37) * 11500).round();
-          sumHarga.add(nilai);
-          if (((g[i].estimasiHarga! * 0.37) * 11500) <= 5000000) {
-            listKelasHarga.add(
-                'XS'); //!menambahakn item baru ke dalam list yang sudah dibuatkan
-          } else if (((g[i].estimasiHarga! * 0.37) * 11500) <= 10000000) {
-            listKelasHarga.add('S');
-          } else if (((g[i].estimasiHarga! * 0.37) * 11500) <= 20000000) {
-            listKelasHarga.add('M');
-          } else if (((g[i].estimasiHarga! * 0.37) * 11500) <= 35000000) {
-            listKelasHarga.add('L');
-          } else {
-            listKelasHarga.add('XL');
-          }
-        }
-        //? untuk beli berlian dan metier
-        else {
-          int nilai = g[i].estimasiHarga!;
-          sumHarga.add(nilai);
-          if (g[i].estimasiHarga! <= 5000000) {
-            listKelasHarga.add(
-                'XS'); //!menambahakn item baru ke dalam list yang sudah dibuatkan
-          } else if (g[i].estimasiHarga! <= 10000000) {
-            listKelasHarga.add('S');
-          } else if (g[i].estimasiHarga! <= 20000000) {
-            listKelasHarga.add('M');
-          } else if (g[i].estimasiHarga! <= 35000000) {
-            listKelasHarga.add('L');
-          } else {
-            listKelasHarga.add('XL');
-          }
-        }
-      }
-      totalHarga = sumHarga.reduce((a, b) => a + b);
-
-      // print(listKelasHarga.where((e) => e == "XS").length); //! mencari kalimat tertentu di dalam list yang menampilkan count dalam list
-      // print(listKelasHarga.toSet().toList()); //! menghapus item duplikat di dalam 1 list
-      return g;
-    } else {
+    } catch (c) {
+      print('err get kelas harga');
       throw Exception('Unexpected error occured!');
     }
   }

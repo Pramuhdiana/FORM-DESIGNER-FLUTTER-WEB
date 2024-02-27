@@ -1,4 +1,3 @@
-
 // ignore_for_file: file_names
 
 class ItemQcModel {
@@ -13,6 +12,7 @@ class ItemQcModel {
   final String? jenisBatu;
   final String? kualitasBatu;
   final String? ukuranBatu;
+  final String? caratPcs;
 
   ItemQcModel({
     required this.id,
@@ -26,6 +26,7 @@ class ItemQcModel {
     this.jenisBatu,
     this.kualitasBatu,
     this.ukuranBatu,
+    this.caratPcs,
   });
 
   factory ItemQcModel.fromJson(Map<String, dynamic> json) {
@@ -41,6 +42,7 @@ class ItemQcModel {
       jenisBatu: json["jenisBatu"].toString(),
       kualitasBatu: (json["kualitasBatu"] ?? '').toString(),
       ukuranBatu: (json["ukuranBatu"] ?? '').toString(),
+      caratPcs: json["caratPcs"].toString(),
     );
   }
   Map<String, dynamic> toJson() {
@@ -55,7 +57,8 @@ class ItemQcModel {
     data['lebar'] = lebar;
     data['jenisBatu'] = jenisBatu;
     data['kualitasBatu'] = kualitasBatu;
-    data['fixBerat'] = qty;
+    data['ukuranBatu'] = ukuranBatu;
+    data['caratPcs'] = caratPcs;
     return data;
   }
 }

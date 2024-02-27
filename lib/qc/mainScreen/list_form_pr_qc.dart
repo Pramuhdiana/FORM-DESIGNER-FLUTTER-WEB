@@ -14,6 +14,7 @@ import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';
 // ignore: unused_import
 import 'package:intl/intl.dart';
+import 'package:overlay_support/overlay_support.dart';
 
 class ListFormPrQc extends StatefulWidget {
   const ListFormPrQc({super.key});
@@ -191,10 +192,21 @@ class _ListFormPrQcState extends State<ListFormPrQc> {
           ),
           body: isForm == true
               ? FormDetailBatuQc(
+                  listItemPR: _listItemPR,
+                  countItem: _listItemPR!
+                      .where((element) =>
+                          element.noPr.toString().toLowerCase() ==
+                          dataFormPR![indexDataPr]
+                              .noPR
+                              .toString()
+                              .toLowerCase())
+                      .toList()
+                      .length,
                   dataFormPr: FormPrModel(
                     noPR: dataFormPR![indexDataPr].noPR,
                     id: dataFormPR![indexDataPr].id,
                     vendor: dataFormPR![indexDataPr].vendor,
+                    jenisBatu: dataFormPR![indexDataPr].jenisBatu,
                     created_at: dataFormPR![indexDataPr].created_at,
                     tanggalInQc: dataFormPR![indexDataPr].tanggalInQc,
                     fixTotalQty: dataFormPR![indexDataPr].fixTotalQty,
@@ -365,7 +377,7 @@ class _ListFormPrQcState extends State<ListFormPrQc> {
                                         const DataColumn(
                                           label: SizedBox(
                                               child: Text(
-                                            "Total Qty",
+                                            "Total Qty\nPermintaan",
                                             style: TextStyle(
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.bold),
@@ -377,7 +389,7 @@ class _ListFormPrQcState extends State<ListFormPrQc> {
                                         const DataColumn(
                                           label: SizedBox(
                                               child: Text(
-                                            "Total Berat",
+                                            "Total Berat\nPermintaan",
                                             style: TextStyle(
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.bold),
@@ -388,7 +400,7 @@ class _ListFormPrQcState extends State<ListFormPrQc> {
                                         const DataColumn(
                                           label: SizedBox(
                                               child: Text(
-                                            "Total Qty Diterima",
+                                            "Total Qty\nKedatangan",
                                             style: TextStyle(
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.bold),
@@ -399,7 +411,7 @@ class _ListFormPrQcState extends State<ListFormPrQc> {
                                         const DataColumn(
                                           label: SizedBox(
                                               child: Text(
-                                            "Total Berat Diterima",
+                                            "Total Berat\nKedatangan",
                                             style: TextStyle(
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.bold),
@@ -417,6 +429,9 @@ class _ListFormPrQcState extends State<ListFormPrQc> {
                                                 print('select $indexDataPr');
                                                 refresh();
                                               }, //! mengirim data untuk me refresh state
+                                              getData: () {
+                                                _getData();
+                                              },
                                               indexDataPr: indexDataPr,
                                               listDataPR: _listItemPR,
                                               context: context,
@@ -568,6 +583,9 @@ class _ListFormPrQcState extends State<ListFormPrQc> {
                         print('select $indexDataPr');
                         refresh();
                       },
+                      getData: () {
+                        _getData();
+                      },
                       indexDataPr: indexDataPr,
                       listDataPR: _listItemPR,
                       context: context,
@@ -582,6 +600,7 @@ class _ListFormPrQcState extends State<ListFormPrQc> {
 class RowSource extends DataTableSource {
   final void Function(int)
       onRowPressed; //* menerima data untuk me refresh screen
+  final void Function() getData; //* menerima data untuk me refresh screen
   BuildContext context;
   var myData;
   List<ListItemPRModel>? listDataPR;
@@ -593,6 +612,7 @@ class RowSource extends DataTableSource {
     required this.context,
     required this.listDataPR,
     required this.onRowPressed,
+    required this.getData,
     required this.indexDataPr,
   });
 
@@ -612,31 +632,100 @@ class RowSource extends DataTableSource {
       DataCell(Builder(builder: (context) {
         return Row(
           children: [
-            data.status.toString().toLowerCase() == 'selesai'
-                ? Padding(
-                    padding: const EdgeInsets.only(left: 0),
-                    child: IconButton(
-                      onPressed: () {
-                        onRowPressed(index);
-                      },
-                      icon: const Icon(
-                        Icons.remove_red_eye_outlined,
-                        color: Colors.green,
+            Padding(
+              padding: const EdgeInsets.only(left: 0),
+              child: IconButton(
+                onPressed: () {
+                  onRowPressed(index);
+                },
+                icon: const Icon(
+                  Icons.remove_red_eye_outlined,
+                  color: Colors.green,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 0),
+              child: IconButton(
+                onPressed: () {
+                  showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) => AlertDialog(
+                      title: const Text(
+                        'Perhatian',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: Colors.black, fontWeight: FontWeight.bold),
                       ),
-                    ),
-                  )
-                : Padding(
-                    padding: const EdgeInsets.only(left: 0),
-                    child: IconButton(
-                      onPressed: () {
-                        onRowPressed(index);
-                      },
-                      icon: const Icon(
-                        Icons.send,
-                        color: Colors.blue,
+                      content: Row(
+                        children: [
+                          const Text(
+                            'Apakah anda yakin ingin mengirim form ',
+                          ),
+                          Text(
+                            '${data.noPR}  ?',
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
+                          ),
+                        ],
                       ),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () => Navigator.pop(
+                            context,
+                            'Batal',
+                          ),
+                          child: const Text(
+                            'Batal',
+                            style: TextStyle(color: Colors.red),
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              barrierDismissible:
+                                  false, // Prevent dialog dismissal on tap outside
+                              builder: (BuildContext context) {
+                                return Dialog(
+                                  backgroundColor: Colors.transparent,
+                                  elevation: 0,
+                                  child: Container(
+                                    padding: const EdgeInsets.all(16),
+                                    color: Colors.white,
+                                    child: const Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        CircularProgressIndicator(),
+                                        SizedBox(height: 20),
+                                        Text(
+                                          'Loading, please wait...',
+                                          style: TextStyle(fontSize: 16),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                            kirimForm(data.id.toString());
+                          },
+                          child: const Text(
+                            'Kirim',
+                            style: TextStyle(color: Colors.blue),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
+                  );
+                },
+                icon: const Icon(
+                  Icons.send,
+                  color: Colors.blue,
+                ),
+              ),
+            ),
           ],
         );
       })),
@@ -768,6 +857,31 @@ class RowSource extends DataTableSource {
   //       ]),
   //   ];
   // }
+
+  kirimForm(id) async {
+    await postStatusPR(id);
+    getData();
+    // ignore: use_build_context_synchronously
+    Navigator.pop(context);
+    showSimpleNotification(
+      const Text('Form Berhasil Dikirm'),
+      background: Colors.green,
+      duration: const Duration(seconds: 1),
+    );
+    // ignore: use_build_context_synchronously
+    Navigator.pop(context);
+  }
+
+  postStatusPR(String? id) async {
+    Map<String, String> body = {
+      'id': id!,
+      'status': 'selesai',
+    };
+    final response = await http.post(
+        Uri.parse('${ApiConstants.baseUrl}${ApiConstants.updateStatusPR}'),
+        body: body);
+    print(response.body);
+  }
 
   @override
   bool get isRowCountApproximate => false;

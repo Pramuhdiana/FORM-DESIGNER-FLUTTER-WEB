@@ -1,22 +1,30 @@
-
 // ignore_for_file: file_names, unnecessary_this
 
 class UkuranRoundModel {
   final int idRound;
   final String ukuranRound;
+  final String jenisRound;
   final String caratPcs;
+  final String kodeMdbc;
+  final String lot;
 
   UkuranRoundModel({
     required this.idRound,
     required this.ukuranRound,
+    required this.jenisRound,
     required this.caratPcs,
+    required this.kodeMdbc,
+    required this.lot,
   });
 
   factory UkuranRoundModel.fromJson(Map<String, dynamic> json) {
     return UkuranRoundModel(
       idRound: json["idRound"],
       ukuranRound: json["ukuranRound"] ?? 'null',
+      jenisRound: json["jenisRound"] ?? 'null',
       caratPcs: json["caratPcs"].toString(),
+      kodeMdbc: json["kodeMdbc"] ?? 'null',
+      lot: json["lot"] ?? 'null',
     );
   }
 
