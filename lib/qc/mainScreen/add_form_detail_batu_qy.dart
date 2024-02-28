@@ -90,7 +90,17 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
   List<bool> _isOpen = []; // List untuk mengatur status container
   List<ListItemPRModel>? listItemPr;
   List<ItemQcModel>? listDetailItemPR;
-
+  List<String> items = [
+    "Item 1",
+    "Item 2",
+    "Item 3",
+    "Item 4",
+    "Item 5",
+    "Item 6",
+    "Item 7",
+  ];
+  bool expanded = false;
+  int? expandedIndex;
   @override
   void initState() {
     super.initState();
@@ -105,7 +115,8 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
     _getData();
   }
 
-  callData(int index) async {
+  callData(int index, String? noQcDummy) async {
+    print(noQcDummy);
     setState(() {
       isloadingItem = true;
     });
@@ -113,11 +124,11 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
     if (jenisBatu.toString().toLowerCase() != 'round') {
       await getJenisBatu(index);
     }
-    for (int i = 0; i < _isOpen.length; i++) {
-      if (i != index) {
-        _isOpen[i] = false;
-      }
-    }
+    // for (int i = 0; i < _isOpen.length; i++) {
+    //   if (i != index) {
+    //     _isOpen[i] = false;
+    //   }
+    // }
     idItemPr = listItemPr![index].id.toString();
 
     if (double.parse(listItemPr![index].receiveBerat!) > 0
@@ -126,7 +137,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
         ) {
       notesReject.text = listItemPr![index].notesReject.toString();
       filterBynoQc = listDetailItemPR!
-          .where((element) => element.noQc == listItemPr![index].noQc)
+          .where((element) => element.noQc == noQcDummy)
           .toList();
       for (var i = 0; i < filterBynoQc.length; i++) {
         if (jenisBatu.toString().toLowerCase() == 'round') {
@@ -142,7 +153,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
             '$caratPcs',
             idItem,
           ]);
-          print('round = $selectListItemRound');
+          print('round edit = $selectListItemRound');
         } else {
           kodeMdbc = '${filterBynoQc[i].item}';
           panjang = '${filterBynoQc[i].panjang}';
@@ -165,12 +176,8 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
 
       no += filterBynoQc.length;
       _isOpen[index] = !_isOpen[index];
-      print('mode edit');
-      print('count table akhir = $no');
     } else {
       _isOpen[index] = !_isOpen[index];
-      print('mode new');
-      print('count table akhir = $no');
     }
     setState(() {
       isloadingItem = false;
@@ -209,25 +216,29 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
   }
 
   dataTableForm(String mode, String jenisBatu, int count, int index) {
-    return DataTable(
-        headingTextStyle:
-            const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
-        headingRowColor:
-            MaterialStateProperty.resolveWith((states) => Colors.black54),
-        dataRowColor:
-            MaterialStateProperty.resolveWith((states) => Colors.white),
-        columnSpacing: 0,
-        headingRowHeight: 50,
-        // dataRowMaxHeight: 50,
-        columns: columnsData(jenisBatu, index),
-        border: TableBorder.all(),
-        rows: mode == 'edit'
-            ? rowsEditData(index, jenisBatu, () {
-                setState(() {});
-              }, count)
-            : rowsData(index, jenisBatu, () {
-                setState(() {});
-              }, count));
+    return SizedBox(
+        width: MediaQuery.of(context).size.width *
+            0.7, // Lebar DataTable adalah 70% dari lebar layar
+
+        child: DataTable(
+            headingTextStyle: const TextStyle(
+                fontWeight: FontWeight.bold, color: Colors.white),
+            headingRowColor:
+                MaterialStateProperty.resolveWith((states) => Colors.black54),
+            dataRowColor:
+                MaterialStateProperty.resolveWith((states) => Colors.white),
+            columnSpacing: 0,
+            headingRowHeight: 50,
+            // dataRowMaxHeight: 50,
+            columns: columnsData(jenisBatu, index),
+            border: TableBorder.all(),
+            rows: mode == 'edit'
+                ? rowsEditData(index, jenisBatu, () {
+                    setState(() {});
+                  }, count)
+                : rowsData(index, jenisBatu, () {
+                    setState(() {});
+                  }, count)));
   }
 
   List<DataColumn> columnsData(String jenisBatu, int index) {
@@ -244,7 +255,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 10),
                   child: Text(
-                    'Ukuran batu\nround',
+                    'Ukuran',
                     textAlign:
                         TextAlign.center, // Atur alignment sesuai kebutuhan
                     overflow: TextOverflow
@@ -272,7 +283,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 10),
                   child: Text(
-                    'Carat\nPcs',
+                    'Carat Pcs',
                     textAlign:
                         TextAlign.center, // Atur alignment sesuai kebutuhan
                     overflow: TextOverflow
@@ -360,7 +371,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                         setState(() {
                           selectListItemRound[i][0] = '$ukuran';
                           selectListItemRound[i][3] = '$caratPcs';
-                          print(selectListItemRound);
+                          print('round = $selectListItemRound');
                         });
                       },
                       dropdownDecoratorProps: const DropDownDecoratorProps(
@@ -399,8 +410,6 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                                 double.parse(selectListItemRound[i][3]))
                             .round();
 
-                        print(
-                            'value = $value berat = $berat total : $sumBerat');
                         setState(() {
                           // if (double.parse(kebutuhanBerat!) < sumBerat) {
                           //   showDialog<String>(
@@ -417,7 +426,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                           qty = resultQty.toString();
                           selectListItemRound[i][1] = '$qty';
                           selectListItemRound[i][2] = '$berat';
-                          print(selectListItemRound);
+                          print('round = $selectListItemRound');
                         });
                         // onChangedCallback(); // Panggil onChangedCallback di sini
                         // print(selectListItem);
@@ -571,7 +580,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                                   setState(() {
                                     selectListItemRound[i][0] = '$ukuran';
                                     selectListItemRound[i][3] = '$caratPcs';
-                                    print(selectListItemRound);
+                                    print('round = $selectListItemRound');
                                   });
                                   Navigator.of(context)
                                       .pop(); // Close the dialog
@@ -634,8 +643,6 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                                 double.parse(selectListItemRound[i][3]))
                             .round();
 
-                        print(
-                            'value = $value berat = $berat total : $sumBerat');
                         setState(() {
                           // if (double.parse(kebutuhanBerat!) < sumBerat) {
                           //   showDialog<String>(
@@ -652,7 +659,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                           qty = resultQty.toString();
                           selectListItemRound[i][1] = '$qty';
                           selectListItemRound[i][2] = '$berat';
-                          print(selectListItemRound);
+                          print('round = $selectListItemRound');
                         });
                         // onChangedCallback(); // Panggil onChangedCallback di sini
                         // print(selectListItem);
@@ -795,7 +802,6 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
   //* HINTS get data dan filter langsung ke API
   Future<List<UkuranRoundModel>> getListUkuranRound(
       String lot, String kualitasBatu, String filter) async {
-    print('$lot, $kualitasBatu');
     var filterKualitas = kualitasBatu.toString().toLowerCase();
     if (kualitasBatu.toString().toLowerCase() == 'zr / zs') {
       filterKualitas = 'zr';
@@ -860,8 +866,6 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
         setState(() {
           listItemPr = dataList;
         });
-
-        print('list item pr oke');
       } else {
         print(responseList.body);
         throw Exception('Unexpected error occured!');
@@ -893,31 +897,6 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
       isLoading = false;
     });
   }
-
-  // getCountQc() async {
-  //   try {
-  //     final response = await http
-  //         .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getCountQc));
-  //     if (response.statusCode == 200) {
-  //       List jsonResponse = json.decode(response.body);
-  //       var allData =
-  //           jsonResponse.map((data) => QcModel.fromJson(data)).toList();
-  //       int number = allData.length + 1;
-  //       nomorQc = number.toString().padLeft(5, '0');
-  //       setState(() {
-  //         // DateTime now = DateTime.now();
-
-  //         // String month = now.month.toString().padLeft(2, '0');
-  //         // String year = now.year.toString();
-  //         // noQc = '${widget.dataFormPr!.noPR}/QC/${getMonthName(month)}/$year';
-  //       });
-  //     } else {
-  //       throw Exception('Unexpected error occured!');
-  //     }
-  //   } catch (c) {
-  //     print('err get data panjang = $c');
-  //   }
-  // }
 
   getPanjang() async {
     try {
@@ -983,27 +962,6 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
     }
   }
 
-  // getKualitasBatu() async {
-  //   try {
-  //     final response = await http.get(
-  //         Uri.parse(ApiConstants.baseUrl + ApiConstants.getListKualitasBatu));
-  //     if (response.statusCode == 200) {
-  //       List jsonResponse = json.decode(response.body);
-  //       var alldata = jsonResponse
-  //           .map((data) => KualitasBatuModel.fromJson(data))
-  //           .toList();
-  //       setState(() {
-  //         listKualitasBatu = alldata.toList();
-  //       });
-  //     } else {
-  //       throw Exception('Unexpected error occured!');
-  //     }
-  //   } catch (c) {
-  //     // ignore:
-  //     print('err get data jenisBatu = $c');
-  //   }
-  // }
-
   refresh() {
     //? hints Panggil onCloseForm untuk menutup form
     widget.onCloseForm?.call();
@@ -1023,6 +981,8 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
         : Container(
             padding: const EdgeInsets.only(left: 25, right: 25),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1042,71 +1002,98 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                   ],
                 ),
                 Expanded(
-                  // Tambahkan Expanded agar ListView dapat memanfaatkan sisa ruang yang tersedia
-                  child: Container(
-                    color: Colors.white,
-                    child: ListView.builder(
-                      itemCount: countItemPr,
-                      itemBuilder: (context, index) {
-                        return Column(
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.grey),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              child: ListTile(
-                                title: listItemPr![index].receiveBerat != '0'
-                                    ? Container(
-                                        color: Colors.green,
-                                        child: Text(
-                                          '${listItemPr![index].item} Tersimpan',
-                                          style: const TextStyle(
-                                              fontSize: 20,
-                                              color: Colors.black),
-                                        ),
-                                      )
-                                    : Text(
-                                        '${listItemPr![index].item} Tap to detail'),
-                                onTap: () {
-                                  selectListItemFancy.clear();
-                                  selectListItemRound.clear();
-                                  no = 0;
-                                  print('count table awal = $no');
+                  // Pindahkan Expanded ke sini untuk memungkinkan ListView memanfaatkan ruang yang tersedia
+                  child: ListView.builder(
+                    padding: const EdgeInsets.symmetric(
+                        vertical:
+                            10.0), // Tambahkan jarak vertikal   padding: EdgeInsets.all(5.0), // Tambahkan jarak di sini
+                    itemCount: countItemPr,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () {
+                          selectListItemFancy.clear();
+                          selectListItemRound.clear();
+                          no = 0;
+                          notesReject.text = '';
+                          setState(() {
+                            if (expandedIndex == index) {
+                              expandedIndex =
+                                  null; // Menutup item jika sudah terbuka
+                            } else {
+                              expandedIndex = index; // Membuka item yang diklik
+                              callData(index, listItemPr![index].noQc);
+                            }
+                          });
+                        },
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 500),
+                          padding: const EdgeInsets.all(16.0),
+                          margin: const EdgeInsets.only(
+                              bottom: 10.0), // Tambahkan jarak di sini
+                          decoration: BoxDecoration(
+                            color: expandedIndex == index
+                                ? Colors.blue[100]
+                                : listItemPr![index].receiveBerat != '0'
+                                    ? Colors.green[100]
+                                    : Colors.white,
+                            border: expandedIndex == index
+                                ? Border.all(color: Colors.blue)
+                                : listItemPr![index].receiveBerat != '0'
+                                    ? Border.all(color: Colors.green)
+                                    : Border.all(color: Colors.white),
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              listItemPr![index].receiveBerat != '0'
+                                  ? Text('${listItemPr![index].item} Selesai',
+                                      style: const TextStyle(fontSize: 18.0))
+                                  : Text(
+                                      '${listItemPr![index].item} Tap to detail',
+                                      style: const TextStyle(fontSize: 18.0),
+                                    ),
+                              if (expandedIndex == index)
+                                LayoutBuilder(
+                                  builder: (context, constraints) {
+                                    return Container(
+                                      margin: const EdgeInsets.only(top: 8.0),
+                                      color: Colors.blue[50],
 
-                                  callData(index);
-                                },
-                              ),
-                            ),
-                            if (_isOpen[index])
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 8.0,
-                                    right: 8.0,
-                                    bottom: 8.0), // Atur padding di sini
-                                child: Container(
-                                  color: colorBG,
-                                  padding: const EdgeInsets.all(16.0),
-                                  child: isloadingItem == true
-                                      ? Center(
-                                          child: Container(
-                                            padding: const EdgeInsets.all(5),
-                                            width: 90,
-                                            height: 90,
-                                            child: Lottie.asset(
-                                                "loadingJSON/loadingV1.json"),
-                                          ),
-                                        )
-                                      : listItemPr![index].receiveBerat != '0'
-                                          ? editFormItem(index, listItemPr,
-                                              listDetailItemPR)
-                                          : detailFormItem(index),
+                                      // Widget apa pun yang ingin Anda tampilkan saat item diperluas
+                                      child:
+                                          //  isloadingItem == true
+                                          //     ? Center(
+                                          //         child: Container(
+                                          //           padding:
+                                          //               const EdgeInsets.all(5),
+                                          //           width: 90,
+                                          //           height: 90,
+                                          //           child: Lottie.asset(
+                                          //               "loadingJSON/loadingV1.json"),
+                                          //         ),
+                                          //       )
+                                          //     :
+                                          Container(
+                                        color: Colors.white,
+                                        padding: const EdgeInsets.all(16.0),
+                                        child:
+                                            listItemPr![index].receiveBerat !=
+                                                    '0'
+                                                ? editFormItem(
+                                                    index,
+                                                    listItemPr,
+                                                    listDetailItemPR)
+                                                : detailFormItem(index),
+                                      ),
+                                    );
+                                  },
                                 ),
-                              ),
-                          ],
-                        );
-                      },
-                    ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 ),
               ],
@@ -1116,853 +1103,591 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
 
   detailFormItem(i) {
     double widhtMAX = MediaQuery.of(context).size.width;
-    double widValue = 250;
+    double widValue = 100;
+    double widValueMid = 100;
+    double widValueEnd = 150;
     kualitasBatu = listItemPr![i].kadar;
     DateTime now = DateTime.now();
 
     String month = now.month.toString().padLeft(2, '0');
     String year = now.year.toString();
-    return Expanded(
-      child: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Container(
-          width: widhtMAX,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border.all(
-                color: Colors
-                    .white), // Atur warna dan ketebalan garis sesuai kebutuhan
-            borderRadius:
-                BorderRadius.circular(10), // Atur sudut border sesuai kebutuhan
+    return Container(
+      width: widhtMAX,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border.all(
+            color: Colors
+                .white), // Atur warna dan ketebalan garis sesuai kebutuhan
+        borderRadius:
+            BorderRadius.circular(10), // Atur sudut border sesuai kebutuhan
+      ),
+      padding: const EdgeInsets.only(top: 26, left: 20, right: 20),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Container(
+            color: Colors.grey.shade400,
+            padding: const EdgeInsets.only(left: 5, right: 5),
+            child: Text(
+              'LEMBAR QUALITY CONTROL ${listItemPr![i].item}',
+              style: const TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 26),
+            ),
           ),
-          padding: const EdgeInsets.only(top: 26, left: 20, right: 20),
-          child: Column(
-            children: [
-              Container(
-                color: Colors.grey.shade400,
-                child: Text(
-                  'LEMBAR QUALITY CONTROL ${listItemPr![i].item}',
-                  style: const TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 26),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: LayoutBuilder(builder: (context, constraints) {
-                  print(constraints.maxWidth);
-                  lebarLayar = constraints.maxWidth;
+          Container(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      SizedBox(width: widValue, child: const Text('NO. QC')),
+                      SizedBox(width: widValueMid, child: const Text(':')),
+                      Container(
+                          padding: const EdgeInsets.only(left: 0),
+                          width: widValueEnd,
+                          child: Flexible(
+                            child: Text(
+                              noQc =
+                                  '${widget.dataFormPr!.noPR}/QC/${getMonthName(month)}/$year/${(i + 1).toString().padLeft(5, '0')}',
+                              maxLines: 2,
+                            ),
+                          ))
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      SizedBox(width: widValue, child: const Text('TGL QC IN')),
+                      SizedBox(width: widValueMid, child: const Text(':')),
+                      Container(
+                        padding: const EdgeInsets.only(left: 0),
+                        width: widValueEnd,
+                        child: Flexible(
+                          child: Text(DateFormat('dd/MMMM/yyyy HH:ss').format(
+                              DateTime.parse(
+                                  widget.dataFormPr!.tanggalInQc!.toString()))),
+                        ),
+                      )
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                          width: widValue, child: const Text('TGL QC OUT')),
+                      SizedBox(width: widValueMid, child: const Text(':')),
+                      Container(
+                          padding: const EdgeInsets.only(left: 0),
+                          width: widValueEnd,
+                          child: Flexible(child: Text('$tglOut')))
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      SizedBox(width: widValue, child: const Text('VENDOR')),
+                      SizedBox(width: widValueMid, child: const Text(':')),
+                      Container(
+                          padding: const EdgeInsets.only(left: 0),
+                          width: widValueEnd,
+                          child: Flexible(
+                              child:
+                                  Text(widget.dataFormPr!.vendor.toString())))
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      SizedBox(width: widValue, child: const Text('KEBUTUHAN')),
+                      SizedBox(width: widValueMid, child: const Text(':')),
+                      SizedBox(
+                          width: widValueEnd,
+                          child: Text('${listItemPr![i].fixBerat}'))
+                    ],
+                  ),
+                ],
+              )),
+          Container(
+            color: Colors.grey.shade400,
+            padding: const EdgeInsets.only(left: 5, right: 5),
+            child: const Text(
+              'TABEL DATA YANG DITEIRMA QC',
+              style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 26),
+            ),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          dataTableForm('new', jenisBatu!, no, i),
+          const SizedBox(
+            height: 20,
+          ),
+          jenisBatu == null
+              ? const SizedBox()
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        setState(() {
+                          if (jenisBatu.toString().toLowerCase() == 'round') {
+                            ukuran = '';
+                            qty = '0';
+                            berat = '';
+                            caratPcs = '';
+                            selectListItemRound.add([
+                              '$ukuran',
+                              '$qty',
+                              '$berat',
+                              '$caratPcs',
+                            ]);
+                            print('round = $selectListItemRound');
+                          } else {
+                            kodeMdbc = '';
+                            panjang = '';
+                            lebar = '';
+                            qtyFancy = '';
+                            beratFancy = '';
+                            selectListItemFancy.add([
+                              '$kodeMdbc',
+                              '$panjang',
+                              '$lebar',
+                              '$qtyFancy',
+                              '$beratFancy',
+                            ]);
+                            print('fancy = $selectListItemFancy');
+                          }
 
-                  //* hints fungsi multi screen
-                  if (constraints.maxWidth < 900) {
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        // ignore: avoid_unnecessary_containers
-                        Container(
-                          child: Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  const SizedBox(
-                                      width: 100, child: Text('NO. QC')),
-                                  const SizedBox(width: 30, child: Text(':')),
-                                  Container(
-                                      padding: const EdgeInsets.only(left: 0),
-                                      width: widValue,
-                                      child: Text(noQc =
-                                          '${widget.dataFormPr!.noPR}/QC/${getMonthName(month)}/$year/${(i + 1).toString().padLeft(5, '0')}'))
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  const SizedBox(
-                                      width: 100, child: Text('TGL QC IN')),
-                                  const SizedBox(width: 30, child: Text(':')),
-                                  Container(
-                                    padding: const EdgeInsets.only(left: 0),
-                                    width: widValue,
-                                    child: Text(DateFormat('dd/MMMM/yyyy HH:ss')
-                                        .format(DateTime.parse(widget
-                                            .dataFormPr!.tanggalInQc!
-                                            .toString()))),
-                                  )
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  const SizedBox(
-                                      width: 100, child: Text('TGL QC OUT')),
-                                  const SizedBox(width: 30, child: Text(':')),
-                                  Container(
-                                      padding: const EdgeInsets.only(left: 0),
-                                      width: widValue,
-                                      child: Text('$tglOut'))
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  const SizedBox(
-                                      width: 100, child: Text('VENDOR')),
-                                  const SizedBox(width: 30, child: Text(':')),
-                                  Container(
-                                      padding: const EdgeInsets.only(left: 0),
-                                      width: widValue,
-                                      child: Text(
-                                          widget.dataFormPr!.vendor.toString()))
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  const SizedBox(
-                                      width: 100, child: Text('KEBUTUHAN')),
-                                  const SizedBox(width: 30, child: Text(':')),
-                                  SizedBox(
-                                      width: widValue,
-                                      child: Text('${listItemPr![i].fixBerat}'))
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    );
-                  } else {
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        // ignore: avoid_unnecessary_containers
-                        Container(
-                          child: Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  const SizedBox(
-                                      width: 100, child: Text('NO. QC')),
-                                  const SizedBox(width: 30, child: Text(':')),
-                                  Container(
-                                      padding: const EdgeInsets.only(left: 0),
-                                      width: widValue,
-                                      child: Text(noQc =
-                                          '${widget.dataFormPr!.noPR}/QC/${getMonthName(month)}/$year/${(i + 1).toString().padLeft(5, '0')}'))
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  const SizedBox(
-                                      width: 100, child: Text('TGL QC IN')),
-                                  const SizedBox(width: 30, child: Text(':')),
-                                  Container(
-                                    padding: const EdgeInsets.only(left: 0),
-                                    width: widValue,
-                                    child: Text(DateFormat('dd/MMMM/yyyy HH:ss')
-                                        .format(DateTime.parse(widget
-                                            .dataFormPr!.tanggalInQc!
-                                            .toString()))),
-                                  )
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  const SizedBox(
-                                      width: 100, child: Text('TGL QC OUT')),
-                                  const SizedBox(width: 30, child: Text(':')),
-                                  Container(
-                                      padding: const EdgeInsets.only(left: 0),
-                                      width: widValue,
-                                      child: Text('$tglOut'))
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  const SizedBox(
-                                      width: 100, child: Text('VENDOR')),
-                                  const SizedBox(width: 30, child: Text(':')),
-                                  Container(
-                                      padding: const EdgeInsets.only(left: 0),
-                                      width: widValue,
-                                      child: Text(
-                                          widget.dataFormPr!.vendor.toString()))
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  const SizedBox(
-                                      width: 100, child: Text('KEBUTUHAN')),
-                                  const SizedBox(width: 30, child: Text(':')),
-                                  SizedBox(
-                                      width: widValue,
-                                      child: Text('${listItemPr![i].fixBerat}'))
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    );
-                  }
-                }),
-              ),
-              Container(
-                color: Colors.grey.shade400,
-                child: const Text(
-                  'TABEL DATA YANG DITEIRMA QC',
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 26),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              jenisBatu == null
-                  ? const SizedBox()
-                  : dataTableForm('new', jenisBatu!, no, i),
-              //  SingleChildScrollView(
-              //     scrollDirection: Axis.horizontal,
-              //     child: dataTableForm(jenisBatu!, no),
-              //   ),
-              const SizedBox(
-                height: 20,
-              ),
-              jenisBatu == null
-                  ? const SizedBox()
-                  : Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ElevatedButton.icon(
-                          onPressed: () {
-                            setState(() {
-                              if (jenisBatu.toString().toLowerCase() ==
-                                  'round') {
-                                ukuran = '';
-                                qty = '0';
-                                berat = '';
-                                caratPcs = '';
-                                selectListItemRound.add([
-                                  '$ukuran',
-                                  '$qty',
-                                  '$berat',
-                                  '$caratPcs',
-                                ]);
-                                print(selectListItemRound);
-                              } else {
-                                kodeMdbc = '';
-                                panjang = '';
-                                lebar = '';
-                                qtyFancy = '';
-                                beratFancy = '';
-                                selectListItemFancy.add([
-                                  '$kodeMdbc',
-                                  '$panjang',
-                                  '$lebar',
-                                  '$qtyFancy',
-                                  '$beratFancy',
-                                ]);
-                                print('fancy = $selectListItemFancy');
-                              }
-
-                              no += 1;
-                            });
-                          },
-                          icon: const Icon(Icons.add), // Icon "add"
-                          label: const Text('Tambah Item'),
-                        ),
-                        const SizedBox(
-                          width: 30,
-                        ),
-                        no < 1
-                            ? const SizedBox()
-                            : ElevatedButton.icon(
-                                onPressed: () {
-                                  setState(() {
-                                    no -= 1;
-                                    if (jenisBatu.toString().toLowerCase() ==
-                                        'round') {
-                                      selectListItemRound.removeAt(no);
-                                      print(selectListItemRound);
-                                    } else {
-                                      selectListItemFancy.removeAt(no);
-                                      print('fancy = $selectListItemFancy');
-                                    }
-                                  });
-                                },
-                                icon: const Icon(Icons.delete), // Icon "delete"
-                                label: const Text('Hapus Item'), // Label tombol
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor:
-                                      Colors.red, // Warna latar belakang merah
-                                ),
-                              )
-                      ],
+                          no += 1;
+                        });
+                      },
+                      icon: const Icon(Icons.add), // Icon "add"
+                      label: const Text('Tambah Item'),
                     ),
-              const SizedBox(
-                height: 20,
-              ),
-              Container(
-                color: Colors.grey.shade400,
-                child: const Text(
-                  'KETERANGAN',
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 26),
+                    const SizedBox(
+                      width: 30,
+                    ),
+                    no < 1
+                        ? const SizedBox()
+                        : ElevatedButton.icon(
+                            onPressed: () {
+                              setState(() {
+                                no -= 1;
+                                if (jenisBatu.toString().toLowerCase() ==
+                                    'round') {
+                                  selectListItemRound.removeAt(no);
+                                  print('round = $selectListItemRound');
+                                } else {
+                                  selectListItemFancy.removeAt(no);
+                                  print('fancy = $selectListItemFancy');
+                                }
+                              });
+                            },
+                            icon: const Icon(Icons.delete), // Icon "delete"
+                            label: const Text('Hapus Item'), // Label tombol
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  Colors.red, // Warna latar belakang merah
+                            ),
+                          )
+                  ],
+                ),
+          const SizedBox(
+            height: 20,
+          ),
+          Container(
+            color: Colors.grey.shade400,
+            child: const Text(
+              'KETERANGAN',
+              style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 26),
+            ),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          ConstrainedBox(
+            constraints: const BoxConstraints(
+                minHeight: 100,
+                maxHeight: 200), //? untuk menenrukan max tinggi di sizedbox
+            child: SizedBox(
+              child: TextField(
+                controller: notesReject,
+                keyboardType: TextInputType.multiline,
+                maxLines:
+                    null, // null untuk menyesuaikan tinggi sesuai isi teks
+                decoration: const InputDecoration(
+                  labelText: 'Notes Reject',
+                  hintText: 'Masukkan keterangan di sini...',
+                  labelStyle: TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.bold),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      width: 2, // Atur ketebalan border sesuai kebutuhan
+                      color: Colors.black, // Atur warna border sesuai kebutuhan
+                    ),
+                  ),
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              ConstrainedBox(
-                constraints: const BoxConstraints(
-                    minHeight: 100,
-                    maxHeight: 200), //? untuk menenrukan max tinggi di sizedbox
-                child: SizedBox(
-                  child: TextField(
-                    controller: notesReject,
-                    keyboardType: TextInputType.multiline,
-                    maxLines:
-                        null, // null untuk menyesuaikan tinggi sesuai isi teks
-                    decoration: const InputDecoration(
-                      labelText: 'Notes Reject',
-                      hintText: 'Masukkan keterangan di sini...',
-                      labelStyle: TextStyle(
-                          color: Colors.black, fontWeight: FontWeight.bold),
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          width: 2, // Atur ketebalan border sesuai kebutuhan
-                          color: Colors
-                              .black, // Atur warna border sesuai kebutuhan
+            ),
+          ),
+          Container(
+            width:
+                MediaQuery.of(context).size.width * 0.8, // 80% of screen width
+            height: 45, // Fixed height of 45
+            padding: const EdgeInsets.only(bottom: 5),
+            child: ElevatedButton(
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  barrierDismissible:
+                      false, // Prevent dialog dismissal on tap outside
+                  builder: (BuildContext context) {
+                    return Dialog(
+                      backgroundColor: Colors.transparent,
+                      elevation: 0,
+                      child: Container(
+                        padding: const EdgeInsets.all(16),
+                        color: Colors.white,
+                        child: const Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            CircularProgressIndicator(),
+                            SizedBox(height: 20),
+                            Text(
+                              'Loading, please wait...',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ],
                         ),
                       ),
-                    ),
-                  ),
-                ),
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width *
-                    0.8, // 80% of screen width
-                height: 45, // Fixed height of 45
-                padding: const EdgeInsets.only(bottom: 5),
-                child: ElevatedButton(
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      barrierDismissible:
-                          false, // Prevent dialog dismissal on tap outside
-                      builder: (BuildContext context) {
-                        return Dialog(
-                          backgroundColor: Colors.transparent,
-                          elevation: 0,
-                          child: Container(
-                            padding: const EdgeInsets.all(16),
-                            color: Colors.white,
-                            child: const Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                CircularProgressIndicator(),
-                                SizedBox(height: 20),
-                                Text(
-                                  'Loading, please wait...',
-                                  style: TextStyle(fontSize: 16),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
                     );
-                    simpanForm();
                   },
-                  child: const Text(
-                    'Simpan Form',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-
-                  //  const SizedBox(
-                  //     width: 200, // Sesuaikan dengan lebar yang diinginkan
-                  //     child: Row(
-                  //       mainAxisAlignment: MainAxisAlignment.center,
-                  //       children: [
-                  //         Icon(Icons.save_alt),
-                  //         SizedBox(width: 8), // Jarak antara ikon dan teks
-                  //         Text('Simpan Form'),
-                  //       ],
-                  //     ),
-                  //   ),
-                ),
+                );
+                simpanForm();
+              },
+              child: const Text(
+                'Simpan Form',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
-            ],
+
+              //  const SizedBox(
+              //     width: 200, // Sesuaikan dengan lebar yang diinginkan
+              //     child: Row(
+              //       mainAxisAlignment: MainAxisAlignment.center,
+              //       children: [
+              //         Icon(Icons.save_alt),
+              //         SizedBox(width: 8), // Jarak antara ikon dan teks
+              //         Text('Simpan Form'),
+              //       ],
+              //     ),
+              //   ),
+            ),
           ),
-        ),
+        ],
       ),
     );
-    // jenisBatu == null
-    //     ? const SizedBox()
-    //     : Container(
-    //         width: MediaQuery.of(context).size.width * 0.7,
-    //         padding: const EdgeInsets.only(bottom: 20, top: 20),
-    //         child:
-    //         FloatingActionButton.extended(
-    //           onPressed: () {
-    //             showDialog(
-    //               context: context,
-    //               barrierDismissible:
-    //                   false, // Prevent dialog dismissal on tap outside
-    //               builder: (BuildContext context) {
-    //                 return Dialog(
-    //                   backgroundColor: Colors.transparent,
-    //                   elevation: 0,
-    //                   child: Container(
-    //                     padding: const EdgeInsets.all(16),
-    //                     color: Colors.white,
-    //                     child: const Column(
-    //                       mainAxisSize: MainAxisSize.min,
-    //                       children: [
-    //                         CircularProgressIndicator(),
-    //                         SizedBox(height: 20),
-    //                         Text(
-    //                           'Loading, please wait...',
-    //                           style: TextStyle(fontSize: 16),
-    //                         ),
-    //                       ],
-    //                     ),
-    //                   ),
-    //                 );
-    //               },
-    //             );
-    //             simpanForm();
-    //           },
-    //           label: const Text(
-    //             'Simpan Form',
-    //             style: TextStyle(
-    //                 fontSize: 20, fontWeight: FontWeight.bold),
-    //           ),
-    //           icon: const Icon(
-    //             Icons.save_alt,
-    //             size: 20,
-    //           ),
-    //           //  const SizedBox(
-    //           //     width: 200, // Sesuaikan dengan lebar yang diinginkan
-    //           //     child: Row(
-    //           //       mainAxisAlignment: MainAxisAlignment.center,
-    //           //       children: [
-    //           //         Icon(Icons.save_alt),
-    //           //         SizedBox(width: 8), // Jarak antara ikon dan teks
-    //           //         Text('Simpan Form'),
-    //           //       ],
-    //           //     ),
-    //           //   ),
-    //         ),
-    //       )
   }
 
   editFormItem(i, var allData, var detailItem) {
     double widhtMAX = MediaQuery.of(context).size.width;
-    double widValue = 250;
+    double widValue = 100;
+    double widValueMid = 100;
+    double widValueEnd = 150;
     var data = allData[i];
     var detailItemdata = detailItem[i];
     kualitasBatu = data.kadar;
     noQc = detailItemdata.noQc;
-    return Expanded(
-      child: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Container(
-          width: widhtMAX,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border.all(
-                color: Colors
-                    .white), // Atur warna dan ketebalan garis sesuai kebutuhan
-            borderRadius:
-                BorderRadius.circular(10), // Atur sudut border sesuai kebutuhan
+    return Container(
+      width: widhtMAX,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border.all(
+            color: Colors
+                .white), // Atur warna dan ketebalan garis sesuai kebutuhan
+        borderRadius:
+            BorderRadius.circular(10), // Atur sudut border sesuai kebutuhan
+      ),
+      padding: const EdgeInsets.only(top: 26, left: 20, right: 20),
+      child: Column(
+        children: [
+          Container(
+            color: Colors.grey.shade400,
+            child: Text(
+              'LEMBAR QUALITY CONTROL ${listItemPr![i].item}',
+              style: const TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 26),
+            ),
           ),
-          padding: const EdgeInsets.only(top: 26, left: 20, right: 20),
-          child: Column(
-            children: [
-              Container(
-                color: Colors.grey.shade400,
-                child: Text(
-                  'LEMBAR QUALITY CONTROL ${listItemPr![i].item}',
-                  style: const TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 26),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: LayoutBuilder(builder: (context, constraints) {
-                  print(constraints.maxWidth);
-                  lebarLayar = constraints.maxWidth;
+          Container(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      SizedBox(width: widValue, child: const Text('NO. QC')),
+                      SizedBox(width: widValueMid, child: const Text(':')),
+                      Container(
+                          padding: const EdgeInsets.only(left: 0),
+                          width: widValueEnd,
+                          child: Flexible(
+                            child: Text(
+                              noQc = '${listItemPr![i].noQc}',
+                              maxLines: 2,
+                            ),
+                          ))
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      SizedBox(width: widValue, child: const Text('TGL QC IN')),
+                      SizedBox(width: widValueMid, child: const Text(':')),
+                      Container(
+                        padding: const EdgeInsets.only(left: 0),
+                        width: widValueEnd,
+                        child: Flexible(
+                          child: Text(DateFormat('dd/MMMM/yyyy HH:ss').format(
+                              DateTime.parse(
+                                  widget.dataFormPr!.tanggalInQc!.toString()))),
+                        ),
+                      )
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                          width: widValue, child: const Text('TGL QC OUT')),
+                      SizedBox(width: widValueMid, child: const Text(':')),
+                      Container(
+                          padding: const EdgeInsets.only(left: 0),
+                          width: widValueEnd,
+                          child: Flexible(child: Text('$tglOut')))
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      SizedBox(width: widValue, child: const Text('VENDOR')),
+                      SizedBox(width: widValueMid, child: const Text(':')),
+                      Container(
+                          padding: const EdgeInsets.only(left: 0),
+                          width: widValueEnd,
+                          child: Flexible(
+                              child:
+                                  Text(widget.dataFormPr!.vendor.toString())))
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      SizedBox(width: widValue, child: const Text('KEBUTUHAN')),
+                      SizedBox(width: widValueMid, child: const Text(':')),
+                      SizedBox(
+                          width: widValueEnd,
+                          child: Text('${listItemPr![i].fixBerat}'))
+                    ],
+                  ),
+                ],
+              )),
+          Container(
+            color: Colors.grey.shade400,
+            child: const Text(
+              'TABEL DATA YANG DITEIRMA QC',
+              style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 26),
+            ),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          jenisBatu == null
+              ? const SizedBox()
+              : dataTableForm('edit', jenisBatu!, no, i),
+          const SizedBox(
+            height: 20,
+          ),
+          jenisBatu == null
+              ? const SizedBox()
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        setState(() {
+                          if (jenisBatu.toString().toLowerCase() == 'round') {
+                            ukuran = '';
+                            qty = '0';
+                            berat = '';
+                            caratPcs = '';
+                            selectListItemRound.add([
+                              '$ukuran',
+                              '$qty',
+                              '$berat',
+                              '$caratPcs',
+                            ]);
+                            print('round = $selectListItemRound');
+                          } else {
+                            kodeMdbc = '';
+                            panjang = '';
+                            lebar = '';
+                            qtyFancy = '';
+                            beratFancy = '';
+                            selectListItemFancy.add([
+                              '$kodeMdbc',
+                              '$panjang',
+                              '$lebar',
+                              '$qtyFancy',
+                              '$beratFancy',
+                            ]);
+                            print('fancy = $selectListItemFancy');
+                          }
 
-                  //* hints fungsi multi screen
-                  if (constraints.maxWidth < 900) {
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        // ignore: avoid_unnecessary_containers
-                        Container(
-                          child: Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  const SizedBox(
-                                      width: 100, child: Text('NO. QC')),
-                                  const SizedBox(width: 30, child: Text(':')),
-                                  Container(
-                                      padding: const EdgeInsets.only(left: 0),
-                                      width: widValue,
-                                      child: Text(noQc))
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  const SizedBox(
-                                      width: 100, child: Text('TGL QC IN')),
-                                  const SizedBox(width: 30, child: Text(':')),
-                                  Container(
-                                    padding: const EdgeInsets.only(left: 0),
-                                    width: widValue,
-                                    child: Text(DateFormat('dd/MMMM/yyyy HH:ss')
-                                        .format(DateTime.parse(widget
-                                            .dataFormPr!.tanggalInQc!
-                                            .toString()))),
-                                  )
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  const SizedBox(
-                                      width: 100, child: Text('TGL QC OUT')),
-                                  const SizedBox(width: 30, child: Text(':')),
-                                  Container(
-                                      padding: const EdgeInsets.only(left: 0),
-                                      width: widValue,
-                                      child: Text('$tglOut'))
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  const SizedBox(
-                                      width: 100, child: Text('VENDOR')),
-                                  const SizedBox(width: 30, child: Text(':')),
-                                  Container(
-                                      padding: const EdgeInsets.only(left: 0),
-                                      width: widValue,
-                                      child: Text(
-                                          widget.dataFormPr!.vendor.toString()))
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  const SizedBox(
-                                      width: 100, child: Text('KEBUTUHAN')),
-                                  const SizedBox(width: 30, child: Text(':')),
-                                  SizedBox(
-                                      width: widValue,
-                                      child: Text('${listItemPr![i].fixBerat}'))
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    );
-                  } else {
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        // ignore: avoid_unnecessary_containers
-                        Container(
-                          child: Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  const SizedBox(
-                                      width: 100, child: Text('NO. QC')),
-                                  const SizedBox(width: 30, child: Text(':')),
-                                  Container(
-                                      padding: const EdgeInsets.only(left: 0),
-                                      width: widValue,
-                                      child: Text(noQc))
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  const SizedBox(
-                                      width: 100, child: Text('TGL QC IN')),
-                                  const SizedBox(width: 30, child: Text(':')),
-                                  Container(
-                                    padding: const EdgeInsets.only(left: 0),
-                                    width: widValue,
-                                    child: Text(DateFormat('dd/MMMM/yyyy HH:ss')
-                                        .format(DateTime.parse(widget
-                                            .dataFormPr!.tanggalInQc!
-                                            .toString()))),
-                                  )
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  const SizedBox(
-                                      width: 100, child: Text('TGL QC OUT')),
-                                  const SizedBox(width: 30, child: Text(':')),
-                                  Container(
-                                      padding: const EdgeInsets.only(left: 0),
-                                      width: widValue,
-                                      child: Text(
-                                          DateFormat('dd/MMMM/yyyy HH:ss')
-                                              .format(DateTime.parse(widget
-                                                  .dataFormPr!.tanggalInQc!
-                                                  .toString()))))
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  const SizedBox(
-                                      width: 100, child: Text('VENDOR')),
-                                  const SizedBox(width: 30, child: Text(':')),
-                                  Container(
-                                      padding: const EdgeInsets.only(left: 0),
-                                      width: widValue,
-                                      child: Text(
-                                          widget.dataFormPr!.vendor.toString()))
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  const SizedBox(
-                                      width: 100, child: Text('KEBUTUHAN')),
-                                  const SizedBox(width: 30, child: Text(':')),
-                                  SizedBox(
-                                      width: widValue,
-                                      child: Text('${listItemPr![i].fixBerat}'))
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    );
-                  }
-                }),
-              ),
-              Container(
-                color: Colors.grey.shade400,
-                child: const Text(
-                  'TABEL DATA YANG DITEIRMA QC',
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 26),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              jenisBatu == null
-                  ? const SizedBox()
-                  : dataTableForm('edit', jenisBatu!, no, i),
-              const SizedBox(
-                height: 20,
-              ),
-              jenisBatu == null
-                  ? const SizedBox()
-                  : Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ElevatedButton.icon(
-                          onPressed: () {
-                            setState(() {
-                              if (jenisBatu.toString().toLowerCase() ==
-                                  'round') {
-                                ukuran = '';
-                                qty = '0';
-                                berat = '';
-                                caratPcs = '';
-                                selectListItemRound.add([
-                                  '$ukuran',
-                                  '$qty',
-                                  '$berat',
-                                  '$caratPcs',
-                                ]);
-                                print(selectListItemRound);
-                                // Menambahkan index dan selectListItemRound ke indexSelectItemRound
-//                                 indexSelectItemRound
-//                                     .add([i, selectListItemRound]);
-
-// // Mencetak nilai indexSelectItemRound
-//                                 print(indexSelectItemRound);
-                              } else {
-                                kodeMdbc = '';
-                                panjang = '';
-                                lebar = '';
-                                qtyFancy = '';
-                                beratFancy = '';
-                                selectListItemFancy.add([
-                                  '$kodeMdbc',
-                                  '$panjang',
-                                  '$lebar',
-                                  '$qtyFancy',
-                                  '$beratFancy',
-                                ]);
-                                print('fancy = $selectListItemFancy');
-                              }
-
-                              no += 1;
-                            });
-                          },
-                          icon: const Icon(Icons.add), // Icon "add"
-                          label: const Text('Tambah Item'),
-                        ),
-                        const SizedBox(
-                          width: 30,
-                        ),
-                        no < 1
-                            ? const SizedBox()
-                            : ElevatedButton.icon(
-                                onPressed: () {
-                                  setState(() {
-                                    no -= 1;
-                                    if (jenisBatu.toString().toLowerCase() ==
-                                        'round') {
-                                      selectListItemRound.removeAt(no);
-                                      print(selectListItemRound);
-                                    } else {
-                                      selectListItemFancy.removeAt(no);
-                                      print('fancy = $selectListItemFancy');
-                                    }
-                                  });
-                                },
-                                icon: const Icon(Icons.delete), // Icon "delete"
-                                label: const Text('Hapus Item'), // Label tombol
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor:
-                                      Colors.red, // Warna latar belakang merah
-                                ),
-                              )
-                      ],
+                          no += 1;
+                        });
+                      },
+                      icon: const Icon(Icons.add), // Icon "add"
+                      label: const Text('Tambah Item'),
                     ),
-              const SizedBox(
-                height: 20,
-              ),
-              Container(
-                color: Colors.grey.shade400,
-                child: const Text(
-                  'KETERANGAN',
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 26),
+                    const SizedBox(
+                      width: 30,
+                    ),
+                    no < 1
+                        ? const SizedBox()
+                        : ElevatedButton.icon(
+                            onPressed: () {
+                              setState(() {
+                                no -= 1;
+                                if (jenisBatu.toString().toLowerCase() ==
+                                    'round') {
+                                  selectListItemRound.removeAt(no);
+                                  print('round = $selectListItemRound');
+                                } else {
+                                  selectListItemFancy.removeAt(no);
+                                  print('fancy = $selectListItemFancy');
+                                }
+                              });
+                            },
+                            icon: const Icon(Icons.delete), // Icon "delete"
+                            label: const Text('Hapus Item'), // Label tombol
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  Colors.red, // Warna latar belakang merah
+                            ),
+                          )
+                  ],
+                ),
+          const SizedBox(
+            height: 20,
+          ),
+          Container(
+            color: Colors.grey.shade400,
+            child: const Text(
+              'KETERANGAN',
+              style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 26),
+            ),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          ConstrainedBox(
+            constraints: const BoxConstraints(
+                minHeight: 100,
+                maxHeight: 200), //? untuk menenrukan max tinggi di sizedbox
+            child: SizedBox(
+              child: TextField(
+                controller: notesReject,
+                keyboardType: TextInputType.multiline,
+                maxLines:
+                    null, // null untuk menyesuaikan tinggi sesuai isi teks
+                decoration: const InputDecoration(
+                  labelText: 'Notes Reject',
+                  hintText: 'Masukkan keterangan di sini...',
+                  labelStyle: TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.bold),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      width: 2, // Atur ketebalan border sesuai kebutuhan
+                      color: Colors.black, // Atur warna border sesuai kebutuhan
+                    ),
+                  ),
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              ConstrainedBox(
-                constraints: const BoxConstraints(
-                    minHeight: 100,
-                    maxHeight: 200), //? untuk menenrukan max tinggi di sizedbox
-                child: SizedBox(
-                  child: TextField(
-                    controller: notesReject,
-                    keyboardType: TextInputType.multiline,
-                    maxLines:
-                        null, // null untuk menyesuaikan tinggi sesuai isi teks
-                    decoration: const InputDecoration(
-                      labelText: 'Notes Reject',
-                      hintText: 'Masukkan keterangan di sini...',
-                      labelStyle: TextStyle(
-                          color: Colors.black, fontWeight: FontWeight.bold),
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          width: 2, // Atur ketebalan border sesuai kebutuhan
-                          color: Colors
-                              .black, // Atur warna border sesuai kebutuhan
+            ),
+          ),
+          Container(
+            width:
+                MediaQuery.of(context).size.width * 0.8, // 80% of screen width
+            height: 45, // Fixed height of 45
+            padding: const EdgeInsets.only(bottom: 5),
+            child: ElevatedButton(
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  barrierDismissible:
+                      false, // Prevent dialog dismissal on tap outside
+                  builder: (BuildContext context) {
+                    return Dialog(
+                      backgroundColor: Colors.transparent,
+                      elevation: 0,
+                      child: Container(
+                        padding: const EdgeInsets.all(16),
+                        color: Colors.white,
+                        child: const Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            CircularProgressIndicator(),
+                            SizedBox(height: 20),
+                            Text(
+                              'Loading, please wait...',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ],
                         ),
                       ),
-                    ),
-                  ),
-                ),
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width *
-                    0.8, // 80% of screen width
-                height: 45, // Fixed height of 45
-                padding: const EdgeInsets.only(bottom: 5),
-                child: ElevatedButton(
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      barrierDismissible:
-                          false, // Prevent dialog dismissal on tap outside
-                      builder: (BuildContext context) {
-                        return Dialog(
-                          backgroundColor: Colors.transparent,
-                          elevation: 0,
-                          child: Container(
-                            padding: const EdgeInsets.all(16),
-                            color: Colors.white,
-                            child: const Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                CircularProgressIndicator(),
-                                SizedBox(height: 20),
-                                Text(
-                                  'Loading, please wait...',
-                                  style: TextStyle(fontSize: 16),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
                     );
-                    editForm();
                   },
-                  child: const Text(
-                    'Edit Form',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-
-                  //  const SizedBox(
-                  //     width: 200, // Sesuaikan dengan lebar yang diinginkan
-                  //     child: Row(
-                  //       mainAxisAlignment: MainAxisAlignment.center,
-                  //       children: [
-                  //         Icon(Icons.save_alt),
-                  //         SizedBox(width: 8), // Jarak antara ikon dan teks
-                  //         Text('Simpan Form'),
-                  //       ],
-                  //     ),
-                  //   ),
-                ),
+                );
+                editForm();
+              },
+              child: const Text(
+                'Edit Form',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
-            ],
+
+              //  const SizedBox(
+              //     width: 200, // Sesuaikan dengan lebar yang diinginkan
+              //     child: Row(
+              //       mainAxisAlignment: MainAxisAlignment.center,
+              //       children: [
+              //         Icon(Icons.save_alt),
+              //         SizedBox(width: 8), // Jarak antara ikon dan teks
+              //         Text('Simpan Form'),
+              //       ],
+              //     ),
+              //   ),
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
@@ -2107,6 +1832,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
   updateDetailItem(
       String id, String item, qty, berat, panjang, lebar, caratPcs) async {
     Map<String, String> body = {
+      'type': 'detailItem',
       'id': id,
       'item': item,
       'qty': qty,
@@ -2183,3 +1909,70 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
     );
   }
 }
+
+// Container(
+//                     color: Colors.white,
+//                     padding: const EdgeInsets.only(
+//                         top: 8.0), // Tambahkan padding di sini jika diperlukan
+//                     child: ListView.builder(
+//                       itemCount: countItemPr,
+//                       itemBuilder: (context, index) {
+//                         return Column(
+//                           children: [
+//                             Container(
+//                               decoration: BoxDecoration(
+//                                 border: Border.all(color: Colors.grey),
+//                                 borderRadius: BorderRadius.circular(8.0),
+//                               ),
+//                               child: ListTile(
+//                                 title: listItemPr![index].receiveBerat != '0'
+//                                     ? Container(
+//                                         color: Colors.green,
+//                                         child: Text(
+//                                           '${listItemPr![index].item} Tersimpan',
+//                                           style: const TextStyle(
+//                                               fontSize: 20,
+//                                               color: Colors.black),
+//                                         ),
+//                                       )
+//                                     : Text(
+//                                         '${listItemPr![index].item} Tap to detail'),
+//                                 onTap: () {
+//                                   selectListItemFancy.clear();
+//                                   selectListItemRound.clear();
+//                                   no = 0;
+
+//                                   callData(index);
+//                                 },
+//                               ),
+//                             ),
+//                             if (_isOpen[index])
+//                               isloadingItem == true
+//                                   ? Center(
+//                                       child: Container(
+//                                         padding: const EdgeInsets.all(5),
+//                                         width: 90,
+//                                         height: 90,
+//                                         child: Lottie.asset(
+//                                             "loadingJSON/loadingV1.json"),
+//                                       ),
+//                                     )
+//                                   : Expanded(
+//                                       child: Container(
+//                                         color: colorBG,
+//                                         padding: const EdgeInsets.all(16.0),
+//                                         child:
+//                                             listItemPr![index].receiveBerat !=
+//                                                     '0'
+//                                                 ? editFormItem(
+//                                                     index,
+//                                                     listItemPr,
+//                                                     listDetailItemPR)
+//                                                 : detailFormItem(index),
+//                                       ),
+//                                     ),
+//                           ],
+//                         );
+//                       },
+//                     ),
+//                   ),
