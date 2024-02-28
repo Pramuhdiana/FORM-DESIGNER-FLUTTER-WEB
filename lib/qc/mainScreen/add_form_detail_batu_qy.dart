@@ -86,6 +86,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
   double totalBerat = 0.0;
   String? noPr;
   double? lebarLayar;
+  double? sumReject = 0.0;
 
   List<ListItemPRModel>? listItemPr;
   List<ItemQcModel>? listDetailItemPR;
@@ -110,6 +111,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
     jenisBatu = widget.dataFormPr!.jenisBatu.toString();
     countItemPr = widget.countItem;
     _getData();
+    print(kebutuhanBerat);
   }
 
   callData(int index, String? noQcDummy) async {
@@ -117,6 +119,8 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
     setState(() {
       isloadingItem = true;
     });
+    kebutuhanBerat = listItemPr![index].fixBerat;
+
     List<ItemQcModel>? filterBynoQc;
     if (jenisBatu.toString().toLowerCase() != 'round') {
       await getJenisBatu(index);
@@ -167,7 +171,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
       }
     }
 
-    no += filterBynoQc.length - 1;
+    no += filterBynoQc.length;
     setState(() {
       isloadingItem = false;
     });
@@ -204,7 +208,8 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
     }
   }
 
-  dataTableForm(String mode, String jenisBatu, int count, int index) {
+  dataTableForm(
+      String mode, String jenisBatu, int count, int index, double kebutuhan) {
     return SizedBox(
         width: MediaQuery.of(context).size.width *
             0.7, // Lebar DataTable adalah 70% dari lebar layar
@@ -224,10 +229,10 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
             rows: mode == 'edit'
                 ? rowsEditData(index, jenisBatu, () {
                     setState(() {});
-                  }, count)
+                  }, count, kebutuhan)
                 : rowsData(index, jenisBatu, () {
                     setState(() {});
-                  }, count)));
+                  }, count, kebutuhan)));
   }
 
   List<DataColumn> columnsData(String jenisBatu, int index) {
@@ -330,11 +335,29 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
           ];
   }
 
-  List<DataRow> rowsData(
-      int index, String jenisBatu, Function() onChangedCallback, int count) {
+  List<DataRow> rowsData(int index, String jenisBatu,
+      Function() onChangedCallback, int totalData, double kebutuhan) {
+    double sumBerat = 0.0;
+    double sumQty = 0.0;
+    if (jenisBatu.toString().toLowerCase() == 'round') {
+      for (var data in selectListItemRound) {
+        sumBerat += double.parse(
+            data[2]); // Menambahkan nilai dari indeks kedua (indeks kolom ke-1)
+        sumQty += int.parse(
+            data[1]); // Menambahkan nilai dari indeks kedua (indeks kolom ke-1)
+      }
+    } else {
+      for (var data in selectListItemFancy) {
+        sumBerat += double.parse(
+            data[4]); // Menambahkan nilai dari indeks kedua (indeks kolom ke-1)
+        sumQty += int.parse(
+            data[3]); // Menambahkan nilai dari indeks kedua (indeks kolom ke-1)
+      }
+    }
+    double sumReject = kebutuhan - sumBerat;
     return jenisBatu.toString().toLowerCase() == 'round'
         ? [
-            for (var i = 0; i < count; i++)
+            for (var i = 0; i < totalData; i++)
               //? nomor
               DataRow(cells: [
                 DataCell(Container(
@@ -399,21 +422,11 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                             .round();
 
                         setState(() {
-                          // if (double.parse(kebutuhanBerat!) < sumBerat) {
-                          //   showDialog<String>(
-                          //       context: context,
-                          //       builder: (BuildContext context) =>
-                          //           const AlertDialog(
-                          //             title: Text(
-                          //               'Total carat melibihi yang seharusnya diterima',
-                          //             ),
-                          //           ));
-                          //   berat = '0';
-                          //   resultQty = 0;
-                          // }
                           qty = resultQty.toString();
                           selectListItemRound[i][1] = '$qty';
                           selectListItemRound[i][2] = '$berat';
+                          sumBerat += double.parse(selectListItemRound[i][2]);
+                          sumQty += int.parse(selectListItemRound[i][1]);
                           print('round = $selectListItemRound');
                         });
                         // onChangedCallback(); // Panggil onChangedCallback di sini
@@ -427,9 +440,71 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: Center(child: Text(selectListItemRound[i][3])))),
               ]),
+            DataRow(cells: [
+              DataCell(
+                Container(
+                    color: Colors.black,
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: const Center(
+                        child: Text(
+                      'Total',
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ))),
+              ),
+
+              DataCell(
+                Container(
+                    color: Colors.black,
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: const Center(
+                        child: Text(
+                      '',
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ))),
+              ),
+              //? qty round
+              DataCell(
+                Container(
+                    color: Colors.black,
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Center(
+                        child: Text(
+                      '$sumQty',
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ))),
+              ),
+
+              //? berat round
+              DataCell(
+                Container(
+                    color: Colors.black,
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Center(
+                        child: Text(
+                      '$sumBerat',
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ))),
+              ),
+
+              DataCell(
+                Container(
+                    color: Colors.black,
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Center(
+                        child: Text(
+                      'Reject : ${sumReject.toStringAsFixed(3)}',
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ))),
+              ),
+            ]),
           ]
         : [
-            for (var i = 0; i < count; i++)
+            for (var i = 0; i < totalData; i++)
               //? nomor
               DataRow(cells: [
                 DataCell(Container(
@@ -550,8 +625,27 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
           ];
   }
 
-  List<DataRow> rowsEditData(
-      int index, String jenisBatu, Function() onChangedCallback, int count) {
+  List<DataRow> rowsEditData(int index, String jenisBatu,
+      Function() onChangedCallback, int count, double kebutuhan) {
+    double sumBerat = 0.0;
+    double sumQty = 0.0;
+    if (jenisBatu.toString().toLowerCase() == 'round') {
+      for (var data in selectListItemRound) {
+        sumBerat += double.parse(
+            data[2]); // Menambahkan nilai dari indeks kedua (indeks kolom ke-1)
+        sumQty += int.parse(
+            data[1]); // Menambahkan nilai dari indeks kedua (indeks kolom ke-1)
+      }
+    } else {
+      for (var data in selectListItemFancy) {
+        sumBerat += double.parse(
+            data[4]); // Menambahkan nilai dari indeks kedua (indeks kolom ke-1)
+        sumQty += int.parse(
+            data[3]); // Menambahkan nilai dari indeks kedua (indeks kolom ke-1)
+      }
+    }
+    double sumReject = kebutuhan - sumBerat;
+
     return jenisBatu.toString().toLowerCase() == 'round'
         ? [
             for (var i = 0; i < count; i++)
@@ -655,18 +749,6 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                             .round();
 
                         setState(() {
-                          // if (double.parse(kebutuhanBerat!) < sumBerat) {
-                          //   showDialog<String>(
-                          //       context: context,
-                          //       builder: (BuildContext context) =>
-                          //           const AlertDialog(
-                          //             title: Text(
-                          //               'Total carat melibihi yang seharusnya diterima',
-                          //             ),
-                          //           ));
-                          //   berat = '0';
-                          //   resultQty = 0;
-                          // }
                           qty = resultQty.toString();
                           selectListItemRound[i][1] = '$qty';
                           selectListItemRound[i][2] = '$berat';
@@ -683,6 +765,70 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: Center(child: Text(selectListItemRound[i][3])))),
               ]),
+
+            //* HINTS untuk total
+            DataRow(cells: [
+              DataCell(
+                Container(
+                    color: Colors.black,
+                    padding: const EdgeInsets.symmetric(horizontal: 0),
+                    child: const Center(
+                        child: Text(
+                      'Total',
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ))),
+              ),
+
+              DataCell(
+                Container(
+                    color: Colors.black,
+                    padding: const EdgeInsets.symmetric(horizontal: 0),
+                    child: const Center(
+                        child: Text(
+                      '',
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ))),
+              ),
+              //? qty round
+              DataCell(
+                Container(
+                    color: Colors.black,
+                    padding: const EdgeInsets.symmetric(horizontal: 0),
+                    child: Center(
+                        child: Text(
+                      '$sumQty',
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ))),
+              ),
+
+              //? berat round
+              DataCell(
+                Container(
+                    color: Colors.black,
+                    padding: const EdgeInsets.symmetric(horizontal: 0),
+                    child: Center(
+                        child: Text(
+                      sumBerat.toStringAsFixed(3),
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ))),
+              ),
+
+              DataCell(
+                Container(
+                    color: Colors.black,
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Center(
+                        child: Text(
+                      'Reject : ${sumReject.toStringAsFixed(3)}',
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ))),
+              ),
+            ]),
           ]
         : [
             for (var i = 0; i < count; i++)
@@ -1231,7 +1377,8 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
           ),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
-            child: dataTableForm('new', jenisBatu!, no, i),
+            child: dataTableForm(
+                'new', jenisBatu!, no, i, double.parse(kebutuhanBerat!)),
           ),
           const SizedBox(
             height: 20,
@@ -1239,66 +1386,74 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ElevatedButton.icon(
-                onPressed: () {
-                  setState(() {
-                    if (jenisBatu.toString().toLowerCase() == 'round') {
-                      ukuran = '';
-                      qty = '0';
-                      berat = '';
-                      caratPcs = '';
-                      selectListItemRound.add([
-                        '$ukuran',
-                        '$qty',
-                        '$berat',
-                        '$caratPcs',
-                      ]);
-                      print('round = $selectListItemRound');
-                    } else {
-                      kodeMdbc = '';
-                      panjang = '';
-                      lebar = '';
-                      qtyFancy = '';
-                      beratFancy = '';
-                      selectListItemFancy.add([
-                        '$kodeMdbc',
-                        '$panjang',
-                        '$lebar',
-                        '$qtyFancy',
-                        '$beratFancy',
-                      ]);
-                      print('fancy = $selectListItemFancy');
-                    }
+              SizedBox(
+                width: 200,
+                height: 45,
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                    setState(() {
+                      if (jenisBatu.toString().toLowerCase() == 'round') {
+                        ukuran = '';
+                        qty = '0';
+                        berat = '';
+                        caratPcs = '';
+                        selectListItemRound.add([
+                          '$ukuran',
+                          '$qty',
+                          '$berat',
+                          '$caratPcs',
+                        ]);
+                        print('round = $selectListItemRound');
+                      } else {
+                        kodeMdbc = '';
+                        panjang = '';
+                        lebar = '';
+                        qtyFancy = '';
+                        beratFancy = '';
+                        selectListItemFancy.add([
+                          '$kodeMdbc',
+                          '$panjang',
+                          '$lebar',
+                          '$qtyFancy',
+                          '$beratFancy',
+                        ]);
+                        print('fancy = $selectListItemFancy');
+                      }
 
-                    no += 1;
-                  });
-                },
-                icon: const Icon(Icons.add), // Icon "add"
-                label: const Text('Tambah Item'),
+                      no += 1;
+                    });
+                  },
+                  icon: const Icon(Icons.add), // Icon "add"
+                  label: const Text('Tambah Item'),
+                ),
               ),
               const SizedBox(
                 width: 30,
               ),
               no < 1
                   ? const SizedBox()
-                  : ElevatedButton.icon(
-                      onPressed: () {
-                        setState(() {
-                          no -= 1;
-                          if (jenisBatu.toString().toLowerCase() == 'round') {
-                            selectListItemRound.removeAt(no);
-                            print('round = $selectListItemRound');
-                          } else {
-                            selectListItemFancy.removeAt(no);
-                            print('fancy = $selectListItemFancy');
-                          }
-                        });
-                      },
-                      icon: const Icon(Icons.delete), // Icon "delete"
-                      label: const Text('Hapus Item'), // Label tombol
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            Colors.red, // Warna latar belakang merah
+                  : SizedBox(
+                      width: 200,
+                      height: 45,
+                      child: ElevatedButton.icon(
+                        onPressed: () {
+                          setState(() {
+                            no -= 1;
+                            if (jenisBatu.toString().toLowerCase() == 'round') {
+                              selectListItemRound.removeAt(no);
+                              print('round = $selectListItemRound');
+                            } else {
+                              selectListItemFancy.removeAt(no);
+                              print('fancy = $selectListItemFancy');
+                            }
+                          });
+                        },
+                        icon: const Icon(Icons.delete), // Icon "delete"
+                        label: const Text('Hapus Item'), // Label tombol
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              Colors.red, // Warna latar belakang merah
+                        ),
                       ),
                     )
             ],
@@ -1519,7 +1674,8 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
           ),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
-            child: dataTableForm('edit', jenisBatu!, no, index),
+            child: dataTableForm(
+                'edit', jenisBatu!, no, index, double.parse(kebutuhanBerat!)),
           ),
           const SizedBox(
             height: 20,
@@ -1527,66 +1683,74 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ElevatedButton.icon(
-                onPressed: () {
-                  setState(() {
-                    if (jenisBatu.toString().toLowerCase() == 'round') {
-                      ukuran = '';
-                      qty = '0';
-                      berat = '';
-                      caratPcs = '';
-                      selectListItemRound.add([
-                        '$ukuran',
-                        '$qty',
-                        '$berat',
-                        '$caratPcs',
-                      ]);
-                      print('round = $selectListItemRound');
-                    } else {
-                      kodeMdbc = '';
-                      panjang = '';
-                      lebar = '';
-                      qtyFancy = '';
-                      beratFancy = '';
-                      selectListItemFancy.add([
-                        '$kodeMdbc',
-                        '$panjang',
-                        '$lebar',
-                        '$qtyFancy',
-                        '$beratFancy',
-                      ]);
-                      print('fancy = $selectListItemFancy');
-                    }
+              SizedBox(
+                width: 200,
+                height: 45,
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                    setState(() {
+                      if (jenisBatu.toString().toLowerCase() == 'round') {
+                        ukuran = '';
+                        qty = '0';
+                        berat = '';
+                        caratPcs = '';
+                        selectListItemRound.add([
+                          '$ukuran',
+                          '$qty',
+                          '$berat',
+                          '$caratPcs',
+                        ]);
+                        print('round = $selectListItemRound');
+                      } else {
+                        kodeMdbc = '';
+                        panjang = '';
+                        lebar = '';
+                        qtyFancy = '';
+                        beratFancy = '';
+                        selectListItemFancy.add([
+                          '$kodeMdbc',
+                          '$panjang',
+                          '$lebar',
+                          '$qtyFancy',
+                          '$beratFancy',
+                        ]);
+                        print('fancy = $selectListItemFancy');
+                      }
 
-                    no += 1;
-                  });
-                },
-                icon: const Icon(Icons.add), // Icon "add"
-                label: const Text('Tambah Item'),
+                      no += 1;
+                    });
+                  },
+                  icon: const Icon(Icons.add), // Icon "add"
+                  label: const Text('Tambah Item'),
+                ),
               ),
               const SizedBox(
                 width: 30,
               ),
               no < 1
                   ? const SizedBox()
-                  : ElevatedButton.icon(
-                      onPressed: () {
-                        setState(() {
-                          no -= 1;
-                          if (jenisBatu.toString().toLowerCase() == 'round') {
-                            selectListItemRound.removeAt(no);
-                            print('round = $selectListItemRound');
-                          } else {
-                            selectListItemFancy.removeAt(no);
-                            print('fancy = $selectListItemFancy');
-                          }
-                        });
-                      },
-                      icon: const Icon(Icons.delete), // Icon "delete"
-                      label: const Text('Hapus Item'), // Label tombol
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            Colors.red, // Warna latar belakang merah
+                  : SizedBox(
+                      width: 200,
+                      height: 45,
+                      child: ElevatedButton.icon(
+                        onPressed: () {
+                          setState(() {
+                            no -= 1;
+                            if (jenisBatu.toString().toLowerCase() == 'round') {
+                              selectListItemRound.removeAt(no);
+                              print('round = $selectListItemRound');
+                            } else {
+                              selectListItemFancy.removeAt(no);
+                              print('fancy = $selectListItemFancy');
+                            }
+                          });
+                        },
+                        icon: const Icon(Icons.delete), // Icon "delete"
+                        label: const Text('Hapus Item'), // Label tombol
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              Colors.red, // Warna latar belakang merah
+                        ),
                       ),
                     )
             ],
