@@ -105,70 +105,8 @@ class _MainViewQcState extends State<MainViewQc> {
               : listNugraha(),
 
           onTap: (index) {
-            if (sharedPreferences!.getString('role') == '1') {
+            if (sharedPreferences!.getString('role') == '0') {
               if (index == screenAtik.length - 1) {
-                showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        content: Stack(
-                          clipBehavior: Clip.none,
-                          children: <Widget>[
-                            Positioned(
-                              right: -47.0,
-                              top: -47.0,
-                              child: InkResponse(
-                                onTap: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: const CircleAvatar(
-                                  backgroundColor: Colors.red,
-                                  child: Icon(Icons.close),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              child: Form(
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    const Padding(
-                                      padding:
-                                          EdgeInsets.only(top: 5, bottom: 10),
-                                      child: Text('Yakin ingin keluar ?'),
-                                    ),
-                                    Container(
-                                      width: 200,
-                                      height: 50,
-                                      padding: const EdgeInsets.only(top: 10),
-                                      child: ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                            backgroundColor: Colors.red),
-                                        child: const Text("Keluar"),
-                                        onPressed: () async {
-                                          SharedPreferences prefs =
-                                              await SharedPreferences
-                                                  .getInstance();
-                                          prefs.clear();
-                                          prefs.setString('token', 'null');
-                                          // ignore: use_build_context_synchronously
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (c) =>
-                                                      const LoginScreen()));
-                                        },
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    });
-              } else if (index == screenNugraha.length - 1) {
                 showDialog(
                     context: context,
                     builder: (BuildContext context) {
@@ -236,9 +174,73 @@ class _MainViewQcState extends State<MainViewQc> {
                 });
               }
             } else {
-              setState(() {
-                widget.col = index;
-              });
+              if (index == screenNugraha.length - 1) {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        content: Stack(
+                          clipBehavior: Clip.none,
+                          children: <Widget>[
+                            Positioned(
+                              right: -47.0,
+                              top: -47.0,
+                              child: InkResponse(
+                                onTap: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const CircleAvatar(
+                                  backgroundColor: Colors.red,
+                                  child: Icon(Icons.close),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              child: Form(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    const Padding(
+                                      padding:
+                                          EdgeInsets.only(top: 5, bottom: 10),
+                                      child: Text('Yakin ingin keluar ?'),
+                                    ),
+                                    Container(
+                                      width: 200,
+                                      height: 50,
+                                      padding: const EdgeInsets.only(top: 10),
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.red),
+                                        child: const Text("Keluar"),
+                                        onPressed: () async {
+                                          SharedPreferences prefs =
+                                              await SharedPreferences
+                                                  .getInstance();
+                                          prefs.clear();
+                                          prefs.setString('token', 'null');
+                                          // ignore: use_build_context_synchronously
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (c) =>
+                                                      const LoginScreen()));
+                                        },
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    });
+              } else {
+                setState(() {
+                  widget.col = index;
+                });
+              }
             }
           },
           toggler: SideBarToggler(

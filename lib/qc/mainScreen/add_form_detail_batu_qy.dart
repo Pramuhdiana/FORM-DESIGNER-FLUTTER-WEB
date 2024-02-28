@@ -1059,22 +1059,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                                     return Container(
                                       margin: const EdgeInsets.only(top: 8.0),
                                       color: Colors.blue[50],
-
-                                      // Widget apa pun yang ingin Anda tampilkan saat item diperluas
-                                      child:
-                                          //  isloadingItem == true
-                                          //     ? Center(
-                                          //         child: Container(
-                                          //           padding:
-                                          //               const EdgeInsets.all(5),
-                                          //           width: 90,
-                                          //           height: 90,
-                                          //           child: Lottie.asset(
-                                          //               "loadingJSON/loadingV1.json"),
-                                          //         ),
-                                          //       )
-                                          //     :
-                                          Container(
+                                      child: Container(
                                         color: Colors.white,
                                         padding: const EdgeInsets.all(16.0),
                                         child:
@@ -1104,7 +1089,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
   detailFormItem(i) {
     double widhtMAX = MediaQuery.of(context).size.width;
     double widValue = 100;
-    double widValueMid = 100;
+    double widValueMid = 10;
     double widValueEnd = 150;
     kualitasBatu = listItemPr![i].kadar;
     DateTime now = DateTime.now();
@@ -1147,15 +1132,14 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                       SizedBox(width: widValue, child: const Text('NO. QC')),
                       SizedBox(width: widValueMid, child: const Text(':')),
                       Container(
-                          padding: const EdgeInsets.only(left: 0),
-                          width: widValueEnd,
-                          child: Flexible(
-                            child: Text(
-                              noQc =
-                                  '${widget.dataFormPr!.noPR}/QC/${getMonthName(month)}/$year/${(i + 1).toString().padLeft(5, '0')}',
-                              maxLines: 2,
-                            ),
-                          ))
+                        padding: const EdgeInsets.only(left: 0),
+                        width: widValueEnd,
+                        child: Text(
+                          noQc =
+                              '${widget.dataFormPr!.noPR}/QC/${getMonthName(month)}/$year/${(i + 1).toString().padLeft(5, '0')}',
+                          maxLines: 2,
+                        ),
+                      )
                     ],
                   ),
                   Row(
@@ -1166,10 +1150,10 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                       Container(
                         padding: const EdgeInsets.only(left: 0),
                         width: widValueEnd,
-                        child: Flexible(
-                          child: Text(DateFormat('dd/MMMM/yyyy HH:ss').format(
+                        child: Text(
+                          DateFormat('dd/MMMM/yyyy HH:ss').format(
                               DateTime.parse(
-                                  widget.dataFormPr!.tanggalInQc!.toString()))),
+                                  widget.dataFormPr!.tanggalInQc!.toString())),
                         ),
                       )
                     ],
@@ -1183,7 +1167,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                       Container(
                           padding: const EdgeInsets.only(left: 0),
                           width: widValueEnd,
-                          child: Flexible(child: Text('$tglOut')))
+                          child: Text('$tglOut'))
                     ],
                   ),
                   Row(
@@ -1194,9 +1178,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                       Container(
                           padding: const EdgeInsets.only(left: 0),
                           width: widValueEnd,
-                          child: Flexible(
-                              child:
-                                  Text(widget.dataFormPr!.vendor.toString())))
+                          child: Text(widget.dataFormPr!.vendor.toString()))
                     ],
                   ),
                   Row(
@@ -1225,80 +1207,80 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
           const SizedBox(
             height: 10,
           ),
-          dataTableForm('new', jenisBatu!, no, i),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: dataTableForm('new', jenisBatu!, no, i),
+          ),
           const SizedBox(
             height: 20,
           ),
-          jenisBatu == null
-              ? const SizedBox()
-              : Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ElevatedButton.icon(
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton.icon(
+                onPressed: () {
+                  setState(() {
+                    if (jenisBatu.toString().toLowerCase() == 'round') {
+                      ukuran = '';
+                      qty = '0';
+                      berat = '';
+                      caratPcs = '';
+                      selectListItemRound.add([
+                        '$ukuran',
+                        '$qty',
+                        '$berat',
+                        '$caratPcs',
+                      ]);
+                      print('round = $selectListItemRound');
+                    } else {
+                      kodeMdbc = '';
+                      panjang = '';
+                      lebar = '';
+                      qtyFancy = '';
+                      beratFancy = '';
+                      selectListItemFancy.add([
+                        '$kodeMdbc',
+                        '$panjang',
+                        '$lebar',
+                        '$qtyFancy',
+                        '$beratFancy',
+                      ]);
+                      print('fancy = $selectListItemFancy');
+                    }
+
+                    no += 1;
+                  });
+                },
+                icon: const Icon(Icons.add), // Icon "add"
+                label: const Text('Tambah Item'),
+              ),
+              const SizedBox(
+                width: 30,
+              ),
+              no < 1
+                  ? const SizedBox()
+                  : ElevatedButton.icon(
                       onPressed: () {
                         setState(() {
+                          no -= 1;
                           if (jenisBatu.toString().toLowerCase() == 'round') {
-                            ukuran = '';
-                            qty = '0';
-                            berat = '';
-                            caratPcs = '';
-                            selectListItemRound.add([
-                              '$ukuran',
-                              '$qty',
-                              '$berat',
-                              '$caratPcs',
-                            ]);
+                            selectListItemRound.removeAt(no);
                             print('round = $selectListItemRound');
                           } else {
-                            kodeMdbc = '';
-                            panjang = '';
-                            lebar = '';
-                            qtyFancy = '';
-                            beratFancy = '';
-                            selectListItemFancy.add([
-                              '$kodeMdbc',
-                              '$panjang',
-                              '$lebar',
-                              '$qtyFancy',
-                              '$beratFancy',
-                            ]);
+                            selectListItemFancy.removeAt(no);
                             print('fancy = $selectListItemFancy');
                           }
-
-                          no += 1;
                         });
                       },
-                      icon: const Icon(Icons.add), // Icon "add"
-                      label: const Text('Tambah Item'),
-                    ),
-                    const SizedBox(
-                      width: 30,
-                    ),
-                    no < 1
-                        ? const SizedBox()
-                        : ElevatedButton.icon(
-                            onPressed: () {
-                              setState(() {
-                                no -= 1;
-                                if (jenisBatu.toString().toLowerCase() ==
-                                    'round') {
-                                  selectListItemRound.removeAt(no);
-                                  print('round = $selectListItemRound');
-                                } else {
-                                  selectListItemFancy.removeAt(no);
-                                  print('fancy = $selectListItemFancy');
-                                }
-                              });
-                            },
-                            icon: const Icon(Icons.delete), // Icon "delete"
-                            label: const Text('Hapus Item'), // Label tombol
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  Colors.red, // Warna latar belakang merah
-                            ),
-                          )
-                  ],
-                ),
+                      icon: const Icon(Icons.delete), // Icon "delete"
+                      label: const Text('Hapus Item'), // Label tombol
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            Colors.red, // Warna latar belakang merah
+                      ),
+                    )
+            ],
+          ),
           const SizedBox(
             height: 20,
           ),
@@ -1401,7 +1383,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
   editFormItem(i, var allData, var detailItem) {
     double widhtMAX = MediaQuery.of(context).size.width;
     double widValue = 100;
-    double widValueMid = 100;
+    double widValueMid = 10;
     double widValueEnd = 150;
     var data = allData[i];
     var detailItemdata = detailItem[i];
@@ -1441,14 +1423,13 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                       SizedBox(width: widValue, child: const Text('NO. QC')),
                       SizedBox(width: widValueMid, child: const Text(':')),
                       Container(
-                          padding: const EdgeInsets.only(left: 0),
-                          width: widValueEnd,
-                          child: Flexible(
-                            child: Text(
-                              noQc = '${listItemPr![i].noQc}',
-                              maxLines: 2,
-                            ),
-                          ))
+                        padding: const EdgeInsets.only(left: 0),
+                        width: widValueEnd,
+                        child: Text(
+                          noQc = '${listItemPr![i].noQc}',
+                          maxLines: 2,
+                        ),
+                      )
                     ],
                   ),
                   Row(
@@ -1459,10 +1440,10 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                       Container(
                         padding: const EdgeInsets.only(left: 0),
                         width: widValueEnd,
-                        child: Flexible(
-                          child: Text(DateFormat('dd/MMMM/yyyy HH:ss').format(
+                        child: Text(
+                          DateFormat('dd/MMMM/yyyy HH:ss').format(
                               DateTime.parse(
-                                  widget.dataFormPr!.tanggalInQc!.toString()))),
+                                  widget.dataFormPr!.tanggalInQc!.toString())),
                         ),
                       )
                     ],
@@ -1476,7 +1457,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                       Container(
                           padding: const EdgeInsets.only(left: 0),
                           width: widValueEnd,
-                          child: Flexible(child: Text('$tglOut')))
+                          child: Text('$tglOut'))
                     ],
                   ),
                   Row(
@@ -1487,9 +1468,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                       Container(
                           padding: const EdgeInsets.only(left: 0),
                           width: widValueEnd,
-                          child: Flexible(
-                              child:
-                                  Text(widget.dataFormPr!.vendor.toString())))
+                          child: Text(widget.dataFormPr!.vendor.toString()))
                     ],
                   ),
                   Row(
@@ -1506,6 +1485,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
               )),
           Container(
             color: Colors.grey.shade400,
+            padding: const EdgeInsets.only(left: 5, right: 5),
             child: const Text(
               'TABEL DATA YANG DITEIRMA QC',
               style: TextStyle(
@@ -1517,82 +1497,80 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
           const SizedBox(
             height: 10,
           ),
-          jenisBatu == null
-              ? const SizedBox()
-              : dataTableForm('edit', jenisBatu!, no, i),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: dataTableForm('new', jenisBatu!, no, i),
+          ),
           const SizedBox(
             height: 20,
           ),
-          jenisBatu == null
-              ? const SizedBox()
-              : Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ElevatedButton.icon(
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton.icon(
+                onPressed: () {
+                  setState(() {
+                    if (jenisBatu.toString().toLowerCase() == 'round') {
+                      ukuran = '';
+                      qty = '0';
+                      berat = '';
+                      caratPcs = '';
+                      selectListItemRound.add([
+                        '$ukuran',
+                        '$qty',
+                        '$berat',
+                        '$caratPcs',
+                      ]);
+                      print('round = $selectListItemRound');
+                    } else {
+                      kodeMdbc = '';
+                      panjang = '';
+                      lebar = '';
+                      qtyFancy = '';
+                      beratFancy = '';
+                      selectListItemFancy.add([
+                        '$kodeMdbc',
+                        '$panjang',
+                        '$lebar',
+                        '$qtyFancy',
+                        '$beratFancy',
+                      ]);
+                      print('fancy = $selectListItemFancy');
+                    }
+
+                    no += 1;
+                  });
+                },
+                icon: const Icon(Icons.add), // Icon "add"
+                label: const Text('Tambah Item'),
+              ),
+              const SizedBox(
+                width: 30,
+              ),
+              no < 1
+                  ? const SizedBox()
+                  : ElevatedButton.icon(
                       onPressed: () {
                         setState(() {
+                          no -= 1;
                           if (jenisBatu.toString().toLowerCase() == 'round') {
-                            ukuran = '';
-                            qty = '0';
-                            berat = '';
-                            caratPcs = '';
-                            selectListItemRound.add([
-                              '$ukuran',
-                              '$qty',
-                              '$berat',
-                              '$caratPcs',
-                            ]);
+                            selectListItemRound.removeAt(no);
                             print('round = $selectListItemRound');
                           } else {
-                            kodeMdbc = '';
-                            panjang = '';
-                            lebar = '';
-                            qtyFancy = '';
-                            beratFancy = '';
-                            selectListItemFancy.add([
-                              '$kodeMdbc',
-                              '$panjang',
-                              '$lebar',
-                              '$qtyFancy',
-                              '$beratFancy',
-                            ]);
+                            selectListItemFancy.removeAt(no);
                             print('fancy = $selectListItemFancy');
                           }
-
-                          no += 1;
                         });
                       },
-                      icon: const Icon(Icons.add), // Icon "add"
-                      label: const Text('Tambah Item'),
-                    ),
-                    const SizedBox(
-                      width: 30,
-                    ),
-                    no < 1
-                        ? const SizedBox()
-                        : ElevatedButton.icon(
-                            onPressed: () {
-                              setState(() {
-                                no -= 1;
-                                if (jenisBatu.toString().toLowerCase() ==
-                                    'round') {
-                                  selectListItemRound.removeAt(no);
-                                  print('round = $selectListItemRound');
-                                } else {
-                                  selectListItemFancy.removeAt(no);
-                                  print('fancy = $selectListItemFancy');
-                                }
-                              });
-                            },
-                            icon: const Icon(Icons.delete), // Icon "delete"
-                            label: const Text('Hapus Item'), // Label tombol
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  Colors.red, // Warna latar belakang merah
-                            ),
-                          )
-                  ],
-                ),
+                      icon: const Icon(Icons.delete), // Icon "delete"
+                      label: const Text('Hapus Item'), // Label tombol
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            Colors.red, // Warna latar belakang merah
+                      ),
+                    )
+            ],
+          ),
           const SizedBox(
             height: 20,
           ),
