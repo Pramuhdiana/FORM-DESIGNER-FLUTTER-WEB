@@ -87,7 +87,6 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
   String? noPr;
   double? lebarLayar;
 
-  List<bool> _isOpen = []; // List untuk mengatur status container
   List<ListItemPRModel>? listItemPr;
   List<ItemQcModel>? listDetailItemPR;
   List<String> items = [
@@ -110,8 +109,6 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
     noPr = widget.dataFormPr!.noPR.toString();
     jenisBatu = widget.dataFormPr!.jenisBatu.toString();
     countItemPr = widget.countItem;
-    _isOpen = List.generate(
-        countItemPr!, (index) => false); // List untuk mengatur status container
     _getData();
   }
 
@@ -131,54 +128,46 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
     // }
     idItemPr = listItemPr![index].id.toString();
 
-    if (double.parse(listItemPr![index].receiveBerat!) > 0
-        // &&
-        //     _isOpen[index] == false
-        ) {
-      notesReject.text = listItemPr![index].notesReject.toString();
-      filterBynoQc = listDetailItemPR!
-          .where((element) => element.noQc == noQcDummy)
-          .toList();
-      for (var i = 0; i < filterBynoQc.length; i++) {
-        if (jenisBatu.toString().toLowerCase() == 'round') {
-          ukuran = '${filterBynoQc[i].item}';
-          qty = '${filterBynoQc[i].qty}';
-          berat = '${filterBynoQc[i].berat}';
-          caratPcs = '${filterBynoQc[i].caratPcs}';
-          String idItem = '${filterBynoQc[i].id}';
-          selectListItemRound.add([
-            '$ukuran',
-            '$qty',
-            '$berat',
-            '$caratPcs',
-            idItem,
-          ]);
-          print('round edit = $selectListItemRound');
-        } else {
-          kodeMdbc = '${filterBynoQc[i].item}';
-          panjang = '${filterBynoQc[i].panjang}';
-          lebar = '${filterBynoQc[i].lebar}';
-          qtyFancy = '${filterBynoQc[i].qty}';
-          beratFancy = '${filterBynoQc[i].berat}';
-          String idItem = '${filterBynoQc[i].id}';
+    notesReject.text = listItemPr![index].notesReject.toString();
+    filterBynoQc = listDetailItemPR!
+        .where((element) => element.noQc == noQcDummy)
+        .toList();
+    for (var i = 0; i < filterBynoQc.length; i++) {
+      if (jenisBatu.toString().toLowerCase() == 'round') {
+        ukuran = '${filterBynoQc[i].item}';
+        qty = '${filterBynoQc[i].qty}';
+        berat = '${filterBynoQc[i].berat}';
+        caratPcs = '${filterBynoQc[i].caratPcs}';
+        String idItem = '${filterBynoQc[i].id}';
+        selectListItemRound.add([
+          '$ukuran',
+          '$qty',
+          '$berat',
+          '$caratPcs',
+          idItem,
+        ]);
+        print('round edit = $selectListItemRound');
+      } else {
+        kodeMdbc = '${filterBynoQc[i].item}';
+        panjang = '${filterBynoQc[i].panjang}';
+        lebar = '${filterBynoQc[i].lebar}';
+        qtyFancy = '${filterBynoQc[i].qty}';
+        beratFancy = '${filterBynoQc[i].berat}';
+        String idItem = '${filterBynoQc[i].id}';
 
-          selectListItemFancy.add([
-            '$kodeMdbc',
-            '$panjang',
-            '$lebar',
-            '$qtyFancy',
-            '$beratFancy',
-            idItem,
-          ]);
-          print('fancy = $selectListItemFancy');
-        }
+        selectListItemFancy.add([
+          '$kodeMdbc',
+          '$panjang',
+          '$lebar',
+          '$qtyFancy',
+          '$beratFancy',
+          idItem,
+        ]);
+        print('fancy = $selectListItemFancy');
       }
-
-      no += filterBynoQc.length;
-      _isOpen[index] = !_isOpen[index];
-    } else {
-      _isOpen[index] = !_isOpen[index];
     }
+
+    no += filterBynoQc.length - 1;
     setState(() {
       isloadingItem = false;
     });
@@ -395,11 +384,10 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                   Center(
                     child: TextFormField(
                       // initialValue: data[i].kadar,
-                      textAlign: TextAlign
-                          .center, // Menengahkan teks secara horizontal
+                      textAlign: TextAlign.center,
+                      //* HINTS Menengahkan teks secara horizontal
                       keyboardType: const TextInputType.numberWithOptions(
-                          decimal:
-                              true), //* hHINTS Mengizinkan input nilai desimal
+                          decimal: true), // Mengizinkan input nilai desimal
                       inputFormatters: <TextInputFormatter>[
                         FilteringTextInputFormatter.allow(RegExp(
                             r'^\d+\.?\d{0,3}')), // Membatasi input agar sesuai format desimal
@@ -447,18 +435,24 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                 DataCell(Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: Center(child: Text('${i + 1}')))),
-                //? kode mdbc
-                DataCell(Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Center(child: Text(selectListItemFancy[i][0])))),
+                // //? kode mdbc
+                // DataCell(Container(
+                //     padding: const EdgeInsets.symmetric(horizontal: 10),
+                //     child: Center(child: Text(selectListItemFancy[i][0])))),
 
                 //? panjang fancy
                 DataCell(
                   Center(
                     child: TextFormField(
                       // initialValue: data[i].kadar,
-                      textAlign: TextAlign
-                          .center, // Menengahkan teks secara horizontal
+                      textAlign: TextAlign.center,
+                      //* HINTS Menengahkan teks secara horizontal
+                      keyboardType: const TextInputType.numberWithOptions(
+                          decimal: true), // Mengizinkan input nilai desimal
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.allow(RegExp(
+                            r'^\d+\.?\d{0,3}')), // Membatasi input agar sesuai format desimal
+                      ],
                       onChanged: (panjangValue) {
                         final double panjang =
                             double.tryParse(panjangValue) ?? 0;
@@ -484,8 +478,14 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                   Center(
                     child: TextFormField(
                       // initialValue: data[i].kadar,
-                      textAlign: TextAlign
-                          .center, // Menengahkan teks secara horizontal
+                      textAlign: TextAlign.center,
+                      //* HINTS Menengahkan teks secara horizontal
+                      keyboardType: const TextInputType.numberWithOptions(
+                          decimal: true), // Mengizinkan input nilai desimal
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.allow(RegExp(
+                            r'^\d+\.?\d{0,3}')), // Membatasi input agar sesuai format desimal
+                      ],
                       onChanged: (lebarValue) {
                         final double lebar = double.tryParse(lebarValue) ?? 0;
                         resultLebar = calculateResultLebar(lebar);
@@ -505,8 +505,14 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                   Center(
                     child: TextFormField(
                       // initialValue: data[i].kadar,
-                      textAlign: TextAlign
-                          .center, // Menengahkan teks secara horizontal
+                      textAlign: TextAlign.center,
+                      //* HINTS Menengahkan teks secara horizontal
+                      keyboardType: const TextInputType.numberWithOptions(
+                          decimal: true), // Mengizinkan input nilai desimal
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.allow(RegExp(
+                            r'^\d+\.?\d{0,3}')), // Membatasi input agar sesuai format desimal
+                      ],
                       onChanged: (value) {
                         qtyFancy = value;
                         setState(() {
@@ -522,8 +528,14 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                   Center(
                     child: TextFormField(
                       // initialValue: data[i].kadar,
-                      textAlign: TextAlign
-                          .center, // Menengahkan teks secara horizontal
+                      textAlign: TextAlign.center,
+                      //* HINTS Menengahkan teks secara horizontal
+                      keyboardType: const TextInputType.numberWithOptions(
+                          decimal: true), // Mengizinkan input nilai desimal
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.allow(RegExp(
+                            r'^\d+\.?\d{0,3}')), // Membatasi input agar sesuai format desimal
+                      ],
                       onChanged: (value) {
                         beratFancy = value;
                         setState(() {
@@ -628,11 +640,10 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                   Center(
                     child: TextFormField(
                       initialValue: selectListItemRound[i][2],
-                      textAlign: TextAlign
-                          .center, // Menengahkan teks secara horizontal
+                      textAlign: TextAlign.center,
+                      //* HINTS Menengahkan teks secara horizontal
                       keyboardType: const TextInputType.numberWithOptions(
-                          decimal:
-                              true), //* hHINTS Mengizinkan input nilai desimal
+                          decimal: true), // Mengizinkan input nilai desimal
                       inputFormatters: <TextInputFormatter>[
                         FilteringTextInputFormatter.allow(RegExp(
                             r'^\d+\.?\d{0,3}')), // Membatasi input agar sesuai format desimal
@@ -680,21 +691,20 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                 DataCell(Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: Center(child: Text('${i + 1}')))),
-                //? kode mdbc
-                DataCell(Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Center(child: Text(selectListItemFancy[i][0])))),
+                // //? kode mdbc
+                // DataCell(Container(
+                //     padding: const EdgeInsets.symmetric(horizontal: 10),
+                //     child: Center(child: Text(selectListItemFancy[i][0])))),
 
                 //? panjang fancy
                 DataCell(
                   Center(
                     child: TextFormField(
                       initialValue: selectListItemFancy[i][1],
-                      textAlign: TextAlign
-                          .center, // Menengahkan teks secara horizontal
+                      textAlign: TextAlign.center,
+                      //* HINTS Menengahkan teks secara horizontal
                       keyboardType: const TextInputType.numberWithOptions(
-                          decimal:
-                              true), //* hHINTS Mengizinkan input nilai desimal
+                          decimal: true), // Mengizinkan input nilai desimal
                       inputFormatters: <TextInputFormatter>[
                         FilteringTextInputFormatter.allow(RegExp(
                             r'^\d+\.?\d{0,3}')), // Membatasi input agar sesuai format desimal
@@ -724,11 +734,10 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                   Center(
                     child: TextFormField(
                       initialValue: selectListItemFancy[i][2],
-                      textAlign: TextAlign
-                          .center, // Menengahkan teks secara horizontal
+                      textAlign: TextAlign.center,
+                      //* HINTS Menengahkan teks secara horizontal
                       keyboardType: const TextInputType.numberWithOptions(
-                          decimal:
-                              true), //* hHINTS Mengizinkan input nilai desimal
+                          decimal: true), // Mengizinkan input nilai desimal
                       inputFormatters: <TextInputFormatter>[
                         FilteringTextInputFormatter.allow(RegExp(
                             r'^\d+\.?\d{0,3}')), // Membatasi input agar sesuai format desimal
@@ -752,11 +761,10 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                   Center(
                     child: TextFormField(
                       initialValue: selectListItemFancy[i][3],
-                      textAlign: TextAlign
-                          .center, // Menengahkan teks secara horizontal
+                      textAlign: TextAlign.center,
+                      //* HINTS Menengahkan teks secara horizontal
                       keyboardType: const TextInputType.numberWithOptions(
-                          decimal:
-                              true), //* hHINTS Mengizinkan input nilai desimal
+                          decimal: true), // Mengizinkan input nilai desimal
                       inputFormatters: <TextInputFormatter>[
                         FilteringTextInputFormatter.allow(RegExp(
                             r'^\d+\.?\d{0,3}')), // Membatasi input agar sesuai format desimal
@@ -776,11 +784,10 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                   Center(
                     child: TextFormField(
                       initialValue: selectListItemFancy[i][4],
-                      textAlign: TextAlign
-                          .center, // Menengahkan teks secara horizontal
+                      textAlign: TextAlign.center,
+                      //* HINTS Menengahkan teks secara horizontal
                       keyboardType: const TextInputType.numberWithOptions(
-                          decimal:
-                              true), //* hHINTS Mengizinkan input nilai desimal
+                          decimal: true), // Mengizinkan input nilai desimal
                       inputFormatters: <TextInputFormatter>[
                         FilteringTextInputFormatter.allow(RegExp(
                             r'^\d+\.?\d{0,3}')), // Membatasi input agar sesuai format desimal
@@ -1010,7 +1017,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                     itemCount: countItemPr,
                     itemBuilder: (context, index) {
                       return GestureDetector(
-                        onTap: () {
+                        onDoubleTap: () {
                           selectListItemFancy.clear();
                           selectListItemRound.clear();
                           no = 0;
@@ -1025,6 +1032,21 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                             }
                           });
                         },
+                        // onTap: () {
+                        // selectListItemFancy.clear();
+                        // selectListItemRound.clear();
+                        // no = 0;
+                        // notesReject.text = '';
+                        // setState(() {
+                        //   if (expandedIndex == index) {
+                        //     expandedIndex =
+                        //         null; // Menutup item jika sudah terbuka
+                        //   } else {
+                        //     expandedIndex = index; // Membuka item yang diklik
+                        //     callData(index, listItemPr![index].noQc);
+                        //   }
+                        // });
+                        // },
                         child: AnimatedContainer(
                           duration: const Duration(milliseconds: 500),
                           padding: const EdgeInsets.all(16.0),
@@ -1050,7 +1072,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                                   ? Text('${listItemPr![index].item} Selesai',
                                       style: const TextStyle(fontSize: 18.0))
                                   : Text(
-                                      '${listItemPr![index].item} Tap to detail',
+                                      '${listItemPr![index].item} DoubleTap to detail',
                                       style: const TextStyle(fontSize: 18.0),
                                     ),
                               if (expandedIndex == index)
@@ -1380,15 +1402,14 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
     );
   }
 
-  editFormItem(i, var allData, var detailItem) {
+  editFormItem(index, var allData, var detailItem) {
     double widhtMAX = MediaQuery.of(context).size.width;
     double widValue = 100;
     double widValueMid = 10;
     double widValueEnd = 150;
-    var data = allData[i];
-    var detailItemdata = detailItem[i];
+    var data = allData[index];
     kualitasBatu = data.kadar;
-    noQc = detailItemdata.noQc;
+    noQc = data.noQc;
     return Container(
       width: widhtMAX,
       decoration: BoxDecoration(
@@ -1405,7 +1426,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
           Container(
             color: Colors.grey.shade400,
             child: Text(
-              'LEMBAR QUALITY CONTROL ${listItemPr![i].item}',
+              'LEMBAR QUALITY CONTROL ${listItemPr![index].item}',
               style: const TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.bold,
@@ -1426,7 +1447,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                         padding: const EdgeInsets.only(left: 0),
                         width: widValueEnd,
                         child: Text(
-                          noQc = '${listItemPr![i].noQc}',
+                          noQc,
                           maxLines: 2,
                         ),
                       )
@@ -1477,8 +1498,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                       SizedBox(width: widValue, child: const Text('KEBUTUHAN')),
                       SizedBox(width: widValueMid, child: const Text(':')),
                       SizedBox(
-                          width: widValueEnd,
-                          child: Text('${listItemPr![i].fixBerat}'))
+                          width: widValueEnd, child: Text('${data.fixBerat}'))
                     ],
                   ),
                 ],
@@ -1499,7 +1519,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
           ),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
-            child: dataTableForm('new', jenisBatu!, no, i),
+            child: dataTableForm('edit', jenisBatu!, no, index),
           ),
           const SizedBox(
             height: 20,
