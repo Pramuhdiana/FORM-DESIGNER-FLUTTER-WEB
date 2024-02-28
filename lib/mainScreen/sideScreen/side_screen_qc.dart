@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:form_designer/global/global.dart';
 import 'package:form_designer/mainScreen/login.dart';
+import 'package:form_designer/pembelian/home_pembelian.dart';
 import 'package:form_designer/qc/mainScreen/home_qc.dart';
 import 'package:form_designer/qc/mainScreen/list_form_pr_qc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -27,10 +28,14 @@ class _MainViewQcState extends State<MainViewQc> {
     super.initState();
   }
 
-  List<Widget> views = [
+  List<Widget> screenAtik = [
     const HomeScreenQc(),
     const ListFormPrQc(),
     const HomeScreenQc()
+  ];
+  List<Widget> screenNugraha = [
+    const HomeScreenPembelian(),
+    const HomeScreenPembelian(),
   ];
 
   bool isKodeAkses = false;
@@ -95,84 +100,141 @@ class _MainViewQcState extends State<MainViewQc> {
           )),
           initiallyExpanded: true,
           selectedIndex: widget.col,
-          items: const [
-            SideNavigationBarItem(
-              icon: Icons.home,
-              label: 'Dashboard',
-            ),
-            SideNavigationBarItem(
-              icon: Icons.list_alt,
-              label: 'List Form PR',
-            ),
-            SideNavigationBarItem(
-              icon: Icons.logout,
-              label: 'Keluar',
-            ),
-          ],
+          items: sharedPreferences!.getString('role') == '0'
+              ? listAtik()
+              : listNugraha(),
 
           onTap: (index) {
-            if (index == 2) {
-              showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      content: Stack(
-                        clipBehavior: Clip.none,
-                        children: <Widget>[
-                          Positioned(
-                            right: -47.0,
-                            top: -47.0,
-                            child: InkResponse(
-                              onTap: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: const CircleAvatar(
-                                backgroundColor: Colors.red,
-                                child: Icon(Icons.close),
+            if (sharedPreferences!.getString('role') == '1') {
+              if (index == screenAtik.length - 1) {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        content: Stack(
+                          clipBehavior: Clip.none,
+                          children: <Widget>[
+                            Positioned(
+                              right: -47.0,
+                              top: -47.0,
+                              child: InkResponse(
+                                onTap: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const CircleAvatar(
+                                  backgroundColor: Colors.red,
+                                  child: Icon(Icons.close),
+                                ),
                               ),
                             ),
-                          ),
-                          SizedBox(
-                            child: Form(
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  const Padding(
-                                    padding:
-                                        EdgeInsets.only(top: 5, bottom: 10),
-                                    child: Text('Yakin ingin keluar ?'),
-                                  ),
-                                  Container(
-                                    width: 200,
-                                    height: 50,
-                                    padding: const EdgeInsets.only(top: 10),
-                                    child: ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.red),
-                                      child: const Text("Keluar"),
-                                      onPressed: () async {
-                                        SharedPreferences prefs =
-                                            await SharedPreferences
-                                                .getInstance();
-                                        prefs.clear();
-                                        prefs.setString('token', 'null');
-                                        // ignore: use_build_context_synchronously
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (c) =>
-                                                    const LoginScreen()));
-                                      },
+                            SizedBox(
+                              child: Form(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    const Padding(
+                                      padding:
+                                          EdgeInsets.only(top: 5, bottom: 10),
+                                      child: Text('Yakin ingin keluar ?'),
                                     ),
-                                  )
-                                ],
+                                    Container(
+                                      width: 200,
+                                      height: 50,
+                                      padding: const EdgeInsets.only(top: 10),
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.red),
+                                        child: const Text("Keluar"),
+                                        onPressed: () async {
+                                          SharedPreferences prefs =
+                                              await SharedPreferences
+                                                  .getInstance();
+                                          prefs.clear();
+                                          prefs.setString('token', 'null');
+                                          // ignore: use_build_context_synchronously
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (c) =>
+                                                      const LoginScreen()));
+                                        },
+                                      ),
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    );
-                  });
+                          ],
+                        ),
+                      );
+                    });
+              } else if (index == screenNugraha.length - 1) {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        content: Stack(
+                          clipBehavior: Clip.none,
+                          children: <Widget>[
+                            Positioned(
+                              right: -47.0,
+                              top: -47.0,
+                              child: InkResponse(
+                                onTap: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const CircleAvatar(
+                                  backgroundColor: Colors.red,
+                                  child: Icon(Icons.close),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              child: Form(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    const Padding(
+                                      padding:
+                                          EdgeInsets.only(top: 5, bottom: 10),
+                                      child: Text('Yakin ingin keluar ?'),
+                                    ),
+                                    Container(
+                                      width: 200,
+                                      height: 50,
+                                      padding: const EdgeInsets.only(top: 10),
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.red),
+                                        child: const Text("Keluar"),
+                                        onPressed: () async {
+                                          SharedPreferences prefs =
+                                              await SharedPreferences
+                                                  .getInstance();
+                                          prefs.clear();
+                                          prefs.setString('token', 'null');
+                                          // ignore: use_build_context_synchronously
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (c) =>
+                                                      const LoginScreen()));
+                                        },
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    });
+              } else {
+                setState(() {
+                  widget.col = index;
+                });
+              }
             } else {
               setState(() {
                 widget.col = index;
@@ -202,9 +264,39 @@ class _MainViewQcState extends State<MainViewQc> {
           ),
         ),
         Expanded(
-          child: views.elementAt(widget.col),
+          child: screenAtik.elementAt(widget.col),
         )
       ],
     );
+  }
+
+  listAtik() {
+    return [
+      const SideNavigationBarItem(
+        icon: Icons.home,
+        label: 'Dashboard',
+      ),
+      const SideNavigationBarItem(
+        icon: Icons.list_alt,
+        label: 'List Form PR',
+      ),
+      const SideNavigationBarItem(
+        icon: Icons.logout,
+        label: 'Keluar',
+      ),
+    ];
+  }
+
+  listNugraha() {
+    return [
+      const SideNavigationBarItem(
+        icon: Icons.home,
+        label: 'Dashboard',
+      ),
+      const SideNavigationBarItem(
+        icon: Icons.logout,
+        label: 'Keluar',
+      ),
+    ];
   }
 }
