@@ -2895,6 +2895,7 @@ class RowSourceProduksi extends DataTableSource {
   var listSubDivisiArtistStell;
   var listSubDivisiArtistPasangBatu;
   List<String> listBulan;
+  List<String> listCasting = ['W1', 'W2', 'W3', 'W4'];
 
   RowSourceProduksi({
     required this.myData,
@@ -3464,14 +3465,15 @@ class RowSourceProduksi extends DataTableSource {
                                                                         seconds:
                                                                             1),
                                                               );
-                                                              if (listDivisi[j]
-                                                                          .toString()
-                                                                          .toLowerCase() ==
-                                                                      'printing resin' ||
+                                                              if (listDivisi[j].toString().toLowerCase() == 'printing resin' ||
                                                                   listDivisi[j]
                                                                           .toString()
                                                                           .toLowerCase() ==
-                                                                      'finishing resin') {
+                                                                      'finishing resin' ||
+                                                                  listDivisi[j]
+                                                                          .toString()
+                                                                          .toLowerCase() ==
+                                                                      'casting') {
                                                                 orulReparasiPopup(
                                                                     context,
                                                                     data.idMps,
@@ -4481,9 +4483,14 @@ class RowSourceProduksi extends DataTableSource {
                                                 ? i <
                                                     listSubDivisiArtistStell
                                                         .length
-                                                : i <
-                                                    listSubDivisiArtistPasangBatu
-                                                        .length;
+                                                : listDivisi[j]
+                                                            .toString()
+                                                            .toLowerCase() ==
+                                                        'casting'
+                                                    ? i < listCasting.length
+                                                    : i <
+                                                        listSubDivisiArtistPasangBatu
+                                                            .length;
                                     i++)
                                   Container(
                                     padding: const EdgeInsets.only(top: 15),
@@ -4534,8 +4541,13 @@ class RowSourceProduksi extends DataTableSource {
                                                                 'stell 2'
                                                         ? listSubDivisiArtistStell[
                                                             i]
-                                                        : listSubDivisiArtistPasangBatu[
-                                                            i],
+                                                        : listDivisi[j]
+                                                                    .toString()
+                                                                    .toLowerCase() ==
+                                                                'casting'
+                                                            ? listCasting[i]
+                                                            : listSubDivisiArtistPasangBatu[
+                                                                i],
                                           );
                                           onRowPressed();
 
@@ -4567,8 +4579,13 @@ class RowSourceProduksi extends DataTableSource {
                                                                 'stell 2'
                                                         ? listSubDivisiArtistStell[
                                                             i]
-                                                        : listSubDivisiArtistPasangBatu[
-                                                            i],
+                                                        : listDivisi[j]
+                                                                    .toString()
+                                                                    .toLowerCase() ==
+                                                                'casting'
+                                                            ? listCasting[i]
+                                                            : listSubDivisiArtistPasangBatu[
+                                                                i],
                                           );
 
                                           Navigator.pop(context);
@@ -4606,8 +4623,13 @@ class RowSourceProduksi extends DataTableSource {
                                                               'stell 2'
                                                       ? listSubDivisiArtistStell[
                                                           i]
-                                                      : listSubDivisiArtistPasangBatu[
-                                                          i],
+                                                      : listDivisi[j]
+                                                                  .toString()
+                                                                  .toLowerCase() ==
+                                                              'casting'
+                                                          ? listCasting[i]
+                                                          : listSubDivisiArtistPasangBatu[
+                                                              i],
                                           style: const TextStyle(
                                             fontSize: 16,
                                           ),
@@ -4679,9 +4701,14 @@ class RowSourceProduksi extends DataTableSource {
                                                 ? i <
                                                     listSubDivisiArtistStell
                                                         .length
-                                                : i <
-                                                    listSubDivisiArtistPasangBatu
-                                                        .length;
+                                                : listDivisi[j]
+                                                            .toString()
+                                                            .toLowerCase() ==
+                                                        'casting'
+                                                    ? i < listCasting.length
+                                                    : i <
+                                                        listSubDivisiArtistPasangBatu
+                                                            .length;
                                     i++)
                                   Container(
                                     padding: const EdgeInsets.only(top: 15),
@@ -4729,8 +4756,13 @@ class RowSourceProduksi extends DataTableSource {
                                                               'stell 2'
                                                       ? listSubDivisiArtistStell[
                                                           i]
-                                                      : listSubDivisiArtistPasangBatu[
-                                                          i];
+                                                      : listDivisi[j]
+                                                                  .toString()
+                                                                  .toLowerCase() ==
+                                                              'casting'
+                                                          ? listCasting[i]
+                                                          : listSubDivisiArtistPasangBatu[
+                                                              i];
 
                                           print(
                                               '$posisi -- $artisOrulRep orul/reparasi');
@@ -4784,8 +4816,13 @@ class RowSourceProduksi extends DataTableSource {
                                                               'stell 2'
                                                       ? listSubDivisiArtistStell[
                                                           i]
-                                                      : listSubDivisiArtistPasangBatu[
-                                                          i],
+                                                      : listDivisi[j]
+                                                                  .toString()
+                                                                  .toLowerCase() ==
+                                                              'casting'
+                                                          ? listCasting[i]
+                                                          : listSubDivisiArtistPasangBatu[
+                                                              i],
                                           style: const TextStyle(
                                             fontSize: 16,
                                           ),
