@@ -12,7 +12,7 @@ import 'package:form_designer/pembelian/export_pembelian.dart';
 import 'package:form_designer/pembelian/form_pr_model.dart';
 import 'package:form_designer/pembelian/list_form_pr_model.dart';
 import 'package:form_designer/qc/modelQc/itemQcModel.dart';
-import 'package:form_designer/widgets/custom_loading.dart';
+import 'package:fullscreen_window/fullscreen_window.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';
@@ -50,12 +50,29 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
   String? dumDiterima = '';
   double totalBerat = 0.0;
   int totalQty = 0;
-
+  String screenSizeText = "";
+  List<bool> selectedList = List.generate(
+      100, (index) => false); // List untuk menyimpan status pilihan
   @override
   initState() {
     super.initState();
     print('masuk');
     _getData();
+  }
+
+  void setFullScreen(bool isFullScreen) {
+    FullScreenWindow.setFullScreen(isFullScreen);
+  }
+
+  void showScreenSize() async {
+    Size logicalSize = await FullScreenWindow.getScreenSize(context);
+    Size physicalSize = await FullScreenWindow.getScreenSize(null);
+    setState(() {
+      screenSizeText =
+          "Screen size (logical pixel): ${logicalSize.width} x ${logicalSize.height}\n";
+      screenSizeText +=
+          "Screen size (physical pixel): ${physicalSize.width} x ${physicalSize.height}\n";
+    });
   }
 
   _getData() async {
@@ -140,7 +157,6 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
             MaterialStateProperty.resolveWith((states) => Colors.white),
         columnSpacing: 0,
         headingRowHeight: 50,
-        // dataRowMaxHeight: 50,
         columns: columnsData(jenisItem, status),
         border: TableBorder.all(),
         rows: rowsData(listData, listData!.length, () {
@@ -236,6 +252,15 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
 
   List<DataRow> rowsData(
       var data, int count, Function() onChangedCallback, jenisItem) {
+    double sumBerat = 0.0;
+    double sumQty = 0.0;
+    for (var i = 0; i < count; i++) {
+      sumBerat += double.parse(data[i]
+          .berat); // Menambahkan nilai dari indeks kedua (indeks kolom ke-1)
+      sumQty += int.parse(data[i]
+          .qty); // Menambahkan nilai dari indeks kedua (indeks kolom ke-1)
+    }
+
     return jenisItem.toString().toLowerCase() == 'round'
         ? [
             for (var i = 0; i < count; i++)
@@ -259,6 +284,79 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: Center(child: Text(data[i].kualitasBatu)))),
               ]),
+            DataRow(cells: [
+              DataCell(
+                Container(
+                    color: Colors.black,
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: const Center(
+                        child: Text(
+                      'Total',
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ))),
+              ),
+
+              DataCell(
+                Container(
+                    color: Colors.black,
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: const Center(
+                        child: Text(
+                      '',
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ))),
+              ),
+              //? qty round
+              DataCell(
+                Container(
+                    color: Colors.black,
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Center(
+                        child: Text(
+                      '$sumQty',
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ))),
+              ),
+
+              //? berat round
+              DataCell(
+                Container(
+                    color: Colors.black,
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Center(
+                        child: Text(
+                      sumBerat.toStringAsFixed(3),
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ))),
+              ),
+
+              DataCell(
+                Container(
+                    color: Colors.black,
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: const Center(
+                        child: Text(
+                      '',
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ))),
+              ),
+              DataCell(
+                Container(
+                    color: Colors.black,
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: const Center(
+                        child: Text(
+                      '',
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ))),
+              ),
+            ]),
           ]
         : [
             for (var i = 0; i < count; i++)
@@ -375,6 +473,9 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
                           itemCount: listItemQc!.length,
                           itemBuilder: (context, index) => InkWell(
                             onTap: () {
+                              setFullScreen(true);
+                              // showScreenSize();
+
                               selectListItemRound.clear();
                               var filterBynoPR = listDetailItemQc!
                                   .where((element) =>
@@ -417,342 +518,242 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
                                             child: StatefulBuilder(
                                               builder: (context, setState) =>
                                                   AlertDialog(
-                                                      content: Stack(
-                                                          clipBehavior:
-                                                              Clip.none,
-                                                          children: <Widget>[
-                                                    SizedBox(
-                                                      child: Column(
-                                                        mainAxisSize:
-                                                            MainAxisSize.min,
-                                                        children: [
-                                                          Align(
-                                                            alignment: Alignment
-                                                                .topLeft,
-                                                            child: Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceBetween,
-                                                              children: [
-                                                                Row(
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .start,
-                                                                  children: [
-                                                                    SizedBox(
-                                                                      width:
-                                                                          100,
-                                                                      height:
-                                                                          50,
-                                                                      child: Image
-                                                                          .network(
-                                                                        '${ApiConstants.baseUrlImage}csv.png',
-                                                                        fit: BoxFit
-                                                                            .scaleDown,
-                                                                      ),
-                                                                    ),
-                                                                    const SizedBox(
-                                                                        width:
-                                                                            10),
-                                                                    const Text(
-                                                                      'Jl. Raya Daan Mogot\nKM 21 Pergudangan Eraprima\nBlok I No.2 Batu Ceper, Tanggerang,\nBanten 15122, Tangerang',
-                                                                      style: TextStyle(
-                                                                          color: Colors
-                                                                              .black,
-                                                                          fontSize:
-                                                                              12),
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                          const Text(
-                                                            'TANDA TERIMA QUALITY CONTROL',
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                fontSize: 22),
-                                                          ),
-                                                          Text(
-                                                            'No. ${listItemQc![index].noQc}',
-                                                            textAlign:
-                                                                TextAlign.start,
-                                                            style: const TextStyle(
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                fontSize: 18),
-                                                          ),
-                                                          const Align(
-                                                            alignment: Alignment
-                                                                .topLeft,
-                                                            child: Text(
-                                                              'Sudah Diterima dengan rincian sbb',
-                                                              style: TextStyle(
+                                                      content: SizedBox(
+                                                width: MediaQuery.of(context)
+                                                    .size
+                                                    .width,
+                                                height: MediaQuery.of(context)
+                                                    .size
+                                                    .height,
+                                                child: Stack(
+                                                    clipBehavior: Clip.none,
+                                                    children: <Widget>[
+                                                      SizedBox(
+                                                        child: Column(
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          children: [
+                                                            Text(
+                                                              'TANDA TERIMA QUALITY CONTROL ${listItemQc![index].item}',
+                                                              style: const TextStyle(
                                                                   color: Colors
                                                                       .black,
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .bold,
-                                                                  fontSize: 12),
+                                                                  fontSize: 22),
                                                             ),
-                                                          ),
-                                                          Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceBetween,
-                                                            children: [
-                                                              const Text(
-                                                                'Vendor : value',
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .start,
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                    fontSize:
-                                                                        12),
-                                                              ),
-                                                              Text(
-                                                                'Tanggal selesai : ${DateFormat('dd-MMMM-yyyy').format(DateTime.parse(listItemQc![index].updateAt!))}',
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .start,
-                                                                style: const TextStyle(
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                    fontSize:
-                                                                        12),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                          Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceBetween,
-                                                            children: [
-                                                              const Text(
-                                                                'Lokasi  : CSV',
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .start,
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                    fontSize:
-                                                                        12),
-                                                              ),
-                                                              Text(
-                                                                'Jam : ${DateFormat('H.mm').format(DateTime.parse(listItemQc![index].updateAt!))}',
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .start,
-                                                                style: const TextStyle(
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                    fontSize:
-                                                                        12),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                          Container(
-                                                            constraints: BoxConstraints(
-                                                                maxHeight: MediaQuery.of(
-                                                                            context)
-                                                                        .size
-                                                                        .height *
-                                                                    0.4 // Sesuaikan dengan tinggi maksimum yang diinginkan
-                                                                ),
-                                                            child:
-                                                                SingleChildScrollView(
-                                                              scrollDirection:
-                                                                  Axis.vertical,
-                                                              child: dataTableForm(
-                                                                  listDetailItemQc!
-                                                                      .where((element) =>
-                                                                          element
-                                                                              .noQc
-                                                                              .toString()
-                                                                              .toLowerCase() ==
-                                                                          listItemQc![index]
-                                                                              .noQc
-                                                                              .toString()
-                                                                              .toLowerCase())
-                                                                      .toList(),
-                                                                  'read',
-                                                                  listDetailItemQc![
-                                                                          index]
-                                                                      .jenisBatu!),
+                                                            Text(
+                                                              'No. ${listItemQc![index].noQc}',
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .start,
+                                                              style: const TextStyle(
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  fontSize: 18),
                                                             ),
-                                                          ),
-                                                          const SizedBox(
-                                                              height: 20),
-                                                          const Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceBetween,
-                                                              children: [
-                                                                Column(
-                                                                  children: [
-                                                                    Text(
-                                                                      'Diserahkan oleh,',
-                                                                      textAlign:
-                                                                          TextAlign
-                                                                              .start,
-                                                                      style: TextStyle(
-                                                                          color: Colors
-                                                                              .black,
-                                                                          fontWeight: FontWeight
-                                                                              .bold,
-                                                                          fontSize:
-                                                                              12),
-                                                                    ),
-                                                                    SizedBox(
-                                                                        height:
-                                                                            40),
-                                                                    Text(
-                                                                        'Sri Sumiati')
-                                                                  ],
-                                                                ),
-                                                                Column(
-                                                                  children: [
-                                                                    Text(
-                                                                      'Dibawa oleh,',
-                                                                      textAlign:
-                                                                          TextAlign
-                                                                              .start,
-                                                                      style: TextStyle(
-                                                                          color: Colors
-                                                                              .black,
-                                                                          fontWeight: FontWeight
-                                                                              .bold,
-                                                                          fontSize:
-                                                                              12),
-                                                                    ),
-                                                                    SizedBox(
-                                                                        height:
-                                                                            40),
-                                                                    Text('....')
-                                                                  ],
-                                                                ),
-                                                                Column(
-                                                                  children: [
-                                                                    Text(
-                                                                      'Diterima oleh,',
-                                                                      textAlign:
-                                                                          TextAlign
-                                                                              .start,
-                                                                      style: TextStyle(
-                                                                          color: Colors
-                                                                              .black,
-                                                                          fontWeight: FontWeight
-                                                                              .bold,
-                                                                          fontSize:
-                                                                              12),
-                                                                    ),
-                                                                    SizedBox(
-                                                                        height:
-                                                                            40),
-                                                                    Text('....')
-                                                                  ],
-                                                                ),
-                                                                Column(
-                                                                  children: [
-                                                                    Text(
-                                                                      'Diketahui oleh,',
-                                                                      textAlign:
-                                                                          TextAlign
-                                                                              .start,
-                                                                      style: TextStyle(
-                                                                          color: Colors
-                                                                              .black,
-                                                                          fontWeight: FontWeight
-                                                                              .bold,
-                                                                          fontSize:
-                                                                              12),
-                                                                    ),
-                                                                    SizedBox(
-                                                                        height:
-                                                                            40),
-                                                                    Text('....')
-                                                                  ],
-                                                                ),
-                                                              ]),
-                                                          Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceEvenly,
-                                                              children: [
-                                                                SizedBox(
-                                                                  width: 200,
-                                                                  child:
-                                                                      CustomLoadingButton(
-                                                                    backgroundColor:
-                                                                        Colors
-                                                                            .red,
-                                                                    controller:
-                                                                        btnControllerBatal,
-                                                                    onPressed:
-                                                                        () {
-                                                                      Navigator.pop(
-                                                                          context);
-                                                                    },
+                                                            Container(
+                                                              constraints: BoxConstraints(
+                                                                  maxHeight: MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .height *
+                                                                      0.70 // Sesuaikan dengan tinggi maksimum yang diinginkan
+                                                                  ),
+                                                              child:
+                                                                  SingleChildScrollView(
+                                                                scrollDirection:
+                                                                    Axis.vertical,
+                                                                child: dataTableForm(
+                                                                    listDetailItemQc!
+                                                                        .where((element) =>
+                                                                            element.noQc.toString().toLowerCase() ==
+                                                                            listItemQc![index]
+                                                                                .noQc
+                                                                                .toString()
+                                                                                .toLowerCase())
+                                                                        .toList(),
+                                                                    'read',
+                                                                    listDetailItemQc![
+                                                                            index]
+                                                                        .jenisBatu!),
+                                                              ),
+                                                            ),
+                                                            const SizedBox(
+                                                                height: 10),
+                                                            Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceEvenly,
+                                                                children: [
+                                                                  SizedBox(
+                                                                    width: 200,
+                                                                    height: 50,
                                                                     child:
-                                                                        const Text(
-                                                                      "Batal",
-                                                                      style: TextStyle(
-                                                                          color: Colors
-                                                                              .white,
-                                                                          fontSize:
-                                                                              18),
+                                                                        ElevatedButton(
+                                                                      onPressed:
+                                                                          () {
+                                                                        selectedList = List.generate(
+                                                                            listItemQc!
+                                                                                .length,
+                                                                            (index) =>
+                                                                                false);
+
+                                                                        setFullScreen(
+                                                                            false);
+                                                                        Navigator.pop(
+                                                                            context);
+                                                                      },
+                                                                      style: ElevatedButton
+                                                                          .styleFrom(
+                                                                        backgroundColor:
+                                                                            Colors.red, // Mengatur warna latar belakang tombol
+                                                                        shape:
+                                                                            RoundedRectangleBorder(
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(10), // Memberikan radius 10
+                                                                        ),
+                                                                      ),
+                                                                      child:
+                                                                          const Text(
+                                                                        "Batal",
+                                                                        style: TextStyle(
+                                                                            color:
+                                                                                Colors.white,
+                                                                            fontSize: 18),
+                                                                      ),
                                                                     ),
                                                                   ),
-                                                                ),
-                                                                SizedBox(
-                                                                  width: 200,
-                                                                  child:
-                                                                      CustomLoadingButton(
-                                                                    controller:
-                                                                        btnControllerSimpan,
-                                                                    onPressed:
-                                                                        () {
-                                                                      exportData(
-                                                                          '${listItemQc![index].noQc}');
-                                                                    },
+                                                                  SizedBox(
+                                                                    width: 200,
+                                                                    height: 50,
                                                                     child:
-                                                                        const Text(
-                                                                      "Export Data",
-                                                                      style: TextStyle(
-                                                                          color: Colors
-                                                                              .white,
-                                                                          fontSize:
-                                                                              18),
+                                                                        ElevatedButton(
+                                                                      onPressed:
+                                                                          () {
+                                                                        // setFullScreen(
+                                                                        //     false);
+                                                                        // exportData(
+                                                                        //     '${listItemQc![index].noQc}');
+                                                                        showGeneralDialog(
+                                                                          transitionDuration:
+                                                                              const Duration(milliseconds: 200),
+                                                                          barrierDismissible:
+                                                                              true,
+                                                                          barrierLabel:
+                                                                              '',
+                                                                          context:
+                                                                              context,
+                                                                          pageBuilder: (context,
+                                                                              animation1,
+                                                                              animation2) {
+                                                                            return const Text('');
+                                                                          },
+                                                                          barrierColor: Colors
+                                                                              .black
+                                                                              .withOpacity(0.75),
+                                                                          transitionBuilder: (context,
+                                                                              a1,
+                                                                              a2,
+                                                                              widget) {
+                                                                            return Transform.scale(
+                                                                              scale: a1.value,
+                                                                              child: Opacity(
+                                                                                opacity: a1.value,
+                                                                                child: StatefulBuilder(
+                                                                                  builder: (context, setState) => AlertDialog(
+                                                                                    content: SizedBox(
+                                                                                      width: 500,
+                                                                                      height: 500,
+                                                                                      child: SingleChildScrollView(
+                                                                                        scrollDirection: Axis.vertical,
+                                                                                        child: Column(
+                                                                                          mainAxisSize: MainAxisSize.min,
+                                                                                          children: [
+                                                                                            // List of checkboxes and names
+                                                                                            ListView.builder(
+                                                                                              shrinkWrap: true,
+                                                                                              itemCount: listItemQc!.length,
+                                                                                              itemBuilder: (context, index) {
+                                                                                                // Membuat selectedList dengan panjang yang sesuai
+
+                                                                                                return CheckboxListTile(
+                                                                                                  title: Text('No QC = ${listItemQc![index].noQc}'),
+                                                                                                  value: selectedList[index],
+                                                                                                  onChanged: (isSelected) {
+                                                                                                    setState(() {
+                                                                                                      selectedList[index] = isSelected ?? false;
+                                                                                                    });
+                                                                                                  },
+                                                                                                );
+                                                                                              },
+                                                                                            ),
+                                                                                            // Display button to submit selected items
+                                                                                            ElevatedButton(
+                                                                                              onPressed: () {
+                                                                                                setFullScreen(false);
+
+                                                                                                // Print selected items
+                                                                                                List<String> selectedNoQc = [];
+                                                                                                for (int i = 0; i < selectedList.length; i++) {
+                                                                                                  if (selectedList[i]) {
+                                                                                                    selectedNoQc.add('${listItemQc![i].noQc}');
+                                                                                                  }
+                                                                                                }
+                                                                                                print('Selected No Qc : $selectedNoQc');
+                                                                                                Navigator.pop(context);
+                                                                                                Navigator.pop(context);
+                                                                                                exportData(selectedNoQc);
+                                                                                              },
+                                                                                              child: const Row(
+                                                                                                children: [
+                                                                                                  Icon(Icons.download), // Menambahkan ikon Download
+                                                                                                  SizedBox(width: 8), // Menambahkan jarak antara ikon dan teks
+                                                                                                  Text('Download'),
+                                                                                                ],
+                                                                                              ),
+                                                                                            ),
+                                                                                          ],
+                                                                                        ),
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                            );
+                                                                          },
+                                                                        );
+                                                                      },
+                                                                      style: ElevatedButton
+                                                                          .styleFrom(
+                                                                        backgroundColor:
+                                                                            Colors.blue, // Mengatur warna latar belakang tombol
+                                                                        shape:
+                                                                            RoundedRectangleBorder(
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(10), // Memberikan radius 10
+                                                                        ),
+                                                                      ),
+                                                                      child:
+                                                                          const Text(
+                                                                        "Export data",
+                                                                        style: TextStyle(
+                                                                            color:
+                                                                                Colors.white,
+                                                                            fontSize: 18),
+                                                                      ),
                                                                     ),
                                                                   ),
-                                                                ),
-                                                              ]),
-                                                        ],
+                                                                ]),
+                                                          ],
+                                                        ),
                                                       ),
-                                                    ),
-                                                  ])),
+                                                    ]),
+                                              )),
                                             )));
                                   });
                             },
@@ -795,9 +796,9 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
                                           ],
                                         ),
                                       ),
-                                      const Text(
-                                        'TANDA TERIMA QUALITY CONTROL',
-                                        style: TextStyle(
+                                      Text(
+                                        'TANDA TERIMA QUALITY CONTROL ${listItemQc![index].item}',
+                                        style: const TextStyle(
                                             color: Colors.black,
                                             fontWeight: FontWeight.bold,
                                             fontSize: 22),
@@ -997,13 +998,14 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
     );
     ExcelPembelian().exportExcel(noQc);
 
-    // ignore: use_build_context_synchronously
+    // // ignore: use_build_context_synchronously
     Future.delayed(const Duration(seconds: 1)).then((value) {
-      //! lalu eksekusi fungsi ini
+      //   //! lalu eksekusi fungsi ini
       Navigator.pop(context);
-      Navigator.pop(context);
+      //   Navigator.pop(context);
     });
     selectListItemRound.clear();
+    selectedList = List.generate(listItemQc!.length, (index) => false);
   }
 
   postStatusPR(id, fixTotalQty, fixTotalBerat) async {

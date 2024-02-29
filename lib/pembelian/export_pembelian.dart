@@ -14,24 +14,24 @@ import 'package:http/http.dart' as http;
 class ExcelPembelian {
   List<FormPrModel>? dataFormPR;
   List<ItemQcModel>? dataItemQc;
-  
-
 
   Future<void> exportExcel(noQc) async {
-   
-
 //get data
     final response = await http
         .get(Uri.parse('${ApiConstants.baseUrl}${ApiConstants.getFormPR}'));
-
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);
 
       var data =
           jsonResponse.map((data) => FormPrModel.fromJson(data)).toList();
-      var filterByNoQc =
-          data.where((element) => element.noQc == noQc).toList();
+      //* hints Filter data berdasarkan nomor QC yang ada dalam list noQc
+      // Filter data based on whether any of the conditions in noQc are met
+      var filterByNoQc = data
+          .where((element) => noQc.any((qc) => element.noQc == qc))
+          .toList();
+
       data = filterByNoQc;
+
       dataFormPR = data;
     } else {
       print(response.body);
@@ -47,10 +47,15 @@ class ExcelPembelian {
       var dataList = jsonResponse
           .map((dataList) => ItemQcModel.fromJson(dataList))
           .toList();
- var filterByNoQc =
-          dataList.where((element) => element.noQc == noQc).toList();
+      //* hints Filter data berdasarkan nomor QC yang ada dalam list noQc
+      // Filter data berdasarkan nomor QC yang ada dalam list noQc
+      // Filter data based on whether any of the conditions in noQc are met
+      var filterByNoQc = dataList
+          .where((element) => noQc.any((qc) => element.noQc == qc))
+          .toList();
+
       dataList = filterByNoQc;
-        dataItemQc = dataList;
+      dataItemQc = dataList;
     } else {
       print(response.body);
       throw Exception('Unexpected error occured!');
@@ -78,7 +83,6 @@ class ExcelPembelian {
     var berat = sheet.cell(CellIndex.indexByString("D1"));
     berat.value = "Berat";
     berat.cellStyle = headStyle;
-  
 
     for (int row = 0; row < dataItemQc!.length; row++) {
       //belum bisa image  Image.network( ApiConstants.baseUrlImage + myData![row].imageUrl!,);
@@ -92,16 +96,15 @@ class ExcelPembelian {
       //? list kodeMdbc
       var listKodeMdbc = sheet
           .cell(CellIndex.indexByColumnRow(columnIndex: 1, rowIndex: row + 1));
-      listKodeMdbc.value = data.item;
-       //? list qty
+      listKodeMdbc.value = data.kodeMdbc;
+      //? list qty
       var listQty = sheet
           .cell(CellIndex.indexByColumnRow(columnIndex: 2, rowIndex: row + 1));
       listQty.value = data.qty;
-        //? list berat
+      //? list berat
       var listBerat = sheet
           .cell(CellIndex.indexByColumnRow(columnIndex: 3, rowIndex: row + 1));
       listBerat.value = data.berat;
-
     }
 
     excel.rename("mySheet", "RESULT");
@@ -111,22 +114,19 @@ class ExcelPembelian {
     Stopwatch stopwatch = Stopwatch()..start();
     stopwatch.reset();
     // Saving the file
-      // Simpan file
+    // Simpan file
     String outputFileName = "$noQc.xlsx";
     //stopwatch.reset();
     List<int>? fileBytes = excel.save();
     //print('saving executed in ${stopwatch.elapsed}');
     // if (fileBytes != null) {
-      try{
+    try {
       File(join(outputFileName))
         ..createSync(recursive: true)
         ..writeAsBytesSync(fileBytes!);
-      } catch(c){
-        print('err get excel $c');
-      }
-    // } 
-   
+    } catch (c) {
+      print('err get excel $c');
+    }
+    // }
   }
-
-
 }

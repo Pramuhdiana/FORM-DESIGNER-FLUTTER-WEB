@@ -5,6 +5,7 @@ class ItemQcModel {
   String? noPr;
   String? noQc;
   final String? item;
+  final String? kodeMdbc;
   final String? qty;
   final String? berat;
   final String? panjang;
@@ -17,6 +18,7 @@ class ItemQcModel {
   ItemQcModel({
     required this.id,
     required this.item,
+    this.kodeMdbc,
     this.noPr,
     this.noQc,
     this.qty,
@@ -33,6 +35,7 @@ class ItemQcModel {
     return ItemQcModel(
       id: json["id"],
       item: json["item"] ?? '',
+      kodeMdbc: json["kodeMdbc"] ?? '',
       noPr: json["noPr"] ?? '',
       noQc: json["noQc"] ?? '',
       qty: json["qty"].toString(),
@@ -49,6 +52,7 @@ class ItemQcModel {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
     data['item'] = item;
+    data['kodeMdbc'] = kodeMdbc;
     data['noPr'] = noPr;
     data['noQc'] = noQc;
     data['qty'] = qty;

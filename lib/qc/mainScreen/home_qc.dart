@@ -56,7 +56,7 @@ class _HomeScreenQcState extends State<HomeScreenQc> {
     super.initState();
     _getData();
     setFullScreen(true);
-    showScreenSize();
+    // showScreenSize();
   }
 
   void setFullScreen(bool isFullScreen) {

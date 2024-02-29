@@ -52,7 +52,7 @@ class _ListFormPrQcState extends State<ListFormPrQc> {
     super.initState();
     _getData();
     setFullScreen(true);
-    showScreenSize();
+    // showScreenSize();
   }
 
   void setFullScreen(bool isFullScreen) {

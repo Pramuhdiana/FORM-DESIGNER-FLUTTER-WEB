@@ -721,7 +721,7 @@ class RowSource extends DataTableSource {
                                                             fontSize: 12),
                                                       ),
                                                       SizedBox(height: 40),
-                                                      Text('....')
+                                                      Text('Warehouse')
                                                     ],
                                                   ),
                                                   Column(
@@ -1017,8 +1017,9 @@ class RowSource extends DataTableSource {
           DataCell(Container(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Center(
-                  child: Text(
-                      '${double.parse(data[i].fixBerat) - double.parse(data[i].receiveBerat)}')))),
+                  child: Text(((double.parse(data[i].fixBerat)) -
+                          (double.parse(data[i].receiveBerat)))
+                      .toStringAsFixed(3))))),
           DataCell(Container(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Center(child: Text(data[i].kadar)))),
