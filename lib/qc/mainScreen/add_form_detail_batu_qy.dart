@@ -1395,7 +1395,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                       if (jenisBatu.toString().toLowerCase() == 'round') {
                         ukuran = '';
                         qty = '0';
-                        berat = '';
+                        berat = '0';
                         caratPcs = '';
                         selectListItemRound.add([
                           '$ukuran',
@@ -1408,8 +1408,8 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                         kodeMdbc = '';
                         panjang = '';
                         lebar = '';
-                        qtyFancy = '';
-                        beratFancy = '';
+                        qtyFancy = '0';
+                        beratFancy = '0';
                         selectListItemFancy.add([
                           '$kodeMdbc',
                           '$panjang',
@@ -1692,29 +1692,33 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                       if (jenisBatu.toString().toLowerCase() == 'round') {
                         ukuran = '';
                         qty = '0';
-                        berat = '';
+                        berat = '0';
                         caratPcs = '';
+                        var idRound = '';
                         selectListItemRound.add([
                           '$ukuran',
                           '$qty',
                           '$berat',
                           '$caratPcs',
+                          idRound,
                         ]);
-                        print('round = $selectListItemRound');
+                        print('round edit = $selectListItemRound');
                       } else {
                         kodeMdbc = '';
                         panjang = '';
                         lebar = '';
-                        qtyFancy = '';
-                        beratFancy = '';
+                        qtyFancy = '0';
+                        beratFancy = '0';
+                        var idFancy = '';
                         selectListItemFancy.add([
                           '$kodeMdbc',
                           '$panjang',
                           '$lebar',
                           '$qtyFancy',
                           '$beratFancy',
+                          idFancy,
                         ]);
-                        print('fancy = $selectListItemFancy');
+                        print('fancy edit = $selectListItemFancy');
                       }
 
                       no += 1;
@@ -1897,21 +1901,31 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
   }
 
   editForm() async {
+    print(selectListItemRound.length);
     totalBerat = 0;
     totalQty = 0;
     if (jenisBatu.toString().toLowerCase() == 'round') {
       for (var i = 0; i < selectListItemRound.length; i++) {
         totalBerat += double.tryParse(selectListItemRound[i][2]) ?? 0;
         totalQty += int.tryParse(selectListItemRound[i][1]) ?? 0;
-
-        await updateDetailItem(
-            selectListItemRound[i][4], //? id
-            selectListItemRound[i][0],
-            selectListItemRound[i][1],
-            selectListItemRound[i][2],
-            '',
-            '',
-            selectListItemRound[i][3]);
+        try {
+          await updateDetailItem(
+              selectListItemRound[i][4], //? id
+              selectListItemRound[i][0],
+              selectListItemRound[i][1],
+              selectListItemRound[i][2],
+              '',
+              '',
+              selectListItemRound[i][3]);
+        } catch (c) {
+          // ignore: use_build_context_synchronously
+          // Navigator.pop(context);
+          showSimpleNotification(
+            Text('Edit form gagal hubungi admin => $c'),
+            background: Colors.green,
+            duration: const Duration(seconds: 10),
+          );
+        }
       }
     } else {
       for (var i = 0; i < selectListItemFancy.length; i++) {
@@ -1993,6 +2007,8 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
 
   updateDetailItem(
       String id, String item, qty, berat, panjang, lebar, caratPcs) async {
+    print(item);
+    id == '' ? id = '-1' : id = id;
     Map<String, String> body = {
       'type': 'detailItem',
       'id': id,
@@ -2005,6 +2021,8 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
       'jenisBatu': jenisBatu!,
       'kualitasBatu': kualitasBatu!,
       'ukuranBatu': ukuranBatu.text,
+      'noPr': noPr!,
+      'noQc': noQc,
     };
     final response = await http.post(
         Uri.parse('${ApiConstants.baseUrl}${ApiConstants.updateItemPr}'),

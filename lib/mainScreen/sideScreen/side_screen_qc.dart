@@ -266,8 +266,9 @@ class _MainViewQcState extends State<MainViewQc> {
           ),
         ),
         Expanded(
-          child: screenAtik.elementAt(widget.col),
-        )
+            child: sharedPreferences!.getString('role') == '0'
+                ? screenAtik.elementAt(widget.col)
+                : screenNugraha.elementAt(widget.col))
       ],
     );
   }

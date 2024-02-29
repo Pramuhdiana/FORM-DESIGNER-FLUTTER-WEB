@@ -54,6 +54,7 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
   @override
   initState() {
     super.initState();
+    print('masuk');
     _getData();
   }
 
@@ -71,7 +72,8 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
           jsonResponse.map((data) => FormPrModel.fromJson(data)).toList();
       var filterByStatus = data
           .where((element) =>
-              element.status == 'selesai' || element.jenisItem == 'diamond')
+              element.status.toString().toLowerCase() == 'selesai' ||
+              element.jenisItem.toString().toLowerCase() == 'diamond')
           .toList();
       data = filterByStatus;
       //* hints Urutkan data berdasarkan tanggal terlama
@@ -341,6 +343,17 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
                   },
                 ),
               ),
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    _getData();
+                  },
+                  icon: const Icon(
+                    Icons.refresh,
+                    color: Colors.blue,
+                  ),
+                )
+              ],
             ),
             body: isLoading == true
                 ? Center(
@@ -573,8 +586,18 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
                                                               scrollDirection:
                                                                   Axis.vertical,
                                                               child: dataTableForm(
-                                                                  filterBynoPR,
-                                                                  'edit',
+                                                                  listDetailItemQc!
+                                                                      .where((element) =>
+                                                                          element
+                                                                              .noQc
+                                                                              .toString()
+                                                                              .toLowerCase() ==
+                                                                          listItemQc![index]
+                                                                              .noQc
+                                                                              .toString()
+                                                                              .toLowerCase())
+                                                                      .toList(),
+                                                                  'read',
                                                                   listDetailItemQc![
                                                                           index]
                                                                       .jenisBatu!),
