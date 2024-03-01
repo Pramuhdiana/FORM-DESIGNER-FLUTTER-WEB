@@ -814,7 +814,7 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
                                       const Align(
                                         alignment: Alignment.topLeft,
                                         child: Text(
-                                          'Sudah Diterima dengan rincian sbb',
+                                          'Sudah Diterima dalam keadaan baik dan tersegel sbb',
                                           style: TextStyle(
                                               color: Colors.black,
                                               fontWeight: FontWeight.bold,
