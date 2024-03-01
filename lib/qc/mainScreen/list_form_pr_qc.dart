@@ -51,7 +51,9 @@ class _ListFormPrQcState extends State<ListFormPrQc> {
   initState() {
     super.initState();
     _getData();
-    setFullScreen(true);
+    sharedPreferences!.getString('divisi') != 'admin'
+        ? setFullScreen(true)
+        : setFullScreen(false);
     // showScreenSize();
   }
 
@@ -90,10 +92,14 @@ class _ListFormPrQcState extends State<ListFormPrQc> {
 
         var data =
             jsonResponse.map((data) => FormPrModel.fromJson(data)).toList();
-        var filterByStatus = data
-            .where((element) =>
-                element.status == 'qc' || element.status == 'qc review')
-            .toList();
+        var filterByStatus = data;
+        if (sharedPreferences!.getString('divisi') != 'admin') {
+          filterByStatus = data
+              .where((element) =>
+                  element.status == 'qc' || element.status == 'qc review')
+              .toList();
+        }
+
         // data.where((element) => element.status == 'qc' || element.status == 'selesai' ).toList();
         data = filterByStatus;
         setState(() {
@@ -178,7 +184,7 @@ class _ListFormPrQcState extends State<ListFormPrQc> {
                 onChanged: (value) {
                   dataFormPR = filterFormPR!
                       .where((element) =>
-                          element.noPR!
+                          element.noPr!
                               .toLowerCase()
                               .contains(value.toLowerCase()) ||
                           element.vendor!
@@ -197,13 +203,13 @@ class _ListFormPrQcState extends State<ListFormPrQc> {
                       .where((element) =>
                           element.noPr.toString().toLowerCase() ==
                           dataFormPR![indexDataPr]
-                              .noPR
+                              .noPr
                               .toString()
                               .toLowerCase())
                       .toList()
                       .length,
                   dataFormPr: FormPrModel(
-                    noPR: dataFormPR![indexDataPr].noPR,
+                    noPr: dataFormPR![indexDataPr].noPr,
                     id: dataFormPR![indexDataPr].id,
                     vendor: dataFormPR![indexDataPr].vendor,
                     jenisBatu: dataFormPR![indexDataPr].jenisBatu,
@@ -302,16 +308,16 @@ class _ListFormPrQcState extends State<ListFormPrQc> {
                                                 if (sort == true) {
                                                   sort = false;
                                                   filterFormPR!.sort((a, b) => a
-                                                      .noPR!
+                                                      .noPr!
                                                       .toLowerCase()
-                                                      .compareTo(b.noPR!
+                                                      .compareTo(b.noPr!
                                                           .toLowerCase()));
                                                 } else {
                                                   sort = true;
                                                   filterFormPR!.sort((a, b) => b
-                                                      .noPR!
+                                                      .noPr!
                                                       .toLowerCase()
-                                                      .compareTo(a.noPR!
+                                                      .compareTo(a.noPr!
                                                           .toLowerCase()));
                                                 }
                                               });
@@ -395,28 +401,28 @@ class _ListFormPrQcState extends State<ListFormPrQc> {
                                                 fontWeight: FontWeight.bold),
                                           )),
                                         ),
-                                        // Total qty diterima
-                                        DataColumn(label: _verticalDivider),
-                                        const DataColumn(
-                                          label: SizedBox(
-                                              child: Text(
-                                            "Total Qty\nKedatangan",
-                                            style: TextStyle(
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.bold),
-                                          )),
-                                        ),
-                                        // Total Berat diterima
-                                        DataColumn(label: _verticalDivider),
-                                        const DataColumn(
-                                          label: SizedBox(
-                                              child: Text(
-                                            "Total Berat\nKedatangan",
-                                            style: TextStyle(
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.bold),
-                                          )),
-                                        ),
+                                        // // Total qty diterima
+                                        // DataColumn(label: _verticalDivider),
+                                        // const DataColumn(
+                                        //   label: SizedBox(
+                                        //       child: Text(
+                                        //     "Total Qty\nKedatangan",
+                                        //     style: TextStyle(
+                                        //         fontSize: 15,
+                                        //         fontWeight: FontWeight.bold),
+                                        //   )),
+                                        // ),
+                                        // // Total Berat diterima
+                                        // DataColumn(label: _verticalDivider),
+                                        // const DataColumn(
+                                        //   label: SizedBox(
+                                        //       child: Text(
+                                        //     "Total Berat\nKedatangan",
+                                        //     style: TextStyle(
+                                        //         fontSize: 15,
+                                        //         fontWeight: FontWeight.bold),
+                                        //   )),
+                                        // ),
                                       ],
 
                                       source:
@@ -496,14 +502,14 @@ class _ListFormPrQcState extends State<ListFormPrQc> {
                         _currentSortColumn = columnIndex;
                         if (sort == true) {
                           sort = false;
-                          filterFormPR!.sort((a, b) => a.noPR!
+                          filterFormPR!.sort((a, b) => a.noPr!
                               .toLowerCase()
-                              .compareTo(b.noPR!.toLowerCase()));
+                              .compareTo(b.noPr!.toLowerCase()));
                         } else {
                           sort = true;
-                          filterFormPR!.sort((a, b) => b.noPR!
+                          filterFormPR!.sort((a, b) => b.noPr!
                               .toLowerCase()
-                              .compareTo(a.noPR!.toLowerCase()));
+                              .compareTo(a.noPr!.toLowerCase()));
                         }
                       });
                     }),
@@ -599,7 +605,7 @@ class _ListFormPrQcState extends State<ListFormPrQc> {
 
 class RowSource extends DataTableSource {
   final void Function(int)
-      onRowPressed; //* menerima data untuk me refresh screen
+      onRowPressed; //*HINTS menerima data untuk me refresh screen
   final void Function() getData; //* menerima data untuk me refresh screen
   BuildContext context;
   var myData;
@@ -644,88 +650,97 @@ class RowSource extends DataTableSource {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 0),
-              child: IconButton(
-                onPressed: () {
-                  showDialog<String>(
-                    context: context,
-                    builder: (BuildContext context) => AlertDialog(
-                      title: const Text(
-                        'Perhatian',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: Colors.black, fontWeight: FontWeight.bold),
-                      ),
-                      content: Row(
-                        children: [
-                          const Text(
-                            'Apakah anda yakin ingin mengirim form ',
-                          ),
-                          Text(
-                            '${data.noPR}  ?',
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black),
-                          ),
-                        ],
-                      ),
-                      actions: <Widget>[
-                        TextButton(
-                          onPressed: () => Navigator.pop(
-                            context,
-                            'Batal',
-                          ),
-                          child: const Text(
-                            'Batal',
-                            style: TextStyle(color: Colors.red),
-                          ),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            showDialog(
-                              context: context,
-                              barrierDismissible:
-                                  false, // Prevent dialog dismissal on tap outside
-                              builder: (BuildContext context) {
-                                return Dialog(
-                                  backgroundColor: Colors.transparent,
-                                  elevation: 0,
-                                  child: Container(
-                                    padding: const EdgeInsets.all(16),
-                                    color: Colors.white,
-                                    child: const Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        CircularProgressIndicator(),
-                                        SizedBox(height: 20),
-                                        Text(
-                                          'Loading, please wait...',
-                                          style: TextStyle(fontSize: 16),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                );
-                              },
-                            );
-                            kirimForm(data.id.toString());
-                          },
-                          child: const Text(
-                            'Kirim',
-                            style: TextStyle(color: Colors.blue),
-                          ),
-                        ),
-                      ],
+            data.status.toString().toLowerCase() == 'selesai'
+                ? const Padding(
+                    padding: EdgeInsets.only(left: 0),
+                    child: Icon(
+                      Icons.verified,
+                      color: Colors.green,
                     ),
-                  );
-                },
-                icon: const Icon(
-                  Icons.send,
-                  color: Colors.blue,
-                ),
-              ),
-            ),
+                  )
+                : Padding(
+                    padding: const EdgeInsets.only(left: 0),
+                    child: IconButton(
+                      onPressed: () {
+                        showDialog<String>(
+                          context: context,
+                          builder: (BuildContext context) => AlertDialog(
+                            title: const Text(
+                              'Perhatian',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            content: Row(
+                              children: [
+                                const Text(
+                                  'Apakah anda yakin ingin mengirim form ',
+                                ),
+                                Text(
+                                  '${data.noPr}  ?',
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black),
+                                ),
+                              ],
+                            ),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () => Navigator.pop(
+                                  context,
+                                  'Batal',
+                                ),
+                                child: const Text(
+                                  'Batal',
+                                  style: TextStyle(color: Colors.red),
+                                ),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  showDialog(
+                                    context: context,
+                                    barrierDismissible:
+                                        false, // Prevent dialog dismissal on tap outside
+                                    builder: (BuildContext context) {
+                                      return Dialog(
+                                        backgroundColor: Colors.transparent,
+                                        elevation: 0,
+                                        child: Container(
+                                          padding: const EdgeInsets.all(16),
+                                          color: Colors.white,
+                                          child: const Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              CircularProgressIndicator(),
+                                              SizedBox(height: 20),
+                                              Text(
+                                                'Loading, please wait...',
+                                                style: TextStyle(fontSize: 16),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                  kirimForm(data.id.toString());
+                                },
+                                child: const Text(
+                                  'Kirim',
+                                  style: TextStyle(color: Colors.blue),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                      icon: const Icon(
+                        Icons.send,
+                        color: Colors.blue,
+                      ),
+                    ),
+                  ),
           ],
         );
       })),
@@ -733,7 +748,7 @@ class RowSource extends DataTableSource {
       DataCell(_verticalDivider),
       //no PR
       DataCell(
-        Padding(padding: const EdgeInsets.all(0), child: Text(data.noPR)),
+        Padding(padding: const EdgeInsets.all(0), child: Text(data.noPr)),
       ),
       DataCell(_verticalDivider),
       //vendor
@@ -760,18 +775,18 @@ class RowSource extends DataTableSource {
       DataCell(
         Padding(padding: const EdgeInsets.all(0), child: Text(data.totalBerat)),
       ),
-      DataCell(_verticalDivider),
-      //fixTotalQty
-      DataCell(
-        Padding(
-            padding: const EdgeInsets.all(0), child: Text(data.fixTotalQty)),
-      ),
-      DataCell(_verticalDivider),
-      //fixTotalBerat
-      DataCell(
-        Padding(
-            padding: const EdgeInsets.all(0), child: Text(data.fixTotalBerat)),
-      ),
+      // DataCell(_verticalDivider),
+      // //fixTotalQty
+      // DataCell(
+      //   Padding(
+      //       padding: const EdgeInsets.all(0), child: Text(data.fixTotalQty)),
+      // ),
+      // DataCell(_verticalDivider),
+      // //fixTotalBerat
+      // DataCell(
+      //   Padding(
+      //       padding: const EdgeInsets.all(0), child: Text(data.fixTotalBerat)),
+      // ),
     ]);
   }
 

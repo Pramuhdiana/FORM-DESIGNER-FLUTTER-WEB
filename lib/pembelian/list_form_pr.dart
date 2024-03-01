@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:form_designer/api/api_constant.dart';
 import 'package:form_designer/global/global.dart';
-import 'package:form_designer/mainScreen/sideScreen/side_screen_addPR.dart';
+import 'package:form_designer/pembelian/add_form_pr.dart';
 import 'package:form_designer/pembelian/form_pr_model.dart';
 import 'package:form_designer/pembelian/list_form_pr_model.dart';
 import 'package:form_designer/widgets/loading_widget.dart';
@@ -30,6 +30,8 @@ Widget _verticalDivider = const VerticalDivider(
 
 class _ListFormPrState extends State<ListFormPr> {
   TextEditingController controller = TextEditingController();
+  bool isForm = false;
+  int indexDataPr = 0;
 
   List<FormPrModel>? filterFormPR;
   List<FormPrModel>? dataFormPR;
@@ -39,11 +41,25 @@ class _ListFormPrState extends State<ListFormPr> {
   int _rowsPerPage = 10;
   List<ListItemPRModel>? _listItemPR;
   var dataListPR;
-
+  String? nomorPr;
+  String? mode = 'new';
   @override
   initState() {
     super.initState();
     _getData();
+  }
+
+  changeWithData() async {
+    setState(() {
+      isForm = !isForm;
+      _getData();
+    });
+  }
+
+  change() async {
+    setState(() {
+      isForm = !isForm;
+    });
   }
 
   refresh() async {
@@ -139,367 +155,276 @@ class _ListFormPrState extends State<ListFormPr> {
                 // keyboardType: TextInputType.number,
                 // focusNode: numberFocusNode,
                 keyboardType: TextInputType.text,
-                onChanged: (value) {},
+                onChanged: (value) {
+                  dataFormPR = filterFormPR!
+                      .where((element) =>
+                          element.noPr!
+                              .toLowerCase()
+                              .contains(value.toLowerCase()) ||
+                          element.vendor!
+                              .toLowerCase()
+                              .contains(value.toLowerCase()))
+                      .toList();
+                  setState(() {});
+                },
               ),
             ),
           ),
-          body: Container(
-            padding: const EdgeInsets.only(left: 20, right: 20),
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.only(top: 26),
-                    child: const Text(
-                      'List PR',
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 26),
-                    ),
-                  ),
-                  FloatingActionButton.extended(
-                    onPressed: () async {
-                      // Navigasi ke ScreenB dan tunggu hingga layar tersebut ditutup
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => MainViewAddPr(
-                                col: 1,
-                                onBackPressed: () {
-                                  // Callback yang akan dijalankan saat Navigator.pop dari ScreenB
-                                  // _getData();
-                                  print('call back oke');
-                                })),
-                      );
-                    },
-                    label: const Text(
-                      "Tambah Form PR",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    icon: const Icon(
-                      Icons.add_circle_outline_sharp,
-                      color: Colors.white,
-                    ),
-                    backgroundColor: Colors.blue,
-                  ),
-                  isLoading == true
-                      ? Expanded(
-                          child: Center(
-                              child: Container(
-                          padding: const EdgeInsets.all(5),
-                          width: 90,
-                          height: 90,
-                          child: Lottie.asset("loadingJSON/loadingV1.json"),
-                        )))
-                      : Expanded(
-                          child: ListView(children: [
-                          Container(
-                            padding: const EdgeInsets.all(15),
-                            width: MediaQuery.of(context).size.width * 0.8,
-                            child: Theme(
-                              data: ThemeData.light().copyWith(
-                                  // cardColor: Theme.of(context).canvasColor),
-                                  cardColor: Colors.white,
-                                  hoverColor: Colors.grey.shade400,
-                                  dividerColor: Colors.grey),
-                              child: PaginatedDataTable(
-                                  showCheckboxColumn: false,
-                                  availableRowsPerPage: const [10, 50, 100],
-                                  rowsPerPage: _rowsPerPage,
-                                  onRowsPerPageChanged: (value) {
-                                    setState(() {
-                                      _rowsPerPage = value!;
-                                    });
-                                  },
-                                  sortColumnIndex: _currentSortColumn,
-                                  sortAscending: sort,
-                                  // rowsPerPage: 25,
-                                  columnSpacing: 0,
-                                  columns: [
-                                    //AKSI
-                                    DataColumn(
-                                      label: Container(
-                                          padding:
-                                              const EdgeInsets.only(left: 0),
-                                          child: const Text(
-                                            "AKSI",
-                                            style: TextStyle(
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.bold),
-                                          )),
-                                    ),
-                                    DataColumn(label: _verticalDivider),
-
-                                    // No PR
-                                    DataColumn(
-                                        label: const SizedBox(
-                                            child: Text(
-                                          "Nomor PR",
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.bold),
-                                        )),
-                                        onSort: (columnIndex, _) {
-                                          setState(() {
-                                            _currentSortColumn = columnIndex;
-                                            if (sort == true) {
-                                              sort = false;
-                                              filterFormPR!.sort((a, b) => a
-                                                  .noPR!
-                                                  .toLowerCase()
-                                                  .compareTo(
-                                                      b.noPR!.toLowerCase()));
-                                            } else {
-                                              sort = true;
-                                              filterFormPR!.sort((a, b) => b
-                                                  .noPR!
-                                                  .toLowerCase()
-                                                  .compareTo(
-                                                      a.noPR!.toLowerCase()));
-                                            }
-                                          });
-                                        }),
-                                    DataColumn(label: _verticalDivider),
-                                    // vendor
-                                    DataColumn(
-                                        label: const SizedBox(
-                                            child: Text(
-                                          "Vendor",
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.bold),
-                                        )),
-                                        onSort: (columnIndex, _) {
-                                          setState(() {
-                                            _currentSortColumn = columnIndex;
-                                            if (sort == true) {
-                                              sort = false;
-                                              filterFormPR!.sort((a, b) => a
-                                                  .vendor!
-                                                  .toLowerCase()
-                                                  .compareTo(
-                                                      b.vendor!.toLowerCase()));
-                                            } else {
-                                              sort = true;
-                                              filterFormPR!.sort((a, b) => b
-                                                  .vendor!
-                                                  .toLowerCase()
-                                                  .compareTo(
-                                                      a.vendor!.toLowerCase()));
-                                            }
-                                          });
-                                        }),
-                                    DataColumn(label: _verticalDivider),
-                                    // notes
-                                    const DataColumn(
-                                      label: SizedBox(
-                                          child: Text(
-                                        "Notes",
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                    ),
-
-                                    DataColumn(label: _verticalDivider),
-                                    // total Item
-                                    const DataColumn(
-                                      label: SizedBox(
-                                          child: Text(
-                                        "Total Item",
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                    ),
-
-                                    DataColumn(label: _verticalDivider),
-
-                                    // Total QTY
-                                    const DataColumn(
-                                      label: SizedBox(
-                                          child: Text(
-                                        "Total Qty",
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                    ),
-                                    DataColumn(label: _verticalDivider),
-
-                                    // Total Berat
-                                    const DataColumn(
-                                      label: SizedBox(
-                                          child: Text(
-                                        "Total Berat",
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                    ),
-                                  ],
-                                  source:
-                                      // UserDataTableSource(userData: filterCrm!)),
-                                      RowSource(
-                                          onRowPressed: () {
-                                            refresh();
-                                          }, //! mengirim data untuk me refresh state
-
-                                          listDataPR: _listItemPR,
-                                          context: context,
-                                          myData: dataFormPR,
-                                          count: dataFormPR!.length)),
-                            ),
+          body: isForm == true
+              ? AddFormPr(
+                  onCloseForm: () {
+                    setState(() {
+                      change();
+                    });
+                  },
+                  onCloseFormLoadData: () {
+                    setState(() {
+                      changeWithData();
+                    });
+                  },
+                  listItemPR: _listItemPR,
+                  dataFormPR: dataFormPR,
+                  nomorPr: nomorPr,
+                  mode: mode)
+              : Container(
+                  padding: const EdgeInsets.only(left: 20, right: 20),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.only(top: 26),
+                          child: const Text(
+                            'List PR',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 26),
                           ),
-                        ]))
-                ]),
-          )),
+                        ),
+                        FloatingActionButton.extended(
+                          onPressed: () {
+                            mode = 'new';
+                            nomorPr = '';
+                            change();
+                          },
+                          label: const Text(
+                            "Tambah Form PR",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          icon: const Icon(
+                            Icons.add_circle_outline_sharp,
+                            color: Colors.white,
+                          ),
+                          backgroundColor: Colors.blue,
+                        ),
+                        isLoading == true
+                            ? Expanded(
+                                child: Center(
+                                    child: Container(
+                                padding: const EdgeInsets.all(5),
+                                width: 90,
+                                height: 90,
+                                child:
+                                    Lottie.asset("loadingJSON/loadingV1.json"),
+                              )))
+                            : Expanded(
+                                child: ListView(children: [
+                                Container(
+                                  padding: const EdgeInsets.all(15),
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.8,
+                                  child: Theme(
+                                    data: ThemeData.light().copyWith(
+                                        // cardColor: Theme.of(context).canvasColor),
+                                        cardColor: Colors.white,
+                                        hoverColor: Colors.grey.shade400,
+                                        dividerColor: Colors.grey),
+                                    child: PaginatedDataTable(
+                                        showCheckboxColumn: false,
+                                        availableRowsPerPage: const [
+                                          10,
+                                          50,
+                                          100
+                                        ],
+                                        rowsPerPage: _rowsPerPage,
+                                        onRowsPerPageChanged: (value) {
+                                          setState(() {
+                                            _rowsPerPage = value!;
+                                          });
+                                        },
+                                        sortColumnIndex: _currentSortColumn,
+                                        sortAscending: sort,
+                                        // rowsPerPage: 25,
+                                        columnSpacing: 0,
+                                        columns: [
+                                          //AKSI
+                                          DataColumn(
+                                            label: Container(
+                                                padding: const EdgeInsets.only(
+                                                    left: 0),
+                                                child: const Text(
+                                                  "AKSI",
+                                                  style: TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                )),
+                                          ),
+                                          DataColumn(label: _verticalDivider),
+
+                                          // No PR
+                                          DataColumn(
+                                              label: const SizedBox(
+                                                  child: Text(
+                                                "Nomor PR",
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              )),
+                                              onSort: (columnIndex, _) {
+                                                setState(() {
+                                                  _currentSortColumn =
+                                                      columnIndex;
+                                                  if (sort == true) {
+                                                    sort = false;
+                                                    filterFormPR!.sort((a, b) =>
+                                                        a.noPr!
+                                                            .toLowerCase()
+                                                            .compareTo(b.noPr!
+                                                                .toLowerCase()));
+                                                  } else {
+                                                    sort = true;
+                                                    filterFormPR!.sort((a, b) =>
+                                                        b.noPr!
+                                                            .toLowerCase()
+                                                            .compareTo(a.noPr!
+                                                                .toLowerCase()));
+                                                  }
+                                                });
+                                              }),
+                                          DataColumn(label: _verticalDivider),
+                                          // vendor
+                                          DataColumn(
+                                              label: const SizedBox(
+                                                  child: Text(
+                                                "Vendor",
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              )),
+                                              onSort: (columnIndex, _) {
+                                                setState(() {
+                                                  _currentSortColumn =
+                                                      columnIndex;
+                                                  if (sort == true) {
+                                                    sort = false;
+                                                    filterFormPR!.sort((a, b) =>
+                                                        a.vendor!
+                                                            .toLowerCase()
+                                                            .compareTo(b.vendor!
+                                                                .toLowerCase()));
+                                                  } else {
+                                                    sort = true;
+                                                    filterFormPR!.sort((a, b) =>
+                                                        b.vendor!
+                                                            .toLowerCase()
+                                                            .compareTo(a.vendor!
+                                                                .toLowerCase()));
+                                                  }
+                                                });
+                                              }),
+                                          DataColumn(label: _verticalDivider),
+                                          // lokasi
+                                          const DataColumn(
+                                            label: SizedBox(
+                                                child: Text(
+                                              "Lokasi",
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold),
+                                            )),
+                                          ),
+
+                                          DataColumn(label: _verticalDivider),
+                                          // notes
+                                          const DataColumn(
+                                            label: SizedBox(
+                                                child: Text(
+                                              "Notes",
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold),
+                                            )),
+                                          ),
+
+                                          DataColumn(label: _verticalDivider),
+                                          // total Item
+                                          const DataColumn(
+                                            label: SizedBox(
+                                                child: Text(
+                                              "Total Item",
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold),
+                                            )),
+                                          ),
+
+                                          DataColumn(label: _verticalDivider),
+
+                                          // Total QTY
+                                          const DataColumn(
+                                            label: SizedBox(
+                                                child: Text(
+                                              "Total Qty",
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold),
+                                            )),
+                                          ),
+                                          DataColumn(label: _verticalDivider),
+
+                                          // Total Berat
+                                          const DataColumn(
+                                            label: SizedBox(
+                                                child: Text(
+                                              "Total Berat",
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold),
+                                            )),
+                                          ),
+                                        ],
+                                        source:
+                                            // UserDataTableSource(userData: filterCrm!)),
+                                            RowSource(
+                                                onRowPressed: () {
+                                                  refresh();
+                                                }, //! mengirim data untuk me refresh state
+                                                onRowChange:
+                                                    (int i, String dumNomorPr) {
+                                                  setState(() {
+                                                    indexDataPr = i;
+                                                    nomorPr = dumNomorPr;
+                                                    mode = 'edit';
+                                                  });
+                                                  print(
+                                                      'select $indexDataPr => $dumNomorPr');
+                                                  change();
+                                                },
+                                                listDataPR: _listItemPR,
+                                                context: context,
+                                                myData: dataFormPR,
+                                                count: dataFormPR!.length)),
+                                  ),
+                                ),
+                              ]))
+                      ]),
+                )),
     );
   }
-
-  // tableFormPR() {
-  //   ListView(children: [
-  //     Container(
-  //       padding: const EdgeInsets.all(15),
-  //       width: MediaQuery.of(context).size.width * 0.8,
-  //       child: Theme(
-  //         data: ThemeData.light().copyWith(
-  //             // cardColor: Theme.of(context).canvasColor),
-  //             cardColor: Colors.white,
-  //             hoverColor: Colors.grey.shade400,
-  //             dividerColor: Colors.grey),
-  //         child: PaginatedDataTable(
-  //             showCheckboxColumn: false,
-  //             availableRowsPerPage: const [10, 50, 100],
-  //             rowsPerPage: _rowsPerPage,
-  //             onRowsPerPageChanged: (value) {
-  //               setState(() {
-  //                 _rowsPerPage = value!;
-  //               });
-  //             },
-  //             sortColumnIndex: _currentSortColumn,
-  //             sortAscending: sort,
-  //             // rowsPerPage: 25,
-  //             columnSpacing: 0,
-  //             columns: [
-  //               //AKSI
-  //               DataColumn(
-  //                 label: Container(
-  //                     padding: const EdgeInsets.only(left: 0),
-  //                     child: const Text(
-  //                       "AKSI",
-  //                       style: TextStyle(
-  //                           fontSize: 15, fontWeight: FontWeight.bold),
-  //                     )),
-  //               ),
-  //               DataColumn(label: _verticalDivider),
-
-  //               // No PR
-  //               DataColumn(
-  //                   label: const SizedBox(
-  //                       child: Text(
-  //                     "Nomor PR",
-  //                     style:
-  //                         TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-  //                   )),
-  //                   onSort: (columnIndex, _) {
-  //                     setState(() {
-  //                       _currentSortColumn = columnIndex;
-  //                       if (sort == true) {
-  //                         sort = false;
-  //                         filterFormPR!.sort((a, b) => a.noPR!
-  //                             .toLowerCase()
-  //                             .compareTo(b.noPR!.toLowerCase()));
-  //                       } else {
-  //                         sort = true;
-  //                         filterFormPR!.sort((a, b) => b.noPR!
-  //                             .toLowerCase()
-  //                             .compareTo(a.noPR!.toLowerCase()));
-  //                       }
-  //                     });
-  //                   }),
-  //               DataColumn(label: _verticalDivider),
-  //               // vendor
-  //               DataColumn(
-  //                   label: const SizedBox(
-  //                       child: Text(
-  //                     "Vendor",
-  //                     style:
-  //                         TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-  //                   )),
-  //                   onSort: (columnIndex, _) {
-  //                     setState(() {
-  //                       _currentSortColumn = columnIndex;
-  //                       if (sort == true) {
-  //                         sort = false;
-  //                         filterFormPR!.sort((a, b) => a.vendor!
-  //                             .toLowerCase()
-  //                             .compareTo(b.vendor!.toLowerCase()));
-  //                       } else {
-  //                         sort = true;
-  //                         filterFormPR!.sort((a, b) => b.vendor!
-  //                             .toLowerCase()
-  //                             .compareTo(a.vendor!.toLowerCase()));
-  //                       }
-  //                     });
-  //                   }),
-  //               DataColumn(label: _verticalDivider),
-  //               // notes
-  //               const DataColumn(
-  //                 label: SizedBox(
-  //                     child: Text(
-  //                   "Notes",
-  //                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-  //                 )),
-  //               ),
-
-  //               DataColumn(label: _verticalDivider),
-  //               // total Item
-  //               const DataColumn(
-  //                 label: SizedBox(
-  //                     child: Text(
-  //                   "Total Item",
-  //                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-  //                 )),
-  //               ),
-
-  //               DataColumn(label: _verticalDivider),
-
-  //               // Total QTY
-  //               const DataColumn(
-  //                 label: SizedBox(
-  //                     child: Text(
-  //                   "Total Qty",
-  //                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-  //                 )),
-  //               ),
-  //               DataColumn(label: _verticalDivider),
-
-  //               // Total Berat
-  //               const DataColumn(
-  //                 label: SizedBox(
-  //                     child: Text(
-  //                   "Total Berat",
-  //                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-  //                 )),
-  //               ),
-  //             ],
-  //             source:
-  //                 // UserDataTableSource(userData: filterCrm!)),
-  //                 RowSource(
-  //                     onRowPressed: () {
-  //                       refresh();
-  //                     }, //! mengirim data untuk me refresh state
-  //                     listDataPR: _listItemPR,
-  //                     context: context,
-  //                     myData: dataFormPR,
-  //                     count: dataFormPR!.length)),
-  //       ),
-  //     ),
-  //   ]);
-  // }
 }
 
 class RowSource extends DataTableSource {
@@ -509,6 +434,8 @@ class RowSource extends DataTableSource {
   String? _selectedTime;
   final count;
   final VoidCallback onRowPressed; //* menerima data untuk me refresh screen
+  final void Function(int, String)
+      onRowChange; //* menerima data untuk me refresh screen
 
   double totalBeratReceive = 0.0;
   int? totalQtyReceive;
@@ -521,19 +448,20 @@ class RowSource extends DataTableSource {
     required this.context,
     required this.listDataPR,
     required this.onRowPressed,
+    required this.onRowChange,
   });
 
   @override
   DataRow? getRow(int index) {
     if (index < rowCount) {
-      return recentFileDataRow(myData![index], context, listDataPR!);
+      return recentFileDataRow(myData![index], context, listDataPR!, index);
     } else {
       return null;
     }
   }
 
-  DataRow recentFileDataRow(
-      var data, BuildContext context, List<ListItemPRModel>? listDataPR) {
+  DataRow recentFileDataRow(var data, BuildContext context,
+      List<ListItemPRModel>? listDataPR, int index) {
     return DataRow(cells: [
       //Aksi
       DataCell(Builder(builder: (context) {
@@ -548,10 +476,10 @@ class RowSource extends DataTableSource {
                   var filterBynoPR = listDataPR!
                       .where((element) =>
                           element.noPr.toString().toLowerCase() ==
-                          data.noPR.toString().toLowerCase())
+                          data.noPr.toString().toLowerCase())
                       .toList();
-                  // for(var i=0; i< filterBynoPR.length; i++){
-                  // totalBeratReceive +=  double.tryParse(filterBynoPR[i].receiveBerat!) ?? 0;
+                  // for(var i=0; i< filterBynoPr.length; i++){
+                  // totalBeratReceive +=  double.tryParse(filterBynoPr[i].receiveBerat!) ?? 0;
                   // }
                   showGeneralDialog(
                       transitionDuration: const Duration(milliseconds: 200),
@@ -604,7 +532,7 @@ class RowSource extends DataTableSource {
                                                     ],
                                                   ),
                                                   Text(
-                                                    'No. ${data.noPR}',
+                                                    'No. ${data.noPr}',
                                                     textAlign: TextAlign.start,
                                                     style: const TextStyle(
                                                         color: Colors.black,
@@ -667,10 +595,10 @@ class RowSource extends DataTableSource {
                                                   MainAxisAlignment
                                                       .spaceBetween,
                                               children: [
-                                                const Text(
-                                                  'Lokasi  : CSV',
+                                                Text(
+                                                  'Lokasi  : ${data.lokasi}',
                                                   textAlign: TextAlign.start,
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                       color: Colors.black,
                                                       fontWeight:
                                                           FontWeight.bold,
@@ -806,7 +734,12 @@ class RowSource extends DataTableSource {
                                                             const EdgeInsets
                                                                 .only(left: 0),
                                                         child: IconButton(
-                                                          onPressed: () {},
+                                                          onPressed: () {
+                                                            Navigator.pop(
+                                                                context);
+                                                            onRowChange(index,
+                                                                data.noPr);
+                                                          },
                                                           icon: const Icon(
                                                             Icons.edit,
                                                             color:
@@ -829,28 +762,35 @@ class RowSource extends DataTableSource {
                                                           ),
                                                         ),
                                                       ),
-                                                data.status
-                                                            .toString()
-                                                            .toLowerCase() ==
-                                                        'waiting'
-                                                    ? Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .only(left: 0),
-                                                        child: IconButton(
-                                                          onPressed: () async {
-                                                            await _showDatePicker(
-                                                                context,
-                                                                data.id);
-                                                            onRowPressed();
-                                                          },
-                                                          icon: const Icon(
-                                                            Icons.send,
-                                                            color: Colors.green,
-                                                          ),
-                                                        ),
-                                                      )
-                                                    : const SizedBox()
+                                                sharedPreferences!.getString(
+                                                            'divisi') ==
+                                                        'scm'
+                                                    ? const SizedBox()
+                                                    : data.status
+                                                                .toString()
+                                                                .toLowerCase() ==
+                                                            'waiting'
+                                                        ? Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .only(
+                                                                    left: 0),
+                                                            child: IconButton(
+                                                              onPressed:
+                                                                  () async {
+                                                                await _showDatePicker(
+                                                                    context,
+                                                                    data.id);
+                                                                onRowPressed();
+                                                              },
+                                                              icon: const Icon(
+                                                                Icons.send,
+                                                                color: Colors
+                                                                    .green,
+                                                              ),
+                                                            ),
+                                                          )
+                                                        : const SizedBox()
                                               ],
                                             ),
                                           ],
@@ -880,12 +820,17 @@ class RowSource extends DataTableSource {
       DataCell(_verticalDivider),
       //no PR
       DataCell(
-        Padding(padding: const EdgeInsets.all(0), child: Text(data.noPR)),
+        Padding(padding: const EdgeInsets.all(0), child: Text(data.noPr)),
       ),
       DataCell(_verticalDivider),
       //vendor
       DataCell(
         Padding(padding: const EdgeInsets.all(0), child: Text(data.vendor)),
+      ),
+      DataCell(_verticalDivider),
+      //lokasi
+      DataCell(
+        Padding(padding: const EdgeInsets.all(0), child: Text(data.lokasi)),
       ),
       DataCell(_verticalDivider),
       //notes
@@ -905,9 +850,51 @@ class RowSource extends DataTableSource {
       DataCell(_verticalDivider),
       //totalBerat
       DataCell(
-        Padding(padding: const EdgeInsets.all(0), child: Text(data.totalBerat)),
+        Padding(
+          padding: const EdgeInsets.all(0),
+          child: FutureBuilder<String>(
+            future: getSumBerat(data.noPr),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Text(
+                    ''); // Tampilkan indikator loading jika sedang menunggu hasil
+                // return const CircularProgressIndicator(); // Tampilkan indikator loading jika sedang menunggu hasil
+              } else if (snapshot.hasError) {
+                return Text('Error: ${snapshot.error}');
+              } else {
+                return Text(
+                    snapshot.data ?? ''); // Tampilkan hasil jika tersedia
+              }
+            },
+          ),
+        ),
       ),
     ]);
+  }
+
+  Future<String> getSumBerat(String noPr) async {
+    double sumTotalBerat = 0.0;
+
+    // Pastikan listDataPR tidak null
+    if (listDataPR != null) {
+      // Filter listDataPR berdasarkan noPr
+      var filteredList = listDataPR!
+          .where((element) =>
+              element.noPr.toString().toLowerCase() ==
+              noPr.toString().toLowerCase())
+          .toList();
+
+      // Iterasi melalui data yang difilter
+      for (var item in filteredList) {
+        // Periksa jika nilai berat valid
+        if (item.berat != null) {
+          sumTotalBerat += double.parse(item.berat!);
+        }
+      }
+    }
+
+    // Kembalikan hasil dengan format string yang diinginkan
+    return sumTotalBerat.toStringAsFixed(3);
   }
 
   dataTableForm(List<ListItemPRModel>? listData, jenisItem) {
@@ -1007,13 +994,19 @@ class RowSource extends DataTableSource {
               child: Center(child: Text(data[i].qty)))),
           DataCell(Container(
               padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Center(child: Text(data[i].berat)))),
+              child: Center(
+                  child:
+                      Text(double.parse(data[i].berat).toStringAsFixed(3))))),
           DataCell(Container(
               padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Center(child: Text(data[i].fixBerat)))),
+              child: Center(
+                  child: Text(
+                      double.parse(data[i].fixBerat).toStringAsFixed(3))))),
           DataCell(Container(
               padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Center(child: Text(data[i].receiveBerat)))),
+              child: Center(
+                  child: Text(
+                      double.parse(data[i].receiveBerat).toStringAsFixed(3))))),
           DataCell(Container(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Center(

@@ -11,7 +11,7 @@ initState() {}
 
 class FormPrModel {
   int? id;
-  String? noPR;
+  String? noPr;
   String? vendor;
   String? notes;
   String? created_at;
@@ -30,10 +30,11 @@ class FormPrModel {
   String? tanggalSelesai;
   String? totalBeratDiterima;
   String? totalQtyDiterima;
+  String? lokasi;
 
   FormPrModel({
     this.id,
-    this.noPR,
+    this.noPr,
     this.vendor,
     this.notes,
     this.created_at,
@@ -52,12 +53,13 @@ class FormPrModel {
     this.tanggalSelesai,
     this.totalBeratDiterima,
     this.totalQtyDiterima,
+    this.lokasi,
   });
 
   // ignore: avoid_types_as_parameter_names
   factory FormPrModel.fromJson(Map<String, dynamic> json) => FormPrModel(
         id: json["id"],
-        noPR: json["noPr"] ?? '',
+        noPr: json["noPr"] ?? '',
         vendor: json["vendor"] ?? '',
         notes: json["notes"] ?? '',
         created_at: json["created_at"].toString(),
@@ -76,11 +78,12 @@ class FormPrModel {
         tanggalSelesai: json["tanggal_selesai"].toString(),
         totalBeratDiterima: json["total_berat_diterima"].toString(),
         totalQtyDiterima: json["total_qty_diterima"].toString(),
+        lokasi: json["lokasi"] ?? '',
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "noPR": noPR,
+        "noPr": noPr,
         "vendor": vendor,
         "notes": notes,
         "created_at": created_at,
@@ -98,6 +101,6 @@ class FormPrModel {
         "tanggal_in_qc": tanggalInQc,
         "tanggal_selesai": tanggalSelesai,
         "total_berat_diterima": totalBeratDiterima,
-        "total_qty_diterima": totalQtyDiterima,
+        "lokasi": lokasi,
       };
 }

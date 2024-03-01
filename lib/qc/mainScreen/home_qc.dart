@@ -353,7 +353,7 @@ class _HomeScreenQcState extends State<HomeScreenQc> {
                   onChanged: (value) {
                     dataFormPR = filterFormPR!
                         .where((element) =>
-                            element.noPR!
+                            element.noPr!
                                 .toLowerCase()
                                 .contains(value.toLowerCase()) ||
                             element.vendor!
@@ -393,7 +393,7 @@ class _HomeScreenQcState extends State<HomeScreenQc> {
                                   .where((element) =>
                                       element.noPr.toString().toLowerCase() ==
                                       dataFormPR![index]
-                                          .noPR
+                                          .noPr
                                           .toString()
                                           .toLowerCase())
                                   .toList();
@@ -477,7 +477,7 @@ class _HomeScreenQcState extends State<HomeScreenQc> {
                                                                   ],
                                                                 ),
                                                                 Text(
-                                                                  'No. ${dataFormPR![index].noPR}',
+                                                                  'No. ${dataFormPR![index].noPr}',
                                                                   textAlign:
                                                                       TextAlign
                                                                           .start,
@@ -761,7 +761,7 @@ class _HomeScreenQcState extends State<HomeScreenQc> {
                                                                     }
                                                                     // ignore: unused_local_variable
                                                                     var body = [
-                                                                      'noPR: ${dataFormPR![index].noPR}',
+                                                                      'noPr: ${dataFormPR![index].noPr}',
                                                                       'item: $selectListItem',
                                                                       'totalQty: $totalQty',
                                                                       'totalBerat: $totalBerat',
@@ -879,7 +879,7 @@ class _HomeScreenQcState extends State<HomeScreenQc> {
                                               ],
                                             ),
                                             Text(
-                                              'No. ${dataFormPR![index].noPR}',
+                                              'No. ${dataFormPR![index].noPr}',
                                               textAlign: TextAlign.start,
                                               style: const TextStyle(
                                                   color: Colors.black,
@@ -974,7 +974,7 @@ class _HomeScreenQcState extends State<HomeScreenQc> {
                                                             .toString()
                                                             .toLowerCase() ==
                                                         dataFormPR![index]
-                                                            .noPR
+                                                            .noPr
                                                             .toString()
                                                             .toLowerCase())
                                                     .toList(),

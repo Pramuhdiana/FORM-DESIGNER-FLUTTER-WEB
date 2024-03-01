@@ -107,7 +107,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
     tglOut = DateFormat('dd/MMMM/yyyy HH:ss').format(DateTime.now());
     kebutuhanBerat = widget.dataFormPr!.fixTotalBerat.toString();
     idForm = widget.dataFormPr!.id.toString();
-    noPr = widget.dataFormPr!.noPR.toString();
+    noPr = widget.dataFormPr!.noPr.toString();
     jenisBatu = widget.dataFormPr!.jenisBatu.toString();
     countItemPr = widget.countItem;
     _getData();
@@ -1304,7 +1304,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                         width: widValueEnd,
                         child: Text(
                           noQc =
-                              '${widget.dataFormPr!.noPR}/QC/${getMonthName(month)}/$year/${(i + 1).toString().padLeft(5, '0')}',
+                              '${widget.dataFormPr!.noPr}/QC/${getMonthName(month)}/$year/${(i + 1).toString().padLeft(5, '0')}',
                           maxLines: 2,
                         ),
                       )
