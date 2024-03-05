@@ -1,73 +1,3 @@
-// import 'dart:typed_data';
-// // ignore: avoid_web_libraries_in_flutter
-// import 'dart:html' as html;
-// import 'dart:ui';
-// import 'package:flutter/material.dart';
-// import 'package:syncfusion_flutter_pdf/pdf.dart';
-
-// class SavePdfPembelian {
-//   Future<void> generatePDF() async {
-//     // Create a new PDF document.
-//     final PdfDocument document = PdfDocument();
-//     // Add a new page to the document.
-//     final PdfPage page = document.pages.add();
-//     // Create a PDF grid class to add tables.
-//     final PdfGrid grid = PdfGrid();
-//     // Specify the grid column count.
-//     grid.columns.add(count: 3);
-//     // Add a grid header row.
-//     final PdfGridRow headerRow = grid.headers.add(1)[0];
-//     headerRow.cells[0].value = 'Customer ID';
-//     headerRow.cells[1].value = 'Contact Name';
-//     headerRow.cells[2].value = 'Country';
-//     // Set header font.
-//     headerRow.style.font = PdfStandardFont(
-//       PdfFontFamily.helvetica,
-//       10,
-//       style: PdfFontStyle.bold,
-//     );
-//     // Add rows to the grid.
-
-//     for (var i = 0; i < 50; i++) {
-//       // Add next row.
-//       PdfGridRow row = grid.rows.add();
-//       row.cells[0].value = 'N $i';
-//       row.cells[1].value = 'Contac $i';
-//       row.cells[2].value = 'Country $i';
-//     }
-
-//     // Set grid format.
-//     grid.style.cellPadding = PdfPaddings(left: 5, top: 5);
-//     // Draw table in the PDF page.
-//     grid.draw(
-//       page: page,
-//       bounds: Rect.fromLTWH(
-//         0,
-//         0,
-//         page.getClientSize().width,
-//         page.getClientSize().height,
-//       ),
-//     );
-
-//     // Save the document as bytes.
-//     final List<int> bytes = await document.save();
-//     // Dispose the document.
-//     document.dispose();
-
-//     // Convert the bytes to blob.
-//     final blob = html.Blob([Uint8List.fromList(bytes)], 'application/pdf');
-//     // Create a download link.
-//     final url = html.Url.createObjectUrlFromBlob(blob);
-//     // Create anchor element.
-//     // ignore: unused_local_variable
-//     final anchor = html.AnchorElement(href: url)
-//       ..setAttribute('download', 'PDFTable.pdf')
-//       ..click();
-//     // Revoke the object URL.
-//     html.Url.revokeObjectUrl(url);
-//   }
-// }
-
 // import 'dart:convert';
 // // ignore: unused_import
 // import 'dart:typed_data';
@@ -488,15 +418,6 @@ class SavePdfPembelian {
 // Split data into chunks to fit on each page
     final List<List<List<String>>> chunkedData = _splitList(data, 27);
 
-    // final table = pw.Table.fromTextArray(
-    //   headers: headers,
-    //   data: data,
-    //   border: pw.TableBorder.all(),
-    //   headerStyle: pw.TextStyle(fontWeight: pw.FontWeight.bold),
-    //   headerDecoration: pw.BoxDecoration(color: PdfColors.grey300),
-    //   cellAlignment: pw.Alignment.center,
-    // );
-
     // Add a page to the document.
     pdf.addPage(
       pw.MultiPage(
@@ -521,10 +442,23 @@ class SavePdfPembelian {
                   headers: headers,
                   data: chunk,
                   border: pw.TableBorder.all(),
-                  headerStyle: pw.TextStyle(fontWeight: pw.FontWeight.bold),
-                  headerDecoration:
-                      const pw.BoxDecoration(color: PdfColors.grey300),
+                  headerStyle: pw.TextStyle(
+                    fontWeight: pw.FontWeight.bold,
+                    color: PdfColors.white,
+                  ),
+                  headerDecoration: const pw.BoxDecoration(
+                    color: PdfColors.blue,
+                  ),
+                  cellStyle: const pw.TextStyle(
+                    color: PdfColors.black,
+                  ),
                   cellAlignment: pw.Alignment.center,
+                  cellDecoration: (rowIndex, _, rowNum) {
+                    // Jika index baris genap, beri warna biru muda, jika tidak, beri warna putih
+                    return rowNum % 2 == 0
+                        ? const pw.BoxDecoration(color: PdfColors.white)
+                        : const pw.BoxDecoration(color: PdfColors.blue100);
+                  },
                 ),
 
               //? footer
