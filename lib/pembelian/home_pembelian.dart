@@ -475,7 +475,6 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
                           itemBuilder: (context, index) => InkWell(
                             onTap: () {
                               setFullScreen(true);
-                              // showScreenSize();
 
                               selectListItemRound.clear();
                               var filterBynoPR = listDetailItemQc!
@@ -604,8 +603,11 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
                                                                             (index) =>
                                                                                 false);
 
-                                                                        setFullScreen(
-                                                                            false);
+                                                                        if (sharedPreferences!.getString('nama') !=
+                                                                            'Sri Sumiati') {
+                                                                          setFullScreen(
+                                                                              false);
+                                                                        }
                                                                         Navigator.pop(
                                                                             context);
                                                                       },
@@ -636,17 +638,95 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
                                                                         ElevatedButton(
                                                                       onPressed:
                                                                           () {
-                                                                        selectedList = List.generate(
-                                                                            listItemQc!
-                                                                                .length,
-                                                                            (index) =>
-                                                                                false);
+                                                                        showGeneralDialog(
+                                                                          transitionDuration:
+                                                                              const Duration(milliseconds: 200),
+                                                                          barrierDismissible:
+                                                                              true,
+                                                                          barrierLabel:
+                                                                              '',
+                                                                          context:
+                                                                              context,
+                                                                          pageBuilder: (context,
+                                                                              animation1,
+                                                                              animation2) {
+                                                                            return const Text('');
+                                                                          },
+                                                                          barrierColor: Colors
+                                                                              .black
+                                                                              .withOpacity(0.75),
+                                                                          transitionBuilder: (context,
+                                                                              a1,
+                                                                              a2,
+                                                                              widget) {
+                                                                            return Transform.scale(
+                                                                              scale: a1.value,
+                                                                              child: Opacity(
+                                                                                opacity: a1.value,
+                                                                                child: StatefulBuilder(
+                                                                                  builder: (context, setState) => AlertDialog(
+                                                                                    content: SizedBox(
+                                                                                      width: 500,
+                                                                                      height: 500,
+                                                                                      child: SingleChildScrollView(
+                                                                                        scrollDirection: Axis.vertical,
+                                                                                        child: Column(
+                                                                                          mainAxisSize: MainAxisSize.min,
+                                                                                          children: [
+                                                                                            // List of checkboxes and names
+                                                                                            ListView.builder(
+                                                                                              shrinkWrap: true,
+                                                                                              itemCount: listItemQc!.length,
+                                                                                              itemBuilder: (context, index) {
+                                                                                                // Membuat selectedList dengan panjang yang sesuai
 
-                                                                        setFullScreen(
-                                                                            false);
-                                                                        Navigator.pop(
-                                                                            context);
-                                                                        // savePdf();
+                                                                                                return CheckboxListTile(
+                                                                                                  title: Text('No QC = ${listItemQc![index].noQc} / ${listItemQc![index].item}'),
+                                                                                                  value: selectedList[index],
+                                                                                                  onChanged: (isSelected) {
+                                                                                                    setState(() {
+                                                                                                      selectedList[index] = isSelected ?? false;
+                                                                                                    });
+                                                                                                  },
+                                                                                                );
+                                                                                              },
+                                                                                            ),
+                                                                                            // Display button to submit selected items
+                                                                                            ElevatedButton(
+                                                                                              onPressed: () {
+                                                                                                if (sharedPreferences!.getString('nama') != 'Sri Sumiati') {
+                                                                                                  setFullScreen(false);
+                                                                                                }
+                                                                                                // Print selected items
+                                                                                                List<String> selectedNoQc = [];
+                                                                                                for (int i = 0; i < selectedList.length; i++) {
+                                                                                                  if (selectedList[i]) {
+                                                                                                    selectedNoQc.add('${listItemQc![i].noQc}');
+                                                                                                  }
+                                                                                                }
+                                                                                                print('Selected No Qc : $selectedNoQc');
+                                                                                                Navigator.pop(context);
+                                                                                                Navigator.pop(context);
+                                                                                                savePdf(selectedNoQc);
+                                                                                              },
+                                                                                              child: const Row(
+                                                                                                children: [
+                                                                                                  Icon(Icons.download), // Menambahkan ikon Download
+                                                                                                  SizedBox(width: 8), // Menambahkan jarak antara ikon dan teks
+                                                                                                  Text('Download PDF'),
+                                                                                                ],
+                                                                                              ),
+                                                                                            ),
+                                                                                          ],
+                                                                                        ),
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                            );
+                                                                          },
+                                                                        );
                                                                       },
                                                                       style: ElevatedButton
                                                                           .styleFrom(
@@ -731,7 +811,9 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
                                                                                             // Display button to submit selected items
                                                                                             ElevatedButton(
                                                                                               onPressed: () {
-                                                                                                setFullScreen(false);
+                                                                                                if (sharedPreferences!.getString('nama') != 'Sri Sumiati') {
+                                                                                                  setFullScreen(false);
+                                                                                                }
                                                                                                 // Print selected items
                                                                                                 List<String> selectedNoQc = [];
                                                                                                 for (int i = 0; i < selectedList.length; i++) {
@@ -1005,7 +1087,7 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
                       })));
   }
 
-  savePdf() async {
+  savePdf(noQc) async {
     showDialog(
       context: context,
       barrierDismissible: false, // Prevent dialog dismissal on tap outside
@@ -1032,9 +1114,11 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
       },
     );
 
-    await SavePdfPembelian().generatePDF();
+    await SavePdfPembelian().generatePDF(noQc);
     // ignore: use_build_context_synchronously
     Navigator.pop(context);
+    selectListItemRound.clear();
+    selectedList = List.generate(listItemQc!.length, (index) => false);
   }
 
   exportData(noQc) async {

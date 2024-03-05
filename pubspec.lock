@@ -21,10 +21,10 @@ packages:
     dependency: transitive
     description:
       name: archive
-      sha256: d6347d54a2d8028e0437e3c099f66fdb8ae02c4720c1e7534c9f24c10351f85d
+      sha256: "20071638cbe4e5964a427cfa0e86dce55d060bc7d82d56f3554095d7239a8765"
       url: "https://pub.dev"
     source: hosted
-    version: "3.3.6"
+    version: "3.4.2"
   args:
     dependency: transitive
     description:
@@ -41,6 +41,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.11.0"
+  barcode:
+    dependency: transitive
+    description:
+      name: barcode
+      sha256: "91b143666f7bb13636f716b6d4e412e372ab15ff7969799af8c9e30a382e9385"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.6"
+  bidi:
+    dependency: transitive
+    description:
+      name: bidi
+      sha256: "1a7d0c696324b2089f72e7671fd1f1f64fef44c980f3cebc84e803967c597b63"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.10"
   boolean_selector:
     dependency: transitive
     description:
@@ -53,26 +69,26 @@ packages:
     dependency: "direct main"
     description:
       name: cached_network_image
-      sha256: fd3d0dc1d451f9a252b32d95d3f0c3c487bc41a75eba2e6097cb0b9c71491b15
+      sha256: "28ea9690a8207179c319965c13cd8df184d5ee721ae2ce60f398ced1219cea1f"
       url: "https://pub.dev"
     source: hosted
-    version: "3.2.3"
+    version: "3.3.1"
   cached_network_image_platform_interface:
     dependency: transitive
     description:
       name: cached_network_image_platform_interface
-      sha256: bb2b8403b4ccdc60ef5f25c70dead1f3d32d24b9d6117cfc087f496b178594a7
+      sha256: "9e90e78ae72caa874a323d78fa6301b3fb8fa7ea76a8f96dc5b5bf79f283bf2f"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.0"
+    version: "4.0.0"
   cached_network_image_web:
     dependency: transitive
     description:
       name: cached_network_image_web
-      sha256: b8eb814ebfcb4dea049680f8c1ffb2df399e4d03bf7a352c775e26fa06e02fa0
+      sha256: "42a835caa27c220d1294311ac409a43361088625a4f23c820b006dd9bffb3316"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.2"
+    version: "1.1.1"
   carousel_slider:
     dependency: "direct main"
     description:
@@ -374,14 +390,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0"
-  flutter_blurhash:
-    dependency: transitive
-    description:
-      name: flutter_blurhash
-      sha256: "05001537bd3fac7644fa6558b09ec8c0a3f2eba78c0765f88912882b1331a5c6"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.7.0"
   flutter_cache_manager:
     dependency: transitive
     description:
@@ -502,13 +510,13 @@ packages:
     source: hosted
     version: "4.0.2"
   image:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: image
-      sha256: "483a389d6ccb292b570c31b3a193779b1b0178e7eb571986d9a49904b6861227"
+      sha256: "4c68bfd5ae83e700b5204c1e74451e7bf3cf750e6843c6e158289cf56bda018e"
       url: "https://pub.dev"
     source: hosted
-    version: "4.0.15"
+    version: "4.1.7"
   image_picker:
     dependency: "direct main"
     description:
@@ -625,10 +633,10 @@ packages:
     dependency: transitive
     description:
       name: octo_image
-      sha256: "107f3ed1330006a3bea63615e81cf637433f5135a52466c7caa0e7152bca9143"
+      sha256: "45b40f99622f11901238e18d48f5f12ea36426d8eced9f4cbf58479c7aa2430d"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.2"
+    version: "2.0.0"
   overlay_support:
     dependency: "direct main"
     description:
@@ -701,6 +709,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.7"
+  pdf:
+    dependency: "direct main"
+    description:
+      name: pdf
+      sha256: "243f05342fc0bdf140eba5b069398985cdbdd3dbb1d776cf43d5ea29cc570ba6"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.10.8"
   petitparser:
     dependency: transitive
     description:
@@ -757,6 +773,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.0.5"
+  qr:
+    dependency: transitive
+    description:
+      name: qr
+      sha256: "64957a3930367bf97cc211a5af99551d630f2f4625e38af10edd6b19131b64b3"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.1"
   rounded_loading_button:
     dependency: "direct main"
     description:
@@ -935,6 +959,14 @@ packages:
     description:
       name: syncfusion_flutter_core
       sha256: "8a1220f978491f56431c66dacf1bb97bf2abcd1458b542fe0dfbf1a630c67260"
+      url: "https://pub.dev"
+    source: hosted
+    version: "23.2.4"
+  syncfusion_flutter_pdf:
+    dependency: "direct main"
+    description:
+      name: syncfusion_flutter_pdf
+      sha256: c75af6a8280a56883d84293032703d9c8dd6ef338909bbf50cb0a153091ec654
       url: "https://pub.dev"
     source: hosted
     version: "23.2.4"

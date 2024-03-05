@@ -31,6 +31,7 @@ class _MainViewQcState extends State<MainViewQc> {
   List<Widget> screenAtik = [
     const HomeScreenQc(),
     const ListFormPrQc(),
+    const HomeScreenPembelian(),
     const HomeScreenQc()
   ];
   List<Widget> screenNugraha = [
@@ -282,6 +283,10 @@ class _MainViewQcState extends State<MainViewQc> {
       const SideNavigationBarItem(
         icon: Icons.list_alt,
         label: 'List Form PR',
+      ),
+      const SideNavigationBarItem(
+        icon: Icons.home,
+        label: 'List yang sudah selesai',
       ),
       const SideNavigationBarItem(
         icon: Icons.logout,

@@ -29,7 +29,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   animated_tree_view: ^2.1.0
-  cached_network_image: ^3.2.3
+  cached_network_image: ^3.3.1
   carousel_slider: ^4.2.1
   cart_stepper: ^4.1.0
   cloud_firestore: ^4.3.2
@@ -70,6 +70,9 @@ dependencies:
   smooth_star_rating_nsafe: ^1.0.0+1
   staggered_grid_view_flutter: ^0.0.4
   syncfusion_flutter_charts: ^23.2.4
+  syncfusion_flutter_pdf: ^23.2.4
+  pdf: ^3.10.8
+  image: ^4.1.7
 
 dev_dependencies:
   flutter_lints: ^2.0.0
