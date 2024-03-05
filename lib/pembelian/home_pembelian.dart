@@ -11,6 +11,7 @@ import 'package:form_designer/mainScreen/form_screen_by_id.dart';
 import 'package:form_designer/pembelian/export_pembelian.dart';
 import 'package:form_designer/pembelian/form_pr_model.dart';
 import 'package:form_designer/pembelian/list_form_pr_model.dart';
+import 'package:form_designer/pembelian/save_pdf_pembelian.dart';
 import 'package:form_designer/qc/modelQc/itemQcModel.dart';
 import 'package:fullscreen_window/fullscreen_window.dart';
 import 'package:intl/intl.dart';
@@ -635,10 +636,45 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
                                                                         ElevatedButton(
                                                                       onPressed:
                                                                           () {
-                                                                        // setFullScreen(
-                                                                        //     false);
-                                                                        // exportData(
-                                                                        //     '${listItemQc![index].noQc}');
+                                                                        selectedList = List.generate(
+                                                                            listItemQc!
+                                                                                .length,
+                                                                            (index) =>
+                                                                                false);
+
+                                                                        setFullScreen(
+                                                                            false);
+                                                                        Navigator.pop(
+                                                                            context);
+                                                                        // savePdf();
+                                                                      },
+                                                                      style: ElevatedButton
+                                                                          .styleFrom(
+                                                                        backgroundColor:
+                                                                            Colors.yellow, // Mengatur warna latar belakang tombol
+                                                                        shape:
+                                                                            RoundedRectangleBorder(
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(10), // Memberikan radius 10
+                                                                        ),
+                                                                      ),
+                                                                      child:
+                                                                          const Text(
+                                                                        "Save PDF",
+                                                                        style: TextStyle(
+                                                                            color:
+                                                                                Colors.white,
+                                                                            fontSize: 18),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                  SizedBox(
+                                                                    width: 200,
+                                                                    height: 50,
+                                                                    child:
+                                                                        ElevatedButton(
+                                                                      onPressed:
+                                                                          () {
                                                                         showGeneralDialog(
                                                                           transitionDuration:
                                                                               const Duration(milliseconds: 200),
@@ -682,7 +718,7 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
                                                                                                 // Membuat selectedList dengan panjang yang sesuai
 
                                                                                                 return CheckboxListTile(
-                                                                                                  title: Text('No QC = ${listItemQc![index].noQc}'),
+                                                                                                  title: Text('No QC = ${listItemQc![index].noQc} / ${listItemQc![index].item}'),
                                                                                                   value: selectedList[index],
                                                                                                   onChanged: (isSelected) {
                                                                                                     setState(() {
@@ -696,7 +732,6 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
                                                                                             ElevatedButton(
                                                                                               onPressed: () {
                                                                                                 setFullScreen(false);
-
                                                                                                 // Print selected items
                                                                                                 List<String> selectedNoQc = [];
                                                                                                 for (int i = 0; i < selectedList.length; i++) {
@@ -970,6 +1005,38 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
                       })));
   }
 
+  savePdf() async {
+    showDialog(
+      context: context,
+      barrierDismissible: false, // Prevent dialog dismissal on tap outside
+      builder: (BuildContext context) {
+        return Dialog(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          child: Container(
+            padding: const EdgeInsets.all(16),
+            color: Colors.white,
+            child: const Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CircularProgressIndicator(),
+                SizedBox(height: 20),
+                Text(
+                  'Loading, please wait...',
+                  style: TextStyle(fontSize: 16),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+
+    await SavePdfPembelian().generatePDF();
+    // ignore: use_build_context_synchronously
+    Navigator.pop(context);
+  }
+
   exportData(noQc) async {
     showDialog(
       context: context,
@@ -996,14 +1063,12 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
         );
       },
     );
-    ExcelPembelian().exportExcel(noQc);
 
-    // // ignore: use_build_context_synchronously
-    Future.delayed(const Duration(seconds: 1)).then((value) {
-      //   //! lalu eksekusi fungsi ini
-      Navigator.pop(context);
-      //   Navigator.pop(context);
-    });
+    await ExcelPembelian().exportExcel(noQc);
+
+    // ignore: use_build_context_synchronously
+    Navigator.pop(context);
+
     selectListItemRound.clear();
     selectedList = List.generate(listItemQc!.length, (index) => false);
   }

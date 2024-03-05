@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:form_designer/api/api_constant.dart';
 import 'package:form_designer/pembelian/form_pr_model.dart';
+import 'package:form_designer/pembelian/list_form_pr_model.dart';
 import 'package:form_designer/qc/modelQc/itemQcModel.dart';
 // ignore: depend_on_referenced_packages
 import 'package:path/path.dart';
@@ -13,7 +14,29 @@ import 'package:http/http.dart' as http;
 
 class ExcelPembelian {
   List<FormPrModel>? dataFormPR;
+  List<ListItemPRModel>? dataItemPr;
   List<ItemQcModel>? dataItemQc;
+
+  Future<String?> getItemName(String qc) async {
+    //get item pr
+    final responseListItem = await http
+        .get(Uri.parse('${ApiConstants.baseUrl}${ApiConstants.getListFormPR}'));
+    if (responseListItem.statusCode == 200) {
+      List jsonResponse = json.decode(responseListItem.body);
+
+      var data =
+          jsonResponse.map((data) => ListItemPRModel.fromJson(data)).toList();
+      //* hints Filter data berdasarkan nomor QC yang ada dalam list noQc
+      // Filter data based on whether any of the conditions in noQc are met
+      var filterByNoQc = data.where((element) => element.noQc == qc).toList();
+
+      data = filterByNoQc;
+
+      return data.first.item.toString();
+    } else {
+      throw Exception('Unexpected error occured!');
+    }
+  }
 
   Future<void> exportExcel(noQc) async {
 //get data
@@ -37,6 +60,7 @@ class ExcelPembelian {
       print(response.body);
       throw Exception('Unexpected error occured!');
     }
+
     //get listnya
     final responseList = await http
         .get(Uri.parse('${ApiConstants.baseUrl}${ApiConstants.getItemQc}'));
@@ -83,6 +107,9 @@ class ExcelPembelian {
     var berat = sheet.cell(CellIndex.indexByString("D1"));
     berat.value = "Berat";
     berat.cellStyle = headStyle;
+    var noQcLOT = sheet.cell(CellIndex.indexByString("E1"));
+    noQcLOT.value = "No Qc";
+    noQcLOT.cellStyle = headStyle;
 
     for (int row = 0; row < dataItemQc!.length; row++) {
       //belum bisa image  Image.network( ApiConstants.baseUrlImage + myData![row].imageUrl!,);
@@ -105,6 +132,11 @@ class ExcelPembelian {
       var listBerat = sheet
           .cell(CellIndex.indexByColumnRow(columnIndex: 3, rowIndex: row + 1));
       listBerat.value = data.berat;
+      //? noQc
+      var listNoQc = sheet
+          .cell(CellIndex.indexByColumnRow(columnIndex: 4, rowIndex: row + 1));
+      String? itemName = await getItemName(data.noQc.toString());
+      listNoQc.value = '${data.noQc} / $itemName';
     }
 
     excel.rename("mySheet", "RESULT");
