@@ -5,7 +5,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:form_designer/admin/menu_model.dart';
 import 'package:form_designer/admin/users_model.dart';
 import 'package:form_designer/api/api_constant.dart';
 import 'package:form_designer/mainScreen/login.dart';
@@ -14,7 +13,6 @@ import 'package:form_designer/mainScreen/sideScreen/side_screen_admin.dart';
 import 'package:form_designer/mainScreen/sideScreen/side_screen_designer.dart';
 import 'package:form_designer/mainScreen/sideScreen/side_screen_pembelian.dart';
 import 'package:form_designer/mainScreen/sideScreen/side_screen_produksi.dart';
-import 'package:form_designer/mainScreen/sideScreen/side_screen_qc.dart';
 import 'package:form_designer/mainScreen/sideScreen/side_screen_scm.dart';
 import 'package:form_designer/model/siklus_model.dart';
 import 'package:form_designer/qc/modelQc/jenisBatuModel.dart';
