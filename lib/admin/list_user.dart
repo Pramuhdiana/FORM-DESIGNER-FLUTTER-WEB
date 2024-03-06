@@ -66,18 +66,25 @@ class _ListUserState extends State<ListUser> {
     String kodeMonth = DateFormat('M', 'id').format(now);
     nowSiklus = month;
     kodeBulan = getHuruf(int.parse(kodeMonth));
-    _getListMenu();
-    _getData();
+    loadData();
   }
 
   String getHuruf(int angka) {
     return String.fromCharCode(angka + 64);
   }
 
-  _getData() async {
+  loadData() async {
     setState(() {
       isLoading = true;
     });
+    // await _getListMenu();
+    await _getData();
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  _getData() async {
     List<String> idMenu = [];
     dataListMenu.clear();
     final response = await http
@@ -137,7 +144,7 @@ class _ListUserState extends State<ListUser> {
 
       // ignore: unnecessary_null_comparison
       if (targetMenu != null) {
-        print('Menu dengan ID $targetId: ${targetMenu.nama}');
+        print('Menu dengan ID $targetId: ${targetMenu.menu}');
       } else {
         print('Menu dengan ID $targetId tidak ditemukan');
       }
@@ -147,9 +154,6 @@ class _ListUserState extends State<ListUser> {
     } else {
       throw Exception('Unexpected error occured!');
     }
-    setState(() {
-      isLoading = false;
-    });
   }
 
   @override

@@ -43,7 +43,6 @@ class _MainViewState extends State<MainView> {
     //? 4
     const ListKebutuhanBatuScreen(),
     //? 5
-    const ListStatusApprovalScreen(),
     //? 6
     const ListMpsScreen(),
     //! keluar untuk scm dan admin

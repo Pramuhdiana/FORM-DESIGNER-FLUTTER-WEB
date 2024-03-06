@@ -1,20 +1,20 @@
 class MenuModel {
   int? idMenu;
-  String? nama;
+  String? menu;
   int? isActive;
 
-  MenuModel({this.idMenu, this.nama, this.isActive});
+  MenuModel({this.idMenu, this.menu, this.isActive});
 
   MenuModel.fromJson(Map<String, dynamic> json) {
     idMenu = json['idMenu'];
-    nama = json['nama'];
+    menu = json['menu'];
     isActive = json['isActive'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['idMenu'] = idMenu;
-    data['nama'] = nama;
+    data['menu'] = menu;
     data['isActive'] = isActive;
     return data;
   }

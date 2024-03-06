@@ -188,7 +188,6 @@ class _LoginDesktopState extends State<LoginDesktop> {
                                     ApiConstants.postLogin),
                                 body: body);
                             final data = jsonDecode(response.body);
-                            print(data);
                             int value = data['value'];
                             print(response.statusCode);
                             if (value == 1) {
@@ -199,6 +198,7 @@ class _LoginDesktopState extends State<LoginDesktop> {
                               String statusAPI = data['status'];
                               String divisiAPI = data['divisi'];
                               String roleAPI = data['role'];
+                              String listMenuAPI = data['listMenu'];
                               setState(() {
                                 sharedPreferences!
                                     .setString('token', 'ingat saya');
@@ -211,6 +211,10 @@ class _LoginDesktopState extends State<LoginDesktop> {
                                 sharedPreferences!
                                     .setString('divisi', divisiAPI);
                                 sharedPreferences!.setString('role', roleAPI);
+                                sharedPreferences!
+                                    .setString('listMenu', listMenuAPI);
+                                print(listMenuAPI);
+
                                 sharedPreferences!.setBool('isLogin', true);
                                 // savePref(
                                 //     id, emailAPI, namaAPI, levelAPI, statusAPI);

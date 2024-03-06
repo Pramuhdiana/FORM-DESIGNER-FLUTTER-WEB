@@ -5,6 +5,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:form_designer/admin/menu_model.dart';
 import 'package:form_designer/api/api_constant.dart';
 import 'package:form_designer/mainScreen/login.dart';
 import 'package:form_designer/mainScreen/sideScreen/side_screen.dart';
@@ -53,6 +54,7 @@ class _MySplashScreenState extends State<MySplashScreen> {
           } else {
             throw Exception('Unexpected error occured!');
           }
+
           if (sharedPreferences!.getString('divisi') == 'produksi') {
             print('masuk area produksi');
             Navigator.push(context,
@@ -68,7 +70,7 @@ class _MySplashScreenState extends State<MySplashScreen> {
                 context, MaterialPageRoute(builder: (c) => MainViewQc(col: 0)));
           } else if (sharedPreferences!.getString('divisi') == 'pembelian') {
             Navigator.push(context,
-                MaterialPageRoute(builder: (c) => MainViewPembelian(col: 0)));
+                MaterialPageRoute(builder: (c) => const MainViewPembelian()));
           } else if (sharedPreferences!.getString('divisi') == 'admin') {
             Navigator.push(context,
                 MaterialPageRoute(builder: (c) => const MainViewAdmin()));

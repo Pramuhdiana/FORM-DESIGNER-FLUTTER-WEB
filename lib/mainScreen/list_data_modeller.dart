@@ -249,7 +249,7 @@ class _ListDataModellerScreenState extends State<ListDataModellerScreen> {
                         } catch (c) {
                           print('err msg : get data modeller $c');
                         }
-                        sharedPreferences!.getString('divisi') == 'admin'
+                        sharedPreferences!.getString('divisi') != 'trial'
                             ? showDialog(
                                 context: context,
                                 builder: (BuildContext context) {

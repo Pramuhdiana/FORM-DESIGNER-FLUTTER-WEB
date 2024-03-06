@@ -18,7 +18,8 @@ class LoginScreen extends StatelessWidget {
               return const LoginMobile();
             } else if (constraints.maxWidth > 600 &&
                 constraints.maxWidth < 900) {
-              return const LoginTablet();
+              // return const LoginTablet();
+              return const LoginDesktop();
             } else {
               return const LoginDesktop();
             }
