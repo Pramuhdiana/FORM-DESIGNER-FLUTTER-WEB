@@ -3,6 +3,7 @@ import 'package:form_designer/SCM/mainScreen/kebutuhan_batu_by_siklus.dart';
 import 'package:form_designer/SCM/mainScreen/list_scm.dart';
 import 'package:form_designer/admin/list_user.dart';
 import 'package:form_designer/calculatePricing/list_calculate_pricing_screen.dart';
+import 'package:form_designer/mainScreen/home_admin.dart';
 import 'package:form_designer/mainScreen/home_screen.dart';
 import 'package:form_designer/mainScreen/list_batu_screen.dart';
 import 'package:form_designer/mainScreen/list_data_modeller.dart';
@@ -12,12 +13,14 @@ import 'package:form_designer/mainScreen/list_status_approval.dart';
 import 'package:form_designer/pembelian/home_pembelian.dart';
 import 'package:form_designer/pembelian/list_form_pr.dart';
 import 'package:form_designer/produksi/mainScreen/dashboard_control.dart';
+import 'package:form_designer/produksi/mainScreen/dashboard_orul_reparasi.dart';
 import 'package:form_designer/produksi/mainScreen/monthly_meeting_scm.dart';
 import 'package:form_designer/produksi/mainScreen/produksi_new_screen.dart';
 import 'package:form_designer/produksi/mainScreen/report_untuk_manufaktur.dart';
 import 'package:form_designer/produksi/mainScreen/summary_pasang_batu.dart';
 import 'package:form_designer/produksi/mainScreen/summary_produktivitas.dart';
 import 'package:form_designer/produksi/mainScreen/summary_susut.dart';
+import 'package:form_designer/qc/mainScreen/home_qc.dart';
 import 'package:form_designer/qc/mainScreen/list_form_pr_qc.dart';
 // ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart';
@@ -28,7 +31,7 @@ SharedPreferences? sharedPreferences;
 int revisiBesar =
     1; //UI baru, banyak fitur baru, perubahan konsep, dll  (MAJOR)
 int revisiKecil =
-    39; //perubahan kecil                                    (MINOR)
+    40; //perubahan kecil                                    (MINOR)
 int rilisPerbaikanbug =
     12; //perbaikan bug                                      (PATCH)
 //? komen
@@ -47,23 +50,53 @@ String siklusSaatIini = DateFormat('MMMM', 'id').format(now);
 
 List<Widget> screenGlobal = [
   const SizedBox(),
-  const HomeScreenPembelian(),
+  const HomeScreenAdmin(),
   const ListUser(),
-  const ListDataModellerScreen(),
-  const ListBatuScreen(), //* produksi
-  const ListDesignerScreen(),
-  const ListKebutuhanBatuScreen(),
-  const ListScmScreen(),
-  const ListMpsScreen(),
+  const HomeScreen(),
+  const HomeScreenQc(),
   const MonthlyMeetingScm(),
+  const HomeScreenPembelian(),
+  const ReportUntukManufaktur(),
+  const DashboardOrulReparasi(),
   const DashboardControl(),
+  const ListDataModellerScreen(),
+  const ListDesignerScreen(),
+  const ListScmScreen(),
+  const ListBatuScreen(),
+  const ListFormPr(),
+  const ListKebutuhanBatuScreen(),
+  const ListFormPrQc(),
   const ProduksiNewScreen(),
+  const ListMpsScreen(),
   const SummarySusutScreen(),
   const SummaryPasangBatuScreen(),
   const SummaryProduktivitasScreen(),
   const ListStatusApprovalScreen(),
   const ListCalculatePricingScreen(),
-  const ListFormPrQc(),
-  const ListFormPr(),
-  const ReportUntukManufaktur(),
 ];
+Map<String, IconData> iconMapGlobal = {
+  'Dashboard Admin': Icons.home,
+  'Dashboard Procurement': Icons.home,
+  'Dashboard Qc': Icons.home,
+  'Dashboard': Icons.home,
+  'List Data User': Icons.list,
+  'List Data Modeller': Icons.list_alt,
+  'List Data Batu': Icons.list,
+  'List Data Designer': Icons.list_alt,
+  'List Data Kebutuhan Batu': Icons.list,
+  'List Data SCM': Icons.list_alt,
+  'MPS': Icons.list,
+  'Monthly Meeting SCM': Icons.list_alt,
+  'Dashboard Control': Icons.list,
+  'Daily Produksi': Icons.list_alt,
+  'SUM Susut': Icons.list,
+  'SUM Pasang Batu': Icons.list_alt,
+  'SUM Produktivitas': Icons.list,
+  'List Data Status Approval': Icons.list_alt,
+  'Calculate Pricing': Icons.list,
+  'List Form Qc': Icons.list_alt,
+  'List Form Pr': Icons.list,
+  'Report Manufaktur': Icons.list_alt,
+  'Dashboard Orul & Reparasi': Icons.list,
+  // Tambahkan mapping untuk ikon lainnya sesuai kebutuhan Anda
+};

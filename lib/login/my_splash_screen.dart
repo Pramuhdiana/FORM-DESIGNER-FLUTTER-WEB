@@ -6,6 +6,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:form_designer/admin/menu_model.dart';
+import 'package:form_designer/admin/users_model.dart';
 import 'package:form_designer/api/api_constant.dart';
 import 'package:form_designer/mainScreen/login.dart';
 import 'package:form_designer/mainScreen/sideScreen/side_screen.dart';
@@ -65,10 +66,13 @@ class _MySplashScreenState extends State<MySplashScreen> {
           } else if (sharedPreferences!.getString('divisi') == 'designer') {
             Navigator.push(context,
                 MaterialPageRoute(builder: (c) => MainViewDesigner(col: 0)));
-          } else if (sharedPreferences!.getString('divisi') == 'qc') {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (c) => MainViewQc(col: 0)));
-          } else if (sharedPreferences!.getString('divisi') == 'pembelian') {
+          }
+          // else if (sharedPreferences!.getString('divisi') == 'qc') {
+          //   Navigator.push(
+          //       context, MaterialPageRoute(builder: (c) => MainViewQc(col: 0)));
+          // }
+          else if (sharedPreferences!.getString('divisi') == 'pembelian' ||
+              sharedPreferences!.getString('divisi') == 'qc') {
             Navigator.push(context,
                 MaterialPageRoute(builder: (c) => const MainViewPembelian()));
           } else if (sharedPreferences!.getString('divisi') == 'admin') {
@@ -103,10 +107,38 @@ class _MySplashScreenState extends State<MySplashScreen> {
   }
 
   _getData() async {
+    await _getDataUser();
     await getPanjang();
     // await getLebar();
     await getJenisBatu();
     // await getKualitasBatu();
+  }
+
+  _getDataUser() async {
+    final response = await http
+        .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getListUsers));
+
+    // if response successful
+
+    if (response.statusCode == 200) {
+      List jsonResponse = json.decode(response.body);
+
+      var allData =
+          jsonResponse.map((data) => UsersModel.fromJson(data)).toList();
+      var filterByName = allData
+          .where((element) =>
+              element.nama.toString().toLowerCase() ==
+              sharedPreferences!.getString('nama').toString().toLowerCase())
+          .toList();
+      String? listMenuAPI = filterByName.first.listMenu;
+      sharedPreferences!.setString('listMenu', listMenuAPI!);
+
+      // idMenu[i][j] =
+
+      setState(() {});
+    } else {
+      throw Exception('Unexpected error occured!');
+    }
   }
 
   //* HINTS menyimpan api ke list lokal

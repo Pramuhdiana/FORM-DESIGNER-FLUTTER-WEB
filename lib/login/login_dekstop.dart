@@ -211,8 +211,7 @@ class _LoginDesktopState extends State<LoginDesktop> {
                                 sharedPreferences!
                                     .setString('divisi', divisiAPI);
                                 sharedPreferences!.setString('role', roleAPI);
-                                sharedPreferences!
-                                    .setString('listMenu', listMenuAPI);
+
                                 print(listMenuAPI);
 
                                 sharedPreferences!.setBool('isLogin', true);

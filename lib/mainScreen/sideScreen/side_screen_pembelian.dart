@@ -579,11 +579,14 @@ class _MainViewPembelianState extends State<MainViewPembelian> {
   }
 
 //? all list divisi
-  listMenuUser() {
+  List<SideNavigationBarItem> listMenuUser() {
     return [
       for (int i = 0; i < listMenu.length; i++)
         SideNavigationBarItem(
-          icon: Icons.home, // Ganti ikon sesuai kebutuhan Anda
+          icon: iconMapGlobal.containsKey(listMenu[i])
+              ? iconMapGlobal[listMenu[i]]!
+              : Icons
+                  .error, // Menggunakan ikon default jika tidak ditemukan ikon
           label: listMenu[i],
         )
     ];

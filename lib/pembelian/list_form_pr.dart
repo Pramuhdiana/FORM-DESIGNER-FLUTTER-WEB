@@ -202,22 +202,24 @@ class _ListFormPrState extends State<ListFormPr> {
                                 fontSize: 26),
                           ),
                         ),
-                        FloatingActionButton.extended(
-                          onPressed: () {
-                            mode = 'new';
-                            nomorPr = '';
-                            change();
-                          },
-                          label: const Text(
-                            "Tambah Form PR",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          icon: const Icon(
-                            Icons.add_circle_outline_sharp,
-                            color: Colors.white,
-                          ),
-                          backgroundColor: Colors.blue,
-                        ),
+                        sharedPreferences!.getString('divisi') == 'qc'
+                            ? const SizedBox()
+                            : FloatingActionButton.extended(
+                                onPressed: () {
+                                  mode = 'new';
+                                  nomorPr = '';
+                                  change();
+                                },
+                                label: const Text(
+                                  "Tambah Form PR",
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                icon: const Icon(
+                                  Icons.add_circle_outline_sharp,
+                                  color: Colors.white,
+                                ),
+                                backgroundColor: Colors.blue,
+                              ),
                         isLoading == true
                             ? Expanded(
                                 child: Center(
