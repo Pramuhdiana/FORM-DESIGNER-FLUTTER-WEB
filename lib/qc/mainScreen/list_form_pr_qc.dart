@@ -195,6 +195,17 @@ class _ListFormPrQcState extends State<ListFormPrQc> {
                 },
               ),
             ),
+            actions: [
+              IconButton(
+                onPressed: () {
+                  _getData();
+                },
+                icon: const Icon(
+                  Icons.refresh,
+                  color: Colors.blue,
+                ),
+              )
+            ],
           ),
           body: isForm == true
               ? FormDetailBatuQc(

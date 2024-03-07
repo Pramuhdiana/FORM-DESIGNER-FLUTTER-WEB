@@ -3,6 +3,7 @@ import 'package:form_designer/SCM/mainScreen/kebutuhan_batu_by_siklus.dart';
 import 'package:form_designer/SCM/mainScreen/list_scm.dart';
 import 'package:form_designer/admin/list_user.dart';
 import 'package:form_designer/calculatePricing/list_calculate_pricing_screen.dart';
+import 'package:form_designer/ga/home_screen_ga.dart';
 import 'package:form_designer/mainScreen/home_admin.dart';
 import 'package:form_designer/mainScreen/home_screen.dart';
 import 'package:form_designer/mainScreen/list_batu_screen.dart';
@@ -12,6 +13,7 @@ import 'package:form_designer/mainScreen/list_mps.dart';
 import 'package:form_designer/mainScreen/list_status_approval.dart';
 import 'package:form_designer/pembelian/home_pembelian.dart';
 import 'package:form_designer/pembelian/list_form_pr.dart';
+import 'package:form_designer/pembelian/list_invoice.dart';
 import 'package:form_designer/produksi/mainScreen/dashboard_control.dart';
 import 'package:form_designer/produksi/mainScreen/dashboard_orul_reparasi.dart';
 import 'package:form_designer/produksi/mainScreen/monthly_meeting_scm.dart';
@@ -31,7 +33,7 @@ SharedPreferences? sharedPreferences;
 int revisiBesar =
     1; //UI baru, banyak fitur baru, perubahan konsep, dll  (MAJOR)
 int revisiKecil =
-    40; //perubahan kecil                                    (MINOR)
+    41; //perubahan kecil                                    (MINOR)
 int rilisPerbaikanbug =
     12; //perbaikan bug                                      (PATCH)
 //? komen
@@ -73,13 +75,17 @@ List<Widget> screenGlobal = [
   const SummaryProduktivitasScreen(),
   const ListStatusApprovalScreen(),
   const ListCalculatePricingScreen(),
+  const HomeScreenGa(),
+  const ListInvoice(),
 ];
 Map<String, IconData> iconMapGlobal = {
   'Dashboard Admin': Icons.home,
+  'Dashboard Ga': Icons.home,
   'Dashboard Procurement': Icons.home,
   'Dashboard Qc': Icons.home,
   'Dashboard': Icons.home,
   'List Data User': Icons.list,
+  'List Invoice': Icons.list,
   'List Data Modeller': Icons.list_alt,
   'List Data Batu': Icons.list,
   'List Data Designer': Icons.list_alt,

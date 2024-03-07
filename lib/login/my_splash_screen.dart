@@ -70,7 +70,8 @@ class _MySplashScreenState extends State<MySplashScreen> {
           //       context, MaterialPageRoute(builder: (c) => MainViewQc(col: 0)));
           // }
           else if (sharedPreferences!.getString('divisi') == 'pembelian' ||
-              sharedPreferences!.getString('divisi') == 'qc') {
+              sharedPreferences!.getString('divisi') == 'qc' ||
+              sharedPreferences!.getString('divisi') == 'ga') {
             Navigator.push(context,
                 MaterialPageRoute(builder: (c) => const MainViewPembelian()));
           } else if (sharedPreferences!.getString('divisi') == 'admin') {

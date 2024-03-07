@@ -178,7 +178,7 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
                 label: Center(
                     child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 10),
-              child: Text('Ukuran Batu Round'),
+              child: Text('Ukuran Batu\nRound'),
             ))),
             const DataColumn(
                 label: Center(
@@ -196,13 +196,13 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
                 label: Center(
                     child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 10),
-              child: Text('Jenis Batu'),
+              child: Text('Jenis\nBatu'),
             ))),
             const DataColumn(
                 label: Center(
                     child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 10),
-              child: Text('Kualitas Batu'),
+              child: Text('Kualitas\nBatu'),
             ))),
           ]
         : [
@@ -216,7 +216,7 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
                 label: Center(
                     child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 10),
-              child: Text('Kode Mdbc'),
+              child: Text('Kode\nMdbc'),
             ))),
             const DataColumn(
                 label: Center(
@@ -240,13 +240,13 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
                 label: Center(
                     child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 10),
-              child: Text('Jenis Batu'),
+              child: Text('Jenis\nBatu'),
             ))),
             const DataColumn(
                 label: Center(
                     child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 10),
-              child: Text('Kualitas Batu'),
+              child: Text('Kualitas\nBatu'),
             ))),
           ];
   }
@@ -468,7 +468,7 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
                       )
                     : LayoutBuilder(builder: (context, constraints) {
                         return StaggeredGridView.countBuilder(
-                          crossAxisCount: constraints.maxWidth < 900
+                          crossAxisCount: constraints.maxWidth < 850
                               ? 1
                               : 2, // dua item per baris
                           itemCount: listItemQc!.length,

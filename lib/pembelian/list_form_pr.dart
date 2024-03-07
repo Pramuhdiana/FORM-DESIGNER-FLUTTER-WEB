@@ -169,6 +169,17 @@ class _ListFormPrState extends State<ListFormPr> {
                 },
               ),
             ),
+            actions: [
+              IconButton(
+                onPressed: () {
+                  _getData();
+                },
+                icon: const Icon(
+                  Icons.refresh,
+                  color: Colors.blue,
+                ),
+              )
+            ],
           ),
           body: isForm == true
               ? AddFormPr(
@@ -633,14 +644,14 @@ class RowSource extends DataTableSource {
                                               ),
                                             ),
                                             const SizedBox(height: 20),
-                                            const Row(
+                                            Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment
                                                         .spaceBetween,
                                                 children: [
                                                   Column(
                                                     children: [
-                                                      Text(
+                                                      const Text(
                                                         'Diserahkan oleh,',
                                                         textAlign:
                                                             TextAlign.start,
@@ -650,11 +661,19 @@ class RowSource extends DataTableSource {
                                                                 FontWeight.bold,
                                                             fontSize: 12),
                                                       ),
-                                                      SizedBox(height: 40),
-                                                      Text('Warehouse')
+                                                      const SizedBox(
+                                                          height: 40),
+                                                      data.jenisForm
+                                                                  .toString()
+                                                                  .toLowerCase() ==
+                                                              'retur'
+                                                          ? const Text(
+                                                              'Warehouse')
+                                                          : Text(
+                                                              '${data.vendor}')
                                                     ],
                                                   ),
-                                                  Column(
+                                                  const Column(
                                                     children: [
                                                       Text(
                                                         'Dibawa oleh,',
@@ -672,7 +691,7 @@ class RowSource extends DataTableSource {
                                                   ),
                                                   Column(
                                                     children: [
-                                                      Text(
+                                                      const Text(
                                                         'Diterima oleh,',
                                                         textAlign:
                                                             TextAlign.start,
@@ -682,11 +701,22 @@ class RowSource extends DataTableSource {
                                                                 FontWeight.bold,
                                                             fontSize: 12),
                                                       ),
-                                                      SizedBox(height: 40),
-                                                      Text('....')
+                                                      const SizedBox(
+                                                        height: 40,
+                                                        child: Icon(Icons
+                                                            .verified_outlined),
+                                                      ),
+                                                      data.jenisForm
+                                                                  .toString()
+                                                                  .toLowerCase() ==
+                                                              'retur'
+                                                          ? Text(
+                                                              '${data.vendor}')
+                                                          : const Text(
+                                                              'Warehouse')
                                                     ],
                                                   ),
-                                                  Column(
+                                                  const Column(
                                                     children: [
                                                       Text(
                                                         'Diketahui oleh,',

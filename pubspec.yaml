@@ -71,6 +71,7 @@ dependencies:
   staggered_grid_view_flutter: ^0.0.4
   syncfusion_flutter_charts: ^23.2.4
   syncfusion_flutter_pdf: ^23.2.4
+  syncfusion_flutter_signaturepad: ^23.2.4
   pdf: ^3.10.8
   image: ^4.1.7
 

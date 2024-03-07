@@ -364,6 +364,17 @@ class _HomeScreenQcState extends State<HomeScreenQc> {
                   },
                 ),
               ),
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    _getData();
+                  },
+                  icon: const Icon(
+                    Icons.refresh,
+                    color: Colors.blue,
+                  ),
+                )
+              ],
             ),
             body: isLoading == true
                 ? Center(
