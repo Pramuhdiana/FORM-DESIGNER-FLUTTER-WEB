@@ -42,6 +42,10 @@ class _MySplashScreenState extends State<MySplashScreen> {
       //user sudah login
       print('token $token');
       if (sharedPreferences!.getString("token").toString() != "null") {
+        await getUser();
+
+        _getData();
+
         try {
           final response = await http
               .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getSiklus));
@@ -55,7 +59,6 @@ class _MySplashScreenState extends State<MySplashScreen> {
           } else {
             throw Exception('Unexpected error occured!');
           }
-          await getUser();
 
           await getToken(sharedPreferences!.getString('id'));
 
@@ -107,7 +110,6 @@ class _MySplashScreenState extends State<MySplashScreen> {
   void initState() {
     super.initState();
 
-    _getData();
     splashScreenTimer();
     PushNotificationsSystem.configureFirebaseMessaging(
         context); // Panggil fungsi penanganan pesan
@@ -186,37 +188,40 @@ class _MySplashScreenState extends State<MySplashScreen> {
   }
 
   _getDataUser() async {
-    final response = await http
-        .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getListUsers));
+    try {
+      final response = await http
+          .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getListUsers));
 
-    // if response successful
+      // if response successful
 
-    if (response.statusCode == 200) {
-      List jsonResponse = json.decode(response.body);
+      if (response.statusCode == 200) {
+        List jsonResponse = json.decode(response.body);
 
-      var allData =
-          jsonResponse.map((data) => UsersModel.fromJson(data)).toList();
-      var filterByName = allData
-          .where((element) =>
-              element.nama.toString().toLowerCase() ==
-              sharedPreferences!.getString('nama').toString().toLowerCase())
-          .toList();
-      String? listMenuAPI = filterByName.first.listMenu;
-      String? notifAPI = filterByName.first.notif;
-      sharedPreferences!.setString('listMenu', listMenuAPI!);
-      sharedPreferences!.setString('notif', notifAPI!);
+        var allData =
+            jsonResponse.map((data) => UsersModel.fromJson(data)).toList();
+        var filterByName = allData
+            .where((element) =>
+                element.nama.toString().toLowerCase() ==
+                sharedPreferences!.getString('nama').toString().toLowerCase())
+            .toList();
+        String? listMenuAPI = filterByName.first.listMenu;
+        String? notifAPI = filterByName.first.notif;
+        sharedPreferences!.setString('listMenu', listMenuAPI!);
+        sharedPreferences!.setString('notif', notifAPI!);
 
-      // idMenu[i][j] =
+        // idMenu[i][j] =
 
-      setState(() {});
-    } else {
-      throw Exception('Unexpected error occured!');
+        setState(() {});
+      } else {
+        throw Exception('Unexpected error occured!');
+      }
+    } catch (e) {
+      print('>>>>>>>> err get data user $e');
     }
   }
 
   //* HINTS menyimpan api ke list lokal
   getPanjang() async {
-    print('on');
     final prefs = await SharedPreferences.getInstance();
 
     try {
@@ -238,7 +243,6 @@ class _MySplashScreenState extends State<MySplashScreen> {
   }
 
   getJenisBatu() async {
-    print('on');
     final prefs = await SharedPreferences.getInstance();
 
     try {

@@ -98,6 +98,34 @@ class _NotifikasiAdminState extends State<NotifikasiAdmin> {
 
   // Fungsi untuk mengirim notifikasi ke pengguna
   void _sendNotification() {
+    AwesomeDialog(
+      context: context,
+      dialogType: DialogType.success,
+      borderSide: const BorderSide(
+        color: Colors.green,
+        width: 2,
+      ),
+      buttonsBorderRadius: const BorderRadius.all(
+        Radius.circular(2),
+      ),
+      width: 450,
+      dismissOnTouchOutside: true,
+      dismissOnBackKeyPress: false,
+      // onDismissCallback: (type) {
+      //   ScaffoldMessenger.of(context).showSnackBar(
+      //     SnackBar(
+      //       content: Text('Dismissed by $type'),
+      //     ),
+      //   );
+      // },
+      headerAnimationLoop: true,
+      animType: AnimType.bottomSlide,
+      title: 'SUCCESS',
+      desc: tokenUser,
+      // showCloseIcon: true,
+      // btnCancelOnPress: () {},
+      btnOkOnPress: () {},
+    ).show();
     String title = _titleController.text;
     String content = _contentController.text;
     notif.sendNotificationTo(tokenUser, title, content);

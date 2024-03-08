@@ -214,11 +214,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:form_designer/SCM/mainScreen/kebutuhan_batu_by_siklus.dart';
 import 'package:form_designer/admin/menu_model.dart';
 import 'package:form_designer/api/api_constant.dart';
 import 'package:form_designer/global/global.dart';
-import 'package:form_designer/mainScreen/list_status_approval.dart';
 import 'package:form_designer/mainScreen/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:side_navigation/side_navigation.dart';
@@ -291,8 +289,6 @@ class _MainViewPembelianState extends State<MainViewPembelian> {
   }
 
   listUser() async {
-    print('list user oke');
-
     screenUserRole = [];
     await listNamaMenu();
     // Tambahkan widget sesuai dengan daftar menu user
