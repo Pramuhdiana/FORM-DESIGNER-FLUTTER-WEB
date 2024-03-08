@@ -2,8 +2,10 @@
 
 import 'dart:convert';
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:form_designer/api/api_constant.dart';
 import 'package:form_designer/global/global.dart';
 // ignore: unused_import
@@ -13,10 +15,12 @@ import 'package:form_designer/pembelian/form_pr_model.dart';
 import 'package:form_designer/pembelian/list_form_pr_model.dart';
 import 'package:form_designer/pembelian/save_pdf_pembelian.dart';
 import 'package:form_designer/qc/modelQc/itemQcModel.dart';
+import 'package:form_designer/widgets/custom_loading.dart';
 import 'package:fullscreen_window/fullscreen_window.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';
+import 'package:overlay_support/overlay_support.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_grid_view.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_tile.dart';
@@ -59,6 +63,515 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
     super.initState();
     print('masuk');
     _getData();
+  }
+
+  simpanHarga(id, harga) async {
+    await updateHarga(id, harga);
+    btnControllerSimpan.success();
+    // ignore: use_build_context_synchronously
+    Navigator.pop(context);
+    _getData();
+    showSimpleNotification(
+      const Text('Harga berhasil ditambahkan'),
+      background: Colors.green,
+      duration: const Duration(seconds: 1),
+    );
+  }
+
+  updateHarga(idUser, harga) async {
+    try {
+      Map<String, String> body = {
+        'type': 'saveHarga',
+        'id': idUser.toString(),
+        'harga': harga.toString(),
+      };
+      final response = await http.post(
+          Uri.parse('${ApiConstants.baseUrl}${ApiConstants.restFullApi}'),
+          body: jsonEncode(body));
+      print(response.body);
+    } catch (e) {
+      print('error get token $e');
+    }
+  }
+
+  openForm(int index) async {
+    setFullScreen(true);
+
+    selectListItemRound.clear();
+    var filterBynoPR = listDetailItemQc!
+        .where((element) =>
+            element.noPr.toString().toLowerCase() ==
+            listItemQc![index].noPr.toString().toLowerCase())
+        .toList();
+
+    for (var i = 0; i < filterBynoPR.length; i++) {
+      selectListItemRound.add([
+        filterBynoPR[i].id.toString(),
+        filterBynoPR[i].item!,
+        filterBynoPR[i].qty!,
+        filterBynoPR[i].berat!,
+        filterBynoPR[i].panjang!,
+        filterBynoPR[i].lebar!,
+        filterBynoPR[i].jenisBatu!,
+        filterBynoPR[i].kualitasBatu!,
+      ]);
+    }
+    print(selectListItemRound);
+    return showGeneralDialog(
+        transitionDuration: const Duration(milliseconds: 200),
+        barrierDismissible: false,
+        barrierLabel: '',
+        context: context,
+        pageBuilder: (context, animation1, animation2) {
+          return const Text('');
+        },
+        barrierColor: Colors.black.withOpacity(0.75),
+        transitionBuilder: (context, a1, a2, widget) {
+          return Transform.scale(
+              scale: a1.value,
+              child: Opacity(
+                  opacity: a1.value,
+                  child: StatefulBuilder(
+                    builder: (context, setState) => AlertDialog(
+                        content: SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height,
+                      child: Stack(clipBehavior: Clip.none, children: <Widget>[
+                        SizedBox(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Text(
+                                'TANDA TERIMA QUALITY CONTROL ${listItemQc![index].item}',
+                                style: const TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 22),
+                              ),
+                              Text(
+                                'No. ${listItemQc![index].noQc}',
+                                textAlign: TextAlign.start,
+                                style: const TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18),
+                              ),
+                              Container(
+                                constraints: BoxConstraints(
+                                    maxHeight: MediaQuery.of(context)
+                                            .size
+                                            .height *
+                                        0.70 // Sesuaikan dengan tinggi maksimum yang diinginkan
+                                    ),
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.vertical,
+                                  child: dataTableForm(
+                                      listDetailItemQc!
+                                          .where((element) =>
+                                              element.noQc
+                                                  .toString()
+                                                  .toLowerCase() ==
+                                              listItemQc![index]
+                                                  .noQc
+                                                  .toString()
+                                                  .toLowerCase())
+                                          .toList(),
+                                      'read',
+                                      listDetailItemQc![index].jenisBatu!),
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+                              Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    SizedBox(
+                                      width: 200,
+                                      height: 50,
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          selectedList = List.generate(
+                                              listItemQc!.length,
+                                              (index) => false);
+
+                                          if (sharedPreferences!
+                                                  .getString('nama') !=
+                                              'Sri Sumiati') {
+                                            setFullScreen(false);
+                                          }
+                                          Navigator.pop(context);
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors
+                                              .red, // Mengatur warna latar belakang tombol
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                                10), // Memberikan radius 10
+                                          ),
+                                        ),
+                                        child: const Text(
+                                          "Batal",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 18),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 200,
+                                      height: 50,
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          showGeneralDialog(
+                                            transitionDuration: const Duration(
+                                                milliseconds: 200),
+                                            barrierDismissible: true,
+                                            barrierLabel: '',
+                                            context: context,
+                                            pageBuilder: (context, animation1,
+                                                animation2) {
+                                              return const Text('');
+                                            },
+                                            barrierColor:
+                                                Colors.black.withOpacity(0.75),
+                                            transitionBuilder:
+                                                (context, a1, a2, widget) {
+                                              return Transform.scale(
+                                                scale: a1.value,
+                                                child: Opacity(
+                                                  opacity: a1.value,
+                                                  child: StatefulBuilder(
+                                                    builder:
+                                                        (context, setState) =>
+                                                            AlertDialog(
+                                                      content: SizedBox(
+                                                        width: 500,
+                                                        height: 500,
+                                                        child:
+                                                            SingleChildScrollView(
+                                                          scrollDirection:
+                                                              Axis.vertical,
+                                                          child: Column(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .min,
+                                                            children: [
+                                                              // List of checkboxes and names
+                                                              ListView.builder(
+                                                                shrinkWrap:
+                                                                    true,
+                                                                itemCount:
+                                                                    listItemQc!
+                                                                        .length,
+                                                                itemBuilder:
+                                                                    (context,
+                                                                        index) {
+                                                                  // Membuat selectedList dengan panjang yang sesuai
+
+                                                                  return CheckboxListTile(
+                                                                    title: Text(
+                                                                        'No QC = ${listItemQc![index].noQc} / ${listItemQc![index].item}'),
+                                                                    value: selectedList[
+                                                                        index],
+                                                                    onChanged:
+                                                                        (isSelected) {
+                                                                      setState(
+                                                                          () {
+                                                                        selectedList[index] =
+                                                                            isSelected ??
+                                                                                false;
+                                                                      });
+                                                                    },
+                                                                  );
+                                                                },
+                                                              ),
+                                                              // Display button to submit selected items
+                                                              ElevatedButton(
+                                                                onPressed: () {
+                                                                  if (sharedPreferences!
+                                                                          .getString(
+                                                                              'nama') !=
+                                                                      'Sri Sumiati') {
+                                                                    setFullScreen(
+                                                                        false);
+                                                                  }
+                                                                  // Print selected items
+                                                                  List<String>
+                                                                      selectedNoQc =
+                                                                      [];
+                                                                  for (int i =
+                                                                          0;
+                                                                      i <
+                                                                          selectedList
+                                                                              .length;
+                                                                      i++) {
+                                                                    if (selectedList[
+                                                                        i]) {
+                                                                      selectedNoQc
+                                                                          .add(
+                                                                              '${listItemQc![i].noQc}');
+                                                                    }
+                                                                  }
+                                                                  print(
+                                                                      'Selected No Qc : $selectedNoQc');
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                  savePdf(
+                                                                      selectedNoQc);
+                                                                },
+                                                                child:
+                                                                    const Row(
+                                                                  children: [
+                                                                    Icon(Icons
+                                                                        .download), // Menambahkan ikon Download
+                                                                    SizedBox(
+                                                                        width:
+                                                                            8), // Menambahkan jarak antara ikon dan teks
+                                                                    Text(
+                                                                        'Download PDF'),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          );
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors
+                                              .yellow, // Mengatur warna latar belakang tombol
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                                10), // Memberikan radius 10
+                                          ),
+                                        ),
+                                        child: const Text(
+                                          "Save PDF",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 18),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 200,
+                                      height: 50,
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          showGeneralDialog(
+                                            transitionDuration: const Duration(
+                                                milliseconds: 200),
+                                            barrierDismissible: true,
+                                            barrierLabel: '',
+                                            context: context,
+                                            pageBuilder: (context, animation1,
+                                                animation2) {
+                                              return const Text('');
+                                            },
+                                            barrierColor:
+                                                Colors.black.withOpacity(0.75),
+                                            transitionBuilder:
+                                                (context, a1, a2, widget) {
+                                              return Transform.scale(
+                                                scale: a1.value,
+                                                child: Opacity(
+                                                  opacity: a1.value,
+                                                  child: StatefulBuilder(
+                                                    builder:
+                                                        (context, setState) =>
+                                                            AlertDialog(
+                                                      content: SizedBox(
+                                                        width: 500,
+                                                        height: 500,
+                                                        child:
+                                                            SingleChildScrollView(
+                                                          scrollDirection:
+                                                              Axis.vertical,
+                                                          child: Column(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .min,
+                                                            children: [
+                                                              // List of checkboxes and names
+                                                              ListView.builder(
+                                                                shrinkWrap:
+                                                                    true,
+                                                                itemCount:
+                                                                    listItemQc!
+                                                                        .length,
+                                                                itemBuilder:
+                                                                    (context,
+                                                                        index) {
+                                                                  // Membuat selectedList dengan panjang yang sesuai
+
+                                                                  return CheckboxListTile(
+                                                                    title: Text(
+                                                                        'No QC = ${listItemQc![index].noQc} / ${listItemQc![index].item}'),
+                                                                    value: selectedList[
+                                                                        index],
+                                                                    onChanged:
+                                                                        (isSelected) {
+                                                                      setState(
+                                                                          () {
+                                                                        selectedList[index] =
+                                                                            isSelected ??
+                                                                                false;
+                                                                      });
+                                                                    },
+                                                                  );
+                                                                },
+                                                              ),
+                                                              // Display button to submit selected items
+                                                              ElevatedButton(
+                                                                onPressed: () {
+                                                                  if (sharedPreferences!
+                                                                          .getString(
+                                                                              'nama') !=
+                                                                      'Sri Sumiati') {
+                                                                    setFullScreen(
+                                                                        false);
+                                                                  }
+                                                                  // Print selected items
+                                                                  List<String>
+                                                                      selectedNoQc =
+                                                                      [];
+                                                                  for (int i =
+                                                                          0;
+                                                                      i <
+                                                                          selectedList
+                                                                              .length;
+                                                                      i++) {
+                                                                    if (selectedList[
+                                                                        i]) {
+                                                                      selectedNoQc
+                                                                          .add(
+                                                                              '${listItemQc![i].noQc}');
+                                                                    }
+                                                                  }
+                                                                  print(
+                                                                      'Selected No Qc : $selectedNoQc');
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                  exportData(
+                                                                      selectedNoQc);
+                                                                },
+                                                                child:
+                                                                    const Row(
+                                                                  children: [
+                                                                    Icon(Icons
+                                                                        .download), // Menambahkan ikon Download
+                                                                    SizedBox(
+                                                                        width:
+                                                                            8), // Menambahkan jarak antara ikon dan teks
+                                                                    Text(
+                                                                        'Download'),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          );
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors
+                                              .blue, // Mengatur warna latar belakang tombol
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                                10), // Memberikan radius 10
+                                          ),
+                                        ),
+                                        child: const Text(
+                                          "Export data",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 18),
+                                        ),
+                                      ),
+                                    ),
+                                  ]),
+                            ],
+                          ),
+                        ),
+                      ]),
+                    )),
+                  )));
+        });
+  }
+
+  hargaForm(index) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          TextEditingController harga = TextEditingController();
+
+          return StatefulBuilder(
+              builder: (context, setState) => AlertDialog(
+                      content:
+                          Stack(clipBehavior: Clip.none, children: <Widget>[
+                    Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          TextFormField(
+                            style: const TextStyle(
+                                fontStyle: FontStyle.italic,
+                                fontSize: 16,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
+                            textInputAction: TextInputAction.next,
+                            controller: harga,
+                            decoration: InputDecoration(
+                              // hintText: "example: Cahaya Sanivokasi",
+                              labelText: "Harga",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5.0)),
+                            ),
+                            //* HINTS Menengahkan teks secara horizontal
+                            keyboardType: const TextInputType.numberWithOptions(
+                                decimal:
+                                    true), // Mengizinkan input nilai desimal
+                            inputFormatters: <TextInputFormatter>[
+                              FilteringTextInputFormatter.allow(RegExp(
+                                  r'^\d+\.?\d{0,3}')), // Membatasi input agar sesuai format desimal
+                            ],
+                          ),
+                          Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: SizedBox(
+                                  width: 250,
+                                  child: CustomLoadingButton(
+                                      controller: btnControllerSimpan,
+                                      child: const Text(
+                                        "Simpan Harga",
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      onPressed: () {
+                                        simpanHarga(
+                                            listItemQc![index].id, harga.text);
+                                      })))
+                        ])
+                  ])));
+        });
   }
 
   void setFullScreen(bool isFullScreen) {
@@ -474,405 +987,40 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
                           itemCount: listItemQc!.length,
                           itemBuilder: (context, index) => InkWell(
                             onTap: () {
-                              setFullScreen(true);
-
-                              selectListItemRound.clear();
-                              var filterBynoPR = listDetailItemQc!
-                                  .where((element) =>
-                                      element.noPr.toString().toLowerCase() ==
-                                      listItemQc![index]
-                                          .noPr
-                                          .toString()
-                                          .toLowerCase())
-                                  .toList();
-
-                              for (var i = 0; i < filterBynoPR.length; i++) {
-                                selectListItemRound.add([
-                                  filterBynoPR[i].id.toString(),
-                                  filterBynoPR[i].item!,
-                                  filterBynoPR[i].qty!,
-                                  filterBynoPR[i].berat!,
-                                  filterBynoPR[i].panjang!,
-                                  filterBynoPR[i].lebar!,
-                                  filterBynoPR[i].jenisBatu!,
-                                  filterBynoPR[i].kualitasBatu!,
-                                ]);
-                              }
-                              print(selectListItemRound);
-                              showGeneralDialog(
-                                  transitionDuration:
-                                      const Duration(milliseconds: 200),
-                                  barrierDismissible: false,
-                                  barrierLabel: '',
-                                  context: context,
-                                  pageBuilder:
-                                      (context, animation1, animation2) {
-                                    return const Text('');
-                                  },
-                                  barrierColor: Colors.black.withOpacity(0.75),
-                                  transitionBuilder: (context, a1, a2, widget) {
-                                    return Transform.scale(
-                                        scale: a1.value,
-                                        child: Opacity(
-                                            opacity: a1.value,
-                                            child: StatefulBuilder(
-                                              builder: (context, setState) =>
-                                                  AlertDialog(
-                                                      content: SizedBox(
-                                                width: MediaQuery.of(context)
-                                                    .size
-                                                    .width,
-                                                height: MediaQuery.of(context)
-                                                    .size
-                                                    .height,
-                                                child: Stack(
-                                                    clipBehavior: Clip.none,
-                                                    children: <Widget>[
-                                                      SizedBox(
-                                                        child: Column(
-                                                          mainAxisSize:
-                                                              MainAxisSize.max,
-                                                          children: [
-                                                            Text(
-                                                              'TANDA TERIMA QUALITY CONTROL ${listItemQc![index].item}',
-                                                              style: const TextStyle(
-                                                                  color: Colors
-                                                                      .black,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  fontSize: 22),
-                                                            ),
-                                                            Text(
-                                                              'No. ${listItemQc![index].noQc}',
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .start,
-                                                              style: const TextStyle(
-                                                                  color: Colors
-                                                                      .black,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  fontSize: 18),
-                                                            ),
-                                                            Container(
-                                                              constraints: BoxConstraints(
-                                                                  maxHeight: MediaQuery.of(
-                                                                              context)
-                                                                          .size
-                                                                          .height *
-                                                                      0.70 // Sesuaikan dengan tinggi maksimum yang diinginkan
-                                                                  ),
-                                                              child:
-                                                                  SingleChildScrollView(
-                                                                scrollDirection:
-                                                                    Axis.vertical,
-                                                                child: dataTableForm(
-                                                                    listDetailItemQc!
-                                                                        .where((element) =>
-                                                                            element.noQc.toString().toLowerCase() ==
-                                                                            listItemQc![index]
-                                                                                .noQc
-                                                                                .toString()
-                                                                                .toLowerCase())
-                                                                        .toList(),
-                                                                    'read',
-                                                                    listDetailItemQc![
-                                                                            index]
-                                                                        .jenisBatu!),
-                                                              ),
-                                                            ),
-                                                            const SizedBox(
-                                                                height: 10),
-                                                            Row(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .spaceEvenly,
-                                                                children: [
-                                                                  SizedBox(
-                                                                    width: 200,
-                                                                    height: 50,
-                                                                    child:
-                                                                        ElevatedButton(
-                                                                      onPressed:
-                                                                          () {
-                                                                        selectedList = List.generate(
-                                                                            listItemQc!
-                                                                                .length,
-                                                                            (index) =>
-                                                                                false);
-
-                                                                        if (sharedPreferences!.getString('nama') !=
-                                                                            'Sri Sumiati') {
-                                                                          setFullScreen(
-                                                                              false);
-                                                                        }
-                                                                        Navigator.pop(
-                                                                            context);
-                                                                      },
-                                                                      style: ElevatedButton
-                                                                          .styleFrom(
-                                                                        backgroundColor:
-                                                                            Colors.red, // Mengatur warna latar belakang tombol
-                                                                        shape:
-                                                                            RoundedRectangleBorder(
-                                                                          borderRadius:
-                                                                              BorderRadius.circular(10), // Memberikan radius 10
-                                                                        ),
-                                                                      ),
-                                                                      child:
-                                                                          const Text(
-                                                                        "Batal",
-                                                                        style: TextStyle(
-                                                                            color:
-                                                                                Colors.white,
-                                                                            fontSize: 18),
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                  SizedBox(
-                                                                    width: 200,
-                                                                    height: 50,
-                                                                    child:
-                                                                        ElevatedButton(
-                                                                      onPressed:
-                                                                          () {
-                                                                        showGeneralDialog(
-                                                                          transitionDuration:
-                                                                              const Duration(milliseconds: 200),
-                                                                          barrierDismissible:
-                                                                              true,
-                                                                          barrierLabel:
-                                                                              '',
-                                                                          context:
-                                                                              context,
-                                                                          pageBuilder: (context,
-                                                                              animation1,
-                                                                              animation2) {
-                                                                            return const Text('');
-                                                                          },
-                                                                          barrierColor: Colors
-                                                                              .black
-                                                                              .withOpacity(0.75),
-                                                                          transitionBuilder: (context,
-                                                                              a1,
-                                                                              a2,
-                                                                              widget) {
-                                                                            return Transform.scale(
-                                                                              scale: a1.value,
-                                                                              child: Opacity(
-                                                                                opacity: a1.value,
-                                                                                child: StatefulBuilder(
-                                                                                  builder: (context, setState) => AlertDialog(
-                                                                                    content: SizedBox(
-                                                                                      width: 500,
-                                                                                      height: 500,
-                                                                                      child: SingleChildScrollView(
-                                                                                        scrollDirection: Axis.vertical,
-                                                                                        child: Column(
-                                                                                          mainAxisSize: MainAxisSize.min,
-                                                                                          children: [
-                                                                                            // List of checkboxes and names
-                                                                                            ListView.builder(
-                                                                                              shrinkWrap: true,
-                                                                                              itemCount: listItemQc!.length,
-                                                                                              itemBuilder: (context, index) {
-                                                                                                // Membuat selectedList dengan panjang yang sesuai
-
-                                                                                                return CheckboxListTile(
-                                                                                                  title: Text('No QC = ${listItemQc![index].noQc} / ${listItemQc![index].item}'),
-                                                                                                  value: selectedList[index],
-                                                                                                  onChanged: (isSelected) {
-                                                                                                    setState(() {
-                                                                                                      selectedList[index] = isSelected ?? false;
-                                                                                                    });
-                                                                                                  },
-                                                                                                );
-                                                                                              },
-                                                                                            ),
-                                                                                            // Display button to submit selected items
-                                                                                            ElevatedButton(
-                                                                                              onPressed: () {
-                                                                                                if (sharedPreferences!.getString('nama') != 'Sri Sumiati') {
-                                                                                                  setFullScreen(false);
-                                                                                                }
-                                                                                                // Print selected items
-                                                                                                List<String> selectedNoQc = [];
-                                                                                                for (int i = 0; i < selectedList.length; i++) {
-                                                                                                  if (selectedList[i]) {
-                                                                                                    selectedNoQc.add('${listItemQc![i].noQc}');
-                                                                                                  }
-                                                                                                }
-                                                                                                print('Selected No Qc : $selectedNoQc');
-                                                                                                Navigator.pop(context);
-                                                                                                Navigator.pop(context);
-                                                                                                savePdf(selectedNoQc);
-                                                                                              },
-                                                                                              child: const Row(
-                                                                                                children: [
-                                                                                                  Icon(Icons.download), // Menambahkan ikon Download
-                                                                                                  SizedBox(width: 8), // Menambahkan jarak antara ikon dan teks
-                                                                                                  Text('Download PDF'),
-                                                                                                ],
-                                                                                              ),
-                                                                                            ),
-                                                                                          ],
-                                                                                        ),
-                                                                                      ),
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                              ),
-                                                                            );
-                                                                          },
-                                                                        );
-                                                                      },
-                                                                      style: ElevatedButton
-                                                                          .styleFrom(
-                                                                        backgroundColor:
-                                                                            Colors.yellow, // Mengatur warna latar belakang tombol
-                                                                        shape:
-                                                                            RoundedRectangleBorder(
-                                                                          borderRadius:
-                                                                              BorderRadius.circular(10), // Memberikan radius 10
-                                                                        ),
-                                                                      ),
-                                                                      child:
-                                                                          const Text(
-                                                                        "Save PDF",
-                                                                        style: TextStyle(
-                                                                            color:
-                                                                                Colors.white,
-                                                                            fontSize: 18),
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                  SizedBox(
-                                                                    width: 200,
-                                                                    height: 50,
-                                                                    child:
-                                                                        ElevatedButton(
-                                                                      onPressed:
-                                                                          () {
-                                                                        showGeneralDialog(
-                                                                          transitionDuration:
-                                                                              const Duration(milliseconds: 200),
-                                                                          barrierDismissible:
-                                                                              true,
-                                                                          barrierLabel:
-                                                                              '',
-                                                                          context:
-                                                                              context,
-                                                                          pageBuilder: (context,
-                                                                              animation1,
-                                                                              animation2) {
-                                                                            return const Text('');
-                                                                          },
-                                                                          barrierColor: Colors
-                                                                              .black
-                                                                              .withOpacity(0.75),
-                                                                          transitionBuilder: (context,
-                                                                              a1,
-                                                                              a2,
-                                                                              widget) {
-                                                                            return Transform.scale(
-                                                                              scale: a1.value,
-                                                                              child: Opacity(
-                                                                                opacity: a1.value,
-                                                                                child: StatefulBuilder(
-                                                                                  builder: (context, setState) => AlertDialog(
-                                                                                    content: SizedBox(
-                                                                                      width: 500,
-                                                                                      height: 500,
-                                                                                      child: SingleChildScrollView(
-                                                                                        scrollDirection: Axis.vertical,
-                                                                                        child: Column(
-                                                                                          mainAxisSize: MainAxisSize.min,
-                                                                                          children: [
-                                                                                            // List of checkboxes and names
-                                                                                            ListView.builder(
-                                                                                              shrinkWrap: true,
-                                                                                              itemCount: listItemQc!.length,
-                                                                                              itemBuilder: (context, index) {
-                                                                                                // Membuat selectedList dengan panjang yang sesuai
-
-                                                                                                return CheckboxListTile(
-                                                                                                  title: Text('No QC = ${listItemQc![index].noQc} / ${listItemQc![index].item}'),
-                                                                                                  value: selectedList[index],
-                                                                                                  onChanged: (isSelected) {
-                                                                                                    setState(() {
-                                                                                                      selectedList[index] = isSelected ?? false;
-                                                                                                    });
-                                                                                                  },
-                                                                                                );
-                                                                                              },
-                                                                                            ),
-                                                                                            // Display button to submit selected items
-                                                                                            ElevatedButton(
-                                                                                              onPressed: () {
-                                                                                                if (sharedPreferences!.getString('nama') != 'Sri Sumiati') {
-                                                                                                  setFullScreen(false);
-                                                                                                }
-                                                                                                // Print selected items
-                                                                                                List<String> selectedNoQc = [];
-                                                                                                for (int i = 0; i < selectedList.length; i++) {
-                                                                                                  if (selectedList[i]) {
-                                                                                                    selectedNoQc.add('${listItemQc![i].noQc}');
-                                                                                                  }
-                                                                                                }
-                                                                                                print('Selected No Qc : $selectedNoQc');
-                                                                                                Navigator.pop(context);
-                                                                                                Navigator.pop(context);
-                                                                                                exportData(selectedNoQc);
-                                                                                              },
-                                                                                              child: const Row(
-                                                                                                children: [
-                                                                                                  Icon(Icons.download), // Menambahkan ikon Download
-                                                                                                  SizedBox(width: 8), // Menambahkan jarak antara ikon dan teks
-                                                                                                  Text('Download'),
-                                                                                                ],
-                                                                                              ),
-                                                                                            ),
-                                                                                          ],
-                                                                                        ),
-                                                                                      ),
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                              ),
-                                                                            );
-                                                                          },
-                                                                        );
-                                                                      },
-                                                                      style: ElevatedButton
-                                                                          .styleFrom(
-                                                                        backgroundColor:
-                                                                            Colors.blue, // Mengatur warna latar belakang tombol
-                                                                        shape:
-                                                                            RoundedRectangleBorder(
-                                                                          borderRadius:
-                                                                              BorderRadius.circular(10), // Memberikan radius 10
-                                                                        ),
-                                                                      ),
-                                                                      child:
-                                                                          const Text(
-                                                                        "Export data",
-                                                                        style: TextStyle(
-                                                                            color:
-                                                                                Colors.white,
-                                                                            fontSize: 18),
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ]),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ]),
-                                              )),
-                                            )));
-                                  });
+                              listItemQc![index].harga != '0'
+                                  ? openForm(index)
+                                  : AwesomeDialog(
+                                      context: context,
+                                      dialogType: DialogType.info,
+                                      borderSide: const BorderSide(
+                                        color: Colors.green,
+                                        width: 2,
+                                      ),
+                                      buttonsBorderRadius:
+                                          const BorderRadius.all(
+                                        Radius.circular(2),
+                                      ),
+                                      width: 450,
+                                      dismissOnTouchOutside: true,
+                                      dismissOnBackKeyPress: true,
+                                      headerAnimationLoop: true,
+                                      animType: AnimType.bottomSlide,
+                                      title: 'INFO',
+                                      desc:
+                                          'Harga untuk ${listItemQc![index].item} belum tersedia',
+                                      onDismissCallback: (type) {},
+                                      showCloseIcon: true,
+                                      btnCancelOnPress: () {
+                                        hargaForm(index);
+                                      },
+                                      btnOkOnPress: () {
+                                        openForm(index);
+                                      },
+                                      btnOkText:
+                                          'Lanjut', // Atur teks tombol OK menjadi 'Custom OK'
+                                      btnCancelText:
+                                          'Isi harga', // Atur teks tombol Cancel menjadi 'Custom Cancel'
+                                    ).show();
                             },
                             child: Card(
                               child: Container(

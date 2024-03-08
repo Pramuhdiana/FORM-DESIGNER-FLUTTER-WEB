@@ -38,6 +38,28 @@ class ExcelPembelian {
     }
   }
 
+  //*HINTS get data dari tabel lain
+  Future<String?> getItemHarga(String qc) async {
+    //get item pr
+    final responseListItem = await http
+        .get(Uri.parse('${ApiConstants.baseUrl}${ApiConstants.getListFormPR}'));
+    if (responseListItem.statusCode == 200) {
+      List jsonResponse = json.decode(responseListItem.body);
+
+      var data =
+          jsonResponse.map((data) => ListItemPRModel.fromJson(data)).toList();
+      //* hints Filter data berdasarkan nomor QC yang ada dalam list noQc
+      // Filter data based on whether any of the conditions in noQc are met
+      var filterByNoQc = data.where((element) => element.noQc == qc).toList();
+
+      data = filterByNoQc;
+
+      return data.first.harga.toString();
+    } else {
+      throw Exception('Unexpected error occured!');
+    }
+  }
+
   Future<void> exportExcel(noQc) async {
 //get data
     final response = await http
@@ -110,6 +132,9 @@ class ExcelPembelian {
     var noQcLOT = sheet.cell(CellIndex.indexByString("E1"));
     noQcLOT.value = "No Qc";
     noQcLOT.cellStyle = headStyle;
+    var harga = sheet.cell(CellIndex.indexByString("F1"));
+    harga.value = "Harga";
+    harga.cellStyle = headStyle;
 
     for (int row = 0; row < dataItemQc!.length; row++) {
       //belum bisa image  Image.network( ApiConstants.baseUrlImage + myData![row].imageUrl!,);
@@ -137,6 +162,11 @@ class ExcelPembelian {
           .cell(CellIndex.indexByColumnRow(columnIndex: 4, rowIndex: row + 1));
       String? itemName = await getItemName(data.noQc.toString());
       listNoQc.value = '${data.noQc} / $itemName';
+      //* HINTS noQc
+      var listHarga = sheet
+          .cell(CellIndex.indexByColumnRow(columnIndex: 5, rowIndex: row + 1));
+      String? itemHarga = await getItemHarga(data.noQc.toString());
+      listHarga.value = '$itemHarga';
     }
 
     excel.rename("mySheet", "RESULT");
