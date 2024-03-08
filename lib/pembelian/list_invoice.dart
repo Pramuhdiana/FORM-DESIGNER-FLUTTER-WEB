@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 import 'dart:ui' as ui;
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -941,19 +942,42 @@ class _ListInvoiceState extends State<ListInvoice> {
                                             child: CustomLoadingButton(
                                                 controller: btnControllerSimpan,
                                                 onPressed: () async {
-                                                  await Future.delayed(
-                                                          const Duration(
-                                                              seconds: 5))
-                                                      .then((value) async {
-                                                    btnControllerSimpan
-                                                        .success();
-                                                  });
-                                                  print(_signatureData);
-                                                  Future.delayed(const Duration(
-                                                          seconds: 2))
-                                                      .then((value) async {
-                                                    btnControllerSimpan.reset();
-                                                  });
+                                                  if (_signatureData.isEmpty) {
+                                                    showCustomDialog(
+                                                      context: context,
+                                                      dialogType:
+                                                          DialogType.error,
+                                                      title: 'GAGAL',
+                                                      description:
+                                                          'Tanda tangan wajib di isi',
+                                                    );
+                                                  } else {
+                                                    await Future.delayed(
+                                                            const Duration(
+                                                                seconds: 2))
+                                                        .then((value) async {
+                                                      btnControllerSimpan
+                                                          .success();
+                                                    });
+                                                    print(_signatureData);
+                                                    Future.delayed(
+                                                            const Duration(
+                                                                seconds: 1))
+                                                        .then((value) async {
+                                                      btnControllerSimpan
+                                                          .reset();
+                                                    });
+                                                    //*HINTS Panggil fungsi showCustomDialog
+                                                    // ignore: use_build_context_synchronously
+                                                    showCustomDialog(
+                                                      context: context,
+                                                      dialogType:
+                                                          DialogType.success,
+                                                      title: 'SUCCESS',
+                                                      description:
+                                                          'Nota tersimpan',
+                                                    );
+                                                  }
                                                 },
                                                 child: const Row(
                                                   mainAxisAlignment:

@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:form_designer/SCM/mainScreen/kebutuhan_batu_by_siklus.dart';
 import 'package:form_designer/SCM/mainScreen/list_scm.dart';
@@ -111,3 +112,32 @@ Map<String, IconData> iconMapGlobal = {
   'Dashboard Orul & Reparasi': Icons.list,
   // Tambahkan mapping untuk ikon lainnya sesuai kebutuhan Anda
 };
+
+//*HINTS global fungsi showCustomDialog
+
+void showCustomDialog({
+  required BuildContext context,
+  required DialogType dialogType,
+  required String title,
+  required String description,
+}) {
+  AwesomeDialog(
+    context: context,
+    dialogType: dialogType,
+    borderSide: const BorderSide(
+      color: Colors.green,
+      width: 2,
+    ),
+    buttonsBorderRadius: const BorderRadius.all(
+      Radius.circular(2),
+    ),
+    width: 450,
+    dismissOnTouchOutside: true,
+    dismissOnBackKeyPress: false,
+    headerAnimationLoop: true,
+    animType: AnimType.bottomSlide,
+    title: title,
+    desc: description,
+    btnOkOnPress: () {},
+  ).show();
+}
