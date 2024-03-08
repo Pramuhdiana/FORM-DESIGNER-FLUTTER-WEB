@@ -444,12 +444,13 @@ class _ListInvoiceState extends State<ListInvoice> {
 
   List<DataRow> rowsData(
       var data, int count, Function() onChangedCallback, jenisItem) {
-    double sumBerat = 0.0;
+    List<double> totalHarga = [];
+    double sumHargaBerat = 0.0;
     for (var i = 0; i < count; i++) {
-      sumBerat += double.parse(data[i]
-          .berat); // Menambahkan nilai dari indeks kedua (indeks kolom ke-1)
-      // sumQty += int.parse(data[i]
-      //     .qty); // Menambahkan nilai dari indeks kedua (indeks kolom ke-1)
+      double sumTotal =
+          double.parse(data[i].harga) * double.parse(data[i].receiveBerat);
+      totalHarga.add(sumTotal);
+      sumHargaBerat += sumTotal;
     }
 
     return [
@@ -471,13 +472,14 @@ class _ListInvoiceState extends State<ListInvoice> {
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Text('${data[i].item} / ${getKualitas(data[i].kadar)}'),
           )),
-          const DataCell(Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10),
-            child: Text('\$ 480'),
+          DataCell(Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Text('\$ ${data[i].harga}', textAlign: TextAlign.left),
           )),
-          const DataCell(Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10),
-            child: Text('\$ 2000'),
+          DataCell(Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Text('\$ ${totalHarga[i].toStringAsFixed(3)}',
+                textAlign: TextAlign.left),
           )),
         ]),
       DataRow(cells: [
@@ -538,7 +540,8 @@ class _ListInvoiceState extends State<ListInvoice> {
               child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Text(
-                    sumBerat.toStringAsFixed(3),
+                    '\$ ${sumHargaBerat.toStringAsFixed(3)}',
+                    textAlign: TextAlign.left,
                     style: const TextStyle(
                         color: Colors.black, fontWeight: FontWeight.bold),
                   ))),
