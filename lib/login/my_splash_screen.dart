@@ -145,6 +145,7 @@ class _MySplashScreenState extends State<MySplashScreen> {
         String statusAPI = filterByIdUser.first.status.toString();
         String divisiAPI = filterByIdUser.first.divisi.toString();
         String roleAPI = filterByIdUser.first.role.toString();
+        String listMenuAPI = filterByIdUser.first.listMenu.toString();
 
         setState(() {
           sharedPreferences!.setString('token', 'ingat saya');
@@ -155,6 +156,7 @@ class _MySplashScreenState extends State<MySplashScreen> {
           sharedPreferences!.setString('status', statusAPI);
           sharedPreferences!.setString('divisi', divisiAPI);
           sharedPreferences!.setString('role', roleAPI);
+          sharedPreferences!.setString('listMenu', listMenuAPI);
         });
       } else {
         throw Exception('Unexpected error occured!');

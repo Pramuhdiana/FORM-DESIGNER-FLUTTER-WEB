@@ -234,11 +234,7 @@ class MainViewPembelian extends StatefulWidget {
 
 class _MainViewPembelianState extends State<MainViewPembelian> {
   List<int> userMenuIds = [];
-  List<Widget> screenUserRole = [
-    const ListKebutuhanBatuScreen(),
-    const ListStatusApprovalScreen(),
-    const ListKebutuhanBatuScreen(),
-  ];
+  List<Widget> screenUserRole = [];
   List<String> listMenu = [];
   final _formKey = GlobalKey<FormState>();
   int selectedIndex = 0;
