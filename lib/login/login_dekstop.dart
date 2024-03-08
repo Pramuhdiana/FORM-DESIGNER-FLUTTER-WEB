@@ -192,27 +192,27 @@ class _LoginDesktopState extends State<LoginDesktop> {
                             print(response.statusCode);
                             if (value == 1) {
                               String id = data['id'];
-                              String emailAPI = data['email'];
-                              String namaAPI = data['nama'];
-                              String levelAPI = data['level'];
-                              String statusAPI = data['status'];
-                              String divisiAPI = data['divisi'];
-                              String roleAPI = data['role'];
-                              String listMenuAPI = data['listMenu'];
+                              // String emailAPI = data['email'];
+                              // String namaAPI = data['nama'];
+                              // String levelAPI = data['level'];
+                              // String statusAPI = data['status'];
+                              // String divisiAPI = data['divisi'];
+                              // String roleAPI = data['role'];
+                              // String listMenuAPI = data['listMenu'];
                               setState(() {
                                 sharedPreferences!
                                     .setString('token', 'ingat saya');
                                 sharedPreferences!.setString('id', id);
-                                sharedPreferences!.setString('nama', namaAPI);
-                                sharedPreferences!.setString('email', emailAPI);
-                                sharedPreferences!.setString('level', levelAPI);
-                                sharedPreferences!
-                                    .setString('status', statusAPI);
-                                sharedPreferences!
-                                    .setString('divisi', divisiAPI);
-                                sharedPreferences!.setString('role', roleAPI);
+                                // sharedPreferences!.setString('nama', namaAPI);
+                                // sharedPreferences!.setString('email', emailAPI);
+                                // sharedPreferences!.setString('level', levelAPI);
+                                // sharedPreferences!
+                                //     .setString('status', statusAPI);
+                                // sharedPreferences!
+                                //     .setString('divisi', divisiAPI);
+                                // sharedPreferences!.setString('role', roleAPI);
 
-                                print(listMenuAPI);
+                                // print(listMenuAPI);
 
                                 sharedPreferences!.setBool('isLogin', true);
                                 // savePref(

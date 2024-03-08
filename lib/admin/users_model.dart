@@ -8,6 +8,8 @@ class UsersModel {
   String? divisi;
   int? role;
   String? listMenu;
+  String? notif;
+  String? token;
 
   UsersModel(
       {this.id,
@@ -18,7 +20,9 @@ class UsersModel {
       this.status,
       this.divisi,
       this.role,
-      this.listMenu});
+      this.listMenu,
+      this.notif,
+      this.token});
 
   UsersModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -30,6 +34,8 @@ class UsersModel {
     divisi = json['divisi'];
     role = json['role'];
     listMenu = json['listMenu'] ?? '';
+    notif = json['notif'] ?? 'off';
+    token = json['token'] ?? '';
   }
 
   Map<String, dynamic> toJson() {
@@ -43,6 +49,8 @@ class UsersModel {
     data['divisi'] = divisi;
     data['role'] = role;
     data['listMenu'] = listMenu;
+    data['notif'] = notif;
+    data['token'] = token;
     return data;
   }
 }

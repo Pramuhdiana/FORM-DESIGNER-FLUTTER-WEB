@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:form_designer/SCM/mainScreen/kebutuhan_batu_by_siklus.dart';
 import 'package:form_designer/SCM/mainScreen/list_scm.dart';
 import 'package:form_designer/admin/list_user.dart';
+import 'package:form_designer/admin/notifikasi_admin.dart';
 import 'package:form_designer/api/api_constant.dart';
 import 'package:form_designer/calculatePricing/list_calculate_pricing_screen.dart';
 import 'package:form_designer/global/global.dart';
@@ -57,6 +58,7 @@ class _MainViewAdminState extends State<MainViewAdmin> {
     const SummarySusutScreen(),
     const SummaryPasangBatuScreen(),
     const SummaryProduktivitasScreen(),
+    const NotifikasiAdmin(),
     //! keluar admin
     const HomeScreen()
   ];
@@ -64,10 +66,11 @@ class _MainViewAdminState extends State<MainViewAdmin> {
   int selectedIndex = 0;
   bool isKodeAkses = false;
   TextEditingController kodeAkses = TextEditingController();
-
+  String? notifPermission;
   @override
   void initState() {
     super.initState();
+    notifPermission = sharedPreferences!.getString('notif');
   }
 
   @override
@@ -213,6 +216,10 @@ class _MainViewAdminState extends State<MainViewAdmin> {
             SideNavigationBarItem(
               icon: Icons.developer_mode,
               label: 'SUM Produktivitas',
+            ),
+            SideNavigationBarItem(
+              icon: Icons.developer_mode,
+              label: 'Notifikasi',
             ),
             SideNavigationBarItem(
               icon: Icons.logout,

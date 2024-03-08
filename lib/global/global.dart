@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:form_designer/SCM/mainScreen/kebutuhan_batu_by_siklus.dart';
 import 'package:form_designer/SCM/mainScreen/list_scm.dart';
 import 'package:form_designer/admin/list_user.dart';
+import 'package:form_designer/admin/send_notif.dart';
 import 'package:form_designer/calculatePricing/list_calculate_pricing_screen.dart';
 import 'package:form_designer/ga/home_screen_ga.dart';
 import 'package:form_designer/mainScreen/home_admin.dart';
@@ -33,10 +34,14 @@ SharedPreferences? sharedPreferences;
 int revisiBesar =
     1; //UI baru, banyak fitur baru, perubahan konsep, dll  (MAJOR)
 int revisiKecil =
-    41; //perubahan kecil                                    (MINOR)
+    42; //perubahan kecil                                    (MINOR)
 int rilisPerbaikanbug =
     12; //perbaikan bug                                      (PATCH)
 //? komen
+SendNotif notif = SendNotif();
+String fcmServerToken =
+    "AAAAcuKVUe8:APA91bGu674MRJ9S3DUyAnRkHGOhRh_IARdfPYEckq5kB5LyHsL1zOEuqDtLFXtsRY1PDVDGBVhaV0ApkYGGAMFGV-bHav-jJcEYGaGaQRf1HcTbhNsM5nipDlLZP3H4C8t9fr8jo8lQ";
+
 Color colorDasar = const Color.fromRGBO(38, 54, 72, 1);
 Color colorBG = const Color.fromARGB(255, 157, 157, 165);
 Color colorGrey = const Color.fromARGB(243, 243, 243, 187);

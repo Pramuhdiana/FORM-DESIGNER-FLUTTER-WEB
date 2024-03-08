@@ -103,6 +103,7 @@ class _HomeScreenAdminState extends State<HomeScreenAdmin> {
     _getAllData("all", sharedPreferences!.getString('nama')!);
     nowSiklus = sharedPreferences!.getString('siklus')!;
     // _getDataJenisBarang('all', '');
+    //star notifi
   }
 
   _getAllData(month, name) async {

@@ -3,8 +3,10 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:form_designer/admin/push_notification_system.dart';
 import 'package:form_designer/admin/users_model.dart';
 import 'package:form_designer/api/api_constant.dart';
 import 'package:form_designer/mainScreen/login.dart';
@@ -53,6 +55,9 @@ class _MySplashScreenState extends State<MySplashScreen> {
           } else {
             throw Exception('Unexpected error occured!');
           }
+          await getUser();
+
+          await getToken(sharedPreferences!.getString('id'));
 
           if (sharedPreferences!.getString('divisi') == 'produksi') {
             print('masuk area produksi');
@@ -101,8 +106,11 @@ class _MySplashScreenState extends State<MySplashScreen> {
   @override
   void initState() {
     super.initState();
+
     _getData();
     splashScreenTimer();
+    PushNotificationsSystem.configureFirebaseMessaging(
+        context); // Panggil fungsi penanganan pesan
   }
 
   _getData() async {
@@ -111,6 +119,68 @@ class _MySplashScreenState extends State<MySplashScreen> {
     // await getLebar();
     await getJenisBatu();
     // await getKualitasBatu();
+  }
+
+  getUser() async {
+    try {
+      final response = await http
+          .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getListUsers));
+      if (response.statusCode == 200) {
+        List jsonResponse = json.decode(response.body);
+
+        var allData =
+            jsonResponse.map((data) => UsersModel.fromJson(data)).toList();
+
+        var filterByIdUser = allData
+            .where((element) =>
+                element.id.toString().toLowerCase() ==
+                sharedPreferences!.getString('id').toString().toLowerCase())
+            .toList();
+        // idMenu[i][j] =
+
+        String id = filterByIdUser.first.id.toString();
+        String emailAPI = filterByIdUser.first.email.toString();
+        String namaAPI = filterByIdUser.first.nama.toString();
+        String levelAPI = filterByIdUser.first.level.toString();
+        String statusAPI = filterByIdUser.first.status.toString();
+        String divisiAPI = filterByIdUser.first.divisi.toString();
+        String roleAPI = filterByIdUser.first.role.toString();
+
+        setState(() {
+          sharedPreferences!.setString('token', 'ingat saya');
+          sharedPreferences!.setString('id', id);
+          sharedPreferences!.setString('nama', namaAPI);
+          sharedPreferences!.setString('email', emailAPI);
+          sharedPreferences!.setString('level', levelAPI);
+          sharedPreferences!.setString('status', statusAPI);
+          sharedPreferences!.setString('divisi', divisiAPI);
+          sharedPreferences!.setString('role', roleAPI);
+        });
+      } else {
+        throw Exception('Unexpected error occured!');
+      }
+    } catch (e) {
+      print('err get user $e');
+    }
+    // if response
+  }
+
+  getToken(idUser) async {
+    try {
+      String? token = await FirebaseMessaging.instance.getToken();
+      print('FCM Token: $token');
+      Map<String, String> body = {
+        'type': 'saveToken',
+        'id': idUser,
+        'token': '$token',
+      };
+      final response = await http.post(
+          Uri.parse('${ApiConstants.baseUrl}${ApiConstants.restFullApi}'),
+          body: jsonEncode(body));
+      print(response.body);
+    } catch (e) {
+      print('error get token $e');
+    }
   }
 
   _getDataUser() async {
@@ -130,7 +200,9 @@ class _MySplashScreenState extends State<MySplashScreen> {
               sharedPreferences!.getString('nama').toString().toLowerCase())
           .toList();
       String? listMenuAPI = filterByName.first.listMenu;
+      String? notifAPI = filterByName.first.notif;
       sharedPreferences!.setString('listMenu', listMenuAPI!);
+      sharedPreferences!.setString('notif', notifAPI!);
 
       // idMenu[i][j] =
 
