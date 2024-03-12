@@ -628,13 +628,21 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
   List<DataRow> rowsEditData(int index, String jenisBatu,
       Function() onChangedCallback, int count, double kebutuhan) {
     double sumBerat = 0.0;
-    double sumQty = 0.0;
+    int sumQty = 0;
     if (jenisBatu.toString().toLowerCase() == 'round') {
       for (var data in selectListItemRound) {
-        sumBerat += double.parse(
-            data[2]); // Menambahkan nilai dari indeks kedua (indeks kolom ke-1)
-        sumQty += int.parse(
-            data[1]); // Menambahkan nilai dari indeks kedua (indeks kolom ke-1)
+        try {
+          sumBerat += double.parse(data[
+              2]); // Menambahkan nilai dari indeks kedua (indeks kolom ke-1)
+        } catch (e) {
+          sumBerat += 0.0;
+        }
+        try {
+          sumQty += int.parse(data[1]);
+        } catch (e) {
+          // Jika parsing gagal, tambahkan 0
+          sumQty += 0;
+        }
       }
     } else {
       for (var data in selectListItemFancy) {
@@ -725,9 +733,39 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                 ),
 
                 //? qty round
-                DataCell(Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Center(child: Text((selectListItemRound[i][1]))))),
+                // DataCell(Container(
+                //     padding: const EdgeInsets.symmetric(horizontal: 10),
+                //     child: Center(child: Text((selectListItemRound[i][1]))))),
+
+                DataCell(
+                  Center(
+                    child: TextFormField(
+                      initialValue: selectListItemRound[i][1],
+                      textAlign: TextAlign.center,
+                      //* HINTS Menengahkan teks secara horizontal
+                      keyboardType: const TextInputType.numberWithOptions(
+                          decimal: true), // Mengizinkan input nilai desimal
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.allow(RegExp(
+                            r'^\d+\.?\d{0,3}')), // Membatasi input agar sesuai format desimal
+                      ],
+                      onChanged: (value) {
+                        try {
+                          qty = value;
+                        } catch (e) {
+                          print('err $e');
+                          qty = '0';
+                        }
+                        setState(() {
+                          selectListItemRound[i][1] = '$qty';
+                          print('round = $selectListItemRound');
+                        });
+                        // onChangedCallback(); // Panggil onChangedCallback di sini
+                        // print(selectListItem);
+                      },
+                    ),
+                  ),
+                ),
 
                 //? berat round
                 DataCell(
@@ -798,7 +836,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                     padding: const EdgeInsets.symmetric(horizontal: 0),
                     child: Center(
                         child: Text(
-                      '$sumQty',
+                      sumQty.toStringAsFixed(0),
                       style: const TextStyle(
                           color: Colors.white, fontWeight: FontWeight.bold),
                     ))),
