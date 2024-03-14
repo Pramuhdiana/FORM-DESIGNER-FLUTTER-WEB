@@ -32,6 +32,7 @@ class FormPrModel {
   String? totalQtyDiterima;
   String? lokasi;
   String? tanggalCetak;
+  String? kurir;
 
   FormPrModel({
     this.id,
@@ -56,6 +57,7 @@ class FormPrModel {
     this.totalQtyDiterima,
     this.lokasi,
     this.tanggalCetak,
+    this.kurir,
   });
 
   // ignore: avoid_types_as_parameter_names
@@ -82,6 +84,7 @@ class FormPrModel {
         totalQtyDiterima: json["total_qty_diterima"].toString(),
         lokasi: json["lokasi"] ?? '',
         tanggalCetak: json["tanggal_cetak"] ?? '',
+        kurir: json["kurir"] ?? '',
       );
 
   Map<String, dynamic> toJson() => {
@@ -105,6 +108,6 @@ class FormPrModel {
         "tanggal_selesai": tanggalSelesai,
         "total_berat_diterima": totalBeratDiterima,
         "lokasi": lokasi,
-        "tanggal_cetak": tanggalCetak,
+        "kurir": kurir,
       };
 }

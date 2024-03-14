@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:dio/dio.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
@@ -209,9 +210,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
   dataTableForm(
       String mode, String jenisBatu, int count, int index, double kebutuhan) {
     return SizedBox(
-        width: MediaQuery.of(context).size.width *
-            0.7, // Lebar DataTable adalah 70% dari lebar layar
-
+        width: 500,
         child: DataTable(
             headingTextStyle: const TextStyle(
                 fontWeight: FontWeight.bold, color: Colors.white),
@@ -236,11 +235,12 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
   List<DataColumn> columnsData(String jenisBatu, int index) {
     return kodeBatu.toString().toLowerCase() == 'round'
         ? [
-            const DataColumn(
+            DataColumn(
                 label: Center(
-                    child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              child: Text('No'),
+                    child: Container(
+              width: 15,
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: const Text('No'),
             ))),
             const DataColumn(
               label: Center(
@@ -288,11 +288,12 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
             ),
           ]
         : [
-            const DataColumn(
+            DataColumn(
                 label: Center(
-                    child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              child: Text('No'),
+                    child: Container(
+              width: 15,
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: const Text('No'),
             ))),
             // const DataColumn(
             //     label: Center(
@@ -646,10 +647,18 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
       }
     } else {
       for (var data in selectListItemFancy) {
-        sumBerat += double.parse(
-            data[4]); // Menambahkan nilai dari indeks kedua (indeks kolom ke-1)
-        sumQty += int.parse(
-            data[3]); // Menambahkan nilai dari indeks kedua (indeks kolom ke-1)
+        try {
+          sumBerat += double.parse(data[
+              4]); // Menambahkan nilai dari indeks kedua (indeks kolom ke-1)
+        } catch (e) {
+          sumBerat += 0.0;
+        }
+        try {
+          sumQty += int.parse(data[
+              3]); // Menambahkan nilai dari indeks kedua (indeks kolom ke-1)
+        } catch (e) {
+          sumQty += 0;
+        }
       }
     }
     double sumReject = kebutuhan - sumBerat;
@@ -1064,8 +1073,14 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
         print(responseList.body);
         throw Exception('Unexpected error occured!');
       }
-    } catch (c) {
-      print('err get form list item pr $c');
+    } catch (e) {
+      // ignore: use_build_context_synchronously
+      showDialogError(
+        context: context,
+        dialogType: DialogType.error,
+        title: 'ERROR GET list item',
+        description: 'Hubungi admin => $e',
+      );
     }
 
     var filtBynoPR = listItemPr!
@@ -1075,16 +1090,26 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
         .toList();
 
     //get listnya
-    final responseList = await http
-        .get(Uri.parse('${ApiConstants.baseUrl}${ApiConstants.getItemQc}'));
+    try {
+      final responseList = await http
+          .get(Uri.parse('${ApiConstants.baseUrl}${ApiConstants.getItemQc}'));
 
-    if (responseList.statusCode == 200) {
-      List jsonResponse = json.decode(responseList.body);
+      if (responseList.statusCode == 200) {
+        List jsonResponse = json.decode(responseList.body);
 
-      var dataList = jsonResponse
-          .map((dataList) => ItemQcModel.fromJson(dataList))
-          .toList();
-      listDetailItemPR = dataList;
+        var dataList = jsonResponse
+            .map((dataList) => ItemQcModel.fromJson(dataList))
+            .toList();
+        listDetailItemPR = dataList;
+      }
+    } catch (e) {
+      // ignore: use_build_context_synchronously
+      showDialogError(
+        context: context,
+        dialogType: DialogType.error,
+        title: 'ERROR edit form',
+        description: 'Hubungi admin => $e',
+      );
     }
     setState(() {
       listItemPr = filtBynoPR;
@@ -1106,8 +1131,14 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
       } else {
         throw Exception('Unexpected error occured!');
       }
-    } catch (c) {
-      print('err get data panjang = $c');
+    } catch (e) {
+      // ignore: use_build_context_synchronously
+      showDialogError(
+        context: context,
+        dialogType: DialogType.error,
+        title: 'ERROR GET list panjang',
+        description: 'Hubungi admin => $e',
+      );
     }
   }
 
@@ -1125,9 +1156,14 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
       } else {
         throw Exception('Unexpected error occured!');
       }
-    } catch (c) {
-      // ignore:
-      print('err get data lebar = $c');
+    } catch (e) {
+      // ignore: use_build_context_synchronously
+      showDialogError(
+        context: context,
+        dialogType: DialogType.error,
+        title: 'ERROR GET list lebar',
+        description: 'Hubungi admin => $e',
+      );
     }
   }
 
@@ -1150,9 +1186,14 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
       } else {
         throw Exception('Unexpected error occured!');
       }
-    } catch (c) {
-      // ignore:
-      print('err get data jenisBatu = $c');
+    } catch (e) {
+      // ignore: use_build_context_synchronously
+      showDialogError(
+        context: context,
+        dialogType: DialogType.error,
+        title: 'ERROR GET list jenisbatu',
+        description: 'Hubungi admin => $e',
+      );
     }
   }
 
@@ -1175,9 +1216,14 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
       } else {
         throw Exception('Unexpected error occured!');
       }
-    } catch (c) {
-      // ignore:
-      print('err get data kodeBatu = $c');
+    } catch (e) {
+      // ignore: use_build_context_synchronously
+      showDialogError(
+        context: context,
+        dialogType: DialogType.error,
+        title: 'ERROR GET list kodeBatu',
+        description: 'Hubungi admin => $e',
+      );
     }
   }
 
@@ -1953,29 +1999,32 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
       for (var i = 0; i < selectListItemRound.length; i++) {
         totalBerat += double.tryParse(selectListItemRound[i][2]) ?? 0;
         totalQty += int.tryParse(selectListItemRound[i][1]) ?? 0;
-
-        await postDetailItem(
-          selectListItemRound[i][0],
-          selectListItemRound[i][1],
-          selectListItemRound[i][2],
-          '',
-          '',
-          selectListItemRound[i][3],
-          selectListItemRound[i][5],
-        );
+        if (selectListItemRound[i][0] != '') {
+          await postDetailItem(
+            selectListItemRound[i][0],
+            selectListItemRound[i][1],
+            selectListItemRound[i][2],
+            '',
+            '',
+            selectListItemRound[i][3],
+            selectListItemRound[i][5],
+          );
+        }
       }
     } else {
       for (var i = 0; i < selectListItemFancy.length; i++) {
         totalBerat += double.tryParse(selectListItemFancy[i][4]) ?? 0;
         totalQty += int.tryParse(selectListItemFancy[i][3]) ?? 0;
-        await postDetailItem(
-            '${selectListItemFancy[i][1]} x ${selectListItemFancy[i][2]}',
-            selectListItemFancy[i][3],
-            selectListItemFancy[i][4],
-            selectListItemFancy[i][1],
-            selectListItemFancy[i][2],
-            '0',
-            selectListItemFancy[i][0]);
+        if (selectListItemFancy[i][1] != '') {
+          await postDetailItem(
+              '${selectListItemFancy[i][1]} x ${selectListItemFancy[i][2]}',
+              selectListItemFancy[i][3],
+              selectListItemFancy[i][4],
+              selectListItemFancy[i][1],
+              selectListItemFancy[i][2],
+              '0',
+              selectListItemFancy[i][0]);
+        }
       }
     }
 
@@ -2000,22 +2049,24 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
         totalBerat += double.tryParse(selectListItemRound[i][2]) ?? 0;
         totalQty += int.tryParse(selectListItemRound[i][1]) ?? 0;
         try {
-          await updateDetailItem(
-              selectListItemRound[i][4], //? id
-              selectListItemRound[i][0],
-              selectListItemRound[i][1],
-              selectListItemRound[i][2],
-              '',
-              '',
-              selectListItemRound[i][3],
-              selectListItemRound[i][5]);
-        } catch (c) {
+          if (selectListItemRound[i][0] != '') {
+            await updateDetailItem(
+                selectListItemRound[i][4], //? id
+                selectListItemRound[i][0],
+                selectListItemRound[i][1],
+                selectListItemRound[i][2],
+                '',
+                '',
+                selectListItemRound[i][3],
+                selectListItemRound[i][5]);
+          }
+        } catch (e) {
           // ignore: use_build_context_synchronously
-          // Navigator.pop(context);
-          showSimpleNotification(
-            Text('Edit form gagal hubungi admin => $c'),
-            background: Colors.green,
-            duration: const Duration(seconds: 10),
+          showDialogError(
+            context: context,
+            dialogType: DialogType.error,
+            title: 'ERROR edit form',
+            description: 'Hubungi admin => $e',
           );
         }
       }
@@ -2023,15 +2074,17 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
       for (var i = 0; i < selectListItemFancy.length; i++) {
         totalBerat += double.tryParse(selectListItemFancy[i][4]) ?? 0;
         totalQty += int.tryParse(selectListItemFancy[i][3]) ?? 0;
-        await updateDetailItem(
-            selectListItemFancy[i][5], //? id
-            '${selectListItemFancy[i][1]} x ${selectListItemFancy[i][2]}',
-            selectListItemFancy[i][3],
-            selectListItemFancy[i][4],
-            selectListItemFancy[i][1],
-            selectListItemFancy[i][2],
-            '0',
-            selectListItemFancy[i][0]);
+        if (selectListItemFancy[i][1] != '') {
+          await updateDetailItem(
+              selectListItemFancy[i][5], //? id
+              '${selectListItemFancy[i][1]} x ${selectListItemFancy[i][2]}',
+              selectListItemFancy[i][3],
+              selectListItemFancy[i][4],
+              selectListItemFancy[i][1],
+              selectListItemFancy[i][2],
+              '0',
+              selectListItemFancy[i][0]);
+        }
       }
     }
 
@@ -2056,10 +2109,20 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
       'total_berat_diteirma': totalBerat.toString(),
       'notes_reject': notesReject.text,
     };
-    final response = await http.post(
-        Uri.parse('${ApiConstants.baseUrl}${ApiConstants.updateStatusPR}'),
-        body: body);
-    print(response.body);
+    try {
+      final response = await http.post(
+          Uri.parse('${ApiConstants.baseUrl}${ApiConstants.updateStatusPR}'),
+          body: body);
+      print(response.body);
+    } catch (e) {
+      // ignore: use_build_context_synchronously
+      showDialogError(
+        context: context,
+        dialogType: DialogType.error,
+        title: 'ERROR edit form',
+        description: 'Hubungi admin => $e',
+      );
+    }
   }
 
   postStatusItemPR(String? id) async {
@@ -2071,10 +2134,20 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
       'receiveQty': totalQty.toString(),
       'notesReject': notesReject.text,
     };
-    final response = await http.post(
-        Uri.parse('${ApiConstants.baseUrl}${ApiConstants.updateItemPr}'),
-        body: jsonEncode(body));
-    print(response.body);
+    try {
+      final response = await http.post(
+          Uri.parse('${ApiConstants.baseUrl}${ApiConstants.updateItemPr}'),
+          body: jsonEncode(body));
+      print(response.body);
+    } catch (e) {
+      // ignore: use_build_context_synchronously
+      showDialogError(
+        context: context,
+        dialogType: DialogType.error,
+        title: 'ERROR edit form',
+        description: 'Hubungi admin => $e',
+      );
+    }
   }
 
   postDetailItem(String item, qty, berat, panjang, lebar, caratPcs,
@@ -2094,10 +2167,20 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
       'ukuranBatu': ukuranBatu.text,
       'kodeMdbc': kodeMdbc,
     };
-    final response = await http.post(
-        Uri.parse('${ApiConstants.baseUrl}${ApiConstants.postListFormQc}'),
-        body: body);
-    print(response.body);
+    try {
+      final response = await http.post(
+          Uri.parse('${ApiConstants.baseUrl}${ApiConstants.postListFormQc}'),
+          body: body);
+      print(response.body);
+    } catch (e) {
+      // ignore: use_build_context_synchronously
+      showDialogError(
+        context: context,
+        dialogType: DialogType.error,
+        title: 'ERROR POST detail item',
+        description: 'Hubungi admin => $e',
+      );
+    }
   }
 
   updateDetailItem(String id, String item, qty, berat, panjang, lebar, caratPcs,
@@ -2120,10 +2203,20 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
       'noQc': noQc,
       'kodeMdbc': kodeMdbc,
     };
-    final response = await http.post(
-        Uri.parse('${ApiConstants.baseUrl}${ApiConstants.updateItemPr}'),
-        body: jsonEncode(body));
-    print(response.body);
+    try {
+      final response = await http.post(
+          Uri.parse('${ApiConstants.baseUrl}${ApiConstants.updateItemPr}'),
+          body: jsonEncode(body));
+      print(response.body);
+    } catch (e) {
+      // ignore: use_build_context_synchronously
+      showDialogError(
+        context: context,
+        dialogType: DialogType.error,
+        title: 'ERROR POST detail item',
+        description: 'Hubungi admin => $e',
+      );
+    }
   }
 
   //* HINTS Fungsi untuk menentukan hasil berdasarkan range panjang dan lebar fancy

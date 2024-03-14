@@ -35,7 +35,7 @@ SharedPreferences? sharedPreferences;
 int revisiBesar =
     1; //UI baru, banyak fitur baru, perubahan konsep, dll  (MAJOR)
 int revisiKecil =
-    44; //perubahan kecil                                    (MINOR)
+    45; //perubahan kecil                                    (MINOR)
 int rilisPerbaikanbug =
     12; //perbaikan bug                                      (PATCH)
 //? komen
@@ -120,6 +120,7 @@ void showCustomDialog({
   required DialogType dialogType,
   required String title,
   required String description,
+  bool dissmiss = true,
 }) {
   AwesomeDialog(
     context: context,
@@ -132,12 +133,39 @@ void showCustomDialog({
       Radius.circular(2),
     ),
     width: 450,
-    dismissOnTouchOutside: true,
-    dismissOnBackKeyPress: false,
+    dismissOnTouchOutside: dissmiss,
+    dismissOnBackKeyPress: dissmiss,
     headerAnimationLoop: true,
     animType: AnimType.bottomSlide,
     title: title,
     desc: description,
     btnOkOnPress: () {},
+  ).show();
+}
+
+void showDialogError({
+  required BuildContext context,
+  required DialogType dialogType,
+  required String title,
+  required String description,
+  bool dissmiss = false,
+}) {
+  AwesomeDialog(
+    context: context,
+    dialogType: dialogType,
+    borderSide: const BorderSide(
+      color: Colors.green,
+      width: 2,
+    ),
+    buttonsBorderRadius: const BorderRadius.all(
+      Radius.circular(2),
+    ),
+    width: 450,
+    dismissOnTouchOutside: dissmiss,
+    dismissOnBackKeyPress: dissmiss,
+    headerAnimationLoop: true,
+    animType: AnimType.bottomSlide,
+    title: title,
+    desc: description,
   ).show();
 }

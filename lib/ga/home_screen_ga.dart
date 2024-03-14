@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:form_designer/api/api_constant.dart';
@@ -256,6 +257,20 @@ class _HomeScreenGaState extends State<HomeScreenGa> {
                                                 )),
                                           ),
                                           DataColumn(label: _verticalDivider),
+                                          //Tanggal Kirim
+                                          DataColumn(
+                                            label: Container(
+                                                padding: const EdgeInsets.only(
+                                                    left: 0),
+                                                child: const Text(
+                                                  "Tgl.Kirim",
+                                                  style: TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                )),
+                                          ),
+                                          DataColumn(label: _verticalDivider),
 
                                           // No PR
                                           DataColumn(
@@ -338,6 +353,18 @@ class _HomeScreenGaState extends State<HomeScreenGa> {
                                             label: SizedBox(
                                                 child: Text(
                                               "Notes",
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold),
+                                            )),
+                                          ),
+
+                                          DataColumn(label: _verticalDivider),
+                                          // kurir
+                                          const DataColumn(
+                                            label: SizedBox(
+                                                child: Text(
+                                              "Kurir",
                                               style: TextStyle(
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.bold),
@@ -456,352 +483,42 @@ class RowSource extends DataTableSource {
               padding: const EdgeInsets.only(left: 0),
               child: IconButton(
                 onPressed: () {
-                  totalBeratReceive = 0.0;
-                  totalQtyReceive = 0;
-                  var filterBynoPR = listDataPR!
-                      .where((element) =>
-                          element.noPr.toString().toLowerCase() ==
-                          data.noPr.toString().toLowerCase())
-                      .toList();
-                  // for(var i=0; i< filterBynoPr.length; i++){
-                  // totalBeratReceive +=  double.tryParse(filterBynoPr[i].receiveBerat!) ?? 0;
-                  // }
-                  showGeneralDialog(
-                      transitionDuration: const Duration(milliseconds: 200),
-                      barrierDismissible: false,
-                      barrierLabel: '',
-                      context: context,
-                      pageBuilder: (context, animation1, animation2) {
-                        return const Text('');
-                      },
-                      barrierColor: Colors.black.withOpacity(0.5),
-                      transitionBuilder: (context, a1, a2, widget) {
-                        return Transform.scale(
-                            scale: a1.value,
-                            child: Opacity(
-                                opacity: a1.value,
-                                child: AlertDialog(
-                                    content: Stack(
-                                        clipBehavior: Clip.none,
-                                        children: <Widget>[
-                                      SizedBox(
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Align(
-                                              alignment: Alignment.topLeft,
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    children: [
-                                                      SizedBox(
-                                                        width: 100,
-                                                        height: 50,
-                                                        child: Image.network(
-                                                          '${ApiConstants.baseUrlImage}csv.png',
-                                                          fit: BoxFit.scaleDown,
-                                                        ),
-                                                      ),
-                                                      const SizedBox(width: 10),
-                                                      const Text(
-                                                        'Jl. Raya Daan Mogot\nKM 21 Pergudangan Eraprima\nBlok I No.2 Batu Ceper, Tanggerang,\nBanten 15122, Tangerang',
-                                                        style: TextStyle(
-                                                            color: Colors.black,
-                                                            fontSize: 12),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  Text(
-                                                    'No. ${data.noPr}',
-                                                    textAlign: TextAlign.start,
-                                                    style: const TextStyle(
-                                                        color: Colors.black,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 18),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            Text(
-                                              data.jenisForm
-                                                          .toString()
-                                                          .toLowerCase() ==
-                                                      'retur'
-                                                  ? 'TANDA TERIMA RETUR'
-                                                  : 'TANDA TERIMA PEMBELIAN',
-                                              style: const TextStyle(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 22),
-                                            ),
-                                            const Align(
-                                              alignment: Alignment.topLeft,
-                                              child: Text(
-                                                'Sudah Diterima dalam keadaan baik dan tersegel sbb',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 12),
-                                              ),
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  'Vendor : ${data.vendor}',
-                                                  textAlign: TextAlign.start,
-                                                  style: const TextStyle(
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 12),
-                                                ),
-                                                Text(
-                                                  'Tanggal : ${DateFormat('dd-MMMM-yyyy').format(DateTime.parse(data.created_at))}',
-                                                  textAlign: TextAlign.start,
-                                                  style: const TextStyle(
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 12),
-                                                ),
-                                              ],
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  'Lokasi  : ${data.lokasi}',
-                                                  textAlign: TextAlign.start,
-                                                  style: const TextStyle(
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 12),
-                                                ),
-                                                Text(
-                                                  'Jam : ${DateFormat('H.mm').format(DateTime.parse(data.created_at))}',
-                                                  textAlign: TextAlign.start,
-                                                  style: const TextStyle(
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 12),
-                                                ),
-                                              ],
-                                            ),
-                                            Container(
-                                              constraints: BoxConstraints(
-                                                  maxHeight: MediaQuery.of(
-                                                              context)
-                                                          .size
-                                                          .height *
-                                                      0.4 // Sesuaikan dengan tinggi maksimum yang diinginkan
-                                                  ),
-                                              child: SingleChildScrollView(
-                                                scrollDirection: Axis.vertical,
-                                                child: dataTableForm(
-                                                    filterBynoPR,
-                                                    data.jenisItem),
-                                              ),
-                                            ),
-                                            const SizedBox(height: 20),
-                                            const Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Column(
-                                                    children: [
-                                                      Text(
-                                                        'Diserahkan oleh,',
-                                                        textAlign:
-                                                            TextAlign.start,
-                                                        style: TextStyle(
-                                                            color: Colors.black,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize: 12),
-                                                      ),
-                                                      SizedBox(height: 40),
-                                                      Text('Warehouse')
-                                                    ],
-                                                  ),
-                                                  Column(
-                                                    children: [
-                                                      Text(
-                                                        'Dibawa oleh,',
-                                                        textAlign:
-                                                            TextAlign.start,
-                                                        style: TextStyle(
-                                                            color: Colors.black,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize: 12),
-                                                      ),
-                                                      SizedBox(height: 40),
-                                                      Text('....')
-                                                    ],
-                                                  ),
-                                                  Column(
-                                                    children: [
-                                                      Text(
-                                                        'Diterima oleh,',
-                                                        textAlign:
-                                                            TextAlign.start,
-                                                        style: TextStyle(
-                                                            color: Colors.black,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize: 12),
-                                                      ),
-                                                      SizedBox(height: 40),
-                                                      Text('....')
-                                                    ],
-                                                  ),
-                                                  Column(
-                                                    children: [
-                                                      Text(
-                                                        'Diketahui oleh,',
-                                                        textAlign:
-                                                            TextAlign.start,
-                                                        style: TextStyle(
-                                                            color: Colors.black,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize: 12),
-                                                      ),
-                                                      SizedBox(height: 40),
-                                                      Text('....')
-                                                    ],
-                                                  ),
-                                                ]),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceEvenly,
-                                              children: [
-                                                data.status
-                                                            .toString()
-                                                            .toLowerCase() ==
-                                                        'waiting'
-                                                    ? Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .only(left: 0),
-                                                        child: IconButton(
-                                                          onPressed: () {
-                                                            Navigator.pop(
-                                                                context);
-                                                          },
-                                                          icon: const Icon(
-                                                            Icons.cancel,
-                                                            color: Colors.red,
-                                                          ),
-                                                        ),
-                                                      )
-                                                    : const SizedBox(),
-                                                data.status
-                                                            .toString()
-                                                            .toLowerCase() ==
-                                                        'waiting'
-                                                    ? Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .only(left: 0),
-                                                        child: IconButton(
-                                                          onPressed: () {
-                                                            Navigator.pop(
-                                                                context);
-                                                            onRowChange(index,
-                                                                data.noPr);
-                                                          },
-                                                          icon: const Icon(
-                                                            Icons.edit,
-                                                            color:
-                                                                Colors.yellow,
-                                                          ),
-                                                        ),
-                                                      )
-                                                    : Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .only(left: 0),
-                                                        child: IconButton(
-                                                          onPressed: () {
-                                                            Navigator.pop(
-                                                                context);
-                                                          },
-                                                          icon: const Icon(
-                                                            Icons.cancel,
-                                                            color: Colors.red,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                sharedPreferences!.getString(
-                                                            'divisi') ==
-                                                        'scm'
-                                                    ? const SizedBox()
-                                                    : data.status
-                                                                .toString()
-                                                                .toLowerCase() ==
-                                                            'waiting'
-                                                        ? Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .only(
-                                                                    left: 0),
-                                                            child: IconButton(
-                                                              onPressed:
-                                                                  () async {
-                                                                await _showDatePicker(
-                                                                    context,
-                                                                    data.id);
-                                                                onRowPressed();
-                                                              },
-                                                              icon: const Icon(
-                                                                Icons.send,
-                                                                color: Colors
-                                                                    .green,
-                                                              ),
-                                                            ),
-                                                          )
-                                                        : const SizedBox()
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      )
-                                    ]))));
-                      });
+                  data.kurir == ''
+                      ? showCustomDialog(
+                          context: context,
+                          dialogType: DialogType.info,
+                          title: 'INFO',
+                          description: 'Isi kurir terlebih dahulu',
+                        )
+                      : showCustomDialog(
+                          context: context,
+                          dialogType: DialogType.success,
+                          title: 'SUCCESS',
+                          description: 'This is a success message!',
+                        );
+                  // var filterBynoPR = listDataPR!
+                  //     .where((element) =>
+                  //         element.noPr.toString().toLowerCase() ==
+                  //         data.noPr.toString().toLowerCase())
+                  //     .toList();
                 },
-                icon: Icon(
-                  Icons.remove_red_eye_outlined,
-                  color: data.status.toString().toLowerCase() == 'waiting'
-                      ? Colors.green
-                      : Colors.blue,
+                icon: const Icon(
+                  Icons.print,
+                  color: Colors.blue,
                 ),
               ),
             ),
-            data.status.toString().toLowerCase() == 'waiting'
-                ? const SizedBox()
-                : const Icon(
-                    Icons.done,
-                    color: Colors.green,
-                  )
           ],
         );
       })),
-
+      DataCell(_verticalDivider),
+      //Tanggal Kirim
+      DataCell(
+        Padding(
+            padding: const EdgeInsets.all(0),
+            child: Text(DateFormat('dd/MMMM/yyyy hh:mm')
+                .format(DateTime.parse(data.tanggalKirim)))),
+      ),
       DataCell(_verticalDivider),
       //no PR
       DataCell(
@@ -822,6 +539,26 @@ class RowSource extends DataTableSource {
       DataCell(
         Padding(padding: const EdgeInsets.all(0), child: Text(data.notes)),
       ),
+      DataCell(_verticalDivider),
+      //kurir
+      DataCell(Builder(builder: (context) {
+        return data.kurir != ''
+            ? Text(data.kurir)
+            : Padding(
+                padding: const EdgeInsets.only(left: 0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    showCustomDialog(
+                      context: context,
+                      dialogType: DialogType.success,
+                      title: 'SUCCESS',
+                      description: 'This is a success message!',
+                    );
+                  },
+                  child: const Text('Pilih kurir'),
+                ),
+              );
+      })),
       DataCell(_verticalDivider),
       //totalItem
       DataCell(
@@ -1010,6 +747,7 @@ class RowSource extends DataTableSource {
 
   DateTime currentDate = DateTime.now();
 
+  // ignore: unused_element
   Future<void> _showDatePicker(BuildContext context, id) async {
     try {
       final pickedDate = await Future.wait([

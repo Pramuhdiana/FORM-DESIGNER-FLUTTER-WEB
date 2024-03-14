@@ -222,128 +222,8 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
                                       height: 50,
                                       child: ElevatedButton(
                                         onPressed: () {
-                                          showGeneralDialog(
-                                            transitionDuration: const Duration(
-                                                milliseconds: 200),
-                                            barrierDismissible: true,
-                                            barrierLabel: '',
-                                            context: context,
-                                            pageBuilder: (context, animation1,
-                                                animation2) {
-                                              return const Text('');
-                                            },
-                                            barrierColor:
-                                                Colors.black.withOpacity(0.75),
-                                            transitionBuilder:
-                                                (context, a1, a2, widget) {
-                                              return Transform.scale(
-                                                scale: a1.value,
-                                                child: Opacity(
-                                                  opacity: a1.value,
-                                                  child: StatefulBuilder(
-                                                    builder:
-                                                        (context, setState) =>
-                                                            AlertDialog(
-                                                      content: SizedBox(
-                                                        width: 500,
-                                                        height: 500,
-                                                        child:
-                                                            SingleChildScrollView(
-                                                          scrollDirection:
-                                                              Axis.vertical,
-                                                          child: Column(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .min,
-                                                            children: [
-                                                              // List of checkboxes and names
-                                                              ListView.builder(
-                                                                shrinkWrap:
-                                                                    true,
-                                                                itemCount:
-                                                                    listItemQc!
-                                                                        .length,
-                                                                itemBuilder:
-                                                                    (context,
-                                                                        index) {
-                                                                  // Membuat selectedList dengan panjang yang sesuai
-
-                                                                  return CheckboxListTile(
-                                                                    title: Text(
-                                                                        'No QC = ${listItemQc![index].noQc} / ${listItemQc![index].item} / ${listItemQc![index].fixBerat}'),
-                                                                    value: selectedList[
-                                                                        index],
-                                                                    onChanged:
-                                                                        (isSelected) {
-                                                                      setState(
-                                                                          () {
-                                                                        selectedList[index] =
-                                                                            isSelected ??
-                                                                                false;
-                                                                      });
-                                                                    },
-                                                                  );
-                                                                },
-                                                              ),
-                                                              // Display button to submit selected items
-                                                              ElevatedButton(
-                                                                onPressed: () {
-                                                                  if (sharedPreferences!
-                                                                          .getString(
-                                                                              'nama') !=
-                                                                      'Sri Sumiati') {
-                                                                    setFullScreen(
-                                                                        false);
-                                                                  }
-                                                                  // Print selected items
-                                                                  List<String>
-                                                                      selectedNoQc =
-                                                                      [];
-                                                                  for (int i =
-                                                                          0;
-                                                                      i <
-                                                                          selectedList
-                                                                              .length;
-                                                                      i++) {
-                                                                    if (selectedList[
-                                                                        i]) {
-                                                                      selectedNoQc
-                                                                          .add(
-                                                                              '${listItemQc![i].noQc}');
-                                                                    }
-                                                                  }
-                                                                  print(
-                                                                      'Selected No Qc : $selectedNoQc');
-                                                                  Navigator.pop(
-                                                                      context);
-                                                                  Navigator.pop(
-                                                                      context);
-                                                                  savePdf(
-                                                                      selectedNoQc);
-                                                                },
-                                                                child:
-                                                                    const Row(
-                                                                  children: [
-                                                                    Icon(Icons
-                                                                        .download), // Menambahkan ikon Download
-                                                                    SizedBox(
-                                                                        width:
-                                                                            8), // Menambahkan jarak antara ikon dan teks
-                                                                    Text(
-                                                                        'Download PDF'),
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              );
-                                            },
-                                          );
+                                          dialogSavePdf(
+                                              '${listItemQc![index].noPr}');
                                         },
                                         style: ElevatedButton.styleFrom(
                                           backgroundColor: Colors
@@ -366,128 +246,8 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
                                       height: 50,
                                       child: ElevatedButton(
                                         onPressed: () {
-                                          showGeneralDialog(
-                                            transitionDuration: const Duration(
-                                                milliseconds: 200),
-                                            barrierDismissible: true,
-                                            barrierLabel: '',
-                                            context: context,
-                                            pageBuilder: (context, animation1,
-                                                animation2) {
-                                              return const Text('');
-                                            },
-                                            barrierColor:
-                                                Colors.black.withOpacity(0.75),
-                                            transitionBuilder:
-                                                (context, a1, a2, widget) {
-                                              return Transform.scale(
-                                                scale: a1.value,
-                                                child: Opacity(
-                                                  opacity: a1.value,
-                                                  child: StatefulBuilder(
-                                                    builder:
-                                                        (context, setState) =>
-                                                            AlertDialog(
-                                                      content: SizedBox(
-                                                        width: 500,
-                                                        height: 500,
-                                                        child:
-                                                            SingleChildScrollView(
-                                                          scrollDirection:
-                                                              Axis.vertical,
-                                                          child: Column(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .min,
-                                                            children: [
-                                                              // List of checkboxes and names
-                                                              ListView.builder(
-                                                                shrinkWrap:
-                                                                    true,
-                                                                itemCount:
-                                                                    listItemQc!
-                                                                        .length,
-                                                                itemBuilder:
-                                                                    (context,
-                                                                        index) {
-                                                                  // Membuat selectedList dengan panjang yang sesuai
-
-                                                                  return CheckboxListTile(
-                                                                    title: Text(
-                                                                        'No QC = ${listItemQc![index].noQc} / ${listItemQc![index].item}'),
-                                                                    value: selectedList[
-                                                                        index],
-                                                                    onChanged:
-                                                                        (isSelected) {
-                                                                      setState(
-                                                                          () {
-                                                                        selectedList[index] =
-                                                                            isSelected ??
-                                                                                false;
-                                                                      });
-                                                                    },
-                                                                  );
-                                                                },
-                                                              ),
-                                                              // Display button to submit selected items
-                                                              ElevatedButton(
-                                                                onPressed: () {
-                                                                  if (sharedPreferences!
-                                                                          .getString(
-                                                                              'nama') !=
-                                                                      'Sri Sumiati') {
-                                                                    setFullScreen(
-                                                                        false);
-                                                                  }
-                                                                  // Print selected items
-                                                                  List<String>
-                                                                      selectedNoQc =
-                                                                      [];
-                                                                  for (int i =
-                                                                          0;
-                                                                      i <
-                                                                          selectedList
-                                                                              .length;
-                                                                      i++) {
-                                                                    if (selectedList[
-                                                                        i]) {
-                                                                      selectedNoQc
-                                                                          .add(
-                                                                              '${listItemQc![i].noQc}');
-                                                                    }
-                                                                  }
-                                                                  print(
-                                                                      'Selected No Qc : $selectedNoQc');
-                                                                  Navigator.pop(
-                                                                      context);
-                                                                  Navigator.pop(
-                                                                      context);
-                                                                  exportData(
-                                                                      selectedNoQc);
-                                                                },
-                                                                child:
-                                                                    const Row(
-                                                                  children: [
-                                                                    Icon(Icons
-                                                                        .download), // Menambahkan ikon Download
-                                                                    SizedBox(
-                                                                        width:
-                                                                            8), // Menambahkan jarak antara ikon dan teks
-                                                                    Text(
-                                                                        'Download'),
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              );
-                                            },
-                                          );
+                                          dialogExportExcel(
+                                              '${listItemQc![index].noPr}');
                                         },
                                         style: ElevatedButton.styleFrom(
                                           backgroundColor: Colors
@@ -513,6 +273,186 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
                     )),
                   )));
         });
+  }
+
+  dialogSavePdf(String noPr) {
+    var dataByNoPr = listItemQc!
+        .where((element) =>
+            element.noPr.toString().toLowerCase() ==
+            noPr.toString().toLowerCase())
+        .toList();
+    return showGeneralDialog(
+      transitionDuration: const Duration(milliseconds: 200),
+      barrierDismissible: true,
+      barrierLabel: '',
+      context: context,
+      pageBuilder: (context, animation1, animation2) {
+        return const Text('');
+      },
+      barrierColor: Colors.black.withOpacity(0.75),
+      transitionBuilder: (context, a1, a2, widget) {
+        return Transform.scale(
+          scale: a1.value,
+          child: Opacity(
+            opacity: a1.value,
+            child: StatefulBuilder(
+              builder: (context, setState) => AlertDialog(
+                content: SizedBox(
+                  width: 500,
+                  height: 500,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        // List of checkboxes and names
+                        ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: dataByNoPr.length,
+                          itemBuilder: (context, index) {
+                            // Membuat selectedList dengan panjang yang sesuai
+
+                            return CheckboxListTile(
+                              title: Text(
+                                  'No QC = ${dataByNoPr[index].noQc} / ${dataByNoPr[index].item} / ${listItemQc![index].fixBerat}'),
+                              value: selectedList[index],
+                              onChanged: (isSelected) {
+                                setState(() {
+                                  selectedList[index] = isSelected ?? false;
+                                });
+                              },
+                            );
+                          },
+                        ),
+                        // Display button to submit selected items
+                        ElevatedButton(
+                          onPressed: () {
+                            if (sharedPreferences!.getString('nama') !=
+                                'Sri Sumiati') {
+                              setFullScreen(false);
+                            }
+                            // Print selected items
+                            List<String> selectedNoQc = [];
+                            for (int i = 0; i < selectedList.length; i++) {
+                              if (selectedList[i]) {
+                                selectedNoQc.add('${dataByNoPr[i].noQc}');
+                              }
+                            }
+                            print('Selected No Qc : $selectedNoQc');
+                            Navigator.pop(context);
+                            Navigator.pop(context);
+                            savePdf(selectedNoQc);
+                          },
+                          child: const Row(
+                            children: [
+                              Icon(Icons.download), // Menambahkan ikon Download
+                              SizedBox(
+                                  width:
+                                      8), // Menambahkan jarak antara ikon dan teks
+                              Text('Download PDF'),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  dialogExportExcel(String noPr) {
+    var dataByNoPr = listItemQc!
+        .where((element) =>
+            element.noPr.toString().toLowerCase() ==
+            noPr.toString().toLowerCase())
+        .toList();
+    return showGeneralDialog(
+      transitionDuration: const Duration(milliseconds: 200),
+      barrierDismissible: true,
+      barrierLabel: '',
+      context: context,
+      pageBuilder: (context, animation1, animation2) {
+        return const Text('');
+      },
+      barrierColor: Colors.black.withOpacity(0.75),
+      transitionBuilder: (context, a1, a2, widget) {
+        return Transform.scale(
+          scale: a1.value,
+          child: Opacity(
+            opacity: a1.value,
+            child: StatefulBuilder(
+              builder: (context, setState) => AlertDialog(
+                content: SizedBox(
+                  width: 500,
+                  height: 500,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        // List of checkboxes and names
+                        ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: dataByNoPr.length,
+                          itemBuilder: (context, index) {
+                            // Membuat selectedList dengan panjang yang sesuai
+
+                            return CheckboxListTile(
+                              title: Text(
+                                  'No QC = ${dataByNoPr[index].noQc} / ${dataByNoPr[index].item}'),
+                              value: selectedList[index],
+                              onChanged: (isSelected) {
+                                setState(() {
+                                  selectedList[index] = isSelected ?? false;
+                                });
+                              },
+                            );
+                          },
+                        ),
+                        // Display button to submit selected items
+                        ElevatedButton(
+                          onPressed: () {
+                            if (sharedPreferences!.getString('nama') !=
+                                'Sri Sumiati') {
+                              setFullScreen(false);
+                            }
+                            // Print selected items
+                            List<String> selectedNoQc = [];
+                            for (int i = 0; i < selectedList.length; i++) {
+                              if (selectedList[i]) {
+                                selectedNoQc.add('${dataByNoPr[i].noQc}');
+                              }
+                            }
+                            print('Selected No Qc : $selectedNoQc');
+                            Navigator.pop(context);
+                            Navigator.pop(context);
+                            exportData(selectedNoQc);
+                          },
+                          child: const Row(
+                            children: [
+                              Icon(Icons.download), // Menambahkan ikon Download
+                              SizedBox(
+                                  width:
+                                      8), // Menambahkan jarak antara ikon dan teks
+                              Text('Download'),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
   }
 
   hargaForm(index) {
