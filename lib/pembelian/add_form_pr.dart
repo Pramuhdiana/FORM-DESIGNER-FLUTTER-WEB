@@ -23,7 +23,7 @@ class AddFormPr extends StatefulWidget {
   List<ListItemPRModel>? listItemPR;
   List<FormPrModel>? dataFormPR;
   String? mode;
-
+  List<bool> listFancy = [];
   AddFormPr(
       {super.key,
       this.onCloseForm,
@@ -56,6 +56,7 @@ class _AddFormPrState extends State<AddFormPr> {
   String? dumBerat = '';
   String? dumKadar = '';
   String? dumColor = '';
+  String? dumFancy = 'false';
   TextEditingController dumNama = TextEditingController();
   TextEditingController controller = TextEditingController();
   TextEditingController qty1 = TextEditingController();
@@ -92,10 +93,20 @@ class _AddFormPrState extends State<AddFormPr> {
 
     for (var i = 0; i < selectListItem.length; i++) {
       isCheckedDiamond == false
-          ? postApiListFormPR(selectListItem[i][0], selectListItem[i][1],
-              selectListItem[i][2], selectListItem[i][3], selectListItem[i][4])
-          : postApiListFormPR(selectListItem[i][0], selectListItem[i][1],
-              selectListItem[i][2], selectListItem[i][3], selectListItem[i][4]);
+          ? postApiListFormPR(
+              selectListItem[i][0],
+              selectListItem[i][1],
+              selectListItem[i][2],
+              selectListItem[i][3],
+              selectListItem[i][4],
+              selectListItem[i][5])
+          : postApiListFormPR(
+              selectListItem[i][0],
+              selectListItem[i][1],
+              selectListItem[i][2],
+              selectListItem[i][3],
+              selectListItem[i][4],
+              selectListItem[i][5]);
     }
     Navigator.pop(context);
     widget.onCloseFormLoadData!.call();
@@ -121,14 +132,16 @@ class _AddFormPrState extends State<AddFormPr> {
               selectListItem[i][1],
               selectListItem[i][2],
               selectListItem[i][3],
-              selectListItem[i][4])
+              selectListItem[i][4],
+              selectListItem[i][5])
           : await updateItem(
               selectListItem[i][5],
               selectListItem[i][0],
               selectListItem[i][1],
               selectListItem[i][2],
               selectListItem[i][3],
-              selectListItem[i][4]);
+              selectListItem[i][4],
+              selectListItem[i][5]);
     }
     await updateForm();
     Navigator.pop(context);
@@ -167,6 +180,10 @@ class _AddFormPrState extends State<AddFormPr> {
           dumBerat = _listItemPR![i].berat;
           dumKadar = _listItemPR![i].kadar;
           dumColor = _listItemPR![i].color;
+          dumFancy = _listItemPR![i].jenisBatu == 'ROUND' ||
+                  _listItemPR![i].jenisBatu == ''
+              ? 'false'
+              : 'true';
           var dumId = _listItemPR![i].id;
           selectListItem.add([
             '$dumItem',
@@ -174,7 +191,8 @@ class _AddFormPrState extends State<AddFormPr> {
             '$dumBerat',
             '$dumKadar',
             '$dumColor',
-            '$dumId'
+            '$dumId',
+            '$dumFancy'
           ]);
         }
 
@@ -528,29 +546,29 @@ class _AddFormPrState extends State<AddFormPr> {
                       ]),
                 ],
               ),
-              isCheckedDiamond == false
-                  ? const SizedBox()
-                  : Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                      Checkbox(
-                        value: isCheckedRound,
-                        onChanged: (value) {
-                          setState(() {
-                            isCheckedRound = value!;
-                            if (isCheckedRound) {
-                              jenisBatu = 'FANCY';
-                            } else {
-                              jenisBatu = 'ROUND';
-                            }
-                            print(jenisBatu);
-                          });
-                        },
-                      ),
-                      const Text(
-                        'Fancy ?',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 18),
-                      ),
-                    ]),
+              // isCheckedDiamond == false
+              //     ? const SizedBox()
+              //     : Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+              //         Checkbox(
+              //           value: isCheckedRound,
+              //           onChanged: (value) {
+              //             setState(() {
+              //               isCheckedRound = value!;
+              //               if (isCheckedRound) {
+              //                 jenisBatu = 'FANCY';
+              //               } else {
+              //                 jenisBatu = 'ROUND';
+              //               }
+              //               print(jenisBatu);
+              //             });
+              //           },
+              //         ),
+              //         const Text(
+              //           'Fancy ?',
+              //           style: TextStyle(
+              //               fontWeight: FontWeight.bold, fontSize: 18),
+              //         ),
+              //       ]),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -824,7 +842,32 @@ class _AddFormPrState extends State<AddFormPr> {
                                       print(selectListItem);
                                     },
                                   ),
-                                )
+                                ),
+                                // SizedBox(width: wid),
+                                // Row(
+                                //     mainAxisAlignment: MainAxisAlignment.start,
+                                //     children: [
+                                //       Checkbox(
+                                //         value: bool.parse(selectListItem[i][6]),
+                                //         onChanged: (value) {
+                                //           setState(() {
+                                //             isCheckedRound = value!;
+                                //             if (isCheckedRound) {
+                                //               jenisBatu = 'FANCY';
+                                //             } else {
+                                //               jenisBatu = 'ROUND';
+                                //             }
+                                //             print(jenisBatu);
+                                //           });
+                                //         },
+                                //       ),
+                                //       const Text(
+                                //         'Fancy ?',
+                                //         style: TextStyle(
+                                //             fontWeight: FontWeight.bold,
+                                //             fontSize: 18),
+                                //       ),
+                                //     ]),
                               ],
                             ),
                           )
@@ -873,11 +916,12 @@ class _AddFormPrState extends State<AddFormPr> {
                                           item.id == sItem.id,
                                       onChanged: (item) async {
                                         dumNama.text = '';
-
-                                        dumItem = '$item';
+                                        var dumKodeItem = item!.kodeItem,
+                                            dumItem = '$item';
                                         selectListItem[i].isNotEmpty
-                                            ? selectListItem[i][0] = '$dumItem'
+                                            ? selectListItem[i][0] = dumItem
                                             : null;
+                                        selectListItem[i][6] = dumKodeItem!;
                                         print(selectListItem);
                                       },
                                       dropdownDecoratorProps:
@@ -1021,7 +1065,32 @@ class _AddFormPrState extends State<AddFormPr> {
                                       print(selectListItem);
                                     },
                                   ),
-                                )
+                                ),
+                                // SizedBox(width: wid),
+                                // Row(
+                                //     mainAxisAlignment: MainAxisAlignment.start,
+                                //     children: [
+                                //       Checkbox(
+                                //         value: bool.parse(selectListItem[i][5]),
+                                //         onChanged: (value) {
+                                //           setState(() {
+                                //             isCheckedRound = value!;
+                                //             if (isCheckedRound) {
+                                //               jenisBatu = 'FANCY';
+                                //             } else {
+                                //               jenisBatu = 'ROUND';
+                                //             }
+                                //             print(jenisBatu);
+                                //           });
+                                //         },
+                                //       ),
+                                //       const Text(
+                                //         'Fancy ?',
+                                //         style: TextStyle(
+                                //             fontWeight: FontWeight.bold,
+                                //             fontSize: 18),
+                                //       ),
+                                //     ]),
                               ],
                             ),
                           ),
@@ -1041,13 +1110,15 @@ class _AddFormPrState extends State<AddFormPr> {
                                   dumBerat = '';
                                   dumKadar = '';
                                   dumColor = '';
+                                  dumFancy = 'false';
                                   selectListItem.add([
                                     '$dumItem',
                                     '$dumQty',
                                     '$dumBerat',
                                     '$dumKadar',
                                     '$dumColor',
-                                    '-1'
+                                    '-1',
+                                    '$dumFancy',
                                   ]);
                                   print(selectListItem);
                                   limitItem += 1;
@@ -1292,7 +1363,8 @@ class _AddFormPrState extends State<AddFormPr> {
     print(response.body);
   }
 
-  updateItem(String id, String item, qty, berat, kadar, color) async {
+  updateItem(String id, String item, qty, berat, kadar, color,
+      String jenisBatu) async {
     print(item);
     id == '' ? id = '-1' : id = id;
     Map<String, String> body = {
@@ -1304,6 +1376,7 @@ class _AddFormPrState extends State<AddFormPr> {
       'berat': berat,
       'kadar': kadar,
       'color': color,
+      'jenis_batu': jenisBatu,
     };
     final response = await http.post(
         Uri.parse('${ApiConstants.baseUrl}${ApiConstants.updateItemPr}'),
@@ -1311,7 +1384,7 @@ class _AddFormPrState extends State<AddFormPr> {
     print(response.body);
   }
 
-  postApiListFormPR(item, qty, berat, kadar, color) async {
+  postApiListFormPR(item, qty, berat, kadar, color, String jenisBatu) async {
     Map<String, String> body = {
       'noPr': noPr.text,
       'item': item,
@@ -1319,6 +1392,7 @@ class _AddFormPrState extends State<AddFormPr> {
       'berat': berat,
       'kadar': kadar,
       'color': color,
+      'jenis_batu': jenisBatu,
     };
     final response = await http.post(
         Uri.parse('${ApiConstants.baseUrl}${ApiConstants.postListFormPR}'),

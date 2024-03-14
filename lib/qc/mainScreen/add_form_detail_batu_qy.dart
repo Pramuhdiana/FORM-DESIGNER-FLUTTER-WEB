@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:form_designer/api/api_constant.dart';
 import 'package:form_designer/global/global.dart';
 import 'package:form_designer/pembelian/form_pr_model.dart';
+import 'package:form_designer/pembelian/item_pr_model.dart';
 import 'package:form_designer/pembelian/list_form_pr_model.dart';
 import 'package:form_designer/qc/modelQc/itemQcModel.dart';
 import 'package:form_designer/qc/modelQc/jenisBatuModel.dart';
@@ -48,7 +49,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
   TextEditingController notesReject = TextEditingController();
   // TextEditingController jenisBatu = TextEditingController();
   String? jenisBatu;
-  String? kodeBatu;
+  String? kodeBatu = 'ROUND';
   int? countItemPr;
   String? kualitasBatu;
   bool isLoading = false;
@@ -122,14 +123,9 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
     kebutuhanBerat = listItemPr![index].fixBerat;
 
     List<ItemQcModel>? filterBynoQc;
-    if (jenisBatu.toString().toLowerCase() != 'round') {
-      await getJenisBatu(index);
-    }
-    // for (int i = 0; i < _isOpen.length; i++) {
-    //   if (i != index) {
-    //     _isOpen[i] = false;
-    //   }
-    // }
+
+    await getKodeBatu(index);
+
     idItemPr = listItemPr![index].id.toString();
 
     notesReject.text = listItemPr![index].notesReject.toString();
@@ -137,18 +133,20 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
         .where((element) => element.noQc == noQcDummy)
         .toList();
     for (var i = 0; i < filterBynoQc.length; i++) {
-      if (jenisBatu.toString().toLowerCase() == 'round') {
+      if (kodeBatu.toString().toLowerCase() == 'round') {
         ukuran = '${filterBynoQc[i].item}';
         qty = '${filterBynoQc[i].qty}';
         berat = '${filterBynoQc[i].berat}';
         caratPcs = '${filterBynoQc[i].caratPcs}';
         String idItem = '${filterBynoQc[i].id}';
+        String kodeMdbc = '${filterBynoQc[i].kodeMdbc}';
         selectListItemRound.add([
           '$ukuran',
           '$qty',
           '$berat',
           '$caratPcs',
           idItem,
+          kodeMdbc,
         ]);
         print('round edit = $selectListItemRound');
       } else {
@@ -236,7 +234,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
   }
 
   List<DataColumn> columnsData(String jenisBatu, int index) {
-    return jenisBatu.toString().toLowerCase() == 'round'
+    return kodeBatu.toString().toLowerCase() == 'round'
         ? [
             const DataColumn(
                 label: Center(
@@ -296,12 +294,12 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
               padding: EdgeInsets.symmetric(horizontal: 10),
               child: Text('No'),
             ))),
-            const DataColumn(
-                label: Center(
-                    child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              child: Text('Kode Mdbc'),
-            ))),
+            // const DataColumn(
+            //     label: Center(
+            //         child: Padding(
+            //   padding: EdgeInsets.symmetric(horizontal: 10),
+            //   child: Text('Kode Mdbc'),
+            // ))),
             const DataColumn(
                 label: Center(
                     child: Padding(
@@ -339,7 +337,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
       Function() onChangedCallback, int totalData, double kebutuhan) {
     double sumBerat = 0.0;
     double sumQty = 0.0;
-    if (jenisBatu.toString().toLowerCase() == 'round') {
+    if (kodeBatu.toString().toLowerCase() == 'round') {
       for (var data in selectListItemRound) {
         sumBerat += double.parse(
             data[2]); // Menambahkan nilai dari indeks kedua (indeks kolom ke-1)
@@ -355,7 +353,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
       }
     }
     double sumReject = kebutuhan - sumBerat;
-    return jenisBatu.toString().toLowerCase() == 'round'
+    return kodeBatu.toString().toLowerCase() == 'round'
         ? [
             for (var i = 0; i < totalData; i++)
               //? nomor
@@ -380,9 +378,11 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                       onChanged: (item) {
                         ukuran = item!.ukuranRound;
                         caratPcs = item.caratPcs;
+                        String kodeMdbc = item.kodeMdbc;
                         setState(() {
                           selectListItemRound[i][0] = '$ukuran';
                           selectListItemRound[i][3] = '$caratPcs';
+                          selectListItemRound[i][5] = kodeMdbc;
                           print('round = $selectListItemRound');
                         });
                       },
@@ -629,7 +629,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
       Function() onChangedCallback, int count, double kebutuhan) {
     double sumBerat = 0.0;
     int sumQty = 0;
-    if (jenisBatu.toString().toLowerCase() == 'round') {
+    if (kodeBatu.toString().toLowerCase() == 'round') {
       for (var data in selectListItemRound) {
         try {
           sumBerat += double.parse(data[
@@ -654,7 +654,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
     }
     double sumReject = kebutuhan - sumBerat;
 
-    return jenisBatu.toString().toLowerCase() == 'round'
+    return kodeBatu.toString().toLowerCase() == 'round'
         ? [
             for (var i = 0; i < count; i++)
               //? nomor
@@ -691,9 +691,12 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                                 onChanged: (item) {
                                   ukuran = item!.ukuranRound;
                                   caratPcs = item.caratPcs;
+                                  String kodeMdbc = item.kodeMdbc;
                                   setState(() {
                                     selectListItemRound[i][0] = '$ukuran';
                                     selectListItemRound[i][3] = '$caratPcs';
+                                    selectListItemRound[i][5] = kodeMdbc;
+
                                     print('round = $selectListItemRound');
                                   });
                                   Navigator.of(context)
@@ -1153,6 +1156,31 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
     }
   }
 
+  getKodeBatu(int i) async {
+    try {
+      final response = await http
+          .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getListItem));
+      if (response.statusCode == 200) {
+        List jsonResponse = json.decode(response.body);
+        var alldata =
+            jsonResponse.map((data) => ItemPrModel.fromJson(data)).toList();
+        var filterByJenis = alldata
+            .where((element) =>
+                element.item.toString().toLowerCase() ==
+                listItemPr![i].item.toString().toLowerCase())
+            .toList();
+        setState(() {
+          kodeBatu = filterByJenis.first.kodeItem.toString();
+        });
+      } else {
+        throw Exception('Unexpected error occured!');
+      }
+    } catch (c) {
+      // ignore:
+      print('err get data kodeBatu = $c');
+    }
+  }
+
   refresh() {
     //? hints Panggil onCloseForm untuk menutup form
     widget.onCloseForm?.call();
@@ -1211,8 +1239,8 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                               expandedIndex =
                                   null; // Menutup item jika sudah terbuka
                             } else {
-                              expandedIndex = index; // Membuka item yang diklik
                               callData(index, listItemPr![index].noQc);
+                              expandedIndex = index; // Membuka item yang diklik
                             }
                           });
                         },
@@ -1413,11 +1441,20 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
           const SizedBox(
             height: 10,
           ),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: dataTableForm(
-                'new', jenisBatu!, no, i, double.parse(kebutuhanBerat!)),
-          ),
+          isloadingItem == true
+              ? Center(
+                  child: Container(
+                    padding: const EdgeInsets.all(5),
+                    width: 90,
+                    height: 90,
+                    child: Lottie.asset("loadingJSON/loadingV1.json"),
+                  ),
+                )
+              : SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: dataTableForm(
+                      'new', jenisBatu!, no, i, double.parse(kebutuhanBerat!)),
+                ),
           const SizedBox(
             height: 20,
           ),
@@ -1430,16 +1467,19 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                 child: ElevatedButton.icon(
                   onPressed: () {
                     setState(() {
-                      if (jenisBatu.toString().toLowerCase() == 'round') {
+                      if (kodeBatu.toString().toLowerCase() == 'round') {
                         ukuran = '';
                         qty = '0';
                         berat = '0';
                         caratPcs = '';
+                        var idRound = '-1';
                         selectListItemRound.add([
                           '$ukuran',
                           '$qty',
                           '$berat',
                           '$caratPcs',
+                          idRound,
+                          '',
                         ]);
                         print('round = $selectListItemRound');
                       } else {
@@ -1477,7 +1517,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                         onPressed: () {
                           setState(() {
                             no -= 1;
-                            if (jenisBatu.toString().toLowerCase() == 'round') {
+                            if (kodeBatu.toString().toLowerCase() == 'round') {
                               selectListItemRound.removeAt(no);
                               print('round = $selectListItemRound');
                             } else {
@@ -1710,11 +1750,20 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
           const SizedBox(
             height: 10,
           ),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: dataTableForm(
-                'edit', jenisBatu!, no, index, double.parse(kebutuhanBerat!)),
-          ),
+          isloadingItem == true
+              ? Center(
+                  child: Container(
+                    padding: const EdgeInsets.all(5),
+                    width: 90,
+                    height: 90,
+                    child: Lottie.asset("loadingJSON/loadingV1.json"),
+                  ),
+                )
+              : SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: dataTableForm('edit', jenisBatu!, no, index,
+                      double.parse(kebutuhanBerat!)),
+                ),
           const SizedBox(
             height: 20,
           ),
@@ -1727,18 +1776,19 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                 child: ElevatedButton.icon(
                   onPressed: () {
                     setState(() {
-                      if (jenisBatu.toString().toLowerCase() == 'round') {
+                      if (kodeBatu.toString().toLowerCase() == 'round') {
                         ukuran = '';
                         qty = '0';
                         berat = '0';
                         caratPcs = '';
-                        var idRound = '';
+                        var idRound = '-1';
                         selectListItemRound.add([
                           '$ukuran',
                           '$qty',
                           '$berat',
                           '$caratPcs',
                           idRound,
+                          '',
                         ]);
                         print('round edit = $selectListItemRound');
                       } else {
@@ -1778,7 +1828,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                         onPressed: () {
                           setState(() {
                             no -= 1;
-                            if (jenisBatu.toString().toLowerCase() == 'round') {
+                            if (kodeBatu.toString().toLowerCase() == 'round') {
                               selectListItemRound.removeAt(no);
                               print('round = $selectListItemRound');
                             } else {
@@ -1899,30 +1949,33 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
   simpanForm() async {
     totalBerat = 0;
     totalQty = 0;
-    if (jenisBatu.toString().toLowerCase() == 'round') {
+    if (kodeBatu.toString().toLowerCase() == 'round') {
       for (var i = 0; i < selectListItemRound.length; i++) {
         totalBerat += double.tryParse(selectListItemRound[i][2]) ?? 0;
         totalQty += int.tryParse(selectListItemRound[i][1]) ?? 0;
 
         await postDetailItem(
-            selectListItemRound[i][0],
-            selectListItemRound[i][1],
-            selectListItemRound[i][2],
-            '',
-            '',
-            selectListItemRound[i][3]);
+          selectListItemRound[i][0],
+          selectListItemRound[i][1],
+          selectListItemRound[i][2],
+          '',
+          '',
+          selectListItemRound[i][3],
+          selectListItemRound[i][5],
+        );
       }
     } else {
       for (var i = 0; i < selectListItemFancy.length; i++) {
         totalBerat += double.tryParse(selectListItemFancy[i][4]) ?? 0;
         totalQty += int.tryParse(selectListItemFancy[i][3]) ?? 0;
         await postDetailItem(
-            selectListItemFancy[i][0],
+            '${selectListItemFancy[i][1]} x ${selectListItemFancy[i][2]}',
             selectListItemFancy[i][3],
             selectListItemFancy[i][4],
             selectListItemFancy[i][1],
             selectListItemFancy[i][2],
-            '0');
+            '0',
+            selectListItemFancy[i][0]);
       }
     }
 
@@ -1942,7 +1995,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
     print(selectListItemRound.length);
     totalBerat = 0;
     totalQty = 0;
-    if (jenisBatu.toString().toLowerCase() == 'round') {
+    if (kodeBatu.toString().toLowerCase() == 'round') {
       for (var i = 0; i < selectListItemRound.length; i++) {
         totalBerat += double.tryParse(selectListItemRound[i][2]) ?? 0;
         totalQty += int.tryParse(selectListItemRound[i][1]) ?? 0;
@@ -1954,7 +2007,8 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
               selectListItemRound[i][2],
               '',
               '',
-              selectListItemRound[i][3]);
+              selectListItemRound[i][3],
+              selectListItemRound[i][5]);
         } catch (c) {
           // ignore: use_build_context_synchronously
           // Navigator.pop(context);
@@ -1971,12 +2025,13 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
         totalQty += int.tryParse(selectListItemFancy[i][3]) ?? 0;
         await updateDetailItem(
             selectListItemFancy[i][5], //? id
-            selectListItemFancy[i][0],
+            '${selectListItemFancy[i][1]} x ${selectListItemFancy[i][2]}',
             selectListItemFancy[i][3],
             selectListItemFancy[i][4],
             selectListItemFancy[i][1],
             selectListItemFancy[i][2],
-            '0');
+            '0',
+            selectListItemFancy[i][0]);
       }
     }
 
@@ -2022,7 +2077,8 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
     print(response.body);
   }
 
-  postDetailItem(String item, qty, berat, panjang, lebar, caratPcs) async {
+  postDetailItem(String item, qty, berat, panjang, lebar, caratPcs,
+      String kodeMdbc) async {
     Map<String, String> body = {
       'type': 'itemPr', // Menambahkan jenis data 'itemPr' ke body
       'noPr': noPr!,
@@ -2036,6 +2092,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
       'jenisBatu': jenisBatu!,
       'kualitasBatu': kualitasBatu!,
       'ukuranBatu': ukuranBatu.text,
+      'kodeMdbc': kodeMdbc,
     };
     final response = await http.post(
         Uri.parse('${ApiConstants.baseUrl}${ApiConstants.postListFormQc}'),
@@ -2043,8 +2100,8 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
     print(response.body);
   }
 
-  updateDetailItem(
-      String id, String item, qty, berat, panjang, lebar, caratPcs) async {
+  updateDetailItem(String id, String item, qty, berat, panjang, lebar, caratPcs,
+      String kodeMdbc) async {
     print(item);
     id == '' ? id = '-1' : id = id;
     Map<String, String> body = {
@@ -2061,6 +2118,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
       'ukuranBatu': ukuranBatu.text,
       'noPr': noPr!,
       'noQc': noQc,
+      'kodeMdbc': kodeMdbc,
     };
     final response = await http.post(
         Uri.parse('${ApiConstants.baseUrl}${ApiConstants.updateItemPr}'),

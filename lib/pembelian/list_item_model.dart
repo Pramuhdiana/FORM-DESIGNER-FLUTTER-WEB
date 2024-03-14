@@ -9,6 +9,7 @@ class ListItemModel {
   final String? kadar;
   final String? color;
   final String? created_at;
+  final String? kodeItem;
 
   ListItemModel({
     required this.id,
@@ -19,6 +20,7 @@ class ListItemModel {
     this.kadar,
     this.color,
     this.created_at,
+    this.kodeItem,
   });
 
   factory ListItemModel.fromJson(Map<String, dynamic> json) {
@@ -31,6 +33,7 @@ class ListItemModel {
       kadar: json["kadar"].toString(),
       color: json["color"].toString(),
       created_at: json["created_at"].toString(),
+      kodeItem: json["kodeItem"] ?? '',
     );
   }
 

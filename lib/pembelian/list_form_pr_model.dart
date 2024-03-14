@@ -16,6 +16,7 @@ class ListItemPRModel {
   final String? updateAt;
   final String? notesReject;
   final String? harga;
+  final String? jenisBatu;
 
   ListItemPRModel({
     required this.id,
@@ -33,6 +34,7 @@ class ListItemPRModel {
     this.updateAt,
     this.notesReject,
     this.harga,
+    this.jenisBatu,
   });
 
   factory ListItemPRModel.fromJson(Map<String, dynamic> json) {
@@ -52,6 +54,7 @@ class ListItemPRModel {
       updateAt: json["updated_at"] ?? '',
       notesReject: json["notesReject"] ?? '',
       harga: (json["harga"] ?? '0').toString(),
+      jenisBatu: json["jenis_batu"] ?? '',
     );
   }
   Map<String, dynamic> toJson() {
@@ -71,6 +74,7 @@ class ListItemPRModel {
     data['updated_at'] = updateAt;
     data['notesReject'] = notesReject;
     data['harga'] = harga;
+    data['jenis_batu'] = jenisBatu;
     return data;
   }
 }

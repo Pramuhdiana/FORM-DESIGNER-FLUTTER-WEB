@@ -142,7 +142,7 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Text(
-                                'TANDA TERIMA QUALITY CONTROL ${listItemQc![index].item}',
+                                'TANDA TERIMA QUALITY CONTROL ${listItemQc![index].item} / ${listItemQc![index].fixBerat}',
                                 style: const TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,
@@ -270,7 +270,7 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
 
                                                                   return CheckboxListTile(
                                                                     title: Text(
-                                                                        'No QC = ${listItemQc![index].noQc} / ${listItemQc![index].item}'),
+                                                                        'No QC = ${listItemQc![index].noQc} / ${listItemQc![index].item} / ${listItemQc![index].fixBerat}'),
                                                                     value: selectedList[
                                                                         index],
                                                                     onChanged:
@@ -691,7 +691,7 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
                 label: Center(
                     child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 10),
-              child: Text('Ukuran Batu\nRound'),
+              child: Text('Ukuran Batu'),
             ))),
             const DataColumn(
                 label: Center(
@@ -989,38 +989,44 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
                             onTap: () {
                               listItemQc![index].harga != '0'
                                   ? openForm(index)
-                                  : AwesomeDialog(
-                                      context: context,
-                                      dialogType: DialogType.info,
-                                      borderSide: const BorderSide(
-                                        color: Colors.green,
-                                        width: 2,
-                                      ),
-                                      buttonsBorderRadius:
-                                          const BorderRadius.all(
-                                        Radius.circular(2),
-                                      ),
-                                      width: 450,
-                                      dismissOnTouchOutside: true,
-                                      dismissOnBackKeyPress: true,
-                                      headerAnimationLoop: true,
-                                      animType: AnimType.bottomSlide,
-                                      title: 'INFO',
-                                      desc:
-                                          'Harga untuk ${listItemQc![index].item} belum tersedia',
-                                      onDismissCallback: (type) {},
-                                      showCloseIcon: true,
-                                      btnCancelOnPress: () {
-                                        hargaForm(index);
-                                      },
-                                      btnOkOnPress: () {
-                                        openForm(index);
-                                      },
-                                      btnOkText:
-                                          'Lanjut', // Atur teks tombol OK menjadi 'Custom OK'
-                                      btnCancelText:
-                                          'Isi harga', // Atur teks tombol Cancel menjadi 'Custom Cancel'
-                                    ).show();
+                                  : sharedPreferences!.getString('divisi') ==
+                                              'admin' ||
+                                          sharedPreferences!
+                                                  .getString('divisi') ==
+                                              'pembelian'
+                                      ? AwesomeDialog(
+                                          context: context,
+                                          dialogType: DialogType.info,
+                                          borderSide: const BorderSide(
+                                            color: Colors.green,
+                                            width: 2,
+                                          ),
+                                          buttonsBorderRadius:
+                                              const BorderRadius.all(
+                                            Radius.circular(2),
+                                          ),
+                                          width: 450,
+                                          dismissOnTouchOutside: true,
+                                          dismissOnBackKeyPress: true,
+                                          headerAnimationLoop: true,
+                                          animType: AnimType.bottomSlide,
+                                          title: 'INFO',
+                                          desc:
+                                              'Harga untuk ${listItemQc![index].item} belum tersedia',
+                                          onDismissCallback: (type) {},
+                                          showCloseIcon: true,
+                                          btnCancelOnPress: () {
+                                            hargaForm(index);
+                                          },
+                                          btnOkOnPress: () {
+                                            openForm(index);
+                                          },
+                                          btnOkText:
+                                              'Lanjut', // Atur teks tombol OK menjadi 'Custom OK'
+                                          btnCancelText:
+                                              'Isi harga', // Atur teks tombol Cancel menjadi 'Custom Cancel'
+                                        ).show()
+                                      : openForm(index);
                             },
                             child: Card(
                               child: Container(
@@ -1062,7 +1068,7 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
                                         ),
                                       ),
                                       Text(
-                                        'TANDA TERIMA QUALITY CONTROL ${listItemQc![index].item}',
+                                        'TANDA TERIMA QUALITY CONTROL ${listItemQc![index].item} / ${listItemQc![index].fixBerat}',
                                         style: const TextStyle(
                                             color: Colors.black,
                                             fontWeight: FontWeight.bold,

@@ -9,6 +9,7 @@ class ApiConstants {
   static String baseUrl = 'http://$ipPublic:1212/Api_Flutter/';
 
   //* HINTS API YANG SUDAH RESTFULL
+  static String getListItem = 'spk/rest_api.php?type=listItem';
   static String getListPanjang = 'spk/rest_api.php?type=panjang';
   static String getListLebar = 'spk/rest_api.php?type=lebar';
   static String getListJenisBatu = 'spk/rest_api.php?type=jenisBatu';

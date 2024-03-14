@@ -13,6 +13,7 @@ import 'package:form_designer/mainScreen/list_designer_screen.dart';
 import 'package:form_designer/mainScreen/list_mps.dart';
 import 'package:form_designer/mainScreen/list_status_approval.dart';
 import 'package:form_designer/mainScreen/login.dart';
+import 'package:form_designer/pembelian/home_pembelian.dart';
 import 'package:form_designer/pembelian/list_form_pr.dart';
 import 'package:form_designer/produksi/mainScreen/monthly_meeting_scm.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -47,6 +48,7 @@ class _MainViewScmState extends State<MainViewScm> {
     const MonthlyMeetingScm(),
     const ListMpsScreen(),
     const ListStatusApprovalScreen(),
+    const HomeScreenPembelian(),
     const ListFormPr(),
     const ListCalculatePricingScreen(),
     const HomeScreenAdmin()
@@ -60,6 +62,7 @@ class _MainViewScmState extends State<MainViewScm> {
     const ListKebutuhanBatuScreen(),
     const MonthlyMeetingScm(),
     const ListMpsScreen(),
+    const HomeScreenPembelian(),
     const ListFormPr(),
     const HomeScreenAdmin()
   ];
@@ -709,6 +712,10 @@ class _MainViewScmState extends State<MainViewScm> {
       ),
       const SideNavigationBarItem(
         icon: Icons.list_alt,
+        label: 'Dashboard Procurement',
+      ),
+      const SideNavigationBarItem(
+        icon: Icons.list_alt,
         label: 'List Form PR',
       ),
       const SideNavigationBarItem(
@@ -755,6 +762,10 @@ class _MainViewScmState extends State<MainViewScm> {
       const SideNavigationBarItem(
         icon: Icons.moving_outlined,
         label: 'Monitoring Per Siklus',
+      ),
+      const SideNavigationBarItem(
+        icon: Icons.list_alt,
+        label: 'Dashboard Procurement',
       ),
       const SideNavigationBarItem(
         icon: Icons.list_alt,
