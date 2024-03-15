@@ -12,6 +12,7 @@ import 'package:form_designer/global/global.dart';
 import 'package:form_designer/pembelian/form_pr_model.dart';
 import 'package:form_designer/pembelian/item_pr_model.dart';
 import 'package:form_designer/pembelian/list_form_pr_model.dart';
+import 'package:form_designer/qc/modelQc/beratKodeModel.dart';
 import 'package:form_designer/qc/modelQc/itemQcModel.dart';
 import 'package:form_designer/qc/modelQc/jenisBatuModel.dart';
 import 'package:form_designer/qc/modelQc/kualitasBatuModel.dart';
@@ -59,6 +60,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
   List<String> listBerat = [];
   List<PanjangModel>? listPanjang;
   List<LebarModel>? listLebar;
+  List<BeratKodeModel>? listBeratKode;
   List<JenisBatuModel>? listJenisBatu;
   List<KualitasBatuModel>? listKualitasBatu;
   String? tglOut;
@@ -78,6 +80,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
   String? beratFancy = '';
   String? resultPanjang = '';
   String? resultLebar = '';
+  String? resultberatKode = '';
   double sumBerat = 0.0;
   String? kebutuhanBerat;
   double? previousBerat; // Variabel untuk menyimpan nilai berat sebelumnya
@@ -614,8 +617,20 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                       ],
                       onChanged: (value) {
                         beratFancy = value;
+                        final double beratKode = double.tryParse(value) ?? 0;
+                        resultberatKode = calculateResultBeratKode(beratKode);
+
                         setState(() {
                           selectListItemFancy[i][4] = '$beratFancy';
+                          if (kodeBatu.toString().toLowerCase() == 'bq' ||
+                              kodeBatu.toString().toLowerCase() == 'tp') {
+                            selectListItemFancy[i][0] =
+                                '$kodeBatu$resultPanjang$kualitasBatu$resultLebar';
+                          } else {
+                            selectListItemFancy[i][0] =
+                                '$kodeBatu$resultberatKode$kualitasBatu';
+                          }
+
                           print('fancy = $selectListItemFancy');
                         });
                       },
@@ -990,8 +1005,20 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                       ],
                       onChanged: (value) {
                         beratFancy = value;
+                        final double beratKode = double.tryParse(value) ?? 0;
+                        resultberatKode = calculateResultBeratKode(beratKode);
+
                         setState(() {
                           selectListItemFancy[i][4] = '$beratFancy';
+                          if (kodeBatu.toString().toLowerCase() == 'bq' ||
+                              kodeBatu.toString().toLowerCase() == 'tp') {
+                            selectListItemFancy[i][0] =
+                                '$kodeBatu$resultPanjang$kualitasBatu$resultLebar';
+                          } else {
+                            selectListItemFancy[i][0] =
+                                '$kodeBatu$resultberatKode$kualitasBatu';
+                          }
+
                           print('fancy = $selectListItemFancy');
                         });
                       },
@@ -999,6 +1026,90 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                   ),
                 ),
               ]),
+            //* HINTS untuk total
+            DataRow(cells: [
+              DataCell(
+                Container(
+                    color: Colors.black,
+                    padding: const EdgeInsets.symmetric(horizontal: 0),
+                    child: const Center(
+                        child: Text(
+                      '',
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ))),
+              ),
+              DataCell(
+                Container(
+                    color: Colors.black,
+                    padding: const EdgeInsets.symmetric(horizontal: 0),
+                    child: const Center(
+                        child: Text(
+                      '',
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ))),
+              ),
+              DataCell(
+                Container(
+                    color: Colors.black,
+                    padding: const EdgeInsets.symmetric(horizontal: 0),
+                    child: const Center(
+                        child: Text(
+                      '',
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ))),
+              ),
+              DataCell(
+                Container(
+                    color: Colors.black,
+                    padding: const EdgeInsets.symmetric(horizontal: 0),
+                    child: const Center(
+                        child: Text(
+                      'Total',
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ))),
+              ),
+              //? qty round
+              DataCell(
+                Container(
+                    color: Colors.black,
+                    padding: const EdgeInsets.symmetric(horizontal: 0),
+                    child: Center(
+                        child: Text(
+                      sumQty.toStringAsFixed(0),
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ))),
+              ),
+
+              //? berat round
+              DataCell(
+                Container(
+                    color: Colors.black,
+                    padding: const EdgeInsets.symmetric(horizontal: 0),
+                    child: Center(
+                        child: Text(
+                      sumBerat.toStringAsFixed(3),
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ))),
+              ),
+
+              // DataCell(
+              //   Container(
+              //       color: Colors.black,
+              //       padding: const EdgeInsets.symmetric(horizontal: 10),
+              //       child: Center(
+              //           child: Text(
+              //         'Reject : ${sumReject.toStringAsFixed(3)}',
+              //         style: const TextStyle(
+              //             color: Colors.white, fontWeight: FontWeight.bold),
+              //       ))),
+              // ),
+            ]),
           ];
   }
 
@@ -1045,6 +1156,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
     }
     //* end fungsi
     await getLebar();
+    await getBeratKode();
     //* hinst start menyimpan list string lokal ke json
     List<String>? jenisBatuStrings =
         sharedPreferences!.getStringList('jenisBatu');
@@ -1162,6 +1274,31 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
         context: context,
         dialogType: DialogType.error,
         title: 'ERROR GET list lebar',
+        description: 'Hubungi admin => $e',
+      );
+    }
+  }
+
+  getBeratKode() async {
+    try {
+      final response = await http
+          .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getListBeratKode));
+      if (response.statusCode == 200) {
+        List jsonResponse = json.decode(response.body);
+        var alldata =
+            jsonResponse.map((data) => BeratKodeModel.fromJson(data)).toList();
+        setState(() {
+          listBeratKode = alldata.toList();
+        });
+      } else {
+        throw Exception('Unexpected error occured!');
+      }
+    } catch (e) {
+      // ignore: use_build_context_synchronously
+      showDialogError(
+        context: context,
+        dialogType: DialogType.error,
+        title: 'ERROR GET list berat kode',
         description: 'Hubungi admin => $e',
       );
     }
@@ -2254,6 +2391,25 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
     }
 
     result = listLebar?[i].resultLebar.toString();
+
+    return result;
+  }
+
+  String calculateResultBeratKode(double beratFancy) {
+    // ignore: prefer_typing_uninitialized_variables
+    var result;
+    int i = 0;
+    //! hints Loop untuk mencari indeks yang sesuai
+    while (i <= listBeratKode!.length) {
+      if (beratFancy < double.parse(listBeratKode![i].beratKode!)) {
+        result = listBeratKode![i].resultBeratKode!;
+        break; // Jika kondisi terpenuhi, keluar dari loop
+      } else {
+        i++; // Jika tidak, lanjut ke nilai berikutnya
+      }
+    }
+
+    result = listBeratKode?[i].resultBeratKode.toString();
 
     return result;
   }

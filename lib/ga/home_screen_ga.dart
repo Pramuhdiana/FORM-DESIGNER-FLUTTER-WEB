@@ -3,18 +3,24 @@
 import 'dart:convert';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:dio/dio.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:form_designer/api/api_constant.dart';
+import 'package:form_designer/ga/list_kurir.dart';
 import 'package:form_designer/global/global.dart';
 import 'package:form_designer/pembelian/add_form_pr.dart';
 import 'package:form_designer/pembelian/form_pr_model.dart';
 import 'package:form_designer/pembelian/list_form_pr_model.dart';
+import 'package:form_designer/pembelian/save_pdf_pembelian.dart';
 import 'package:form_designer/widgets/loading_widget.dart';
+import 'package:fullscreen_window/fullscreen_window.dart';
 import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';
 import 'package:intl/intl.dart';
 import 'package:overlay_support/overlay_support.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 class HomeScreenGa extends StatefulWidget {
   const HomeScreenGa({super.key});
@@ -453,6 +459,11 @@ class RowSource extends DataTableSource {
 
   double? totalBeratDatang;
   int? totalQtyDatang;
+  String screenSizeText = "";
+
+  RoundedLoadingButtonController btnControllerSimpan =
+      RoundedLoadingButtonController();
+
   RowSource({
     required this.myData,
     required this.count,
@@ -490,12 +501,15 @@ class RowSource extends DataTableSource {
                           title: 'INFO',
                           description: 'Isi kurir terlebih dahulu',
                         )
-                      : showCustomDialog(
-                          context: context,
-                          dialogType: DialogType.success,
-                          title: 'SUCCESS',
-                          description: 'This is a success message!',
-                        );
+                      : openForm(data, listDataPR);
+
+                  // html.window.print();
+                  // showCustomDialog(
+                  //     context: context,
+                  //     dialogType: DialogType.success,
+                  //     title: 'SUCCESS',
+                  //     description: 'This is a success message!',
+                  //   );
                   // var filterBynoPR = listDataPR!
                   //     .where((element) =>
                   //         element.noPr.toString().toLowerCase() ==
@@ -543,17 +557,21 @@ class RowSource extends DataTableSource {
       //kurir
       DataCell(Builder(builder: (context) {
         return data.kurir != ''
-            ? Text(data.kurir)
+            ? Row(
+                children: [
+                  Text(data.kurir),
+                  IconButton(
+                      onPressed: () {
+                        addKurirForm(data.id);
+                      },
+                      icon: const Icon(Icons.edit))
+                ],
+              )
             : Padding(
                 padding: const EdgeInsets.only(left: 0),
                 child: ElevatedButton(
                   onPressed: () {
-                    showCustomDialog(
-                      context: context,
-                      dialogType: DialogType.success,
-                      title: 'SUCCESS',
-                      description: 'This is a success message!',
-                    );
+                    addKurirForm(data.id);
                   },
                   child: const Text('Pilih kurir'),
                 ),
@@ -592,6 +610,450 @@ class RowSource extends DataTableSource {
         ),
       ),
     ]);
+  }
+
+  void setFullScreen(bool isFullScreen) {
+    FullScreenWindow.setFullScreen(isFullScreen);
+  }
+
+  void showScreenSize() async {
+    Size logicalSize = await FullScreenWindow.getScreenSize(context);
+    Size physicalSize = await FullScreenWindow.getScreenSize(null);
+    screenSizeText =
+        "Screen size (logical pixel): ${logicalSize.width} x ${logicalSize.height}\n";
+    screenSizeText +=
+        "Screen size (physical pixel): ${physicalSize.width} x ${physicalSize.height}\n";
+  }
+
+  openForm(var data, List<ListItemPRModel>? listDataPR) {
+    setFullScreen(true);
+
+    var filterBynoPR = listDataPR!
+        .where((element) =>
+            element.noPr.toString().toLowerCase() ==
+            data.noPr.toString().toLowerCase())
+        .toList();
+    return showGeneralDialog(
+        transitionDuration: const Duration(milliseconds: 200),
+        barrierDismissible: false,
+        barrierLabel: '',
+        context: context,
+        pageBuilder: (context, animation1, animation2) {
+          return const Text('');
+        },
+        barrierColor: Colors.black.withOpacity(0.5),
+        transitionBuilder: (context, a1, a2, widget) {
+          return Transform.scale(
+              scale: a1.value,
+              child: Opacity(
+                  opacity: a1.value,
+                  child: AlertDialog(
+                      content:
+                          Stack(clipBehavior: Clip.none, children: <Widget>[
+                    SizedBox(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    SizedBox(
+                                      width: 100,
+                                      height: 50,
+                                      child: Image.network(
+                                        '${ApiConstants.baseUrlImage}csv.png',
+                                        fit: BoxFit.scaleDown,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 10),
+                                    const Text(
+                                      'Jl. Raya Daan Mogot\nKM 21 Pergudangan Eraprima\nBlok I No.2 Batu Ceper, Tanggerang,\nBanten 15122, Tangerang',
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 12),
+                                    ),
+                                  ],
+                                ),
+                                Text(
+                                  'No. ${data.noPr}',
+                                  textAlign: TextAlign.start,
+                                  style: const TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Text(
+                            data.jenisForm.toString().toLowerCase() == 'retur'
+                                ? 'TANDA TERIMA RETUR'
+                                : 'TANDA TERIMA PEMBELIAN',
+                            style: const TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 22),
+                          ),
+                          const Align(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              'Sudah Diterima dalam keadaan baik dan tersegel sbb',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12),
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Vendor : ${data.vendor}',
+                                textAlign: TextAlign.start,
+                                style: const TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 12),
+                              ),
+                              Text(
+                                'Tanggal : ${DateFormat('dd-MMMM-yyyy').format(DateTime.parse(data.created_at))}',
+                                textAlign: TextAlign.start,
+                                style: const TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 12),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Lokasi  : ${data.lokasi}',
+                                textAlign: TextAlign.start,
+                                style: const TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 12),
+                              ),
+                              Text(
+                                'Jam : ${DateFormat('H.mm').format(DateTime.parse(data.created_at))}',
+                                textAlign: TextAlign.start,
+                                style: const TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 12),
+                              ),
+                            ],
+                          ),
+                          Container(
+                            constraints: BoxConstraints(
+                                maxHeight: MediaQuery.of(context).size.height *
+                                    0.4 // Sesuaikan dengan tinggi maksimum yang diinginkan
+                                ),
+                            child: SingleChildScrollView(
+                              scrollDirection: Axis.vertical,
+                              child:
+                                  dataTableForm(filterBynoPR, data.jenisItem),
+                            ),
+                          ),
+                          const SizedBox(height: 20),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  children: [
+                                    const Text(
+                                      'Diserahkan oleh,',
+                                      textAlign: TextAlign.start,
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12),
+                                    ),
+                                    const SizedBox(height: 40),
+                                    data.jenisForm.toString().toLowerCase() ==
+                                            'retur'
+                                        ? const Text('Warehouse')
+                                        : Text('${data.vendor}')
+                                  ],
+                                ),
+                                Column(
+                                  children: [
+                                    const Text(
+                                      'Dibawa oleh,',
+                                      textAlign: TextAlign.start,
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12),
+                                    ),
+                                    const SizedBox(
+                                        height: 40,
+                                        child: Icon(Icons.verified_outlined)),
+                                    Text(data.kurir)
+                                  ],
+                                ),
+                                Column(
+                                  children: [
+                                    const Text(
+                                      'Diterima oleh,',
+                                      textAlign: TextAlign.start,
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12),
+                                    ),
+                                    const SizedBox(
+                                      height: 40,
+                                      child: Icon(Icons.verified_outlined),
+                                    ),
+                                    data.jenisForm.toString().toLowerCase() ==
+                                            'retur'
+                                        ? Text('${data.vendor}')
+                                        : const Text('Warehouse')
+                                  ],
+                                ),
+                                const Column(
+                                  children: [
+                                    Text(
+                                      'Diketahui oleh,',
+                                      textAlign: TextAlign.start,
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12),
+                                    ),
+                                    SizedBox(height: 40),
+                                    Text('....')
+                                  ],
+                                ),
+                              ]),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              SizedBox(
+                                width: 200,
+                                height: 50,
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    setFullScreen(false);
+                                    Navigator.pop(context);
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors
+                                        .red, // Mengatur warna latar belakang tombol
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          10), // Memberikan radius 10
+                                    ),
+                                  ),
+                                  child: const Text(
+                                    "Batal",
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 18),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 200,
+                                height: 50,
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    setFullScreen(false);
+
+                                    Navigator.pop(context);
+                                    savePdf(data.noPr);
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors
+                                        .yellow, // Mengatur warna latar belakang tombol
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          10), // Memberikan radius 10
+                                    ),
+                                  ),
+                                  child: const Text(
+                                    "Save PDF",
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 18),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    )
+                  ]))));
+        });
+  }
+
+  savePdf(noPr) async {
+    showDialog(
+      context: context,
+      barrierDismissible: false, // Prevent dialog dismissal on tap outside
+      builder: (BuildContext context) {
+        return Dialog(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          child: Container(
+            padding: const EdgeInsets.all(16),
+            color: Colors.white,
+            child: const Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CircularProgressIndicator(),
+                SizedBox(height: 20),
+                Text(
+                  'Loading, please wait...',
+                  style: TextStyle(fontSize: 16),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+
+    await SavePdfPembelian().generatePDFKurir(noPr);
+    // ignore: use_build_context_synchronously
+    Navigator.pop(context);
+  }
+
+  addKurirForm(id) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          TextEditingController kurir = TextEditingController();
+
+          return StatefulBuilder(
+              builder: (context, setState) => AlertDialog(
+                      content:
+                          Stack(clipBehavior: Clip.none, children: <Widget>[
+                    SizedBox(
+                        height: 65,
+                        width: 200,
+                        child: DropdownSearch<ListKurir>(
+                          asyncItems: (String? filter) => getDataKurir(filter),
+                          popupProps: PopupPropsMultiSelection.modalBottomSheet(
+                            searchFieldProps: TextFieldProps(
+                                controller: kurir,
+                                decoration: InputDecoration(
+                                  labelText: "Search..",
+                                  prefixIcon: const Icon(Icons.search),
+                                  suffixIcon: InkWell(
+                                      onTap: () {
+                                        Navigator.pop(context);
+
+                                        simpanKurir('yes', id, kurir.text);
+                                        Navigator.pop(context);
+                                        showSimpleNotification(
+                                          const Text('Success'),
+                                          background: Colors.green,
+                                          duration: const Duration(seconds: 1),
+                                        );
+                                      },
+                                      child: const Icon(
+                                        Icons.add,
+                                        color: Colors.black,
+                                      )),
+                                  //! end fungsi
+                                )),
+                            showSelectedItems: true,
+                            itemBuilder: _listKurir,
+                            showSearchBox: true,
+                          ),
+                          compareFn: (item, sItem) => item.id == sItem.id,
+                          onChanged: (item) {
+                            Navigator.pop(context);
+                            simpanKurir('', id, item);
+                          },
+                          dropdownDecoratorProps: const DropDownDecoratorProps(
+                            dropdownSearchDecoration: InputDecoration(
+                              filled: true,
+                              fillColor: Colors.white,
+                            ),
+                          ),
+                        )),
+                  ])));
+        });
+  }
+
+  simpanKurir(String modeAdd, id, kurir) async {
+    if (modeAdd == 'yes') {
+      await addKurir(kurir);
+    }
+    await updateKurir(id, kurir);
+    // ignore: use_build_context_synchronously
+    onRowPressed();
+    showSimpleNotification(
+      const Text('Success'),
+      background: Colors.green,
+      duration: const Duration(seconds: 1),
+    );
+  }
+
+  updateKurir(idUser, kurir) async {
+    try {
+      Map<String, String> body = {
+        'type': 'updateKurir',
+        'id': idUser.toString(),
+        'kurir': kurir.toString(),
+      };
+
+      print(body);
+      final response = await http.post(
+          Uri.parse('${ApiConstants.baseUrl}${ApiConstants.restFullApi}'),
+          body: jsonEncode(body));
+      print(response.body);
+    } catch (e) {
+      print(e);
+      // ignore: use_build_context_synchronously
+      showDialogError(
+        context: context,
+        dialogType: DialogType.error,
+        title: 'update kurir',
+        description: 'Hubungi admin => $e',
+      );
+    }
+  }
+
+  addKurir(kurir) async {
+    try {
+      Map<String, String> body = {
+        'type': 'addKurir',
+        'kurir': kurir.toString(),
+      };
+      final response = await http.post(
+          Uri.parse('${ApiConstants.baseUrl}${ApiConstants.restFullApi}'),
+          body: jsonEncode(body));
+      print(response.body);
+    } catch (e) {
+      // ignore: use_build_context_synchronously
+      showDialogError(
+        context: context,
+        dialogType: DialogType.error,
+        title: 'add kurir',
+        description: 'Hubungi admin => $e',
+      );
+    }
+  }
+
+  Future<List<ListKurir>> getDataKurir(filter) async {
+    var response = await Dio().get(
+      ApiConstants.baseUrl + ApiConstants.getListKurir,
+      queryParameters: {"filter": filter.toLowerCase()},
+    );
+    final data = response.data;
+    if (data != null) {
+      return ListKurir.fromJsonList(data);
+    }
+    return [];
   }
 
   Future<String> getSumBerat(String noPr) async {
@@ -851,4 +1313,31 @@ class RowSource extends DataTableSource {
 
   @override
   int get selectedRowCount => 0;
+}
+
+Widget _listKurir(
+  BuildContext context,
+  ListKurir? item,
+  bool isSelected,
+) {
+  return Container(
+    margin: const EdgeInsets.symmetric(horizontal: 8),
+    decoration: !isSelected
+        ? null
+        : BoxDecoration(
+            border: Border.all(color: Colors.black, width: 5),
+            borderRadius: BorderRadius.circular(50),
+          ),
+    child: ListTile(
+      selected: isSelected,
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            item?.nama ?? '',
+          ),
+        ],
+      ),
+    ),
+  );
 }

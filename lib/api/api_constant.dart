@@ -12,9 +12,11 @@ class ApiConstants {
   static String getListItem = 'spk/rest_api.php?type=listItem';
   static String getListPanjang = 'spk/rest_api.php?type=panjang';
   static String getListLebar = 'spk/rest_api.php?type=lebar';
+  static String getListBeratKode = 'spk/rest_api.php?type=beratKode';
   static String getListJenisBatu = 'spk/rest_api.php?type=jenisBatu';
   static String getListKualitasBatu = 'spk/rest_api.php?type=kualitasBatu';
   static String getListUkuranRound = 'spk/rest_api.php?type=ukuranRound';
+  static String getListKurir = 'spk/rest_api.php?type=kurir';
   static String getCountQc = 'spk/rest_api.php?type=qc';
   static String getItemQc = 'spk/rest_api.php?type=itemQc';
   static String updateItemPr = 'spk/rest_api.php';
