@@ -12,6 +12,7 @@ import 'package:form_designer/global/global.dart';
 import 'package:form_designer/pembelian/form_pr_model.dart';
 import 'package:form_designer/pembelian/item_pr_model.dart';
 import 'package:form_designer/pembelian/list_form_pr_model.dart';
+import 'package:form_designer/pembelian/list_piecut_model.dart';
 import 'package:form_designer/qc/modelQc/beratKodeModel.dart';
 import 'package:form_designer/qc/modelQc/itemQcModel.dart';
 import 'package:form_designer/qc/modelQc/jenisBatuModel.dart';
@@ -52,6 +53,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
   // TextEditingController jenisBatu = TextEditingController();
   String? jenisBatu;
   String? kodeBatu = 'ROUND';
+  String? namaPieCut = '';
   int? countItemPr;
   String? kualitasBatu;
   bool isLoading = false;
@@ -75,6 +77,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
   String? caratPcs = '';
   String? kodeMdbc = '';
   String? panjang = '';
+  String? namaItemFancy = '';
   String? lebar = '';
   String? qtyFancy = '';
   String? beratFancy = '';
@@ -93,6 +96,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
   double? lebarLayar;
   double? sumReject = 0.0;
 
+  List<ListPieCutModel>? listPieCut;
   List<ListItemPRModel>? listItemPr;
   List<ItemQcModel>? listDetailItemPR;
   List<String> items = [
@@ -129,7 +133,9 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
     List<ItemQcModel>? filterBynoQc;
 
     await getKodeBatu(index);
-
+    if (kodeBatu.toString().toLowerCase() == 'pie cut') {
+      await getListPieCut(index);
+    }
     idItemPr = listItemPr![index].id.toString();
 
     notesReject.text = listItemPr![index].notesReject.toString();
@@ -154,20 +160,22 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
         ]);
         print('round edit = $selectListItemRound');
       } else {
-        kodeMdbc = '${filterBynoQc[i].item}';
+        namaItemFancy = '${filterBynoQc[i].item}';
         panjang = '${filterBynoQc[i].panjang}';
         lebar = '${filterBynoQc[i].lebar}';
         qtyFancy = '${filterBynoQc[i].qty}';
         beratFancy = '${filterBynoQc[i].berat}';
         String idItem = '${filterBynoQc[i].id}';
+        kodeMdbc = '${filterBynoQc[i].kodeMdbc}';
 
         selectListItemFancy.add([
-          '$kodeMdbc',
+          '$namaItemFancy',
           '$panjang',
           '$lebar',
           '$qtyFancy',
           '$beratFancy',
           idItem,
+          '$kodeMdbc',
         ]);
         print('fancy = $selectListItemFancy');
       }
@@ -539,7 +547,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
 
                         setState(() {
                           selectListItemFancy[i][1] = '$panjang';
-                          selectListItemFancy[i][0] =
+                          selectListItemFancy[i][6] =
                               '$kodeBatu$resultPanjang$kualitasBatu$resultLebar';
                           print('fancy = $selectListItemFancy');
                         });
@@ -571,8 +579,11 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
 
                         setState(() {
                           selectListItemFancy[i][2] = '$lebar';
-                          selectListItemFancy[i][0] =
-                              '$kodeBatu$resultPanjang$kualitasBatu$resultLebar';
+                          if (kodeBatu.toString().toLowerCase() != 'pie cut') {
+                            selectListItemFancy[i][6] =
+                                '$kodeBatu$resultPanjang$kualitasBatu$resultLebar';
+                          }
+
                           print('fancy = $selectListItemFancy');
                         });
                       },
@@ -618,16 +629,24 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                       onChanged: (value) {
                         beratFancy = value;
                         final double beratKode = double.tryParse(value) ?? 0;
-                        resultberatKode = calculateResultBeratKode(beratKode);
-
                         setState(() {
                           selectListItemFancy[i][4] = '$beratFancy';
-                          if (kodeBatu.toString().toLowerCase() == 'bq' ||
+                          if (kodeBatu.toString().toLowerCase() == 'pie cut') {
+                            print('pie cut on');
+                            resultberatKode =
+                                calculateResultBeratKodePieCut(beratKode);
+                            String kodeBaru = resultberatKode!
+                                .replaceAll("SA", "$kualitasBatu");
+                            selectListItemFancy[i][6] = kodeBaru;
+                          } else if (kodeBatu.toString().toLowerCase() ==
+                                  'bq' ||
                               kodeBatu.toString().toLowerCase() == 'tp') {
-                            selectListItemFancy[i][0] =
+                            selectListItemFancy[i][6] =
                                 '$kodeBatu$resultPanjang$kualitasBatu$resultLebar';
                           } else {
-                            selectListItemFancy[i][0] =
+                            resultberatKode =
+                                calculateResultBeratKode(beratKode);
+                            selectListItemFancy[i][6] =
                                 '$kodeBatu$resultberatKode$kualitasBatu';
                           }
 
@@ -927,7 +946,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
 
                         setState(() {
                           selectListItemFancy[i][1] = '$panjang';
-                          selectListItemFancy[i][0] =
+                          selectListItemFancy[i][6] =
                               '$kodeBatu$resultPanjang$kualitasBatu$resultLebar';
                           print('fancy = $selectListItemFancy');
                         });
@@ -959,8 +978,10 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
 
                         setState(() {
                           selectListItemFancy[i][2] = '$lebar';
-                          selectListItemFancy[i][0] =
-                              '$kodeBatu$resultPanjang$kualitasBatu$resultLebar';
+                          if (kodeBatu.toString().toLowerCase() != 'pie cut') {
+                            selectListItemFancy[i][6] =
+                                '$kodeBatu$resultPanjang$kualitasBatu$resultLebar';
+                          }
                           print('fancy = $selectListItemFancy');
                         });
                       },
@@ -1006,16 +1027,25 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                       onChanged: (value) {
                         beratFancy = value;
                         final double beratKode = double.tryParse(value) ?? 0;
-                        resultberatKode = calculateResultBeratKode(beratKode);
-
                         setState(() {
+                          print(
+                              'kode batunya ${kodeBatu.toString().toLowerCase()}');
                           selectListItemFancy[i][4] = '$beratFancy';
-                          if (kodeBatu.toString().toLowerCase() == 'bq' ||
+                          if (kodeBatu.toString().toLowerCase() == 'pie cut') {
+                            resultberatKode =
+                                calculateResultBeratKodePieCut(beratKode);
+                            String kodeBaru = resultberatKode!
+                                .replaceAll("SA", "$kualitasBatu");
+                            selectListItemFancy[i][6] = kodeBaru;
+                          } else if (kodeBatu.toString().toLowerCase() ==
+                                  'bq' ||
                               kodeBatu.toString().toLowerCase() == 'tp') {
-                            selectListItemFancy[i][0] =
+                            selectListItemFancy[i][6] =
                                 '$kodeBatu$resultPanjang$kualitasBatu$resultLebar';
                           } else {
-                            selectListItemFancy[i][0] =
+                            resultberatKode =
+                                calculateResultBeratKode(beratKode);
+                            selectListItemFancy[i][6] =
                                 '$kodeBatu$resultberatKode$kualitasBatu';
                           }
 
@@ -1349,6 +1379,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
             .toList();
         setState(() {
           kodeBatu = filterByJenis.first.kodeItem.toString();
+          namaPieCut = filterByJenis.first.item.toString();
         });
       } else {
         throw Exception('Unexpected error occured!');
@@ -1359,6 +1390,46 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
         context: context,
         dialogType: DialogType.error,
         title: 'ERROR GET list kodeBatu',
+        description: 'Hubungi admin => $e',
+      );
+    }
+  }
+
+  getListPieCut(i) async {
+    print('get db pie cut on');
+    //? get List Pie Cutnya
+    try {
+      final responseList = await http.get(
+          Uri.parse('${ApiConstants.baseUrl}${ApiConstants.getListPieCut}'));
+
+      if (responseList.statusCode == 200) {
+        List jsonResponse = json.decode(responseList.body);
+
+        var dataList = jsonResponse
+            .map((dataList) => ListPieCutModel.fromJson(dataList))
+            .toList();
+
+        var filterByName = dataList
+            .where((element) =>
+                element.nama.toString().toLowerCase() ==
+                listItemPr![i].item.toString().toLowerCase())
+            .toList();
+        for (var item in filterByName) {
+          print(item.nama);
+        }
+        setState(() {
+          listPieCut = filterByName;
+        });
+      } else {
+        print(responseList.body);
+        throw Exception('Unexpected error occured!');
+      }
+    } catch (e) {
+      // ignore: use_build_context_synchronously
+      showDialogError(
+        context: context,
+        dialogType: DialogType.error,
+        title: 'ERROR GET list Pie Cut',
         description: 'Hubungi admin => $e',
       );
     }
@@ -1666,17 +1737,21 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                         ]);
                         print('round = $selectListItemRound');
                       } else {
-                        kodeMdbc = '';
+                        namaItemFancy = '';
                         panjang = '';
                         lebar = '';
                         qtyFancy = '0';
                         beratFancy = '0';
+                        var idFancy = '';
+                        kodeMdbc = '';
                         selectListItemFancy.add([
-                          '$kodeMdbc',
+                          '$namaItemFancy',
                           '$panjang',
                           '$lebar',
                           '$qtyFancy',
                           '$beratFancy',
+                          idFancy,
+                          '$kodeMdbc',
                         ]);
                         print('fancy = $selectListItemFancy');
                       }
@@ -1975,19 +2050,21 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                         ]);
                         print('round edit = $selectListItemRound');
                       } else {
-                        kodeMdbc = '';
+                        namaItemFancy = '';
                         panjang = '';
                         lebar = '';
                         qtyFancy = '0';
                         beratFancy = '0';
                         var idFancy = '';
+                        kodeMdbc = '';
                         selectListItemFancy.add([
-                          '$kodeMdbc',
+                          '$namaItemFancy',
                           '$panjang',
                           '$lebar',
                           '$qtyFancy',
                           '$beratFancy',
                           idFancy,
+                          '$kodeMdbc',
                         ]);
                         print('fancy edit = $selectListItemFancy');
                       }
@@ -2160,7 +2237,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
               selectListItemFancy[i][1],
               selectListItemFancy[i][2],
               '0',
-              selectListItemFancy[i][0]);
+              selectListItemFancy[i][6]);
         }
       }
     }
@@ -2220,7 +2297,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
               selectListItemFancy[i][1],
               selectListItemFancy[i][2],
               '0',
-              selectListItemFancy[i][0]);
+              selectListItemFancy[i][6]);
         }
       }
     }
@@ -2410,6 +2487,25 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
     }
 
     result = listBeratKode?[i].resultBeratKode.toString();
+
+    return result;
+  }
+
+  String calculateResultBeratKodePieCut(double beratPieCut) {
+    // ignore: prefer_typing_uninitialized_variables
+    var result;
+    int i = 0;
+    //* hints Loop untuk mencari indeks yang sesuai
+    while (i <= listPieCut!.length) {
+      if (beratPieCut <= double.parse(listPieCut![i].berat!)) {
+        result = listPieCut![i].resultPieCut!;
+        break; // Jika kondisi terpenuhi, keluar dari loop
+      } else {
+        i++; // Jika tidak, lanjut ke nilai berikutnya
+      }
+    }
+
+    result = listPieCut?[i].resultPieCut.toString();
 
     return result;
   }

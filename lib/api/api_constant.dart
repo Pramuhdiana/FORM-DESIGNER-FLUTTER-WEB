@@ -17,6 +17,7 @@ class ApiConstants {
   static String getListKualitasBatu = 'spk/rest_api.php?type=kualitasBatu';
   static String getListUkuranRound = 'spk/rest_api.php?type=ukuranRound';
   static String getListKurir = 'spk/rest_api.php?type=kurir';
+  static String getListPieCut = 'spk/rest_api.php?type=pieCut';
   static String getCountQc = 'spk/rest_api.php?type=qc';
   static String getItemQc = 'spk/rest_api.php?type=itemQc';
   static String updateItemPr = 'spk/rest_api.php';

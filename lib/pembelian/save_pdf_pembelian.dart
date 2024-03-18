@@ -337,7 +337,7 @@ class SavePdfPembelian {
       return chunks;
     }
 
-// Split data into chunks to fit on each page
+//* Split data into chunks to fit on each page (sesuaikan splitnya)
     final List<List<List<String>>> chunkedData = _splitList(data, 27);
 
     // Add a page to the document.
@@ -350,15 +350,39 @@ class SavePdfPembelian {
             pw.Column(children: [
               //? header
               pw.Row(children: [
-                pw.Center(
-                    child: pw.Text(
-                  jenisForm == 'retur'
-                      ? 'TANDA TERIMA RETUR'
-                      : 'TANDA TERIMA PEMBELIAN',
+                pw.Row(
+                  mainAxisAlignment: pw.MainAxisAlignment.start,
+                  children: [
+                    pw.SizedBox(
+                      width: 100,
+                      height: 50,
+                      // child: Image.network(
+                      //   '${ApiConstants.baseUrlImage}csv.png',
+                      //   fit: BoxFit.scaleDown,
+                      // ),
+                    ),
+                    pw.SizedBox(width: 10),
+                    pw.Text(
+                      'Jl. Raya Daan Mogot\nKM 21 Pergudangan Eraprima\nBlok I No.2 Batu Ceper, Tanggerang,\nBanten 15122, Tangerang',
+                      style: const pw.TextStyle(fontSize: 12),
+                    ),
+                  ],
+                ),
+                pw.Text(
+                  'No. ${dataFormPR!.first.noPr}',
+                  textAlign: pw.TextAlign.start,
                   style: pw.TextStyle(
-                      fontWeight: pw.FontWeight.bold, fontSize: 22),
-                )),
+                      fontWeight: pw.FontWeight.bold, fontSize: 18),
+                ),
               ]),
+              pw.Center(
+                  child: pw.Text(
+                jenisForm == 'retur'
+                    ? 'TANDA TERIMA RETUR'
+                    : 'TANDA TERIMA PEMBELIAN',
+                style:
+                    pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 22),
+              )),
               for (final chunk in chunkedData)
                 //? body
                 // ignore: deprecated_member_use

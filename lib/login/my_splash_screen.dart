@@ -119,7 +119,7 @@ class _MySplashScreenState extends State<MySplashScreen> {
     await _getDataUser();
     await getPanjang();
     // await getLebar();
-    await getJenisBatu();
+    // await getJenisBatu();
     // await getKualitasBatu();
   }
 
