@@ -92,13 +92,17 @@ class _ListFormPrQcState extends State<ListFormPrQc> {
 
         var data =
             jsonResponse.map((data) => FormPrModel.fromJson(data)).toList();
+        //* hints Urutkan data berdasarkan tanggal terlama
+        data.sort((a, b) => b.id!.compareTo(a.id!));
+        //? Sekarang, data sudah diurutkan berdasarkan tanggal terlama
         var filterByStatus = data;
-        if (sharedPreferences!.getString('divisi') != 'admin') {
-          filterByStatus = data
-              .where((element) =>
-                  element.status == 'qc' || element.status == 'qc review')
-              .toList();
-        }
+
+        // if (sharedPreferences!.getString('divisi') != 'admin') {
+        //   filterByStatus = data
+        //       .where((element) =>
+        //           element.status == 'qc' || element.status == 'qc review')
+        //       .toList();
+        // }
 
         // data.where((element) => element.status == 'qc' || element.status == 'selesai' ).toList();
         data = filterByStatus;

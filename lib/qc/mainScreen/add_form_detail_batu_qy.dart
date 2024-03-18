@@ -2086,8 +2086,18 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
                       height: 45,
                       child: ElevatedButton.icon(
                         onPressed: () {
+                          try {
+                            if (kodeBatu.toString().toLowerCase() == 'round') {
+                              deleteById(selectListItemRound[no - 1][4]);
+                            } else {
+                              deleteById(selectListItemFancy[no - 1][5]);
+                            }
+                          } catch (e) {
+                            print('id tidak ada $e');
+                          }
+                          no -= 1;
+
                           setState(() {
-                            no -= 1;
                             if (kodeBatu.toString().toLowerCase() == 'round') {
                               selectListItemRound.removeAt(no);
                               print('round = $selectListItemRound');
@@ -2204,6 +2214,17 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
         ],
       ),
     );
+  }
+
+  deleteById(id) async {
+    Map<String, String> body = {
+      'type': 'deleteDetailItemQc',
+      'id': id.toString(),
+    };
+    final response = await http.post(
+        Uri.parse('${ApiConstants.baseUrl}${ApiConstants.restFullApi}'),
+        body: jsonEncode(body));
+    print(response.body);
   }
 
   simpanForm() async {

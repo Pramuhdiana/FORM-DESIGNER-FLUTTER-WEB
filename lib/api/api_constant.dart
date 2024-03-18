@@ -22,6 +22,7 @@ class ApiConstants {
   static String getItemQc = 'spk/rest_api.php?type=itemQc';
   static String updateItemPr = 'spk/rest_api.php';
   static String restFullApi = 'spk/rest_api.php';
+  static String deleteDetailItemQc = 'spk/rest_api.php?type=detailItemQc&';
   //* END RESTFULL
 
   static String getNilaiProduksi = 'spk/get_nilai_produksi.php';

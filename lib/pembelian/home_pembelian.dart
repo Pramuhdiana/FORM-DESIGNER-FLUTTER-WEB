@@ -45,6 +45,7 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
   List<FormPrModel>? dataFormPR;
   List<ListItemPRModel>? listItemQc;
   List<ItemQcModel>? listDetailItemQc;
+  List<String> filNomorPr = [];
   List<List<String>> selectListItemRound = [];
   List<List<String>> selectListItemFancy = [];
   String? dumItem = '';
@@ -533,6 +534,7 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
     setState(() {
       isLoading = true;
     });
+    filNomorPr = [];
     final response = await http
         .get(Uri.parse('${ApiConstants.baseUrl}${ApiConstants.getFormPR}'));
 
@@ -552,6 +554,9 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
       //? Sekarang, data sudah diurutkan berdasarkan tanggal terlama
 
       dataFormPR = data;
+      for (int i = dataFormPR!.length - 1; i >= 0; i--) {
+        filNomorPr.add(dataFormPR![i].noPr.toString());
+      }
     } else {
       print(response.body);
       throw Exception('Unexpected error occured!');
@@ -867,33 +872,149 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
             appBar: AppBar(
               automaticallyImplyLeading: false,
               backgroundColor: Colors.white,
-              leadingWidth: 320,
               // ignore: avoid_unnecessary_containers
-              title: Container(
-                // width: MediaQuery.of(context).size.width * 0.3,
-                child: CupertinoSearchTextField(
-                  placeholder: 'Search Anything...',
-                  borderRadius: const BorderRadius.all(Radius.circular(25)),
-                  itemColor: Colors.black,
-                  // autofocus: false,
-                  controller: controller,
-                  backgroundColor: Colors.black12,
-                  // keyboardType: TextInputType.number,
-                  // focusNode: numberFocusNode,
-                  keyboardType: TextInputType.text,
-                  onChanged: (value) {
-                    listItemQc = filterFormPR!
-                        .where((element) =>
-                            element.noPr!
-                                .toLowerCase()
-                                .contains(value.toLowerCase()) ||
-                            element.noQc!
-                                .toLowerCase()
-                                .contains(value.toLowerCase()))
-                        .toList();
-                    setState(() {});
-                  },
+              leading: IconButton(
+                onPressed: () {
+                  showGeneralDialog(
+                      barrierColor: Colors.black.withOpacity(0.5),
+                      transitionBuilder: (context, a1, a2, widget) {
+                        return Transform.scale(
+                          scale: a1.value,
+                          child: Opacity(
+                            opacity: a1.value,
+                            child: AlertDialog(
+                              shape: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(16.0)),
+                              title: const Text('Pilih nomor PR'),
+                              content: Stack(
+                                  clipBehavior: Clip.none,
+                                  children: <Widget>[
+                                    ConstrainedBox(
+                                      constraints:
+                                          const BoxConstraints(maxHeight: 400),
+                                      // ignore: avoid_unnecessary_containers
+                                      child: Container(
+                                        child: SingleChildScrollView(
+                                          scrollDirection: Axis.vertical,
+                                          child: Center(
+                                            child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  for (var i = 0;
+                                                      i < filNomorPr.length;
+                                                      i++)
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              top: 15),
+                                                      child: SizedBox(
+                                                        width: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width *
+                                                            0.5,
+                                                        height: 40,
+                                                        child: ElevatedButton(
+                                                          style: ButtonStyle(
+                                                              shape: MaterialStateProperty.all<
+                                                                      RoundedRectangleBorder>(
+                                                                  RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        50.0),
+                                                            // side: BorderSide(color: Colors.grey.shade200)
+                                                          ))),
+                                                          onPressed: () {
+                                                            Navigator.pop(
+                                                                context);
+                                                            controller.text =
+                                                                filNomorPr[i];
+                                                            listItemQc = filterFormPR!
+                                                                .where((element) => element
+                                                                    .noPr!
+                                                                    .toLowerCase()
+                                                                    .contains(
+                                                                        controller
+                                                                            .text
+                                                                            .toLowerCase()))
+                                                                .toList();
+                                                            setState(() {});
+                                                          },
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              //icon
+                                                              const Padding(
+                                                                  padding: EdgeInsets
+                                                                      .only(
+                                                                          right:
+                                                                              5),
+                                                                  child: Icon(Icons
+                                                                      .arrow_forward_ios)),
+                                                              Expanded(
+                                                                child: Text(
+                                                                  filNomorPr[i],
+                                                                  style: const TextStyle(
+                                                                      fontSize:
+                                                                          16),
+                                                                  maxLines: 1,
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                ]),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ]),
+                            ),
+                          ),
+                        );
+                      },
+                      transitionDuration: const Duration(milliseconds: 200),
+                      barrierDismissible: true,
+                      barrierLabel: '',
+                      context: context,
+                      pageBuilder: (context, animation1, animation2) {
+                        return const Text('');
+                      });
+                },
+                icon: const Icon(
+                  Icons.list,
+                  color: Colors.blue,
                 ),
+              ),
+              title: CupertinoSearchTextField(
+                placeholder: 'Search Anything...',
+                borderRadius: const BorderRadius.all(Radius.circular(25)),
+                itemColor: Colors.black,
+                // autofocus: false,
+                controller: controller,
+                backgroundColor: Colors.black12,
+                // keyboardType: TextInputType.number,
+                // focusNode: numberFocusNode,
+                keyboardType: TextInputType.text,
+                onChanged: (value) {
+                  listItemQc = filterFormPR!
+                      .where((element) =>
+                          element.noPr!
+                              .toLowerCase()
+                              .contains(value.toLowerCase()) ||
+                          element.noQc!
+                              .toLowerCase()
+                              .contains(value.toLowerCase()))
+                      .toList();
+                  setState(() {});
+                },
               ),
               actions: [
                 IconButton(
