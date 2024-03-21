@@ -341,7 +341,7 @@ class SavePdfPembelian {
     }
 
 //* Split data into chunks to fit on each page (sesuaikan splitnya)
-    final List<List<List<String>>> chunkedData = _splitList(data, 27);
+    final List<List<List<String>>> chunkedData = _splitList(data, 20);
 
     // Add a page to the document.
     pdf.addPage(
@@ -599,11 +599,12 @@ class SavePdfPembelian {
         '${item.receiveBerat}',
         '${item.item}',
         '\$ ${item.harga}',
-        '\$ ${totalHarga[index].toStringAsFixed(3)}',
+        '\$ ${(double.parse(item.harga!) * double.parse(item.receiveBerat!)).toStringAsFixed(3)}',
       ]);
     });
 // Add total quantity and total weight to the last row of the table
-    data.add(['', '', '', '', 'Total', sumHargaBerat.toStringAsFixed(3)]);
+    data.add(
+        ['', '', '', '', 'Total', '\$ ${sumHargaBerat.toStringAsFixed(3)}']);
 // Function to split a list into smaller chunks
     // ignore: no_leading_underscores_for_local_identifiers
     List<List<T>> _splitList<T>(List<T> list, int chunkSize) {
@@ -616,7 +617,7 @@ class SavePdfPembelian {
     }
 
 //* Split data into chunks to fit on each page (sesuaikan splitnya)
-    final List<List<List<String>>> chunkedData = _splitList(data, 27);
+    final List<List<List<String>>> chunkedData = _splitList(data, 20);
 
     // Add a page to the document.
     pdf.addPage(
