@@ -1334,35 +1334,35 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
     }
   }
 
-  getJenisBatu(int i) async {
-    try {
-      final response = await http
-          .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getListJenisBatu));
-      if (response.statusCode == 200) {
-        List jsonResponse = json.decode(response.body);
-        var alldata =
-            jsonResponse.map((data) => JenisBatuModel.fromJson(data)).toList();
-        var filterByJenis = alldata
-            .where((element) =>
-                element.jenisBatu.toString().toLowerCase() ==
-                listItemPr![i].item.toString().toLowerCase())
-            .toList();
-        setState(() {
-          kodeBatu = filterByJenis.first.kodeBatu.toString();
-        });
-      } else {
-        throw Exception('Unexpected error occured!');
-      }
-    } catch (e) {
-      // ignore: use_build_context_synchronously
-      showDialogError(
-        context: context,
-        dialogType: DialogType.error,
-        title: 'ERROR GET list jenisbatu',
-        description: 'Hubungi admin => $e',
-      );
-    }
-  }
+  // getJenisBatu(int i) async {
+  //   try {
+  //     final response = await http
+  //         .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getListJenisBatu));
+  //     if (response.statusCode == 200) {
+  //       List jsonResponse = json.decode(response.body);
+  //       var alldata =
+  //           jsonResponse.map((data) => JenisBatuModel.fromJson(data)).toList();
+  //       var filterByJenis = alldata
+  //           .where((element) =>
+  //               element.jenisBatu.toString().toLowerCase() ==
+  //               listItemPr![i].item.toString().toLowerCase())
+  //           .toList();
+  //       setState(() {
+  //         kodeBatu = filterByJenis.first.kodeBatu.toString();
+  //       });
+  //     } else {
+  //       throw Exception('Unexpected error occured!');
+  //     }
+  //   } catch (e) {
+  //     // ignore: use_build_context_synchronously
+  //     showDialogError(
+  //       context: context,
+  //       dialogType: DialogType.error,
+  //       title: 'ERROR GET list jenisbatu',
+  //       description: 'Hubungi admin => $e',
+  //     );
+  //   }
+  // }
 
   getKodeBatu(int i) async {
     try {
@@ -2236,14 +2236,14 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
         totalQty += int.tryParse(selectListItemRound[i][1]) ?? 0;
         if (selectListItemRound[i][0] != '') {
           await postDetailItem(
-            selectListItemRound[i][0],
-            selectListItemRound[i][1],
-            selectListItemRound[i][2],
-            '',
-            '',
-            selectListItemRound[i][3],
-            selectListItemRound[i][5],
-          );
+              selectListItemRound[i][0],
+              selectListItemRound[i][1],
+              selectListItemRound[i][2],
+              '',
+              '',
+              selectListItemRound[i][3],
+              selectListItemRound[i][5],
+              'ROUND');
         }
       }
     } else {
@@ -2258,7 +2258,8 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
               selectListItemFancy[i][1],
               selectListItemFancy[i][2],
               '0',
-              selectListItemFancy[i][6]);
+              selectListItemFancy[i][6],
+              'FANCY');
         }
       }
     }
@@ -2386,7 +2387,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
   }
 
   postDetailItem(String item, qty, berat, panjang, lebar, caratPcs,
-      String kodeMdbc) async {
+      String kodeMdbc, String jenisBatuRorV) async {
     Map<String, String> body = {
       'type': 'itemPr', // Menambahkan jenis data 'itemPr' ke body
       'noPr': noPr!,
@@ -2397,7 +2398,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
       'panjang': panjang,
       'lebar': lebar,
       'caratPcs': caratPcs,
-      'jenisBatu': jenisBatu!,
+      'jenisBatu': jenisBatuRorV,
       'kualitasBatu': kualitasBatu!,
       'ukuranBatu': ukuranBatu.text,
       'kodeMdbc': kodeMdbc,

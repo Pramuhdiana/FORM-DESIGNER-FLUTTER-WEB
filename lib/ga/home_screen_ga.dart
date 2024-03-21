@@ -493,7 +493,7 @@ class RowSource extends DataTableSource {
             Padding(
               padding: const EdgeInsets.only(left: 0),
               child: IconButton(
-                onPressed: () {
+                onPressed: () async {
                   data.kurir == ''
                       ? showCustomDialog(
                           context: context,
@@ -502,19 +502,6 @@ class RowSource extends DataTableSource {
                           description: 'Isi kurir terlebih dahulu',
                         )
                       : openForm(data, listDataPR);
-
-                  // html.window.print();
-                  // showCustomDialog(
-                  //     context: context,
-                  //     dialogType: DialogType.success,
-                  //     title: 'SUCCESS',
-                  //     description: 'This is a success message!',
-                  //   );
-                  // var filterBynoPR = listDataPR!
-                  //     .where((element) =>
-                  //         element.noPr.toString().toLowerCase() ==
-                  //         data.noPr.toString().toLowerCase())
-                  //     .toList();
                 },
                 icon: const Icon(
                   Icons.print,

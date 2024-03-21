@@ -12,6 +12,7 @@ import 'package:form_designer/global/global.dart';
 import 'package:form_designer/mainScreen/form_screen_by_id.dart';
 import 'package:form_designer/pembelian/export_pembelian.dart';
 import 'package:form_designer/pembelian/form_pr_model.dart';
+import 'package:form_designer/pembelian/item_pr_model.dart';
 import 'package:form_designer/pembelian/list_form_pr_model.dart';
 import 'package:form_designer/pembelian/save_pdf_pembelian.dart';
 import 'package:form_designer/qc/modelQc/itemQcModel.dart';
@@ -54,6 +55,7 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
   String? dumKadar = '';
   String? dumColor = '';
   String? dumDiterima = '';
+  String? kodeBatu = 'ROUND';
   double totalBerat = 0.0;
   int totalQty = 0;
   String screenSizeText = "";
@@ -63,6 +65,7 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
   initState() {
     super.initState();
     print('masuk');
+    controller.clear();
     _getData();
   }
 
@@ -599,9 +602,40 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
       print(response.body);
       throw Exception('Unexpected error occured!');
     }
+
     setState(() {
       isLoading = false;
     });
+  }
+
+  getKodeBatu(int i) async {
+    try {
+      final response = await http
+          .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getListItem));
+      if (response.statusCode == 200) {
+        List jsonResponse = json.decode(response.body);
+        var alldata =
+            jsonResponse.map((data) => ItemPrModel.fromJson(data)).toList();
+        var filterByJenis = alldata
+            .where((element) =>
+                element.item.toString().toLowerCase() ==
+                listItemQc![i].item.toString().toLowerCase())
+            .toList();
+        setState(() {
+          kodeBatu = filterByJenis.first.kodeItem.toString();
+        });
+      } else {
+        throw Exception('Unexpected error occured!');
+      }
+    } catch (e) {
+      // ignore: use_build_context_synchronously
+      showDialogError(
+        context: context,
+        dialogType: DialogType.error,
+        title: 'ERROR GET list kodeBatu',
+        description: 'Hubungi admin => $e',
+      );
+    }
   }
 
   final List<String> items = List.generate(20, (index) => "Item $index");

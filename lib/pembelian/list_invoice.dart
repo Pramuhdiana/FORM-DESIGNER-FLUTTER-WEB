@@ -15,7 +15,6 @@ import 'package:form_designer/pembelian/form_pr_model.dart';
 import 'package:form_designer/pembelian/list_form_pr_model.dart';
 import 'package:form_designer/pembelian/save_pdf_pembelian.dart';
 import 'package:form_designer/qc/modelQc/itemQcModel.dart';
-import 'package:form_designer/widgets/custom_loading.dart';
 import 'package:form_designer/widgets/web_image_converter.dart';
 import 'package:fullscreen_window/fullscreen_window.dart';
 import 'package:intl/intl.dart';
@@ -61,10 +60,13 @@ class _ListInvoiceState extends State<ListInvoice> {
   List<bool> selectedList = List.generate(
       100, (index) => false); // List untuk menyimpan status pilihan
   String? _selectedTime;
+  List<String> filNomorPr = [];
 
+  // ignore: unused_field
   bool _isSigned = false;
   final double _fontSize = 16;
 
+  // ignore: unused_field
   late Uint8List _signatureData;
   final GlobalKey<SfSignaturePadState> _signaturePadKey = GlobalKey();
   Color? _backgroundColor;
@@ -73,6 +75,7 @@ class _ListInvoiceState extends State<ListInvoice> {
   initState() {
     super.initState();
     print('masuk');
+    controller.clear();
     _getData();
   }
 
@@ -81,6 +84,39 @@ class _ListInvoiceState extends State<ListInvoice> {
     return false;
   }
 
+  savePdf(noPr, tanggalCetak) async {
+    showDialog(
+      context: context,
+      barrierDismissible: false, // Prevent dialog dismissal on tap outside
+      builder: (BuildContext context) {
+        return Dialog(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          child: Container(
+            padding: const EdgeInsets.all(16),
+            color: Colors.white,
+            child: const Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CircularProgressIndicator(),
+                SizedBox(height: 20),
+                Text(
+                  'Loading, please wait...',
+                  style: TextStyle(fontSize: 16),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+    await SavePdfPembelian().generatePDFInvoice(noPr, tanggalCetak);
+
+    // ignore: use_build_context_synchronously
+    Navigator.pop(context);
+  }
+
+  // ignore: unused_element
   void _showPopup() {
     _isSigned = false;
 
@@ -314,6 +350,8 @@ class _ListInvoiceState extends State<ListInvoice> {
     setState(() {
       isLoading = true;
     });
+    filNomorPr = [];
+
     final response = await http
         .get(Uri.parse('${ApiConstants.baseUrl}${ApiConstants.getFormPR}'));
 
@@ -334,6 +372,10 @@ class _ListInvoiceState extends State<ListInvoice> {
 
       dataFormPR = data;
       filterDataFormPR = data;
+      dataFormPR = data;
+      for (int i = dataFormPR!.length - 1; i >= 0; i--) {
+        filNomorPr.add(dataFormPR![i].noPr.toString());
+      }
     } else {
       print(response.body);
       throw Exception('Unexpected error occured!');
@@ -589,7 +631,132 @@ class _ListInvoiceState extends State<ListInvoice> {
             appBar: AppBar(
               automaticallyImplyLeading: false,
               backgroundColor: Colors.white,
-              leadingWidth: 320,
+              leading: IconButton(
+                onPressed: () {
+                  showGeneralDialog(
+                      barrierColor: Colors.black.withOpacity(0.5),
+                      transitionBuilder: (context, a1, a2, widget) {
+                        return Transform.scale(
+                          scale: a1.value,
+                          child: Opacity(
+                            opacity: a1.value,
+                            child: AlertDialog(
+                              shape: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(16.0)),
+                              title: const Text('Pilih nomor PR'),
+                              content: Stack(
+                                  clipBehavior: Clip.none,
+                                  children: <Widget>[
+                                    ConstrainedBox(
+                                      constraints:
+                                          const BoxConstraints(maxHeight: 400),
+                                      // ignore: avoid_unnecessary_containers
+                                      child: Container(
+                                        child: SingleChildScrollView(
+                                          scrollDirection: Axis.vertical,
+                                          child: Center(
+                                            child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  for (var i = 0;
+                                                      i < filNomorPr.length;
+                                                      i++)
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              top: 15),
+                                                      child: SizedBox(
+                                                        width: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width *
+                                                            0.5,
+                                                        height: 40,
+                                                        child: ElevatedButton(
+                                                          style: ButtonStyle(
+                                                              shape: MaterialStateProperty.all<
+                                                                      RoundedRectangleBorder>(
+                                                                  RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        50.0),
+                                                            // side: BorderSide(color: Colors.grey.shade200)
+                                                          ))),
+                                                          onPressed: () {
+                                                            Navigator.pop(
+                                                                context);
+                                                            controller.text =
+                                                                filNomorPr[i];
+                                                            dataFormPR = filterDataFormPR!
+                                                                .where((element) =>
+                                                                    element
+                                                                        .noPr!
+                                                                        .toLowerCase()
+                                                                        .contains(controller
+                                                                            .text
+                                                                            .toLowerCase()) ||
+                                                                    element
+                                                                        .vendor!
+                                                                        .toLowerCase()
+                                                                        .contains(controller
+                                                                            .text
+                                                                            .toLowerCase()))
+                                                                .toList();
+                                                            setState(() {});
+                                                          },
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              //icon
+                                                              const Padding(
+                                                                  padding: EdgeInsets
+                                                                      .only(
+                                                                          right:
+                                                                              5),
+                                                                  child: Icon(Icons
+                                                                      .arrow_forward_ios)),
+                                                              Expanded(
+                                                                child: Text(
+                                                                  filNomorPr[i],
+                                                                  style: const TextStyle(
+                                                                      fontSize:
+                                                                          16),
+                                                                  maxLines: 1,
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                ]),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ]),
+                            ),
+                          ),
+                        );
+                      },
+                      transitionDuration: const Duration(milliseconds: 200),
+                      barrierDismissible: true,
+                      barrierLabel: '',
+                      context: context,
+                      pageBuilder: (context, animation1, animation2) {
+                        return const Text('');
+                      });
+                },
+                icon: const Icon(
+                  Icons.list,
+                  color: Colors.blue,
+                ),
+              ),
               // ignore: avoid_unnecessary_containers
               title: Container(
                 // width: MediaQuery.of(context).size.width * 0.3,
@@ -725,26 +892,6 @@ class _ListInvoiceState extends State<ListInvoice> {
                                                       fontSize: _fontSize),
                                                 ),
                                               ),
-                                              // SizedBox(
-                                              //   width: 10,
-                                              //   child: Text(
-                                              //     ':',
-                                              //     textAlign: TextAlign.start,
-                                              //     style: TextStyle(
-                                              //         color: Colors.black,
-                                              //         fontWeight:
-                                              //             FontWeight.bold,
-                                              //         fontSize: _fontSize),
-                                              //   ),
-                                              // ),
-                                              // Text(
-                                              //   'PT. Cahaya Sani Vokasi',
-                                              //   textAlign: TextAlign.start,
-                                              //   style: TextStyle(
-                                              //       color: Colors.black,
-                                              //       fontWeight: FontWeight.bold,
-                                              //       fontSize: _fontSize),
-                                              // ),
                                             ],
                                           ),
                                           dataFormPR![index].tanggalCetak == ''
@@ -794,7 +941,7 @@ class _ListInvoiceState extends State<ListInvoice> {
                                                       fontSize: _fontSize),
                                                 )
                                               : Text(
-                                                  'Jam : ${DateFormat('H.mm').format(DateTime.parse(listItemQc![index].updateAt!))}',
+                                                  'Jam : ${DateFormat('H.mm').format(DateTime.parse(dataFormPR![index].tanggalCetak!))}',
                                                   textAlign: TextAlign.start,
                                                   style: TextStyle(
                                                       color: Colors.black,
@@ -804,15 +951,16 @@ class _ListInvoiceState extends State<ListInvoice> {
                                                 ),
                                         ],
                                       ),
+                                      // ignore: avoid_unnecessary_containers
                                       Container(
-                                        constraints: BoxConstraints(
-                                            maxHeight: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.4 // Sesuaikan dengan tinggi maksimum yang diinginkan
-                                            ),
+                                        // constraints: BoxConstraints(
+                                        //     maxHeight: MediaQuery.of(context)
+                                        //             .size
+                                        //             .height *
+                                        //         0.4 // Sesuaikan dengan tinggi maksimum yang diinginkan
+                                        //     ),
                                         child: SingleChildScrollView(
-                                          scrollDirection: Axis.vertical,
+                                          // scrollDirection: Axis.vertical,
                                           child: dataTableForm(
                                               listItemQc!
                                                   .where((element) =>
@@ -844,6 +992,43 @@ class _ListInvoiceState extends State<ListInvoice> {
                                                           FontWeight.bold,
                                                       fontSize: _fontSize),
                                                 ),
+                                                // InkWell(
+                                                //   splashColor:
+                                                //       Colors.transparent,
+                                                //   highlightColor:
+                                                //       Colors.transparent,
+                                                //   //ignore: sdk_version_set_literal
+                                                //   onTap: () {
+                                                //     _showPopup();
+                                                //   },
+                                                //   child: Container(
+                                                //     decoration: BoxDecoration(
+                                                //       border: Border.all(
+                                                //           color: _isSigned
+                                                //               ? Colors.white
+                                                //               : Colors.black),
+                                                //     ),
+                                                //     height: 78,
+                                                //     width: 138,
+                                                //     child: _isSigned
+                                                //         ? Image.memory(
+                                                //             _signatureData)
+                                                //         : Center(
+                                                //             child: Text(
+                                                //               'Tap here to sign',
+                                                //               style: TextStyle(
+                                                //                   fontSize:
+                                                //                       _fontSize,
+                                                //                   fontWeight:
+                                                //                       FontWeight
+                                                //                           .bold,
+                                                //                   color: Colors
+                                                //                       .black),
+                                                //             ),
+                                                //           ),
+                                                //   ),
+                                                // ),
+                                                // SizedBox(height: 40),
                                                 InkWell(
                                                   splashColor:
                                                       Colors.transparent,
@@ -851,36 +1036,32 @@ class _ListInvoiceState extends State<ListInvoice> {
                                                       Colors.transparent,
                                                   //ignore: sdk_version_set_literal
                                                   onTap: () {
-                                                    _showPopup();
+                                                    // _showPopup();
                                                   },
                                                   child: Container(
                                                     decoration: BoxDecoration(
                                                       border: Border.all(
-                                                          color: _isSigned
-                                                              ? Colors.white
-                                                              : Colors.black),
+                                                          color: Colors.black),
                                                     ),
                                                     height: 78,
                                                     width: 138,
-                                                    child: _isSigned
-                                                        ? Image.memory(
-                                                            _signatureData)
-                                                        : Center(
-                                                            child: Text(
-                                                              'Tap here to sign',
-                                                              style: TextStyle(
-                                                                  fontSize:
-                                                                      _fontSize,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  color: Colors
-                                                                      .black),
-                                                            ),
-                                                          ),
+                                                    // child: _isSigned
+                                                    //     ? Image.memory(
+                                                    //         _signatureData)
+                                                    //     : const Center(
+                                                    //         child: Text(
+                                                    //           'Tap here to sign',
+                                                    //           style: TextStyle(
+                                                    //               fontSize: 12,
+                                                    //               fontWeight:
+                                                    //                   FontWeight
+                                                    //                       .bold,
+                                                    //               color: Colors
+                                                    //                   .black),
+                                                    //         ),
+                                                    //       ),
                                                   ),
                                                 ),
-                                                // SizedBox(height: 40),
                                                 const Text('....')
                                               ],
                                             ),
@@ -942,44 +1123,25 @@ class _ListInvoiceState extends State<ListInvoice> {
                                             height: 40,
                                             padding:
                                                 const EdgeInsets.only(left: 0),
-                                            child: CustomLoadingButton(
-                                                controller: btnControllerSimpan,
-                                                onPressed: () async {
-                                                  if (_signatureData.isEmpty) {
+                                            child: ElevatedButton(
+                                                onPressed: () {
+                                                  if (dataFormPR![index]
+                                                          .tanggalCetak ==
+                                                      '') {
+                                                    //*HINTS Panggil fungsi showCustomDialog
                                                     showCustomDialog(
                                                       context: context,
                                                       dialogType:
-                                                          DialogType.error,
-                                                      title: 'GAGAL',
+                                                          DialogType.info,
+                                                      title: 'INFO',
                                                       description:
-                                                          'Tanda tangan wajib di isi',
+                                                          'Pilih tanggal terlebih dahulu',
                                                     );
                                                   } else {
-                                                    await Future.delayed(
-                                                            const Duration(
-                                                                seconds: 2))
-                                                        .then((value) async {
-                                                      btnControllerSimpan
-                                                          .success();
-                                                    });
-                                                    print(_signatureData);
-                                                    Future.delayed(
-                                                            const Duration(
-                                                                seconds: 1))
-                                                        .then((value) async {
-                                                      btnControllerSimpan
-                                                          .reset();
-                                                    });
-                                                    //*HINTS Panggil fungsi showCustomDialog
-                                                    // ignore: use_build_context_synchronously
-                                                    showCustomDialog(
-                                                      context: context,
-                                                      dialogType:
-                                                          DialogType.success,
-                                                      title: 'SUCCESS',
-                                                      description:
-                                                          'Nota tersimpan',
-                                                    );
+                                                    savePdf(
+                                                        dataFormPR![index].noPr,
+                                                        dataFormPR![index]
+                                                            .tanggalCetak);
                                                   }
                                                 },
                                                 child: const Row(
@@ -1012,39 +1174,39 @@ class _ListInvoiceState extends State<ListInvoice> {
                       })));
   }
 
-  savePdf(noQc) async {
-    showDialog(
-      context: context,
-      barrierDismissible: false, // Prevent dialog dismissal on tap outside
-      builder: (BuildContext context) {
-        return Dialog(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          child: Container(
-            padding: const EdgeInsets.all(16),
-            color: Colors.white,
-            child: const Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                CircularProgressIndicator(),
-                SizedBox(height: 20),
-                Text(
-                  'Loading, please wait...',
-                  style: TextStyle(fontSize: 16),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
+  // savePdf(noQc) async {
+  //   showDialog(
+  //     context: context,
+  //     barrierDismissible: false, // Prevent dialog dismissal on tap outside
+  //     builder: (BuildContext context) {
+  //       return Dialog(
+  //         backgroundColor: Colors.transparent,
+  //         elevation: 0,
+  //         child: Container(
+  //           padding: const EdgeInsets.all(16),
+  //           color: Colors.white,
+  //           child: const Column(
+  //             mainAxisSize: MainAxisSize.min,
+  //             children: [
+  //               CircularProgressIndicator(),
+  //               SizedBox(height: 20),
+  //               Text(
+  //                 'Loading, please wait...',
+  //                 style: TextStyle(fontSize: 16),
+  //               ),
+  //             ],
+  //           ),
+  //         ),
+  //       );
+  //     },
+  //   );
 
-    await SavePdfPembelian().generatePDF(noQc);
-    // ignore: use_build_context_synchronously
-    Navigator.pop(context);
-    selectListItemRound.clear();
-    selectedList = List.generate(listItemQc!.length, (index) => false);
-  }
+  //   await SavePdfPembelian().generatePDF(noQc);
+  //   // ignore: use_build_context_synchronously
+  //   Navigator.pop(context);
+  //   selectListItemRound.clear();
+  //   selectedList = List.generate(listItemQc!.length, (index) => false);
+  // }
 
   exportData(noQc) async {
     showDialog(
