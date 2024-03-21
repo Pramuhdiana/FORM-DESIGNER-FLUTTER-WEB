@@ -6,6 +6,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:form_designer/api/api_constant.dart';
 import 'package:form_designer/global/global.dart';
 // ignore: unused_import
@@ -15,11 +16,13 @@ import 'package:form_designer/pembelian/form_pr_model.dart';
 import 'package:form_designer/pembelian/list_form_pr_model.dart';
 import 'package:form_designer/pembelian/save_pdf_pembelian.dart';
 import 'package:form_designer/qc/modelQc/itemQcModel.dart';
+import 'package:form_designer/widgets/custom_loading.dart';
 import 'package:form_designer/widgets/web_image_converter.dart';
 import 'package:fullscreen_window/fullscreen_window.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';
+import 'package:overlay_support/overlay_support.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_grid_view.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_tile.dart';
@@ -516,7 +519,13 @@ class _ListInvoiceState extends State<ListInvoice> {
           )),
           DataCell(Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Text('\$ ${data[i].harga}', textAlign: TextAlign.left),
+            child: data[i].harga == '0'
+                ? ElevatedButton(
+                    onPressed: () {
+                      hargaForm(i);
+                    },
+                    child: const Text('Isi harga'))
+                : Text('\$ ${data[i].harga}', textAlign: TextAlign.left),
           )),
           DataCell(Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -590,6 +599,94 @@ class _ListInvoiceState extends State<ListInvoice> {
         ),
       ]),
     ];
+  }
+
+  hargaForm(index) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          TextEditingController harga = TextEditingController();
+
+          return StatefulBuilder(
+              builder: (context, setState) => AlertDialog(
+                      content:
+                          Stack(clipBehavior: Clip.none, children: <Widget>[
+                    Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          TextFormField(
+                            style: const TextStyle(
+                                fontStyle: FontStyle.italic,
+                                fontSize: 16,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
+                            textInputAction: TextInputAction.next,
+                            controller: harga,
+                            decoration: InputDecoration(
+                              // hintText: "example: Cahaya Sanivokasi",
+                              labelText: "Harga",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5.0)),
+                            ),
+                            //* HINTS Menengahkan teks secara horizontal
+                            keyboardType: const TextInputType.numberWithOptions(
+                                decimal:
+                                    true), // Mengizinkan input nilai desimal
+                            inputFormatters: <TextInputFormatter>[
+                              FilteringTextInputFormatter.allow(RegExp(
+                                  r'^\d+\.?\d{0,3}')), // Membatasi input agar sesuai format desimal
+                            ],
+                          ),
+                          Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: SizedBox(
+                                  width: 250,
+                                  child: CustomLoadingButton(
+                                      controller: btnControllerSimpan,
+                                      child: const Text(
+                                        "Simpan Harga",
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      onPressed: () {
+                                        simpanHarga(
+                                            listItemQc![index].id, harga.text);
+                                      })))
+                        ])
+                  ])));
+        });
+  }
+
+  simpanHarga(id, harga) async {
+    await updateHarga(id, harga);
+    btnControllerSimpan.success();
+    // ignore: use_build_context_synchronously
+    Navigator.pop(context);
+    _getData();
+    showSimpleNotification(
+      const Text('Harga berhasil ditambahkan'),
+      background: Colors.green,
+      duration: const Duration(seconds: 1),
+    );
+  }
+
+  updateHarga(idUser, harga) async {
+    try {
+      Map<String, String> body = {
+        'type': 'saveHarga',
+        'id': idUser.toString(),
+        'harga': harga.toString(),
+      };
+      final response = await http.post(
+          Uri.parse('${ApiConstants.baseUrl}${ApiConstants.restFullApi}'),
+          body: jsonEncode(body));
+      print(response.body);
+    } catch (e) {
+      print('error get token $e');
+    }
   }
 
   //* HINTS switch case mengembalikan hasil
