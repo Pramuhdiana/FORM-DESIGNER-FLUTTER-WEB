@@ -2,10 +2,12 @@
 
 import 'dart:convert';
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:form_designer/SCM/mainScreen/row_source_scm.dart';
 import 'package:form_designer/global/currency_format.dart';
 import 'package:form_designer/mainScreen/view_photo_mps.dart';
@@ -1720,20 +1722,7 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
                     child: SizedBox(
                       width: wid,
                       child: DropdownSearch<String>(
-                        items: const [
-                          "JANUARI",
-                          "FEBRUARI",
-                          "MARET",
-                          "APRIL",
-                          "MEI",
-                          "JUNI",
-                          "JULI",
-                          "AGUSTUS",
-                          "SEPTEMBER",
-                          "OKTOBER",
-                          "NOVEMBER",
-                          "DESEMBER"
-                        ],
+                        items: namaBulan,
                         onChanged: (item) async {
                           setState(() {
                             isLoading = true;
@@ -1999,7 +1988,7 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
                                                                       myDataProduksi!,
                                                                       listBulan[
                                                                           int.parse(convertMonthToNumber(siklusDesigner)) -
-                                                                              1]);
+                                                                              2]);
                                                                 } else {}
                                                               },
                                                             ),
@@ -2014,7 +2003,7 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
                                           });
                                     },
                                     child: Text(
-                                        'Kirim semua ke bulan ${listBulan[int.parse(convertMonthToNumber(siklusDesigner)) - 1]}'),
+                                        'Kirim semua ke bulan ${listBulan[int.parse(convertMonthToNumber(siklusDesigner)) - 2]}'),
                                   ))
                           : const SizedBox()
                 ],
@@ -2365,7 +2354,7 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
               ),
               Text(
-                "$sumEmas Gr",
+                "${sumEmas.toStringAsFixed(3)} Gr",
                 style: const TextStyle(
                     color: Colors.blue, // Ubah warna teks di sini
                     fontSize: 17,
@@ -2398,7 +2387,7 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
               ),
               Text(
-                "$sumDiamond Ct",
+                "${sumDiamond.toStringAsFixed(3)} Ct",
                 style: const TextStyle(
                     color: Colors.blue, // Ubah warna teks di sini
                     fontSize: 17,
@@ -2895,6 +2884,21 @@ class RowSourceProduksi extends DataTableSource {
   var listSubDivisiArtistStell;
   var listSubDivisiArtistPasangBatu;
   List<String> listBulan;
+  List<String> listSwitchBulan = [
+    'CANCEL',
+    'JANUARI',
+    'FEBRUARI',
+    'MARET',
+    'APRIL',
+    'MEI',
+    'JUNI',
+    'JULI',
+    'AGUSTUS',
+    'SEPTEMBER',
+    'OKTOBER',
+    'NOVEMBER',
+    'DESEMBER'
+  ];
   List<String> listCasting = ['W1', 'W2', 'W3', 'W4'];
 
   RowSourceProduksi({
@@ -2945,1205 +2949,1100 @@ class RowSourceProduksi extends DataTableSource {
     // ignore: prefer_interpolation_to_compose_strings
     bool isBackPosisi = false;
 
-    return DataRow(cells: [
-      //No
-      DataCell(
-        Builder(builder: (context) {
-          return Padding(
-              padding: const EdgeInsets.all(0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text((i + 1).toString()),
-                  Stack(
-                    clipBehavior: Clip.none, //agar tidak menghalangi object
+    return DataRow(
+        color: MaterialStateProperty.resolveWith<Color?>(
+          (Set<MaterialState> states) {
+            // Set the background color to red when the row is selected
+            if (data.isSend.toString() != '') {
+              return Colors.red.withOpacity(0.9); // Adjust opacity as needed
+            }
+            // The default row color
+            return null;
+          },
+        ),
+        cells: [
+          //No
+          DataCell(
+            Builder(builder: (context) {
+              return Padding(
+                  padding: const EdgeInsets.all(0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      data.isSend.toString() != ''
-                          ? const Icon(
-                              Icons.verified,
-                              color: Colors.red,
-                            )
-                          : sharedPreferences!.getString('role') == '1' ||
+                      Text((i + 1).toString()),
+                      Stack(
+                        clipBehavior: Clip.none, //agar tidak menghalangi object
+                        children: [
+                          data.isSend.toString() != ''
+                              ? const Icon(
+                                  Icons.verified,
+                                  color: Colors.white,
+                                )
+                              : sharedPreferences!.getString('role') == '1' ||
+                                      sharedPreferences!.getString('role') ==
+                                          '2' ||
+                                      sharedPreferences!.getString('divisi') ==
+                                          'admin'
+                                  ? data.posisi.toString().toLowerCase() ==
+                                          'brj'
+                                      ? const SizedBox()
+                                      : IconButton(
+                                          onPressed: () {
+                                            formSwitchBulan(
+                                                context,
+                                                data.kodeDesignMdbc,
+                                                i,
+                                                data.id,
+                                                data.idMps);
+                                            // formCancel(context, data.kodeDesignMdbc, i);
+                                          },
+                                          icon: const Icon(
+                                            Icons.swap_horiz,
+                                            color: Colors.blue,
+                                          ),
+                                        )
+                                  : const SizedBox(),
+                        ],
+                      )
+                    ],
+                  ));
+            }),
+          ),
+          DataCell(_verticalDivider),
+          //keterangan minggu
+          DataCell(
+            Builder(builder: (context) {
+              return Padding(
+                  padding: const EdgeInsets.all(0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(data.keteranganMinggu),
+                      Stack(
+                        clipBehavior: Clip.none, //agar tidak menghalangi object
+                        children: [
+                          //tambahan icon ADD
+                          sharedPreferences!.getString('role') == '1' ||
                                   sharedPreferences!.getString('role') == '2' ||
                                   sharedPreferences!.getString('divisi') ==
                                       'admin'
-                              ? data.posisi.toString().toLowerCase() == 'brj'
-                                  ? const SizedBox()
-                                  : IconButton(
+                              ? Positioned(
+                                  right: -5.0,
+                                  top: -3.0,
+                                  child: InkResponse(
+                                    onTap: () {
+                                      // Navigator.of(context).pop();
+                                    },
+                                    child: const Icon(
+                                      Icons.add_circle_outline,
+                                      color: Colors.green,
+                                      size: 20,
+                                    ),
+                                  ),
+                                )
+                              : const SizedBox(),
+                          data.isSend.toString() != ''
+                              ? const SizedBox()
+                              : sharedPreferences!.getString('role') == '1' ||
+                                      sharedPreferences!.getString('role') ==
+                                          '2' ||
+                                      sharedPreferences!.getString('divisi') ==
+                                          'admin'
+                                  ? IconButton(
                                       onPressed: () {
-                                        showDialog<String>(
-                                          barrierDismissible: false,
-                                          context: context,
-                                          builder: (BuildContext context) =>
-                                              AlertDialog(
-                                            title: const Text(
-                                              'Perhatian',
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            content: Row(
-                                              children: [
-                                                const Text(
-                                                  'Apakah anda yakin ingin mengCANCEL - ',
-                                                ),
-                                                Text(
-                                                  '${data.kodeDesignMdbc}  ?',
-                                                  style: const TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: Colors.black),
-                                                ),
-                                              ],
-                                            ),
-                                            actions: <Widget>[
-                                              TextButton(
-                                                onPressed: () => Navigator.pop(
-                                                  context,
-                                                  'Batal',
-                                                ),
-                                                child: const Text('Batal'),
-                                              ),
-                                              TextButton(
-                                                onPressed: () async {
-                                                  await postDataMps(
-                                                      myData,
-                                                      i,
-                                                      'cancel',
-                                                      context,
-                                                      'false');
-                                                  onRowPressed();
-                                                },
-                                                child: const Text(
-                                                  'YA',
-                                                  style: TextStyle(
-                                                      color: Colors.red),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        );
+                                        showGeneralDialog(
+                                            transitionDuration: const Duration(
+                                                milliseconds: 200),
+                                            barrierDismissible: true,
+                                            barrierLabel: '',
+                                            context: context,
+                                            pageBuilder: (context, animation1,
+                                                animation2) {
+                                              return const Text('');
+                                            },
+                                            barrierColor:
+                                                Colors.black.withOpacity(0.5),
+                                            transitionBuilder:
+                                                (context, a1, a2, widget) {
+                                              return Transform.scale(
+                                                  scale: a1.value,
+                                                  child: Opacity(
+                                                      opacity: a1.value,
+                                                      child: AlertDialog(
+                                                          shape: RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8)),
+                                                          content: SizedBox(
+                                                              child:
+                                                                  SingleChildScrollView(
+                                                                      scrollDirection:
+                                                                          Axis
+                                                                              .vertical,
+                                                                      child: Column(
+                                                                          children: [
+                                                                            const Text(
+                                                                              'Pilih Waktu',
+                                                                              style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
+                                                                            ),
+                                                                            Container(
+                                                                              padding: const EdgeInsets.only(top: 15),
+                                                                              child: ElevatedButton(
+                                                                                  style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
+                                                                                  onPressed: () async {
+                                                                                    await postKeteranganMinggu(data.idMps, 'WEEK 1');
+                                                                                    onRowPressed();
+                                                                                    Navigator.pop(context);
+                                                                                    showSimpleNotification(
+                                                                                      const Text('Pemilihan Waktu Berhasil'),
+                                                                                      background: Colors.green,
+                                                                                      duration: const Duration(seconds: 1),
+                                                                                    );
+                                                                                  },
+                                                                                  child: const Text(
+                                                                                    "WEEK 1",
+                                                                                    style: TextStyle(
+                                                                                      fontSize: 16,
+                                                                                    ),
+                                                                                  )),
+                                                                            ),
+                                                                            Container(
+                                                                              padding: const EdgeInsets.only(top: 15),
+                                                                              child: ElevatedButton(
+                                                                                  style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
+                                                                                  onPressed: () async {
+                                                                                    await postKeteranganMinggu(data.idMps, 'WEEK 2');
+                                                                                    onRowPressed();
+                                                                                    Navigator.pop(context);
+                                                                                    showSimpleNotification(
+                                                                                      const Text('Pemilihan Waktu Berhasil'),
+                                                                                      background: Colors.green,
+                                                                                      duration: const Duration(seconds: 1),
+                                                                                    );
+                                                                                  },
+                                                                                  child: const Text(
+                                                                                    "WEEK 2",
+                                                                                    style: TextStyle(
+                                                                                      fontSize: 16,
+                                                                                    ),
+                                                                                  )),
+                                                                            ),
+                                                                            Container(
+                                                                              padding: const EdgeInsets.only(top: 15),
+                                                                              child: ElevatedButton(
+                                                                                  style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
+                                                                                  onPressed: () async {
+                                                                                    await postKeteranganMinggu(data.idMps, 'WEEK 3');
+                                                                                    onRowPressed();
+                                                                                    Navigator.pop(context);
+                                                                                    showSimpleNotification(
+                                                                                      const Text('Pemilihan Waktu Berhasil'),
+                                                                                      background: Colors.green,
+                                                                                      duration: const Duration(seconds: 1),
+                                                                                    );
+                                                                                  },
+                                                                                  child: const Text(
+                                                                                    "WEEK 3",
+                                                                                    style: TextStyle(
+                                                                                      fontSize: 16,
+                                                                                    ),
+                                                                                  )),
+                                                                            ),
+                                                                            Container(
+                                                                              padding: const EdgeInsets.only(top: 15),
+                                                                              child: ElevatedButton(
+                                                                                  style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
+                                                                                  onPressed: () async {
+                                                                                    await postKeteranganMinggu(data.idMps, 'WEEK 4');
+                                                                                    onRowPressed();
+                                                                                    Navigator.pop(context);
+                                                                                    showSimpleNotification(
+                                                                                      const Text('Pemilihan Waktu Berhasil'),
+                                                                                      background: Colors.green,
+                                                                                      duration: const Duration(seconds: 1),
+                                                                                    );
+                                                                                  },
+                                                                                  child: const Text(
+                                                                                    "WEEK 4",
+                                                                                    style: TextStyle(
+                                                                                      fontSize: 16,
+                                                                                    ),
+                                                                                  )),
+                                                                            ),
+                                                                          ]))))));
+                                            });
                                       },
                                       icon: const Icon(
-                                          Icons.cancel_schedule_send_sharp),
-                                      color: Colors.red,
+                                          Icons.calendar_today_outlined),
+                                      color: Colors.green,
                                     )
-                              : const SizedBox(),
+                                  : const SizedBox(),
+                        ],
+                      )
                     ],
-                  )
-                ],
-              ));
-        }),
-      ),
-      DataCell(_verticalDivider),
-      //keterangan minggu
-      DataCell(
-        Builder(builder: (context) {
-          return Padding(
-              padding: const EdgeInsets.all(0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(data.keteranganMinggu),
-                  Stack(
-                    clipBehavior: Clip.none, //agar tidak menghalangi object
-                    children: [
-                      //tambahan icon ADD
-                      sharedPreferences!.getString('role') == '1' ||
-                              sharedPreferences!.getString('role') == '2' ||
-                              sharedPreferences!.getString('divisi') == 'admin'
-                          ? Positioned(
-                              right: -5.0,
-                              top: -3.0,
-                              child: InkResponse(
-                                onTap: () {
-                                  // Navigator.of(context).pop();
-                                },
-                                child: const Icon(
-                                  Icons.add_circle_outline,
-                                  color: Colors.green,
-                                  size: 20,
-                                ),
-                              ),
-                            )
-                          : const SizedBox(),
-                      sharedPreferences!.getString('role') == '1' ||
-                              sharedPreferences!.getString('role') == '2' ||
-                              sharedPreferences!.getString('divisi') == 'admin'
-                          ? IconButton(
-                              onPressed: () {
-                                showGeneralDialog(
-                                    transitionDuration:
-                                        const Duration(milliseconds: 200),
-                                    barrierDismissible: true,
-                                    barrierLabel: '',
-                                    context: context,
-                                    pageBuilder:
-                                        (context, animation1, animation2) {
-                                      return const Text('');
-                                    },
-                                    barrierColor: Colors.black.withOpacity(0.5),
-                                    transitionBuilder:
-                                        (context, a1, a2, widget) {
-                                      return Transform.scale(
-                                          scale: a1.value,
-                                          child: Opacity(
-                                              opacity: a1.value,
-                                              child: AlertDialog(
-                                                  shape: RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8)),
-                                                  content: SizedBox(
-                                                      child:
-                                                          SingleChildScrollView(
-                                                              scrollDirection:
-                                                                  Axis.vertical,
-                                                              child: Column(
-                                                                  children: [
-                                                                    const Text(
-                                                                      'Pilih Waktu',
-                                                                      style: TextStyle(
-                                                                          color: Colors
-                                                                              .black,
-                                                                          fontSize:
-                                                                              18,
-                                                                          fontWeight:
-                                                                              FontWeight.bold),
-                                                                    ),
-                                                                    Container(
-                                                                      padding: const EdgeInsets
-                                                                          .only(
-                                                                          top:
-                                                                              15),
-                                                                      child: ElevatedButton(
-                                                                          style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
-                                                                          onPressed: () async {
-                                                                            await postKeteranganMinggu(data.idMps,
-                                                                                'WEEK 1');
-                                                                            onRowPressed();
-                                                                            Navigator.pop(context);
-                                                                            showSimpleNotification(
-                                                                              const Text('Pemilihan Waktu Berhasil'),
-                                                                              background: Colors.green,
-                                                                              duration: const Duration(seconds: 1),
-                                                                            );
-                                                                          },
-                                                                          child: const Text(
-                                                                            "WEEK 1",
-                                                                            style:
-                                                                                TextStyle(
-                                                                              fontSize: 16,
-                                                                            ),
-                                                                          )),
-                                                                    ),
-                                                                    Container(
-                                                                      padding: const EdgeInsets
-                                                                          .only(
-                                                                          top:
-                                                                              15),
-                                                                      child: ElevatedButton(
-                                                                          style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
-                                                                          onPressed: () async {
-                                                                            await postKeteranganMinggu(data.idMps,
-                                                                                'WEEK 2');
-                                                                            onRowPressed();
-                                                                            Navigator.pop(context);
-                                                                            showSimpleNotification(
-                                                                              const Text('Pemilihan Waktu Berhasil'),
-                                                                              background: Colors.green,
-                                                                              duration: const Duration(seconds: 1),
-                                                                            );
-                                                                          },
-                                                                          child: const Text(
-                                                                            "WEEK 2",
-                                                                            style:
-                                                                                TextStyle(
-                                                                              fontSize: 16,
-                                                                            ),
-                                                                          )),
-                                                                    ),
-                                                                    Container(
-                                                                      padding: const EdgeInsets
-                                                                          .only(
-                                                                          top:
-                                                                              15),
-                                                                      child: ElevatedButton(
-                                                                          style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
-                                                                          onPressed: () async {
-                                                                            await postKeteranganMinggu(data.idMps,
-                                                                                'WEEK 3');
-                                                                            onRowPressed();
-                                                                            Navigator.pop(context);
-                                                                            showSimpleNotification(
-                                                                              const Text('Pemilihan Waktu Berhasil'),
-                                                                              background: Colors.green,
-                                                                              duration: const Duration(seconds: 1),
-                                                                            );
-                                                                          },
-                                                                          child: const Text(
-                                                                            "WEEK 3",
-                                                                            style:
-                                                                                TextStyle(
-                                                                              fontSize: 16,
-                                                                            ),
-                                                                          )),
-                                                                    ),
-                                                                    Container(
-                                                                      padding: const EdgeInsets
-                                                                          .only(
-                                                                          top:
-                                                                              15),
-                                                                      child: ElevatedButton(
-                                                                          style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
-                                                                          onPressed: () async {
-                                                                            await postKeteranganMinggu(data.idMps,
-                                                                                'WEEK 4');
-                                                                            onRowPressed();
-                                                                            Navigator.pop(context);
-                                                                            showSimpleNotification(
-                                                                              const Text('Pemilihan Waktu Berhasil'),
-                                                                              background: Colors.green,
-                                                                              duration: const Duration(seconds: 1),
-                                                                            );
-                                                                          },
-                                                                          child: const Text(
-                                                                            "WEEK 4",
-                                                                            style:
-                                                                                TextStyle(
-                                                                              fontSize: 16,
-                                                                            ),
-                                                                          )),
-                                                                    ),
-                                                                  ]))))));
-                                    });
-                              },
-                              icon: const Icon(Icons.calendar_today_outlined),
-                              color: Colors.green,
-                            )
-                          : const SizedBox(),
-                    ],
-                  )
-                ],
-              ));
-        }),
-      ),
-      DataCell(_verticalDivider),
-      //gambar
-      DataCell(Builder(builder: (context) {
-        return Padding(
-            padding: const EdgeInsets.all(0),
-            child: SizedBox(
-              width: 100,
-              height: 140,
-              child: InkWell(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (c) => ViewPhotoMpsScreen(
-                                modelMps: ListMpsModel(
-                                    kodeDesignMdbc: data.kodeDesignMdbc,
-                                    imageUrl: data.imageUrl),
-                              )));
-                },
-                child: Image.network(
-                  ApiConstants.baseUrlImage + data.imageUrl!,
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ));
-      })),
+                  ));
+            }),
+          ),
+          DataCell(_verticalDivider),
+          //gambar
+          DataCell(Builder(builder: (context) {
+            return Padding(
+                padding: const EdgeInsets.all(0),
+                child: SizedBox(
+                  width: 100,
+                  height: 140,
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (c) => ViewPhotoMpsScreen(
+                                    modelMps: ListMpsModel(
+                                        kodeDesignMdbc: data.kodeDesignMdbc,
+                                        imageUrl: data.imageUrl),
+                                  )));
+                    },
+                    child: Image.network(
+                      ApiConstants.baseUrlImage + data.imageUrl!,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ));
+          })),
 
-      DataCell(_verticalDivider),
-      //kode mdbc
-      DataCell(
-        Builder(builder: (context) {
-          return Padding(
-              padding: const EdgeInsets.all(0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text(data.kodeDesignMdbc),
-                ],
-              ));
-        }),
-      ),
-      DataCell(_verticalDivider),
-      //kode marketing
-      DataCell(
-        Builder(builder: (context) {
-          return Padding(
-              padding: const EdgeInsets.all(0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(data.kodeMarketing),
-                ],
-              ));
-        }),
-      ),
-      DataCell(_verticalDivider),
-      //posisi
-      DataCell(Builder(builder: (context) {
-        // String? posisi = '';
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 63),
-              child: Column(
-                children: [
-                  Text('${data.posisi}'),
-                  data.posisi.toString().toLowerCase() == 'brj' ||
-                          data.posisi.toString().toLowerCase() ==
-                              'out pasang batu'
-                      ? const SizedBox()
-                      : Text('${data.artist}'),
-                ],
-              ),
-            ),
-            sharedPreferences!.getString('nama') == 'Tri Sartika Rahayu'
-                ? const SizedBox()
-                : sharedPreferences!.getString('divisi') == 'produksi' ||
-                        sharedPreferences!.getString('divisi') == 'admin'
-                    ? IconButton(
-                        onPressed: () {
-                          print('tap ke : ${data.posisi}');
-                          int idPosisi = 0;
-                          if (sharedPreferences!.getString('role') == '3') {
-                            data.posisi.toString().toLowerCase() == 'orul'
-                                ? idPosisi = 0
-                                : data.posisi.toString().toLowerCase() ==
-                                        'printing resin'
-                                    ? idPosisi = 1
-                                    : data.posisi.toString().toLowerCase() ==
-                                            'finishing resin'
-                                        ? idPosisi = 2
+          DataCell(_verticalDivider),
+          //kode mdbc
+          DataCell(
+            Builder(builder: (context) {
+              return InkWell(
+                  onLongPress: () {
+                    var copy = data.kodeDesignMdbc;
+                    Clipboard.setData(ClipboardData(text: copy));
+                    showSimpleNotification(
+                      const Text('Text Berhasil Dicopy'),
+                      background: Colors.green,
+                      duration: const Duration(seconds: 2),
+                    );
+                  },
+                  child: Padding(
+                      padding: const EdgeInsets.all(0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Text(data.kodeDesignMdbc),
+                        ],
+                      )));
+            }),
+          ),
+          DataCell(_verticalDivider),
+          //kode marketing
+          DataCell(
+            Builder(builder: (context) {
+              return InkWell(
+                  onLongPress: () {
+                    var copy = data.kodeMarketing.toString();
+                    Clipboard.setData(ClipboardData(text: copy));
+                    showSimpleNotification(
+                      const Text('Text Berhasil Dicopy'),
+                      background: Colors.green,
+                      duration: const Duration(seconds: 2),
+                    );
+                  },
+                  child: Padding(
+                      padding: const EdgeInsets.all(0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(data.kodeMarketing),
+                        ],
+                      )));
+            }),
+          ),
+          DataCell(_verticalDivider),
+          //posisi
+          DataCell(Builder(builder: (context) {
+            // String? posisi = '';
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 63),
+                  child: Column(
+                    children: [
+                      Text('${data.posisi}'),
+                      data.posisi.toString().toLowerCase() == 'brj' ||
+                              data.posisi.toString().toLowerCase() ==
+                                  'out pasang batu'
+                          ? const SizedBox()
+                          : Text('${data.artist}'),
+                    ],
+                  ),
+                ),
+                data.isSend.toString() != ''
+                    ? const SizedBox()
+                    : sharedPreferences!.getString('nama') ==
+                            'Tri Sartika Rahayu'
+                        ? const SizedBox()
+                        : sharedPreferences!.getString('divisi') ==
+                                    'produksi' ||
+                                sharedPreferences!.getString('divisi') ==
+                                    'admin'
+                            ? IconButton(
+                                onPressed: () {
+                                  print('tap ke : ${data.posisi}');
+                                  int idPosisi = 0;
+                                  if (sharedPreferences!.getString('role') ==
+                                      '3') {
+                                    data.posisi.toString().toLowerCase() ==
+                                            'orul'
+                                        ? idPosisi = 0
                                         : data.posisi
                                                     .toString()
                                                     .toLowerCase() ==
-                                                'casting'
-                                            ? idPosisi = 3
-                                            : idPosisi = 4;
-                          } else if (sharedPreferences!.getString('role') ==
-                              '4') {
-                            data.posisi.toString().toLowerCase() ==
-                                    'stok finishing'
-                                ? idPosisi = 1
-                                : data.posisi.toString().toLowerCase() ==
-                                        'finishing'
-                                    ? idPosisi = 1
-                                    : data.posisi.toString().toLowerCase() ==
-                                            'polishing 1'
-                                        ? idPosisi = 2
-                                        : data.posisi
-                                                    .toString()
-                                                    .toLowerCase() ==
-                                                'stell 1'
-                                            ? idPosisi = 3
+                                                'printing resin'
+                                            ? idPosisi = 1
                                             : data.posisi
                                                         .toString()
                                                         .toLowerCase() ==
-                                                    'stok pasang batu'
-                                                ? idPosisi = 4
+                                                    'finishing resin'
+                                                ? idPosisi = 2
                                                 : data.posisi
                                                             .toString()
                                                             .toLowerCase() ==
-                                                        'out pasang batu'
-                                                    ? idPosisi = 5
+                                                        'casting'
+                                                    ? idPosisi = 3
+                                                    : idPosisi = 4;
+                                  } else if (sharedPreferences!
+                                          .getString('role') ==
+                                      '4') {
+                                    data.posisi.toString().toLowerCase() ==
+                                            'stok finishing'
+                                        ? idPosisi = 1
+                                        : data.posisi
+                                                    .toString()
+                                                    .toLowerCase() ==
+                                                'finishing'
+                                            ? idPosisi = 1
+                                            : data.posisi
+                                                        .toString()
+                                                        .toLowerCase() ==
+                                                    'polishing 1'
+                                                ? idPosisi = 2
+                                                : data.posisi
+                                                            .toString()
+                                                            .toLowerCase() ==
+                                                        'stell 1'
+                                                    ? idPosisi = 3
                                                     : data.posisi
                                                                 .toString()
                                                                 .toLowerCase() ==
-                                                            'stell 2'
-                                                        ? idPosisi = 5
+                                                            'stok pasang batu'
+                                                        ? idPosisi = 4
                                                         : data.posisi
                                                                     .toString()
                                                                     .toLowerCase() ==
-                                                                'polishing 2'
-                                                            ? idPosisi = 6
-                                                            : idPosisi = 7;
-                          } else if (sharedPreferences!.getString('role') ==
-                              '5') {
-                            data.posisi.toString().toLowerCase() ==
-                                    'stok pasang batu'
-                                ? idPosisi = 1
-                                : data.posisi.toString().toLowerCase() ==
-                                        'pasang batu'
-                                    ? idPosisi = 2
-                                    : idPosisi = 3;
-                          } else {
-                            idPosisi = -99;
-                          }
+                                                                'out pasang batu'
+                                                            ? idPosisi = 5
+                                                            : data.posisi
+                                                                        .toString()
+                                                                        .toLowerCase() ==
+                                                                    'stell 2'
+                                                                ? idPosisi = 5
+                                                                : data.posisi
+                                                                            .toString()
+                                                                            .toLowerCase() ==
+                                                                        'polishing 2'
+                                                                    ? idPosisi =
+                                                                        6
+                                                                    : idPosisi =
+                                                                        7;
+                                  } else if (sharedPreferences!
+                                          .getString('role') ==
+                                      '5') {
+                                    data.posisi.toString().toLowerCase() ==
+                                            'stok pasang batu'
+                                        ? idPosisi = 1
+                                        : data.posisi
+                                                    .toString()
+                                                    .toLowerCase() ==
+                                                'pasang batu'
+                                            ? idPosisi = 2
+                                            : idPosisi = 3;
+                                  } else {
+                                    idPosisi = -99;
+                                  }
 
-                          showGeneralDialog(
-                              transitionDuration:
-                                  const Duration(milliseconds: 200),
-                              barrierDismissible: true,
-                              barrierLabel: '',
-                              context: context,
-                              pageBuilder: (context, animation1, animation2) {
-                                return const Text('');
-                              },
-                              barrierColor: Colors.black.withOpacity(0.5),
-                              transitionBuilder: (context, a1, a2, widget) {
-                                return Transform.scale(
-                                    scale: a1.value,
-                                    child: Opacity(
-                                        opacity: a1.value,
-                                        child: AlertDialog(
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(8)),
-                                          content: SizedBox(
-                                            child: SingleChildScrollView(
-                                              scrollDirection: Axis.vertical,
-                                              child: Column(
-                                                children: [
-                                                  const Text(
-                                                    'Pilih Posisi Divisi',
-                                                    style: TextStyle(
-                                                        color: Colors.black,
-                                                        fontSize: 18,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  ),
-                                                  for (var j = 0;
-                                                      j < listDivisi.length;
-                                                      j++)
-                                                    Container(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              top: 15),
-                                                      child: ElevatedButton(
-                                                          style: ElevatedButton.styleFrom(
-                                                              backgroundColor:
-                                                                  listDivisi[j]
-                                                                              .toString()
-                                                                              .toLowerCase() ==
-                                                                          'orul'
-                                                                      ? Colors
-                                                                          .red
-                                                                      : Colors
-                                                                          .blue,
-                                                              shape: RoundedRectangleBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              50.0))),
-                                                          onPressed: () async {
-                                                            print(
-                                                                '$j kurang dari $idPosisi');
-                                                            Navigator.pop(
-                                                                context);
-                                                            if (j == 0) {
-                                                              //! pop up untuk keterangan atau alasan ORUL
-                                                              //! function back posisi
-                                                              orulReparasiPopup(
-                                                                  context,
-                                                                  data.idMps,
-                                                                  j,
-                                                                  data.kodeDesignMdbc,
-                                                                  data.kodeMarketing,
-                                                                  data.posisi,
-                                                                  'orul',
-                                                                  '');
-                                                            } else if (j <
-                                                                idPosisi) {
-                                                              isBackPosisi =
-                                                                  true;
+                                  showGeneralDialog(
+                                      transitionDuration:
+                                          const Duration(milliseconds: 200),
+                                      barrierDismissible: true,
+                                      barrierLabel: '',
+                                      context: context,
+                                      pageBuilder:
+                                          (context, animation1, animation2) {
+                                        return const Text('');
+                                      },
+                                      barrierColor:
+                                          Colors.black.withOpacity(0.5),
+                                      transitionBuilder:
+                                          (context, a1, a2, widget) {
+                                        return Transform.scale(
+                                            scale: a1.value,
+                                            child: Opacity(
+                                                opacity: a1.value,
+                                                child: AlertDialog(
+                                                  shape: RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8)),
+                                                  content: SizedBox(
+                                                    child:
+                                                        SingleChildScrollView(
+                                                      scrollDirection:
+                                                          Axis.vertical,
+                                                      child: Column(
+                                                        children: [
+                                                          const Text(
+                                                            'Pilih Posisi Divisi',
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .black,
+                                                                fontSize: 18,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
+                                                          for (var j = 0;
+                                                              j <
+                                                                  listDivisi
+                                                                      .length;
+                                                              j++)
+                                                            Container(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .only(
+                                                                      top: 15),
+                                                              child:
+                                                                  ElevatedButton(
+                                                                      style: ElevatedButton.styleFrom(
+                                                                          backgroundColor: listDivisi[j].toString().toLowerCase() == 'orul'
+                                                                              ? Colors
+                                                                                  .red
+                                                                              : Colors
+                                                                                  .blue,
+                                                                          shape: RoundedRectangleBorder(
+                                                                              borderRadius: BorderRadius.circular(
+                                                                                  50.0))),
+                                                                      onPressed:
+                                                                          () async {
+                                                                        print(
+                                                                            '$j kurang dari $idPosisi');
+                                                                        Navigator.pop(
+                                                                            context);
+                                                                        if (j ==
+                                                                            0) {
+                                                                          //! pop up untuk keterangan atau alasan ORUL
+                                                                          //! function back posisi
+                                                                          orulReparasiPopup(
+                                                                              context,
+                                                                              data.idMps,
+                                                                              j,
+                                                                              data.kodeDesignMdbc,
+                                                                              data.kodeMarketing,
+                                                                              data.posisi,
+                                                                              'orul',
+                                                                              '');
+                                                                        } else if (j <
+                                                                            idPosisi) {
+                                                                          isBackPosisi =
+                                                                              true;
 
-                                                              //! function back posisi
-                                                              showSimpleNotification(
-                                                                const Text(
-                                                                    'Alert Back Posisi'),
-                                                                background:
-                                                                    Colors.red,
-                                                                duration:
-                                                                    const Duration(
-                                                                        seconds:
-                                                                            1),
-                                                              );
-                                                              if (listDivisi[j].toString().toLowerCase() == 'printing resin' ||
-                                                                  listDivisi[j]
-                                                                          .toString()
-                                                                          .toLowerCase() ==
-                                                                      'finishing resin' ||
-                                                                  listDivisi[j]
-                                                                          .toString()
-                                                                          .toLowerCase() ==
-                                                                      'casting') {
-                                                                orulReparasiPopup(
-                                                                    context,
-                                                                    data.idMps,
-                                                                    j,
-                                                                    data.kodeDesignMdbc,
-                                                                    data.kodeMarketing,
-                                                                    data.posisi,
-                                                                    'reparasi',
-                                                                    '');
-                                                              } else {
-                                                                //! back posisi untuk role admin dan head
-                                                                artistPopup(
-                                                                    context,
-                                                                    data.idMps,
-                                                                    j,
-                                                                    data.kodeDesignMdbc,
-                                                                    data.kodeMarketing,
-                                                                    data.posisi,
-                                                                    isBackPosisi);
-                                                              }
-                                                            } else {
-                                                              isBackPosisi =
-                                                                  false;
+                                                                          //! function back posisi
+                                                                          showSimpleNotification(
+                                                                            const Text('Alert Back Posisi'),
+                                                                            background:
+                                                                                Colors.red,
+                                                                            duration:
+                                                                                const Duration(seconds: 1),
+                                                                          );
+                                                                          if (listDivisi[j].toString().toLowerCase() == 'printing resin' ||
+                                                                              listDivisi[j].toString().toLowerCase() == 'finishing resin' ||
+                                                                              listDivisi[j].toString().toLowerCase() == 'casting') {
+                                                                            orulReparasiPopup(
+                                                                                context,
+                                                                                data.idMps,
+                                                                                j,
+                                                                                data.kodeDesignMdbc,
+                                                                                data.kodeMarketing,
+                                                                                data.posisi,
+                                                                                'reparasi',
+                                                                                '');
+                                                                          } else {
+                                                                            //! back posisi untuk role admin dan head
+                                                                            artistPopup(
+                                                                                context,
+                                                                                data.idMps,
+                                                                                j,
+                                                                                data.kodeDesignMdbc,
+                                                                                data.kodeMarketing,
+                                                                                data.posisi,
+                                                                                isBackPosisi);
+                                                                          }
+                                                                        } else {
+                                                                          isBackPosisi =
+                                                                              false;
 
-                                                              //? function pilih posisi
-                                                              if (sharedPreferences!
-                                                                          .getString(
-                                                                              'role') ==
-                                                                      '1' ||
-                                                                  sharedPreferences!
-                                                                          .getString(
-                                                                              'nama') ==
-                                                                      'Tri Sartika R' ||
-                                                                  sharedPreferences!
-                                                                          .getString(
-                                                                              'divisi') ==
-                                                                      'admin') {
-                                                                //! admin dan head
-                                                                j == 1 ||
-                                                                        j ==
-                                                                            2 ||
-                                                                        j ==
-                                                                            10 ||
-                                                                        j ==
-                                                                            11 ||
-                                                                        j ==
-                                                                            12 ||
-                                                                        j == 13
-                                                                    ? postDatabase(
-                                                                        data
-                                                                            .idMps,
-                                                                        j,
-                                                                        data
-                                                                            .kodeDesignMdbc,
-                                                                        data
-                                                                            .kodeMarketing)
-                                                                    : j == 3
-                                                                        ? castingPopup(
-                                                                            context,
-                                                                            data
-                                                                                .id,
-                                                                            j,
-                                                                            data
-                                                                                .kodeDesignMdbc,
-                                                                            data
-                                                                                .kodeMarketing)
-                                                                        : artistPopup(
-                                                                            context,
-                                                                            data.idMps,
-                                                                            j,
-                                                                            data.kodeDesignMdbc,
-                                                                            data.kodeMarketing,
-                                                                            data.posisi,
-                                                                            isBackPosisi);
-                                                              }
-                                                              //  else if (sharedPreferences!
-                                                              //         .getString(
-                                                              //             'role') ==
-                                                              //     '2') {
-                                                              //   showSimpleNotification(
-                                                              //     const Text(
-                                                              //         'Tidak ada pilihan'),
-                                                              //     background:
-                                                              //         Colors
-                                                              //             .red,
-                                                              //     duration:
-                                                              //         const Duration(
-                                                              //             seconds:
-                                                              //                 1),
-                                                              //   );
-                                                              // }
-                                                              else if (sharedPreferences!
-                                                                      .getString(
-                                                                          'role') ==
-                                                                  '3') {
-                                                                j == 3
-                                                                    ? castingPopup(
-                                                                        context,
-                                                                        data.id,
-                                                                        j,
-                                                                        data
-                                                                            .kodeDesignMdbc,
-                                                                        data
-                                                                            .kodeMarketing)
-                                                                    : postDatabase(
-                                                                        data.idMps,
-                                                                        j,
-                                                                        data.kodeDesignMdbc,
-                                                                        data.kodeMarketing);
-                                                              } else if (sharedPreferences!
-                                                                      .getString(
-                                                                          'role') ==
-                                                                  '4') {
-                                                                j == 4 || j == 7
-                                                                    ? postDatabase(
-                                                                        data
-                                                                            .idMps,
-                                                                        j,
-                                                                        data
-                                                                            .kodeDesignMdbc,
-                                                                        data
-                                                                            .kodeMarketing)
-                                                                    : artistPopup(
-                                                                        context,
-                                                                        data.idMps,
-                                                                        j,
-                                                                        data.kodeDesignMdbc,
-                                                                        data.kodeMarketing,
-                                                                        data.posisi,
-                                                                        isBackPosisi);
-                                                              } else if (sharedPreferences!
-                                                                      .getString(
-                                                                          'role') ==
-                                                                  '5') {
-                                                                j == 2
-                                                                    ? postDatabase(
-                                                                        data
-                                                                            .idMps,
-                                                                        j,
-                                                                        data
-                                                                            .kodeDesignMdbc,
-                                                                        data
-                                                                            .kodeMarketing)
-                                                                    : artistPopup(
-                                                                        context,
-                                                                        data.idMps,
-                                                                        j,
-                                                                        data.kodeDesignMdbc,
-                                                                        data.kodeMarketing,
-                                                                        data.posisi,
-                                                                        isBackPosisi);
-                                                              } else {
-                                                                showSimpleNotification(
-                                                                  const Text(
-                                                                      'Tidak ada pilihan'),
-                                                                  background:
-                                                                      Colors
-                                                                          .red,
-                                                                  duration:
-                                                                      const Duration(
-                                                                          seconds:
-                                                                              1),
-                                                                );
-                                                              }
-                                                            }
-                                                          },
-                                                          child: Text(
-                                                            "${listDivisi[j]}",
-                                                            style:
-                                                                const TextStyle(
-                                                              fontSize: 16,
+                                                                          //? function pilih posisi
+                                                                          if (sharedPreferences!.getString('role') == '1' ||
+                                                                              sharedPreferences!.getString('nama') == 'Tri Sartika R' ||
+                                                                              sharedPreferences!.getString('divisi') == 'admin') {
+                                                                            //! admin dan head
+                                                                            j == 1 || j == 2 || j == 10 || j == 11 || j == 12 || j == 13
+                                                                                ? postDatabase(data.idMps, j, data.kodeDesignMdbc, data.kodeMarketing)
+                                                                                : j == 3
+                                                                                    ? castingPopup(context, data.id, j, data.kodeDesignMdbc, data.kodeMarketing)
+                                                                                    : artistPopup(context, data.idMps, j, data.kodeDesignMdbc, data.kodeMarketing, data.posisi, isBackPosisi);
+                                                                          }
+                                                                          //  else if (sharedPreferences!
+                                                                          //         .getString(
+                                                                          //             'role') ==
+                                                                          //     '2') {
+                                                                          //   showSimpleNotification(
+                                                                          //     const Text(
+                                                                          //         'Tidak ada pilihan'),
+                                                                          //     background:
+                                                                          //         Colors
+                                                                          //             .red,
+                                                                          //     duration:
+                                                                          //         const Duration(
+                                                                          //             seconds:
+                                                                          //                 1),
+                                                                          //   );
+                                                                          // }
+                                                                          else if (sharedPreferences!.getString('role') ==
+                                                                              '3') {
+                                                                            j == 3
+                                                                                ? castingPopup(context, data.id, j, data.kodeDesignMdbc, data.kodeMarketing)
+                                                                                : postDatabase(data.idMps, j, data.kodeDesignMdbc, data.kodeMarketing);
+                                                                          } else if (sharedPreferences!.getString('role') ==
+                                                                              '4') {
+                                                                            j == 4 || j == 7
+                                                                                ? postDatabase(data.idMps, j, data.kodeDesignMdbc, data.kodeMarketing)
+                                                                                : artistPopup(context, data.idMps, j, data.kodeDesignMdbc, data.kodeMarketing, data.posisi, isBackPosisi);
+                                                                          } else if (sharedPreferences!.getString('role') ==
+                                                                              '5') {
+                                                                            j == 2
+                                                                                ? postDatabase(data.idMps, j, data.kodeDesignMdbc, data.kodeMarketing)
+                                                                                : artistPopup(context, data.idMps, j, data.kodeDesignMdbc, data.kodeMarketing, data.posisi, isBackPosisi);
+                                                                          } else {
+                                                                            showSimpleNotification(
+                                                                              const Text('Tidak ada pilihan'),
+                                                                              background: Colors.red,
+                                                                              duration: const Duration(seconds: 1),
+                                                                            );
+                                                                          }
+                                                                        }
+                                                                      },
+                                                                      child:
+                                                                          Text(
+                                                                        "${listDivisi[j]}",
+                                                                        style:
+                                                                            const TextStyle(
+                                                                          fontSize:
+                                                                              16,
+                                                                        ),
+                                                                      )),
                                                             ),
-                                                          )),
+                                                        ],
+                                                      ),
                                                     ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        )));
-                              });
-                        },
-                        icon: const Icon(
-                          Icons.change_circle,
-                          color: Colors.green,
-                        ))
-                    : const SizedBox(),
-          ],
-        );
-      })),
-      DataCell(_verticalDivider),
-      //status batu
-      DataCell(
-        Builder(builder: (context) {
-          return Padding(
-              padding: const EdgeInsets.all(0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(data.keteranganStatusBatu),
-                  Stack(
-                    clipBehavior: Clip.none, //agar tidak menghalangi object
-                    children: [
-                      //tambahan icon ADD
-                      sharedPreferences!.getString('role') == '1' ||
-                              sharedPreferences!.getString('role') == '2' ||
-                              sharedPreferences!.getString('divisi') ==
-                                  'admin' ||
-                              sharedPreferences!.getString('divisi') == 'scm'
-                          ? Positioned(
-                              right: -5.0,
-                              top: -3.0,
-                              child: InkResponse(
-                                onTap: () {
-                                  // Navigator.of(context).pop();
+                                                  ),
+                                                )));
+                                      });
                                 },
-                                child: const Icon(
-                                  Icons.add_circle_outline,
+                                icon: const Icon(
+                                  Icons.change_circle,
                                   color: Colors.green,
-                                  size: 20,
-                                ),
-                              ),
-                            )
-                          : const SizedBox(),
-                      sharedPreferences!.getString('role') == '1' ||
-                              sharedPreferences!.getString('role') == '2' ||
-                              sharedPreferences!.getString('divisi') ==
-                                  'admin' ||
-                              sharedPreferences!.getString('divisi') == 'scm'
-                          ? IconButton(
-                              onPressed: () {
-                                showGeneralDialog(
-                                    transitionDuration:
-                                        const Duration(milliseconds: 200),
-                                    barrierDismissible: true,
-                                    barrierLabel: '',
-                                    context: context,
-                                    pageBuilder:
-                                        (context, animation1, animation2) {
-                                      return const Text('');
-                                    },
-                                    barrierColor: Colors.black.withOpacity(0.5),
-                                    transitionBuilder:
-                                        (context, a1, a2, widget) {
-                                      return Transform.scale(
-                                          scale: a1.value,
-                                          child: Opacity(
-                                              opacity: a1.value,
-                                              child: AlertDialog(
-                                                  shape: RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8)),
-                                                  content: SizedBox(
-                                                      child:
-                                                          SingleChildScrollView(
-                                                              scrollDirection:
-                                                                  Axis.vertical,
-                                                              child: Column(
-                                                                  children: [
-                                                                    const Text(
-                                                                      'Pilih Status Batu',
-                                                                      style: TextStyle(
-                                                                          color: Colors
-                                                                              .black,
-                                                                          fontSize:
-                                                                              18,
-                                                                          fontWeight:
-                                                                              FontWeight.bold),
-                                                                    ),
-                                                                    Container(
-                                                                      padding: const EdgeInsets
-                                                                          .only(
-                                                                          top:
-                                                                              15),
-                                                                      child: ElevatedButton(
-                                                                          style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
-                                                                          onPressed: () async {
-                                                                            await postKeteranganStatusBatu(data.idMps,
-                                                                                'ECER');
-                                                                            onRowPressed();
-                                                                            Navigator.pop(context);
-                                                                            showSimpleNotification(
-                                                                              const Text('Pemilihan Status Batu Berhasil'),
-                                                                              background: Colors.green,
-                                                                              duration: const Duration(seconds: 1),
-                                                                            );
-                                                                          },
-                                                                          child: const Text(
-                                                                            "ECER",
-                                                                            style:
-                                                                                TextStyle(
-                                                                              fontSize: 16,
-                                                                            ),
-                                                                          )),
-                                                                    ),
-                                                                    sharedPreferences!.getString('divisi') ==
-                                                                            'scm'
-                                                                        ? Container(
-                                                                            padding:
-                                                                                const EdgeInsets.only(top: 15),
-                                                                            child: ElevatedButton(
-                                                                                style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
-                                                                                onPressed: () async {
-                                                                                  await postKeteranganStatusBatu(data.idMps, 'TRANSFER BATU');
-                                                                                  onRowPressed();
-                                                                                  Navigator.pop(context);
-                                                                                  showSimpleNotification(
-                                                                                    const Text('Pemilihan Status Batu Berhasil'),
-                                                                                    background: Colors.green,
-                                                                                    duration: const Duration(seconds: 1),
-                                                                                  );
-                                                                                },
-                                                                                child: const Text(
-                                                                                  "TRANSFER BATU",
-                                                                                  style: TextStyle(
-                                                                                    fontSize: 16,
-                                                                                  ),
-                                                                                )),
-                                                                          )
-                                                                        : Container(
-                                                                            padding:
-                                                                                const EdgeInsets.only(top: 15),
-                                                                            child: ElevatedButton(
-                                                                                style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
-                                                                                onPressed: () async {
-                                                                                  await postKeteranganStatusBatu(data.idMps, 'KOMPLIT BATU');
-                                                                                  onRowPressed();
-                                                                                  Navigator.pop(context);
-                                                                                  showSimpleNotification(
-                                                                                    const Text('Pemilihan Status Batu Berhasil'),
-                                                                                    background: Colors.green,
-                                                                                    duration: const Duration(seconds: 1),
-                                                                                  );
-                                                                                },
-                                                                                child: const Text(
-                                                                                  "KOMPLIT BATU",
-                                                                                  style: TextStyle(
-                                                                                    fontSize: 16,
-                                                                                  ),
-                                                                                )),
-                                                                          ),
-                                                                    Container(
-                                                                      padding: const EdgeInsets
-                                                                          .only(
-                                                                          top:
-                                                                              15),
-                                                                      child: ElevatedButton(
-                                                                          style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
-                                                                          onPressed: () async {
-                                                                            await postKeteranganStatusBatu(data.idMps,
-                                                                                'BELUM KOMPLIT BATU');
-                                                                            onRowPressed();
-                                                                            Navigator.pop(context);
-                                                                            showSimpleNotification(
-                                                                              const Text('Pemilihan Status Batu Berhasil'),
-                                                                              background: Colors.green,
-                                                                              duration: const Duration(seconds: 1),
-                                                                            );
-                                                                          },
-                                                                          child: const Text(
-                                                                            "BELUM KOMPLIT BATU",
-                                                                            style:
-                                                                                TextStyle(
-                                                                              fontSize: 16,
-                                                                            ),
-                                                                          )),
-                                                                    ),
-                                                                  ]))))));
-                                    });
-                              },
-                              icon:
-                                  const Icon(Icons.chat_bubble_outline_rounded),
-                              color: Colors.green,
-                            )
-                          : const SizedBox(),
-                    ],
-                  )
-                ],
-              ));
-        }),
-      ),
-      DataCell(_verticalDivider),
-      //status acc
-      DataCell(
-        Builder(builder: (context) {
-          return Padding(
-              padding: const EdgeInsets.all(0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(data.keteranganStatusAcc),
-                  Stack(
-                    clipBehavior: Clip.none, //agar tidak menghalangi object
-                    children: [
-                      //tambahan icon ADD
-                      sharedPreferences!.getString('role') == '1' ||
-                              sharedPreferences!.getString('role') == '2' ||
-                              sharedPreferences!.getString('divisi') == 'admin'
-                          ? Positioned(
-                              right: -5.0,
-                              top: -3.0,
-                              child: InkResponse(
-                                onTap: () {
-                                  // Navigator.of(context).pop();
-                                },
-                                child: const Icon(
-                                  Icons.add_circle_outline,
-                                  color: Colors.green,
-                                  size: 20,
-                                ),
-                              ),
-                            )
-                          : const SizedBox(),
-                      sharedPreferences!.getString('role') == '1' ||
-                              sharedPreferences!.getString('role') == '2' ||
-                              sharedPreferences!.getString('divisi') == 'scm' ||
-                              sharedPreferences!.getString('divisi') == 'admin'
-                          ? IconButton(
-                              onPressed: () {
-                                showGeneralDialog(
-                                    transitionDuration:
-                                        const Duration(milliseconds: 200),
-                                    barrierDismissible: true,
-                                    barrierLabel: '',
-                                    context: context,
-                                    pageBuilder:
-                                        (context, animation1, animation2) {
-                                      return const Text('');
-                                    },
-                                    barrierColor: Colors.black.withOpacity(0.5),
-                                    transitionBuilder:
-                                        (context, a1, a2, widget) {
-                                      return Transform.scale(
-                                          scale: a1.value,
-                                          child: Opacity(
-                                              opacity: a1.value,
-                                              child: AlertDialog(
-                                                  shape: RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8)),
-                                                  content: SizedBox(
-                                                      child:
-                                                          SingleChildScrollView(
-                                                              scrollDirection:
-                                                                  Axis.vertical,
-                                                              child: Column(
-                                                                  children: [
-                                                                    const Text(
-                                                                      'Pilih Status Acc',
-                                                                      style: TextStyle(
-                                                                          color: Colors
-                                                                              .black,
-                                                                          fontSize:
-                                                                              18,
-                                                                          fontWeight:
-                                                                              FontWeight.bold),
-                                                                    ),
-                                                                    Container(
-                                                                      padding: const EdgeInsets
-                                                                          .only(
-                                                                          top:
-                                                                              15),
-                                                                      child: ElevatedButton(
-                                                                          style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
-                                                                          onPressed: () async {
-                                                                            await postKeteranganStatusAcc(data.idMps,
-                                                                                'Tidak Ada');
-                                                                            onRowPressed();
-                                                                            Navigator.pop(context);
-                                                                            showSimpleNotification(
-                                                                              const Text('Pemilihan Status Batu Berhasil'),
-                                                                              background: Colors.green,
-                                                                              duration: const Duration(seconds: 1),
-                                                                            );
-                                                                          },
-                                                                          child: const Text(
-                                                                            "Tidak Ada",
-                                                                            style:
-                                                                                TextStyle(
-                                                                              fontSize: 16,
-                                                                            ),
-                                                                          )),
-                                                                    ),
-                                                                    sharedPreferences!.getString('divisi') ==
-                                                                            'scm'
-                                                                        ? Container(
-                                                                            padding:
-                                                                                const EdgeInsets.only(top: 15),
-                                                                            child: ElevatedButton(
-                                                                                style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
-                                                                                onPressed: () async {
-                                                                                  await postKeteranganStatusAcc(data.idMps, 'TRANSFER ACC');
-                                                                                  onRowPressed();
-                                                                                  Navigator.pop(context);
-                                                                                  showSimpleNotification(
-                                                                                    const Text('Pemilihan Status Acc Berhasil'),
-                                                                                    background: Colors.green,
-                                                                                    duration: const Duration(seconds: 1),
-                                                                                  );
-                                                                                },
-                                                                                child: const Text(
-                                                                                  "TRANSFER ACC",
-                                                                                  style: TextStyle(
-                                                                                    fontSize: 16,
-                                                                                  ),
-                                                                                )),
-                                                                          )
-                                                                        : Container(
-                                                                            padding:
-                                                                                const EdgeInsets.only(top: 15),
-                                                                            child: ElevatedButton(
-                                                                                style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
-                                                                                onPressed: () async {
-                                                                                  await postKeteranganStatusAcc(data.idMps, 'KOMPLIT ACC');
-                                                                                  onRowPressed();
-                                                                                  Navigator.pop(context);
-                                                                                  showSimpleNotification(
-                                                                                    const Text('Pemilihan Status Acc Berhasil'),
-                                                                                    background: Colors.green,
-                                                                                    duration: const Duration(seconds: 1),
-                                                                                  );
-                                                                                },
-                                                                                child: const Text(
-                                                                                  "KOMPLIT ACC",
-                                                                                  style: TextStyle(
-                                                                                    fontSize: 16,
-                                                                                  ),
-                                                                                )),
-                                                                          ),
-                                                                    Container(
-                                                                      padding: const EdgeInsets
-                                                                          .only(
-                                                                          top:
-                                                                              15),
-                                                                      child: ElevatedButton(
-                                                                          style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
-                                                                          onPressed: () async {
-                                                                            await postKeteranganStatusAcc(data.idMps,
-                                                                                'BELUM KOMPLIT ACC');
-                                                                            onRowPressed();
-                                                                            Navigator.pop(context);
-                                                                            showSimpleNotification(
-                                                                              const Text('Pemilihan Status Acc Berhasil'),
-                                                                              background: Colors.green,
-                                                                              duration: const Duration(seconds: 1),
-                                                                            );
-                                                                          },
-                                                                          child: const Text(
-                                                                            "BELUM KOMPLIT ACC",
-                                                                            style:
-                                                                                TextStyle(
-                                                                              fontSize: 16,
-                                                                            ),
-                                                                          )),
-                                                                    ),
-                                                                  ]))))));
-                                    });
-                              },
-                              icon: const Icon(Icons.toll_outlined),
-                              color: Colors.green,
-                            )
-                          : const SizedBox()
-                    ],
-                  )
-                ],
-              ));
-        }),
-      ),
-      DataCell(_verticalDivider),
-      //keterangan batu
-      DataCell(
-        Padding(
-            padding: const EdgeInsets.all(0), child: Text(data.keteranganBatu)),
-      ),
-      DataCell(_verticalDivider),
-      //tema
-      DataCell(
-        Padding(padding: const EdgeInsets.all(0), child: Text(data.tema)),
-      ),
-      DataCell(_verticalDivider),
-      //jenisBarang
-      DataCell(
-        Padding(
-            padding: const EdgeInsets.all(0), child: Text(data.jenisBarang)),
-      ),
-      DataCell(_verticalDivider),
-
-      //berat emas
-      DataCell(
-        Padding(
-            padding: const EdgeInsets.all(0),
-            child: Text(data.beratEmas.toString())),
-      ),
-      DataCell(_verticalDivider),
-      //berat diamond
-      DataCell(
-        Padding(
-            padding: const EdgeInsets.all(0),
-            child: Text(data.totalCarat.toString())),
-      ),
-      DataCell(_verticalDivider),
-
-      //brand
-      DataCell(
-        Padding(padding: const EdgeInsets.all(0), child: Text(data.brand)),
-      ),
-      DataCell(_verticalDivider),
-      //harga
-      sharedPreferences!.getString('role') == '1' ||
-              sharedPreferences!.getString('role') == '2' ||
-              sharedPreferences!.getString('divisi') == 'admin'
-          ? DataCell(
-              Container(
+                                ))
+                            : const SizedBox(),
+              ],
+            );
+          })),
+          DataCell(_verticalDivider),
+          //status batu
+          DataCell(
+            Builder(builder: (context) {
+              return Padding(
                   padding: const EdgeInsets.all(0),
-                  child: data.brand.toString().toLowerCase() == 'parva'
-                      ? Text(
-                          CurrencyFormat.convertToIdr(
-                              ((data.estimasiHarga * 0.37) * 11500), 0),
-                          maxLines: 2,
-                        )
-                      : Text(
-                          CurrencyFormat.convertToIdr(
-                              ((data.estimasiHarga)), 0),
-                          maxLines: 2,
-                        )),
-            )
-          : const DataCell(SizedBox()),
-      sharedPreferences!.getString('role') == '1' ||
-              sharedPreferences!.getString('role') == '2' ||
-              sharedPreferences!.getString('divisi') == 'admin'
-          ? DataCell(_verticalDivider)
-          : const DataCell(SizedBox()),
-      //kelas harga
-      DataCell(
-        Container(
-            padding: const EdgeInsets.all(0),
-            child: ((data.estimasiHarga * 0.37) * 11500) <= 5000000
-                ? const Text(
-                    "XS",
-                    maxLines: 2,
-                  )
-                : ((data.estimasiHarga * 0.37) * 11500) <= 10000000
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(data.keteranganStatusBatu),
+                      Stack(
+                        clipBehavior: Clip.none, //agar tidak menghalangi object
+                        children: [
+                          //tambahan icon ADD
+                          sharedPreferences!.getString('role') == '1' ||
+                                  sharedPreferences!.getString('role') == '2' ||
+                                  sharedPreferences!.getString('divisi') ==
+                                      'admin' ||
+                                  sharedPreferences!.getString('divisi') ==
+                                      'scm'
+                              ? Positioned(
+                                  right: -5.0,
+                                  top: -3.0,
+                                  child: InkResponse(
+                                    onTap: () {
+                                      // Navigator.of(context).pop();
+                                    },
+                                    child: const Icon(
+                                      Icons.add_circle_outline,
+                                      color: Colors.green,
+                                      size: 20,
+                                    ),
+                                  ),
+                                )
+                              : const SizedBox(),
+                          sharedPreferences!.getString('role') == '1' ||
+                                  sharedPreferences!.getString('role') == '2' ||
+                                  sharedPreferences!.getString('divisi') ==
+                                      'admin' ||
+                                  sharedPreferences!.getString('divisi') ==
+                                      'scm'
+                              ? IconButton(
+                                  onPressed: () {
+                                    showGeneralDialog(
+                                        transitionDuration:
+                                            const Duration(milliseconds: 200),
+                                        barrierDismissible: true,
+                                        barrierLabel: '',
+                                        context: context,
+                                        pageBuilder:
+                                            (context, animation1, animation2) {
+                                          return const Text('');
+                                        },
+                                        barrierColor:
+                                            Colors.black.withOpacity(0.5),
+                                        transitionBuilder:
+                                            (context, a1, a2, widget) {
+                                          return Transform.scale(
+                                              scale: a1.value,
+                                              child: Opacity(
+                                                  opacity: a1.value,
+                                                  child: AlertDialog(
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8)),
+                                                      content: SizedBox(
+                                                          child:
+                                                              SingleChildScrollView(
+                                                                  scrollDirection:
+                                                                      Axis
+                                                                          .vertical,
+                                                                  child: Column(
+                                                                      children: [
+                                                                        const Text(
+                                                                          'Pilih Status Batu',
+                                                                          style: TextStyle(
+                                                                              color: Colors.black,
+                                                                              fontSize: 18,
+                                                                              fontWeight: FontWeight.bold),
+                                                                        ),
+                                                                        Container(
+                                                                          padding: const EdgeInsets
+                                                                              .only(
+                                                                              top: 15),
+                                                                          child: ElevatedButton(
+                                                                              style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
+                                                                              onPressed: () async {
+                                                                                await postKeteranganStatusBatu(data.idMps, 'ECER');
+                                                                                onRowPressed();
+                                                                                Navigator.pop(context);
+                                                                                showSimpleNotification(
+                                                                                  const Text('Pemilihan Status Batu Berhasil'),
+                                                                                  background: Colors.green,
+                                                                                  duration: const Duration(seconds: 1),
+                                                                                );
+                                                                              },
+                                                                              child: const Text(
+                                                                                "ECER",
+                                                                                style: TextStyle(
+                                                                                  fontSize: 16,
+                                                                                ),
+                                                                              )),
+                                                                        ),
+                                                                        sharedPreferences!.getString('divisi') ==
+                                                                                'scm'
+                                                                            ? Container(
+                                                                                padding: const EdgeInsets.only(top: 15),
+                                                                                child: ElevatedButton(
+                                                                                    style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
+                                                                                    onPressed: () async {
+                                                                                      await postKeteranganStatusBatu(data.idMps, 'TRANSFER BATU');
+                                                                                      onRowPressed();
+                                                                                      Navigator.pop(context);
+                                                                                      showSimpleNotification(
+                                                                                        const Text('Pemilihan Status Batu Berhasil'),
+                                                                                        background: Colors.green,
+                                                                                        duration: const Duration(seconds: 1),
+                                                                                      );
+                                                                                    },
+                                                                                    child: const Text(
+                                                                                      "TRANSFER BATU",
+                                                                                      style: TextStyle(
+                                                                                        fontSize: 16,
+                                                                                      ),
+                                                                                    )),
+                                                                              )
+                                                                            : Container(
+                                                                                padding: const EdgeInsets.only(top: 15),
+                                                                                child: ElevatedButton(
+                                                                                    style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
+                                                                                    onPressed: () async {
+                                                                                      await postKeteranganStatusBatu(data.idMps, 'KOMPLIT BATU');
+                                                                                      onRowPressed();
+                                                                                      Navigator.pop(context);
+                                                                                      showSimpleNotification(
+                                                                                        const Text('Pemilihan Status Batu Berhasil'),
+                                                                                        background: Colors.green,
+                                                                                        duration: const Duration(seconds: 1),
+                                                                                      );
+                                                                                    },
+                                                                                    child: const Text(
+                                                                                      "KOMPLIT BATU",
+                                                                                      style: TextStyle(
+                                                                                        fontSize: 16,
+                                                                                      ),
+                                                                                    )),
+                                                                              ),
+                                                                        Container(
+                                                                          padding: const EdgeInsets
+                                                                              .only(
+                                                                              top: 15),
+                                                                          child: ElevatedButton(
+                                                                              style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
+                                                                              onPressed: () async {
+                                                                                await postKeteranganStatusBatu(data.idMps, 'BELUM KOMPLIT BATU');
+                                                                                onRowPressed();
+                                                                                Navigator.pop(context);
+                                                                                showSimpleNotification(
+                                                                                  const Text('Pemilihan Status Batu Berhasil'),
+                                                                                  background: Colors.green,
+                                                                                  duration: const Duration(seconds: 1),
+                                                                                );
+                                                                              },
+                                                                              child: const Text(
+                                                                                "BELUM KOMPLIT BATU",
+                                                                                style: TextStyle(
+                                                                                  fontSize: 16,
+                                                                                ),
+                                                                              )),
+                                                                        ),
+                                                                      ]))))));
+                                        });
+                                  },
+                                  icon: const Icon(
+                                      Icons.chat_bubble_outline_rounded),
+                                  color: Colors.green,
+                                )
+                              : const SizedBox(),
+                        ],
+                      )
+                    ],
+                  ));
+            }),
+          ),
+          DataCell(_verticalDivider),
+          //status acc
+          DataCell(
+            Builder(builder: (context) {
+              return Padding(
+                  padding: const EdgeInsets.all(0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(data.keteranganStatusAcc),
+                      Stack(
+                        clipBehavior: Clip.none, //agar tidak menghalangi object
+                        children: [
+                          //tambahan icon ADD
+                          sharedPreferences!.getString('role') == '1' ||
+                                  sharedPreferences!.getString('role') == '2' ||
+                                  sharedPreferences!.getString('divisi') ==
+                                      'admin'
+                              ? Positioned(
+                                  right: -5.0,
+                                  top: -3.0,
+                                  child: InkResponse(
+                                    onTap: () {
+                                      // Navigator.of(context).pop();
+                                    },
+                                    child: const Icon(
+                                      Icons.add_circle_outline,
+                                      color: Colors.green,
+                                      size: 20,
+                                    ),
+                                  ),
+                                )
+                              : const SizedBox(),
+                          sharedPreferences!.getString('role') == '1' ||
+                                  sharedPreferences!.getString('role') == '2' ||
+                                  sharedPreferences!.getString('divisi') ==
+                                      'scm' ||
+                                  sharedPreferences!.getString('divisi') ==
+                                      'admin'
+                              ? IconButton(
+                                  onPressed: () {
+                                    showGeneralDialog(
+                                        transitionDuration:
+                                            const Duration(milliseconds: 200),
+                                        barrierDismissible: true,
+                                        barrierLabel: '',
+                                        context: context,
+                                        pageBuilder:
+                                            (context, animation1, animation2) {
+                                          return const Text('');
+                                        },
+                                        barrierColor:
+                                            Colors.black.withOpacity(0.5),
+                                        transitionBuilder:
+                                            (context, a1, a2, widget) {
+                                          return Transform.scale(
+                                              scale: a1.value,
+                                              child: Opacity(
+                                                  opacity: a1.value,
+                                                  child: AlertDialog(
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8)),
+                                                      content: SizedBox(
+                                                          child:
+                                                              SingleChildScrollView(
+                                                                  scrollDirection:
+                                                                      Axis
+                                                                          .vertical,
+                                                                  child: Column(
+                                                                      children: [
+                                                                        const Text(
+                                                                          'Pilih Status Acc',
+                                                                          style: TextStyle(
+                                                                              color: Colors.black,
+                                                                              fontSize: 18,
+                                                                              fontWeight: FontWeight.bold),
+                                                                        ),
+                                                                        Container(
+                                                                          padding: const EdgeInsets
+                                                                              .only(
+                                                                              top: 15),
+                                                                          child: ElevatedButton(
+                                                                              style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
+                                                                              onPressed: () async {
+                                                                                await postKeteranganStatusAcc(data.idMps, 'Tidak Ada');
+                                                                                onRowPressed();
+                                                                                Navigator.pop(context);
+                                                                                showSimpleNotification(
+                                                                                  const Text('Pemilihan Status Batu Berhasil'),
+                                                                                  background: Colors.green,
+                                                                                  duration: const Duration(seconds: 1),
+                                                                                );
+                                                                              },
+                                                                              child: const Text(
+                                                                                "Tidak Ada",
+                                                                                style: TextStyle(
+                                                                                  fontSize: 16,
+                                                                                ),
+                                                                              )),
+                                                                        ),
+                                                                        sharedPreferences!.getString('divisi') ==
+                                                                                'scm'
+                                                                            ? Container(
+                                                                                padding: const EdgeInsets.only(top: 15),
+                                                                                child: ElevatedButton(
+                                                                                    style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
+                                                                                    onPressed: () async {
+                                                                                      await postKeteranganStatusAcc(data.idMps, 'TRANSFER ACC');
+                                                                                      onRowPressed();
+                                                                                      Navigator.pop(context);
+                                                                                      showSimpleNotification(
+                                                                                        const Text('Pemilihan Status Acc Berhasil'),
+                                                                                        background: Colors.green,
+                                                                                        duration: const Duration(seconds: 1),
+                                                                                      );
+                                                                                    },
+                                                                                    child: const Text(
+                                                                                      "TRANSFER ACC",
+                                                                                      style: TextStyle(
+                                                                                        fontSize: 16,
+                                                                                      ),
+                                                                                    )),
+                                                                              )
+                                                                            : Container(
+                                                                                padding: const EdgeInsets.only(top: 15),
+                                                                                child: ElevatedButton(
+                                                                                    style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
+                                                                                    onPressed: () async {
+                                                                                      await postKeteranganStatusAcc(data.idMps, 'KOMPLIT ACC');
+                                                                                      onRowPressed();
+                                                                                      Navigator.pop(context);
+                                                                                      showSimpleNotification(
+                                                                                        const Text('Pemilihan Status Acc Berhasil'),
+                                                                                        background: Colors.green,
+                                                                                        duration: const Duration(seconds: 1),
+                                                                                      );
+                                                                                    },
+                                                                                    child: const Text(
+                                                                                      "KOMPLIT ACC",
+                                                                                      style: TextStyle(
+                                                                                        fontSize: 16,
+                                                                                      ),
+                                                                                    )),
+                                                                              ),
+                                                                        Container(
+                                                                          padding: const EdgeInsets
+                                                                              .only(
+                                                                              top: 15),
+                                                                          child: ElevatedButton(
+                                                                              style: ElevatedButton.styleFrom(backgroundColor: Colors.blue, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0))),
+                                                                              onPressed: () async {
+                                                                                await postKeteranganStatusAcc(data.idMps, 'BELUM KOMPLIT ACC');
+                                                                                onRowPressed();
+                                                                                Navigator.pop(context);
+                                                                                showSimpleNotification(
+                                                                                  const Text('Pemilihan Status Acc Berhasil'),
+                                                                                  background: Colors.green,
+                                                                                  duration: const Duration(seconds: 1),
+                                                                                );
+                                                                              },
+                                                                              child: const Text(
+                                                                                "BELUM KOMPLIT ACC",
+                                                                                style: TextStyle(
+                                                                                  fontSize: 16,
+                                                                                ),
+                                                                              )),
+                                                                        ),
+                                                                      ]))))));
+                                        });
+                                  },
+                                  icon: const Icon(Icons.toll_outlined),
+                                  color: Colors.green,
+                                )
+                              : const SizedBox()
+                        ],
+                      )
+                    ],
+                  ));
+            }),
+          ),
+          DataCell(_verticalDivider),
+          //keterangan batu
+          DataCell(
+            Padding(
+                padding: const EdgeInsets.all(0),
+                child: Text(data.keteranganBatu)),
+          ),
+          DataCell(_verticalDivider),
+          //tema
+          DataCell(
+            Padding(padding: const EdgeInsets.all(0), child: Text(data.tema)),
+          ),
+          DataCell(_verticalDivider),
+          //jenisBarang
+          DataCell(
+            Padding(
+                padding: const EdgeInsets.all(0),
+                child: Text(data.jenisBarang)),
+          ),
+          DataCell(_verticalDivider),
+
+          //berat emas
+          DataCell(
+            Padding(
+                padding: const EdgeInsets.all(0),
+                child: Text(data.beratEmas.toString())),
+          ),
+          DataCell(_verticalDivider),
+          //berat diamond
+          DataCell(
+            Padding(
+                padding: const EdgeInsets.all(0),
+                child: Text(data.totalCarat.toString())),
+          ),
+          DataCell(_verticalDivider),
+
+          //brand
+          DataCell(
+            Padding(padding: const EdgeInsets.all(0), child: Text(data.brand)),
+          ),
+          DataCell(_verticalDivider),
+          //harga
+          sharedPreferences!.getString('role') == '1' ||
+                  sharedPreferences!.getString('role') == '2' ||
+                  sharedPreferences!.getString('divisi') == 'admin'
+              ? DataCell(
+                  Container(
+                      padding: const EdgeInsets.all(0),
+                      child: data.brand.toString().toLowerCase() == 'parva'
+                          ? Text(
+                              CurrencyFormat.convertToIdr(
+                                  ((data.estimasiHarga * 0.37) * 11500), 0),
+                              maxLines: 2,
+                            )
+                          : Text(
+                              CurrencyFormat.convertToIdr(
+                                  ((data.estimasiHarga)), 0),
+                              maxLines: 2,
+                            )),
+                )
+              : const DataCell(SizedBox()),
+          sharedPreferences!.getString('role') == '1' ||
+                  sharedPreferences!.getString('role') == '2' ||
+                  sharedPreferences!.getString('divisi') == 'admin'
+              ? DataCell(_verticalDivider)
+              : const DataCell(SizedBox()),
+          //kelas harga
+          DataCell(
+            Container(
+                padding: const EdgeInsets.all(0),
+                child: ((data.estimasiHarga * 0.37) * 11500) <= 5000000
                     ? const Text(
-                        "S",
+                        "XS",
                         maxLines: 2,
                       )
-                    : ((data.estimasiHarga * 0.37) * 11500) <= 20000000
+                    : ((data.estimasiHarga * 0.37) * 11500) <= 10000000
                         ? const Text(
-                            "M",
+                            "S",
                             maxLines: 2,
                           )
-                        : ((data.estimasiHarga * 0.37) * 11500) <= 35000000
+                        : ((data.estimasiHarga * 0.37) * 11500) <= 20000000
                             ? const Text(
-                                "L",
+                                "M",
                                 maxLines: 2,
                               )
-                            : const Text(
-                                "XL",
-                                maxLines: 2,
-                              )),
-      ),
-      DataCell(_verticalDivider),
-      //tanggal in produksi
-      DataCell(
-        Padding(
-            padding: const EdgeInsets.all(0),
-            child: Text(data.tanggalInProduksi)),
-      ),
-    ]);
+                            : ((data.estimasiHarga * 0.37) * 11500) <= 35000000
+                                ? const Text(
+                                    "L",
+                                    maxLines: 2,
+                                  )
+                                : const Text(
+                                    "XL",
+                                    maxLines: 2,
+                                  )),
+          ),
+          DataCell(_verticalDivider),
+          //tanggal in produksi
+          DataCell(
+            Padding(
+                padding: const EdgeInsets.all(0),
+                child: Text(data.tanggalInProduksi)),
+          ),
+        ]);
   }
 
   @override
@@ -4154,6 +4053,167 @@ class RowSourceProduksi extends DataTableSource {
 
   @override
   int get selectedRowCount => 0;
+
+  formSwitchBulan(context, kodeDesignMdbc, i, idFormDesigner, idMps) {
+    return showGeneralDialog(
+        transitionDuration: const Duration(milliseconds: 200),
+        barrierDismissible: true,
+        barrierLabel: '',
+        context: context,
+        pageBuilder: (context, animation1, animation2) {
+          return const Text('');
+        },
+        barrierColor: Colors.black.withOpacity(0.5),
+        transitionBuilder: (context, a1, a2, widget) {
+          return Transform.scale(
+              scale: a1.value,
+              child: Opacity(
+                  opacity: a1.value,
+                  child: AlertDialog(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8)),
+                      content: SizedBox(
+                          child: SingleChildScrollView(
+                              scrollDirection: Axis.vertical,
+                              child: Column(children: [
+                                const Text(
+                                  'Pilih bulan release',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                for (var j = 0; j < listSwitchBulan.length; j++)
+                                  Container(
+                                      padding: const EdgeInsets.only(top: 15),
+                                      child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                              backgroundColor:
+                                                  listSwitchBulan[j]
+                                                              .toString()
+                                                              .toLowerCase() ==
+                                                          'cancel'
+                                                      ? Colors.red
+                                                      : Colors.blue,
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          50.0))),
+                                          onPressed: () {
+                                            if (j == 0) {
+                                              formCancel(
+                                                  context, kodeDesignMdbc, i);
+                                            }
+                                            updateStatusFormDesigner(
+                                                idFormDesigner,
+                                                listSwitchBulan[j]);
+                                            updateMps(context, idMps,
+                                                listSwitchBulan[j]);
+                                          },
+                                          child: Text(
+                                            listSwitchBulan[j],
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                            ),
+                                          )))
+                              ]))))));
+        });
+  }
+
+  updateStatusFormDesigner(id, release) async {
+    //? menambahkan posisi release dan bulannya
+    Map<String, String> body = {
+      'id': id.toString(),
+      'bulan': release.toString()
+    };
+    final response = await http.post(
+        Uri.parse('${ApiConstants.baseUrl}${ApiConstants.addTanggalProduksi}'),
+        body: body);
+    print(response.body);
+  }
+
+  updateMps(context, idMps, bulanMps) async {
+    Map<String, String> body = {
+      'isUpdate': 'true',
+      'id': idMps.toString(),
+      'bulan': bulanMps.toString().toUpperCase(),
+    };
+    try {
+      final response = await http.post(
+          Uri.parse('${ApiConstants.baseUrl}${ApiConstants.postDataMps}'),
+          body: body);
+      if (response.statusCode == 200) {
+        showSimpleNotification(
+          const Text('Data berhasil di release'),
+          background: Colors.green,
+          duration: const Duration(seconds: 1),
+        );
+        print(response.body);
+      } else {
+        //*HINTS Panggil fungsi showCustomDialog error
+        showCustomDialog(
+          context: context,
+          dialogType: DialogType.error,
+          title: 'Error send data CANCEL',
+          description: response.body,
+        );
+      }
+    } catch (c) {
+      //*HINTS Panggil fungsi showCustomDialog error
+      showCustomDialog(
+        context: context,
+        dialogType: DialogType.error,
+        title: 'Error send data CANCEL',
+        description: '$c',
+      );
+    }
+  }
+
+  formCancel(context, kodeDesignMdbc, i) {
+    return showDialog<String>(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text(
+          'Perhatian',
+          textAlign: TextAlign.center,
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+        ),
+        content: Row(
+          children: [
+            const Text(
+              'Apakah anda yakin ingin mengCANCEL - ',
+            ),
+            Text(
+              '$kodeDesignMdbc  ?',
+              style: const TextStyle(
+                  fontWeight: FontWeight.bold, color: Colors.black),
+            ),
+          ],
+        ),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(
+              context,
+              'Batal',
+            ),
+            child: const Text('Batal'),
+          ),
+          TextButton(
+            onPressed: () async {
+              await postDataMps(myData, i, 'cancel', context, 'false');
+              onRowPressed();
+              Navigator.pop(context);
+            },
+            child: const Text(
+              'YA',
+              style: TextStyle(color: Colors.red),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
   postDataMps(var dumData, index, bulan, context, isUpdate) async {
     var data = dumData[index];
@@ -4174,21 +4234,21 @@ class RowSourceProduksi extends DataTableSource {
         );
         print(response.body);
       } else {
-        print('err : ${response.body}');
-        Navigator.pop(context);
-        showSimpleNotification(
-          const Text('Error Data ()'),
-          background: Colors.red,
-          duration: const Duration(seconds: 2),
+        //*HINTS Panggil fungsi showCustomDialog error
+        showCustomDialog(
+          context: context,
+          dialogType: DialogType.error,
+          title: 'Error send data CANCEL',
+          description: response.body,
         );
       }
     } catch (c) {
-      print('err : $c');
-      Navigator.pop(context);
-      showSimpleNotification(
-        Text('Error Data ($c)'),
-        background: Colors.red,
-        duration: const Duration(seconds: 2),
+      //*HINTS Panggil fungsi showCustomDialog error
+      showCustomDialog(
+        context: context,
+        dialogType: DialogType.error,
+        title: 'Error send data CANCEL',
+        description: '$c',
       );
     }
   }
@@ -5050,18 +5110,19 @@ class CustomScrollBehavior extends MaterialScrollBehavior {
 }
 
 class MyDataTableSource extends DataTableSource {
-  final List<Map<String, dynamic>> _data = List.generate(
-    100,
-    (index) => {'id': index + 1, 'name': 'Name $index', 'age': 20 + index},
-  );
+  final List<List<String>> data;
+
+  MyDataTableSource({required this.data});
 
   @override
   DataRow getRow(int index) {
-    final row = _data[index];
+    final rowData = data[index];
     return DataRow(cells: [
-      DataCell(Text('${row['id']}')),
-      DataCell(Text('${row['name']}')),
-      DataCell(Text('${row['age']}')),
+      DataCell(Text(rowData[0])),
+      DataCell(Text(rowData[1])),
+      DataCell(Text(rowData[2])),
+      DataCell(Text(rowData[3])),
+      DataCell(Text(rowData[4])),
     ]);
   }
 
@@ -5069,7 +5130,7 @@ class MyDataTableSource extends DataTableSource {
   bool get isRowCountApproximate => false;
 
   @override
-  int get rowCount => _data.length;
+  int get rowCount => data.length;
 
   @override
   int get selectedRowCount => 0;

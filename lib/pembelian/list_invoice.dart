@@ -349,6 +349,75 @@ class _ListInvoiceState extends State<ListInvoice> {
     });
   }
 
+  _getDataWithoutLoading() async {
+    final response = await http
+        .get(Uri.parse('${ApiConstants.baseUrl}${ApiConstants.getFormPR}'));
+
+    if (response.statusCode == 200) {
+      List jsonResponse = json.decode(response.body);
+
+      var data =
+          jsonResponse.map((data) => FormPrModel.fromJson(data)).toList();
+      var filterByStatus = data
+          .where((element) =>
+              element.status.toString().toLowerCase() == 'selesai' &&
+              element.jenisItem.toString().toLowerCase() == 'diamond')
+          .toList();
+      data = filterByStatus;
+      //* hints Urutkan data berdasarkan tanggal terlama
+      // data.sort((a, b) => a.tanggalSelesai!.compareTo(b.tanggalSelesai!));
+      //? Sekarang, data sudah diurutkan berdasarkan tanggal terlama
+
+      dataFormPR = data;
+      filterDataFormPR = data;
+      dataFormPR = data;
+    } else {
+      print(response.body);
+      throw Exception('Unexpected error occured!');
+    }
+    //get listnya QC
+    final responseListItem = await http
+        .get(Uri.parse('${ApiConstants.baseUrl}${ApiConstants.getListFormPR}'));
+
+    if (responseListItem.statusCode == 200) {
+      List jsonResponse = json.decode(responseListItem.body);
+
+      var dataListItem = jsonResponse
+          .map((dataListItem) => ListItemPRModel.fromJson(dataListItem))
+          .toList();
+      var filterByNoQc =
+          dataListItem.where((element) => element.noQc != '').toList();
+
+      listItemQc = filterByNoQc;
+      filterFormPR = filterByNoQc;
+    } else {
+      print(response.body);
+      throw Exception('Unexpected error occured!');
+    }
+
+    //get detail listnya QC
+    final responseList = await http
+        .get(Uri.parse('${ApiConstants.baseUrl}${ApiConstants.getItemQc}'));
+
+    if (responseList.statusCode == 200) {
+      List jsonResponse = json.decode(responseList.body);
+
+      var dataList = jsonResponse
+          .map((dataList) => ItemQcModel.fromJson(dataList))
+          .toList();
+
+      listDetailItemQc = dataList;
+    } else {
+      print(response.body);
+      throw Exception('Unexpected error occured!');
+    }
+    dataFormPR = filterDataFormPR!
+        .where((element) =>
+            element.noPr!.toLowerCase().contains(controller.text.toLowerCase()))
+        .toList();
+    setState(() {});
+  }
+
   _getData() async {
     setState(() {
       isLoading = true;
@@ -522,10 +591,24 @@ class _ListInvoiceState extends State<ListInvoice> {
             child: data[i].harga == '0'
                 ? ElevatedButton(
                     onPressed: () {
-                      hargaForm(i);
+                      hargaForm(data[i].id, '');
                     },
                     child: const Text('Isi harga'))
-                : Text('\$ ${data[i].harga}', textAlign: TextAlign.left),
+                : Row(
+                    children: [
+                      Text('\$ ${data[i].harga}', textAlign: TextAlign.left),
+                      IconButton(
+                        onPressed: () {
+                          hargaForm(data[i].id, data[i].harga);
+                        },
+                        icon: const Icon(
+                          color: Colors.blue,
+                          Icons.edit,
+                          size: 24.0,
+                        ),
+                      ),
+                    ],
+                  ),
           )),
           DataCell(Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -601,12 +684,12 @@ class _ListInvoiceState extends State<ListInvoice> {
     ];
   }
 
-  hargaForm(index) {
+  hargaForm(index, value) {
     return showDialog(
         context: context,
         builder: (BuildContext context) {
           TextEditingController harga = TextEditingController();
-
+          harga.text = value;
           return StatefulBuilder(
               builder: (context, setState) => AlertDialog(
                       content:
@@ -652,8 +735,7 @@ class _ListInvoiceState extends State<ListInvoice> {
                                             fontWeight: FontWeight.bold),
                                       ),
                                       onPressed: () {
-                                        simpanHarga(
-                                            listItemQc![index].id, harga.text);
+                                        simpanHarga(index, harga.text);
                                       })))
                         ])
                   ])));
@@ -665,7 +747,7 @@ class _ListInvoiceState extends State<ListInvoice> {
     btnControllerSimpan.success();
     // ignore: use_build_context_synchronously
     Navigator.pop(context);
-    _getData();
+    _getDataWithoutLoading();
     showSimpleNotification(
       const Text('Harga berhasil ditambahkan'),
       background: Colors.green,

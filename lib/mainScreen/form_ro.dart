@@ -4003,20 +4003,7 @@ class _FormROScreenState extends State<FormROScreen> {
                     height: 65,
                     width: 200,
                     child: DropdownSearch<String>(
-                      items: const [
-                        "JANUARI",
-                        "FEBRUARI",
-                        "MARET",
-                        "APRIL",
-                        "MEI",
-                        "JUNI",
-                        "JULI",
-                        "AGUSTUS",
-                        "SEPTEMBER",
-                        "OKTOBER",
-                        "NOVEMBER",
-                        "DESEMBER"
-                      ],
+                      items: namaBulan,
                       onChanged: (item) {
                         setState(() {
                           siklus.text = item!;

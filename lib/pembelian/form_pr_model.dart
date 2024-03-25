@@ -71,7 +71,7 @@ class FormPrModel {
         totalQty: json["total_qty"].toString(),
         totalBerat: json["total_berat"].toString(),
         status: json["status"].toString(),
-        tanggalKirim: json["tanggal_kirim"].toString(),
+        tanggalKirim: json["tanggal_kirim"] ?? '',
         jenisForm: json["jenis_form"].toString(),
         jenisItem: json["jenis_item"].toString(),
         jenisBatu: json["jenis_batu"].toString(),

@@ -50,6 +50,7 @@ class ProduksiModel {
       this.hilangButir,
       this.hilangCarat});
 
+  
   ProduksiModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     bulan = json['bulan'];

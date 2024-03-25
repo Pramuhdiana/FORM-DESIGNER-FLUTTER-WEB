@@ -1256,6 +1256,17 @@ class _HomeScreenPembelianState extends State<HomeScreenPembelian> {
                                                   .jenisBatu!),
                                         ),
                                       ),
+                                      const SizedBox(height: 5),
+                                      Container(
+                                        decoration: const BoxDecoration(
+                                          color: Colors.yellow,
+                                        ),
+                                        child: Text(
+                                          '${listItemQc![index].notesReject}',
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
                                       const SizedBox(height: 20),
                                       const Row(
                                           mainAxisAlignment:

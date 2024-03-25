@@ -8,6 +8,7 @@ import 'package:form_designer/global/global.dart';
 import 'package:form_designer/mainScreen/home_screen.dart';
 import 'package:form_designer/mainScreen/list_mps.dart';
 import 'package:form_designer/produksi/mainScreen/CRUD/finishing.dart';
+import 'package:form_designer/produksi/mainScreen/CRUD/new_finishing.dart';
 import 'package:form_designer/produksi/mainScreen/CRUD/polishing1.dart';
 import 'package:form_designer/produksi/mainScreen/CRUD/stell1.dart';
 import 'package:form_designer/produksi/modelProduksi/produksi_model.dart';
@@ -80,7 +81,7 @@ class _ProduksiNewScreenState extends State<ProduksiNewScreen>
   ];
 
   final List<Widget> _views = [
-    FinishingScreen(input: 'inputSearch'),
+    NewFinishingScreen(input: 'inputSearch'),
     const Poleshing1Screen(),
     const Stell1Screen(),
     const Center(child: Text('Content of Tab Two')),
@@ -101,143 +102,8 @@ class _ProduksiNewScreenState extends State<ProduksiNewScreen>
                 automaticallyImplyLeading: false,
                 backgroundColor: Colors.white,
                 leadingWidth: 320,
-                leading: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        "Bulan Saat Ini : $nowSiklus",
-                        style:
-                            const TextStyle(fontSize: 20, color: Colors.black),
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        final dropdownFormKey = GlobalKey<FormState>();
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8)),
-                                // title: const Text('Pilih Siklus'),
-                                content: SizedBox(
-                                  height: 150,
-                                  child: Column(
-                                    children: [
-                                      Form(
-                                          key: dropdownFormKey,
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              DropdownSearch<String>(
-                                                items: const [
-                                                  "JANUARI",
-                                                  "FEBRUARI",
-                                                  "MARET",
-                                                  "APRIL",
-                                                  "MEI",
-                                                  "JUNI",
-                                                  "JULI",
-                                                  "AGUSTUS",
-                                                  "SEPTEMBER",
-                                                  "OKTOBER",
-                                                  "NOVEMBER",
-                                                  "DESEMBER"
-                                                ],
-                                                dropdownDecoratorProps:
-                                                    DropDownDecoratorProps(
-                                                  dropdownSearchDecoration:
-                                                      InputDecoration(
-                                                    hintText: 'Pilih Bulan',
-                                                    filled: true,
-                                                    fillColor: Colors.black,
-                                                    enabledBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide:
-                                                          const BorderSide(
-                                                              color:
-                                                                  Colors.black,
-                                                              width: 2),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              20),
-                                                    ),
-                                                  ),
-                                                ),
-                                                validator: (value) => value ==
-                                                        null
-                                                    ? "Bulan tidak boleh kosong"
-                                                    : null,
-                                                onChanged: (String? newValue) {
-                                                  addSiklus.text = newValue!;
-                                                },
-                                              ),
-                                              Container(
-                                                padding: const EdgeInsets.only(
-                                                    top: 20),
-                                                child: ElevatedButton(
-                                                    onPressed: () async {
-                                                      if (dropdownFormKey
-                                                          .currentState!
-                                                          .validate()) {
-                                                        //? method untuk mengganti siklus
-                                                        // await postSiklus();
-                                                        Navigator.pop(context);
-                                                        // Navigator.push(
-                                                        //     context,
-                                                        //     MaterialPageRoute(
-                                                        //         builder:
-                                                        //             (c) =>
-                                                        //                 const MainView()));
-
-                                                        showDialog<String>(
-                                                            context: context,
-                                                            builder: (BuildContext
-                                                                    context) =>
-                                                                const AlertDialog(
-                                                                  title: Text(
-                                                                    'Siklus Berhasil Diterapkan',
-                                                                  ),
-                                                                ));
-                                                        setState(() {
-                                                          nowSiklus =
-                                                              addSiklus.text;
-                                                          sharedPreferences!
-                                                              .setString(
-                                                                  'siklusProduksi',
-                                                                  addSiklus
-                                                                      .text);
-                                                        });
-                                                      }
-                                                    },
-                                                    child: const Text(
-                                                      "Submit",
-                                                      style: TextStyle(
-                                                        fontSize: 24,
-                                                      ),
-                                                    )),
-                                              )
-                                            ],
-                                          ))
-                                    ],
-                                  ),
-                                ),
-                              );
-                            });
-                      },
-                      child: SizedBox(
-                        width: 40,
-                        height: 40,
-                        child: Lottie.asset("loadingJSON/icon_edit_black.json",
-                            fit: BoxFit.cover),
-                      ),
-                    )
-                  ],
-                ),
                 elevation: 0,
-                bottom: TabBar(
+                title: TabBar(
                   labelColor: Colors.white,
                   unselectedLabelColor: Colors.black,
                   labelStyle: const TextStyle(fontWeight: FontWeight.bold),

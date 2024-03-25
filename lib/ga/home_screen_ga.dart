@@ -53,7 +53,7 @@ class _HomeScreenGaState extends State<HomeScreenGa> {
   @override
   initState() {
     super.initState();
-    _getData();
+    refresh();
   }
 
   changeWithData() async {
@@ -80,10 +80,14 @@ class _HomeScreenGaState extends State<HomeScreenGa> {
     });
   }
 
+  refreshDataWithoutLoad() async {
+    print('refresh state');
+
+    await _getData();
+    setState(() {});
+  }
+
   _getData() async {
-    setState(() {
-      isLoading = true;
-    });
     final response = await http
         .get(Uri.parse('${ApiConstants.baseUrl}${ApiConstants.getFormPR}'));
 
@@ -92,6 +96,9 @@ class _HomeScreenGaState extends State<HomeScreenGa> {
 
       var data =
           jsonResponse.map((data) => FormPrModel.fromJson(data)).toList();
+      var filterByTanggalKirim =
+          data.where((element) => element.tanggalKirim != '').toList();
+      data = filterByTanggalKirim;
       data.sort((a, b) => b.created_at!.compareTo(a.created_at!));
 
       setState(() {
@@ -115,7 +122,6 @@ class _HomeScreenGaState extends State<HomeScreenGa> {
 
       setState(() {
         _listItemPR = dataList;
-        isLoading = false;
       });
     } else {
       print(response.body);
@@ -418,7 +424,7 @@ class _HomeScreenGaState extends State<HomeScreenGa> {
                                             // UserDataTableSource(userData: filterCrm!)),
                                             RowSource(
                                                 onRowPressed: () {
-                                                  refresh();
+                                                  refreshDataWithoutLoad();
                                                 }, //! mengirim data untuk me refresh state
                                                 onRowChange:
                                                     (int i, String dumNomorPr) {
@@ -816,7 +822,7 @@ class RowSource extends DataTableSource {
                                           fontSize: 12),
                                     ),
                                     SizedBox(height: 40),
-                                    Text('....')
+                                    Text('Procurement')
                                   ],
                                 ),
                               ]),

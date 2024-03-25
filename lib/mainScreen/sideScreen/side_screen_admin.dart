@@ -16,6 +16,7 @@ import 'package:form_designer/mainScreen/list_designer_screen.dart';
 import 'package:form_designer/mainScreen/list_mps.dart';
 import 'package:form_designer/mainScreen/list_status_approval.dart';
 import 'package:form_designer/mainScreen/login.dart';
+import 'package:form_designer/pembelian/home_pembelian.dart';
 import 'package:form_designer/pembelian/list_form_pr.dart';
 import 'package:form_designer/produksi/mainScreen/dashboard_control.dart';
 import 'package:form_designer/produksi/mainScreen/monthly_meeting_scm.dart';
@@ -49,6 +50,7 @@ class _MainViewAdminState extends State<MainViewAdmin> {
     const ListKebutuhanBatuScreen(),
     const ListStatusApprovalScreen(),
     const ListMpsScreen(),
+    const HomeScreenPembelian(),
     const ListFormPr(),
     const ListFormPrQc(),
     const MonthlyMeetingScm(),
@@ -180,6 +182,10 @@ class _MainViewAdminState extends State<MainViewAdmin> {
             SideNavigationBarItem(
               icon: Icons.developer_mode,
               label: 'MPS',
+            ),
+            SideNavigationBarItem(
+              icon: Icons.developer_mode,
+              label: 'Home PR Pembelian',
             ),
             SideNavigationBarItem(
               icon: Icons.developer_mode,

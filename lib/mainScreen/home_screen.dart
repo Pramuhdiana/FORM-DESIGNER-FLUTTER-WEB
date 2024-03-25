@@ -807,20 +807,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       MainAxisAlignment.center,
                                                   children: [
                                                     DropdownSearch<String>(
-                                                      items: const [
-                                                        "JANUARI",
-                                                        "FEBRUARI",
-                                                        "MARET",
-                                                        "APRIL",
-                                                        "MEI",
-                                                        "JUNI",
-                                                        "JULI",
-                                                        "AGUSTUS",
-                                                        "SEPTEMBER",
-                                                        "OKTOBER",
-                                                        "NOVEMBER",
-                                                        "DESEMBER"
-                                                      ],
+                                                      items: namaBulan,
                                                       dropdownDecoratorProps:
                                                           DropDownDecoratorProps(
                                                         dropdownSearchDecoration:
@@ -1311,20 +1298,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         padding: const EdgeInsets.only(),
                         width: 350,
                         child: DropdownSearch<String>(
-                          items: const [
-                            "JANUARI",
-                            "FEBRUARI",
-                            "MARET",
-                            "APRIL",
-                            "MEI",
-                            "JUNI",
-                            "JULI",
-                            "AGUSTUS",
-                            "SEPTEMBER",
-                            "OKTOBER",
-                            "NOVEMBER",
-                            "DESEMBER"
-                          ],
+                          items: namaBulan,
                           onChanged: (item) {
                             setState(() {
                               listKelasHarga.clear();
@@ -1417,20 +1391,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         padding: const EdgeInsets.only(),
                         width: 350,
                         child: DropdownSearch<String>(
-                          items: const [
-                            "JANUARI",
-                            "FEBRUARI",
-                            "MARET",
-                            "APRIL",
-                            "MEI",
-                            "JUNI",
-                            "JULI",
-                            "AGUSTUS",
-                            "SEPTEMBER",
-                            "OKTOBER",
-                            "NOVEMBER",
-                            "DESEMBER"
-                          ],
+                          items: namaBulan,
                           onChanged: (item) {
                             setState(() {
                               listKelasHarga.clear();
@@ -4728,20 +4689,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: const EdgeInsets.only(),
                   width: 350,
                   child: DropdownSearch<String>(
-                    items: const [
-                      "JANUARI",
-                      "FEBRUARI",
-                      "MARET",
-                      "APRIL",
-                      "MEI",
-                      "JUNI",
-                      "JULI",
-                      "AGUSTUS",
-                      "SEPTEMBER",
-                      "OKTOBER",
-                      "NOVEMBER",
-                      "DESEMBER"
-                    ],
+                    items: namaBulan,
                     onChanged: (item) {
                       setState(() {
                         listKelasHarga.clear();
@@ -5662,20 +5610,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: const EdgeInsets.only(),
                   width: 350,
                   child: DropdownSearch<String>(
-                    items: const [
-                      "JANUARI",
-                      "FEBRUARI",
-                      "MARET",
-                      "APRIL",
-                      "MEI",
-                      "JUNI",
-                      "JULI",
-                      "AGUSTUS",
-                      "SEPTEMBER",
-                      "OKTOBER",
-                      "NOVEMBER",
-                      "DESEMBER"
-                    ],
+                    items: namaBulan,
                     onChanged: (item) {
                       setState(() {
                         listKelasHarga.clear();
@@ -6765,20 +6700,7 @@ class RowSource extends DataTableSource {
                                               MainAxisAlignment.center,
                                           children: [
                                             DropdownSearch<String>(
-                                              items: const [
-                                                "JANUARI",
-                                                "FEBRUARI",
-                                                "MARET",
-                                                "APRIL",
-                                                "MEI",
-                                                "JUNI",
-                                                "JULI",
-                                                "AGUSTUS",
-                                                "SEPTEMBER",
-                                                "OKTOBER",
-                                                "NOVEMBER",
-                                                "DESEMBER"
-                                              ],
+                                              items: namaBulan,
                                               dropdownDecoratorProps:
                                                   DropDownDecoratorProps(
                                                 dropdownSearchDecoration:

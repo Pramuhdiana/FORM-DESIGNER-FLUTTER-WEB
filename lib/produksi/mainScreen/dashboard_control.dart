@@ -1132,20 +1132,7 @@ class _DashboardControlState extends State<DashboardControl> {
                               child: SizedBox(
                                 width: 350,
                                 child: DropdownSearch<String>(
-                                  items: const [
-                                    "JANUARI",
-                                    "FEBRUARI",
-                                    "MARET",
-                                    "APRIL",
-                                    "MEI",
-                                    "JUNI",
-                                    "JULI",
-                                    "AGUSTUS",
-                                    "SEPTEMBER",
-                                    "OKTOBER",
-                                    "NOVEMBER",
-                                    "DESEMBER"
-                                  ],
+                                  items: namaBulan,
                                   onChanged: (item) async {
                                     chooseBulan = item!;
                                     await _getAllData(chooseBulan);

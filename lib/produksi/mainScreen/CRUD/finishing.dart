@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:form_designer/api/api_constant.dart';
 import 'package:form_designer/produksi/modelProduksi/artist_produksi_model.dart';
+import 'package:form_designer/produksi/modelProduksi/produksi2024_model.dart';
 import 'package:form_designer/produksi/modelProduksi/produksi_model.dart';
 import 'package:form_designer/widgets/custom_loading.dart';
 import 'package:http/http.dart' as http;
@@ -25,8 +26,8 @@ class FinishingScreen extends StatefulWidget {
 }
 
 class _FinishingScreenState extends State<FinishingScreen> {
-  List<ProduksiModel>? _listFinishing;
-  List<ProduksiModel>? _filterListFinishing;
+  List<ProduksiModel2024>? _listFinishing;
+  List<ProduksiModel2024>? _filterListFinishing;
   TextEditingController controller = TextEditingController();
   bool isLoading = false;
   String divisi = 'finishing';
@@ -57,6 +58,237 @@ class _FinishingScreenState extends State<FinishingScreen> {
         }
       }
     });
+  }
+
+  formSimpanBahan() {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          final _formKey = GlobalKey<FormState>();
+          TextEditingController nama = TextEditingController();
+          TextEditingController kodeProduksi = TextEditingController();
+          TextEditingController debet = TextEditingController();
+          TextEditingController kredit = TextEditingController();
+          TextEditingController point = TextEditingController();
+          TextEditingController keterangan = TextEditingController();
+          RoundedLoadingButtonController btnController =
+              RoundedLoadingButtonController();
+          return AlertDialog(
+            content: Stack(
+              clipBehavior: Clip.none,
+              children: <Widget>[
+                Positioned(
+                  right: -47.0,
+                  top: -47.0,
+                  child: InkResponse(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const CircleAvatar(
+                      backgroundColor: Colors.red,
+                      child: Icon(Icons.close),
+                    ),
+                  ),
+                ),
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      //NAMA
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: DropdownSearch<ArtistProduksiModel>(
+                          asyncItems: (String? filter) => getListArtist(filter),
+                          popupProps: PopupPropsMultiSelection.modalBottomSheet(
+                            showSelectedItems: true,
+                            itemBuilder: _listArtist,
+                            showSearchBox: true,
+                          ),
+                          compareFn: (item, sItem) => item.id == sItem.id,
+                          onChanged: (item) {
+                            setState(() {
+                              nama.text = item!.nama;
+                            });
+                          },
+                          dropdownDecoratorProps: const DropDownDecoratorProps(
+                            dropdownSearchDecoration: InputDecoration(
+                              labelText: "NAMA",
+                              filled: true,
+                              fillColor: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                      //kode produksi
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          style: const TextStyle(
+                              fontSize: 14,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold),
+                          textInputAction: TextInputAction.next,
+                          controller: kodeProduksi,
+                          decoration: InputDecoration(
+                            // hintText: "example: Cahaya Sanivokasi",
+                            labelText: "KODE PRODUKSI",
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0)),
+                          ),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Wajib diisi *';
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          style: const TextStyle(
+                              fontSize: 14,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold),
+                          textInputAction: TextInputAction.next,
+                          controller: debet,
+                          decoration: InputDecoration(
+                            // hintText: "example: Cahaya Sanivokasi",
+                            labelText: "PRODUCT DEBET",
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0)),
+                          ),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Wajib diisi *';
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+
+                      //? KREDIT
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          style: const TextStyle(
+                              fontSize: 14,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold),
+                          textInputAction: TextInputAction.next,
+                          controller: kredit,
+                          decoration: InputDecoration(
+                            // hintText: "example: Cahaya Sanivokasi",
+                            labelText: "PRODUCT KREDIT",
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0)),
+                          ),
+                        ),
+                      ),
+                      //? point
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          style: const TextStyle(
+                              fontSize: 14,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold),
+                          textInputAction: TextInputAction.next,
+                          controller: point,
+                          decoration: InputDecoration(
+                            // hintText: "example: Cahaya Sanivokasi",
+                            labelText: "POINT",
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0)),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          style: const TextStyle(
+                              fontSize: 14,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold),
+                          textInputAction: TextInputAction.next,
+                          controller: keterangan,
+                          decoration: InputDecoration(
+                            // hintText: "example: Cahaya Sanivokasi",
+                            labelText: "KETERANGAN",
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0)),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SizedBox(
+                          width: 250,
+                          child: CustomLoadingButton(
+                              controller: btnController,
+                              child: const Text("Simpan Data SB"),
+                              onPressed: () async {
+                                if (_formKey.currentState!.validate()) {
+                                  _formKey.currentState!.save();
+                                  Future.delayed(const Duration(seconds: 2))
+                                      .then((value) async {
+                                    btnController.success();
+                                    // Map<String, dynamic>
+                                    //     body = {
+                                    //   'lot': lot.text,
+                                    //   'size': size.text,
+                                    //   'parcel': parcel.text,
+                                    //   'qty': qty.text,
+                                    //   'caratPcs':
+                                    //       caratPcs.text,
+                                    //   'keterangan':
+                                    //       keterangan.text,
+                                    // };
+                                    // final response = await http.post(
+                                    //     Uri.parse(ApiConstants
+                                    //             .baseUrl +
+                                    //         ApiConstants
+                                    //             .postDataBatu),
+                                    //     body: body);
+                                    // print(response.body);
+                                    Future.delayed(const Duration(seconds: 1))
+                                        .then((value) {
+                                      btnController.reset(); //reset
+                                      setState(() {
+                                        _getData();
+                                      });
+                                    });
+                                    Navigator.pop(context);
+                                    showSimpleNotification(
+                                      const Text('Tambah Data Berhasil'),
+                                      background: Colors.green,
+                                      duration: const Duration(seconds: 2),
+                                    );
+
+                                    // Navigator.push(
+                                    //     context,
+                                    //     MaterialPageRoute(
+                                    //         builder: (c) =>
+                                    //             const MainViewBatu()));
+                                  });
+                                } else {
+                                  btnController.error();
+                                  Future.delayed(const Duration(seconds: 1))
+                                      .then((value) {
+                                    btnController.reset(); //reset
+                                  });
+                                }
+                              }),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        });
   }
 
   // scrollHide() {
@@ -116,295 +348,7 @@ class _FinishingScreenState extends State<FinishingScreen> {
                       //! simpan sisa bahan
                       FloatingActionButton.extended(
                         backgroundColor: Colors.black,
-                        onPressed: () {
-                          showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                final _formKey = GlobalKey<FormState>();
-                                TextEditingController nama =
-                                    TextEditingController();
-                                TextEditingController kodeProduksi =
-                                    TextEditingController();
-                                TextEditingController debet =
-                                    TextEditingController();
-                                TextEditingController kredit =
-                                    TextEditingController();
-                                TextEditingController point =
-                                    TextEditingController();
-                                TextEditingController keterangan =
-                                    TextEditingController();
-                                RoundedLoadingButtonController btnController =
-                                    RoundedLoadingButtonController();
-                                return AlertDialog(
-                                  content: Stack(
-                                    clipBehavior: Clip.none,
-                                    children: <Widget>[
-                                      Positioned(
-                                        right: -47.0,
-                                        top: -47.0,
-                                        child: InkResponse(
-                                          onTap: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                          child: const CircleAvatar(
-                                            backgroundColor: Colors.red,
-                                            child: Icon(Icons.close),
-                                          ),
-                                        ),
-                                      ),
-                                      Form(
-                                        key: _formKey,
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: <Widget>[
-                                            //NAMA
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: DropdownSearch<
-                                                  ArtistProduksiModel>(
-                                                asyncItems: (String? filter) =>
-                                                    getListArtist(filter),
-                                                popupProps:
-                                                    PopupPropsMultiSelection
-                                                        .modalBottomSheet(
-                                                  showSelectedItems: true,
-                                                  itemBuilder: _listArtist,
-                                                  showSearchBox: true,
-                                                ),
-                                                compareFn: (item, sItem) =>
-                                                    item.id == sItem.id,
-                                                onChanged: (item) {
-                                                  setState(() {
-                                                    nama.text = item!.nama;
-                                                  });
-                                                },
-                                                dropdownDecoratorProps:
-                                                    const DropDownDecoratorProps(
-                                                  dropdownSearchDecoration:
-                                                      InputDecoration(
-                                                    labelText: "NAMA",
-                                                    filled: true,
-                                                    fillColor: Colors.white,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            //kode produksi
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: TextFormField(
-                                                style: const TextStyle(
-                                                    fontSize: 14,
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                                textInputAction:
-                                                    TextInputAction.next,
-                                                controller: kodeProduksi,
-                                                decoration: InputDecoration(
-                                                  // hintText: "example: Cahaya Sanivokasi",
-                                                  labelText: "KODE PRODUKSI",
-                                                  border: OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5.0)),
-                                                ),
-                                                validator: (value) {
-                                                  if (value!.isEmpty) {
-                                                    return 'Wajib diisi *';
-                                                  }
-                                                  return null;
-                                                },
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: TextFormField(
-                                                style: const TextStyle(
-                                                    fontSize: 14,
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                                textInputAction:
-                                                    TextInputAction.next,
-                                                controller: debet,
-                                                decoration: InputDecoration(
-                                                  // hintText: "example: Cahaya Sanivokasi",
-                                                  labelText: "PRODUCT DEBET",
-                                                  border: OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5.0)),
-                                                ),
-                                                validator: (value) {
-                                                  if (value!.isEmpty) {
-                                                    return 'Wajib diisi *';
-                                                  }
-                                                  return null;
-                                                },
-                                              ),
-                                            ),
-
-                                            //? KREDIT
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: TextFormField(
-                                                style: const TextStyle(
-                                                    fontSize: 14,
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                                textInputAction:
-                                                    TextInputAction.next,
-                                                controller: kredit,
-                                                decoration: InputDecoration(
-                                                  // hintText: "example: Cahaya Sanivokasi",
-                                                  labelText: "PRODUCT KREDIT",
-                                                  border: OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5.0)),
-                                                ),
-                                              ),
-                                            ),
-                                            //? point
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: TextFormField(
-                                                style: const TextStyle(
-                                                    fontSize: 14,
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                                textInputAction:
-                                                    TextInputAction.next,
-                                                controller: point,
-                                                decoration: InputDecoration(
-                                                  // hintText: "example: Cahaya Sanivokasi",
-                                                  labelText: "POINT",
-                                                  border: OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5.0)),
-                                                ),
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: TextFormField(
-                                                style: const TextStyle(
-                                                    fontSize: 14,
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                                textInputAction:
-                                                    TextInputAction.next,
-                                                controller: keterangan,
-                                                decoration: InputDecoration(
-                                                  // hintText: "example: Cahaya Sanivokasi",
-                                                  labelText: "KETERANGAN",
-                                                  border: OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5.0)),
-                                                ),
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: SizedBox(
-                                                width: 250,
-                                                child: CustomLoadingButton(
-                                                    controller: btnController,
-                                                    child: const Text(
-                                                        "Simpan Data SB"),
-                                                    onPressed: () async {
-                                                      if (_formKey.currentState!
-                                                          .validate()) {
-                                                        _formKey.currentState!
-                                                            .save();
-                                                        Future.delayed(
-                                                                const Duration(
-                                                                    seconds: 2))
-                                                            .then(
-                                                                (value) async {
-                                                          btnController
-                                                              .success();
-                                                          // Map<String, dynamic>
-                                                          //     body = {
-                                                          //   'lot': lot.text,
-                                                          //   'size': size.text,
-                                                          //   'parcel': parcel.text,
-                                                          //   'qty': qty.text,
-                                                          //   'caratPcs':
-                                                          //       caratPcs.text,
-                                                          //   'keterangan':
-                                                          //       keterangan.text,
-                                                          // };
-                                                          // final response = await http.post(
-                                                          //     Uri.parse(ApiConstants
-                                                          //             .baseUrl +
-                                                          //         ApiConstants
-                                                          //             .postDataBatu),
-                                                          //     body: body);
-                                                          // print(response.body);
-                                                          Future.delayed(
-                                                                  const Duration(
-                                                                      seconds:
-                                                                          1))
-                                                              .then((value) {
-                                                            btnController
-                                                                .reset(); //reset
-                                                            setState(() {
-                                                              _getData();
-                                                            });
-                                                          });
-                                                          Navigator.pop(
-                                                              context);
-                                                          showSimpleNotification(
-                                                            const Text(
-                                                                'Tambah Data Berhasil'),
-                                                            background:
-                                                                Colors.green,
-                                                            duration:
-                                                                const Duration(
-                                                                    seconds: 2),
-                                                          );
-
-                                                          // Navigator.push(
-                                                          //     context,
-                                                          //     MaterialPageRoute(
-                                                          //         builder: (c) =>
-                                                          //             const MainViewBatu()));
-                                                        });
-                                                      } else {
-                                                        btnController.error();
-                                                        Future.delayed(
-                                                                const Duration(
-                                                                    seconds: 1))
-                                                            .then((value) {
-                                                          btnController
-                                                              .reset(); //reset
-                                                        });
-                                                      }
-                                                    }),
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              });
-                        },
+                        onPressed: () {},
                         label: const Text(
                           "Tambah Sisa Bahan Finishing",
                           style: TextStyle(color: Colors.white),
@@ -455,303 +399,6 @@ class _FinishingScreenState extends State<FinishingScreen> {
                       const SizedBox(
                         width: 20,
                       ),
-                      FloatingActionButton.extended(
-                        onPressed: () {
-                          showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                final _formKey = GlobalKey<FormState>();
-                                TextEditingController nama =
-                                    TextEditingController();
-                                TextEditingController kodeProduksi =
-                                    TextEditingController();
-                                TextEditingController debet =
-                                    TextEditingController();
-                                TextEditingController kredit =
-                                    TextEditingController();
-                                TextEditingController point =
-                                    TextEditingController();
-                                TextEditingController keterangan =
-                                    TextEditingController();
-                                RoundedLoadingButtonController btnController =
-                                    RoundedLoadingButtonController();
-                                return AlertDialog(
-                                  content: Stack(
-                                    clipBehavior: Clip.none,
-                                    children: <Widget>[
-                                      Positioned(
-                                        right: -47.0,
-                                        top: -47.0,
-                                        child: InkResponse(
-                                          onTap: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                          child: const CircleAvatar(
-                                            backgroundColor: Colors.red,
-                                            child: Icon(Icons.close),
-                                          ),
-                                        ),
-                                      ),
-                                      Form(
-                                        key: _formKey,
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: <Widget>[
-                                            //NAMA
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: DropdownSearch<
-                                                  ArtistProduksiModel>(
-                                                asyncItems: (String? filter) =>
-                                                    getListArtist(filter),
-                                                popupProps:
-                                                    PopupPropsMultiSelection
-                                                        .modalBottomSheet(
-                                                  showSelectedItems: true,
-                                                  itemBuilder: _listArtist,
-                                                  showSearchBox: true,
-                                                ),
-                                                compareFn: (item, sItem) =>
-                                                    item.id == sItem.id,
-                                                onChanged: (item) {
-                                                  setState(() {
-                                                    nama.text = item!.nama;
-                                                  });
-                                                },
-                                                dropdownDecoratorProps:
-                                                    const DropDownDecoratorProps(
-                                                  dropdownSearchDecoration:
-                                                      InputDecoration(
-                                                    labelText: "NAMA",
-                                                    filled: true,
-                                                    fillColor: Colors.white,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            //kode produksi
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: TextFormField(
-                                                style: const TextStyle(
-                                                    fontSize: 14,
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                                textInputAction:
-                                                    TextInputAction.next,
-                                                controller: kodeProduksi,
-                                                decoration: InputDecoration(
-                                                  // hintText: "example: Cahaya Sanivokasi",
-                                                  labelText: "KODE PRODUKSI",
-                                                  border: OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5.0)),
-                                                ),
-                                                validator: (value) {
-                                                  if (value!.isEmpty) {
-                                                    return 'Wajib diisi *';
-                                                  }
-                                                  return null;
-                                                },
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: TextFormField(
-                                                style: const TextStyle(
-                                                    fontSize: 14,
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                                textInputAction:
-                                                    TextInputAction.next,
-                                                controller: debet,
-                                                decoration: InputDecoration(
-                                                  // hintText: "example: Cahaya Sanivokasi",
-                                                  labelText: "PRODUCT DEBET",
-                                                  border: OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5.0)),
-                                                ),
-                                                validator: (value) {
-                                                  if (value!.isEmpty) {
-                                                    return 'Wajib diisi *';
-                                                  }
-                                                  return null;
-                                                },
-                                              ),
-                                            ),
-
-                                            //? KREDIT
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: TextFormField(
-                                                style: const TextStyle(
-                                                    fontSize: 14,
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                                textInputAction:
-                                                    TextInputAction.next,
-                                                controller: kredit,
-                                                decoration: InputDecoration(
-                                                  // hintText: "example: Cahaya Sanivokasi",
-                                                  labelText: "PRODUCT KREDIT",
-                                                  border: OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5.0)),
-                                                ),
-                                              ),
-                                            ),
-                                            //? point
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: TextFormField(
-                                                style: const TextStyle(
-                                                    fontSize: 14,
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                                textInputAction:
-                                                    TextInputAction.next,
-                                                controller: point,
-                                                decoration: InputDecoration(
-                                                  // hintText: "example: Cahaya Sanivokasi",
-                                                  labelText: "POINT",
-                                                  border: OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5.0)),
-                                                ),
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: TextFormField(
-                                                style: const TextStyle(
-                                                    fontSize: 14,
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                                textInputAction:
-                                                    TextInputAction.next,
-                                                controller: keterangan,
-                                                decoration: InputDecoration(
-                                                  // hintText: "example: Cahaya Sanivokasi",
-                                                  labelText: "KETERANGAN",
-                                                  border: OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5.0)),
-                                                ),
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: SizedBox(
-                                                width: 250,
-                                                child: CustomLoadingButton(
-                                                    controller: btnController,
-                                                    child: const Text(
-                                                        "Simpan Data"),
-                                                    onPressed: () async {
-                                                      if (_formKey.currentState!
-                                                          .validate()) {
-                                                        _formKey.currentState!
-                                                            .save();
-                                                        Future.delayed(
-                                                                const Duration(
-                                                                    seconds: 2))
-                                                            .then(
-                                                                (value) async {
-                                                          btnController
-                                                              .success();
-                                                          // Map<String, dynamic>
-                                                          //     body = {
-                                                          //   'lot': lot.text,
-                                                          //   'size': size.text,
-                                                          //   'parcel': parcel.text,
-                                                          //   'qty': qty.text,
-                                                          //   'caratPcs':
-                                                          //       caratPcs.text,
-                                                          //   'keterangan':
-                                                          //       keterangan.text,
-                                                          // };
-                                                          // final response = await http.post(
-                                                          //     Uri.parse(ApiConstants
-                                                          //             .baseUrl +
-                                                          //         ApiConstants
-                                                          //             .postDataBatu),
-                                                          //     body: body);
-                                                          // print(response.body);
-                                                          Future.delayed(
-                                                                  const Duration(
-                                                                      seconds:
-                                                                          1))
-                                                              .then((value) {
-                                                            btnController
-                                                                .reset(); //reset
-                                                            setState(() {
-                                                              _getData();
-                                                            });
-                                                          });
-                                                          Navigator.pop(
-                                                              context);
-                                                          showSimpleNotification(
-                                                            const Text(
-                                                                'Tambah Data Berhasil'),
-                                                            background:
-                                                                Colors.green,
-                                                            duration:
-                                                                const Duration(
-                                                                    seconds: 2),
-                                                          );
-
-                                                          // Navigator.push(
-                                                          //     context,
-                                                          //     MaterialPageRoute(
-                                                          //         builder: (c) =>
-                                                          //             const MainViewBatu()));
-                                                        });
-                                                      } else {
-                                                        btnController.error();
-                                                        Future.delayed(
-                                                                const Duration(
-                                                                    seconds: 1))
-                                                            .then((value) {
-                                                          btnController
-                                                              .reset(); //reset
-                                                        });
-                                                      }
-                                                    }),
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              });
-                        },
-                        label: const Text(
-                          "Tambah Data Finishing",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        hoverElevation: 50,
-                        hoverColor: Colors.black,
-                      )
                     ],
                   ),
                   const SizedBox(
@@ -783,33 +430,37 @@ class _FinishingScreenState extends State<FinishingScreen> {
         ));
   }
 
-  Future<List<ProduksiModel>> _getData() async {
+  Future<List<ProduksiModel2024>> _getData() async {
     setState(() {
       isLoading = true;
     });
-    print('get data finishing');
-    final response = await http.get(Uri.parse(
-        '${ApiConstants.baseUrl}${ApiConstants.getProduksiByDivisi}?divisi=$divisi'));
-    print(response.statusCode);
+    Map<String, String> body = {
+      'Location': divisi,
+      'strindate': '2024-01-01',
+      'stroutdate': '2024-01-30',
+    };
+    final response =
+        await http.post(Uri.parse(ApiConstants.baseUrlDummySusut), body: body);
+    print(response.body);
     // if response successful
     if (response.statusCode == 200) {
       print('berhasil');
       List jsonResponse = json.decode(response.body);
       var g;
       try {
-        g = jsonResponse.map((data) => ProduksiModel.fromJson(data)).toList();
+        g = jsonResponse
+            .map((data) => ProduksiModel2024.fromJson(data))
+            .toList();
       } catch (c) {
         print('error $c');
       }
       // var filterByDivisiBulan = g.where((element) =>
-      //     element.divisi.toString().toLowerCase() == 'finishing' &&
+      //     element.divisi.toString().toLowerCase() == 'poleshing 1' &&
       //     element.bulan.toString().toLowerCase() == 'oktober');
       _filterListFinishing = g;
       _listFinishing = g;
 
       setState(() {
-        _filterListFinishing = g;
-        _listFinishing!.sort((a, b) => b.id!.compareTo(a.id!));
         isLoading = false;
       });
       return g;
@@ -1249,3 +900,302 @@ class _FinishingScreenState extends State<FinishingScreen> {
     );
   }
 }
+
+//? button tambah data
+   // FloatingActionButton.extended(
+                      //   onPressed: () {
+                      //     showDialog(
+                      //         context: context,
+                      //         builder: (BuildContext context) {
+                      //           final _formKey = GlobalKey<FormState>();
+                      //           TextEditingController nama =
+                      //               TextEditingController();
+                      //           TextEditingController kodeProduksi =
+                      //               TextEditingController();
+                      //           TextEditingController debet =
+                      //               TextEditingController();
+                      //           TextEditingController kredit =
+                      //               TextEditingController();
+                      //           TextEditingController point =
+                      //               TextEditingController();
+                      //           TextEditingController keterangan =
+                      //               TextEditingController();
+                      //           RoundedLoadingButtonController btnController =
+                      //               RoundedLoadingButtonController();
+                      //           return AlertDialog(
+                      //             content: Stack(
+                      //               clipBehavior: Clip.none,
+                      //               children: <Widget>[
+                      //                 Positioned(
+                      //                   right: -47.0,
+                      //                   top: -47.0,
+                      //                   child: InkResponse(
+                      //                     onTap: () {
+                      //                       Navigator.of(context).pop();
+                      //                     },
+                      //                     child: const CircleAvatar(
+                      //                       backgroundColor: Colors.red,
+                      //                       child: Icon(Icons.close),
+                      //                     ),
+                      //                   ),
+                      //                 ),
+                      //                 Form(
+                      //                   key: _formKey,
+                      //                   child: Column(
+                      //                     mainAxisSize: MainAxisSize.min,
+                      //                     children: <Widget>[
+                      //                       //NAMA
+                      //                       Padding(
+                      //                         padding:
+                      //                             const EdgeInsets.all(8.0),
+                      //                         child: DropdownSearch<
+                      //                             ArtistProduksiModel>(
+                      //                           asyncItems: (String? filter) =>
+                      //                               getListArtist(filter),
+                      //                           popupProps:
+                      //                               PopupPropsMultiSelection
+                      //                                   .modalBottomSheet(
+                      //                             showSelectedItems: true,
+                      //                             itemBuilder: _listArtist,
+                      //                             showSearchBox: true,
+                      //                           ),
+                      //                           compareFn: (item, sItem) =>
+                      //                               item.id == sItem.id,
+                      //                           onChanged: (item) {
+                      //                             setState(() {
+                      //                               nama.text = item!.nama;
+                      //                             });
+                      //                           },
+                      //                           dropdownDecoratorProps:
+                      //                               const DropDownDecoratorProps(
+                      //                             dropdownSearchDecoration:
+                      //                                 InputDecoration(
+                      //                               labelText: "NAMA",
+                      //                               filled: true,
+                      //                               fillColor: Colors.white,
+                      //                             ),
+                      //                           ),
+                      //                         ),
+                      //                       ),
+                      //                       //kode produksi
+                      //                       Padding(
+                      //                         padding:
+                      //                             const EdgeInsets.all(8.0),
+                      //                         child: TextFormField(
+                      //                           style: const TextStyle(
+                      //                               fontSize: 14,
+                      //                               color: Colors.black,
+                      //                               fontWeight:
+                      //                                   FontWeight.bold),
+                      //                           textInputAction:
+                      //                               TextInputAction.next,
+                      //                           controller: kodeProduksi,
+                      //                           decoration: InputDecoration(
+                      //                             // hintText: "example: Cahaya Sanivokasi",
+                      //                             labelText: "KODE PRODUKSI",
+                      //                             border: OutlineInputBorder(
+                      //                                 borderRadius:
+                      //                                     BorderRadius.circular(
+                      //                                         5.0)),
+                      //                           ),
+                      //                           validator: (value) {
+                      //                             if (value!.isEmpty) {
+                      //                               return 'Wajib diisi *';
+                      //                             }
+                      //                             return null;
+                      //                           },
+                      //                         ),
+                      //                       ),
+                      //                       Padding(
+                      //                         padding:
+                      //                             const EdgeInsets.all(8.0),
+                      //                         child: TextFormField(
+                      //                           style: const TextStyle(
+                      //                               fontSize: 14,
+                      //                               color: Colors.black,
+                      //                               fontWeight:
+                      //                                   FontWeight.bold),
+                      //                           textInputAction:
+                      //                               TextInputAction.next,
+                      //                           controller: debet,
+                      //                           decoration: InputDecoration(
+                      //                             // hintText: "example: Cahaya Sanivokasi",
+                      //                             labelText: "PRODUCT DEBET",
+                      //                             border: OutlineInputBorder(
+                      //                                 borderRadius:
+                      //                                     BorderRadius.circular(
+                      //                                         5.0)),
+                      //                           ),
+                      //                           validator: (value) {
+                      //                             if (value!.isEmpty) {
+                      //                               return 'Wajib diisi *';
+                      //                             }
+                      //                             return null;
+                      //                           },
+                      //                         ),
+                      //                       ),
+
+                      //                       //? KREDIT
+                      //                       Padding(
+                      //                         padding:
+                      //                             const EdgeInsets.all(8.0),
+                      //                         child: TextFormField(
+                      //                           style: const TextStyle(
+                      //                               fontSize: 14,
+                      //                               color: Colors.black,
+                      //                               fontWeight:
+                      //                                   FontWeight.bold),
+                      //                           textInputAction:
+                      //                               TextInputAction.next,
+                      //                           controller: kredit,
+                      //                           decoration: InputDecoration(
+                      //                             // hintText: "example: Cahaya Sanivokasi",
+                      //                             labelText: "PRODUCT KREDIT",
+                      //                             border: OutlineInputBorder(
+                      //                                 borderRadius:
+                      //                                     BorderRadius.circular(
+                      //                                         5.0)),
+                      //                           ),
+                      //                         ),
+                      //                       ),
+                      //                       //? point
+                      //                       Padding(
+                      //                         padding:
+                      //                             const EdgeInsets.all(8.0),
+                      //                         child: TextFormField(
+                      //                           style: const TextStyle(
+                      //                               fontSize: 14,
+                      //                               color: Colors.black,
+                      //                               fontWeight:
+                      //                                   FontWeight.bold),
+                      //                           textInputAction:
+                      //                               TextInputAction.next,
+                      //                           controller: point,
+                      //                           decoration: InputDecoration(
+                      //                             // hintText: "example: Cahaya Sanivokasi",
+                      //                             labelText: "POINT",
+                      //                             border: OutlineInputBorder(
+                      //                                 borderRadius:
+                      //                                     BorderRadius.circular(
+                      //                                         5.0)),
+                      //                           ),
+                      //                         ),
+                      //                       ),
+                      //                       Padding(
+                      //                         padding:
+                      //                             const EdgeInsets.all(8.0),
+                      //                         child: TextFormField(
+                      //                           style: const TextStyle(
+                      //                               fontSize: 14,
+                      //                               color: Colors.black,
+                      //                               fontWeight:
+                      //                                   FontWeight.bold),
+                      //                           textInputAction:
+                      //                               TextInputAction.next,
+                      //                           controller: keterangan,
+                      //                           decoration: InputDecoration(
+                      //                             // hintText: "example: Cahaya Sanivokasi",
+                      //                             labelText: "KETERANGAN",
+                      //                             border: OutlineInputBorder(
+                      //                                 borderRadius:
+                      //                                     BorderRadius.circular(
+                      //                                         5.0)),
+                      //                           ),
+                      //                         ),
+                      //                       ),
+                      //                       Padding(
+                      //                         padding:
+                      //                             const EdgeInsets.all(8.0),
+                      //                         child: SizedBox(
+                      //                           width: 250,
+                      //                           child: CustomLoadingButton(
+                      //                               controller: btnController,
+                      //                               child: const Text(
+                      //                                   "Simpan Data"),
+                      //                               onPressed: () async {
+                      //                                 if (_formKey.currentState!
+                      //                                     .validate()) {
+                      //                                   _formKey.currentState!
+                      //                                       .save();
+                      //                                   Future.delayed(
+                      //                                           const Duration(
+                      //                                               seconds: 2))
+                      //                                       .then(
+                      //                                           (value) async {
+                      //                                     btnController
+                      //                                         .success();
+                      //                                     // Map<String, dynamic>
+                      //                                     //     body = {
+                      //                                     //   'lot': lot.text,
+                      //                                     //   'size': size.text,
+                      //                                     //   'parcel': parcel.text,
+                      //                                     //   'qty': qty.text,
+                      //                                     //   'caratPcs':
+                      //                                     //       caratPcs.text,
+                      //                                     //   'keterangan':
+                      //                                     //       keterangan.text,
+                      //                                     // };
+                      //                                     // final response = await http.post(
+                      //                                     //     Uri.parse(ApiConstants
+                      //                                     //             .baseUrl +
+                      //                                     //         ApiConstants
+                      //                                     //             .postDataBatu),
+                      //                                     //     body: body);
+                      //                                     // print(response.body);
+                      //                                     Future.delayed(
+                      //                                             const Duration(
+                      //                                                 seconds:
+                      //                                                     1))
+                      //                                         .then((value) {
+                      //                                       btnController
+                      //                                           .reset(); //reset
+                      //                                       setState(() {
+                      //                                         _getData();
+                      //                                       });
+                      //                                     });
+                      //                                     Navigator.pop(
+                      //                                         context);
+                      //                                     showSimpleNotification(
+                      //                                       const Text(
+                      //                                           'Tambah Data Berhasil'),
+                      //                                       background:
+                      //                                           Colors.green,
+                      //                                       duration:
+                      //                                           const Duration(
+                      //                                               seconds: 2),
+                      //                                     );
+
+                      //                                     // Navigator.push(
+                      //                                     //     context,
+                      //                                     //     MaterialPageRoute(
+                      //                                     //         builder: (c) =>
+                      //                                     //             const MainViewBatu()));
+                      //                                   });
+                      //                                 } else {
+                      //                                   btnController.error();
+                      //                                   Future.delayed(
+                      //                                           const Duration(
+                      //                                               seconds: 1))
+                      //                                       .then((value) {
+                      //                                     btnController
+                      //                                         .reset(); //reset
+                      //                                   });
+                      //                                 }
+                      //                               }),
+                      //                         ),
+                      //                       )
+                      //                     ],
+                      //                   ),
+                      //                 ),
+                      //               ],
+                      //             ),
+                      //           );
+                      //         });
+                      //   },
+                      //   label: const Text(
+                      //     "Tambah Data Finishing",
+                      //     style: TextStyle(color: Colors.white),
+                      //   ),
+                      //   hoverElevation: 50,
+                      //   hoverColor: Colors.black,
+                      // )

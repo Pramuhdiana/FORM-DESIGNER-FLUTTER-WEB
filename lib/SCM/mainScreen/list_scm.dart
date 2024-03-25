@@ -282,20 +282,7 @@ class _ListScmState extends State<ListScmScreen> {
                                 padding: const EdgeInsets.only(),
                                 width: 350,
                                 child: DropdownSearch<String>(
-                                  items: const [
-                                    "JANUARI",
-                                    "FEBRUARI",
-                                    "MARET",
-                                    "APRIL",
-                                    "MEI",
-                                    "JUNI",
-                                    "JULI",
-                                    "AGUSTUS",
-                                    "SEPTEMBER",
-                                    "OKTOBER",
-                                    "NOVEMBER",
-                                    "DESEMBER"
-                                  ],
+                                  items: namaBulan,
                                   onChanged: (item) {
                                     setState(() {
                                       siklus.text = item!;
@@ -360,20 +347,7 @@ class _ListScmState extends State<ListScmScreen> {
                                 padding: const EdgeInsets.only(),
                                 width: 350,
                                 child: DropdownSearch<String>(
-                                  items: const [
-                                    "JANUARI",
-                                    "FEBRUARI",
-                                    "MARET",
-                                    "APRIL",
-                                    "MEI",
-                                    "JUNI",
-                                    "JULI",
-                                    "AGUSTUS",
-                                    "SEPTEMBER",
-                                    "OKTOBER",
-                                    "NOVEMBER",
-                                    "DESEMBER"
-                                  ],
+                                  items: namaBulan,
                                   onChanged: (item) {
                                     setState(() {
                                       siklus.text = item!;
@@ -932,6 +906,7 @@ class RowSource extends DataTableSource {
   }
 
   postTanggalProduksi(id, release) async {
+    //? menambahkan posisi release dan bulannya
     Map<String, String> body = {
       'id': id.toString(),
       'bulan': release.toString()
@@ -1008,8 +983,9 @@ class RowSource extends DataTableSource {
       );
     }
   }
+
   updateStatusMPS(id, status) async {
-     Map<String, String> body = {
+    Map<String, String> body = {
       'id': id.toString(),
     };
     final response = await http.post(
@@ -1017,6 +993,7 @@ class RowSource extends DataTableSource {
         body: body);
     print(response.body);
   }
+
   _getKodeMarketingBykodeDesign(kodeDesign) async {
     var kodeMarketing;
     final response = await http.get(

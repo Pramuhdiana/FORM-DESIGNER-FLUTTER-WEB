@@ -2533,20 +2533,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
                     width: 200,
                     child: DropdownSearch<String>(
                       enabled: false,
-                      items: const [
-                        "JANUARI",
-                        "FEBRUARI",
-                        "MARET",
-                        "APRIL",
-                        "MEI",
-                        "JUNI",
-                        "JULI",
-                        "AGUSTUS",
-                        "SEPTEMBER",
-                        "OKTOBER",
-                        "NOVEMBER",
-                        "DESEMBER"
-                      ],
+                      items: namaBulan,
                       onChanged: (item) {
                         setState(() {
                           siklus.text = item!;

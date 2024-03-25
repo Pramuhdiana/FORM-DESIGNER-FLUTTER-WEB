@@ -2774,20 +2774,7 @@ class _FormScreenState extends State<FormScreen> {
                       enabled: sharedPreferences!.getString('divisi') == 'scm'
                           ? true
                           : false,
-                      items: const [
-                        "JANUARI",
-                        "FEBRUARI",
-                        "MARET",
-                        "APRIL",
-                        "MEI",
-                        "JUNI",
-                        "JULI",
-                        "AGUSTUS",
-                        "SEPTEMBER",
-                        "OKTOBER",
-                        "NOVEMBER",
-                        "DESEMBER"
-                      ],
+                      items: namaBulan,
                       onChanged: (item) {
                         setState(() {
                           siklus.text = item!;

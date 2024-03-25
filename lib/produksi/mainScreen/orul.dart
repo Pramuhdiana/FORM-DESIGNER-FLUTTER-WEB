@@ -199,21 +199,7 @@ class _OrulScreenState extends State<OrulScreen> {
                 child: SizedBox(
                   width: 350,
                   child: DropdownSearch<String>(
-                    items: const [
-                      "ALL",
-                      "JANUARI",
-                      "FEBRUARI",
-                      "MARET",
-                      "APRIL",
-                      "MEI",
-                      "JUNI",
-                      "JULI",
-                      "AGUSTUS",
-                      "SEPTEMBER",
-                      "OKTOBER",
-                      "NOVEMBER",
-                      "DESEMBER"
-                    ],
+                    items: namaBulan,
                     onChanged: (item) async {
                       setState(() {
                         isLoading = true;

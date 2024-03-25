@@ -199,20 +199,7 @@ class _ListBatuScreenState extends State<ListBatuScreen> {
                                                               .center,
                                                       children: [
                                                         DropdownSearch<String>(
-                                                          items: const [
-                                                            "JANUARI",
-                                                            "FEBRUARI",
-                                                            "MARET",
-                                                            "APRIL",
-                                                            "MEI",
-                                                            "JUNI",
-                                                            "JULI",
-                                                            "AGUSTUS",
-                                                            "SEPTEMBER",
-                                                            "OKTOBER",
-                                                            "NOVEMBER",
-                                                            "DESEMBER"
-                                                          ],
+                                                          items: namaBulan,
                                                           dropdownDecoratorProps:
                                                               DropDownDecoratorProps(
                                                             dropdownSearchDecoration:
@@ -412,20 +399,7 @@ class _ListBatuScreenState extends State<ListBatuScreen> {
                                                               .center,
                                                       children: [
                                                         DropdownSearch<String>(
-                                                          items: const [
-                                                            "JANUARI",
-                                                            "FEBRUARI",
-                                                            "MARET",
-                                                            "APRIL",
-                                                            "MEI",
-                                                            "JUNI",
-                                                            "JULI",
-                                                            "AGUSTUS",
-                                                            "SEPTEMBER",
-                                                            "OKTOBER",
-                                                            "NOVEMBER",
-                                                            "DESEMBER"
-                                                          ],
+                                                          items: namaBulan,
                                                           dropdownDecoratorProps:
                                                               DropDownDecoratorProps(
                                                             dropdownSearchDecoration:

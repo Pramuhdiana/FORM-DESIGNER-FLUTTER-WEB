@@ -35,7 +35,7 @@ SharedPreferences? sharedPreferences;
 int revisiBesar =
     1; //UI baru, banyak fitur baru, perubahan konsep, dll  (MAJOR)
 int revisiKecil =
-    47; //perubahan kecil                                    (MINOR)
+    48; //perubahan kecil                                    (MINOR)
 int rilisPerbaikanbug =
     12; //perbaikan bug                                      (PATCH)
 //? komen
@@ -169,3 +169,18 @@ void showDialogError({
     desc: description,
   ).show();
 }
+
+List<String> namaBulan = [
+  "JANUARI",
+  "FEBRUARI",
+  "MARET",
+  "APRIL",
+  "MEI",
+  "JUNI",
+  "JULI",
+  "AGUSTUS",
+  "SEPTEMBER",
+  "OKTOBER",
+  "NOVEMBER",
+  "DESEMBER"
+];

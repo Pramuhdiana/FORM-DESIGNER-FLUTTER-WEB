@@ -5,6 +5,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:form_designer/api/api_constant.dart';
 import 'package:form_designer/global/currency_format.dart';
+import 'package:form_designer/global/global.dart';
 import 'dart:convert';
 import 'package:form_designer/model/form_designer_model.dart';
 import 'package:form_designer/produksi/modelProduksi/produksi_model.dart';
@@ -544,20 +545,7 @@ class _SummaryPasangBatuScreenState extends State<SummaryPasangBatuScreen> {
           padding: const EdgeInsets.all(10.0),
           width: 350,
           child: DropdownSearch<String>(
-            items: const [
-              "JANUARI",
-              "FEBRUARI",
-              "MARET",
-              "APRIL",
-              "MEI",
-              "JUNI",
-              "JULI",
-              "AGUSTUS",
-              "SEPTEMBER",
-              "OKTOBER",
-              "NOVEMBER",
-              "DESEMBER"
-            ],
+            items: namaBulan,
             onChanged: (item) {
               setState(() {
                 siklus.text = item!;

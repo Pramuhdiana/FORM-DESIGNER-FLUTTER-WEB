@@ -8,6 +8,9 @@ class ApiConstants {
   static String baseUrlImage = 'http://$ipPublic:1212/Api_Flutter/spk/upload/';
   static String baseUrl = 'http://$ipPublic:1212/Api_Flutter/';
 
+  static String baseUrlDummySusut =
+      'http://192.168.22.163:4010/ManufactureProductivity/GetEmpLossAllowance';
+
   //* HINTS API YANG SUDAH RESTFULL
   static String getListItem = 'spk/rest_api.php?type=listItem';
   static String getListPanjang = 'spk/rest_api.php?type=panjang';
@@ -16,6 +19,7 @@ class ApiConstants {
   static String getListJenisBatu = 'spk/rest_api.php?type=jenisBatu';
   static String getListKualitasBatu = 'spk/rest_api.php?type=kualitasBatu';
   static String getListUkuranRound = 'spk/rest_api.php?type=ukuranRound';
+  static String getListKodeDesign = 'spk/rest_api.php?type=kodeDesign';
   static String getListKurir = 'spk/rest_api.php?type=kurir';
   static String getListPieCut = 'spk/rest_api.php?type=pieCut';
   static String getCountQc = 'spk/rest_api.php?type=qc';

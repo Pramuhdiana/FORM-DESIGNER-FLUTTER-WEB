@@ -390,6 +390,48 @@ class SavePdfPembelian {
                 style:
                     pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 22),
               )),
+              pw.Align(
+                alignment: pw.Alignment.topLeft,
+                child: pw.Text(
+                  'Sudah Diterima dalam keadaan baik dan tersegel sbb',
+                  style: pw.TextStyle(
+                      fontWeight: pw.FontWeight.bold, fontSize: 12),
+                ),
+              ),
+              pw.Row(
+                mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                children: [
+                  pw.Text(
+                    'Vendor : ${dataFormPR!.first.vendor}',
+                    textAlign: pw.TextAlign.start,
+                    style: pw.TextStyle(
+                        fontWeight: pw.FontWeight.bold, fontSize: 12),
+                  ),
+                  pw.Text(
+                    'Tanggal : ${DateFormat('dd-MMMM-yyyy').format(DateTime.parse(dataFormPR!.first.created_at!))}',
+                    textAlign: pw.TextAlign.start,
+                    style: pw.TextStyle(
+                        fontWeight: pw.FontWeight.bold, fontSize: 12),
+                  ),
+                ],
+              ),
+              pw.Row(
+                mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                children: [
+                  pw.Text(
+                    'Lokasi  : ${dataFormPR!.first.lokasi}',
+                    textAlign: pw.TextAlign.start,
+                    style: pw.TextStyle(
+                        fontWeight: pw.FontWeight.bold, fontSize: 12),
+                  ),
+                  pw.Text(
+                    'Jam : ${DateFormat('H.mm').format(DateTime.parse(dataFormPR!.first.created_at!))}',
+                    textAlign: pw.TextAlign.start,
+                    style: pw.TextStyle(
+                        fontWeight: pw.FontWeight.bold, fontSize: 12),
+                  ),
+                ],
+              ),
               for (final chunk in chunkedData)
                 //? body
                 // ignore: deprecated_member_use
@@ -417,89 +459,68 @@ class SavePdfPembelian {
                 ),
 
               //? footer
-              pw.Column(
-                children: [
-                  pw.Row(
-                    mainAxisAlignment: pw.MainAxisAlignment.spaceAround,
-                    children: [
-                      pw.Padding(
-                          padding:
-                              const pw.EdgeInsets.only(left: 20, top: 20.0),
-                          child: pw.SizedBox(
-                              child: pw.Text('Diserahkan oleh,',
-                                  style: const pw.TextStyle(fontSize: 10)))),
-                      pw.Padding(
-                          padding:
-                              const pw.EdgeInsets.only(left: 30, top: 20.0),
-                          child: pw.SizedBox(
-                              child: pw.Text('Dibawa oleh,',
-                                  style: const pw.TextStyle(fontSize: 10)))),
-                      pw.Padding(
-                          padding:
-                              const pw.EdgeInsets.only(left: 30, top: 20.0),
-                          child: pw.SizedBox(
-                              child: pw.Text('Diterima oleh,',
-                                  style: const pw.TextStyle(fontSize: 10)))),
-                      pw.Padding(
-                          padding:
-                              const pw.EdgeInsets.only(left: 30, top: 20.0),
-                          child: pw.SizedBox(
-                              child: pw.Text('Diketahui oleh,',
-                                  style: const pw.TextStyle(fontSize: 10)))),
-                    ],
-                  ),
-                  pw.SizedBox(height: 18),
-                  pw.Row(
-                    mainAxisAlignment: pw.MainAxisAlignment.spaceAround,
-                    children: [
-                      pw.SizedBox(
-                        width: 60,
-                      ),
-                      pw.Padding(
-                          padding: const pw.EdgeInsets.only(
-                            top: 20.0,
-                          ),
-                          child: pw.SizedBox(
-                              width: 60,
-                              child: pw.Text(
-                                  jenisForm == 'retur'
-                                      ? 'Warehouse'
-                                      : '${dataFormPR!.first.vendor}',
-                                  style: const pw.TextStyle(fontSize: 10)))),
-                      pw.SizedBox(
-                        width: 60,
-                      ),
-                      pw.Padding(
-                          padding: const pw.EdgeInsets.only(top: 20.0),
-                          child: pw.SizedBox(
-                              width: 60,
-                              child: pw.Text('${dataFormPR!.first.kurir}',
-                                  style: const pw.TextStyle(fontSize: 10)))),
-                      pw.SizedBox(
-                        width: 60,
-                      ),
-                      pw.Padding(
-                          padding: const pw.EdgeInsets.only(top: 20.0),
-                          child: pw.SizedBox(
-                              width: 60,
-                              child: pw.Text(
-                                  jenisForm == 'retur'
-                                      ? '${dataFormPR!.first.vendor}'
-                                      : 'Warehouse',
-                                  style: const pw.TextStyle(fontSize: 10)))),
-                      pw.SizedBox(
-                        width: 60,
-                      ),
-                      pw.Padding(
-                          padding: const pw.EdgeInsets.only(top: 20.0),
-                          child: pw.SizedBox(
-                              width: 60,
-                              child: pw.Text('Procurement',
-                                  style: const pw.TextStyle(fontSize: 10)))),
-                    ],
-                  ),
-                ],
-              )
+              pw.SizedBox(height: 20),
+
+              pw.Row(
+                  mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                  children: [
+                    pw.Column(
+                      children: [
+                        pw.Text(
+                          'Diserahkan oleh,',
+                          textAlign: pw.TextAlign.start,
+                          style: pw.TextStyle(
+                              fontWeight: pw.FontWeight.bold, fontSize: 12),
+                        ),
+                        pw.SizedBox(height: 40),
+                        jenisForm == 'retur'
+                            ? pw.Text('Warehouse')
+                            : pw.Text('${dataFormPR!.first.vendor}')
+                      ],
+                    ),
+                    pw.Column(
+                      children: [
+                        pw.Text(
+                          'Dibawa oleh,',
+                          textAlign: pw.TextAlign.start,
+                          style: pw.TextStyle(
+                              fontWeight: pw.FontWeight.bold, fontSize: 12),
+                        ),
+                        pw.SizedBox(
+                          height: 40,
+                        ),
+                        pw.Text(dataFormPR!.first.kurir!)
+                      ],
+                    ),
+                    pw.Column(
+                      children: [
+                        pw.Text(
+                          'Diterima oleh,',
+                          textAlign: pw.TextAlign.start,
+                          style: pw.TextStyle(
+                              fontWeight: pw.FontWeight.bold, fontSize: 12),
+                        ),
+                        pw.SizedBox(
+                          height: 40,
+                        ),
+                        jenisForm == 'retur'
+                            ? pw.Text('${dataFormPR!.first.vendor}')
+                            : pw.Text('Warehouse')
+                      ],
+                    ),
+                    pw.Column(
+                      children: [
+                        pw.Text(
+                          'Diketahui oleh,',
+                          textAlign: pw.TextAlign.start,
+                          style: pw.TextStyle(
+                              fontWeight: pw.FontWeight.bold, fontSize: 12),
+                        ),
+                        pw.SizedBox(height: 40),
+                        pw.Text('Procurement')
+                      ],
+                    ),
+                  ])
             ])
           ];
           // } else {

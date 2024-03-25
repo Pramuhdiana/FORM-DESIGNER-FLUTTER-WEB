@@ -483,20 +483,7 @@ class _HomeScreenAdminState extends State<HomeScreenAdmin> {
                                                       MainAxisAlignment.center,
                                                   children: [
                                                     DropdownSearch<String>(
-                                                      items: const [
-                                                        "JANUARI",
-                                                        "FEBRUARI",
-                                                        "MARET",
-                                                        "APRIL",
-                                                        "MEI",
-                                                        "JUNI",
-                                                        "JULI",
-                                                        "AGUSTUS",
-                                                        "SEPTEMBER",
-                                                        "OKTOBER",
-                                                        "NOVEMBER",
-                                                        "DESEMBER"
-                                                      ],
+                                                      items: namaBulan,
                                                       dropdownDecoratorProps:
                                                           DropDownDecoratorProps(
                                                         dropdownSearchDecoration:
@@ -983,20 +970,7 @@ class _HomeScreenAdminState extends State<HomeScreenAdmin> {
                         padding: const EdgeInsets.only(),
                         width: 350,
                         child: DropdownSearch<String>(
-                          items: const [
-                            "JANUARI",
-                            "FEBRUARI",
-                            "MARET",
-                            "APRIL",
-                            "MEI",
-                            "JUNI",
-                            "JULI",
-                            "AGUSTUS",
-                            "SEPTEMBER",
-                            "OKTOBER",
-                            "NOVEMBER",
-                            "DESEMBER"
-                          ],
+                          items: namaBulan,
                           onChanged: (item) {
                             setState(() {
                               listKelasHarga.clear();
@@ -1087,20 +1061,7 @@ class _HomeScreenAdminState extends State<HomeScreenAdmin> {
                         padding: const EdgeInsets.only(),
                         width: 350,
                         child: DropdownSearch<String>(
-                          items: const [
-                            "JANUARI",
-                            "FEBRUARI",
-                            "MARET",
-                            "APRIL",
-                            "MEI",
-                            "JUNI",
-                            "JULI",
-                            "AGUSTUS",
-                            "SEPTEMBER",
-                            "OKTOBER",
-                            "NOVEMBER",
-                            "DESEMBER"
-                          ],
+                          items: namaBulan,
                           onChanged: (item) {
                             setState(() {
                               listKelasHarga.clear();
@@ -3550,20 +3511,7 @@ class RowSource extends DataTableSource {
                                               MainAxisAlignment.center,
                                           children: [
                                             DropdownSearch<String>(
-                                              items: const [
-                                                "JANUARI",
-                                                "FEBRUARI",
-                                                "MARET",
-                                                "APRIL",
-                                                "MEI",
-                                                "JUNI",
-                                                "JULI",
-                                                "AGUSTUS",
-                                                "SEPTEMBER",
-                                                "OKTOBER",
-                                                "NOVEMBER",
-                                                "DESEMBER"
-                                              ],
+                                              items: namaBulan,
                                               dropdownDecoratorProps:
                                                   DropDownDecoratorProps(
                                                 dropdownSearchDecoration:
