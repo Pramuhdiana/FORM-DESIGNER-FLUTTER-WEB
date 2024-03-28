@@ -86,8 +86,11 @@ class _HomeScreenQcState extends State<HomeScreenQc> {
 
       var data =
           jsonResponse.map((data) => FormPrModel.fromJson(data)).toList();
-      var filterByStatus =
-          data.where((element) => element.status == 'terkirim').toList();
+      var filterByStatus = data
+          .where((element) =>
+              element.status == 'terkirim' &&
+              element.jenisItem.toString().toLowerCase() == 'diamond')
+          .toList();
       data = filterByStatus;
       //* hints Urutkan data berdasarkan tanggal terlama
       data.sort((a, b) => a.tanggalKirim!.compareTo(b.tanggalKirim!));

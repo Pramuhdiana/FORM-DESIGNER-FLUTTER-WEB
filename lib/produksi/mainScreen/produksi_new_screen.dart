@@ -81,7 +81,7 @@ class _ProduksiNewScreenState extends State<ProduksiNewScreen>
   ];
 
   final List<Widget> _views = [
-    NewFinishingScreen(input: 'inputSearch'),
+    NewFinishingScreen(divisi: 'Finishing'),
     const Poleshing1Screen(),
     const Stell1Screen(),
     const Center(child: Text('Content of Tab Two')),

@@ -2,11 +2,14 @@
 
 import 'dart:convert';
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:form_designer/api/api_constant.dart';
+import 'package:form_designer/dev/network.dart';
 import 'package:form_designer/global/currency_format.dart';
 import 'package:form_designer/global/global.dart';
 import 'package:form_designer/mainScreen/form_screen.dart';
@@ -85,6 +88,30 @@ class _ListScmState extends State<ListScmScreen> {
     nowSiklus = sharedPreferences!.getString('siklus')!;
 
     _getData();
+  }
+
+  importExcel() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+    if (result != null) {
+      PlatformFile file = result.files.first;
+      print(file.name);
+      print(file.size);
+      print(file.extension);
+      String fileName = file.name;
+      List<int> excelBytes = file.bytes!;
+      // await uploadExcel(file.path);
+      ApiClient.uploadExcel(excelBytes, fileName, context);
+      showCustomDialog(
+        context: context,
+        dialogType: DialogType.success,
+        title: 'SUCCESS',
+        description: 'File berhasil diunggah.',
+      );
+    } else {
+      // User canceled the picker
+      print('cancel pick');
+    }
   }
 
   refresh() async {
@@ -398,6 +425,23 @@ class _ListScmState extends State<ListScmScreen> {
                                     color: Colors.white,
                                   ),
                                   backgroundColor: Colors.blue,
+                                ),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.only(left: 20),
+                                child: FloatingActionButton.extended(
+                                  onPressed: () {
+                                    importExcel();
+                                  },
+                                  label: const Text(
+                                    "Import Excel",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  icon: const Icon(
+                                    Icons.upload_file,
+                                    color: Colors.white,
+                                  ),
+                                  backgroundColor: Colors.green,
                                 ),
                               )
                             ],

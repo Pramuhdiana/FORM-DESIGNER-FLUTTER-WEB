@@ -10,7 +10,7 @@ import 'package:flutter/services.dart';
 import 'package:form_designer/api/api_constant.dart';
 import 'package:form_designer/produksi/modelProduksi/artist_produksi_model.dart';
 import 'package:form_designer/produksi/modelProduksi/produksi2024_model.dart';
-import 'package:form_designer/produksi/modelProduksi/produksi_model.dart';
+// import 'package:form_designer/produksi/modelProduksi/produksi_model.dart';
 import 'package:form_designer/widgets/custom_loading.dart';
 import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';

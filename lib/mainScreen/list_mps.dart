@@ -3,16 +3,20 @@
 import 'dart:convert';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:data_table_2/data_table_2.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:form_designer/SCM/mainScreen/row_source_scm.dart';
 import 'package:form_designer/global/currency_format.dart';
+import 'package:form_designer/mainScreen/form_view_screen.dart';
 import 'package:form_designer/mainScreen/view_photo_mps.dart';
+import 'package:form_designer/model/form_designer_model.dart';
 // import 'package:form_designer/model/form_designer_model.dart';
 import 'package:form_designer/model/list_mps_model.dart';
+import 'package:form_designer/model/modeller_model.dart';
+import 'package:form_designer/produksi/mainScreen/row_source_produksi.dart';
 import 'package:form_designer/produksi/modelProduksi/artist_produksi_model.dart';
 import 'package:form_designer/produksi/modelProduksi/divisi_produksi_model.dart';
 import 'package:form_designer/widgets/custom_loading.dart';
@@ -52,13 +56,12 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
   List<String> listSubDivisiArtistPolishing = [];
   List<String> listSubDivisiArtistStell = [];
   List<String> listSubDivisiArtistPasangBatu = [];
+  int _currentPageIndex = 0;
 
   TextEditingController controller = TextEditingController();
   bool sort = true;
+  // ignore: unused_field
   int _currentSortColumn = 0;
-  // List<FormDesignerModel>? filterDataProduksi;
-  // List<FormDesignerModel>? myCrm;
-  // List<FormDesignerModel>? myDataProduksi;
   List<ListMpsModel>? filterDataProduksi;
   List<ListMpsModel>? myDataProduksi;
   final searchController = TextEditingController();
@@ -76,6 +79,11 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
   double sumEmas = 0;
   double sumDiamond = 0;
   int? sumSpk = 0;
+  List<String>? namaArtist;
+  String? apiIdDataModeller = '';
+  String? apiNoUrutDataModeller = '';
+  String? valueBulanDesigner = '';
+  String? kodeBulan = '';
 
   var nowSiklus = '';
 
@@ -84,788 +92,264 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
     super.initState();
     var now = DateTime.now();
     String month = DateFormat('MMMM', 'id').format(now);
+    String kodeMonth = DateFormat('M', 'id').format(now);
     // nowSiklus = sharedPreferences!.getString('siklus')!;
     nowSiklus = month;
+    valueBulanDesigner = DateFormat('MMyy', 'id').format(now);
+    kodeBulan = getHuruf(int.parse(kodeMonth));
+    loadData();
+  }
+
+  String getHuruf(int angka) {
+    return String.fromCharCode(angka + 64);
+  }
+
+  loadData() async {
     _getListBulan();
+    _getData();
     _getList('all');
     _getListDivisi();
     _getListSubDivisi();
   }
 
-  // dataTable() {
-  //   return Positioned(
-  //     left: 5.0,
-  //     top: 120.0,
-  //     child: Container(
-  //       padding: const EdgeInsets.all(15),
-  //       width: MediaQuery.of(context).size.width * 0.8,
-  //       child: Theme(
-  //         data: ThemeData().copyWith(
-  //             // cardColor: Theme.of(context).canvasColor),
-  //             cardColor: Colors.white,
-  //             hoverColor: Colors.grey.shade400,
-  //             dividerColor: Colors.grey),
-  //         child: PaginatedDataTable(
-  //             showCheckboxColumn: false,
-  //             availableRowsPerPage: const [5, 10, 50, 100],
-  //             rowsPerPage: _rowsPerPage,
-  //             dataRowMaxHeight: 150,
-  //             onRowsPerPageChanged: (value) {
-  //               setState(() {
-  //                 isLoading == true;
-  //               });
-  //               _rowsPerPage = value!;
-  //               setState(() {
-  //                 isLoading == false;
-  //               });
-  //             },
-  //             sortColumnIndex: _currentSortColumn,
-  //             sortAscending: sort,
-  //             // rowsPerPage: 25,
-  //             columnSpacing: 0,
-  //             columns: sharedPreferences!.getString('divisi') == 'produksi' ||
-  //                     sharedPreferences!.getString('divisi') == 'admin'
-  //                 ? [
-  //                     // no
-  //                     const DataColumn(
-  //                       label: SizedBox(
-  //                           child: Text(
-  //                         "No",
-  //                         style: TextStyle(
-  //                             fontSize: 15, fontWeight: FontWeight.bold),
-  //                       )),
-  //                     ),
-  //                     DataColumn(label: _verticalDivider),
-  //                     // keterangan minggu
-  //                     const DataColumn(
-  //                       label: SizedBox(
-  //                           child: Text(
-  //                         "Minggu Ke -",
-  //                         style: TextStyle(
-  //                             fontSize: 15, fontWeight: FontWeight.bold),
-  //                       )),
-  //                     ),
-  //                     DataColumn(label: _verticalDivider),
-  //                     //gambar
-  //                     DataColumn(
-  //                       label: Container(
-  //                           padding: const EdgeInsets.only(left: 30),
-  //                           child: const Text(
-  //                             "Gambar",
-  //                             style: TextStyle(
-  //                                 fontSize: 15, fontWeight: FontWeight.bold),
-  //                           )),
-  //                     ),
-  //                     DataColumn(label: _verticalDivider),
+  _getData() async {
+    final response = await http
+        .get(Uri.parse(ApiConstants.baseUrl + ApiConstants.getDataModeller));
 
-  //                     // kode mdbc
-  //                     DataColumn(
-  //                         label: const SizedBox(
-  //                             child: Text(
-  //                           "Kode\nMDBC",
-  //                           style: TextStyle(
-  //                               fontSize: 15, fontWeight: FontWeight.bold),
-  //                         )),
-  //                         onSort: (columnIndex, _) {
-  //                           setState(() {
-  //                             _currentSortColumn = columnIndex;
-  //                             if (sort == true) {
-  //                               sort = false;
-  //                               myDataProduksi!.sort((a, b) =>
-  //                                   a.kodeDesignMdbc!.toLowerCase().compareTo(
-  //                                       b.kodeDesignMdbc!.toLowerCase()));
-  //                             } else {
-  //                               sort = true;
-  //                               myDataProduksi!.sort((a, b) =>
-  //                                   b.kodeDesignMdbc!.toLowerCase().compareTo(
-  //                                       a.kodeDesignMdbc!.toLowerCase()));
-  //                             }
-  //                           });
-  //                         }),
-  //                     DataColumn(label: _verticalDivider),
-  //                     //kode marketing
-  //                     DataColumn(
-  //                         label: const SizedBox(
-  //                             child: Text(
-  //                           "Kode Marketing",
-  //                           style: TextStyle(
-  //                               fontSize: 15, fontWeight: FontWeight.bold),
-  //                         )),
-  //                         onSort: (columnIndex, _) {
-  //                           setState(() {
-  //                             _currentSortColumn = columnIndex;
+    // if response successful
 
-  //                             if (sort == true) {
-  //                               sort = false;
-  //                               myDataProduksi!.sort((a, b) => a
-  //                                   .kodeMarketing!
-  //                                   .toLowerCase()
-  //                                   .compareTo(b.kodeMarketing!.toLowerCase()));
-  //                             } else {
-  //                               sort = true;
-  //                               myDataProduksi!.sort((a, b) => b
-  //                                   .kodeMarketing!
-  //                                   .toLowerCase()
-  //                                   .compareTo(a.kodeMarketing!.toLowerCase()));
-  //                             }
-  //                           });
-  //                         }),
-  //                     DataColumn(label: _verticalDivider),
-  //                     //posisi
-  //                     DataColumn(
-  //                         label: const SizedBox(
-  //                             child: Text(
-  //                           "Posisi",
-  //                           maxLines: 2,
-  //                           style: TextStyle(
-  //                               fontSize: 15, fontWeight: FontWeight.bold),
-  //                         )),
-  //                         onSort: (columnIndex, _) {
-  //                           setState(() {
-  //                             _currentSortColumn = columnIndex;
-  //                             if (sort == true) {
-  //                               sort = false;
-  //                               myDataProduksi!.sort(
-  //                                   (a, b) => a.posisi!.compareTo(b.posisi!));
-  //                             } else {
-  //                               sort = true;
-  //                               myDataProduksi!.sort(
-  //                                   (a, b) => b.posisi!.compareTo(a.posisi!));
-  //                             }
-  //                           });
-  //                         }),
-  //                     DataColumn(label: _verticalDivider),
+    if (response.statusCode == 200) {
+      List jsonResponse = json.decode(response.body);
 
-  //                     //status batu
-  //                     DataColumn(
-  //                         label: const SizedBox(
-  //                             child: Text(
-  //                           "Status Batu",
-  //                           style: TextStyle(
-  //                               fontSize: 15, fontWeight: FontWeight.bold),
-  //                         )),
-  //                         onSort: (columnIndex, _) {
-  //                           setState(() {
-  //                             _currentSortColumn = columnIndex;
+      var allData =
+          jsonResponse.map((data) => ModellerModel.fromJson(data)).toList();
+      allData.sort((a, b) => b.id!.compareTo(a.id as num));
+      apiIdDataModeller = allData.last.id.toString();
+      var filterByMonth = allData
+          .where((element) =>
+              element.bulan.toString().toLowerCase() ==
+              nowSiklus.toString().toLowerCase())
+          .toList();
+      var filterBynoUrut =
+          filterByMonth.where((element) => element.noUrutBulan! > 0).toList();
+      apiNoUrutDataModeller = filterByMonth.isEmpty
+          ? '0'.padLeft(3, '0')
+          : filterBynoUrut.isEmpty
+              ? '0'.padLeft(3, '0')
+              : filterBynoUrut.length.toString().padLeft(3, '0');
+    } else {
+      showDialogError(
+        context: context,
+        dialogType: DialogType.error,
+        title: 'ERROR edit form',
+        description: 'Hubungi admin => ${response.body}',
+      );
+    }
+  }
 
-  //                             if (sort == true) {
-  //                               sort = false;
-  //                               myDataProduksi!.sort((a, b) => a
-  //                                   .keteranganStatusBatu!
-  //                                   .toLowerCase()
-  //                                   .compareTo(
-  //                                       b.keteranganStatusBatu!.toLowerCase()));
-  //                             } else {
-  //                               sort = true;
-  //                               myDataProduksi!.sort((a, b) => b
-  //                                   .keteranganStatusBatu!
-  //                                   .toLowerCase()
-  //                                   .compareTo(
-  //                                       a.keteranganStatusBatu!.toLowerCase()));
-  //                             }
-  //                           });
-  //                         }),
-  //                     DataColumn(label: _verticalDivider),
-  //                     //status acc
-  //                     DataColumn(
-  //                         label: const SizedBox(
-  //                             child: Text(
-  //                           "Status ACC",
-  //                           style: TextStyle(
-  //                               fontSize: 15, fontWeight: FontWeight.bold),
-  //                         )),
-  //                         onSort: (columnIndex, _) {
-  //                           setState(() {
-  //                             _currentSortColumn = columnIndex;
+  listColumnTabel() {
+    double sizeHeadFont = 16;
+    return [
+      DataColumn2(
+          label: Center(
+            child: Text(
+              'NO',
+              style: TextStyle(fontSize: sizeHeadFont),
+            ),
+          ),
+          size: ColumnSize.S),
+      DataColumn2(
+        label: Center(
+          child: Text(
+            'MINGGU KE -',
+            style: TextStyle(fontSize: sizeHeadFont),
+          ),
+        ),
+      ),
+      DataColumn2(
+        label: Center(
+          child: Text(
+            'GAMBAR',
+            style: TextStyle(fontSize: sizeHeadFont),
+          ),
+        ),
+      ),
+      DataColumn2(
+        label: Center(
+          child: Text(
+            'KODE MDBC',
+            style: TextStyle(fontSize: sizeHeadFont),
+          ),
+        ),
+      ),
+      DataColumn2(
+        label: Center(
+          child: Text(
+            'KODE MARKETING',
+            style: TextStyle(fontSize: sizeHeadFont),
+          ),
+        ),
+      ),
+      DataColumn2(
+        label: Center(
+          child: Text(
+            'POSISI',
+            style: TextStyle(fontSize: sizeHeadFont),
+          ),
+        ),
+      ),
+      DataColumn2(
+        label: Center(
+          child: Text(
+            'STATUS BATU',
+            style: TextStyle(fontSize: sizeHeadFont),
+          ),
+        ),
+      ),
+      DataColumn2(
+        label: Center(
+          child: Text(
+            'STATUS ACC',
+            style: TextStyle(fontSize: sizeHeadFont),
+          ),
+        ),
+      ),
+      DataColumn2(
+        label: Center(
+          child: Text(
+            'KET. BATU',
+            style: TextStyle(fontSize: sizeHeadFont),
+          ),
+        ),
+      ),
+      DataColumn2(
+        label: Center(
+          child: Text(
+            'TEMA',
+            style: TextStyle(fontSize: sizeHeadFont),
+          ),
+        ),
+      ),
+      DataColumn2(
+        label: Center(
+          child: Text(
+            'JENIS BARANG',
+            style: TextStyle(fontSize: sizeHeadFont),
+          ),
+        ),
+      ),
+      DataColumn2(
+        label: Center(
+          child: Text(
+            'BERAT EMAS',
+            style: TextStyle(fontSize: sizeHeadFont),
+          ),
+        ),
+      ),
+      DataColumn2(
+        label: Center(
+          child: Text(
+            'BERAT DIAMOND',
+            style: TextStyle(fontSize: sizeHeadFont),
+          ),
+        ),
+      ),
+      DataColumn2(
+        label: Center(
+          child: Text(
+            'BRAND',
+            style: TextStyle(fontSize: sizeHeadFont),
+          ),
+        ),
+      ),
+      DataColumn2(
+        label: Center(
+          child: Text(
+            'HARGA',
+            style: TextStyle(fontSize: sizeHeadFont),
+          ),
+        ),
+      ),
+      DataColumn2(
+        label: Center(
+          child: Text(
+            'KELAS HARGA',
+            style: TextStyle(fontSize: sizeHeadFont),
+          ),
+        ),
+      ),
+      DataColumn2(
+        label: Center(
+          child: Text(
+            'TGL RELEASE',
+            style: TextStyle(fontSize: sizeHeadFont),
+          ),
+        ),
+      ),
+    ];
+  }
 
-  //                             if (sort == true) {
-  //                               sort = false;
-  //                               myDataProduksi!.sort((a, b) => a
-  //                                   .keteranganStatusAcc!
-  //                                   .toLowerCase()
-  //                                   .compareTo(
-  //                                       b.keteranganStatusAcc!.toLowerCase()));
-  //                             } else {
-  //                               sort = true;
-  //                               myDataProduksi!.sort((a, b) => b
-  //                                   .keteranganStatusAcc!
-  //                                   .toLowerCase()
-  //                                   .compareTo(
-  //                                       a.keteranganStatusAcc!.toLowerCase()));
-  //                             }
-  //                           });
-  //                         }),
-  //                     DataColumn(label: _verticalDivider),
-  //                     //ketrangan batu
-  //                     const DataColumn(
-  //                       label: SizedBox(
-  //                           child: Text(
-  //                         "Keterangan\nBatu",
-  //                         style: TextStyle(
-  //                             fontSize: 15, fontWeight: FontWeight.bold),
-  //                       )),
-  //                       // onSort: (columnIndex, _) {
-  //                       //   setState(() {
-  //                       //     _currentSortColumn = columnIndex;
+  dataTableMPS() {
+    return Expanded(
+      child: PaginatedDataTable2(
+        // columnSpacing: 5,
+        // horizontalMargin: 12,
+        border: TableBorder.all(),
+        rowsPerPage: _rowsPerPage,
+        availableRowsPerPage: const [5, 10, 50, 100],
+        dataRowHeight: 100, // Atur tinggi baris menjadi 50
+        minWidth: 3500, // Atur lebar yang mencukupi untuk menampung semua kolom
+        onRowsPerPageChanged: (value) {
+          setState(() {
+            isLoading = true;
+          });
+          _rowsPerPage = value!;
+          setState(() {
+            isLoading = false;
+          });
+        },
 
-  //                       //     if (sort == true) {
-  //                       //       sort = false;
-  //                       //       myDataProduksi!.sort((a, b) => a
-  //                       //           .keteranganStatusBatu!
-  //                       //           .toLowerCase()
-  //                       //           .compareTo(b
-  //                       //               .keteranganStatusBatu!
-  //                       //               .toLowerCase()));
-  //                       //     } else {
-  //                       //       sort = true;
-  //                       //       myDataProduksi!.sort((a, b) => b
-  //                       //           .keteranganStatusBatu!
-  //                       //           .toLowerCase()
-  //                       //           .compareTo(a
-  //                       //               .keteranganStatusBatu!
-  //                       //               .toLowerCase()));
-  //                       //     }
-  //                       //   });
-  //                       // }
-  //                     ),
-  //                     DataColumn(label: _verticalDivider),
-  //                     //tema
-  //                     DataColumn(
-  //                         label: const SizedBox(
-  //                             child: Text(
-  //                           "Tema",
-  //                           style: TextStyle(
-  //                               fontSize: 15, fontWeight: FontWeight.bold),
-  //                         )),
-  //                         onSort: (columnIndex, _) {
-  //                           setState(() {
-  //                             _currentSortColumn = columnIndex;
-  //                             if (sort == true) {
-  //                               sort = false;
-  //                               myDataProduksi!.sort((a, b) => a.tema!
-  //                                   .toLowerCase()
-  //                                   .compareTo(b.tema!.toLowerCase()));
-  //                             } else {
-  //                               sort = true;
-  //                               myDataProduksi!.sort((a, b) => b.tema!
-  //                                   .toLowerCase()
-  //                                   .compareTo(a.tema!.toLowerCase()));
-  //                             }
-  //                           });
-  //                         }),
-  //                     DataColumn(label: _verticalDivider),
-  //                     //jenis barang
-  //                     DataColumn(
-  //                         label: const SizedBox(
-  //                             child: Text(
-  //                           "Jenis Barang",
-  //                           style: TextStyle(
-  //                               fontSize: 15, fontWeight: FontWeight.bold),
-  //                         )),
-  //                         onSort: (columnIndex, _) {
-  //                           print('tap jenis barnag');
-  //                           setState(() {
-  //                             _currentSortColumn = columnIndex;
-  //                             if (sort == true) {
-  //                               sort = false;
-  //                               myDataProduksi!.sort((a, b) => a.jenisBarang!
-  //                                   .toLowerCase()
-  //                                   .compareTo(b.jenisBarang!.toLowerCase()));
-  //                             } else {
-  //                               sort = true;
-  //                               myDataProduksi!.sort((a, b) => b.jenisBarang!
-  //                                   .toLowerCase()
-  //                                   .compareTo(a.jenisBarang!.toLowerCase()));
-  //                             }
-  //                           });
-  //                         }),
-  //                     DataColumn(label: _verticalDivider),
-  //                     //brand
-  //                     DataColumn(
-  //                         label: const SizedBox(
-  //                             child: Text(
-  //                           "Brand",
-  //                           maxLines: 2,
-  //                           style: TextStyle(
-  //                               fontSize: 15, fontWeight: FontWeight.bold),
-  //                         )),
-  //                         onSort: (columnIndex, _) {
-  //                           setState(() {
-  //                             _currentSortColumn = columnIndex;
-  //                             if (sort == true) {
-  //                               // myCrm.sort((a, b) => a['estimasiHarga'].)
-  //                               sort = false;
-  //                               myDataProduksi!.sort(
-  //                                   (a, b) => a.brand!.compareTo(b.brand!));
-  //                               // onsortColum(columnIndex, ascending);
-  //                             } else {
-  //                               sort = true;
-  //                               myDataProduksi!.sort(
-  //                                   (a, b) => b.brand!.compareTo(a.brand!));
-  //                             }
-  //                           });
-  //                         }),
-  //                     DataColumn(label: _verticalDivider),
-  //                     // harga
-  //                     sharedPreferences!.getString('role') == '1' ||
-  //                             sharedPreferences!.getString('role') == '2' ||
-  //                             sharedPreferences!.getString('divisi') == 'admin'
-  //                         ? const DataColumn(
-  //                             label: SizedBox(
-  //                                 child: Text(
-  //                               "Harga",
-  //                               maxLines: 2,
-  //                               style: TextStyle(
-  //                                   fontSize: 15, fontWeight: FontWeight.bold),
-  //                             )),
-  //                           )
-  //                         : const DataColumn(label: SizedBox()),
-  //                     DataColumn(label: _verticalDivider),
-  //                     //kelas harga
-  //                     DataColumn(
-  //                         label: const SizedBox(
-  //                             child: Text(
-  //                           "Kelas\nHarga",
-  //                           maxLines: 2,
-  //                           style: TextStyle(
-  //                               fontSize: 15, fontWeight: FontWeight.bold),
-  //                         )),
-  //                         onSort: (columnIndex, _) {
-  //                           setState(() {
-  //                             _currentSortColumn = columnIndex;
-  //                             if (sort == true) {
-  //                               // myCrm.sort((a, b) => a['estimasiHarga'].)
-  //                               sort = false;
-  //                               myDataProduksi!.sort((a, b) => a
-  //                                   .estimasiHarga!
-  //                                   .compareTo(b.estimasiHarga!));
-  //                               // onsortColum(columnIndex, ascending);
-  //                             } else {
-  //                               sort = true;
-  //                               myDataProduksi!.sort((a, b) => b
-  //                                   .estimasiHarga!
-  //                                   .compareTo(a.estimasiHarga!));
-  //                             }
-  //                           });
-  //                         }),
-  //                     DataColumn(label: _verticalDivider),
-  //                     //tanggal in produksi
-  //                     DataColumn(
-  //                         label: const SizedBox(
-  //                             child: Text(
-  //                           "Tanggal In\nRelease",
-  //                           style: TextStyle(
-  //                               fontSize: 15, fontWeight: FontWeight.bold),
-  //                         )),
-  //                         onSort: (columnIndex, _) {
-  //                           setState(() {
-  //                             _currentSortColumn = columnIndex;
-  //                             if (sort == true) {
-  //                               sort = false;
-  //                               myDataProduksi!.sort((a, b) => a
-  //                                   .tanggalInProduksi!
-  //                                   .toLowerCase()
-  //                                   .compareTo(
-  //                                       b.tanggalInProduksi!.toLowerCase()));
-  //                             } else {
-  //                               sort = true;
-  //                               myDataProduksi!.sort((a, b) => b
-  //                                   .tanggalInProduksi!
-  //                                   .toLowerCase()
-  //                                   .compareTo(
-  //                                       a.tanggalInProduksi!.toLowerCase()));
-  //                             }
-  //                           });
-  //                         }),
-  //                   ]
-  //                 : [
-  //                     // no
-  //                     const DataColumn(
-  //                       label: SizedBox(
-  //                           child: Text(
-  //                         "No",
-  //                         style: TextStyle(
-  //                             fontSize: 15, fontWeight: FontWeight.bold),
-  //                       )),
-  //                     ),
-  //                     DataColumn(label: _verticalDivider),
-  //                     // keterangan minggu
-  //                     const DataColumn(
-  //                       label: SizedBox(
-  //                           child: Text(
-  //                         "Minggu Ke -",
-  //                         style: TextStyle(
-  //                             fontSize: 15, fontWeight: FontWeight.bold),
-  //                       )),
-  //                     ),
-  //                     DataColumn(label: _verticalDivider),
-  //                     //gambar
-  //                     DataColumn(
-  //                       label: Container(
-  //                           padding: const EdgeInsets.only(left: 30),
-  //                           child: const Text(
-  //                             "Gambar",
-  //                             style: TextStyle(
-  //                                 fontSize: 15, fontWeight: FontWeight.bold),
-  //                           )),
-  //                     ),
-  //                     DataColumn(label: _verticalDivider),
-
-  //                     // kode mdbc
-  //                     DataColumn(
-  //                         label: const SizedBox(
-  //                             child: Text(
-  //                           "Kode\nMDBC",
-  //                           style: TextStyle(
-  //                               fontSize: 15, fontWeight: FontWeight.bold),
-  //                         )),
-  //                         onSort: (columnIndex, _) {
-  //                           setState(() {
-  //                             _currentSortColumn = columnIndex;
-  //                             if (sort == true) {
-  //                               sort = false;
-  //                               myDataProduksi!.sort((a, b) =>
-  //                                   a.kodeDesignMdbc!.toLowerCase().compareTo(
-  //                                       b.kodeDesignMdbc!.toLowerCase()));
-  //                             } else {
-  //                               sort = true;
-  //                               myDataProduksi!.sort((a, b) =>
-  //                                   b.kodeDesignMdbc!.toLowerCase().compareTo(
-  //                                       a.kodeDesignMdbc!.toLowerCase()));
-  //                             }
-  //                           });
-  //                         }),
-  //                     DataColumn(label: _verticalDivider),
-  //                     //kode marketing
-  //                     DataColumn(
-  //                         label: const SizedBox(
-  //                             child: Text(
-  //                           "Kode Marketing",
-  //                           style: TextStyle(
-  //                               fontSize: 15, fontWeight: FontWeight.bold),
-  //                         )),
-  //                         onSort: (columnIndex, _) {
-  //                           setState(() {
-  //                             _currentSortColumn = columnIndex;
-
-  //                             if (sort == true) {
-  //                               sort = false;
-  //                               myDataProduksi!.sort((a, b) => a
-  //                                   .kodeMarketing!
-  //                                   .toLowerCase()
-  //                                   .compareTo(b.kodeMarketing!.toLowerCase()));
-  //                             } else {
-  //                               sort = true;
-  //                               myDataProduksi!.sort((a, b) => b
-  //                                   .kodeMarketing!
-  //                                   .toLowerCase()
-  //                                   .compareTo(a.kodeMarketing!.toLowerCase()));
-  //                             }
-  //                           });
-  //                         }),
-  //                     DataColumn(label: _verticalDivider),
-  //                     //posisi
-  //                     DataColumn(
-  //                         label: const SizedBox(
-  //                             child: Text(
-  //                           "Posisi",
-  //                           maxLines: 2,
-  //                           style: TextStyle(
-  //                               fontSize: 15, fontWeight: FontWeight.bold),
-  //                         )),
-  //                         onSort: (columnIndex, _) {
-  //                           setState(() {
-  //                             _currentSortColumn = columnIndex;
-  //                             if (sort == true) {
-  //                               sort = false;
-  //                               myDataProduksi!.sort(
-  //                                   (a, b) => a.posisi!.compareTo(b.posisi!));
-  //                             } else {
-  //                               sort = true;
-  //                               myDataProduksi!.sort(
-  //                                   (a, b) => b.posisi!.compareTo(a.posisi!));
-  //                             }
-  //                           });
-  //                         }),
-  //                     DataColumn(label: _verticalDivider),
-
-  //                     //status batu
-  //                     DataColumn(
-  //                         label: const SizedBox(
-  //                             child: Text(
-  //                           "Status Batu",
-  //                           style: TextStyle(
-  //                               fontSize: 15, fontWeight: FontWeight.bold),
-  //                         )),
-  //                         onSort: (columnIndex, _) {
-  //                           setState(() {
-  //                             _currentSortColumn = columnIndex;
-
-  //                             if (sort == true) {
-  //                               sort = false;
-  //                               myDataProduksi!.sort((a, b) => a
-  //                                   .keteranganStatusBatu!
-  //                                   .toLowerCase()
-  //                                   .compareTo(
-  //                                       b.keteranganStatusBatu!.toLowerCase()));
-  //                             } else {
-  //                               sort = true;
-  //                               myDataProduksi!.sort((a, b) => b
-  //                                   .keteranganStatusBatu!
-  //                                   .toLowerCase()
-  //                                   .compareTo(
-  //                                       a.keteranganStatusBatu!.toLowerCase()));
-  //                             }
-  //                           });
-  //                         }),
-  //                     DataColumn(label: _verticalDivider),
-  //                     //status acc
-  //                     DataColumn(
-  //                         label: const SizedBox(
-  //                             child: Text(
-  //                           "Status ACC",
-  //                           style: TextStyle(
-  //                               fontSize: 15, fontWeight: FontWeight.bold),
-  //                         )),
-  //                         onSort: (columnIndex, _) {
-  //                           setState(() {
-  //                             _currentSortColumn = columnIndex;
-
-  //                             if (sort == true) {
-  //                               sort = false;
-  //                               myDataProduksi!.sort((a, b) => a
-  //                                   .keteranganStatusAcc!
-  //                                   .toLowerCase()
-  //                                   .compareTo(
-  //                                       b.keteranganStatusAcc!.toLowerCase()));
-  //                             } else {
-  //                               sort = true;
-  //                               myDataProduksi!.sort((a, b) => b
-  //                                   .keteranganStatusAcc!
-  //                                   .toLowerCase()
-  //                                   .compareTo(
-  //                                       a.keteranganStatusAcc!.toLowerCase()));
-  //                             }
-  //                           });
-  //                         }),
-  //                     DataColumn(label: _verticalDivider),
-  //                     //ketrangan batu
-  //                     const DataColumn(
-  //                       label: SizedBox(
-  //                           child: Text(
-  //                         "Keterangan\nBatu",
-  //                         style: TextStyle(
-  //                             fontSize: 15, fontWeight: FontWeight.bold),
-  //                       )),
-  //                     ),
-  //                     DataColumn(label: _verticalDivider),
-  //                     //tema
-  //                     DataColumn(
-  //                         label: const SizedBox(
-  //                             child: Text(
-  //                           "Tema",
-  //                           style: TextStyle(
-  //                               fontSize: 15, fontWeight: FontWeight.bold),
-  //                         )),
-  //                         onSort: (columnIndex, _) {
-  //                           setState(() {
-  //                             _currentSortColumn = columnIndex;
-  //                             if (sort == true) {
-  //                               sort = false;
-  //                               myDataProduksi!.sort((a, b) => a.tema!
-  //                                   .toLowerCase()
-  //                                   .compareTo(b.tema!.toLowerCase()));
-  //                             } else {
-  //                               sort = true;
-  //                               myDataProduksi!.sort((a, b) => b.tema!
-  //                                   .toLowerCase()
-  //                                   .compareTo(a.tema!.toLowerCase()));
-  //                             }
-  //                           });
-  //                         }),
-  //                     DataColumn(label: _verticalDivider),
-  //                     //jenis barang
-  //                     DataColumn(
-  //                         label: const SizedBox(
-  //                             child: Text(
-  //                           "Jenis Barang",
-  //                           style: TextStyle(
-  //                               fontSize: 15, fontWeight: FontWeight.bold),
-  //                         )),
-  //                         onSort: (columnIndex, _) {
-  //                           print('tap jenis barnag');
-  //                           setState(() {
-  //                             _currentSortColumn = columnIndex;
-  //                             if (sort == true) {
-  //                               sort = false;
-  //                               myDataProduksi!.sort((a, b) => a.jenisBarang!
-  //                                   .toLowerCase()
-  //                                   .compareTo(b.jenisBarang!.toLowerCase()));
-  //                             } else {
-  //                               sort = true;
-  //                               myDataProduksi!.sort((a, b) => b.jenisBarang!
-  //                                   .toLowerCase()
-  //                                   .compareTo(a.jenisBarang!.toLowerCase()));
-  //                             }
-  //                           });
-  //                         }),
-  //                     DataColumn(label: _verticalDivider),
-  //                     //berat emas
-  //                     const DataColumn(
-  //                       label: SizedBox(
-  //                           child: Text(
-  //                         "Berat Emas",
-  //                         style: TextStyle(
-  //                             fontSize: 15, fontWeight: FontWeight.bold),
-  //                       )),
-  //                     ),
-  //                     DataColumn(label: _verticalDivider),
-  //                     //berat diamond
-  //                     const DataColumn(
-  //                       label: SizedBox(
-  //                           child: Text(
-  //                         "Berat Diamond",
-  //                         style: TextStyle(
-  //                             fontSize: 15, fontWeight: FontWeight.bold),
-  //                       )),
-  //                     ),
-  //                     DataColumn(label: _verticalDivider),
-  //                     //brand
-  //                     DataColumn(
-  //                         label: const SizedBox(
-  //                             child: Text(
-  //                           "Brand",
-  //                           maxLines: 2,
-  //                           style: TextStyle(
-  //                               fontSize: 15, fontWeight: FontWeight.bold),
-  //                         )),
-  //                         onSort: (columnIndex, _) {
-  //                           setState(() {
-  //                             _currentSortColumn = columnIndex;
-  //                             if (sort == true) {
-  //                               // myCrm.sort((a, b) => a['estimasiHarga'].)
-  //                               sort = false;
-  //                               myDataProduksi!.sort(
-  //                                   (a, b) => a.brand!.compareTo(b.brand!));
-  //                               // onsortColum(columnIndex, ascending);
-  //                             } else {
-  //                               sort = true;
-  //                               myDataProduksi!.sort(
-  //                                   (a, b) => b.brand!.compareTo(a.brand!));
-  //                             }
-  //                           });
-  //                         }),
-  //                     DataColumn(label: _verticalDivider),
-  //                     // harga
-  //                     const DataColumn(
-  //                       label: SizedBox(
-  //                           child: Text(
-  //                         "Harga",
-  //                         maxLines: 2,
-  //                         style: TextStyle(
-  //                             fontSize: 15, fontWeight: FontWeight.bold),
-  //                       )),
-  //                     ),
-  //                     DataColumn(label: _verticalDivider),
-  //                     //kelas harga
-  //                     const DataColumn(
-  //                       label: SizedBox(
-  //                           child: Text(
-  //                         "Kelas\nHarga",
-  //                         maxLines: 2,
-  //                         style: TextStyle(
-  //                             fontSize: 15, fontWeight: FontWeight.bold),
-  //                       )),
-  //                     ),
-  //                     DataColumn(label: _verticalDivider),
-  //                     //tanggal in release
-  //                     DataColumn(
-  //                         label: const SizedBox(
-  //                             child: Text(
-  //                           "Tanggal In\nRelease",
-  //                           style: TextStyle(
-  //                               fontSize: 15, fontWeight: FontWeight.bold),
-  //                         )),
-  //                         onSort: (columnIndex, _) {
-  //                           setState(() {
-  //                             _currentSortColumn = columnIndex;
-  //                             if (sort == true) {
-  //                               sort = false;
-  //                               myDataProduksi!.sort((a, b) => a
-  //                                   .tanggalInProduksi!
-  //                                   .toLowerCase()
-  //                                   .compareTo(
-  //                                       b.tanggalInProduksi!.toLowerCase()));
-  //                             } else {
-  //                               sort = true;
-  //                               myDataProduksi!.sort((a, b) => b
-  //                                   .tanggalInProduksi!
-  //                                   .toLowerCase()
-  //                                   .compareTo(
-  //                                       a.tanggalInProduksi!.toLowerCase()));
-  //                             }
-  //                           });
-  //                         }),
-  //                     DataColumn(label: _verticalDivider),
-  //                     //tanggal in release
-  //                     const DataColumn(
-  //                       label: SizedBox(
-  //                           child: Text(
-  //                         "Tanggal In\nModeller",
-  //                         style: TextStyle(
-  //                             fontSize: 15, fontWeight: FontWeight.bold),
-  //                       )),
-  //                     ),
-  //                   ],
-  //             source: sharedPreferences!.getString('divisi') == 'produksi' ||
-  //                     sharedPreferences!.getString('divisi') == 'admin'
-  //                 ? RowSourceProduksi(
-  //                     onRowPressed: () {
-  //                       refresh();
-  //                     }, //! mengirim data untuk me refresh state
-  //                     listBulan: listBulan,
-  //                     listArtist: listArtist,
-  //                     listDivisi: listDivisi,
-  //                     myData: myDataProduksi,
-  //                     count: myDataProduksi!.length,
-  //                     listSubDivisiArtistFinishing:
-  //                         listSubDivisiArtistFinishing,
-  //                     listSubDivisiArtistPolishing:
-  //                         listSubDivisiArtistPolishing,
-  //                     listSubDivisiArtistStell: listSubDivisiArtistStell,
-  //                     listSubDivisiArtistPasangBatu:
-  //                         listSubDivisiArtistPasangBatu,
-  //                     siklus: siklusDesigner)
-  //                 : RowSourceScm(
-  //                     onRowPressed: () {
-  //                       refresh();
-  //                     }, //! mengirim data untuk me refresh state
-  //                     listArtist: listArtist,
-  //                     listDivisi: listDivisi,
-  //                     myData: myDataProduksi,
-  //                     count: myDataProduksi!.length,
-  //                     listSubDivisiArtistFinishing:
-  //                         listSubDivisiArtistFinishing,
-  //                     listSubDivisiArtistPolishing:
-  //                         listSubDivisiArtistPolishing,
-  //                     listSubDivisiArtistStell: listSubDivisiArtistStell,
-  //                     listSubDivisiArtistPasangBatu:
-  //                         listSubDivisiArtistPasangBatu,
-  //                     siklus: siklusDesigner)),
-  //       ),
-  //     ),
-  //   );
-  // }
+        columns: listColumnTabel(),
+        source: RowSourceProduksi(
+            getNowSiklus: nowSiklus,
+            getKodeBulan: kodeBulan,
+            getValueBulanDesigner: valueBulanDesigner,
+            getIdDataModeller: apiIdDataModeller,
+            getNoUrutDataModeller: apiNoUrutDataModeller,
+            onRowPressed: () {
+              getData(); //* get data baru
+            },
+            rowCount: myDataProduksi!.length,
+            rowsPerPage: _rowsPerPage,
+            currentPageIndex: _currentPageIndex,
+            listDataMps: myDataProduksi,
+            listBulan: listBulan,
+            listArtist: listArtist,
+            listDivisi: listDivisi,
+            listSubDivisiArtistFinishing: listSubDivisiArtistFinishing,
+            listSubDivisiArtistPolishing: listSubDivisiArtistPolishing,
+            listSubDivisiArtistStell: listSubDivisiArtistStell,
+            listSubDivisiArtistPasangBatu: listSubDivisiArtistPasangBatu,
+            siklus: siklusDesigner),
+        onPageChanged: (pageIndex) {
+          setState(() {
+            _currentPageIndex = pageIndex;
+          });
+        },
+      ),
+    );
+  }
 
   List<DataColumn> columnsData() {
     return [
       // no
       const DataColumn(
         label: SizedBox(
+            width: 15,
             child: Text(
-          "No",
-          style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-        )),
+              "No",
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+            )),
       ),
 
       // keterangan minggu
@@ -1473,8 +957,38 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
     }
   }
 
+  //*HINTS filter berdasarkan inputan
+  void searchAnything(String value) {
+    myDataProduksi = filterDataProduksi!
+        .where((element) =>
+            element.kodeDesignMdbc!
+                .toLowerCase()
+                .contains(value.toLowerCase()) ||
+            element.posisi!.toLowerCase().contains(value.toLowerCase()) ||
+            element.brand!.toLowerCase().contains(value.toLowerCase()) ||
+            element.statusForm!.toLowerCase().contains(value.toLowerCase()) ||
+            element.kodeMarketing!
+                .toLowerCase()
+                .contains(value.toLowerCase()) ||
+            element.tema!.toLowerCase().contains(value.toLowerCase()) ||
+            element.jenisBarang!.toLowerCase().contains(value.toLowerCase()) ||
+            element.keteranganBatu!
+                .toLowerCase()
+                .contains(value.toLowerCase()) ||
+            element.keteranganStatusBatu!
+                .toLowerCase()
+                .contains(value.toLowerCase()) ||
+            element.artist!.toLowerCase().contains(value.toLowerCase()) ||
+            element.keteranganStatusAcc!
+                .toLowerCase()
+                .contains(value.toLowerCase()) ||
+            element.estimasiHarga!.toString().contains(value.toLowerCase()))
+        .toList();
+
+    setState(() {});
+  }
+
   _getDataBySiklusProduksi(chooseSiklus, chooseWeek, chooseJenisBarang) async {
-    print('get data mps produksi');
     listJenisBarang = [];
     final response = await http.get(Uri.parse(
         '${ApiConstants.baseUrl}${ApiConstants.getListMpsBySiklus}?siklus=$chooseSiklus'));
@@ -1644,47 +1158,7 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
                   keyboardType: TextInputType.text,
                   onChanged: (value) {
                     //fungsi search anyting
-                    myDataProduksi = filterDataProduksi!
-                        .where((element) =>
-                            element.kodeDesignMdbc!
-                                .toLowerCase()
-                                .contains(value.toLowerCase()) ||
-                            element.posisi!
-                                .toLowerCase()
-                                .contains(value.toLowerCase()) ||
-                            element.brand!
-                                .toLowerCase()
-                                .contains(value.toLowerCase()) ||
-                            element.statusForm!
-                                .toLowerCase()
-                                .contains(value.toLowerCase()) ||
-                            element.kodeMarketing!
-                                .toLowerCase()
-                                .contains(value.toLowerCase()) ||
-                            element.tema!
-                                .toLowerCase()
-                                .contains(value.toLowerCase()) ||
-                            element.jenisBarang!
-                                .toLowerCase()
-                                .contains(value.toLowerCase()) ||
-                            element.keteranganBatu!
-                                .toLowerCase()
-                                .contains(value.toLowerCase()) ||
-                            element.keteranganStatusBatu!
-                                .toLowerCase()
-                                .contains(value.toLowerCase()) ||
-                            element.artist!
-                                .toLowerCase()
-                                .contains(value.toLowerCase()) ||
-                            element.keteranganStatusAcc!
-                                .toLowerCase()
-                                .contains(value.toLowerCase()) ||
-                            element.estimasiHarga!
-                                .toString()
-                                .contains(value.toLowerCase()))
-                        .toList();
-
-                    setState(() {});
+                    searchAnything(value);
                   },
                 ),
               ),
@@ -2038,77 +1512,79 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
                           height: 90,
                           child: Lottie.asset("loadingJSON/loadingV1.json"),
                         )))
-                      : Expanded(
-                          child: ListView(children: [
-                            PaginatedDataTable(
-                                showCheckboxColumn: false,
-                                availableRowsPerPage: const [5, 10, 50, 100],
-                                rowsPerPage: _rowsPerPage,
-                                dataRowMaxHeight: 150,
-                                onRowsPerPageChanged: (value) {
-                                  setState(() {
-                                    isLoading == true;
-                                  });
-                                  _rowsPerPage = value!;
-                                  setState(() {
-                                    isLoading == false;
-                                  });
-                                },
-                                sortColumnIndex: _currentSortColumn,
-                                sortAscending: sort,
-                                // rowsPerPage: 25,
-                                columnSpacing: 0,
-                                columns: sharedPreferences!
-                                                .getString('divisi') ==
-                                            'produksi' ||
-                                        sharedPreferences!
-                                                .getString('divisi') ==
-                                            'admin'
-                                    ? dataColumnProduksi()
-                                    : dataColumnScm(),
-                                source: sharedPreferences!
-                                                .getString('divisi') ==
-                                            'produksi' ||
-                                        sharedPreferences!
-                                                .getString('divisi') ==
-                                            'admin'
-                                    ? RowSourceProduksi(
-                                        onRowPressed: () {
-                                          refresh();
-                                        }, //! mengirim data untuk me refresh state
-                                        listBulan: listBulan,
-                                        listArtist: listArtist,
-                                        listDivisi: listDivisi,
-                                        myData: myDataProduksi,
-                                        count: myDataProduksi!.length,
-                                        listSubDivisiArtistFinishing:
-                                            listSubDivisiArtistFinishing,
-                                        listSubDivisiArtistPolishing:
-                                            listSubDivisiArtistPolishing,
-                                        listSubDivisiArtistStell:
-                                            listSubDivisiArtistStell,
-                                        listSubDivisiArtistPasangBatu:
-                                            listSubDivisiArtistPasangBatu,
-                                        siklus: siklusDesigner)
-                                    : RowSourceScm(
-                                        onRowPressed: () {
-                                          refresh();
-                                        }, //! mengirim data untuk me refresh state
-                                        listArtist: listArtist,
-                                        listDivisi: listDivisi,
-                                        myData: myDataProduksi,
-                                        count: myDataProduksi!.length,
-                                        listSubDivisiArtistFinishing:
-                                            listSubDivisiArtistFinishing,
-                                        listSubDivisiArtistPolishing:
-                                            listSubDivisiArtistPolishing,
-                                        listSubDivisiArtistStell:
-                                            listSubDivisiArtistStell,
-                                        listSubDivisiArtistPasangBatu:
-                                            listSubDivisiArtistPasangBatu,
-                                        siklus: siklusDesigner)),
-                          ]),
-                        ),
+                      : dataTableMPS()
+
+              // Expanded(
+              //     child: ListView(children: [
+              //       PaginatedDataTable(
+              //           showCheckboxColumn: false,
+              //           availableRowsPerPage: const [5, 10, 50, 100],
+              //           rowsPerPage: _rowsPerPage,
+              //           dataRowMaxHeight: 150,
+              //           onRowsPerPageChanged: (value) {
+              //             setState(() {
+              //               isLoading == true;
+              //             });
+              //             _rowsPerPage = value!;
+              //             setState(() {
+              //               isLoading == false;
+              //             });
+              //           },
+              //           sortColumnIndex: _currentSortColumn,
+              //           sortAscending: sort,
+              //           // rowsPerPage: 25,
+              //           columnSpacing: 0,
+              //           columns: sharedPreferences!
+              //                           .getString('divisi') ==
+              //                       'produksi' ||
+              //                   sharedPreferences!
+              //                           .getString('divisi') ==
+              //                       'admin'
+              //               ? dataColumnProduksi()
+              //               : dataColumnScm(),
+              //           source: sharedPreferences!
+              //                           .getString('divisi') ==
+              //                       'produksi' ||
+              //                   sharedPreferences!
+              //                           .getString('divisi') ==
+              //                       'admin'
+              //               ? RowSourceProduksi(
+              //                   onRowPressed: () {
+              //                     getData();
+              //                   }, //! mengirim data untuk me refresh state
+              //                   listBulan: listBulan,
+              //                   listArtist: listArtist,
+              //                   listDivisi: listDivisi,
+              //                   myData: myDataProduksi,
+              //                   count: myDataProduksi!.length,
+              //                   listSubDivisiArtistFinishing:
+              //                       listSubDivisiArtistFinishing,
+              //                   listSubDivisiArtistPolishing:
+              //                       listSubDivisiArtistPolishing,
+              //                   listSubDivisiArtistStell:
+              //                       listSubDivisiArtistStell,
+              //                   listSubDivisiArtistPasangBatu:
+              //                       listSubDivisiArtistPasangBatu,
+              //                   siklus: siklusDesigner)
+              //               : RowSourceScm(
+              //                   onRowPressed: () {
+              //                     refresh();
+              //                   }, //! mengirim data untuk me refresh state
+              //                   listArtist: listArtist,
+              //                   listDivisi: listDivisi,
+              //                   myData: myDataProduksi,
+              //                   count: myDataProduksi!.length,
+              //                   listSubDivisiArtistFinishing:
+              //                       listSubDivisiArtistFinishing,
+              //                   listSubDivisiArtistPolishing:
+              //                       listSubDivisiArtistPolishing,
+              //                   listSubDivisiArtistStell:
+              //                       listSubDivisiArtistStell,
+              //                   listSubDivisiArtistPasangBatu:
+              //                       listSubDivisiArtistPasangBatu,
+              //                   siklus: siklusDesigner)),
+              //     ]),
+              //   ),
             ]),
       ]),
     );
@@ -2123,6 +1599,11 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
     setState(() {
       isLoadingKeteranganMinggu = false;
     });
+  }
+
+  getData() async {
+    await _getDataBySiklusProduksi(siklusDesigner, pilihWeek, pilihJenisBarang);
+    searchAnything(controller.text);
   }
 
   dataColumnProduksi() {
@@ -2872,7 +2353,9 @@ class _ListMpsScreenState extends State<ListMpsScreen> {
   }
 }
 
-class RowSourceProduksi extends DataTableSource {
+class RowSourceProduksi2 extends DataTableSource {
+  List<FormDesignerModel>? dataView;
+
   var myData;
   final count;
   var siklus;
@@ -2901,7 +2384,7 @@ class RowSourceProduksi extends DataTableSource {
   ];
   List<String> listCasting = ['W1', 'W2', 'W3', 'W4'];
 
-  RowSourceProduksi({
+  RowSourceProduksi2({
     required this.myData,
     required this.count,
     required this.siklus,
@@ -2950,6 +2433,7 @@ class RowSourceProduksi extends DataTableSource {
     bool isBackPosisi = false;
 
     return DataRow(
+        //HINTS merubah warna bg
         color: MaterialStateProperty.resolveWith<Color?>(
           (Set<MaterialState> states) {
             // Set the background color to red when the row is selected
@@ -3239,24 +2723,444 @@ class RowSourceProduksi extends DataTableSource {
           //kode marketing
           DataCell(
             Builder(builder: (context) {
-              return InkWell(
-                  onLongPress: () {
-                    var copy = data.kodeMarketing.toString();
-                    Clipboard.setData(ClipboardData(text: copy));
-                    showSimpleNotification(
-                      const Text('Text Berhasil Dicopy'),
-                      background: Colors.green,
-                      duration: const Duration(seconds: 2),
-                    );
-                  },
-                  child: Padding(
+              return sharedPreferences!.getString('divisi') == 'admin'
+                  ? Padding(
                       padding: const EdgeInsets.all(0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(data.kodeMarketing),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              data.kodeMarketing == ''
+                                  ? Center(
+                                      child: ElevatedButton(
+                                          // width: 150,
+                                          // controller: btnController,
+                                          onPressed: (() async {
+                                            showSimpleNotification(
+                                              const Text('Please Wait ...'),
+                                              background: Colors.green,
+                                              duration:
+                                                  const Duration(seconds: 2),
+                                            );
+
+                                            await _getDataDesignerById(data.id);
+                                            var dataKode = dataView!.first;
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (c) =>
+                                                        FormViewScreen(
+                                                          modelDesigner:
+                                                              FormDesignerModel(
+                                                            statusForm: dataKode
+                                                                .statusForm,
+                                                            id: dataKode.id,
+                                                            kodeDesignMdbc: dataKode
+                                                                .kodeDesignMdbc,
+                                                            kodeMarketing: dataKode
+                                                                .kodeMarketing,
+                                                            kodeProduksi: dataKode
+                                                                .kodeProduksi,
+                                                            namaDesigner: dataKode
+                                                                .namaDesigner,
+                                                            namaModeller: dataKode
+                                                                .namaModeller,
+                                                            kodeDesign: dataKode
+                                                                .kodeDesign,
+                                                            siklus:
+                                                                dataKode.siklus,
+                                                            tema: dataKode.tema,
+                                                            rantai:
+                                                                dataKode.rantai,
+                                                            qtyRantai: dataKode
+                                                                .qtyRantai,
+                                                            lain2:
+                                                                dataKode.lain2,
+                                                            qtyLain2: dataKode
+                                                                .qtyLain2,
+                                                            earnut:
+                                                                dataKode.earnut,
+                                                            qtyEarnut: dataKode
+                                                                .qtyEarnut,
+                                                            panjangRantai: dataKode
+                                                                .panjangRantai,
+                                                            customKomponen: dataKode
+                                                                .customKomponen,
+                                                            qtyCustomKomponen:
+                                                                dataKode
+                                                                    .qtyCustomKomponen,
+                                                            jenisBarang: dataKode
+                                                                .jenisBarang,
+                                                            kategoriBarang: dataKode
+                                                                .kategoriBarang,
+                                                            brand:
+                                                                dataKode.brand,
+                                                            photoShoot: dataKode
+                                                                .photoShoot,
+                                                            color:
+                                                                dataKode.color,
+                                                            beratEmas: dataKode
+                                                                .beratEmas,
+                                                            estimasiHarga: dataKode
+                                                                .estimasiHarga,
+                                                            ringSize: dataKode
+                                                                .ringSize,
+                                                            created_at: dataKode
+                                                                .created_at,
+                                                            batu1:
+                                                                dataKode.batu1,
+                                                            qtyBatu1: dataKode
+                                                                .qtyBatu1,
+                                                            batu2:
+                                                                dataKode.batu2,
+                                                            qtyBatu2: dataKode
+                                                                .qtyBatu2,
+                                                            batu3:
+                                                                dataKode.batu3,
+                                                            qtyBatu3: dataKode
+                                                                .qtyBatu3,
+                                                            batu4:
+                                                                dataKode.batu4,
+                                                            qtyBatu4: dataKode
+                                                                .qtyBatu4,
+                                                            batu5:
+                                                                dataKode.batu5,
+                                                            qtyBatu5: dataKode
+                                                                .qtyBatu5,
+                                                            batu6:
+                                                                dataKode.batu6,
+                                                            qtyBatu6: dataKode
+                                                                .qtyBatu6,
+                                                            batu7:
+                                                                dataKode.batu7,
+                                                            qtyBatu7: dataKode
+                                                                .qtyBatu7,
+                                                            batu8:
+                                                                dataKode.batu8,
+                                                            qtyBatu8: dataKode
+                                                                .qtyBatu8,
+                                                            batu9:
+                                                                dataKode.batu9,
+                                                            qtyBatu9: dataKode
+                                                                .qtyBatu9,
+                                                            batu10:
+                                                                dataKode.batu10,
+                                                            qtyBatu10: dataKode
+                                                                .qtyBatu10,
+                                                            batu11:
+                                                                dataKode.batu11,
+                                                            qtyBatu11: dataKode
+                                                                .qtyBatu11,
+                                                            batu12:
+                                                                dataKode.batu12,
+                                                            qtyBatu12: dataKode
+                                                                .qtyBatu12,
+                                                            batu13:
+                                                                dataKode.batu13,
+                                                            qtyBatu13: dataKode
+                                                                .qtyBatu13,
+                                                            batu14:
+                                                                dataKode.batu14,
+                                                            qtyBatu14: dataKode
+                                                                .qtyBatu14,
+                                                            batu15:
+                                                                dataKode.batu15,
+                                                            qtyBatu15: dataKode
+                                                                .qtyBatu15,
+                                                            batu16:
+                                                                dataKode.batu16,
+                                                            qtyBatu16: dataKode
+                                                                .qtyBatu16,
+                                                            batu17:
+                                                                dataKode.batu17,
+                                                            qtyBatu17: dataKode
+                                                                .qtyBatu17,
+                                                            batu18:
+                                                                dataKode.batu18,
+                                                            qtyBatu18: dataKode
+                                                                .qtyBatu18,
+                                                            batu19:
+                                                                dataKode.batu19,
+                                                            qtyBatu19: dataKode
+                                                                .qtyBatu19,
+                                                            batu20:
+                                                                dataKode.batu20,
+                                                            qtyBatu20: dataKode
+                                                                .qtyBatu20,
+                                                            batu21:
+                                                                dataKode.batu21,
+                                                            qtyBatu21: dataKode
+                                                                .qtyBatu21,
+                                                            batu22:
+                                                                dataKode.batu22,
+                                                            qtyBatu22: dataKode
+                                                                .qtyBatu22,
+                                                            batu23:
+                                                                dataKode.batu23,
+                                                            qtyBatu23: dataKode
+                                                                .qtyBatu23,
+                                                            batu24:
+                                                                dataKode.batu24,
+                                                            qtyBatu24: dataKode
+                                                                .qtyBatu24,
+                                                            batu25:
+                                                                dataKode.batu25,
+                                                            qtyBatu25: dataKode
+                                                                .qtyBatu25,
+                                                            batu26:
+                                                                dataKode.batu26,
+                                                            qtyBatu26: dataKode
+                                                                .qtyBatu26,
+                                                            batu27:
+                                                                dataKode.batu27,
+                                                            qtyBatu27: dataKode
+                                                                .qtyBatu27,
+                                                            batu28:
+                                                                dataKode.batu28,
+                                                            qtyBatu28: dataKode
+                                                                .qtyBatu28,
+                                                            batu29:
+                                                                dataKode.batu29,
+                                                            qtyBatu29: dataKode
+                                                                .qtyBatu29,
+                                                            batu30:
+                                                                dataKode.batu30,
+                                                            qtyBatu30: dataKode
+                                                                .qtyBatu30,
+                                                            batu31:
+                                                                dataKode.batu31,
+                                                            qtyBatu31: dataKode
+                                                                .qtyBatu31,
+                                                            batu32:
+                                                                dataKode.batu32,
+                                                            qtyBatu32: dataKode
+                                                                .qtyBatu32,
+                                                            batu33:
+                                                                dataKode.batu33,
+                                                            qtyBatu33: dataKode
+                                                                .qtyBatu33,
+                                                            batu34:
+                                                                dataKode.batu34,
+                                                            qtyBatu34: dataKode
+                                                                .qtyBatu34,
+                                                            batu35:
+                                                                dataKode.batu35,
+                                                            qtyBatu35: dataKode
+                                                                .qtyBatu35,
+                                                            imageUrl: dataKode
+                                                                .imageUrl,
+                                                            keteranganStatusBatu:
+                                                                dataKode
+                                                                    .keteranganStatusBatu,
+                                                            pointModeller: dataKode
+                                                                .pointModeller,
+                                                            tanggalInModeller:
+                                                                dataKode
+                                                                    .tanggalInModeller,
+                                                            tanggalOutModeller:
+                                                                dataKode
+                                                                    .tanggalOutModeller,
+                                                            tanggalInProduksi:
+                                                                dataKode
+                                                                    .tanggalInProduksi,
+                                                            beratModeller: dataKode
+                                                                .beratModeller,
+                                                            jo: dataKode.jo,
+                                                          ),
+                                                        )));
+                                          }),
+                                          child: const Text('Get Kode')),
+                                    )
+                                  : InkWell(
+                                      onLongPress: () {
+                                        var copy =
+                                            data.kodeMarketing.toString();
+                                        Clipboard.setData(
+                                            ClipboardData(text: copy));
+                                        showSimpleNotification(
+                                          const Text('Text Berhasil Dicopy'),
+                                          background: Colors.green,
+                                          duration: const Duration(seconds: 2),
+                                        );
+                                      },
+                                      child: Text(data.kodeMarketing),
+                                    ),
+                            ],
+                          ),
+                          const SizedBox(height: 20),
+                          Center(
+                            child: ElevatedButton(
+                                // width: 150,
+                                // controller: btnController,
+                                onPressed: (() async {
+                                  showSimpleNotification(
+                                    const Text('Please Wait ...'),
+                                    background: Colors.yellow,
+                                    duration: const Duration(seconds: 2),
+                                  );
+
+                                  await _getDataDesignerById(data.id);
+                                  var dataKode = dataView!.first;
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (c) => FormViewScreen(
+                                                modelDesigner:
+                                                    FormDesignerModel(
+                                                  statusForm:
+                                                      dataKode.statusForm,
+                                                  id: dataKode.id,
+                                                  kodeDesignMdbc:
+                                                      dataKode.kodeDesignMdbc,
+                                                  kodeMarketing:
+                                                      dataKode.kodeMarketing,
+                                                  kodeProduksi:
+                                                      dataKode.kodeProduksi,
+                                                  namaDesigner:
+                                                      dataKode.namaDesigner,
+                                                  namaModeller:
+                                                      dataKode.namaModeller,
+                                                  kodeDesign:
+                                                      dataKode.kodeDesign,
+                                                  siklus: dataKode.siklus,
+                                                  tema: dataKode.tema,
+                                                  rantai: dataKode.rantai,
+                                                  qtyRantai: dataKode.qtyRantai,
+                                                  lain2: dataKode.lain2,
+                                                  qtyLain2: dataKode.qtyLain2,
+                                                  earnut: dataKode.earnut,
+                                                  qtyEarnut: dataKode.qtyEarnut,
+                                                  panjangRantai:
+                                                      dataKode.panjangRantai,
+                                                  customKomponen:
+                                                      dataKode.customKomponen,
+                                                  qtyCustomKomponen: dataKode
+                                                      .qtyCustomKomponen,
+                                                  jenisBarang:
+                                                      dataKode.jenisBarang,
+                                                  kategoriBarang:
+                                                      dataKode.kategoriBarang,
+                                                  brand: dataKode.brand,
+                                                  photoShoot:
+                                                      dataKode.photoShoot,
+                                                  color: dataKode.color,
+                                                  beratEmas: dataKode.beratEmas,
+                                                  estimasiHarga:
+                                                      dataKode.estimasiHarga,
+                                                  ringSize: dataKode.ringSize,
+                                                  created_at:
+                                                      dataKode.created_at,
+                                                  batu1: dataKode.batu1,
+                                                  qtyBatu1: dataKode.qtyBatu1,
+                                                  batu2: dataKode.batu2,
+                                                  qtyBatu2: dataKode.qtyBatu2,
+                                                  batu3: dataKode.batu3,
+                                                  qtyBatu3: dataKode.qtyBatu3,
+                                                  batu4: dataKode.batu4,
+                                                  qtyBatu4: dataKode.qtyBatu4,
+                                                  batu5: dataKode.batu5,
+                                                  qtyBatu5: dataKode.qtyBatu5,
+                                                  batu6: dataKode.batu6,
+                                                  qtyBatu6: dataKode.qtyBatu6,
+                                                  batu7: dataKode.batu7,
+                                                  qtyBatu7: dataKode.qtyBatu7,
+                                                  batu8: dataKode.batu8,
+                                                  qtyBatu8: dataKode.qtyBatu8,
+                                                  batu9: dataKode.batu9,
+                                                  qtyBatu9: dataKode.qtyBatu9,
+                                                  batu10: dataKode.batu10,
+                                                  qtyBatu10: dataKode.qtyBatu10,
+                                                  batu11: dataKode.batu11,
+                                                  qtyBatu11: dataKode.qtyBatu11,
+                                                  batu12: dataKode.batu12,
+                                                  qtyBatu12: dataKode.qtyBatu12,
+                                                  batu13: dataKode.batu13,
+                                                  qtyBatu13: dataKode.qtyBatu13,
+                                                  batu14: dataKode.batu14,
+                                                  qtyBatu14: dataKode.qtyBatu14,
+                                                  batu15: dataKode.batu15,
+                                                  qtyBatu15: dataKode.qtyBatu15,
+                                                  batu16: dataKode.batu16,
+                                                  qtyBatu16: dataKode.qtyBatu16,
+                                                  batu17: dataKode.batu17,
+                                                  qtyBatu17: dataKode.qtyBatu17,
+                                                  batu18: dataKode.batu18,
+                                                  qtyBatu18: dataKode.qtyBatu18,
+                                                  batu19: dataKode.batu19,
+                                                  qtyBatu19: dataKode.qtyBatu19,
+                                                  batu20: dataKode.batu20,
+                                                  qtyBatu20: dataKode.qtyBatu20,
+                                                  batu21: dataKode.batu21,
+                                                  qtyBatu21: dataKode.qtyBatu21,
+                                                  batu22: dataKode.batu22,
+                                                  qtyBatu22: dataKode.qtyBatu22,
+                                                  batu23: dataKode.batu23,
+                                                  qtyBatu23: dataKode.qtyBatu23,
+                                                  batu24: dataKode.batu24,
+                                                  qtyBatu24: dataKode.qtyBatu24,
+                                                  batu25: dataKode.batu25,
+                                                  qtyBatu25: dataKode.qtyBatu25,
+                                                  batu26: dataKode.batu26,
+                                                  qtyBatu26: dataKode.qtyBatu26,
+                                                  batu27: dataKode.batu27,
+                                                  qtyBatu27: dataKode.qtyBatu27,
+                                                  batu28: dataKode.batu28,
+                                                  qtyBatu28: dataKode.qtyBatu28,
+                                                  batu29: dataKode.batu29,
+                                                  qtyBatu29: dataKode.qtyBatu29,
+                                                  batu30: dataKode.batu30,
+                                                  qtyBatu30: dataKode.qtyBatu30,
+                                                  batu31: dataKode.batu31,
+                                                  qtyBatu31: dataKode.qtyBatu31,
+                                                  batu32: dataKode.batu32,
+                                                  qtyBatu32: dataKode.qtyBatu32,
+                                                  batu33: dataKode.batu33,
+                                                  qtyBatu33: dataKode.qtyBatu33,
+                                                  batu34: dataKode.batu34,
+                                                  qtyBatu34: dataKode.qtyBatu34,
+                                                  batu35: dataKode.batu35,
+                                                  qtyBatu35: dataKode.qtyBatu35,
+                                                  imageUrl: dataKode.imageUrl,
+                                                  keteranganStatusBatu: dataKode
+                                                      .keteranganStatusBatu,
+                                                  pointModeller:
+                                                      dataKode.pointModeller,
+                                                  tanggalInModeller: dataKode
+                                                      .tanggalInModeller,
+                                                  tanggalOutModeller: dataKode
+                                                      .tanggalOutModeller,
+                                                  tanggalInProduksi: dataKode
+                                                      .tanggalInProduksi,
+                                                  beratModeller:
+                                                      dataKode.beratModeller,
+                                                  jo: dataKode.jo,
+                                                ),
+                                              )));
+                                }),
+                                child: const Text('View detail')),
+                          )
                         ],
-                      )));
+                      ))
+                  : InkWell(
+                      onLongPress: () {
+                        var copy = data.kodeMarketing.toString();
+                        Clipboard.setData(ClipboardData(text: copy));
+                        showSimpleNotification(
+                          const Text('Text Berhasil Dicopy'),
+                          background: Colors.green,
+                          duration: const Duration(seconds: 2),
+                        );
+                      },
+                      child: Padding(
+                          padding: const EdgeInsets.all(0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(data.kodeMarketing),
+                            ],
+                          )));
             }),
           ),
           DataCell(_verticalDivider),
@@ -5098,6 +5002,22 @@ class RowSourceProduksi extends DataTableSource {
         Uri.parse('${ApiConstants.baseUrl}${ApiConstants.addHistoryPosisi}'),
         body: body);
     print(response.body);
+  }
+
+  _getDataDesignerById(id) async {
+    final response = await http.get(
+        Uri.parse(ApiConstants.baseUrl + ApiConstants.getListFormDesigner));
+    if (response.statusCode == 200) {
+      List jsonResponse = json.decode(response.body);
+      var allData =
+          jsonResponse.map((data) => FormDesignerModel.fromJson(data)).toList();
+      var filterById = allData
+          .where((element) => element.id.toString() == id.toString())
+          .toList();
+      dataView = filterById.toList();
+    } else {
+      throw Exception('Unexpected error occured!');
+    }
   }
 }
 

@@ -559,43 +559,43 @@ class _ListBatuScreenState extends State<ListBatuScreen> {
                     //         style: ElevatedButton.styleFrom(
                     //             backgroundColor: Colors.green.shade600),
                     //         onPressed: () async {
-                    //           // FilePickerResult? result =
-                    //           //     await FilePicker.platform.pickFiles();
+                    //           FilePickerResult? result =
+                    //               await FilePicker.platform.pickFiles();
 
-                    //           // if (result != null) {
-                    //           //   PlatformFile file = result.files.first;
-                    //           //   print(file.name);
-                    //           //   print(file.size);
-                    //           //   print(file.extension);
-                    //           //   // print(file.path);
-                    //           //   showSimpleNotification(
-                    //           //     const Center(
-                    //           //         child: Text(
-                    //           //       'Import Data Berhasil',
-                    //           //       style: TextStyle(
-                    //           //           fontSize: 25,
-                    //           //           color: Colors.white,
-                    //           //           fontWeight: FontWeight.bold),
-                    //           //     )),
-                    //           //     subtitle: const Center(
-                    //           //         child: Text('Mohon segera refresh data')),
-                    //           //     background: Colors.green,
-                    //           //     duration: const Duration(seconds: 5),
-                    //           //   );
-                    //           //   // Fluttertoast.showToast(
-                    //           //   //     msg: "Import Data Berhasil");
-                    //           // } else {
-                    //           //   // User canceled the picker
-                    //           //   print('cancel pick');
+                    //           if (result != null) {
+                    //             PlatformFile file = result.files.first;
+                    //             print(file.name);
+                    //             print(file.size);
+                    //             print(file.extension);
+                    //             // print(file.path);
+                    //             showSimpleNotification(
+                    //               const Center(
+                    //                   child: Text(
+                    //                 'Import Data Berhasil',
+                    //                 style: TextStyle(
+                    //                     fontSize: 25,
+                    //                     color: Colors.white,
+                    //                     fontWeight: FontWeight.bold),
+                    //               )),
+                    //               subtitle: const Center(
+                    //                   child: Text('Mohon segera refresh data')),
+                    //               background: Colors.green,
+                    //               duration: const Duration(seconds: 5),
+                    //             );
+                    //             // Fluttertoast.showToast(
+                    //             //     msg: "Import Data Berhasil");
+                    //           } else {
+                    //             // User canceled the picker
+                    //             print('cancel pick');
+                    //           }
+
+                    //           // try {
+                    //           //   await sendFileToApi(
+                    //           //       result as File, ApiConstants.addSiklus);
+                    //           //   print('File sent successfully.');
+                    //           // } catch (e) {
+                    //           //   print('Error sending file: $e');
                     //           // }
-
-                    //           // // try {
-                    //           // //   await sendFileToApi(
-                    //           // //       result as File, ApiConstants.addSiklus);
-                    //           // //   print('File sent successfully.');
-                    //           // // } catch (e) {
-                    //           // //   print('Error sending file: $e');
-                    //           // // }
                     //         },
                     //         child: const Text('Import to excel'))),
                     Container(

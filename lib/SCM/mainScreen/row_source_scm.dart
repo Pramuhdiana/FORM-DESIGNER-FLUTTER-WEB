@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:form_designer/api/api_constant.dart';
 import 'package:form_designer/global/currency_format.dart';
 import 'package:form_designer/global/global.dart';
@@ -154,162 +155,348 @@ class RowSourceScm extends DataTableSource {
         Builder(builder: (context) {
           return Padding(
               padding: const EdgeInsets.all(0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              child: Column(
                 children: [
-                  data.kodeMarketing == ''
-                      ? Center(
-                          child: ElevatedButton(
-                              // width: 150,
-                              // controller: btnController,
-                              onPressed: (() async {
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      data.kodeMarketing == ''
+                          ? Center(
+                              child: ElevatedButton(
+                                  // width: 150,
+                                  // controller: btnController,
+                                  onPressed: (() async {
+                                    showSimpleNotification(
+                                      const Text('Please Wait ...'),
+                                      background: Colors.green,
+                                      duration: const Duration(seconds: 2),
+                                    );
+
+                                    await _getDataDesignerById(data.id);
+                                    var dataKode = dataView!.first;
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (c) => FormViewScreen(
+                                                  modelDesigner:
+                                                      FormDesignerModel(
+                                                    statusForm:
+                                                        dataKode.statusForm,
+                                                    id: dataKode.id,
+                                                    kodeDesignMdbc:
+                                                        dataKode.kodeDesignMdbc,
+                                                    kodeMarketing:
+                                                        dataKode.kodeMarketing,
+                                                    kodeProduksi:
+                                                        dataKode.kodeProduksi,
+                                                    namaDesigner:
+                                                        dataKode.namaDesigner,
+                                                    namaModeller:
+                                                        dataKode.namaModeller,
+                                                    kodeDesign:
+                                                        dataKode.kodeDesign,
+                                                    siklus: dataKode.siklus,
+                                                    tema: dataKode.tema,
+                                                    rantai: dataKode.rantai,
+                                                    qtyRantai:
+                                                        dataKode.qtyRantai,
+                                                    lain2: dataKode.lain2,
+                                                    qtyLain2: dataKode.qtyLain2,
+                                                    earnut: dataKode.earnut,
+                                                    qtyEarnut:
+                                                        dataKode.qtyEarnut,
+                                                    panjangRantai:
+                                                        dataKode.panjangRantai,
+                                                    customKomponen:
+                                                        dataKode.customKomponen,
+                                                    qtyCustomKomponen: dataKode
+                                                        .qtyCustomKomponen,
+                                                    jenisBarang:
+                                                        dataKode.jenisBarang,
+                                                    kategoriBarang:
+                                                        dataKode.kategoriBarang,
+                                                    brand: dataKode.brand,
+                                                    photoShoot:
+                                                        dataKode.photoShoot,
+                                                    color: dataKode.color,
+                                                    beratEmas:
+                                                        dataKode.beratEmas,
+                                                    estimasiHarga:
+                                                        dataKode.estimasiHarga,
+                                                    ringSize: dataKode.ringSize,
+                                                    created_at:
+                                                        dataKode.created_at,
+                                                    batu1: dataKode.batu1,
+                                                    qtyBatu1: dataKode.qtyBatu1,
+                                                    batu2: dataKode.batu2,
+                                                    qtyBatu2: dataKode.qtyBatu2,
+                                                    batu3: dataKode.batu3,
+                                                    qtyBatu3: dataKode.qtyBatu3,
+                                                    batu4: dataKode.batu4,
+                                                    qtyBatu4: dataKode.qtyBatu4,
+                                                    batu5: dataKode.batu5,
+                                                    qtyBatu5: dataKode.qtyBatu5,
+                                                    batu6: dataKode.batu6,
+                                                    qtyBatu6: dataKode.qtyBatu6,
+                                                    batu7: dataKode.batu7,
+                                                    qtyBatu7: dataKode.qtyBatu7,
+                                                    batu8: dataKode.batu8,
+                                                    qtyBatu8: dataKode.qtyBatu8,
+                                                    batu9: dataKode.batu9,
+                                                    qtyBatu9: dataKode.qtyBatu9,
+                                                    batu10: dataKode.batu10,
+                                                    qtyBatu10:
+                                                        dataKode.qtyBatu10,
+                                                    batu11: dataKode.batu11,
+                                                    qtyBatu11:
+                                                        dataKode.qtyBatu11,
+                                                    batu12: dataKode.batu12,
+                                                    qtyBatu12:
+                                                        dataKode.qtyBatu12,
+                                                    batu13: dataKode.batu13,
+                                                    qtyBatu13:
+                                                        dataKode.qtyBatu13,
+                                                    batu14: dataKode.batu14,
+                                                    qtyBatu14:
+                                                        dataKode.qtyBatu14,
+                                                    batu15: dataKode.batu15,
+                                                    qtyBatu15:
+                                                        dataKode.qtyBatu15,
+                                                    batu16: dataKode.batu16,
+                                                    qtyBatu16:
+                                                        dataKode.qtyBatu16,
+                                                    batu17: dataKode.batu17,
+                                                    qtyBatu17:
+                                                        dataKode.qtyBatu17,
+                                                    batu18: dataKode.batu18,
+                                                    qtyBatu18:
+                                                        dataKode.qtyBatu18,
+                                                    batu19: dataKode.batu19,
+                                                    qtyBatu19:
+                                                        dataKode.qtyBatu19,
+                                                    batu20: dataKode.batu20,
+                                                    qtyBatu20:
+                                                        dataKode.qtyBatu20,
+                                                    batu21: dataKode.batu21,
+                                                    qtyBatu21:
+                                                        dataKode.qtyBatu21,
+                                                    batu22: dataKode.batu22,
+                                                    qtyBatu22:
+                                                        dataKode.qtyBatu22,
+                                                    batu23: dataKode.batu23,
+                                                    qtyBatu23:
+                                                        dataKode.qtyBatu23,
+                                                    batu24: dataKode.batu24,
+                                                    qtyBatu24:
+                                                        dataKode.qtyBatu24,
+                                                    batu25: dataKode.batu25,
+                                                    qtyBatu25:
+                                                        dataKode.qtyBatu25,
+                                                    batu26: dataKode.batu26,
+                                                    qtyBatu26:
+                                                        dataKode.qtyBatu26,
+                                                    batu27: dataKode.batu27,
+                                                    qtyBatu27:
+                                                        dataKode.qtyBatu27,
+                                                    batu28: dataKode.batu28,
+                                                    qtyBatu28:
+                                                        dataKode.qtyBatu28,
+                                                    batu29: dataKode.batu29,
+                                                    qtyBatu29:
+                                                        dataKode.qtyBatu29,
+                                                    batu30: dataKode.batu30,
+                                                    qtyBatu30:
+                                                        dataKode.qtyBatu30,
+                                                    batu31: dataKode.batu31,
+                                                    qtyBatu31:
+                                                        dataKode.qtyBatu31,
+                                                    batu32: dataKode.batu32,
+                                                    qtyBatu32:
+                                                        dataKode.qtyBatu32,
+                                                    batu33: dataKode.batu33,
+                                                    qtyBatu33:
+                                                        dataKode.qtyBatu33,
+                                                    batu34: dataKode.batu34,
+                                                    qtyBatu34:
+                                                        dataKode.qtyBatu34,
+                                                    batu35: dataKode.batu35,
+                                                    qtyBatu35:
+                                                        dataKode.qtyBatu35,
+                                                    imageUrl: dataKode.imageUrl,
+                                                    keteranganStatusBatu: dataKode
+                                                        .keteranganStatusBatu,
+                                                    pointModeller:
+                                                        dataKode.pointModeller,
+                                                    tanggalInModeller: dataKode
+                                                        .tanggalInModeller,
+                                                    tanggalOutModeller: dataKode
+                                                        .tanggalOutModeller,
+                                                    tanggalInProduksi: dataKode
+                                                        .tanggalInProduksi,
+                                                    beratModeller:
+                                                        dataKode.beratModeller,
+                                                    jo: dataKode.jo,
+                                                  ),
+                                                )));
+                                  }),
+                                  child: const Text('Get Kode')),
+                            )
+                          : InkWell(
+                              onLongPress: () {
+                                var copy = data.kodeMarketing.toString();
+                                Clipboard.setData(ClipboardData(text: copy));
                                 showSimpleNotification(
-                                  const Text('Please Wait ...'),
+                                  const Text('Text Berhasil Dicopy'),
                                   background: Colors.green,
                                   duration: const Duration(seconds: 2),
                                 );
+                              },
+                              child: Text(data.kodeMarketing),
+                            ),
+                    ],
+                  ),
+                  Center(
+                    child: ElevatedButton(
+                        // width: 150,
+                        // controller: btnController,
+                        onPressed: (() async {
+                          showSimpleNotification(
+                            const Text('Please Wait ...'),
+                            background: Colors.green,
+                            duration: const Duration(seconds: 2),
+                          );
 
-                                await _getDataDesignerById(data.id);
-                                var dataKode = dataView!.first;
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (c) => FormViewScreen(
-                                              modelDesigner: FormDesignerModel(
-                                                statusForm: dataKode.statusForm,
-                                                id: dataKode.id,
-                                                kodeDesignMdbc:
-                                                    dataKode.kodeDesignMdbc,
-                                                kodeMarketing:
-                                                    dataKode.kodeMarketing,
-                                                kodeProduksi:
-                                                    dataKode.kodeProduksi,
-                                                namaDesigner:
-                                                    dataKode.namaDesigner,
-                                                namaModeller:
-                                                    dataKode.namaModeller,
-                                                kodeDesign: dataKode.kodeDesign,
-                                                siklus: dataKode.siklus,
-                                                tema: dataKode.tema,
-                                                rantai: dataKode.rantai,
-                                                qtyRantai: dataKode.qtyRantai,
-                                                lain2: dataKode.lain2,
-                                                qtyLain2: dataKode.qtyLain2,
-                                                earnut: dataKode.earnut,
-                                                qtyEarnut: dataKode.qtyEarnut,
-                                                panjangRantai:
-                                                    dataKode.panjangRantai,
-                                                customKomponen:
-                                                    dataKode.customKomponen,
-                                                qtyCustomKomponen:
-                                                    dataKode.qtyCustomKomponen,
-                                                jenisBarang:
-                                                    dataKode.jenisBarang,
-                                                kategoriBarang:
-                                                    dataKode.kategoriBarang,
-                                                brand: dataKode.brand,
-                                                photoShoot: dataKode.photoShoot,
-                                                color: dataKode.color,
-                                                beratEmas: dataKode.beratEmas,
-                                                estimasiHarga:
-                                                    dataKode.estimasiHarga,
-                                                ringSize: dataKode.ringSize,
-                                                created_at: dataKode.created_at,
-                                                batu1: dataKode.batu1,
-                                                qtyBatu1: dataKode.qtyBatu1,
-                                                batu2: dataKode.batu2,
-                                                qtyBatu2: dataKode.qtyBatu2,
-                                                batu3: dataKode.batu3,
-                                                qtyBatu3: dataKode.qtyBatu3,
-                                                batu4: dataKode.batu4,
-                                                qtyBatu4: dataKode.qtyBatu4,
-                                                batu5: dataKode.batu5,
-                                                qtyBatu5: dataKode.qtyBatu5,
-                                                batu6: dataKode.batu6,
-                                                qtyBatu6: dataKode.qtyBatu6,
-                                                batu7: dataKode.batu7,
-                                                qtyBatu7: dataKode.qtyBatu7,
-                                                batu8: dataKode.batu8,
-                                                qtyBatu8: dataKode.qtyBatu8,
-                                                batu9: dataKode.batu9,
-                                                qtyBatu9: dataKode.qtyBatu9,
-                                                batu10: dataKode.batu10,
-                                                qtyBatu10: dataKode.qtyBatu10,
-                                                batu11: dataKode.batu11,
-                                                qtyBatu11: dataKode.qtyBatu11,
-                                                batu12: dataKode.batu12,
-                                                qtyBatu12: dataKode.qtyBatu12,
-                                                batu13: dataKode.batu13,
-                                                qtyBatu13: dataKode.qtyBatu13,
-                                                batu14: dataKode.batu14,
-                                                qtyBatu14: dataKode.qtyBatu14,
-                                                batu15: dataKode.batu15,
-                                                qtyBatu15: dataKode.qtyBatu15,
-                                                batu16: dataKode.batu16,
-                                                qtyBatu16: dataKode.qtyBatu16,
-                                                batu17: dataKode.batu17,
-                                                qtyBatu17: dataKode.qtyBatu17,
-                                                batu18: dataKode.batu18,
-                                                qtyBatu18: dataKode.qtyBatu18,
-                                                batu19: dataKode.batu19,
-                                                qtyBatu19: dataKode.qtyBatu19,
-                                                batu20: dataKode.batu20,
-                                                qtyBatu20: dataKode.qtyBatu20,
-                                                batu21: dataKode.batu21,
-                                                qtyBatu21: dataKode.qtyBatu21,
-                                                batu22: dataKode.batu22,
-                                                qtyBatu22: dataKode.qtyBatu22,
-                                                batu23: dataKode.batu23,
-                                                qtyBatu23: dataKode.qtyBatu23,
-                                                batu24: dataKode.batu24,
-                                                qtyBatu24: dataKode.qtyBatu24,
-                                                batu25: dataKode.batu25,
-                                                qtyBatu25: dataKode.qtyBatu25,
-                                                batu26: dataKode.batu26,
-                                                qtyBatu26: dataKode.qtyBatu26,
-                                                batu27: dataKode.batu27,
-                                                qtyBatu27: dataKode.qtyBatu27,
-                                                batu28: dataKode.batu28,
-                                                qtyBatu28: dataKode.qtyBatu28,
-                                                batu29: dataKode.batu29,
-                                                qtyBatu29: dataKode.qtyBatu29,
-                                                batu30: dataKode.batu30,
-                                                qtyBatu30: dataKode.qtyBatu30,
-                                                batu31: dataKode.batu31,
-                                                qtyBatu31: dataKode.qtyBatu31,
-                                                batu32: dataKode.batu32,
-                                                qtyBatu32: dataKode.qtyBatu32,
-                                                batu33: dataKode.batu33,
-                                                qtyBatu33: dataKode.qtyBatu33,
-                                                batu34: dataKode.batu34,
-                                                qtyBatu34: dataKode.qtyBatu34,
-                                                batu35: dataKode.batu35,
-                                                qtyBatu35: dataKode.qtyBatu35,
-                                                imageUrl: dataKode.imageUrl,
-                                                keteranganStatusBatu: dataKode
-                                                    .keteranganStatusBatu,
-                                                pointModeller:
-                                                    dataKode.pointModeller,
-                                                tanggalInModeller:
-                                                    dataKode.tanggalInModeller,
-                                                tanggalOutModeller:
-                                                    dataKode.tanggalOutModeller,
-                                                tanggalInProduksi:
-                                                    dataKode.tanggalInProduksi,
-                                                beratModeller:
-                                                    dataKode.beratModeller,
-                                                    jo:
-                                                    dataKode.jo,
-                                              ),
-                                            )));
-                              }),
-                              child: const Text('Get Kode')),
-                        )
-                      : Text(data.kodeMarketing),
+                          await _getDataDesignerById(data.id);
+                          var dataKode = dataView!.first;
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (c) => FormViewScreen(
+                                        modelDesigner: FormDesignerModel(
+                                          statusForm: dataKode.statusForm,
+                                          id: dataKode.id,
+                                          kodeDesignMdbc:
+                                              dataKode.kodeDesignMdbc,
+                                          kodeMarketing: dataKode.kodeMarketing,
+                                          kodeProduksi: dataKode.kodeProduksi,
+                                          namaDesigner: dataKode.namaDesigner,
+                                          namaModeller: dataKode.namaModeller,
+                                          kodeDesign: dataKode.kodeDesign,
+                                          siklus: dataKode.siklus,
+                                          tema: dataKode.tema,
+                                          rantai: dataKode.rantai,
+                                          qtyRantai: dataKode.qtyRantai,
+                                          lain2: dataKode.lain2,
+                                          qtyLain2: dataKode.qtyLain2,
+                                          earnut: dataKode.earnut,
+                                          qtyEarnut: dataKode.qtyEarnut,
+                                          panjangRantai: dataKode.panjangRantai,
+                                          customKomponen:
+                                              dataKode.customKomponen,
+                                          qtyCustomKomponen:
+                                              dataKode.qtyCustomKomponen,
+                                          jenisBarang: dataKode.jenisBarang,
+                                          kategoriBarang:
+                                              dataKode.kategoriBarang,
+                                          brand: dataKode.brand,
+                                          photoShoot: dataKode.photoShoot,
+                                          color: dataKode.color,
+                                          beratEmas: dataKode.beratEmas,
+                                          estimasiHarga: dataKode.estimasiHarga,
+                                          ringSize: dataKode.ringSize,
+                                          created_at: dataKode.created_at,
+                                          batu1: dataKode.batu1,
+                                          qtyBatu1: dataKode.qtyBatu1,
+                                          batu2: dataKode.batu2,
+                                          qtyBatu2: dataKode.qtyBatu2,
+                                          batu3: dataKode.batu3,
+                                          qtyBatu3: dataKode.qtyBatu3,
+                                          batu4: dataKode.batu4,
+                                          qtyBatu4: dataKode.qtyBatu4,
+                                          batu5: dataKode.batu5,
+                                          qtyBatu5: dataKode.qtyBatu5,
+                                          batu6: dataKode.batu6,
+                                          qtyBatu6: dataKode.qtyBatu6,
+                                          batu7: dataKode.batu7,
+                                          qtyBatu7: dataKode.qtyBatu7,
+                                          batu8: dataKode.batu8,
+                                          qtyBatu8: dataKode.qtyBatu8,
+                                          batu9: dataKode.batu9,
+                                          qtyBatu9: dataKode.qtyBatu9,
+                                          batu10: dataKode.batu10,
+                                          qtyBatu10: dataKode.qtyBatu10,
+                                          batu11: dataKode.batu11,
+                                          qtyBatu11: dataKode.qtyBatu11,
+                                          batu12: dataKode.batu12,
+                                          qtyBatu12: dataKode.qtyBatu12,
+                                          batu13: dataKode.batu13,
+                                          qtyBatu13: dataKode.qtyBatu13,
+                                          batu14: dataKode.batu14,
+                                          qtyBatu14: dataKode.qtyBatu14,
+                                          batu15: dataKode.batu15,
+                                          qtyBatu15: dataKode.qtyBatu15,
+                                          batu16: dataKode.batu16,
+                                          qtyBatu16: dataKode.qtyBatu16,
+                                          batu17: dataKode.batu17,
+                                          qtyBatu17: dataKode.qtyBatu17,
+                                          batu18: dataKode.batu18,
+                                          qtyBatu18: dataKode.qtyBatu18,
+                                          batu19: dataKode.batu19,
+                                          qtyBatu19: dataKode.qtyBatu19,
+                                          batu20: dataKode.batu20,
+                                          qtyBatu20: dataKode.qtyBatu20,
+                                          batu21: dataKode.batu21,
+                                          qtyBatu21: dataKode.qtyBatu21,
+                                          batu22: dataKode.batu22,
+                                          qtyBatu22: dataKode.qtyBatu22,
+                                          batu23: dataKode.batu23,
+                                          qtyBatu23: dataKode.qtyBatu23,
+                                          batu24: dataKode.batu24,
+                                          qtyBatu24: dataKode.qtyBatu24,
+                                          batu25: dataKode.batu25,
+                                          qtyBatu25: dataKode.qtyBatu25,
+                                          batu26: dataKode.batu26,
+                                          qtyBatu26: dataKode.qtyBatu26,
+                                          batu27: dataKode.batu27,
+                                          qtyBatu27: dataKode.qtyBatu27,
+                                          batu28: dataKode.batu28,
+                                          qtyBatu28: dataKode.qtyBatu28,
+                                          batu29: dataKode.batu29,
+                                          qtyBatu29: dataKode.qtyBatu29,
+                                          batu30: dataKode.batu30,
+                                          qtyBatu30: dataKode.qtyBatu30,
+                                          batu31: dataKode.batu31,
+                                          qtyBatu31: dataKode.qtyBatu31,
+                                          batu32: dataKode.batu32,
+                                          qtyBatu32: dataKode.qtyBatu32,
+                                          batu33: dataKode.batu33,
+                                          qtyBatu33: dataKode.qtyBatu33,
+                                          batu34: dataKode.batu34,
+                                          qtyBatu34: dataKode.qtyBatu34,
+                                          batu35: dataKode.batu35,
+                                          qtyBatu35: dataKode.qtyBatu35,
+                                          imageUrl: dataKode.imageUrl,
+                                          keteranganStatusBatu:
+                                              dataKode.keteranganStatusBatu,
+                                          pointModeller: dataKode.pointModeller,
+                                          tanggalInModeller:
+                                              dataKode.tanggalInModeller,
+                                          tanggalOutModeller:
+                                              dataKode.tanggalOutModeller,
+                                          tanggalInProduksi:
+                                              dataKode.tanggalInProduksi,
+                                          beratModeller: dataKode.beratModeller,
+                                          jo: dataKode.jo,
+                                        ),
+                                      )));
+                        }),
+                        child: const Text('View detail')),
+                  )
                 ],
               ));
         }),
       ),
+
       DataCell(_verticalDivider),
       //posisi
       DataCell(Builder(builder: (context) {

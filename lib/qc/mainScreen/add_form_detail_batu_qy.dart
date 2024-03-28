@@ -1175,7 +1175,7 @@ class _FormDetailBatuQcState extends State<FormDetailBatuQc> {
     // await getCountQc();
 
     // await getPanjang();
-    //* hinst start menyimpan list string lokal ke json
+    //* hints start menyimpan list string lokal ke json
     List<String>? panjangStrings =
         sharedPreferences!.getStringList('listPanjang');
     if (panjangStrings != null) {

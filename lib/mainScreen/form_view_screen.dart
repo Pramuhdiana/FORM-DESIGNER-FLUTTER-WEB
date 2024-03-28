@@ -487,6 +487,7 @@ class _FormViewScreenState extends State<FormViewScreen> {
     status = widget.modelDesigner!.statusForm!.toString();
     kodeDesignMdbc.text = widget.modelDesigner!.kodeDesignMdbc!.toString();
     kodeMarketing.text = widget.modelDesigner!.kodeMarketing!.toString();
+    print(kodeMarketing.text);
     kodeProduksi.text = widget.modelDesigner!.kodeProduksi!.toString();
     namaDesigner.text = widget.modelDesigner!.namaDesigner!.toString();
     namaModeller.text = widget.modelDesigner!.namaModeller!.toString();

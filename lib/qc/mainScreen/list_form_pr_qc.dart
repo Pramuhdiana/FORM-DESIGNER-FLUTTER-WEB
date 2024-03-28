@@ -93,6 +93,12 @@ class _ListFormPrQcState extends State<ListFormPrQc> {
         var data =
             jsonResponse.map((data) => FormPrModel.fromJson(data)).toList();
         //* hints Urutkan data berdasarkan tanggal terlama
+        var filterByStatusEmas = data
+            .where((element) =>
+                element.tanggalKirim != '' &&
+                element.jenisItem.toString().toLowerCase() == 'diamond')
+            .toList();
+        data = filterByStatusEmas;
         data.sort((a, b) => b.id!.compareTo(a.id!));
         //? Sekarang, data sudah diurutkan berdasarkan tanggal terlama
         var filterByStatus = data;

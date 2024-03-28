@@ -27,7 +27,6 @@ class ExcelPembelian {
       var data =
           jsonResponse.map((data) => ListItemPRModel.fromJson(data)).toList();
       //* hints Filter data berdasarkan nomor QC yang ada dalam list noQc
-      // Filter data based on whether any of the conditions in noQc are met
       var filterByNoQc = data.where((element) => element.noQc == qc).toList();
 
       data = filterByNoQc;

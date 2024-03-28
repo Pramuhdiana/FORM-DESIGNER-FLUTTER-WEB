@@ -12,6 +12,7 @@ class ApiConstants {
       'http://192.168.22.163:4010/ManufactureProductivity/GetEmpLossAllowance';
 
   //* HINTS API YANG SUDAH RESTFULL
+  static String importExcel = 'spk/import_excel.php';
   static String getListItem = 'spk/rest_api.php?type=listItem';
   static String getListPanjang = 'spk/rest_api.php?type=panjang';
   static String getListLebar = 'spk/rest_api.php?type=lebar';
